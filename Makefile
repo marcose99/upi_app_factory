@@ -35,3 +35,9 @@ validate-phase1:
 validate-combined-phases:
 	python -m factory.validators.validate_phase2_to_phase5_combined
 	$(MAKE) validate
+
+validate-regeneration:
+	python -m factory.validators.validate_regeneration_readiness
+
+regenerate-mock-dispute-app:
+	./scripts/regenerate_mock_dispute_app.sh

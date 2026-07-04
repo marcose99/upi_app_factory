@@ -1,0 +1,28 @@
+{
+  "schema_version": "mock_dispute_app_template_manifest.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "template_source": "v0.5.2-testclient-warning-fixed",
+  "regeneration_mode": "deterministic_template_regeneration",
+  "generation_target": "workspace/regeneration_runs/<run_id>/generated",
+  "evidence_labels_required": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "template_files": [
+    "app/disputes/__init__.py",
+    "app/disputes/models.py",
+    "app/disputes/service.py",
+    "app/disputes/router.py",
+    "adapters/mock_upi_switch.py",
+    "adapters/mock_core_banking.py",
+    "adapters/mock_customer_notification.py",
+    "adapters/mock_dispute_evidence_store.py"
+  ],
+  "required_governance_inputs": [
+    "factory_governance/phase2/upi_dispute_requirements.v1.json",
+    "factory_governance/phase2/mock_external_system_contracts.v1.json",
+    "factory_governance/phase3/architecture_design_contract.v1.json"
+  ]
+}
