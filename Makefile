@@ -31,3 +31,7 @@ release-pack:
 
 validate-phase1:
 	python -m factory.validators.validate_phase1_foundation
+
+validate-combined-phases:
+	python -m factory.validators.validate_phase2_to_phase5_combined
+	$(MAKE) validate

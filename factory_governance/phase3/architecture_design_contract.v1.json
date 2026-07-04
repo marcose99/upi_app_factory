@@ -1,0 +1,22 @@
+{
+  "schema_version": "architecture_design_contract.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "evidence_labels_required": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "selected_architecture": "lightweight_fastapi_modular_mock_adapters",
+  "model_provider": "OpenAI",
+  "real_payment_calls_allowed": false,
+  "modules": [
+    "app.disputes.models",
+    "app.disputes.service",
+    "app.disputes.router",
+    "adapters.mock_upi_switch",
+    "adapters.mock_core_banking",
+    "adapters.mock_customer_notification",
+    "adapters.mock_dispute_evidence_store"
+  ]
+}

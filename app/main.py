@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from app.feedback.routes import router as feedback_router
 from app.observability.audit import write_audit_event
 
+from app.disputes.router import router as disputes_router
 app = FastAPI(
     title="UPI Dispute Case Management",
     version="0.1.0",
@@ -13,6 +14,7 @@ app = FastAPI(
 )
 
 app.include_router(feedback_router)
+app.include_router(disputes_router)
 
 
 @app.middleware("http")

@@ -1,0 +1,36 @@
+{
+  "schema_version": "mock_external_system_contracts.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "evidence_labels_required": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "systems": [
+    {
+      "system_id": "mock_upi_switch",
+      "boundary": "MOCK_BOUNDARY",
+      "data_label": "SYNTHETIC_DATA",
+      "real_integration_allowed": false
+    },
+    {
+      "system_id": "mock_core_banking",
+      "boundary": "MOCK_BOUNDARY",
+      "data_label": "SYNTHETIC_DATA",
+      "real_integration_allowed": false
+    },
+    {
+      "system_id": "mock_customer_notification",
+      "boundary": "MOCK_BOUNDARY",
+      "data_label": "SYNTHETIC_DATA",
+      "real_integration_allowed": false
+    },
+    {
+      "system_id": "mock_dispute_evidence_store",
+      "boundary": "MOCK_BOUNDARY",
+      "data_label": "SYNTHETIC_DATA",
+      "real_integration_allowed": false
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "upi_dispute_requirements.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "evidence_labels_required": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "official_source_position": "MISSING_OFFICIAL_SOURCE",
+  "workflow_model": "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+  "real_payment_calls_allowed": false,
+  "business_problem": "Create a local mock-safe case management workflow for failed UPI-like transaction disputes without connecting to real UPI, NPCI, RBI, bank, PSP, switch, settlement, or customer systems.",
+  "roles": [
+    "CUSTOMER_SUPPORT_AGENT",
+    "OPERATIONS_REVIEWER",
+    "GOVERNANCE_REVIEWER",
+    "TECHNICAL_REVIEWER"
+  ],
+  "case_lifecycle": [
+    "FAILED_TRANSACTION_OBSERVED",
+    "DISPUTE_CASE_CREATED",
+    "EVIDENCE_PENDING",
+    "IN_REVIEW",
+    "RESOLVED",
+    "CLOSED"
+  ],
+  "functional_requirements": [
+    "List synthetic failed transaction events.",
+    "Create a dispute case from a synthetic failed transaction.",
+    "Attach mock switch and mock ledger observations.",
+    "Record reviewer actions with audit event identifiers.",
+    "Expose local FastAPI endpoints for demonstration."
+  ],
+  "out_of_scope": [
+    "Official UPI dispute rules",
+    "Official NPCI or RBI compliance certification",
+    "Real payment processing",
+    "Real customer notification",
+    "Real settlement or refund"
+  ]
+}
