@@ -44,3 +44,10 @@ regenerate-mock-dispute-app:
 
 validate-baseline-provenance:
 	python -m factory.validators.validate_baseline_provenance
+
+.PHONY: run-governed-factory-run validate-factory-run
+run-governed-factory-run:
+	RUN_ID=$${RUN_ID:-manual_factory_run} python scripts/run_governed_factory_run.py --force
+
+validate-factory-run:
+	python scripts/validate_factory_run_manifest.py --latest
