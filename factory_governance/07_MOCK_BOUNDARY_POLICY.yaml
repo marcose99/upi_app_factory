@@ -1,0 +1,13 @@
+mock_boundaries:
+  forbidden_real_targets:
+    - "UPI production"
+    - "NPCI systems"
+    - "bank APIs"
+    - "payment switch"
+    - "settlement system"
+    - "customer data source"
+  allowed:
+    - "local mock adapters"
+    - "synthetic data"
+    - "filesystem evidence"
+    - "SQLite local database"

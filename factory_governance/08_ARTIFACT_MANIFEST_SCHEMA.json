@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/artifact_manifest.schema.json",
+  "title": "Governed Agentic Factory Artifact Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_id",
+    "run_id",
+    "task_id",
+    "agent_id",
+    "path",
+    "artifact_type",
+    "input_hash",
+    "output_hash",
+    "requirement_ids",
+    "policy_ids",
+    "validation_ids",
+    "mock_or_synthetic",
+    "created_at_utc"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^ART-[A-Z0-9._-]+$"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "artifact_type": {
+      "enum": [
+        "requirement",
+        "policy",
+        "architecture",
+        "design",
+        "code",
+        "test",
+        "documentation",
+        "validation_report",
+        "audit_log",
+        "release_evidence",
+        "debug_case",
+        "other"
+      ]
+    },
+    "input_hash": {
+      "type": "string"
+    },
+    "output_hash": {
+      "type": "string"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requirement_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "policy_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "approval_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mock_or_synthetic": {
+      "type": "boolean"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at_utc": {
+      "type": "string"
+    }
+  }
+}

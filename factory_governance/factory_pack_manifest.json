@@ -1,0 +1,128 @@
+{
+  "pack_name": "Governed Agentic Software Factory Final Reusable Artifact Pack",
+  "version": "1.0",
+  "status": "FINAL_BASELINE",
+  "generated_at_note": "Generated as reusable baseline; verify and customize before production use.",
+  "files": [
+    {
+      "path": "00_SYSTEM_PROMPT.md",
+      "sha256": "94b8de551a0e38cb646db89d21f74d5ca32a0f746e849511e3d31e60364f538c",
+      "size_bytes": 3296
+    },
+    {
+      "path": "01_PROJECT_CHARTER_TEMPLATE.md",
+      "sha256": "927571d2d1334496bbcdbbb80a510be8c37f335933bc0dc37b9c72a26da3d620",
+      "size_bytes": 3151
+    },
+    {
+      "path": "02_FACTORY_OPERATING_MANUAL.md",
+      "sha256": "99619bcf36bb44e8c74db3930f238c6b8a92072b6b104236a926e7b6c0dc57d9",
+      "size_bytes": 5939
+    },
+    {
+      "path": "03_AGENT_ROLE_PROMPTS.md",
+      "sha256": "8df18b9ccd1f16c18c3aa7a2250953293460542f675106cb5fdf4d76503ccda2",
+      "size_bytes": 7677
+    },
+    {
+      "path": "04_RISK_TIERS.yaml",
+      "sha256": "7cddb8d9d17aacfee5c7fe90beb9f5b832bf939b275ed209101918055b0fc108",
+      "size_bytes": 3579
+    },
+    {
+      "path": "05_POLICY_REGISTRY.yaml",
+      "sha256": "170c020407685d3432b1b6f7ca1de588dfab283719b257d2e24479cf02d9984d",
+      "size_bytes": 7116
+    },
+    {
+      "path": "06_VALIDATION_GATES.yaml",
+      "sha256": "ab139210cc3ad5effbf8c30bc5ceba2115c2c521eb3c72bcdddc665aae925940",
+      "size_bytes": 3596
+    },
+    {
+      "path": "07_TASK_MANIFEST_SCHEMA.json",
+      "sha256": "74d6f277e1065eed84e0d2a084baad055ab46745bed797ed8820abe046e3317b",
+      "size_bytes": 2622
+    },
+    {
+      "path": "08_ARTIFACT_MANIFEST_SCHEMA.json",
+      "sha256": "d78c2b946644cf1be07f5793bdf4a78670aa6e9af472fbbc72e401f6b29eb0db",
+      "size_bytes": 1942
+    },
+    {
+      "path": "09_AUDIT_EVENT_SCHEMA.json",
+      "sha256": "fcbb8cb3ca2e8f37d50bb0cab927a241e1472bc5e1b18b826897af7b6e9d466c",
+      "size_bytes": 1938
+    },
+    {
+      "path": "10_DEBUG_CASE_SCHEMA.json",
+      "sha256": "95bcf695e06e51daf11b4552b40b63d99ff5ad51e27e6f5c89bb3402ac35d93b",
+      "size_bytes": 2807
+    },
+    {
+      "path": "11_REGENERATION_GUIDE.md",
+      "sha256": "f680419dd52036041c7ab76e1b8c2688e82dd19ee4267bc291b7c1c2170d3f46",
+      "size_bytes": 2923
+    },
+    {
+      "path": "12_DEBUGGING_PLAYBOOK.md",
+      "sha256": "879938f64b70c67891fec69f4bad5d9631c283c35cedd11fb4bac31160997dc5",
+      "size_bytes": 3682
+    },
+    {
+      "path": "13_RELEASE_READINESS_CHECKLIST.md",
+      "sha256": "42be50fb044732e177ce8e8c8476b77af363ae091d6dad36101add04767fce63",
+      "size_bytes": 3264
+    },
+    {
+      "path": "14_SECURITY_AND_RED_TEAM_PLAYBOOK.md",
+      "sha256": "1fed242d949c1f5b4c43a4387011ecc1bf2c969b7182809a57efbc33bb25b561",
+      "size_bytes": 3770
+    },
+    {
+      "path": "15_OBSERVABILITY_STANDARD.md",
+      "sha256": "f6487de53cd2801d71504ca4905bab5035c48bc56f203bf6ef30450ab39b8053",
+      "size_bytes": 2252
+    },
+    {
+      "path": "16_EVIDENCE_LEDGER_TEMPLATE.csv",
+      "sha256": "4029e03a4a2722e82780f1c29ed45f1fc2aff5167b90ba6e54f1704b4a5d71e3",
+      "size_bytes": 168
+    },
+    {
+      "path": "17_GOLDEN_REGRESSION_SUITE_TEMPLATE.md",
+      "sha256": "873990ea7300a998245ea1f80e31d4124cc58e85ae8b797b3d1b556843a0777a",
+      "size_bytes": 1708
+    },
+    {
+      "path": "18_HUMAN_APPROVAL_POLICY.md",
+      "sha256": "24b3fd601f1544d13cea2fa7ec035c0a4cdfd3a7d99aa7b22516f20d4b9e8658",
+      "size_bytes": 1748
+    },
+    {
+      "path": "19_MATURITY_MODEL.md",
+      "sha256": "87dbfcd048ac34ec2a591f1ccb08b88ef9cfe1706358c3c24447fbc326903912",
+      "size_bytes": 1792
+    },
+    {
+      "path": "20_FINAL_REVIEWER_CHECKLIST.md",
+      "sha256": "e7c503d9b9ca26a52ac263dca160851baa35cc4af23772a831a7e7812c9ecb15",
+      "size_bytes": 2673
+    },
+    {
+      "path": "21_REFERENCE_BASE.md",
+      "sha256": "fd12af8d97bfd33bdd248bd8cef8c095e60a835824f4e2048bd23ed04d0258fe",
+      "size_bytes": 1687
+    },
+    {
+      "path": "README.md",
+      "sha256": "938aa203ee94fe884cdc27fb6e90fc9f28f7c065a14c302c5250c8a14f328417",
+      "size_bytes": 4050
+    },
+    {
+      "path": "validate_factory_pack.py",
+      "sha256": "c64a9189859eb6ad5ab8a72abb581b210c1a6b4c57ea422c60ba52a68294af92",
+      "size_bytes": 3669
+    }
+  ]
+}

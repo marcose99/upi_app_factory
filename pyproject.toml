@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "upi-dispute-resolution-factory"
+version = "0.1.0"
+description = "Lightweight governed agentic software factory for UPI dispute resolution case management"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+  "pydantic>=2.6",
+  "python-dotenv>=1.0",
+  "PyYAML>=6.0",
+  "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.5",
+  "mypy>=1.8",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*", "factory*", "adapters*"]
+exclude = [
+  "tests*",
+  "prompts*",
+  "evidence*",
+  "workspace*",
+  "factory_governance*",
+  "scripts*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true

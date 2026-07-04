@@ -1,0 +1,17 @@
+policies:
+  - policy_id: POL-MOCK-001
+    name: "No real payment ecosystem calls"
+    rule: "All UPI/NPCI/bank/payment/settlement/customer integrations must use mock adapters."
+    severity: BLOCKER
+  - policy_id: POL-EVIDENCE-001
+    name: "No unsupported official claim"
+    rule: "Official UPI, RBI, NPCI, certification, SLA, or compliance claims require evidence."
+    severity: BLOCKER
+  - policy_id: POL-AUDIT-001
+    name: "Audit all mutations"
+    rule: "Every mutating API or factory action must write an audit event."
+    severity: HIGH
+  - policy_id: POL-FEEDBACK-001
+    name: "Human feedback blocks release when severe"
+    rule: "Open BLOCKER feedback prevents release readiness."
+    severity: BLOCKER

@@ -1,0 +1,21 @@
+risk_tiers:
+  R0:
+    description: "Read-only documentation or analysis"
+    approval_required: false
+  R1:
+    description: "Generate proposal, prompt, design, or non-mutating artifact"
+    approval_required: false
+  R2:
+    description: "Modify local repository files through deterministic applier"
+    approval_required: false
+  R3:
+    description: "Call external non-production service"
+    approval_required: true
+  R4:
+    description: "Use sensitive data, credentials, payment/bank/NPCI-like integration"
+    approval_required: true
+    default_action: "block"
+  R5:
+    description: "Irreversible, destructive, real money, production deployment, or compliance claim"
+    approval_required: true
+    default_action: "block"
