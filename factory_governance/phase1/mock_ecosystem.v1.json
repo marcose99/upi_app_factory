@@ -1,0 +1,75 @@
+{
+  "schema_version": "mock_ecosystem.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "purpose": "Define mock-only upstream and downstream systems for local development and demonstrations.",
+  "global_boundary_rule": {
+    "boundary_type": "MOCK_BOUNDARY",
+    "real_integration_allowed": false,
+    "synthetic_data_only": true,
+    "reason": "The factory must not connect to real payment, banking, settlement, dispute, regulator, or customer systems."
+  },
+  "external_systems": [
+    {
+      "system_id": "mock_upi_switch",
+      "display_name": "Mock UPI Switch",
+      "direction": "upstream_and_downstream",
+      "boundary_type": "MOCK_BOUNDARY",
+      "real_integration_allowed": false,
+      "data_label": "SYNTHETIC_DATA",
+      "adapter_module_target": "adapters.mock_upi_switch",
+      "responsibilities": [
+        "Provide synthetic failed transaction events",
+        "Accept synthetic dispute status updates"
+      ]
+    },
+    {
+      "system_id": "mock_core_banking",
+      "display_name": "Mock Core Banking Ledger",
+      "direction": "upstream",
+      "boundary_type": "MOCK_BOUNDARY",
+      "real_integration_allowed": false,
+      "data_label": "SYNTHETIC_DATA",
+      "adapter_module_target": "adapters.mock_core_banking",
+      "responsibilities": [
+        "Provide synthetic debit and credit ledger observations",
+        "Provide synthetic customer account references"
+      ]
+    },
+    {
+      "system_id": "mock_customer_notification",
+      "display_name": "Mock Customer Notification Gateway",
+      "direction": "downstream",
+      "boundary_type": "MOCK_BOUNDARY",
+      "real_integration_allowed": false,
+      "data_label": "SYNTHETIC_DATA",
+      "adapter_module_target": "adapters.mock_customer_notification",
+      "responsibilities": [
+        "Record synthetic notification requests",
+        "Never send real SMS, email, WhatsApp, push, or payment notifications"
+      ]
+    },
+    {
+      "system_id": "mock_dispute_evidence_store",
+      "display_name": "Mock Dispute Evidence Store",
+      "direction": "internal",
+      "boundary_type": "MOCK_BOUNDARY",
+      "real_integration_allowed": false,
+      "data_label": "SYNTHETIC_DATA",
+      "adapter_module_target": "adapters.mock_dispute_evidence_store",
+      "responsibilities": [
+        "Store generated evidence packs",
+        "Store synthetic decision traces"
+      ]
+    }
+  ],
+  "forbidden_boundaries": [
+    "real UPI production services",
+    "real NPCI services",
+    "real RBI systems",
+    "real bank systems",
+    "real PSP systems",
+    "real payment switch systems",
+    "real settlement systems",
+    "real customer notification systems"
+  ]
+}

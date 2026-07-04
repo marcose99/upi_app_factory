@@ -1,0 +1,93 @@
+{
+  "schema_version": "agent_swarm_contract.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "purpose": "Define governed agent roles before any agent swarm generates or modifies application artifacts.",
+  "global_agent_rules": {
+    "model_provider": "OpenAI",
+    "may_call_real_payment_systems": false,
+    "must_use_mock_adapters": true,
+    "must_emit_evidence_labels": true,
+    "must_accept_human_feedback": true,
+    "must_run_validation_after_changes": true,
+    "must_prefer_lightweight_local_first_tools": true
+  },
+  "agents": [
+    {
+      "agent_id": "requirements_analyst_agent",
+      "role": "Convert user goals into governed synthetic requirements.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "requirements.md",
+        "acceptance_criteria.md",
+        "out_of_scope.md"
+      ],
+      "requires_human_review_before_release": true
+    },
+    {
+      "agent_id": "architecture_agent",
+      "role": "Propose architecture options, compare tradeoffs, and select a lightweight modular architecture.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "architecture_options.md",
+        "architecture_decision.md",
+        "module_designs.md",
+        "diagrams.md"
+      ],
+      "requires_human_review_before_release": true
+    },
+    {
+      "agent_id": "mock_ecosystem_agent",
+      "role": "Create mock upstream and downstream ecosystem contracts.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "mock_contracts.md",
+        "synthetic_data_contracts.md",
+        "mock_boundary_report.md"
+      ],
+      "requires_human_review_before_release": true
+    },
+    {
+      "agent_id": "implementation_agent",
+      "role": "Generate lightweight production-disciplined application code only after requirements and architecture are accepted.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "application_code",
+        "unit_tests",
+        "adapter_interfaces"
+      ],
+      "requires_human_review_before_release": true
+    },
+    {
+      "agent_id": "test_validation_agent",
+      "role": "Generate and run deterministic validation gates.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "test_plan.md",
+        "test_cases",
+        "validation_report.md"
+      ],
+      "requires_human_review_before_release": true
+    },
+    {
+      "agent_id": "governance_reviewer_agent",
+      "role": "Check evidence labels, mock boundaries, release readiness, and unsupported claims.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "governance_review.md",
+        "release_readiness.md"
+      ],
+      "requires_human_review_before_release": true
+    },
+    {
+      "agent_id": "human_feedback_reviewer_agent",
+      "role": "Convert human review feedback into actionable governed work items.",
+      "may_call_real_payment_systems": false,
+      "required_outputs": [
+        "feedback_triage.md",
+        "accepted_changes.md",
+        "deferred_changes.md"
+      ],
+      "requires_human_review_before_release": true
+    }
+  ]
+}

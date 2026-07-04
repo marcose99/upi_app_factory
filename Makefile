@@ -28,3 +28,6 @@ run:
 
 release-pack:
 	python -m factory.release_pack.generate
+
+validate-phase1:
+	python -m factory.validators.validate_phase1_foundation

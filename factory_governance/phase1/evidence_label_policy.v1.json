@@ -1,0 +1,28 @@
+{
+  "schema_version": "evidence_label_policy.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "required_labels": [
+    {
+      "label": "MISSING_OFFICIAL_SOURCE",
+      "meaning": "Used when a claim, workflow, or rule has not been grounded in an approved official source."
+    },
+    {
+      "label": "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+      "meaning": "Used for enterprise-style process models that are intentionally synthetic and demonstration-safe."
+    },
+    {
+      "label": "MOCK_BOUNDARY",
+      "meaning": "Used for every external integration boundary that must remain mocked."
+    },
+    {
+      "label": "SYNTHETIC_DATA",
+      "meaning": "Used for non-real, generated, demonstration-safe transaction, customer, ledger, and dispute data."
+    }
+  ],
+  "rules": {
+    "labels_required_on_agent_outputs": true,
+    "unsupported_official_claims_forbidden": true,
+    "mock_boundary_label_required_for_external_systems": true,
+    "synthetic_data_label_required_for_demo_data": true
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "requirements_intake_contract.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "purpose": "Define the minimum governed intake contract before any agent generates application code.",
+  "domain_position": {
+    "domain": "UPI failed transaction and dispute resolution case management",
+    "model_type": "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "official_source_status": "MISSING_OFFICIAL_SOURCE",
+    "real_payment_integration": "prohibited"
+  },
+  "mandatory_constraints": {
+    "no_real_upi_npci_rbi_bank_psp_switch_or_settlement_calls": true,
+    "all_external_systems_are_mocked": true,
+    "openai_is_model_provider": true,
+    "lightweight_local_first": true,
+    "production_disciplined": true,
+    "modular_adapters_required": true,
+    "human_feedback_required": true,
+    "validation_after_each_phase": true
+  },
+  "required_sections": [
+    "business_problem",
+    "user_roles",
+    "case_lifecycle",
+    "mock_external_systems",
+    "data_contracts",
+    "audit_and_evidence",
+    "human_feedback",
+    "validation_gates",
+    "out_of_scope"
+  ],
+  "evidence_labels_required": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "acceptance_criteria": [
+    "Every generated requirement must identify whether it is synthetic, mock-boundary, or missing official source.",
+    "Every external dependency must be represented through a mock adapter.",
+    "No requirement may claim official UPI, NPCI, RBI, bank, PSP, switch, or settlement compliance unless an approved official source is attached in a future phase.",
+    "Human review feedback must be accepted, stored, and audit-linked."
+  ]
+}

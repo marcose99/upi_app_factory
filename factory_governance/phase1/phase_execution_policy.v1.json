@@ -1,0 +1,55 @@
+{
+  "schema_version": "phase_execution_policy.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "policy": {
+    "build_in_phases": true,
+    "validation_after_each_phase": true,
+    "human_review_after_each_phase": true,
+    "no_big_bang_generation": true,
+    "commit_after_clean_validation": true,
+    "tag_major_restore_points": true
+  },
+  "phase_order": [
+    {
+      "phase": "0",
+      "name": "Bootstrap baseline",
+      "status": "PASSED"
+    },
+    {
+      "phase": "1",
+      "name": "Foundation hardening",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "phase": "2",
+      "name": "Requirements and mock ecosystem",
+      "status": "PLANNED"
+    },
+    {
+      "phase": "3",
+      "name": "Architecture and module design",
+      "status": "PLANNED"
+    },
+    {
+      "phase": "4",
+      "name": "Application generation",
+      "status": "PLANNED"
+    },
+    {
+      "phase": "5",
+      "name": "Testing, validation, evidence, and demo",
+      "status": "PLANNED"
+    }
+  ],
+  "minimum_exit_gates": [
+    "ruff",
+    "mypy",
+    "pytest",
+    "governance_pack",
+    "policy_registry",
+    "mock_boundaries",
+    "evidence_ledger",
+    "release_readiness",
+    "phase_specific_validator"
+  ]
+}

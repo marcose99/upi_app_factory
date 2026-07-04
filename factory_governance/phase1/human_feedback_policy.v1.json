@@ -1,0 +1,36 @@
+{
+  "schema_version": "human_feedback_policy.v1",
+  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "policy": {
+    "feedback_module_required": true,
+    "feedback_endpoint": "/feedback",
+    "audit_linked": true,
+    "feedback_may_block_phase_exit": true,
+    "feedback_must_be_triaged": true
+  },
+  "default_fields": [
+    "feedback_id",
+    "created_at_utc",
+    "status",
+    "title",
+    "description",
+    "reviewer_role",
+    "severity",
+    "quality_dimensions",
+    "audit_event_ids"
+  ],
+  "allowed_statuses": [
+    "SUBMITTED",
+    "TRIAGED",
+    "ACCEPTED",
+    "DEFERRED",
+    "REJECTED",
+    "CLOSED"
+  ],
+  "minimum_reviewer_roles": [
+    "TECHNICAL_REVIEWER",
+    "GOVERNANCE_REVIEWER",
+    "BUSINESS_REVIEWER",
+    "SECURITY_REVIEWER"
+  ]
+}
