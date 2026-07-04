@@ -1,0 +1,66 @@
+{
+  "schema_version": "factory_governance_baseline_provenance.v1",
+  "created_at_utc": "2026-07-04T13:49:25.608298+00:00",
+  "provenance_status": "PROVEN_AND_PRESERVED",
+  "source_zip": {
+    "original_path_observed": "/home/marcose/Downloads/governed_agentic_factory_final_pack.zip",
+    "filename": "governed_agentic_factory_final_pack.zip",
+    "sha256": "24d68830bfd9ac162ac7cfad60bc686df8c170db91bd10360e9e7c66966cfe1f",
+    "size_bytes": 37942
+  },
+  "baseline_preservation": {
+    "preserved_under_version_control_path": "factory_governance/baseline_original/governed_agentic_factory_final_pack",
+    "extracted_file_count": 25,
+    "required_baseline_files": [
+      "00_SYSTEM_PROMPT.md",
+      "01_PROJECT_CHARTER_TEMPLATE.md",
+      "02_FACTORY_OPERATING_MANUAL.md",
+      "03_AGENT_ROLE_PROMPTS.md",
+      "05_POLICY_REGISTRY.yaml",
+      "06_VALIDATION_GATES.yaml",
+      "12_DEBUGGING_PLAYBOOK.md",
+      "13_RELEASE_READINESS_CHECKLIST.md",
+      "14_SECURITY_AND_RED_TEAM_PLAYBOOK.md"
+    ],
+    "missing_required_baseline_files": []
+  },
+  "alignment_to_user_factory_prompt": {
+    "project": "upi_dispute_resolution_factory",
+    "generated_application": "upi_dispute_case_management",
+    "baseline_instruction": "Use governed_agentic_factory_final_pack as starting governance baseline; do not replace it; extend project-specifically.",
+    "honesty_labels": [
+      "MISSING_OFFICIAL_SOURCE",
+      "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+      "MOCK_BOUNDARY",
+      "SYNTHETIC_DATA"
+    ],
+    "boundary": "No real UPI, NPCI, RBI, bank, payment, settlement, customer, or production system calls."
+  },
+  "extracted_files": [
+    "governed_agentic_factory_final_pack/00_SYSTEM_PROMPT.md",
+    "governed_agentic_factory_final_pack/01_PROJECT_CHARTER_TEMPLATE.md",
+    "governed_agentic_factory_final_pack/02_FACTORY_OPERATING_MANUAL.md",
+    "governed_agentic_factory_final_pack/03_AGENT_ROLE_PROMPTS.md",
+    "governed_agentic_factory_final_pack/04_RISK_TIERS.yaml",
+    "governed_agentic_factory_final_pack/05_POLICY_REGISTRY.yaml",
+    "governed_agentic_factory_final_pack/06_VALIDATION_GATES.yaml",
+    "governed_agentic_factory_final_pack/07_TASK_MANIFEST_SCHEMA.json",
+    "governed_agentic_factory_final_pack/08_ARTIFACT_MANIFEST_SCHEMA.json",
+    "governed_agentic_factory_final_pack/09_AUDIT_EVENT_SCHEMA.json",
+    "governed_agentic_factory_final_pack/10_DEBUG_CASE_SCHEMA.json",
+    "governed_agentic_factory_final_pack/11_REGENERATION_GUIDE.md",
+    "governed_agentic_factory_final_pack/12_DEBUGGING_PLAYBOOK.md",
+    "governed_agentic_factory_final_pack/13_RELEASE_READINESS_CHECKLIST.md",
+    "governed_agentic_factory_final_pack/14_SECURITY_AND_RED_TEAM_PLAYBOOK.md",
+    "governed_agentic_factory_final_pack/15_OBSERVABILITY_STANDARD.md",
+    "governed_agentic_factory_final_pack/16_EVIDENCE_LEDGER_TEMPLATE.csv",
+    "governed_agentic_factory_final_pack/17_GOLDEN_REGRESSION_SUITE_TEMPLATE.md",
+    "governed_agentic_factory_final_pack/18_HUMAN_APPROVAL_POLICY.md",
+    "governed_agentic_factory_final_pack/19_MATURITY_MODEL.md",
+    "governed_agentic_factory_final_pack/20_FINAL_REVIEWER_CHECKLIST.md",
+    "governed_agentic_factory_final_pack/21_REFERENCE_BASE.md",
+    "governed_agentic_factory_final_pack/README.md",
+    "governed_agentic_factory_final_pack/factory_pack_manifest.json",
+    "governed_agentic_factory_final_pack/validate_factory_pack.py"
+  ]
+}

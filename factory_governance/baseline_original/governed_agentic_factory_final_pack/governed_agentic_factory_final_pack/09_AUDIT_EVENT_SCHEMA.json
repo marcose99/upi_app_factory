@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/audit_event.schema.json",
+  "title": "Governed Agentic Factory Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "timestamp_utc",
+    "run_id",
+    "actor_type",
+    "actor_id",
+    "action",
+    "target",
+    "result",
+    "risk_tier"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "timestamp_utc": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "actor_type": {
+      "enum": [
+        "human",
+        "agent",
+        "orchestrator",
+        "tool",
+        "validator",
+        "system"
+      ]
+    },
+    "actor_id": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "risk_tier": {
+      "type": "string"
+    },
+    "input_hash": {
+      "type": "string"
+    },
+    "output_hash": {
+      "type": "string"
+    },
+    "policy_decision_id": {
+      "type": "string"
+    },
+    "policy_decision": {
+      "enum": [
+        "allowed",
+        "denied",
+        "requires_approval",
+        "not_applicable",
+        "unknown"
+      ]
+    },
+    "approval_id": {
+      "type": "string"
+    },
+    "approval_status": {
+      "enum": [
+        "not_required",
+        "pending",
+        "approved",
+        "denied",
+        "expired"
+      ]
+    },
+    "validation_id": {
+      "type": "string"
+    },
+    "result": {
+      "enum": [
+        "success",
+        "failure",
+        "blocked",
+        "skipped",
+        "partial"
+      ]
+    },
+    "error_code": {
+      "type": "string"
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "details": {
+      "type": "object"
+    }
+  }
+}

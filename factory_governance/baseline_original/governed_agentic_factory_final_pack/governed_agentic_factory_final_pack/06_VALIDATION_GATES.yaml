@@ -1,0 +1,117 @@
+version: "1.0"
+status: "FINAL_BASELINE"
+default_behavior: "fail_closed"
+
+validation_sequence:
+  - gate_id: "VG-001-FORMAT"
+    name: "Formatting"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "ruff format --check ."
+      - "prettier --check ."
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-002-STATIC-ANALYSIS"
+    name: "Static analysis / lint"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "ruff check ."
+      - "eslint ."
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-003-TYPE-CHECK"
+    name: "Type checks"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "mypy src tests"
+      - "tsc --noEmit"
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-004-UNIT-TESTS"
+    name: "Unit tests"
+    required_for_modes: ["FAST_SAFE", "GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "pytest tests/unit"
+      - "npm test"
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-005-CONTRACT-TESTS"
+    name: "Contract tests"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "pytest tests/contract"
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-006-INTEGRATION-TESTS"
+    name: "Integration tests"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "pytest tests/integration"
+    pass_condition: "command_exit_code_0_or_documented_mock_limitations"
+
+  - gate_id: "VG-007-NEGATIVE-BOUNDARY-TESTS"
+    name: "Negative and boundary tests"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "pytest tests/negative tests/boundary"
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-008-SECURITY-SCANS"
+    name: "Security scans"
+    required_for_modes: ["PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "bandit -r src"
+      - "pip-audit"
+      - "npm audit --audit-level=high"
+    pass_condition: "no_unaccepted_high_or_critical_findings"
+
+  - gate_id: "VG-009-POLICY-CHECKS"
+    name: "Policy checks"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "python scripts/validate_policy_registry.py"
+      - "python scripts/validate_mock_boundaries.py"
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-010-REGRESSION-SUITE"
+    name: "Golden regression suite"
+    required_for_modes: ["GOVERNED_BUILD", "PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "pytest golden_regression_suite"
+    pass_condition: "command_exit_code_0"
+
+  - gate_id: "VG-011-EVIDENCE-COMPLETENESS"
+    name: "Evidence completeness"
+    required_for_modes: ["PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "python scripts/validate_evidence_ledger.py"
+    pass_condition: "all_required_claims_have_evidence_or_are_labeled_unknown"
+
+  - gate_id: "VG-012-RELEASE-READINESS"
+    name: "Release readiness"
+    required_for_modes: ["PRODUCTION_CONTROLLED"]
+    example_commands:
+      - "python scripts/validate_release_readiness.py"
+    pass_condition: "no_open_blockers_and_all_required_sections_present"
+
+status_values:
+  - "NOT_RUN"
+  - "PASSED"
+  - "FAILED"
+  - "WAIVED_WITH_APPROVAL"
+  - "NOT_APPLICABLE_WITH_JUSTIFICATION"
+
+report_required_fields:
+  - "validation_id"
+  - "run_id"
+  - "task_id"
+  - "gate_id"
+  - "command"
+  - "started_at_utc"
+  - "ended_at_utc"
+  - "exit_code"
+  - "status"
+  - "stdout_path"
+  - "stderr_path"
+  - "evidence_ids"
+  - "approver_if_waived"

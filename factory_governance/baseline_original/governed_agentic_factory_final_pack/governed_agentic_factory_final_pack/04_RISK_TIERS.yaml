@@ -1,0 +1,98 @@
+version: "1.0"
+status: "FINAL_BASELINE"
+default_behavior: "fail_closed"
+
+risk_tiers:
+  R0_READ_ONLY:
+    description: "Read-only analysis, explanation, or documentation without mutation or external side effects."
+    examples:
+      - "Summarize local project documentation"
+      - "Review pasted code"
+      - "Draft a design proposal"
+    approval_required: false
+    required_controls:
+      - "cite_or_reference_inputs"
+      - "label_uncertainty"
+
+  R1_LOCAL_GENERATION:
+    description: "Generate local artifacts or code proposals without applying changes."
+    examples:
+      - "Generate patch text"
+      - "Create test-case proposal"
+      - "Create architecture document draft"
+    approval_required: false
+    required_controls:
+      - "link_requirement_ids"
+      - "link_policy_ids"
+      - "state_validation_not_run_unless_run"
+
+  R2_LOCAL_MUTATION:
+    description: "Modify local repository files or create local project artifacts."
+    examples:
+      - "Apply code patch"
+      - "Create files in local workspace"
+      - "Update docs"
+    approval_required: "conditional"
+    approval_condition: "required if destructive, broad, irreversible, or outside assigned task scope"
+    required_controls:
+      - "capture_git_status_before"
+      - "backup_before_mutation_if_not_under_version_control"
+      - "record_changed_files"
+      - "run_targeted_validation"
+      - "write_audit_event"
+
+  R3_EXTERNAL_READ_OR_NETWORK:
+    description: "Read from external systems, cloud services, APIs, email, calendar, ticket systems, or internet sources."
+    examples:
+      - "Call external API read endpoint"
+      - "Read cloud logs"
+      - "Search external documentation"
+    approval_required: "conditional"
+    approval_condition: "required for private, sensitive, paid, rate-limited, or customer-related systems"
+    required_controls:
+      - "tool_registry_check"
+      - "data_sensitivity_check"
+      - "audit_tool_call"
+      - "source_citation_or_evidence_capture"
+
+  R4_EXTERNAL_MUTATION_OR_SENSITIVE_DATA:
+    description: "Mutate external systems or process sensitive/customer/regulated data."
+    examples:
+      - "Create/update/delete external records"
+      - "Send email"
+      - "Use customer data"
+      - "Trigger workflow in external platform"
+    approval_required: true
+    required_controls:
+      - "formal_human_approval"
+      - "data_minimization"
+      - "redaction_or_masking"
+      - "rollback_plan"
+      - "audit_tool_call"
+      - "post_action_validation"
+
+  R5_PRODUCTION_FINANCIAL_DESTRUCTIVE:
+    description: "Production deployment, financial movement, irreversible/destructive action, legal/compliance/security-impacting action."
+    examples:
+      - "Deploy to production"
+      - "Move money"
+      - "Delete production data"
+      - "Disable security control"
+      - "Claim compliance or certification"
+    approval_required: true
+    default_allowed: false
+    required_controls:
+      - "system_owner_approval"
+      - "risk_owner_approval"
+      - "security_owner_approval_if_security_relevant"
+      - "rollback_or_recovery_plan"
+      - "full_validation_suite"
+      - "release_evidence_pack"
+      - "audit_immutability"
+
+conflict_rules:
+  - "A deterministic failed test overrides agent confidence."
+  - "A policy violation overrides coding convenience."
+  - "Security veto overrides feature preference unless formally risk-accepted."
+  - "Human approval cannot override an explicitly blocked action unless policy allows formal exception."
+  - "Unknown evidence blocks production, compliance, or security claims."

@@ -41,3 +41,6 @@ validate-regeneration:
 
 regenerate-mock-dispute-app:
 	./scripts/regenerate_mock_dispute_app.sh
+
+validate-baseline-provenance:
+	python -m factory.validators.validate_baseline_provenance

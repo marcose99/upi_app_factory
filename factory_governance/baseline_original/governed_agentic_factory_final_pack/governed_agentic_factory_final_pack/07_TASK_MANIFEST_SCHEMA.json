@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/task_manifest.schema.json",
+  "title": "Governed Agentic Factory Task Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "run_id",
+    "title",
+    "risk_tier",
+    "mode",
+    "requirement_ids",
+    "policy_ids",
+    "design_refs",
+    "expected_files",
+    "validation_gates",
+    "definition_of_done",
+    "approval_required",
+    "status"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK-[A-Z0-9._-]+$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "FAST_SAFE",
+        "GOVERNED_BUILD",
+        "PRODUCTION_CONTROLLED"
+      ]
+    },
+    "risk_tier": {
+      "enum": [
+        "R0_READ_ONLY",
+        "R1_LOCAL_GENERATION",
+        "R2_LOCAL_MUTATION",
+        "R3_EXTERNAL_READ_OR_NETWORK",
+        "R4_EXTERNAL_MUTATION_OR_SENSITIVE_DATA",
+        "R5_PRODUCTION_FINANCIAL_DESTRUCTIVE"
+      ]
+    },
+    "requirement_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "policy_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "design_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expected_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "agents_allowed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tools_allowed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation_gates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "rollback_plan": {
+      "type": "string"
+    },
+    "approval_required": {
+      "type": "boolean"
+    },
+    "approval_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "definition_of_done": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "status": {
+      "enum": [
+        "PROPOSED",
+        "APPROVED",
+        "IN_PROGRESS",
+        "BLOCKED",
+        "VALIDATION_FAILED",
+        "COMPLETED",
+        "REJECTED"
+      ]
+    },
+    "created_at_utc": {
+      "type": "string"
+    },
+    "updated_at_utc": {
+      "type": "string"
+    }
+  }
+}

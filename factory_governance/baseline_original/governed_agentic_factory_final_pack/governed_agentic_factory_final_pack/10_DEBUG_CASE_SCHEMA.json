@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/debug_case.schema.json",
+  "title": "Governed Agentic Factory Debug Case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "debug_case_id",
+    "status",
+    "symptom",
+    "first_observed_at_utc",
+    "run_id",
+    "classification",
+    "expected_behavior",
+    "actual_behavior",
+    "reproduction",
+    "evidence_inspected",
+    "root_cause_status"
+  ],
+  "properties": {
+    "debug_case_id": {
+      "type": "string",
+      "pattern": "^DBG-[A-Z0-9._-]+$"
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "IN_PROGRESS",
+        "ROOT_CAUSE_FOUND",
+        "FIXED",
+        "VALIDATED",
+        "CLOSED",
+        "UNKNOWN",
+        "BLOCKED"
+      ]
+    },
+    "symptom": {
+      "type": "string"
+    },
+    "first_observed_at_utc": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "classification": {
+      "enum": [
+        "requirement_ambiguity",
+        "missing_evidence",
+        "policy_conflict",
+        "architecture_gap",
+        "design_gap",
+        "implementation_bug",
+        "test_bug",
+        "mock_ecosystem_bug",
+        "tool_failure",
+        "environment_issue",
+        "dependency_issue",
+        "prompt_issue",
+        "retrieval_issue",
+        "hallucination_or_unsupported_claim",
+        "governance_bypass_risk",
+        "observability_gap",
+        "unknown"
+      ]
+    },
+    "expected_behavior": {
+      "type": "string"
+    },
+    "actual_behavior": {
+      "type": "string"
+    },
+    "reproduction": {
+      "type": "object",
+      "required": [
+        "command_or_steps",
+        "is_deterministic"
+      ],
+      "properties": {
+        "command_or_steps": {
+          "type": "string"
+        },
+        "is_deterministic": {
+          "type": "boolean"
+        },
+        "minimal_input": {
+          "type": "string"
+        }
+      }
+    },
+    "evidence_inspected": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "root_cause_status": {
+      "enum": [
+        "not_started",
+        "hypothesized",
+        "confirmed",
+        "unknown",
+        "blocked"
+      ]
+    },
+    "root_cause": {
+      "type": "string"
+    },
+    "fix_summary": {
+      "type": "string"
+    },
+    "regression_tests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lessons_learned": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
