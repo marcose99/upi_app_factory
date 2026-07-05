@@ -1,0 +1,34 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "realistic_mock_engineering_manifest.json",
+  "implementation_files_written": 0,
+  "labels": [
+    "STRICT_MOCK_ONLY",
+    "REALISTIC_MOCK_REQUIRED",
+    "HIGH_VOLUME_ENGINEERING_REQUIRED",
+    "ASYNC_CONCURRENCY_REQUIRED",
+    "LOCAL_FIRST_LIGHTWEIGHT_RUNTIME",
+    "PRODUCTION_MIGRATION_READY",
+    "HA_FAILOVER_FAILBACK_DESIGN_REQUIRED",
+    "PRODUCTION_QUALITY_OBSERVABILITY_REQUIRED",
+    "STRONG_GUARDRAILS_REQUIRED",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "FAIL_CLOSED"
+  ],
+  "llm_calls_made": 0,
+  "network_calls_made": 0,
+  "phase": "Phase 11A.2",
+  "phase11a1_readiness_passed": true,
+  "phase11a1_report_summary": {
+    "errors": [],
+    "passed": true,
+    "warnings": [
+      "Phase 11A.1 is ready. Unsupported live regulatory, economic, and technology-specific values must remain labelled."
+    ]
+  },
+  "purpose": "Strengthen prompts and guardrails for realistic, high-volume, locally runnable, migration-ready mock application generation.",
+  "strictly_mock": true
+}
