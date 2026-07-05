@@ -1,0 +1,259 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "requirements_analysis.json",
+  "determinism": {
+    "generation_style": "static deterministic templates plus explicit traceability",
+    "runtime_timestamp_used": false
+  },
+  "economics_guidance": {
+    "application_economics": [
+      "manual dispute handling effort",
+      "case aging and escalation cost",
+      "refund and compensation exposure",
+      "false approval and false rejection cost",
+      "customer trust and complaint re-open rate",
+      "reconciliation effort",
+      "support workload",
+      "operational exception queues"
+    ],
+    "factory_economics": [
+      "agent/tool run cost",
+      "human review effort",
+      "validation automation effort",
+      "rework and regeneration cost",
+      "cost of quality and audit evidence",
+      "switching cost and vendor lock-in risk",
+      "onboarding and beginner-debuggability cost",
+      "technical debt interest from weak planning"
+    ],
+    "measurement_rule": "Use synthetic values only for demo scenarios. Use official or user-provided data for real monetary, TAT, fee, penalty, volume, or ROI assertions."
+  },
+  "official_reference_candidates": [
+    {
+      "authority": "Reserve Bank of India",
+      "id": "RBI_ODR_DIGITAL_PAYMENTS_2020",
+      "script_status": "REFERENCE_ONLY_NOT_FETCHED_AT_RUNTIME",
+      "title": "Online Dispute Resolution system for digital payments",
+      "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=3194",
+      "use_in_phase10": "ODR expectations, failed-transaction dispute scope, escalation posture"
+    },
+    {
+      "authority": "Reserve Bank of India",
+      "id": "RBI_FAILED_TRANSACTION_TAT_2019",
+      "script_status": "REFERENCE_ONLY_NOT_FETCHED_AT_RUNTIME",
+      "title": "Harmonisation of Turn Around Time and customer compensation for failed transactions using authorised payment systems",
+      "url": "https://www.rbi.org.in/commonman/English/scripts/Notification.aspx?Id=3074",
+      "use_in_phase10": "TAT awareness, compensation-risk awareness, no hard-coded live limits"
+    },
+    {
+      "authority": "Reserve Bank of India",
+      "id": "RBI_LIMITED_LIABILITY_2017",
+      "script_status": "REFERENCE_ONLY_NOT_FETCHED_AT_RUNTIME",
+      "title": "Limiting liability of customers in unauthorised electronic banking transactions",
+      "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336",
+      "use_in_phase10": "Customer-liability awareness and escalation labelling"
+    },
+    {
+      "authority": "National Payments Corporation of India",
+      "id": "NPCI_UPI_PRODUCT_STATISTICS",
+      "script_status": "REFERENCE_ONLY_NOT_FETCHED_AT_RUNTIME",
+      "title": "UPI product statistics",
+      "url": "https://www.npci.org.in/product/upi/product-statistics",
+      "use_in_phase10": "Volume/value sizing source candidate; exact current data is not embedded by this deterministic script"
+    },
+    {
+      "authority": "National Payments Corporation of India",
+      "id": "NPCI_UPI_HELP",
+      "script_status": "REFERENCE_ONLY_NOT_FETCHED_AT_RUNTIME",
+      "title": "UPI Help / dispute redressal mechanism",
+      "url": "https://upihelp.npci.org.in/",
+      "use_in_phase10": "Public complaint and transaction-status reference candidate"
+    }
+  ],
+  "phase": "Phase 10",
+  "purpose": "Requirement-to-Architecture-to-Plan pipeline before code generation",
+  "required_honesty_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "requirements": [
+    {
+      "acceptance_criteria": [
+        "Reject missing required fields with clear beginner-readable errors.",
+        "Mark every sample payload as SYNTHETIC_DATA.",
+        "Never ingest or require real customer, bank, or NPCI credentials."
+      ],
+      "description": "Accept a synthetic dispute request with transaction, participant, amount, timestamps, status reason, and customer narrative.",
+      "honesty_labels": [
+        "SYNTHETIC_DATA",
+        "MOCK_BOUNDARY"
+      ],
+      "id": "RQ-FUN-001",
+      "priority": "must",
+      "title": "Capture a mock UPI dispute case",
+      "type": "functional"
+    },
+    {
+      "acceptance_criteria": [
+        "Produce the same output for the same input and policy version.",
+        "Explain the matched rule and policy version.",
+        "Escalate unsupported cases without hallucinating policy outcomes."
+      ],
+      "description": "Classify failed, pending, duplicate debit, refund pending, and unsupported scenarios using deterministic policy rules first.",
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "id": "RQ-FUN-002",
+      "priority": "must",
+      "title": "Classify dispute pathway deterministically",
+      "type": "functional"
+    },
+    {
+      "acceptance_criteria": [
+        "Evidence pack is append-only and hashable.",
+        "Every decision cites evidence IDs.",
+        "Missing official-rule details are labelled MISSING_OFFICIAL_SOURCE."
+      ],
+      "description": "Create a traceable evidence pack containing input facts, matched rules, mock participant responses, and unresolved gaps.",
+      "honesty_labels": [
+        "MISSING_OFFICIAL_SOURCE"
+      ],
+      "id": "RQ-FUN-003",
+      "priority": "must",
+      "title": "Generate an evidence pack before decision output",
+      "type": "functional"
+    },
+    {
+      "acceptance_criteria": [
+        "No live network call to bank, NPCI, RBI, payment app, or customer system.",
+        "All external calls go through replaceable mock adapters.",
+        "Adapter contract tests cover positive, negative, and timeout scenarios."
+      ],
+      "description": "Represent customer app, remitter bank, beneficiary bank, PSP, NPCI/ODR, ledger, notification, and reconciliation services as mock adapters.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY"
+      ],
+      "id": "RQ-FUN-004",
+      "priority": "must",
+      "title": "Use a mocked ecosystem for all external participants",
+      "type": "functional"
+    },
+    {
+      "acceptance_criteria": [
+        "Traceability connects requirements to design and WBS tasks.",
+        "Planning validation fails closed when required artifacts are missing.",
+        "No generated claim states certification or official compliance approval."
+      ],
+      "description": "Planning artifacts must preserve existing governance dimensions: mock boundaries, evidence ledger, traceability, release readiness, debugging standards, and regeneration readiness.",
+      "honesty_labels": [
+        "MISSING_OFFICIAL_SOURCE",
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "id": "RQ-GOV-001",
+      "priority": "must",
+      "title": "Preserve governance, audit, and release readiness",
+      "type": "governance"
+    },
+    {
+      "acceptance_criteria": [
+        "HLD lists quality attributes and validation gates.",
+        "LLD includes failure modes and debug guidance.",
+        "WBS includes validation tasks for each major quality dimension."
+      ],
+      "description": "Planning must explicitly account for reliability, security, observability, testability, maintainability, usability, performance, recoverability, and operability.",
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "id": "RQ-QUAL-001",
+      "priority": "must",
+      "title": "Carry generated-application quality dimensions into planning",
+      "type": "quality"
+    },
+    {
+      "acceptance_criteria": [
+        "Official references are stored as reference candidates.",
+        "Exact live regulatory limits are not invented.",
+        "Unverified or absent source details are labelled MISSING_OFFICIAL_SOURCE."
+      ],
+      "description": "Planning must consider ODR, failed-transaction TAT, customer liability, security controls, data minimisation, audit evidence, and escalation workflows using official references where available.",
+      "honesty_labels": [
+        "MISSING_OFFICIAL_SOURCE"
+      ],
+      "id": "RQ-REG-001",
+      "priority": "must",
+      "title": "Align with payment regulatory themes without overclaiming",
+      "type": "regulatory_alignment"
+    },
+    {
+      "acceptance_criteria": [
+        "Architecture options compare cost-to-build and cost-to-change.",
+        "WBS includes review and validation effort as first-class work.",
+        "Prompt guidance avoids pretending exact ROI without measured data."
+      ],
+      "description": "Estimate the economic effect of deterministic-first automation, agent run cost, review effort, rework cost, evidence creation, test automation, tool replacement, and technical debt.",
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+        "MISSING_OFFICIAL_SOURCE"
+      ],
+      "id": "RQ-ECO-001",
+      "priority": "must",
+      "title": "Model factory economics before generation",
+      "type": "economics"
+    },
+    {
+      "acceptance_criteria": [
+        "No real bank pricing, NPCI fee, penalty, or TAT value is hard-coded.",
+        "All live economic numbers require an official or user-provided source.",
+        "Synthetic scenarios are separated from measurable production metrics."
+      ],
+      "description": "Capture cost drivers for a UPI dispute operation: manual triage, case aging, compensation exposure, exception handling, customer trust, complaint re-open rate, refund leakage, false positives, false negatives, reconciliation effort, and support workload.",
+      "honesty_labels": [
+        "SYNTHETIC_DATA",
+        "MISSING_OFFICIAL_SOURCE",
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "id": "RQ-ECO-002",
+      "priority": "must",
+      "title": "Model application-level dispute economics",
+      "type": "economics"
+    },
+    {
+      "acceptance_criteria": [
+        "Architecture decision explains deterministic-first cost control.",
+        "Module design includes budget guardrails and escalation thresholds.",
+        "LLD records where human review is economically justified."
+      ],
+      "description": "Prefer lower-cost deterministic checks for stable policy decisions, reserve LLM or human review for ambiguous cases, and expose economic risk from delayed or wrong decisions.",
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "id": "RQ-ECO-003",
+      "priority": "should",
+      "title": "Design for safe cost-risk tradeoffs",
+      "type": "economics"
+    },
+    {
+      "acceptance_criteria": [
+        "HLD shows replaceable interfaces.",
+        "LLD defines ports/adapters rather than hard-wired vendors.",
+        "WBS includes replacement-readiness and lock-in review tasks."
+      ],
+      "description": "Use adapters so LLM providers, workflow engines, storage layers, policy engines, vector stores, and observability tools can be replaced later without rewriting the factory.",
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "id": "RQ-ECO-004",
+      "priority": "should",
+      "title": "Keep tooling modular to manage vendor and switching economics",
+      "type": "economics"
+    }
+  ],
+  "safety_boundary": {
+    "mock_safe": true,
+    "no_certification_claim": true,
+    "no_live_payment_network_calls": true,
+    "no_real_customer_data": true
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "artifact": "work_breakdown_structure.json",
+  "phase": "Phase 10",
+  "planning_model": "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+  "task_order_rule": "Design contracts and governance first, then domain and architecture, then module/HLD/LLD, then traceability and validation.",
+  "tasks": [
+    {
+      "design_refs": [
+        "module_design.md",
+        "lld.md"
+      ],
+      "done_when": [
+        "All required artifact names are declared.",
+        "Validator checks all required files."
+      ],
+      "economics_notes": [
+        "Prevents late rework by freezing artifact shape before code generation.",
+        "Reduces audit preparation effort through standard file contracts."
+      ],
+      "id": "WBS-010-001",
+      "relative_effort_points": 3,
+      "relative_risk_points": 2,
+      "requirement_ids": [
+        "RQ-GOV-001",
+        "RQ-QUAL-001"
+      ],
+      "sequence": 1,
+      "title": "Create deterministic Phase 10 artifact contracts",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md"
+      ],
+      "done_when": [
+        "Every requirement has acceptance criteria.",
+        "Economics requirements exist and are traceable."
+      ],
+      "economics_notes": [
+        "Captures cost drivers before implementation.",
+        "Avoids fake ROI by requiring official or user-provided data."
+      ],
+      "id": "WBS-010-002",
+      "relative_effort_points": 5,
+      "relative_risk_points": 3,
+      "requirement_ids": [
+        "RQ-FUN-001",
+        "RQ-FUN-002",
+        "RQ-FUN-003",
+        "RQ-FUN-004",
+        "RQ-GOV-001",
+        "RQ-ECO-001",
+        "RQ-ECO-002"
+      ],
+      "sequence": 2,
+      "title": "Generate requirements analysis with governance and economics",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "domain_analysis.md",
+        "hld.md"
+      ],
+      "done_when": [
+        "Domain analysis includes MOCK_BOUNDARY.",
+        "Domain analysis includes application economics."
+      ],
+      "economics_notes": [
+        "Shows operational drivers such as triage, aging, re-open, and reconciliation.",
+        "Prevents costly unsafe integration with live payment systems."
+      ],
+      "id": "WBS-010-003",
+      "relative_effort_points": 5,
+      "relative_risk_points": 4,
+      "requirement_ids": [
+        "RQ-FUN-004",
+        "RQ-REG-001",
+        "RQ-ECO-002"
+      ],
+      "sequence": 3,
+      "title": "Write domain analysis with payment and mock ecosystem boundaries",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "architecture_options.md"
+      ],
+      "done_when": [
+        "At least three options are documented.",
+        "Each option has pros, cons, economics, and governance fit."
+      ],
+      "economics_notes": [
+        "Compares build cost, run cost, future change cost, and over-engineering risk.",
+        "Protects current laptop-scale project from premature heavy infrastructure."
+      ],
+      "id": "WBS-010-004",
+      "relative_effort_points": 5,
+      "relative_risk_points": 3,
+      "requirement_ids": [
+        "RQ-QUAL-001",
+        "RQ-ECO-001",
+        "RQ-ECO-003"
+      ],
+      "sequence": 4,
+      "title": "Compare multiple architecture options",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "architecture_decision_record.md"
+      ],
+      "done_when": [
+        "ADR selects one option.",
+        "ADR explains consequences and no-certification posture."
+      ],
+      "economics_notes": [
+        "Makes cost-risk tradeoff explicit.",
+        "Keeps vendor/tool replacement economics visible."
+      ],
+      "id": "WBS-010-005",
+      "relative_effort_points": 3,
+      "relative_risk_points": 3,
+      "requirement_ids": [
+        "RQ-ECO-001",
+        "RQ-ECO-003",
+        "RQ-ECO-004"
+      ],
+      "sequence": 5,
+      "title": "Record architecture decision with economic justification",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "done_when": [
+        "All external participants are mock adapters.",
+        "Ports/adapters are named in module design."
+      ],
+      "economics_notes": [
+        "Reduces switching cost and future refactoring cost.",
+        "Keeps mock participants replaceable and safe."
+      ],
+      "id": "WBS-010-006",
+      "relative_effort_points": 8,
+      "relative_risk_points": 5,
+      "requirement_ids": [
+        "RQ-FUN-004",
+        "RQ-GOV-001",
+        "RQ-ECO-004",
+        "RQ-QUAL-001"
+      ],
+      "sequence": 6,
+      "title": "Create module-level design with ports and adapters",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "hld.md",
+        "lld.md"
+      ],
+      "done_when": [
+        "HLD includes quality attributes.",
+        "LLD includes failure modes and debug guide."
+      ],
+      "economics_notes": [
+        "Early debug design reduces future maintenance cost.",
+        "Quality attributes reduce incident and rework cost."
+      ],
+      "id": "WBS-010-007",
+      "relative_effort_points": 8,
+      "relative_risk_points": 4,
+      "requirement_ids": [
+        "RQ-QUAL-001",
+        "RQ-GOV-001",
+        "RQ-ECO-003"
+      ],
+      "sequence": 7,
+      "title": "Create HLD and LLD with quality and debugging details",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "traceability_matrix.json"
+      ],
+      "done_when": [
+        "Every requirement maps to at least one design artifact.",
+        "Every requirement maps to at least one WBS task."
+      ],
+      "economics_notes": [
+        "Reduces reviewer and audit navigation cost.",
+        "Prevents orphan requirements and hidden scope creep."
+      ],
+      "id": "WBS-010-008",
+      "relative_effort_points": 5,
+      "relative_risk_points": 4,
+      "requirement_ids": [
+        "RQ-GOV-001",
+        "RQ-QUAL-001"
+      ],
+      "sequence": 8,
+      "title": "Build requirement-to-design-to-task traceability",
+      "validation_refs": [
+        "planning_validation_report.json"
+      ]
+    },
+    {
+      "design_refs": [
+        "planning_validation_report.json"
+      ],
+      "done_when": [
+        "Validator passes.",
+        "Tests pass.",
+        "No false certification claim exists."
+      ],
+      "economics_notes": [
+        "Failing early is cheaper than generating code from weak planning.",
+        "Validation gives a repeatable demo gate."
+      ],
+      "id": "WBS-010-009",
+      "relative_effort_points": 5,
+      "relative_risk_points": 5,
+      "requirement_ids": [
+        "RQ-GOV-001",
+        "RQ-QUAL-001",
+        "RQ-REG-001",
+        "RQ-ECO-001",
+        "RQ-ECO-002",
+        "RQ-ECO-003",
+        "RQ-ECO-004"
+      ],
+      "sequence": 9,
+      "title": "Validate Phase 10 lifecycle planning readiness",
+      "validation_refs": [
+        "scripts/validate_phase10_lifecycle_artifacts.py"
+      ]
+    }
+  ]
+}

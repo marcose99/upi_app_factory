@@ -1,0 +1,66 @@
+{
+  "artifact": "planning_validation_report.json",
+  "checked_artifacts": [
+    "requirements_analysis.json",
+    "domain_analysis.md",
+    "architecture_options.md",
+    "architecture_decision_record.md",
+    "module_design.md",
+    "hld.md",
+    "lld.md",
+    "work_breakdown_structure.json",
+    "traceability_matrix.json",
+    "planning_validation_report.json"
+  ],
+  "checked_honesty_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "checked_traceability": {
+    "requirements_seen": [
+      "RQ-ECO-001",
+      "RQ-ECO-002",
+      "RQ-ECO-003",
+      "RQ-ECO-004",
+      "RQ-FUN-001",
+      "RQ-FUN-002",
+      "RQ-FUN-003",
+      "RQ-FUN-004",
+      "RQ-GOV-001",
+      "RQ-QUAL-001",
+      "RQ-REG-001"
+    ],
+    "tasks_seen": [
+      "WBS-010-001",
+      "WBS-010-002",
+      "WBS-010-003",
+      "WBS-010-004",
+      "WBS-010-005",
+      "WBS-010-006",
+      "WBS-010-007",
+      "WBS-010-008",
+      "WBS-010-009"
+    ],
+    "traceability_rows_seen": [
+      "RQ-ECO-001",
+      "RQ-ECO-002",
+      "RQ-ECO-003",
+      "RQ-ECO-004",
+      "RQ-FUN-001",
+      "RQ-FUN-002",
+      "RQ-FUN-003",
+      "RQ-FUN-004",
+      "RQ-GOV-001",
+      "RQ-QUAL-001",
+      "RQ-REG-001"
+    ]
+  },
+  "errors": [],
+  "passed": true,
+  "phase": "Phase 10",
+  "warnings": [
+    "Official-source gaps are intentionally labelled. Replace with parsed official evidence only when a source is available and verified."
+  ]
+}
