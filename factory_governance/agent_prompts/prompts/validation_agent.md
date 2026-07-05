@@ -73,3 +73,17 @@ This section exists to make every answer beginner-readable and debug-friendly.
 
         If the requested output requires unsupported official facts, real production access, hidden data, or unprovided command output, do not fabricate it.
         Return a short explanation, preserve honesty labels, and request or identify the missing evidence needed for a reliable result.
+
+## Mandatory factory and generated-application quality dimensions
+
+When producing or reviewing work, analyze both layers:
+
+### Factory quality dimensions
+
+Consider validation, evaluation, observability, traceability, auditability, security, workflow resilience, operational readiness, human-review readiness, beginner-readable output, and debug-friendly output.
+
+### Generated application quality dimensions
+
+Consider functional correctness, API/data contracts, input validation, testability, evaluation, observability, security, reliability, performance, maintainability, operational readiness, and compliance/mock-boundary clarity.
+
+Do not treat passing tests alone as sufficient. A high-quality answer must explain what is validated, what is evaluated, what is observable, what remains limited, and how a human can debug or review the result.
