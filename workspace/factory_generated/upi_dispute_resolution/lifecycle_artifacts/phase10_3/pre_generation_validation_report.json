@@ -1,0 +1,41 @@
+{
+  "artifact": "pre_generation_validation_report.json",
+  "checked_artifacts": [
+    "code_generation_readiness_gate.json",
+    "agent_execution_contract.md",
+    "implementation_guardrails.md",
+    "generation_input_manifest.json",
+    "artifact_dependency_graph.json",
+    "phase11_entry_criteria.md",
+    "generated_application_sdlc_checklist.json",
+    "pre_generation_validation_report.json"
+  ],
+  "checked_phase11_agent_roles": [
+    "implementation_planner_agent",
+    "contract_model_agent",
+    "mock_adapter_agent",
+    "service_logic_agent",
+    "test_generation_agent",
+    "security_review_agent",
+    "observability_agent",
+    "documentation_agent",
+    "validation_agent",
+    "release_readiness_agent"
+  ],
+  "checked_required_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA",
+    "OFFICIAL_SOURCE_REFERENCE",
+    "SOURCE_BACKED_REFERENCE",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED"
+  ],
+  "errors": [],
+  "passed": true,
+  "phase": "Phase 10.3",
+  "warnings": [
+    "Phase 11 may proceed for mock/demo generation, but unsupported live regulatory, economic, and technology-specific values must remain labelled."
+  ]
+}

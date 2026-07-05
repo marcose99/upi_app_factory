@@ -1,0 +1,58 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "generated_application_sdlc_checklist.json",
+  "items": [
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-001",
+      "title": "Requirement mapped to implementation task"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-002",
+      "title": "Module design followed"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-003",
+      "title": "Mock adapters used for every external participant"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-004",
+      "title": "Technology-specific best practices identified"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-005",
+      "title": "Source-backed, synthetic, missing, and user-provided facts separated"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-006",
+      "title": "Tests generated with implementation"
+    },
+    {
+      "blocking": false,
+      "check_id": "SDLC-CHECK-007",
+      "title": "Debug guide included"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-008",
+      "title": "No false compliance or certification claims"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-009",
+      "title": "Economics assumptions labelled"
+    },
+    {
+      "blocking": true,
+      "check_id": "SDLC-CHECK-010",
+      "title": "Validation script provided"
+    }
+  ],
+  "phase": "Phase 10.3",
+  "purpose": "Checklist future Phase 11 implementation outputs must satisfy."
+}

@@ -1,0 +1,162 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "code_generation_readiness_gate.json",
+  "gates": [
+    {
+      "blocks_phase11_if_failed": true,
+      "evidence_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/requirements_analysis.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/domain_analysis.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/architecture_options.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/architecture_decision_record.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/module_design.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/hld.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/lld.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/work_breakdown_structure.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/traceability_matrix.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/planning_validation_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_registry.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_evidence_pack.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/regulatory_economics_source_gap_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_freshness_policy.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_usage_policy.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_to_requirement_traceability.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_validation_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_technology_registry.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_policy.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/technology_specific_prompt_instructions.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_traceability.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_gap_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_validation_report.json"
+      ],
+      "gate_id": "GATE-10-3-001",
+      "status": "PASS",
+      "title": "Lifecycle planning artifacts exist"
+    },
+    {
+      "blocks_phase11_if_failed": true,
+      "evidence_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/planning_validation_report.json"
+      ],
+      "gate_id": "GATE-10-3-002",
+      "status": "PASS",
+      "title": "Phase 10 planning validation passed"
+    },
+    {
+      "blocks_phase11_if_failed": true,
+      "evidence_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_validation_report.json"
+      ],
+      "gate_id": "GATE-10-3-003",
+      "status": "PASS",
+      "title": "Phase 10.1 official-source validation passed"
+    },
+    {
+      "blocks_phase11_if_failed": true,
+      "evidence_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_validation_report.json"
+      ],
+      "gate_id": "GATE-10-3-004",
+      "status": "PASS",
+      "title": "Phase 10.2 SDLC technology best-practice validation passed"
+    },
+    {
+      "blocks_phase11_if_failed": true,
+      "evidence_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/module_design.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_usage_policy.md",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/technology_specific_prompt_instructions.md"
+      ],
+      "gate_id": "GATE-10-3-005",
+      "status": "PASS",
+      "title": "Mock boundary remains mandatory"
+    },
+    {
+      "blocks_phase11_if_failed": false,
+      "evidence_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/requirements_analysis.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/regulatory_economics_source_gap_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_gap_report.json"
+      ],
+      "gate_id": "GATE-10-3-006",
+      "status": "PASS",
+      "title": "Economics and source gaps remain explicit"
+    }
+  ],
+  "non_claims": {
+    "no_certification_claim": true,
+    "no_legal_advice": true,
+    "no_live_payment_integration": true,
+    "no_production_compliance_claim": true
+  },
+  "phase": "Phase 10.3",
+  "phase11_agent_roles": [
+    "implementation_planner_agent",
+    "contract_model_agent",
+    "mock_adapter_agent",
+    "service_logic_agent",
+    "test_generation_agent",
+    "security_review_agent",
+    "observability_agent",
+    "documentation_agent",
+    "validation_agent",
+    "release_readiness_agent"
+  ],
+  "phase11_allowed": true,
+  "purpose": "Block Phase 11 implementation generation until upstream planning, source, and technology governance are ready.",
+  "required_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA",
+    "OFFICIAL_SOURCE_REFERENCE",
+    "SOURCE_BACKED_REFERENCE",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED"
+  ],
+  "upstream_summaries": {
+    "official_source_ids": [
+      "NPCI_COMPLAINT_STATUS",
+      "NPCI_UPI_PRODUCT_PAGE",
+      "NPCI_UPI_PRODUCT_STATISTICS",
+      "RBI_FAILED_TRANSACTION_TAT_2019",
+      "RBI_LIMITED_LIABILITY_2017",
+      "RBI_ODR_DIGITAL_PAYMENTS_2020"
+    ],
+    "official_source_validation_passed": true,
+    "planning_validation_passed": true,
+    "requirement_ids": [
+      "RQ-FUN-001",
+      "RQ-FUN-002",
+      "RQ-FUN-003",
+      "RQ-FUN-004",
+      "RQ-GOV-001",
+      "RQ-QUAL-001",
+      "RQ-REG-001",
+      "RQ-ECO-001",
+      "RQ-ECO-002",
+      "RQ-ECO-003",
+      "RQ-ECO-004"
+    ],
+    "sdlc_best_practice_validation_passed": true,
+    "technology_ids": [
+      "bash",
+      "docker",
+      "fastapi",
+      "git",
+      "github",
+      "json",
+      "markdown",
+      "mypy",
+      "opa_conftest",
+      "opentelemetry",
+      "postgresql",
+      "pydantic",
+      "pytest",
+      "python",
+      "ruff",
+      "sqlite"
+    ],
+    "upstream_validation_mode": "computed_from_current_artifacts"
+  }
+}
