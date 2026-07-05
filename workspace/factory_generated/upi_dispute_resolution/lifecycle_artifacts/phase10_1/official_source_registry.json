@@ -1,0 +1,319 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "official_source_registry.json",
+  "phase": "Phase 10.1",
+  "purpose": "Convert Phase 10 reference candidates into governed source entries that future requirements, design, economics, and regulatory-alignment prompts can use without inventing facts.",
+  "required_labels": [
+    "SOURCE_BACKED_REFERENCE",
+    "OFFICIAL_SOURCE_REFERENCE",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA",
+    "USER_PROVIDED_VALUE"
+  ],
+  "runtime_network_access": false,
+  "source_governance_boundary": {
+    "mock_safe": true,
+    "no_live_payment_network_calls": true,
+    "not_compliance_certification": true,
+    "not_legal_advice": true,
+    "not_rbi_npci_approval": true
+  },
+  "sources": [
+    {
+      "allowed_usage": [
+        "ODR concept modelling",
+        "failed-transaction dispute scope",
+        "rule-based system-driven design inspiration",
+        "customer lodging and tracking design requirements",
+        "data-minimisation and confidentiality design prompts"
+      ],
+      "authority": "Reserve Bank of India",
+      "document_reference": "DPSS.CO.PD No.116/02.12.004/2020-21",
+      "extracted_claims": [
+        {
+          "claim_id": "SRC-ODR-001",
+          "claim_text": "RBI described ODR for digital-payment customer disputes as system-driven and rule-based, with zero or minimal manual intervention.",
+          "claim_usage": "architecture_and_workflow_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-REG-001",
+            "RQ-GOV-001"
+          ]
+        },
+        {
+          "claim_id": "SRC-ODR-002",
+          "claim_text": "The initial ODR scope covered disputes and grievances related to failed transactions.",
+          "claim_usage": "domain_scope_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-002",
+            "RQ-REG-001"
+          ]
+        },
+        {
+          "claim_id": "SRC-ODR-003",
+          "claim_text": "The ODR design expectation includes simple lodging, necessary minimum details, confidentiality, unique reference number, and tracking.",
+          "claim_usage": "application_requirement_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-001",
+            "RQ-FUN-003",
+            "RQ-REG-001"
+          ]
+        }
+      ],
+      "freshness_class": "stable_circular_verify_before_release",
+      "prohibited_usage": [
+        "claiming actual ODR implementation",
+        "claiming RBI approval or certification",
+        "claiming production compliance",
+        "using as legal advice"
+      ],
+      "publication_date": "2020-08-06",
+      "source_id": "RBI_ODR_DIGITAL_PAYMENTS_2020",
+      "source_status": "OFFICIAL_SOURCE_REFERENCE",
+      "title": "Online Dispute Resolution (ODR) System for Digital Payments",
+      "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=3194"
+    },
+    {
+      "allowed_usage": [
+        "failed-transaction definition",
+        "UPI failed-transaction scenario modelling",
+        "TAT and compensation awareness",
+        "economics exposure modelling with source-backed labels"
+      ],
+      "authority": "Reserve Bank of India",
+      "document_reference": "DPSS.CO.PD No.629/02.01.014/2019-20",
+      "extracted_claims": [
+        {
+          "claim_id": "SRC-TAT-001",
+          "claim_text": "RBI defined failed transactions to include cases not fully completed for reasons not attributable to the customer, including communication failure, timeout, non-credit to beneficiary, or delayed reversal.",
+          "claim_usage": "domain_and_policy_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-002",
+            "RQ-REG-001"
+          ]
+        },
+        {
+          "claim_id": "SRC-TAT-002",
+          "claim_text": "For UPI transfer of funds where the account is debited but the beneficiary account is not credited, the source lists auto-reversal by the beneficiary bank latest on T + 1 day and compensation if delay is beyond T + 1 day.",
+          "claim_usage": "source_backed_scenario_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-002",
+            "RQ-REG-001",
+            "RQ-ECO-002"
+          ]
+        },
+        {
+          "claim_id": "SRC-TAT-003",
+          "claim_text": "For UPI merchant payment where the account is debited but transaction confirmation is not received at the merchant location, the source lists auto-reversal within T + 5 days and compensation if delay is beyond T + 5 days.",
+          "claim_usage": "source_backed_scenario_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-002",
+            "RQ-REG-001",
+            "RQ-ECO-002"
+          ]
+        }
+      ],
+      "freshness_class": "stable_circular_verify_before_release",
+      "prohibited_usage": [
+        "hard-coding live legal obligations without review",
+        "claiming automated compensation is production-ready",
+        "claiming bank-specific policy coverage"
+      ],
+      "publication_date": "2019-09-20",
+      "source_id": "RBI_FAILED_TRANSACTION_TAT_2019",
+      "source_status": "OFFICIAL_SOURCE_REFERENCE",
+      "title": "Harmonisation of Turn Around Time (TAT) and customer compensation for failed transactions using authorised Payment Systems",
+      "url": "https://www.rbi.org.in/commonman/English/scripts/Notification.aspx?Id=3074"
+    },
+    {
+      "allowed_usage": [
+        "unauthorised-transaction escalation awareness",
+        "customer reporting and acknowledgement design prompts",
+        "customer-liability source-gap handling",
+        "security and fraud-control quality prompts"
+      ],
+      "authority": "Reserve Bank of India",
+      "document_reference": "DBR.No.Leg.BC.78/09.07.005/2017-18",
+      "extracted_claims": [
+        {
+          "claim_id": "SRC-LIAB-001",
+          "claim_text": "The source discusses customer notification timing, bank reporting channels, acknowledgement, and recording time/date of customer response for unauthorised electronic transactions.",
+          "claim_usage": "security_and_escalation_prompting",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-003",
+            "RQ-GOV-001",
+            "RQ-REG-001"
+          ]
+        },
+        {
+          "claim_id": "SRC-LIAB-002",
+          "claim_text": "The source states zero liability can arise in specified third-party breach circumstances when the customer notifies the bank within three working days.",
+          "claim_usage": "source_backed_escalation_context",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-REG-001",
+            "RQ-ECO-002"
+          ]
+        },
+        {
+          "claim_id": "SRC-LIAB-003",
+          "claim_text": "The source states banks should resolve complaints and establish customer liability within timelines specified by board-approved policy, not exceeding 90 days.",
+          "claim_usage": "source_backed_escalation_context",
+          "honesty_labels": [
+            "SOURCE_BACKED_REFERENCE",
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-REG-001",
+            "RQ-ECO-002"
+          ]
+        }
+      ],
+      "freshness_class": "stable_circular_verify_before_release",
+      "prohibited_usage": [
+        "treating fraud liability as same as failed UPI dispute",
+        "automating legal liability decisions",
+        "claiming bank-specific board-policy coverage"
+      ],
+      "publication_date": "2017-07-06",
+      "source_id": "RBI_LIMITED_LIABILITY_2017",
+      "source_status": "OFFICIAL_SOURCE_REFERENCE",
+      "title": "Customer Protection - Limiting Liability of Customers in Unauthorised Electronic Banking Transactions",
+      "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336"
+    },
+    {
+      "allowed_usage": [
+        "current UPI volume/value source candidate",
+        "capacity planning input when manually captured",
+        "economics sensitivity analysis when date-stamped"
+      ],
+      "authority": "National Payments Corporation of India",
+      "document_reference": "NPCI UPI statistics page",
+      "extracted_claims": [
+        {
+          "claim_id": "SRC-NPCI-STATS-001",
+          "claim_text": "NPCI provides an official UPI product statistics page. Current volume and value figures are dynamic and must be captured with date, source URL, and review status.",
+          "claim_usage": "economics_capacity_source_candidate",
+          "honesty_labels": [
+            "OFFICIAL_SOURCE_REFERENCE",
+            "MISSING_OFFICIAL_SOURCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-ECO-001",
+            "RQ-ECO-002"
+          ]
+        }
+      ],
+      "freshness_class": "dynamic_verify_on_every_release",
+      "prohibited_usage": [
+        "embedding current transaction volume without capture date",
+        "claiming live values from stale copied data",
+        "using dynamic values without USER_PROVIDED_VALUE or source date"
+      ],
+      "publication_date": "DYNAMIC_WEB_PAGE",
+      "source_id": "NPCI_UPI_PRODUCT_STATISTICS",
+      "source_status": "OFFICIAL_DYNAMIC_SOURCE_REFERENCE",
+      "title": "Unified Payments Interface (UPI) Product Statistics",
+      "url": "https://www.npci.org.in/product/upi/product-statistics"
+    },
+    {
+      "allowed_usage": [
+        "complaint-status and tracking concept reference",
+        "mock customer status-tracking design inspiration"
+      ],
+      "authority": "National Payments Corporation of India",
+      "document_reference": "NPCI complaint-status page",
+      "extracted_claims": [
+        {
+          "claim_id": "SRC-NPCI-COMPLAINT-001",
+          "claim_text": "NPCI exposes a public complaint-status page, but the factory must model this only as a mock boundary.",
+          "claim_usage": "mock_boundary_prompting",
+          "honesty_labels": [
+            "OFFICIAL_SOURCE_REFERENCE",
+            "MOCK_BOUNDARY"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-004",
+            "RQ-REG-001"
+          ]
+        }
+      ],
+      "freshness_class": "dynamic_verify_before_demo_or_release",
+      "prohibited_usage": [
+        "calling the live NPCI complaint-status page",
+        "submitting real complaint details",
+        "claiming factory integration with NPCI"
+      ],
+      "publication_date": "DYNAMIC_WEB_PAGE",
+      "source_id": "NPCI_COMPLAINT_STATUS",
+      "source_status": "OFFICIAL_DYNAMIC_SOURCE_REFERENCE",
+      "title": "User Complaint Status",
+      "url": "https://www.npci.org.in/complaint-status"
+    },
+    {
+      "allowed_usage": [
+        "UPI ecosystem orientation",
+        "official NPCI product-page reference",
+        "linking to UPI help and statistics source candidates"
+      ],
+      "authority": "National Payments Corporation of India",
+      "document_reference": "NPCI UPI product page",
+      "extracted_claims": [
+        {
+          "claim_id": "SRC-NPCI-UPI-001",
+          "claim_text": "NPCI maintains an official UPI product page that links to UPI statistics and customer help resources.",
+          "claim_usage": "ecosystem_reference_prompting",
+          "honesty_labels": [
+            "OFFICIAL_SOURCE_REFERENCE"
+          ],
+          "maps_to_requirement_ids": [
+            "RQ-FUN-004",
+            "RQ-REG-001"
+          ]
+        }
+      ],
+      "freshness_class": "dynamic_verify_before_demo_or_release",
+      "prohibited_usage": [
+        "claiming live integration",
+        "claiming current rules without circular evidence"
+      ],
+      "publication_date": "DYNAMIC_WEB_PAGE",
+      "source_id": "NPCI_UPI_PRODUCT_PAGE",
+      "source_status": "OFFICIAL_DYNAMIC_SOURCE_REFERENCE",
+      "title": "UPI Product Page",
+      "url": "https://www.npci.org.in/product/upi"
+    }
+  ]
+}

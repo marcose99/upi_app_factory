@@ -1,0 +1,74 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "regulatory_economics_source_gap_report.json",
+  "gaps": [
+    {
+      "allowed_placeholder": "SYNTHETIC_DATA for demo only",
+      "blocked_claims": [
+        "current UPI volume",
+        "current UPI value",
+        "year-to-date production sizing"
+      ],
+      "current_status": "MISSING_OFFICIAL_SOURCE",
+      "gap_id": "GAP-ECO-001",
+      "required_source_type": "official NPCI statistics with capture date",
+      "title": "Current UPI transaction volume and value",
+      "why_needed": "Capacity planning and economics sensitivity analysis."
+    },
+    {
+      "allowed_placeholder": "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+      "blocked_claims": [
+        "rupees saved per real dispute",
+        "real bank support cost",
+        "real staffing reduction"
+      ],
+      "current_status": "MISSING_OFFICIAL_SOURCE",
+      "gap_id": "GAP-ECO-002",
+      "required_source_type": "user-provided internal cost model",
+      "title": "Bank internal cost per dispute",
+      "why_needed": "Application ROI and manual-ops savings analysis."
+    },
+    {
+      "allowed_placeholder": "relative cost points only",
+      "blocked_claims": [
+        "exact model run cost",
+        "exact monthly SaaS cost",
+        "guaranteed cheapest vendor"
+      ],
+      "current_status": "MISSING_OFFICIAL_SOURCE",
+      "gap_id": "GAP-ECO-003",
+      "required_source_type": "current vendor pricing or user-provided budget",
+      "title": "LLM, workflow, storage, and observability runtime prices",
+      "why_needed": "Factory run-cost and vendor comparison."
+    },
+    {
+      "allowed_placeholder": "verify-before-release warning",
+      "blocked_claims": [
+        "latest RBI rule confirmed",
+        "latest NPCI operating rule confirmed",
+        "production compliance confirmed"
+      ],
+      "current_status": "MISSING_OFFICIAL_SOURCE",
+      "gap_id": "GAP-REG-001",
+      "required_source_type": "current official circular review",
+      "title": "Latest amendment or supersession review",
+      "why_needed": "Avoid stale regulatory alignment."
+    },
+    {
+      "allowed_placeholder": "MOCK_BOUNDARY",
+      "blocked_claims": [
+        "real bank integration",
+        "real NPCI integration",
+        "real customer-dispute processing"
+      ],
+      "current_status": "MISSING_OFFICIAL_SOURCE",
+      "gap_id": "GAP-APP-001",
+      "required_source_type": "official partner contract and approval",
+      "title": "Live bank, PSP, NPCI, or customer-system API contracts",
+      "why_needed": "Production integration design."
+    }
+  ],
+  "phase": "Phase 10.1",
+  "purpose": "Prevent future prompts from inventing missing regulatory or economic facts.",
+  "rule": "If a fact is not source-backed, user-provided, or explicitly synthetic, it must remain MISSING_OFFICIAL_SOURCE."
+}

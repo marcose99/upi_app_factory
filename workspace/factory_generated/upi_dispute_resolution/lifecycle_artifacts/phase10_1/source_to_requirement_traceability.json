@@ -1,0 +1,218 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "source_to_requirement_traceability.json",
+  "phase": "Phase 10.1",
+  "rows": [
+    {
+      "authority": "Reserve Bank of India",
+      "claim_ids": [
+        "SRC-ODR-001",
+        "SRC-ODR-002",
+        "SRC-ODR-003"
+      ],
+      "phase10_1_artifact_refs": [
+        "official_source_registry.json",
+        "official_source_evidence_pack.md",
+        "source_usage_policy.md",
+        "source_freshness_policy.md",
+        "regulatory_economics_source_gap_report.json"
+      ],
+      "phase10_artifact_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "hld.md",
+        "lld.md",
+        "traceability_matrix.json"
+      ],
+      "requirement_ids": [
+        "RQ-FUN-001",
+        "RQ-FUN-002",
+        "RQ-FUN-003",
+        "RQ-GOV-001",
+        "RQ-REG-001"
+      ],
+      "source_id": "RBI_ODR_DIGITAL_PAYMENTS_2020",
+      "usage_guardrails": [
+        "No compliance certification claim",
+        "No live payment network call",
+        "No real customer data",
+        "No unsourced ROI or monetary claim"
+      ]
+    },
+    {
+      "authority": "Reserve Bank of India",
+      "claim_ids": [
+        "SRC-TAT-001",
+        "SRC-TAT-002",
+        "SRC-TAT-003"
+      ],
+      "phase10_1_artifact_refs": [
+        "official_source_registry.json",
+        "official_source_evidence_pack.md",
+        "source_usage_policy.md",
+        "source_freshness_policy.md",
+        "regulatory_economics_source_gap_report.json"
+      ],
+      "phase10_artifact_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "hld.md",
+        "lld.md",
+        "traceability_matrix.json"
+      ],
+      "requirement_ids": [
+        "RQ-ECO-002",
+        "RQ-FUN-002",
+        "RQ-REG-001"
+      ],
+      "source_id": "RBI_FAILED_TRANSACTION_TAT_2019",
+      "usage_guardrails": [
+        "No compliance certification claim",
+        "No live payment network call",
+        "No real customer data",
+        "No unsourced ROI or monetary claim"
+      ]
+    },
+    {
+      "authority": "Reserve Bank of India",
+      "claim_ids": [
+        "SRC-LIAB-001",
+        "SRC-LIAB-002",
+        "SRC-LIAB-003"
+      ],
+      "phase10_1_artifact_refs": [
+        "official_source_registry.json",
+        "official_source_evidence_pack.md",
+        "source_usage_policy.md",
+        "source_freshness_policy.md",
+        "regulatory_economics_source_gap_report.json"
+      ],
+      "phase10_artifact_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "hld.md",
+        "lld.md",
+        "traceability_matrix.json"
+      ],
+      "requirement_ids": [
+        "RQ-ECO-002",
+        "RQ-FUN-003",
+        "RQ-GOV-001",
+        "RQ-REG-001"
+      ],
+      "source_id": "RBI_LIMITED_LIABILITY_2017",
+      "usage_guardrails": [
+        "No compliance certification claim",
+        "No live payment network call",
+        "No real customer data",
+        "No unsourced ROI or monetary claim"
+      ]
+    },
+    {
+      "authority": "National Payments Corporation of India",
+      "claim_ids": [
+        "SRC-NPCI-STATS-001"
+      ],
+      "phase10_1_artifact_refs": [
+        "official_source_registry.json",
+        "official_source_evidence_pack.md",
+        "source_usage_policy.md",
+        "source_freshness_policy.md",
+        "regulatory_economics_source_gap_report.json"
+      ],
+      "phase10_artifact_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "hld.md",
+        "lld.md",
+        "traceability_matrix.json"
+      ],
+      "requirement_ids": [
+        "RQ-ECO-001",
+        "RQ-ECO-002"
+      ],
+      "source_id": "NPCI_UPI_PRODUCT_STATISTICS",
+      "usage_guardrails": [
+        "No compliance certification claim",
+        "No live payment network call",
+        "No real customer data",
+        "No unsourced ROI or monetary claim"
+      ]
+    },
+    {
+      "authority": "National Payments Corporation of India",
+      "claim_ids": [
+        "SRC-NPCI-COMPLAINT-001"
+      ],
+      "phase10_1_artifact_refs": [
+        "official_source_registry.json",
+        "official_source_evidence_pack.md",
+        "source_usage_policy.md",
+        "source_freshness_policy.md",
+        "regulatory_economics_source_gap_report.json"
+      ],
+      "phase10_artifact_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "hld.md",
+        "lld.md",
+        "traceability_matrix.json"
+      ],
+      "requirement_ids": [
+        "RQ-FUN-004",
+        "RQ-REG-001"
+      ],
+      "source_id": "NPCI_COMPLAINT_STATUS",
+      "usage_guardrails": [
+        "No compliance certification claim",
+        "No live payment network call",
+        "No real customer data",
+        "No unsourced ROI or monetary claim"
+      ]
+    },
+    {
+      "authority": "National Payments Corporation of India",
+      "claim_ids": [
+        "SRC-NPCI-UPI-001"
+      ],
+      "phase10_1_artifact_refs": [
+        "official_source_registry.json",
+        "official_source_evidence_pack.md",
+        "source_usage_policy.md",
+        "source_freshness_policy.md",
+        "regulatory_economics_source_gap_report.json"
+      ],
+      "phase10_artifact_refs": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "hld.md",
+        "lld.md",
+        "traceability_matrix.json"
+      ],
+      "requirement_ids": [
+        "RQ-FUN-004",
+        "RQ-REG-001"
+      ],
+      "source_id": "NPCI_UPI_PRODUCT_PAGE",
+      "usage_guardrails": [
+        "No compliance certification claim",
+        "No live payment network call",
+        "No real customer data",
+        "No unsourced ROI or monetary claim"
+      ]
+    }
+  ],
+  "traceability_rule": "Each source maps to claims, requirements, artifacts, and usage guardrails."
+}
