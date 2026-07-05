@@ -1,0 +1,48 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "sdlc_best_practice_gap_report.json",
+  "gaps": [
+    {
+      "blocked_claims": [
+        "latest best practice confirmed",
+        "version-specific behavior guaranteed"
+      ],
+      "gap_id": "SDLC-GAP-001",
+      "required_resolution": "Record exact version or mark MISSING_OFFICIAL_SOURCE.",
+      "risk": "Version-specific guidance may be wrong if versions are unknown.",
+      "title": "Exact technology versions for future generated application"
+    },
+    {
+      "blocked_claims": [
+        "guaranteed secure",
+        "no vulnerabilities"
+      ],
+      "gap_id": "SDLC-GAP-002",
+      "required_resolution": "Verify official security documentation before release.",
+      "risk": "Security guidance changes over time.",
+      "title": "Current security guidance for each selected technology"
+    },
+    {
+      "blocked_claims": [
+        "production certified",
+        "production compliant"
+      ],
+      "gap_id": "SDLC-GAP-003",
+      "required_resolution": "Keep deployment guidance mock/demo-scoped until topology is supplied.",
+      "risk": "Demo-local best practices may not match production topology.",
+      "title": "Production deployment topology"
+    },
+    {
+      "blocked_claims": [
+        "guaranteed cheapest",
+        "exact run cost"
+      ],
+      "gap_id": "SDLC-GAP-004",
+      "required_resolution": "Use official vendor pricing or USER_PROVIDED_VALUE.",
+      "risk": "Cost statements may become stale or vendor-specific.",
+      "title": "Technology cost model"
+    }
+  ],
+  "phase": "Phase 10.2",
+  "purpose": "Prevent unsupported SDLC best-practice and technology claims."
+}

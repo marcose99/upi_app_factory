@@ -1,0 +1,443 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "sdlc_technology_registry.json",
+  "governance_boundary": {
+    "deterministic_first": true,
+    "mock_safe": true,
+    "no_certification_claim": true,
+    "official_docs_not_fetched_at_runtime": true
+  },
+  "phase": "Phase 10.2",
+  "purpose": "Ensure every future generated application component follows technology-specific SDLC best practices instead of generic advice.",
+  "required_labels": [
+    "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+    "MISSING_OFFICIAL_SOURCE",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+  ],
+  "runtime_network_access": false,
+  "technologies": [
+    {
+      "best_practice_controls": [
+        "clear module boundaries",
+        "type hints for public interfaces",
+        "small beginner-readable functions",
+        "explicit exceptions and helpful error messages",
+        "deterministic tests before generation is trusted",
+        "avoid hidden runtime network calls in governance scripts",
+        "pin or document supported interpreter version",
+        "avoid version-specific syntax unless supported by project Python"
+      ],
+      "category": "programming_language",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Primary implementation language for deterministic factory scripts and validators.",
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "Python",
+      "official_doc_url": "https://docs.python.org/3/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "python"
+    },
+    {
+      "best_practice_controls": [
+        "use set -euo pipefail",
+        "quote variables",
+        "fail closed on unsafe preflight conditions",
+        "print clear step banners",
+        "avoid destructive commands unless explicitly guarded",
+        "make reruns idempotent where practical"
+      ],
+      "category": "scripting",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Runnable automation scripts for patch, validation, merge, tag, and push.",
+      "lifecycle_phases": [
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "Bash",
+      "official_doc_url": "https://www.gnu.org/software/bash/manual/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "bash"
+    },
+    {
+      "best_practice_controls": [
+        "use clean-working-tree preflight",
+        "use branches for phases",
+        "use tags as restore points",
+        "avoid rewriting shared history",
+        "show staged files before commit"
+      ],
+      "category": "version_control",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Branch, merge, restore-point, and traceability management.",
+      "lifecycle_phases": [
+        "release",
+        "maintenance"
+      ],
+      "name": "Git",
+      "official_doc_url": "https://git-scm.com/docs",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "git"
+    },
+    {
+      "best_practice_controls": [
+        "push branches and tags explicitly",
+        "keep remote restore points",
+        "avoid exposing secrets in repository artifacts",
+        "use pull requests when human review is required"
+      ],
+      "category": "source_hosting",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Remote repository hosting for the mock factory project.",
+      "lifecycle_phases": [
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "GitHub",
+      "official_doc_url": "https://docs.github.com/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "github"
+    },
+    {
+      "best_practice_controls": [
+        "stable keys",
+        "deterministic ordering when generated",
+        "machine-validated required fields",
+        "no comments inside JSON",
+        "separate synthetic values from source-backed values"
+      ],
+      "category": "data_format",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Structured lifecycle, traceability, registry, and validation artifacts.",
+      "lifecycle_phases": [
+        "requirements",
+        "architecture",
+        "design",
+        "testing",
+        "release",
+        "maintenance"
+      ],
+      "name": "JSON",
+      "official_doc_url": "https://www.json.org/json-en.html",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "json"
+    },
+    {
+      "best_practice_controls": [
+        "clear headings",
+        "explicit boundaries",
+        "tables for comparisons",
+        "copy-paste runnable commands where applicable",
+        "avoid ambiguous compliance wording"
+      ],
+      "category": "documentation_format",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Human-readable architecture, design, policy, and prompt artifacts.",
+      "lifecycle_phases": [
+        "requirements",
+        "architecture",
+        "design",
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "Markdown",
+      "official_doc_url": "https://www.markdownguide.org/basic-syntax/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "markdown"
+    },
+    {
+      "best_practice_controls": [
+        "test happy path and negative path",
+        "use tmp_path for generated artifacts",
+        "assert validation failures explicitly",
+        "keep tests deterministic and fast",
+        "avoid network-dependent tests in governance modules"
+      ],
+      "category": "testing_framework",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Deterministic unit tests for generators and validators.",
+      "lifecycle_phases": [
+        "testing",
+        "release",
+        "maintenance"
+      ],
+      "name": "pytest",
+      "official_doc_url": "https://docs.pytest.org/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "pytest"
+    },
+    {
+      "best_practice_controls": [
+        "run on changed Python scripts and tests",
+        "treat lint failures as quality-gate failures",
+        "prefer explicit fixes over suppressions"
+      ],
+      "category": "linting",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Python lint quality gate.",
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release"
+      ],
+      "name": "Ruff",
+      "official_doc_url": "https://docs.astral.sh/ruff/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "ruff"
+    },
+    {
+      "best_practice_controls": [
+        "type-check source scripts before release",
+        "prefer explicit return types",
+        "avoid Any unless it is controlled at JSON boundaries"
+      ],
+      "category": "static_type_checking",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Static typing quality gate for deterministic Python modules.",
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release"
+      ],
+      "name": "Mypy",
+      "official_doc_url": "https://mypy.readthedocs.io/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "mypy"
+    },
+    {
+      "best_practice_controls": [
+        "use explicit request and response models",
+        "separate routers, services, and adapters",
+        "validate inputs at boundaries",
+        "use dependency injection for replaceable components",
+        "document mock boundaries for external systems"
+      ],
+      "category": "web_framework_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate web API framework for future generated mock application services.",
+      "lifecycle_phases": [
+        "architecture",
+        "design",
+        "implementation",
+        "testing",
+        "operations"
+      ],
+      "name": "FastAPI",
+      "official_doc_url": "https://fastapi.tiangolo.com/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "fastapi"
+    },
+    {
+      "best_practice_controls": [
+        "use explicit schemas for API and artifact contracts",
+        "forbid or handle extra fields intentionally",
+        "use clear validation errors",
+        "keep source-backed, synthetic, and missing values distinct"
+      ],
+      "category": "data_validation_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate schema validation layer for future generated application contracts.",
+      "lifecycle_phases": [
+        "design",
+        "implementation",
+        "testing"
+      ],
+      "name": "Pydantic",
+      "official_doc_url": "https://docs.pydantic.dev/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "pydantic"
+    },
+    {
+      "best_practice_controls": [
+        "use only for local deterministic demos unless justified",
+        "document migration path to PostgreSQL if durability/concurrency grow",
+        "avoid treating local demo storage as production storage"
+      ],
+      "category": "database_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate lightweight local persistence for deterministic demos.",
+      "lifecycle_phases": [
+        "architecture",
+        "design",
+        "implementation",
+        "testing"
+      ],
+      "name": "SQLite",
+      "official_doc_url": "https://www.sqlite.org/docs.html",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "sqlite"
+    },
+    {
+      "best_practice_controls": [
+        "use migrations for schema evolution",
+        "separate transactional data from evidence artifacts where appropriate",
+        "define indexes from access patterns",
+        "do not claim production sizing without measured workload"
+      ],
+      "category": "database_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate relational store for future durable evidence and application state.",
+      "lifecycle_phases": [
+        "architecture",
+        "design",
+        "implementation",
+        "operations"
+      ],
+      "name": "PostgreSQL",
+      "official_doc_url": "https://www.postgresql.org/docs/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "postgresql"
+    },
+    {
+      "best_practice_controls": [
+        "keep images minimal",
+        "avoid embedding secrets",
+        "document build and run commands",
+        "separate dev/demo configuration from production-like configuration"
+      ],
+      "category": "runtime_packaging_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate packaging/runtime layer for future demos.",
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release",
+        "operations"
+      ],
+      "name": "Docker",
+      "official_doc_url": "https://docs.docker.com/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "docker"
+    },
+    {
+      "best_practice_controls": [
+        "define trace/span boundaries before instrumentation",
+        "avoid logging secrets or personal data",
+        "correlate request ids and evidence ids",
+        "keep observability vendor-neutral where practical"
+      ],
+      "category": "observability_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate observability standard for future generated app tracing.",
+      "lifecycle_phases": [
+        "architecture",
+        "implementation",
+        "observability",
+        "operations"
+      ],
+      "name": "OpenTelemetry",
+      "official_doc_url": "https://opentelemetry.io/docs/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "opentelemetry"
+    },
+    {
+      "best_practice_controls": [
+        "encode release policies as deterministic checks",
+        "treat policy failure as fail-closed",
+        "keep policy inputs explicit and auditable"
+      ],
+      "category": "policy_as_code_candidate",
+      "freshness_rule": "Verify official documentation and exact version before making version-specific, security-sensitive, performance-sensitive, or production-readiness claims.",
+      "generated_app_usage": "Candidate policy-as-code gate for future governance expansion.",
+      "lifecycle_phases": [
+        "security",
+        "testing",
+        "release"
+      ],
+      "name": "OPA / Conftest",
+      "official_doc_url": "https://www.openpolicyagent.org/docs/latest/",
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "runtime_fetch": false,
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "technology_id": "opa_conftest"
+    }
+  ]
+}

@@ -309,6 +309,19 @@ Use the following labels wherever applicable:
 - MOCK_BOUNDARY
 - SYNTHETIC_DATA
 
+## SDLC software best-practice requirement
+
+When generating, reviewing, or validating artifacts for the application SDLC,
+future agents must follow the best practices appropriate to each software,
+framework, library, tool, programming language, database, messaging system,
+workflow engine, testing tool, security tool, observability tool, build tool,
+deployment tool, and runtime technology involved.
+
+If a best-practice statement depends on a specific technology version,
+current vendor behavior, current security guidance, or production deployment
+rules that are not available in the evidence pack, mark it
+MISSING_OFFICIAL_SOURCE instead of guessing.
+
 ## Prohibited outputs
 
 Do not claim:
