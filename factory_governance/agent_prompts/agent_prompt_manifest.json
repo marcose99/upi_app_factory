@@ -1,0 +1,179 @@
+{
+  "agents": [
+    {
+      "agent_id": "requirement_agent",
+      "agent_name": "Requirement Agent",
+      "expected_outputs": [
+        "requirements.md",
+        "acceptance_criteria.md",
+        "open_questions.md"
+      ],
+      "primary_goal": "Convert user or stakeholder intent into clear, testable, traceable requirements.",
+      "prompt_file": "prompts/requirement_agent.md"
+    },
+    {
+      "agent_id": "domain_agent",
+      "agent_name": "Domain Agent",
+      "expected_outputs": [
+        "domain_model.md",
+        "domain_glossary.md",
+        "source_gap_register.md"
+      ],
+      "primary_goal": "Explain the UPI dispute-resolution domain using only supplied evidence and explicit synthetic labels.",
+      "prompt_file": "prompts/domain_agent.md"
+    },
+    {
+      "agent_id": "architect_agent",
+      "agent_name": "Architect Agent",
+      "expected_outputs": [
+        "architecture_decision_record.md",
+        "module_design.md",
+        "diagrams.md"
+      ],
+      "primary_goal": "Design a lightweight but production-disciplined architecture with clear trade-offs.",
+      "prompt_file": "prompts/architect_agent.md"
+    },
+    {
+      "agent_id": "planner_agent",
+      "agent_name": "Planner Agent",
+      "expected_outputs": [
+        "task_manifest.json",
+        "work_breakdown_structure.md",
+        "validation_plan.md"
+      ],
+      "primary_goal": "Break work into safe, ordered, reviewable, and testable implementation steps.",
+      "prompt_file": "prompts/planner_agent.md"
+    },
+    {
+      "agent_id": "developer_agent",
+      "agent_name": "Developer Agent",
+      "expected_outputs": [
+        "source_files",
+        "tests",
+        "implementation_notes.md"
+      ],
+      "primary_goal": "Generate beginner-readable, deterministic, testable Python code that follows approved design.",
+      "prompt_file": "prompts/developer_agent.md"
+    },
+    {
+      "agent_id": "test_agent",
+      "agent_name": "Test Agent",
+      "expected_outputs": [
+        "test_files",
+        "test_report.md",
+        "failure_analysis.md"
+      ],
+      "primary_goal": "Prove behavior through deterministic tests, negative cases, and validation commands.",
+      "prompt_file": "prompts/test_agent.md"
+    },
+    {
+      "agent_id": "security_agent",
+      "agent_name": "Security Agent",
+      "expected_outputs": [
+        "security_review.md",
+        "risk_register.md",
+        "safe_fix_plan.md"
+      ],
+      "primary_goal": "Identify security risks, unsafe defaults, secret exposure, and dependency risks within the current project scope.",
+      "prompt_file": "prompts/security_agent.md"
+    },
+    {
+      "agent_id": "governance_agent",
+      "agent_name": "Governance Agent",
+      "expected_outputs": [
+        "governance_review.md",
+        "policy_traceability.json",
+        "known_limitations.md"
+      ],
+      "primary_goal": "Ensure policy, honesty labels, mock boundaries, and evidence-ledger expectations are enforced.",
+      "prompt_file": "prompts/governance_agent.md"
+    },
+    {
+      "agent_id": "evidence_agent",
+      "agent_name": "Evidence Agent",
+      "expected_outputs": [
+        "artifact_manifest.json",
+        "evidence_ledger.json",
+        "provenance_report.md"
+      ],
+      "primary_goal": "Collect, hash, reference, and preserve evidence for every governed factory run.",
+      "prompt_file": "prompts/evidence_agent.md"
+    },
+    {
+      "agent_id": "reviewer_agent",
+      "agent_name": "Reviewer Agent",
+      "expected_outputs": [
+        "review_report.md",
+        "fix_list.md",
+        "approval_notes.md"
+      ],
+      "primary_goal": "Review generated work for correctness, readability, debugability, governance, and release readiness.",
+      "prompt_file": "prompts/reviewer_agent.md"
+    },
+    {
+      "agent_id": "release_agent",
+      "agent_name": "Release Agent",
+      "expected_outputs": [
+        "release_readiness_report.md",
+        "tag_plan.md",
+        "rollback_guide.md"
+      ],
+      "primary_goal": "Prepare branch merge, restore tag, release notes, and rollback guidance only after all gates pass.",
+      "prompt_file": "prompts/release_agent.md"
+    },
+    {
+      "agent_id": "operations_agent",
+      "agent_name": "Operations Agent",
+      "expected_outputs": [
+        "runbook.md",
+        "debug_guide.md",
+        "recovery_steps.md"
+      ],
+      "primary_goal": "Make local run, validation, troubleshooting, and recovery steps simple and safe.",
+      "prompt_file": "prompts/operations_agent.md"
+    },
+    {
+      "agent_id": "regeneration_agent",
+      "agent_name": "Regeneration Agent",
+      "expected_outputs": [
+        "generation_manifest.json",
+        "generated_artifacts",
+        "regeneration_status.json"
+      ],
+      "primary_goal": "Regenerate mock dispute app artifacts deterministically and record evidence of the run.",
+      "prompt_file": "prompts/regeneration_agent.md"
+    },
+    {
+      "agent_id": "traceability_agent",
+      "agent_name": "Traceability Agent",
+      "expected_outputs": [
+        "traceability_matrix.md",
+        "artifact_manifest.json",
+        "broken_reference_report.md"
+      ],
+      "primary_goal": "Map every generated artifact to requirement, task, policy, and evidence references.",
+      "prompt_file": "prompts/traceability_agent.md"
+    },
+    {
+      "agent_id": "validation_agent",
+      "agent_name": "Validation Agent",
+      "expected_outputs": [
+        "validation_report.json",
+        "gate_summary.md",
+        "failure_triage.md"
+      ],
+      "primary_goal": "Run and summarize deterministic validation gates in a way reviewers can trust.",
+      "prompt_file": "prompts/validation_agent.md"
+    }
+  ],
+  "common_contract_file": "common_governed_agent_contract.md",
+  "honesty_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "project": "FactoryFromNothing / upi_dispute_resolution_factory",
+  "purpose": "Governed, beginner-readable, debug-friendly, anti-hallucination prompts for factory role agents.",
+  "schema_version": "factory.agent_prompt_manifest.v1"
+}

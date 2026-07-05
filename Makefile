@@ -55,3 +55,7 @@ validate-factory-run:
 .PHONY: validate-debugging-standards
 validate-debugging-standards:
 	python scripts/validate_project_debugging_standards.py
+
+.PHONY: validate-agent-prompts
+validate-agent-prompts:
+	python scripts/validate_agent_prompts.py
