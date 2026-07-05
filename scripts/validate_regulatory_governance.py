@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any, cast
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -66,8 +67,8 @@ REQUIRED_SOURCE_IDS = {
 }
 
 
-def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+def _load_json(path: Path) -> dict[str, Any]:
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
 
 
 def validate() -> list[str]:

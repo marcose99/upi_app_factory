@@ -19,7 +19,16 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
+
+
+def _phase11a2_stringify_dict_key(value: object) -> str:
+    """Return a stable string key for manifest/prompt dictionaries."""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, (list, tuple)):
+        return "/".join(str(item) for item in value)
+    return str(value)
 
 REQUIRED_HONESTY_LABELS = [
     "MISSING_OFFICIAL_SOURCE",
@@ -280,7 +289,7 @@ def copy_generated_artifacts(repo_root: Path, run_id: str, run_dir: Path, skip_r
 
 
 def task_index() -> dict[str, dict[str, Any]]:
-    return {task["id"]: task for task in DEFAULT_TASKS}
+    return {_phase11a2_stringify_dict_key(task["id"]): task for task in DEFAULT_TASKS}
 
 
 def artifact_trace_for(relative_path: str) -> dict[str, list[str]]:
@@ -335,11 +344,11 @@ def make_task_manifest(status: str) -> dict[str, Any]:
         task_copy = dict(task)
         task_copy["status"] = status
         tasks.append(task_copy)
-    return {
+    return cast(dict[str, Any], {
         "schema_version": "factory.task_manifest.v1",
         "honesty_labels": REQUIRED_HONESTY_LABELS,
         "tasks": tasks,
-    }
+    })
 
 
 def write_agent_outputs(path: Path, run_id: str, regeneration_results: list[CommandResult], regeneration_status: str) -> None:
@@ -385,7 +394,7 @@ def write_agent_outputs(path: Path, run_id: str, regeneration_results: list[Comm
         },
     ]
     for output in outputs:
-        append_jsonl(path, output)
+        append_jsonl(path, cast(dict[str, Any], output))
 
 
 def write_known_limitations(path: Path, run_id: str, regeneration_status: str) -> None:
@@ -457,12 +466,12 @@ def run_validations(repo_root: Path, run_dir: Path, skip_project_validations: bo
     )
 
     overall_status = "passed" if all(item.get("returncode", 1) == 0 for item in validation_results) else "failed"
-    return {
+    return cast(dict[str, Any], {
         "schema_version": "factory.validation_report.v1",
         "overall_status": overall_status,
         "generated_at_utc": utc_now(),
         "results": validation_results,
-    }
+    })
 
 
 def create_initial_validation_report(path: Path) -> None:
@@ -492,12 +501,12 @@ def build_factory_run(args: argparse.Namespace) -> int:
     audit_path = run_dir / "audit_events.jsonl"
     append_jsonl(
         audit_path,
-        {
+        cast(dict[str, Any], {
             "event_type": "RUN_STARTED",
             "run_id": run_id,
             "occurred_at_utc": utc_now(),
             "workspace": str(run_dir),
-        },
+        }),
     )
 
     regeneration_results, regeneration_status = copy_generated_artifacts(
@@ -508,12 +517,12 @@ def build_factory_run(args: argparse.Namespace) -> int:
     )
     append_jsonl(
         audit_path,
-        {
+        cast(dict[str, Any], {
             "event_type": "REGENERATION_STATUS_RECORDED",
             "run_id": run_id,
             "occurred_at_utc": utc_now(),
             "regeneration_status": regeneration_status,
-        },
+        }),
     )
 
     task_status = "completed" if regeneration_status in {"completed", "skipped"} else "completed_with_limitations"
@@ -627,13 +636,13 @@ def build_factory_run(args: argparse.Namespace) -> int:
     )
     append_jsonl(
         audit_path,
-        {
+        cast(dict[str, Any], {
             "event_type": "RUN_COMPLETED",
             "run_id": run_id,
             "occurred_at_utc": utc_now(),
             "validation_status": validation_report["overall_status"],
             "workspace": str(run_dir),
-        },
+        }),
     )
 
     artifacts = discover_artifacts(run_dir)

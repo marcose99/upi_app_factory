@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -28,7 +28,7 @@ def read_text(path: Path) -> str:
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(read_text(path))
+    return cast(dict[str, Any], json.loads(read_text(path)))
 
 
 def contains_term(text: str, term: str) -> bool:

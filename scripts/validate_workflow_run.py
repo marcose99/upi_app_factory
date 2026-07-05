@@ -10,7 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 REQUIRED_FILES = [
     "workflow_run_manifest.json",
@@ -33,7 +33,7 @@ REQUIRED_TRACEABILITY_FIELDS = ["requirement_ids", "task_ids", "policy_ids", "ev
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
