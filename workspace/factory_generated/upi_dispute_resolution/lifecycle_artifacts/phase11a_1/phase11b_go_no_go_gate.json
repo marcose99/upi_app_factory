@@ -1,0 +1,32 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "phase11b_go_no_go_gate.json",
+  "blocked_if": [
+    "unknown tool requested",
+    "path outside generated workspace requested",
+    "secret access requested",
+    "live payment integration requested",
+    "human approval missing for protected action",
+    "deterministic validation missing"
+  ],
+  "labels": [
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "FAIL_CLOSED"
+  ],
+  "phase": "Phase 11A.1",
+  "phase11b_allowed": true,
+  "required_gates": [
+    "phase10_3_readiness_passed",
+    "phase11a_validation_passed",
+    "phase11a1_validation_passed",
+    "approval_ledger_schema_present",
+    "checkpoint_replay_policy_present",
+    "prompt_injection_policy_present",
+    "secret_guard_policy_present",
+    "budget_policy_present",
+    "repair_loop_policy_present",
+    "acceptance_contract_present",
+    "evaluation_rubric_present"
+  ]
+}

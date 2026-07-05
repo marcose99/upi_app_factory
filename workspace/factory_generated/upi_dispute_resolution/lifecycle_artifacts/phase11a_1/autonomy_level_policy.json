@@ -1,0 +1,35 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "autonomy_level_policy.json",
+  "default_level": "L1_PROPOSAL_ONLY",
+  "fail_closed_on_unknown_action": true,
+  "highest_allowed_without_human": "L1_PROPOSAL_ONLY",
+  "labels": [
+    "HUMAN_APPROVAL_REQUIRED",
+    "FAIL_CLOSED"
+  ],
+  "levels": [
+    {
+      "approval_required": false,
+      "level": "L0_READ_ONLY"
+    },
+    {
+      "approval_required": false,
+      "level": "L1_PROPOSAL_ONLY"
+    },
+    {
+      "approval_required": true,
+      "level": "L2_WORKSPACE_DRAFT_WITH_APPROVAL"
+    },
+    {
+      "approval_required": true,
+      "level": "L3_PATCH_APPLY_WITH_APPROVAL"
+    },
+    {
+      "agent_direct_execution_allowed": false,
+      "approval_required": true,
+      "level": "L4_RELEASE_ACTION_HUMAN_ONLY"
+    }
+  ],
+  "phase": "Phase 11A.1"
+}

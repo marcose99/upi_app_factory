@@ -1,0 +1,25 @@
+{
+  "allowed_provider_candidates": [
+    {
+      "provider": "OpenAI",
+      "requires_explicit_configuration": true,
+      "status": "preferred_candidate_when_configured"
+    }
+  ],
+  "app_id": "upi_dispute_resolution",
+  "artifact": "model_budget_and_provider_policy.json",
+  "blocked_provider_behavior": "fail_closed",
+  "default_mode": "deterministic_shadow",
+  "labels": [
+    "COST_BUDGET_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED"
+  ],
+  "per_run_budget_controls": {
+    "max_agent_rounds": 10,
+    "max_files_per_run": 25,
+    "max_generated_lines_per_run": 5000,
+    "max_repair_rounds": 3,
+    "require_budget_manifest": true
+  },
+  "phase": "Phase 11A.1"
+}

@@ -1,0 +1,23 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "generated_code_acceptance_contract.json",
+  "labels": [
+    "MOCK_BOUNDARY",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "HUMAN_APPROVAL_REQUIRED"
+  ],
+  "phase": "Phase 11A.1",
+  "required_before_acceptance": [
+    "phase10_3_readiness_passed",
+    "phase11a_validation_passed",
+    "phase11a1_validation_passed",
+    "all_generated_files_trace_to_requirements",
+    "all_external_integrations_are_mocked",
+    "all_required_labels_present",
+    "ruff_passed",
+    "mypy_passed",
+    "pytest_passed",
+    "generated_app_validator_passed",
+    "human_approval_recorded_for_protected_write"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "tool_permission_matrix.json",
+  "labels": [
+    "FAIL_CLOSED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED"
+  ],
+  "path_traversal_behavior": "deny",
+  "permissions": [
+    {
+      "action": "read_governance_artifact",
+      "agent_allowed": true,
+      "deterministic_validation_required": false,
+      "human_approval_required": false,
+      "path_scope": "approved_read_or_proposal_only"
+    },
+    {
+      "action": "read_prompt",
+      "agent_allowed": true,
+      "deterministic_validation_required": false,
+      "human_approval_required": false,
+      "path_scope": "approved_read_or_proposal_only"
+    },
+    {
+      "action": "propose_file_plan",
+      "agent_allowed": true,
+      "deterministic_validation_required": true,
+      "human_approval_required": false,
+      "path_scope": "approved_read_or_proposal_only"
+    },
+    {
+      "action": "propose_patch",
+      "agent_allowed": true,
+      "deterministic_validation_required": true,
+      "human_approval_required": false,
+      "path_scope": "approved_read_or_proposal_only"
+    },
+    {
+      "action": "run_deterministic_validator",
+      "agent_allowed": true,
+      "deterministic_validation_required": false,
+      "human_approval_required": false,
+      "path_scope": "approved_read_or_proposal_only"
+    },
+    {
+      "action": "record_decision",
+      "agent_allowed": true,
+      "deterministic_validation_required": false,
+      "human_approval_required": false,
+      "path_scope": "approved_read_or_proposal_only"
+    },
+    {
+      "action": "write_workspace_draft",
+      "agent_allowed": true,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "apply_patch",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "delete_file",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "modify_existing_source",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "commit",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "merge",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "tag",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "push",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    },
+    {
+      "action": "release",
+      "agent_allowed": false,
+      "deterministic_validation_required": true,
+      "human_approval_required": true,
+      "path_scope": "generated_workspace_or_human_git_action_only"
+    }
+  ],
+  "phase": "Phase 11A.1",
+  "secret_access_behavior": "deny",
+  "unknown_tool_behavior": "deny"
+}
