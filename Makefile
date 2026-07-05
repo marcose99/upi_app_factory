@@ -65,3 +65,11 @@ validate-agent-run:
 
 run-multi-agent-simulation:
 	python scripts/run_multi_agent_factory_simulation.py --run-id manual_agent_run --force
+
+.PHONY: run-governed-workflow
+run-governed-workflow:
+	python scripts/run_governed_workflow.py --run-id phase9_manual_workflow --force
+
+.PHONY: validate-workflow-run
+validate-workflow-run:
+	python scripts/validate_workflow_run.py --latest
