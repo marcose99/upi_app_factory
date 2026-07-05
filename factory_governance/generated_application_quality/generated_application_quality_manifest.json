@@ -1,0 +1,86 @@
+{
+  "schema_version": "factory.generated_application_quality_manifest.v1",
+  "purpose": "Define mandatory prompting standards for generated applications produced by the factory.",
+  "honesty_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "minimum_generated_application_standard": [
+    {
+      "id": "GAQ-MODULARITY",
+      "name": "Highly modular design",
+      "expectation": "Generated applications must separate API, contracts, domain logic, services, adapters, validation, tests, observability, operations, and evidence concerns."
+    },
+    {
+      "id": "GAQ-SDLC",
+      "name": "Industry standard software life cycle coverage",
+      "expectation": "Generated applications must include requirements traceability, architecture/design intent, implementation, tests, validation, evaluation, security, observability, operations, and release-readiness evidence."
+    },
+    {
+      "id": "GAQ-NEAR-CERTIFIABLE",
+      "name": "Near-certifiable quality posture",
+      "expectation": "Generated applications should be reviewable against certification-like quality evidence without claiming actual certification or official compliance."
+    },
+    {
+      "id": "GAQ-MOCKED-ECOSYSTEM",
+      "name": "Mocked surrounding ecosystem",
+      "expectation": "All out-of-scope upstream and downstream dependencies must remain explicit mocks unless separately approved and evidenced."
+    },
+    {
+      "id": "GAQ-PORTS-ADAPTERS",
+      "name": "Ports and adapters",
+      "expectation": "External ecosystem interactions must go through explicit interfaces and replaceable mock adapters."
+    },
+    {
+      "id": "GAQ-CONTRACTS",
+      "name": "API and data contracts",
+      "expectation": "API requests, responses, errors, state transitions, and domain objects must be explicit, typed, and testable."
+    },
+    {
+      "id": "GAQ-VALIDATION-EVALUATION",
+      "name": "Validation and evaluation",
+      "expectation": "Generated applications must include deterministic validation and quality evaluation criteria beyond syntax or happy-path tests."
+    },
+    {
+      "id": "GAQ-OBSERVABILITY-OPERATIONS",
+      "name": "Observability and operational readiness",
+      "expectation": "Generated applications must include health/readiness today and should evolve toward logs, metrics, traces, correlation IDs, troubleshooting, and runbooks."
+    },
+    {
+      "id": "GAQ-SECURITY-TESTABILITY",
+      "name": "Security and testability",
+      "expectation": "Generated applications must validate inputs, avoid unsafe defaults, avoid secret leakage, preserve mock boundaries, and include unit/API/contract/negative/boundary/regression tests."
+    },
+    {
+      "id": "GAQ-MAINTAINABILITY",
+      "name": "Beginner-readable and debug-friendly maintainability",
+      "expectation": "Generated code must prefer clear names, small functions, simple control flow, actionable errors, and easy debugging over clever abstractions."
+    }
+  ],
+  "required_prompt_terms": [
+    "Generated-application quality dimensions",
+    "highly modular",
+    "industry standard",
+    "near-certifiable",
+    "software life cycle",
+    "mocked ecosystem",
+    "ports and adapters",
+    "contracts",
+    "validation",
+    "evaluation",
+    "observability",
+    "security",
+    "testability",
+    "operational readiness",
+    "traceability",
+    "auditability",
+    "compliance",
+    "beginner-readable",
+    "debug-friendly",
+    "MOCK_BOUNDARY",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_DATA"
+  ]
+}

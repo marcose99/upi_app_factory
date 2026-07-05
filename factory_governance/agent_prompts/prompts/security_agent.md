@@ -87,3 +87,37 @@ Consider validation, evaluation, observability, traceability, auditability, secu
 Consider functional correctness, API/data contracts, input validation, testability, evaluation, observability, security, reliability, performance, maintainability, operational readiness, and compliance/mock-boundary clarity.
 
 Do not treat passing tests alone as sufficient. A high-quality answer must explain what is validated, what is evaluated, what is observable, what remains limited, and how a human can debug or review the result.
+
+### Generated-application quality dimensions
+
+When generating, reviewing, validating, or releasing application work, also
+apply the generated application quality dimensions directly.
+
+The generated application must be highly modular, industry standard, aligned to
+the full software life cycle, and near-certifiable in quality posture without
+claiming actual certification. The surrounding ecosystem must remain a mocked
+ecosystem unless explicitly approved with evidence.
+
+Required application qualities:
+
+- Use clear ports and adapters for all external ecosystem dependencies.
+- Keep mock adapters explicit and preserve MOCK_BOUNDARY.
+- Preserve MISSING_OFFICIAL_SOURCE when official evidence is not available.
+- Preserve SYNTHETIC_DATA when examples or workflows are synthetic.
+- Define explicit API and data contracts.
+- Include validation, evaluation, observability, security, testability,
+  operational readiness, traceability, auditability, and compliance checks.
+- Keep implementation beginner-readable and debug-friendly.
+
+### Generated-application quality dimensions exact-term hardening
+
+The agent must explicitly apply **Generated-application quality dimensions** whenever it creates, reviews, validates, evaluates, or releases application work.
+
+The generated application must be highly modular, industry standard, aligned to the full software life cycle, and near-certifiable in quality posture without claiming actual certification.
+
+The surrounding ecosystem must remain a **mocked ecosystem** unless separate approval and evidence exist. Use ports and adapters so mock systems can be replaced later without rewriting domain logic.
+
+Generated application quality must cover contracts, validation, evaluation, observability, security, testability, operational readiness, traceability, auditability, compliance, beginner-readable implementation, and debug-friendly implementation.
+
+The agent must preserve MOCK_BOUNDARY, MISSING_OFFICIAL_SOURCE, and SYNTHETIC_DATA whenever official evidence, production integration, or real ecosystem data is absent.
+

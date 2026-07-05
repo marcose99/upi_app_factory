@@ -77,3 +77,6 @@ validate-workflow-run:
 validate-quality-dimensions:
 	python scripts/validate_quality_dimensions.py
 
+
+validate-generated-application-quality-prompting:
+	python scripts/validate_generated_application_quality_prompting.py
