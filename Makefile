@@ -73,3 +73,7 @@ run-governed-workflow:
 .PHONY: validate-workflow-run
 validate-workflow-run:
 	python scripts/validate_workflow_run.py --latest
+
+validate-quality-dimensions:
+	python scripts/validate_quality_dimensions.py
+
