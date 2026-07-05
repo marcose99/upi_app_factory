@@ -1,0 +1,31 @@
+{
+  "artifact": "phase11b_boundary_validation_report.json",
+  "checked_artifacts": [
+    "real_app_mock_ecosystem_boundary_manifest.json",
+    "primary_application_engineering_policy.md",
+    "mock_ecosystem_boundary_policy.md",
+    "external_connectivity_fail_closed_policy.md",
+    "requirement_front_matter_schema.md",
+    "phase11b_requirement_intake_contract.md",
+    "phase11b_boundary_validation_report.json"
+  ],
+  "checked_required_labels": [
+    "PRIMARY_PAYMENT_APPLICATION_REAL_LOCAL_SOFTWARE",
+    "EXTERNAL_ECOSYSTEM_MOCK_ONLY",
+    "SYNTHETIC_DATA_ONLY",
+    "REAL_PAYMENT_PROCESSING_FORBIDDEN",
+    "EXTERNAL_CONNECTIVITY_FAIL_CLOSED",
+    "PRODUCTION_CLAIMS_FORBIDDEN",
+    "MIGRATION_SEAMS_ALLOWED",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "TRACEABILITY_REQUIRED",
+    "QUALITY_GATES_REQUIRED"
+  ],
+  "errors": [],
+  "generation_mode": "real_local_primary_payment_application_with_mock_ecosystem",
+  "passed": true,
+  "phase": "Phase 11B",
+  "warnings": [
+    "Phase 11B boundary is ready: generate real local primary payment software while keeping the external ecosystem simulated."
+  ]
+}
