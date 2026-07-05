@@ -1,0 +1,279 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "artifact_dependency_graph.json",
+  "edges": [
+    {
+      "from": "phase10:requirements_analysis.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:domain_analysis.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:architecture_options.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:architecture_decision_record.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:module_design.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:hld.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:lld.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:work_breakdown_structure.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:traceability_matrix.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10:planning_validation_report.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:official_source_registry.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:official_source_evidence_pack.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:regulatory_economics_source_gap_report.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:source_freshness_policy.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:source_usage_policy.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:source_to_requirement_traceability.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_1:official_source_validation_report.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_2:sdlc_technology_registry.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_2:sdlc_best_practice_policy.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_2:technology_specific_prompt_instructions.md",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_2:sdlc_best_practice_traceability.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_2:sdlc_best_practice_gap_report.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_2:sdlc_best_practice_validation_report.json",
+      "relationship": "required_input",
+      "to": "phase10_3:code_generation_readiness_gate.json"
+    },
+    {
+      "from": "phase10_3:code_generation_readiness_gate.json",
+      "relationship": "readiness_gate",
+      "to": "phase11:implementation_generation"
+    }
+  ],
+  "nodes": [
+    {
+      "filename": "requirements_analysis.json",
+      "node_id": "phase10:requirements_analysis.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/requirements_analysis.json",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "domain_analysis.md",
+      "node_id": "phase10:domain_analysis.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/domain_analysis.md",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "architecture_options.md",
+      "node_id": "phase10:architecture_options.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/architecture_options.md",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "architecture_decision_record.md",
+      "node_id": "phase10:architecture_decision_record.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/architecture_decision_record.md",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "module_design.md",
+      "node_id": "phase10:module_design.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/module_design.md",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "hld.md",
+      "node_id": "phase10:hld.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/hld.md",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "lld.md",
+      "node_id": "phase10:lld.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/lld.md",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "work_breakdown_structure.json",
+      "node_id": "phase10:work_breakdown_structure.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/work_breakdown_structure.json",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "traceability_matrix.json",
+      "node_id": "phase10:traceability_matrix.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/traceability_matrix.json",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "planning_validation_report.json",
+      "node_id": "phase10:planning_validation_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/planning_validation_report.json",
+      "phase_id": "phase10"
+    },
+    {
+      "filename": "official_source_registry.json",
+      "node_id": "phase10_1:official_source_registry.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_registry.json",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "official_source_evidence_pack.md",
+      "node_id": "phase10_1:official_source_evidence_pack.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_evidence_pack.md",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "regulatory_economics_source_gap_report.json",
+      "node_id": "phase10_1:regulatory_economics_source_gap_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/regulatory_economics_source_gap_report.json",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "source_freshness_policy.md",
+      "node_id": "phase10_1:source_freshness_policy.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_freshness_policy.md",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "source_usage_policy.md",
+      "node_id": "phase10_1:source_usage_policy.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_usage_policy.md",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "source_to_requirement_traceability.json",
+      "node_id": "phase10_1:source_to_requirement_traceability.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_to_requirement_traceability.json",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "official_source_validation_report.json",
+      "node_id": "phase10_1:official_source_validation_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_validation_report.json",
+      "phase_id": "phase10_1"
+    },
+    {
+      "filename": "sdlc_technology_registry.json",
+      "node_id": "phase10_2:sdlc_technology_registry.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_technology_registry.json",
+      "phase_id": "phase10_2"
+    },
+    {
+      "filename": "sdlc_best_practice_policy.md",
+      "node_id": "phase10_2:sdlc_best_practice_policy.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_policy.md",
+      "phase_id": "phase10_2"
+    },
+    {
+      "filename": "technology_specific_prompt_instructions.md",
+      "node_id": "phase10_2:technology_specific_prompt_instructions.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/technology_specific_prompt_instructions.md",
+      "phase_id": "phase10_2"
+    },
+    {
+      "filename": "sdlc_best_practice_traceability.json",
+      "node_id": "phase10_2:sdlc_best_practice_traceability.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_traceability.json",
+      "phase_id": "phase10_2"
+    },
+    {
+      "filename": "sdlc_best_practice_gap_report.json",
+      "node_id": "phase10_2:sdlc_best_practice_gap_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_gap_report.json",
+      "phase_id": "phase10_2"
+    },
+    {
+      "filename": "sdlc_best_practice_validation_report.json",
+      "node_id": "phase10_2:sdlc_best_practice_validation_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_validation_report.json",
+      "phase_id": "phase10_2"
+    },
+    {
+      "filename": "code_generation_readiness_gate.json",
+      "node_id": "phase10_3:code_generation_readiness_gate.json",
+      "path": "phase10_3/code_generation_readiness_gate.json",
+      "phase_id": "phase10_3"
+    },
+    {
+      "filename": "implementation_generation",
+      "node_id": "phase11:implementation_generation",
+      "path": "future_phase",
+      "phase_id": "phase11"
+    }
+  ],
+  "phase": "Phase 10.3"
+}

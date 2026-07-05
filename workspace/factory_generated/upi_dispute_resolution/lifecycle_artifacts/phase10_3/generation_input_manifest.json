@@ -1,0 +1,207 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "generation_input_manifest.json",
+  "phase": "Phase 10.3",
+  "phase11_agent_roles": [
+    "implementation_planner_agent",
+    "contract_model_agent",
+    "mock_adapter_agent",
+    "service_logic_agent",
+    "test_generation_agent",
+    "security_review_agent",
+    "observability_agent",
+    "documentation_agent",
+    "validation_agent",
+    "release_readiness_agent"
+  ],
+  "purpose": "Single manifest of upstream inputs that Phase 11 code generation must consume.",
+  "read_order": [
+    "requirements_analysis.json",
+    "domain_analysis.md",
+    "architecture_decision_record.md",
+    "module_design.md",
+    "hld.md",
+    "lld.md",
+    "work_breakdown_structure.json",
+    "traceability_matrix.json",
+    "official_source_registry.json",
+    "regulatory_economics_source_gap_report.json",
+    "source_usage_policy.md",
+    "sdlc_technology_registry.json",
+    "sdlc_best_practice_policy.md",
+    "technology_specific_prompt_instructions.md",
+    "code_generation_readiness_gate.json",
+    "agent_execution_contract.md",
+    "implementation_guardrails.md"
+  ],
+  "required_upstream_artifacts": [
+    {
+      "exists_at_generation_time": true,
+      "filename": "requirements_analysis.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/requirements_analysis.json",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "domain_analysis.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/domain_analysis.md",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "architecture_options.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/architecture_options.md",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "architecture_decision_record.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/architecture_decision_record.md",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "module_design.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/module_design.md",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "hld.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/hld.md",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "lld.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/lld.md",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "work_breakdown_structure.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/work_breakdown_structure.json",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "traceability_matrix.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/traceability_matrix.json",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "planning_validation_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/planning_validation_report.json",
+      "phase_id": "phase10",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "official_source_registry.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_registry.json",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "official_source_evidence_pack.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_evidence_pack.md",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "regulatory_economics_source_gap_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/regulatory_economics_source_gap_report.json",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "source_freshness_policy.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_freshness_policy.md",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "source_usage_policy.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_usage_policy.md",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "source_to_requirement_traceability.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/source_to_requirement_traceability.json",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "official_source_validation_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_1/official_source_validation_report.json",
+      "phase_id": "phase10_1",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "sdlc_technology_registry.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_technology_registry.json",
+      "phase_id": "phase10_2",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "sdlc_best_practice_policy.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_policy.md",
+      "phase_id": "phase10_2",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "technology_specific_prompt_instructions.md",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/technology_specific_prompt_instructions.md",
+      "phase_id": "phase10_2",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "sdlc_best_practice_traceability.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_traceability.json",
+      "phase_id": "phase10_2",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "sdlc_best_practice_gap_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_gap_report.json",
+      "phase_id": "phase10_2",
+      "required": true
+    },
+    {
+      "exists_at_generation_time": true,
+      "filename": "sdlc_best_practice_validation_report.json",
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_2/sdlc_best_practice_validation_report.json",
+      "phase_id": "phase10_2",
+      "required": true
+    }
+  ],
+  "write_constraints": {
+    "must_create_tests_with_code": true,
+    "must_create_validation_script": true,
+    "must_preserve_beginner_readability": true,
+    "must_preserve_mock_boundary": true,
+    "must_update_traceability_when_scope_changes": true
+  }
+}
