@@ -59,3 +59,9 @@ validate-debugging-standards:
 .PHONY: validate-agent-prompts
 validate-agent-prompts:
 	python scripts/validate_agent_prompts.py
+
+validate-agent-run:
+	python scripts/validate_multi_agent_run.py --latest
+
+run-multi-agent-simulation:
+	python scripts/run_multi_agent_factory_simulation.py --run-id manual_agent_run --force
