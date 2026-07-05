@@ -1,0 +1,231 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "agent_deterministic_shadow_run.json",
+  "decisions": [
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "implementation_planner_agent",
+      "step": 1,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "contract_model_agent",
+      "step": 2,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "mock_adapter_agent",
+      "step": 3,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "service_logic_agent",
+      "step": 4,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "test_generation_agent",
+      "step": 5,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "security_review_agent",
+      "step": 6,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "observability_agent",
+      "step": 7,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "documentation_agent",
+      "step": 8,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "validation_agent",
+      "step": 9,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    },
+    {
+      "blocked_tools": [
+        "git_commit",
+        "git_push",
+        "live_payment_call",
+        "secret_read"
+      ],
+      "decision": "Prepared governed proposal contract; no implementation files written.",
+      "honesty_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "mode": "deterministic_shadow",
+      "role_id": "release_readiness_agent",
+      "step": 10,
+      "tools_used": [
+        "read_governance_artifact",
+        "read_prompt",
+        "record_decision"
+      ]
+    }
+  ],
+  "implementation_files_written": 0,
+  "llm_calls_made": 0,
+  "network_calls_made": 0,
+  "phase": "Phase 11A",
+  "run_mode": "deterministic_shadow"
+}

@@ -1,0 +1,347 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "agent_role_catalog.json",
+  "phase": "Phase 11A",
+  "roles": [
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Converts WBS and readiness manifest into ordered implementation steps.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "implementation_planner_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Designs explicit request, response, domain, and validation contracts.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "contract_model_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Creates mock-only external participant adapters and prevents live integrations.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "mock_adapter_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Implements deterministic workflow logic from architecture and module design.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "service_logic_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Generates happy-path, negative-path, boundary, and governance tests.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "test_generation_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Reviews secrets, unsafe inputs, privacy boundaries, and false claims.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "security_review_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Adds request/evidence correlation and structured debug visibility.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "observability_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Produces beginner-readable README, debug guide, and mock-boundary docs.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "documentation_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Runs deterministic validators and summarizes failures.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "validation_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    },
+    {
+      "allowed_tools": [
+        "read_governance_artifact",
+        "read_prompt",
+        "propose_file_plan",
+        "propose_patch",
+        "run_deterministic_validator",
+        "record_decision",
+        "request_human_approval",
+        "write_workspace_draft"
+      ],
+      "description": "Checks gates, traceability, restore point readiness, and human approval.",
+      "must_output": [
+        "agent_decision",
+        "proposed_actions",
+        "validation_expectations",
+        "honesty_labels"
+      ],
+      "must_read": [
+        "phase10_3/generation_input_manifest.json",
+        "phase10_3/code_generation_readiness_gate.json",
+        "phase10_3/agent_execution_contract.md",
+        "phase10_3/implementation_guardrails.md",
+        "phase10_2/sdlc_best_practice_policy.md",
+        "phase10_1/source_usage_policy.md"
+      ],
+      "required_labels": [
+        "MOCK_BOUNDARY",
+        "DETERMINISTIC_VALIDATION_REQUIRED",
+        "HUMAN_APPROVAL_REQUIRED"
+      ],
+      "role_id": "release_readiness_agent",
+      "runtime_mode": "deterministic_shadow_first"
+    }
+  ]
+}

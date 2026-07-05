@@ -1,0 +1,70 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "agent_tool_contracts.json",
+  "phase": "Phase 11A",
+  "tools": [
+    {
+      "allowed": true,
+      "human_approval_required": false,
+      "purpose": "Read approved lifecycle and governance artifacts.",
+      "side_effect_level": "read_only",
+      "tool_id": "read_governance_artifact"
+    },
+    {
+      "allowed": true,
+      "human_approval_required": false,
+      "purpose": "Read the role-specific agent prompt.",
+      "side_effect_level": "read_only",
+      "tool_id": "read_prompt"
+    },
+    {
+      "allowed": true,
+      "human_approval_required": false,
+      "purpose": "Propose files to create or modify before writing patches.",
+      "side_effect_level": "proposal_only",
+      "tool_id": "propose_file_plan"
+    },
+    {
+      "allowed": true,
+      "human_approval_required": true,
+      "purpose": "Propose code or documentation patch content for deterministic review.",
+      "side_effect_level": "proposal_only",
+      "tool_id": "propose_patch"
+    },
+    {
+      "allowed": true,
+      "human_approval_required": false,
+      "purpose": "Run validators, tests, lint, and type checks.",
+      "side_effect_level": "read_and_execute_validation",
+      "tool_id": "run_deterministic_validator"
+    },
+    {
+      "allowed": true,
+      "human_approval_required": false,
+      "purpose": "Append an auditable agent decision to the run manifest.",
+      "side_effect_level": "workspace_write",
+      "tool_id": "record_decision"
+    },
+    {
+      "allowed": true,
+      "human_approval_required": true,
+      "purpose": "Pause before protected writes, merge, tag, or release actions.",
+      "side_effect_level": "approval_gate",
+      "tool_id": "request_human_approval"
+    },
+    {
+      "allowed": true,
+      "forbidden_paths": [
+        ".git",
+        "main branch",
+        "production configuration",
+        "secret files",
+        "live integration credentials"
+      ],
+      "human_approval_required": true,
+      "purpose": "Write draft files only under controlled generated workspace.",
+      "side_effect_level": "workspace_write",
+      "tool_id": "write_workspace_draft"
+    }
+  ]
+}

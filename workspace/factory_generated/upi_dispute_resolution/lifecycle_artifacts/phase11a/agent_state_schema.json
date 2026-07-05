@@ -1,0 +1,34 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "agent_state_schema.json",
+  "field_rules": {
+    "honesty_labels": "Must preserve required source, mock, synthetic, and validation labels.",
+    "human_approval_status": "Required for protected writes, merges, tags, pushes, and release milestones.",
+    "proposed_files": "Must remain proposals until deterministic validation and human approval.",
+    "readiness_gate_passed": "Must be true before Phase 11B generation."
+  },
+  "phase": "Phase 11A",
+  "required_fields": [
+    "run_id",
+    "app_id",
+    "current_role",
+    "readiness_gate_passed",
+    "input_artifacts",
+    "proposed_files",
+    "decisions",
+    "validation_results",
+    "human_approval_status",
+    "honesty_labels"
+  ],
+  "required_labels": [
+    "MOCK_BOUNDARY",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_DATA",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED"
+  ],
+  "schema_name": "GovernedAgenticGenerationState"
+}
