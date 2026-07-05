@@ -1,0 +1,23 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "checkpoint_replay_policy.json",
+  "checkpoint_required_after_each_agent": true,
+  "labels": [
+    "CHECKPOINT_REPLAY_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED"
+  ],
+  "phase": "Phase 11A.1",
+  "replay_required_for_failed_runs": true,
+  "required_checkpoint_fields": [
+    "run_id",
+    "step_id",
+    "agent_role_id",
+    "input_artifact_hashes",
+    "prompt_hash",
+    "tool_calls",
+    "proposed_outputs",
+    "validation_results",
+    "human_approval_refs",
+    "timestamp_utc"
+  ]
+}

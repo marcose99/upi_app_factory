@@ -1,0 +1,58 @@
+{
+  "artifact": "phase11a1_validation_report.json",
+  "checked_artifacts": [
+    "essential_harness_hardening_manifest.json",
+    "autonomy_level_policy.json",
+    "tool_permission_matrix.json",
+    "human_approval_ledger_schema.json",
+    "checkpoint_replay_policy.json",
+    "prompt_injection_and_untrusted_input_policy.md",
+    "secret_and_environment_guard_policy.md",
+    "model_budget_and_provider_policy.json",
+    "agent_repair_loop_policy.json",
+    "generated_code_acceptance_contract.json",
+    "agent_evaluation_rubric.json",
+    "phase11b_go_no_go_gate.json",
+    "phase11a1_validation_report.json"
+  ],
+  "checked_autonomy_levels": [
+    "L0_READ_ONLY",
+    "L1_PROPOSAL_ONLY",
+    "L2_WORKSPACE_DRAFT_WITH_APPROVAL",
+    "L3_PATCH_APPLY_WITH_APPROVAL",
+    "L4_RELEASE_ACTION_HUMAN_ONLY"
+  ],
+  "checked_protected_actions": [
+    "write_workspace_draft",
+    "apply_patch",
+    "delete_file",
+    "modify_existing_source",
+    "commit",
+    "merge",
+    "tag",
+    "push",
+    "release"
+  ],
+  "checked_required_labels": [
+    "MOCK_BOUNDARY",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_DATA",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "FAIL_CLOSED",
+    "CHECKPOINT_REPLAY_REQUIRED",
+    "PROMPT_INJECTION_DEFENSE_REQUIRED",
+    "SECRET_EXFILTRATION_BLOCKED",
+    "COST_BUDGET_REQUIRED",
+    "REPAIR_LOOP_LIMIT_REQUIRED"
+  ],
+  "errors": [],
+  "passed": true,
+  "phase": "Phase 11A.1",
+  "warnings": [
+    "Phase 11A.1 is ready. Unsupported live regulatory, economic, and technology-specific values must remain labelled."
+  ]
+}

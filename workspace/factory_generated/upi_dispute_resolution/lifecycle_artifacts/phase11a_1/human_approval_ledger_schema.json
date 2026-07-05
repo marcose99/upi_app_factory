@@ -1,0 +1,40 @@
+{
+  "allowed_statuses": [
+    "PENDING",
+    "APPROVED",
+    "REJECTED",
+    "EXPIRED"
+  ],
+  "app_id": "upi_dispute_resolution",
+  "artifact": "human_approval_ledger_schema.json",
+  "labels": [
+    "HUMAN_APPROVAL_REQUIRED"
+  ],
+  "phase": "Phase 11A.1",
+  "protected_actions": [
+    "write_workspace_draft",
+    "apply_patch",
+    "delete_file",
+    "modify_existing_source",
+    "commit",
+    "merge",
+    "tag",
+    "push",
+    "release"
+  ],
+  "required_fields": [
+    "approval_id",
+    "run_id",
+    "requested_by_agent",
+    "requested_action",
+    "risk_level",
+    "artifact_refs",
+    "validation_report_refs",
+    "approval_status",
+    "approved_by",
+    "approved_at_utc",
+    "approval_reason"
+  ],
+  "rule": "Protected actions are blocked unless an APPROVED ledger entry exists.",
+  "schema_name": "HumanApprovalLedgerEntry"
+}

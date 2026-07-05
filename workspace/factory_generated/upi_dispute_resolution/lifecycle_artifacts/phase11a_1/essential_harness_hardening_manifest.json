@@ -1,0 +1,48 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "essential_harness_hardening_manifest.json",
+  "controls": [
+    "autonomy_level_policy",
+    "fail_closed_tool_permission_matrix",
+    "human_approval_ledger_schema",
+    "checkpoint_replay_policy",
+    "prompt_injection_and_untrusted_input_policy",
+    "secret_and_environment_guard_policy",
+    "model_budget_and_provider_policy",
+    "agent_repair_loop_policy",
+    "generated_code_acceptance_contract",
+    "agent_evaluation_rubric",
+    "phase11b_go_no_go_gate"
+  ],
+  "implementation_files_written": 0,
+  "labels": [
+    "MOCK_BOUNDARY",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_DATA",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "FAIL_CLOSED",
+    "CHECKPOINT_REPLAY_REQUIRED",
+    "PROMPT_INJECTION_DEFENSE_REQUIRED",
+    "SECRET_EXFILTRATION_BLOCKED",
+    "COST_BUDGET_REQUIRED",
+    "REPAIR_LOOP_LIMIT_REQUIRED"
+  ],
+  "llm_calls_made": 0,
+  "network_calls_made": 0,
+  "phase": "Phase 11A.1",
+  "phase10_3_dir": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_3",
+  "phase11a_dir": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase11a",
+  "phase11a_readiness_passed": true,
+  "phase11a_report_summary": {
+    "errors": [],
+    "passed": true,
+    "warnings": [
+      "Phase 11A is ready for governed agentic generation harness use. Unsupported live regulatory, economic, and technology values remain labelled."
+    ]
+  },
+  "purpose": "Essential operating controls before agent-generated code."
+}
