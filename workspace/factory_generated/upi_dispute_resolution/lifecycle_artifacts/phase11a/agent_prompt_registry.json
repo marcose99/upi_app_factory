@@ -1,0 +1,78 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "agent_prompt_registry.json",
+  "phase": "Phase 11A",
+  "prompt_dir": "prompts/phase11a",
+  "prompts": [
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/implementation_planner_agent.md",
+      "role_id": "implementation_planner_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/contract_model_agent.md",
+      "role_id": "contract_model_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/mock_adapter_agent.md",
+      "role_id": "mock_adapter_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/service_logic_agent.md",
+      "role_id": "service_logic_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/test_generation_agent.md",
+      "role_id": "test_generation_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/security_review_agent.md",
+      "role_id": "security_review_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/observability_agent.md",
+      "role_id": "observability_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/documentation_agent.md",
+      "role_id": "documentation_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/validation_agent.md",
+      "role_id": "validation_agent"
+    },
+    {
+      "must_follow_execution_policy": true,
+      "must_preserve_mock_boundary": true,
+      "must_use_deterministic_validation": true,
+      "prompt_file": "prompts/phase11a/release_readiness_agent.md",
+      "role_id": "release_readiness_agent"
+    }
+  ]
+}

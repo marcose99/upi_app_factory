@@ -1,0 +1,53 @@
+{
+  "artifact": "phase11a_validation_report.json",
+  "checked_agent_roles": [
+    "implementation_planner_agent",
+    "contract_model_agent",
+    "mock_adapter_agent",
+    "service_logic_agent",
+    "test_generation_agent",
+    "security_review_agent",
+    "observability_agent",
+    "documentation_agent",
+    "validation_agent",
+    "release_readiness_agent"
+  ],
+  "checked_artifacts": [
+    "agentic_generation_harness_manifest.json",
+    "agent_role_catalog.json",
+    "agent_tool_contracts.json",
+    "agent_state_schema.json",
+    "agent_execution_policy.md",
+    "agent_prompt_registry.json",
+    "agent_deterministic_shadow_run.json",
+    "proposed_generation_plan.json",
+    "phase11b_entry_criteria.md",
+    "phase11a_validation_report.json"
+  ],
+  "checked_required_labels": [
+    "MOCK_BOUNDARY",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_DATA",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED"
+  ],
+  "checked_tool_contracts": [
+    "read_governance_artifact",
+    "read_prompt",
+    "propose_file_plan",
+    "propose_patch",
+    "run_deterministic_validator",
+    "record_decision",
+    "request_human_approval",
+    "write_workspace_draft"
+  ],
+  "errors": [],
+  "passed": true,
+  "phase": "Phase 11A",
+  "warnings": [
+    "Phase 11A is ready for governed agentic generation harness use. Unsupported live regulatory, economic, and technology values remain labelled."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "approval_required_before_commit": true,
+  "approval_required_before_write": true,
+  "artifact": "proposed_generation_plan.json",
+  "deterministic_validation_required": true,
+  "phase": "Phase 11A",
+  "phase11b_file_plan": [
+    "README.md",
+    "generated_app_manifest.json",
+    "traceability_to_phase10.json",
+    "src/upi_dispute_resolution_app/models.py",
+    "src/upi_dispute_resolution_app/mock_adapters.py",
+    "src/upi_dispute_resolution_app/service.py",
+    "src/upi_dispute_resolution_app/api.py",
+    "tests/test_service.py",
+    "docs/debug_guide.md",
+    "docs/mock_boundary.md",
+    "phase11b_validation_report.json"
+  ],
+  "phase11b_goal": "Use governed agents to generate the first mock application skeleton.",
+  "planned_output_root": "workspace/factory_generated/upi_dispute_resolution/generated_application/phase11b",
+  "planned_sequence": [
+    "implementation_planner_agent",
+    "contract_model_agent",
+    "mock_adapter_agent",
+    "service_logic_agent",
+    "test_generation_agent",
+    "security_review_agent",
+    "observability_agent",
+    "documentation_agent",
+    "validation_agent",
+    "release_readiness_agent"
+  ]
+}

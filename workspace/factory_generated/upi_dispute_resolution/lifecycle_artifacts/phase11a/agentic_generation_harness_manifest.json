@@ -1,0 +1,60 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "agentic_generation_harness_manifest.json",
+  "deterministic_validation_required": true,
+  "human_approval_required": true,
+  "no_direct_commit_by_agents": true,
+  "phase": "Phase 11A",
+  "phase10_3_dir": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10_3",
+  "phase10_3_readiness_passed": true,
+  "phase10_3_report_summary": {
+    "errors": [],
+    "passed": true,
+    "warnings": [
+      "Phase 11 may proceed for mock/demo generation, but unsupported live regulatory, economic, and technology-specific values must remain labelled."
+    ]
+  },
+  "purpose": "Prepare governed agentic code-generation harness before implementation generation.",
+  "required_labels": [
+    "MOCK_BOUNDARY",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_DATA",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "DETERMINISTIC_VALIDATION_REQUIRED"
+  ],
+  "runtime_candidates": [
+    {
+      "name": "LangGraph",
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "usage": "Stateful multi-agent orchestration candidate."
+    },
+    {
+      "name": "LangChain",
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "usage": "Agent/tool abstraction candidate."
+    },
+    {
+      "name": "OpenAI API",
+      "source_status": "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+      "usage": "Preferred LLM provider candidate when configured."
+    }
+  ],
+  "runtime_modes": [
+    {
+      "default": true,
+      "mode": "deterministic_shadow",
+      "requires_llm": false,
+      "requires_network": false
+    },
+    {
+      "default": false,
+      "mode": "langgraph_agentic",
+      "requires_llm": true,
+      "requires_network": true,
+      "status": "future_enabled_after_configuration"
+    }
+  ]
+}
