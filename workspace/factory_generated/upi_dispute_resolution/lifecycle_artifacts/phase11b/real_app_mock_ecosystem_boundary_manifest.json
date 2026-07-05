@@ -1,0 +1,24 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "boundary_summary": "Generate the primary payment application as real local software. Generate banks, payment rails, networks, third-party systems, and upstream/downstream dependencies as simulated ecosystem apps.",
+  "external_ecosystem_mock_only": true,
+  "external_payment_connectivity_allowed": false,
+  "generation_mode": "real_local_primary_payment_application_with_mock_ecosystem",
+  "phase": "Phase 11B",
+  "primary_application_real": true,
+  "production_claims_allowed": false,
+  "real_payment_processing_allowed": false,
+  "required_labels": [
+    "PRIMARY_PAYMENT_APPLICATION_REAL_LOCAL_SOFTWARE",
+    "EXTERNAL_ECOSYSTEM_MOCK_ONLY",
+    "SYNTHETIC_DATA_ONLY",
+    "REAL_PAYMENT_PROCESSING_FORBIDDEN",
+    "EXTERNAL_CONNECTIVITY_FAIL_CLOSED",
+    "PRODUCTION_CLAIMS_FORBIDDEN",
+    "MIGRATION_SEAMS_ALLOWED",
+    "DETERMINISTIC_VALIDATION_REQUIRED",
+    "TRACEABILITY_REQUIRED",
+    "QUALITY_GATES_REQUIRED"
+  ],
+  "synthetic_data_only": true
+}
