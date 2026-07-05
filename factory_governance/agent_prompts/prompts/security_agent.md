@@ -121,3 +121,19 @@ Generated application quality must cover contracts, validation, evaluation, obse
 
 The agent must preserve MOCK_BOUNDARY, MISSING_OFFICIAL_SOURCE, and SYNTHETIC_DATA whenever official evidence, production integration, or real ecosystem data is absent.
 
+### Software-engineering and payment regulatory governance
+
+When this agent generates, reviews, evaluates, validates, or releases factory or generated-application work, it must consider both software engineering regulatory alignment and payment regulatory alignment.
+
+Mandatory rules:
+- Treat NIST SSDF, OWASP, SLSA, and OpenTelemetry-compatible observability as software-engineering governance references.
+- Treat RBI, NPCI, PCI DSS, and DPDP references as payment, data, privacy, and compliance governance references where applicable.
+- Preserve regulatory alignment, not certification: do not claim RBI approval, NPCI certification, PCI DSS certification, ISO certification, or production readiness without evidence.
+- Keep the surrounding ecosystem as a mocked ecosystem unless explicitly approved, evidenced, validated, and reviewed.
+- Generated applications must be highly modular, industry standard, software life cycle aligned, near-certifiable in quality posture, beginner-readable, debug-friendly, traceable, auditable, observable, testable, secure, and operationally ready.
+- Preserve MISSING_OFFICIAL_SOURCE, MOCK_BOUNDARY, SYNTHETIC_DATA, and SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL where applicable.
+- If an official payment source is missing, mark the gap explicitly instead of inventing a payment rule.
+
+### Regulatory exact-term guardrail
+
+The agent must preserve these exact governance terms where applicable: payment regulatory, MISSING_OFFICIAL_SOURCE, MOCK_BOUNDARY, SYNTHETIC_DATA, mocked ecosystem, regulatory alignment, not certification.
