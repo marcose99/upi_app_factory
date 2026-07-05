@@ -1,0 +1,150 @@
+{
+  "schema_version": "factory.regulatory_applicability_matrix.v1",
+  "purpose": "Map regulatory and software-engineering sources to factory controls and generated-application expectations.",
+  "entries": [
+    {
+      "source_id": "SER-NIST-SSDF",
+      "applies_to": [
+        "factory",
+        "generated_application"
+      ],
+      "control_expectations": [
+        "secure SDLC practices",
+        "secure design review",
+        "secure coding expectations",
+        "security validation",
+        "release-readiness evidence"
+      ],
+      "current_status": "aligned_by_policy_and_validation",
+      "limitations": "No external certification claim"
+    },
+    {
+      "source_id": "SER-OWASP-LLM",
+      "applies_to": [
+        "factory"
+      ],
+      "control_expectations": [
+        "prompt injection awareness",
+        "insecure output handling prevention",
+        "excessive agency prevention",
+        "tool-use restrictions before real agents"
+      ],
+      "current_status": "aligned_by_prompt_contracts",
+      "limitations": "No live adversarial LLM testing yet"
+    },
+    {
+      "source_id": "SER-SLSA-PROVENANCE",
+      "applies_to": [
+        "factory"
+      ],
+      "control_expectations": [
+        "artifact hashes",
+        "run manifests",
+        "source provenance",
+        "validation reports"
+      ],
+      "current_status": "partial_local_alignment",
+      "limitations": "No signed attestations yet"
+    },
+    {
+      "source_id": "SER-OPENTELEMETRY",
+      "applies_to": [
+        "factory",
+        "generated_application"
+      ],
+      "control_expectations": [
+        "structured events",
+        "correlation IDs",
+        "future logs/metrics/traces"
+      ],
+      "current_status": "audit_jsonl_today_future_otel",
+      "limitations": "No real telemetry backend yet"
+    },
+    {
+      "source_id": "PAY-RBI-DPSC-2021",
+      "applies_to": [
+        "generated_application",
+        "payment_domain_pack"
+      ],
+      "control_expectations": [
+        "digital payment security controls",
+        "fraud and risk awareness",
+        "authentication assumptions",
+        "secure customer communication"
+      ],
+      "current_status": "alignment_only",
+      "limitations": "Official RBI text must be reviewed by compliance before production use"
+    },
+    {
+      "source_id": "PAY-RBI-ODR-2020",
+      "applies_to": [
+        "generated_application",
+        "payment_domain_pack"
+      ],
+      "control_expectations": [
+        "technology-driven dispute redressal",
+        "rule-based flow",
+        "customer-friendly workflow",
+        "transparent dispute status"
+      ],
+      "current_status": "mock_workflow_alignment",
+      "limitations": "No official ODR integration or certification claim"
+    },
+    {
+      "source_id": "PAY-NPCI-UPI-CIRCULARS",
+      "applies_to": [
+        "payment_domain_pack"
+      ],
+      "control_expectations": [
+        "official UPI circular tracking",
+        "UPI operating assumption registry",
+        "mock boundary visibility"
+      ],
+      "current_status": "source_registry_only",
+      "limitations": "No NPCI member portal/private circular access in current baseline"
+    },
+    {
+      "source_id": "PAY-PCI-DSS-401",
+      "applies_to": [
+        "generated_application"
+      ],
+      "control_expectations": [
+        "cardholder-data scope assessment",
+        "card data exclusion by default",
+        "PCI DSS applicability warning when card data is introduced"
+      ],
+      "current_status": "currently_out_of_scope",
+      "limitations": "UPI mock app does not process cardholder data"
+    },
+    {
+      "source_id": "DATA-DPDP-ACT-2023",
+      "applies_to": [
+        "generated_application"
+      ],
+      "control_expectations": [
+        "synthetic data by default",
+        "personal data minimization",
+        "privacy boundary declaration",
+        "retention and deletion assumptions"
+      ],
+      "current_status": "synthetic_data_alignment",
+      "limitations": "No real personal data processing in current baseline"
+    },
+    {
+      "source_id": "PAY-RBI-CUSTOMER-LIABILITY-2017",
+      "applies_to": [
+        "generated_application",
+        "payment_domain_pack"
+      ],
+      "control_expectations": [
+        "customer liability and unauthorized transaction assumptions",
+        "customer notification and reporting timelines must be source-grounded before production use",
+        "synthetic customer and dispute data by default",
+        "mocked ecosystem boundary for bank, PSP, NPCI, and customer notification integrations",
+        "MISSING_OFFICIAL_SOURCE must be preserved when rule details are not officially sourced"
+      ],
+      "current_status": "alignment_only",
+      "limitations": "Official RBI guidance must be reviewed by compliance, legal, security, and domain experts before production use; no customer-liability compliance claim is made."
+    }
+  ]
+}

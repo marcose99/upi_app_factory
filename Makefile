@@ -80,3 +80,6 @@ validate-quality-dimensions:
 
 validate-generated-application-quality-prompting:
 	python scripts/validate_generated_application_quality_prompting.py
+
+validate-regulatory-governance:
+	python scripts/validate_regulatory_governance.py

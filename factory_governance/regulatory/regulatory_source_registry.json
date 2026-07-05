@@ -1,0 +1,106 @@
+{
+  "schema_version": "factory.regulatory_source_registry.v1",
+  "purpose": "Registry of software-engineering and payment-domain sources used for governance alignment. This is regulatory alignment, not certification.",
+  "honesty_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA"
+  ],
+  "software_engineering_references": [
+    {
+      "id": "SER-NIST-SSDF",
+      "name": "NIST Secure Software Development Framework SP 800-218",
+      "source_owner": "NIST",
+      "source_type": "secure software development framework",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "applicability": "Factory and generated-application secure SDLC practices",
+      "current_use": "Alignment only; no certification claim"
+    },
+    {
+      "id": "SER-OWASP-LLM",
+      "name": "OWASP Top 10 for LLM and Generative AI Applications",
+      "source_owner": "OWASP",
+      "source_type": "AI/LLM application security risks",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "applicability": "Prompt injection, insecure output handling, excessive agency, supply-chain and model-mediated risks",
+      "current_use": "Alignment only"
+    },
+    {
+      "id": "SER-SLSA-PROVENANCE",
+      "name": "SLSA Build Provenance",
+      "source_owner": "OpenSSF / SLSA",
+      "source_type": "software supply-chain provenance",
+      "url": "https://slsa.dev/spec/draft/build-provenance",
+      "applicability": "Generated artifact provenance, hashes, build/run context, and reproducibility evidence",
+      "current_use": "Conceptual alignment with future attestation path"
+    },
+    {
+      "id": "SER-OPENTELEMETRY",
+      "name": "OpenTelemetry",
+      "source_owner": "OpenTelemetry project",
+      "source_type": "observability framework",
+      "url": "https://opentelemetry.io/docs/what-is-opentelemetry/",
+      "applicability": "Future logs, traces, metrics, correlation IDs, run IDs, agent IDs, and workflow step IDs",
+      "current_use": "Design alignment; current project uses structured JSONL audit events"
+    }
+  ],
+  "payment_regulatory_references": [
+    {
+      "id": "PAY-RBI-DPSC-2021",
+      "name": "RBI Digital Payment Security Controls Directions, 2021",
+      "source_owner": "Reserve Bank of India",
+      "source_type": "digital payment security directions",
+      "url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12032&Mode=0",
+      "applicability": "Digital payment security controls, fraud monitoring, risk controls, authentication, security governance",
+      "current_use": "Referenced for alignment only; official text must be reviewed before production use"
+    },
+    {
+      "id": "PAY-RBI-ODR-2020",
+      "name": "RBI Online Dispute Resolution System for Digital Payments",
+      "source_owner": "Reserve Bank of India",
+      "source_type": "digital payment dispute-resolution direction",
+      "url": "https://www.rbi.org.in/commonman/English/Scripts/Notification.aspx?Id=3194",
+      "applicability": "Technology-driven, rule-based, customer-friendly and transparent dispute redressal expectations",
+      "current_use": "Alignment for mock dispute-resolution workflow; no official ODR certification claim"
+    },
+    {
+      "id": "PAY-RBI-CUSTOMER-LIABILITY-2017",
+      "name": "RBI Customer Liability in Unauthorised Electronic Banking Transactions",
+      "source_owner": "Reserve Bank of India",
+      "source_type": "customer protection / electronic banking liability",
+      "url": "https://www.rbi.org.in/commonperson/english/Scripts/Notification.aspx?Id=2336",
+      "applicability": "Customer notification, dispute reporting, unauthorized transaction handling, alerting expectations",
+      "current_use": "Alignment only"
+    },
+    {
+      "id": "PAY-NPCI-UPI-CIRCULARS",
+      "name": "NPCI UPI Circulars",
+      "source_owner": "National Payments Corporation of India",
+      "source_type": "UPI operating circulars and product circulars",
+      "url": "https://www.npci.org.in/circulars/upi",
+      "applicability": "UPI scheme circulars, operating changes, dispute/process updates where publicly available",
+      "current_use": "Source registry only; project does not claim NPCI certification"
+    },
+    {
+      "id": "PAY-PCI-DSS-401",
+      "name": "PCI DSS v4.0.1",
+      "source_owner": "PCI Security Standards Council",
+      "source_type": "cardholder-data security standard",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "applicability": "Only applicable if cardholder data, card rails, or card-payment scope is introduced",
+      "current_use": "Currently out of scope for UPI mock app unless card data is added"
+    }
+  ],
+  "privacy_data_references": [
+    {
+      "id": "DATA-DPDP-ACT-2023",
+      "name": "Digital Personal Data Protection Act, 2023",
+      "source_owner": "Government of India / MeitY",
+      "source_type": "digital personal data protection law",
+      "url": "https://www.meity.gov.in/content/digital-personal-data-protection-act-2023",
+      "applicability": "Personal data processing, minimization, consent/legal basis, data principal rights, retention and protection expectations",
+      "current_use": "Alignment only; synthetic data is used in the current project"
+    }
+  ]
+}
