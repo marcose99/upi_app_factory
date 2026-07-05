@@ -51,3 +51,7 @@ run-governed-factory-run:
 
 validate-factory-run:
 	python scripts/validate_factory_run_manifest.py --latest
+
+.PHONY: validate-debugging-standards
+validate-debugging-standards:
+	python scripts/validate_project_debugging_standards.py
