@@ -1,0 +1,351 @@
+{
+  "artifact": "traceability_matrix.json",
+  "phase": "Phase 10",
+  "rows": [
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "architecture_options.md:Economics",
+        "hld.md:Economics design"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_DATA",
+        "MOCK_BOUNDARY"
+      ],
+      "requirement_id": "RQ-FUN-001",
+      "requirement_title": "Capture a mock UPI dispute case",
+      "requirement_type": "functional",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-002"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "architecture_options.md:Economics",
+        "hld.md:Economics design"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "requirement_id": "RQ-FUN-002",
+      "requirement_title": "Classify dispute pathway deterministically",
+      "requirement_type": "functional",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-002"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "architecture_options.md:Economics",
+        "hld.md:Economics design"
+      ],
+      "honesty_labels": [
+        "MISSING_OFFICIAL_SOURCE"
+      ],
+      "requirement_id": "RQ-FUN-003",
+      "requirement_title": "Generate an evidence pack before decision output",
+      "requirement_type": "functional",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-002"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "architecture_options.md:Economics",
+        "hld.md:Economics design"
+      ],
+      "honesty_labels": [
+        "MOCK_BOUNDARY"
+      ],
+      "requirement_id": "RQ-FUN-004",
+      "requirement_title": "Use a mocked ecosystem for all external participants",
+      "requirement_type": "functional",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-002",
+        "WBS-010-003",
+        "WBS-010-006"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "architecture_options.md:Economics",
+        "hld.md:Economics design"
+      ],
+      "honesty_labels": [
+        "MISSING_OFFICIAL_SOURCE",
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "requirement_id": "RQ-GOV-001",
+      "requirement_title": "Preserve governance, audit, and release readiness",
+      "requirement_type": "governance",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-001",
+        "WBS-010-002",
+        "WBS-010-006",
+        "WBS-010-007",
+        "WBS-010-008",
+        "WBS-010-009"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "architecture_options.md:Economics",
+        "hld.md:Economics design"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "requirement_id": "RQ-QUAL-001",
+      "requirement_title": "Carry generated-application quality dimensions into planning",
+      "requirement_type": "quality",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-001",
+        "WBS-010-004",
+        "WBS-010-006",
+        "WBS-010-007",
+        "WBS-010-008",
+        "WBS-010-009"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "requirements_analysis.json:official_reference_candidates",
+        "domain_analysis.md:Regulatory-alignment themes"
+      ],
+      "honesty_labels": [
+        "MISSING_OFFICIAL_SOURCE"
+      ],
+      "requirement_id": "RQ-REG-001",
+      "requirement_title": "Align with payment regulatory themes without overclaiming",
+      "requirement_type": "regulatory_alignment",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-003",
+        "WBS-010-009"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "requirements_analysis.json:economics_guidance",
+        "domain_analysis.md:Economics",
+        "architecture_options.md:Economics",
+        "architecture_decision_record.md:Economic rationale"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+        "MISSING_OFFICIAL_SOURCE"
+      ],
+      "requirement_id": "RQ-ECO-001",
+      "requirement_title": "Model factory economics before generation",
+      "requirement_type": "economics",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-002",
+        "WBS-010-004",
+        "WBS-010-005",
+        "WBS-010-009"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "requirements_analysis.json:economics_guidance",
+        "domain_analysis.md:Economics",
+        "architecture_options.md:Economics",
+        "architecture_decision_record.md:Economic rationale"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_DATA",
+        "MISSING_OFFICIAL_SOURCE",
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "requirement_id": "RQ-ECO-002",
+      "requirement_title": "Model application-level dispute economics",
+      "requirement_type": "economics",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-002",
+        "WBS-010-003",
+        "WBS-010-009"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "requirements_analysis.json:economics_guidance",
+        "domain_analysis.md:Economics",
+        "architecture_options.md:Economics",
+        "architecture_decision_record.md:Economic rationale"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "requirement_id": "RQ-ECO-003",
+      "requirement_title": "Design for safe cost-risk tradeoffs",
+      "requirement_type": "economics",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-004",
+        "WBS-010-005",
+        "WBS-010-007",
+        "WBS-010-009"
+      ]
+    },
+    {
+      "design_artifacts": [
+        "requirements_analysis.json",
+        "domain_analysis.md",
+        "architecture_options.md",
+        "architecture_decision_record.md",
+        "module_design.md",
+        "hld.md",
+        "lld.md"
+      ],
+      "economics_refs": [
+        "requirements_analysis.json:economics_guidance",
+        "domain_analysis.md:Economics",
+        "architecture_options.md:Economics",
+        "architecture_decision_record.md:Economic rationale"
+      ],
+      "honesty_labels": [
+        "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+      ],
+      "requirement_id": "RQ-ECO-004",
+      "requirement_title": "Keep tooling modular to manage vendor and switching economics",
+      "requirement_type": "economics",
+      "validation_refs": [
+        "planning_validation_report.json",
+        "tests/test_phase10_lifecycle_planner.py"
+      ],
+      "wbs_task_ids": [
+        "WBS-010-005",
+        "WBS-010-006",
+        "WBS-010-009"
+      ]
+    }
+  ],
+  "traceability_rule": "Every requirement must map to design, WBS, validation, economics, and honesty labels."
+}
