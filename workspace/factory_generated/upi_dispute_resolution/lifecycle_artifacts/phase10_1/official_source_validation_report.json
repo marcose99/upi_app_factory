@@ -1,0 +1,50 @@
+{
+  "artifact": "official_source_validation_report.json",
+  "checked_artifacts": [
+    "official_source_registry.json",
+    "official_source_evidence_pack.md",
+    "regulatory_economics_source_gap_report.json",
+    "source_freshness_policy.md",
+    "source_usage_policy.md",
+    "source_to_requirement_traceability.json",
+    "official_source_validation_report.json"
+  ],
+  "checked_claim_ids": [
+    "SRC-LIAB-001",
+    "SRC-LIAB-002",
+    "SRC-LIAB-003",
+    "SRC-NPCI-COMPLAINT-001",
+    "SRC-NPCI-STATS-001",
+    "SRC-NPCI-UPI-001",
+    "SRC-ODR-001",
+    "SRC-ODR-002",
+    "SRC-ODR-003",
+    "SRC-TAT-001",
+    "SRC-TAT-002",
+    "SRC-TAT-003"
+  ],
+  "checked_required_labels": [
+    "SOURCE_BACKED_REFERENCE",
+    "OFFICIAL_SOURCE_REFERENCE",
+    "MISSING_OFFICIAL_SOURCE",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA",
+    "USER_PROVIDED_VALUE"
+  ],
+  "checked_source_ids": [
+    "NPCI_COMPLAINT_STATUS",
+    "NPCI_UPI_PRODUCT_PAGE",
+    "NPCI_UPI_PRODUCT_STATISTICS",
+    "RBI_FAILED_TRANSACTION_TAT_2019",
+    "RBI_LIMITED_LIABILITY_2017",
+    "RBI_ODR_DIGITAL_PAYMENTS_2020"
+  ],
+  "errors": [],
+  "passed": true,
+  "phase": "Phase 10.1",
+  "warnings": [
+    "Missing official sources are intentionally visible. Do not replace them with guessed regulatory, operational, or economic values.",
+    "Dynamic NPCI statistics must be captured with a date before being used for capacity or economics claims."
+  ]
+}
