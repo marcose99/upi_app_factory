@@ -1,0 +1,540 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact": "sdlc_best_practice_traceability.json",
+  "phase": "Phase 10.2",
+  "rows": [
+    {
+      "best_practice_controls": [
+        "clear module boundaries",
+        "type hints for public interfaces",
+        "small beginner-readable functions",
+        "explicit exceptions and helpful error messages",
+        "deterministic tests before generation is trusted",
+        "avoid hidden runtime network calls in governance scripts",
+        "pin or document supported interpreter version",
+        "avoid version-specific syntax unless supported by project Python"
+      ],
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "Python",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "python",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "use set -euo pipefail",
+        "quote variables",
+        "fail closed on unsafe preflight conditions",
+        "print clear step banners",
+        "avoid destructive commands unless explicitly guarded",
+        "make reruns idempotent where practical"
+      ],
+      "lifecycle_phases": [
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "Bash",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "bash",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "use clean-working-tree preflight",
+        "use branches for phases",
+        "use tags as restore points",
+        "avoid rewriting shared history",
+        "show staged files before commit"
+      ],
+      "lifecycle_phases": [
+        "release",
+        "maintenance"
+      ],
+      "name": "Git",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "git",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "push branches and tags explicitly",
+        "keep remote restore points",
+        "avoid exposing secrets in repository artifacts",
+        "use pull requests when human review is required"
+      ],
+      "lifecycle_phases": [
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "GitHub",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "github",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "stable keys",
+        "deterministic ordering when generated",
+        "machine-validated required fields",
+        "no comments inside JSON",
+        "separate synthetic values from source-backed values"
+      ],
+      "lifecycle_phases": [
+        "requirements",
+        "architecture",
+        "design",
+        "testing",
+        "release",
+        "maintenance"
+      ],
+      "name": "JSON",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "json",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "clear headings",
+        "explicit boundaries",
+        "tables for comparisons",
+        "copy-paste runnable commands where applicable",
+        "avoid ambiguous compliance wording"
+      ],
+      "lifecycle_phases": [
+        "requirements",
+        "architecture",
+        "design",
+        "release",
+        "operations",
+        "maintenance"
+      ],
+      "name": "Markdown",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "markdown",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "test happy path and negative path",
+        "use tmp_path for generated artifacts",
+        "assert validation failures explicitly",
+        "keep tests deterministic and fast",
+        "avoid network-dependent tests in governance modules"
+      ],
+      "lifecycle_phases": [
+        "testing",
+        "release",
+        "maintenance"
+      ],
+      "name": "pytest",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "pytest",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "run on changed Python scripts and tests",
+        "treat lint failures as quality-gate failures",
+        "prefer explicit fixes over suppressions"
+      ],
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release"
+      ],
+      "name": "Ruff",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "ruff",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "type-check source scripts before release",
+        "prefer explicit return types",
+        "avoid Any unless it is controlled at JSON boundaries"
+      ],
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release"
+      ],
+      "name": "Mypy",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "mypy",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "use explicit request and response models",
+        "separate routers, services, and adapters",
+        "validate inputs at boundaries",
+        "use dependency injection for replaceable components",
+        "document mock boundaries for external systems"
+      ],
+      "lifecycle_phases": [
+        "architecture",
+        "design",
+        "implementation",
+        "testing",
+        "operations"
+      ],
+      "name": "FastAPI",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "fastapi",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "use explicit schemas for API and artifact contracts",
+        "forbid or handle extra fields intentionally",
+        "use clear validation errors",
+        "keep source-backed, synthetic, and missing values distinct"
+      ],
+      "lifecycle_phases": [
+        "design",
+        "implementation",
+        "testing"
+      ],
+      "name": "Pydantic",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "pydantic",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "use only for local deterministic demos unless justified",
+        "document migration path to PostgreSQL if durability/concurrency grow",
+        "avoid treating local demo storage as production storage"
+      ],
+      "lifecycle_phases": [
+        "architecture",
+        "design",
+        "implementation",
+        "testing"
+      ],
+      "name": "SQLite",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "sqlite",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "use migrations for schema evolution",
+        "separate transactional data from evidence artifacts where appropriate",
+        "define indexes from access patterns",
+        "do not claim production sizing without measured workload"
+      ],
+      "lifecycle_phases": [
+        "architecture",
+        "design",
+        "implementation",
+        "operations"
+      ],
+      "name": "PostgreSQL",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "postgresql",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "keep images minimal",
+        "avoid embedding secrets",
+        "document build and run commands",
+        "separate dev/demo configuration from production-like configuration"
+      ],
+      "lifecycle_phases": [
+        "implementation",
+        "testing",
+        "release",
+        "operations"
+      ],
+      "name": "Docker",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "docker",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "define trace/span boundaries before instrumentation",
+        "avoid logging secrets or personal data",
+        "correlate request ids and evidence ids",
+        "keep observability vendor-neutral where practical"
+      ],
+      "lifecycle_phases": [
+        "architecture",
+        "implementation",
+        "observability",
+        "operations"
+      ],
+      "name": "OpenTelemetry",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "opentelemetry",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    },
+    {
+      "best_practice_controls": [
+        "encode release policies as deterministic checks",
+        "treat policy failure as fail-closed",
+        "keep policy inputs explicit and auditable"
+      ],
+      "lifecycle_phases": [
+        "security",
+        "testing",
+        "release"
+      ],
+      "name": "OPA / Conftest",
+      "prompt_refs": [
+        "technology_specific_prompt_instructions.md",
+        "prompts/phase10/requirement_to_architecture_to_plan_prompt.md",
+        "prompts/phase10_1/official_source_evidence_registry_prompt.md"
+      ],
+      "required_labels": [
+        "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+        "VERSION_SPECIFIC_REVIEW_REQUIRED"
+      ],
+      "source_refs": [
+        "sdlc_technology_registry.json",
+        "sdlc_best_practice_gap_report.json"
+      ],
+      "technology_id": "opa_conftest",
+      "validation_refs": [
+        "sdlc_best_practice_validation_report.json",
+        "tests/test_phase10_2_sdlc_best_practice_governance.py"
+      ]
+    }
+  ],
+  "traceability_rule": "Each SDLC technology must map to lifecycle phases, controls, prompt instructions, validation, source references, and labels."
+}

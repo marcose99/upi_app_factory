@@ -1,0 +1,43 @@
+{
+  "artifact": "sdlc_best_practice_validation_report.json",
+  "checked_artifacts": [
+    "sdlc_technology_registry.json",
+    "sdlc_best_practice_policy.md",
+    "technology_specific_prompt_instructions.md",
+    "sdlc_best_practice_traceability.json",
+    "sdlc_best_practice_gap_report.json",
+    "sdlc_best_practice_validation_report.json"
+  ],
+  "checked_required_labels": [
+    "OFFICIAL_DOC_REFERENCE_CANDIDATE",
+    "MISSING_OFFICIAL_SOURCE",
+    "TECHNOLOGY_SPECIFIC_BEST_PRACTICE_REQUIRED",
+    "VERSION_SPECIFIC_REVIEW_REQUIRED",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+  ],
+  "checked_technology_ids": [
+    "bash",
+    "docker",
+    "fastapi",
+    "git",
+    "github",
+    "json",
+    "markdown",
+    "mypy",
+    "opa_conftest",
+    "opentelemetry",
+    "postgresql",
+    "pydantic",
+    "pytest",
+    "python",
+    "ruff",
+    "sqlite"
+  ],
+  "errors": [],
+  "passed": true,
+  "phase": "Phase 10.2",
+  "warnings": [
+    "Unsupported version-specific, security-sensitive, production, or cost claims must remain MISSING_OFFICIAL_SOURCE."
+  ]
+}
