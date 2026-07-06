@@ -1,0 +1,32 @@
+{
+  "animated_diagrams": "inline SVG with CSS animation; no external network dependency",
+  "artifact": "human_validator_audit_portal.html",
+  "location": "workspace/factory_generated/upi_dispute_resolution/audit_portal/human_validator_audit_portal.html",
+  "must_include_after_generation": [
+    "factory overview",
+    "factory capabilities",
+    "factory architecture",
+    "guardrails",
+    "agent workflow",
+    "tool authorization",
+    "memory/RAG/context policy",
+    "LLM metrics and cost",
+    "validation/test/evaluation summaries",
+    "risk and policy findings",
+    "audit evidence manifest",
+    "generated application capabilities",
+    "generated application architecture",
+    "generated application data flow",
+    "domain scenario coverage",
+    "human validator checklist"
+  ],
+  "must_not_claim": [
+    "production readiness",
+    "regulatory compliance",
+    "RBI certification",
+    "NPCI certification",
+    "live payment capability"
+  ],
+  "offline": true,
+  "phase": "Phase 12A"
+}

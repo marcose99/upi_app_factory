@@ -1,0 +1,25 @@
+{
+  "decisions": [
+    "pass",
+    "pass_with_findings",
+    "fail",
+    "not_applicable"
+  ],
+  "mandatory_fields": [
+    "dimension",
+    "score",
+    "evidence_paths",
+    "findings",
+    "risks",
+    "recommendations",
+    "decision"
+  ],
+  "score_scale": {
+    "0": "missing",
+    "1": "weak",
+    "2": "partial",
+    "3": "acceptable",
+    "4": "strong",
+    "5": "excellent"
+  }
+}

@@ -198,3 +198,22 @@ Mandatory UPI business-domain safety and regulatory guideline awareness:
 - Agents must preserve fairness, customer harm prevention, safe error messages, tamper-evident audit records, immutable evidence where appropriate, replay protection, idempotency, authorization checks, least-privilege access, and fail-closed handling for uncertain regulatory/domain conditions.
 - If a requirement appears to require live integration, regulated certification, legal interpretation, customer data, production money movement, or direct regulator/bank/PSP connectivity, classify it as out-of-scope for local generation and route it to mock ecosystem simulation plus gap/escalation reporting.
 <!-- /PHASE_11C_UPI_DOMAIN_SAFETY_REGULATORY_GUARDRAILS -->
+
+<!-- PHASE_12A_INDEPENDENT_AUDIT_ASSURANCE_VALUE_VALIDATION -->
+## Phase 12A Independent Audit, Assurance, and Value Validation Contract
+
+Before and after governed application generation, the factory must support independent audit across two separately scored subjects:
+- the Agentic AI software factory, and
+- the generated real local primary UPI/payment dispute-resolution application with mock/simulated external ecosystem.
+
+Mandatory audit dimensions:
+- factory governance, repeatability, prompt policy, orchestration, tool authorization, memory/RAG/context engineering, metrics/cost, observability, audit logging, and release governance.
+- agentic AI safety, prompt injection, excessive agency, tool misuse, RAG poisoning, sensitive information disclosure, secret handling, and human approval gates.
+- UPI domain value, ODR/failed-transaction/unauthorised-transaction/privacy guideline awareness, mock-boundary correctness, and no regulatory compliance/certification claim.
+- architecture, HLD, LLD, API contracts, data model, workflow/state-machine, security design, observability design, test strategy, and release-readiness evidence.
+- code quality, unit tests, integration tests, domain scenario tests, regression tests, limited local load/stress tests, security tests, validation reports, evaluation scorecards, risk registers, and value scorecards.
+
+Human validator portal requirement:
+- After generation, produce an offline HTML human-validator portal with factory overview, capabilities, architecture, guardrails, agent workflow, tool policy, memory/RAG policy, metrics/cost, validations, tests, evaluations, risks, audit evidence, generated application capabilities, generated application architecture, generated application data flow, diagrams, and traceability.
+- The portal must be evidence-backed and must not claim production readiness, regulatory compliance, RBI/NPCI certification, or live payment capability.
+<!-- /PHASE_12A_INDEPENDENT_AUDIT_ASSURANCE_VALUE_VALIDATION -->
