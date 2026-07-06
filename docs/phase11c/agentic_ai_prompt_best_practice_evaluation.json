@@ -1,0 +1,46 @@
+{
+  "agentic_and_generated_application_prompt_best_practices": {
+    "app_id": "upi_dispute_resolution",
+    "checks_per_prompt": 19,
+    "conflict_patterns_checked": 6,
+    "errors": [],
+    "passed": true,
+    "phase": "Phase 11C",
+    "prompt_files_checked": 57,
+    "reference_baseline": [
+      {
+        "name": "OpenAI Agents SDK",
+        "reason": "Agent runs, tools, handoffs, guardrails, sessions, and multi-step application structure.",
+        "url": "https://developers.openai.com/api/docs/guides/agents"
+      },
+      {
+        "name": "OWASP Top 10 for LLM Applications",
+        "reason": "Prompt injection, insecure output handling, excessive agency, data leakage, and other LLM application risks.",
+        "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+      },
+      {
+        "name": "NIST AI Risk Management Framework",
+        "reason": "Govern, map, measure, and manage trustworthy AI risks through the AI system lifecycle.",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+      },
+      {
+        "name": "pytest",
+        "reason": "Unit and scenario tests using fixtures and parametrization.",
+        "url": "https://docs.pytest.org/en/stable/"
+      }
+    ]
+  },
+  "app_id": "upi_dispute_resolution",
+  "llm_call_metrics_prompt_policy": {
+    "errors": [],
+    "passed": true,
+    "prompt_files_checked": 57
+  },
+  "phase": "Phase 11C",
+  "summary": {
+    "generated_application_quality_contract_enforced": true,
+    "llm_metrics_contract_enforced": true,
+    "prompt_scope": "relevant_prompt_source_files_only",
+    "real_primary_app_mock_ecosystem_boundary": true
+  }
+}
