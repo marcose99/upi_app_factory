@@ -33,7 +33,6 @@ COMMANDS = [
 
 
 def run_git(args: list[str], *, check: bool = False) -> subprocess.CompletedProcess[str]:
-    command_to_run = cast(Sequence[str], command_spec["command"])
     return subprocess.run(
         ["git", *args],
         cwd=ROOT,
@@ -86,6 +85,7 @@ def restore_allowed_legacy_drift() -> list[str]:
 def command_result(command_spec: Mapping[str, object]) -> dict[str, Any]:
     preexisting_restored = restore_allowed_legacy_drift()
 
+    command_to_run = cast(Sequence[str], command_spec["command"])
     completed = subprocess.run(
         command_to_run,
         cwd=ROOT,
