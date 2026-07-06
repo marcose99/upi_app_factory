@@ -1,0 +1,22 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tag": "v0.13.6-readonly-validation-drift-guardrails",
+  "default_execution_mode": "local_deterministic",
+  "phase": "Phase 13H",
+  "policy_name": "release_state_lineage_registry",
+  "required_operator_commands": [
+    "./factoryctl status",
+    "./factoryctl adapters",
+    "./factoryctl validate --quick",
+    "./factoryctl validate",
+    "./factoryctl portals",
+    "./factoryctl handover",
+    "./factoryctl logs"
+  ],
+  "truth_boundary": [
+    "LangGraph/OpenAI execution is not active by default.",
+    "External execution remains detected and policy-gated.",
+    "Release-state evidence must avoid volatile timestamps and current-commit hashes.",
+    "Validation remains read-only by default after Phase 13G."
+  ]
+}

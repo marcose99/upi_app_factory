@@ -1,0 +1,27 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "components": [
+    {
+      "name": "release_state_snapshot_runner",
+      "path": "scripts/run_phase13h_release_state_snapshot.py",
+      "responsibility": "Create deterministic release-state evidence from stable milestone facts."
+    },
+    {
+      "name": "release_state_portal_generator",
+      "path": "scripts/generate_phase13h_release_state_portal.py",
+      "responsibility": "Render the release-state lineage into a local audit portal."
+    },
+    {
+      "name": "release_state_validator",
+      "path": "scripts/validate_phase13h_release_state_lineage.py",
+      "responsibility": "Validate the release-state evidence without mutating the workspace."
+    }
+  ],
+  "lineage_source_of_truth": "Versioned phase tags plus deterministic policy documents.",
+  "non_goals": [
+    "No online calls.",
+    "No OpenAI/LangGraph execution activation.",
+    "No dependency on the current commit hash for generated evidence."
+  ],
+  "phase": "Phase 13H"
+}
