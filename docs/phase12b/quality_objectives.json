@@ -1,0 +1,28 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "hard_gates": [
+    "no false regulatory compliance claim",
+    "no RBI/NPCI certification claim",
+    "no live payment rail integration",
+    "no real customer data",
+    "all deterministic validators pass",
+    "final audit report generated",
+    "human validator portal updated"
+  ],
+  "minimum_scores": {
+    "agentic_ai_safety": 4,
+    "architecture_hld_lld": 4,
+    "business_value": 4,
+    "code_quality": 4,
+    "factory_governance": 4,
+    "human_validator_portal": 4,
+    "memory_rag_context": 4,
+    "observability_audit_logging": 4,
+    "security_privacy": 4,
+    "test_quality": 4,
+    "tool_authorization": 4,
+    "upi_domain_value": 4
+  },
+  "phase": "Phase 12B",
+  "quality_objectives_met_rule": "all minimum scores met and all hard gates pass"
+}

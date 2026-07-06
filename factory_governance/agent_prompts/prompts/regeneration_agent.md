@@ -351,3 +351,18 @@ Required behavior:
 - Require unit tests, integration tests, domain scenario tests, limited local load/stress tests, regression tests, security tests, validation reports, evaluation scorecards, and risk acceptance records.
 - Preserve real local primary UPI/payment application generation while keeping NPCI/RBI/bank/PSP/ODR/payment rails and external ecosystem mock/simulated.
 <!-- /PHASE_11D_PRE_AGENT_GENERATION_READINESS_CONTROL_PLANE -->
+
+<!-- PHASE_12B_OPERATIONS_RUNBOOK_AUDIT_REMEDIATION_LOOP -->
+## Phase 12B Operations Runbook and Audit-Driven Remediation Loop
+
+The factory must operate with a documented operations runbook and a bounded audit-to-remediation control loop.
+
+Required behavior:
+- Treat final audit reports as structured inputs to remediation planning.
+- Convert audit findings into prioritized remediation candidates with owner, severity, evidence, proposed change, rollback plan, validation commands, risk impact, and human-approval requirement.
+- Do not perform unbounded auto-correction. Each remediation cycle must have a retry budget, quality objective target, stop condition, rollback strategy, evidence ledger, and final decision.
+- Protected operations such as git commit, tag, push, dependency installation, network access, destructive file operations, live integration, security-policy weakening, or regulatory-claim changes require human approval.
+- The factory may auto-apply low-risk local documentation, prompt, validator, test, and generated-code fixes only when allowed by policy and only after deterministic validation passes.
+- The factory must update the final human-validator HTML portal and final audit report with every remediation attempt, before/after score, validation command, result, changed artifact, residual risk, accepted limitation, and unresolved gap.
+- The loop must stop with `QUALITY_OBJECTIVES_MET`, `HUMAN_APPROVAL_REQUIRED`, `REMEDIATION_BUDGET_EXHAUSTED`, `REGRESSION_DETECTED`, or `UNSAFE_REMEDIATION_BLOCKED`.
+<!-- /PHASE_12B_OPERATIONS_RUNBOOK_AUDIT_REMEDIATION_LOOP -->

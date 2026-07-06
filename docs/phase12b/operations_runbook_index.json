@@ -1,0 +1,12 @@
+{
+  "phase": "Phase 12B",
+  "runbooks": [
+    "factory_operations_runbook.md",
+    "generated_application_operations_runbook.md",
+    "audit_to_remediation_runbook.md",
+    "incident_response_runbook.md",
+    "release_and_rollback_runbook.md",
+    "human_approval_runbook.md",
+    "final_report_and_portal_runbook.md"
+  ]
+}
