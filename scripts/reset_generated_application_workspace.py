@@ -8,11 +8,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+_ZONE_INFO_CLS: Any = None
 try:
-    from zoneinfo import ZoneInfo as _ZoneInfo
-except Exception:  # pragma: no cover
-    _ZoneInfo = None
-
+    from zoneinfo import ZoneInfo as _ZoneInfoImpl
+except ImportError:  # pragma: no cover - Python 3.9+ provides zoneinfo.
+    pass
+else:
+    _ZONE_INFO_CLS = _ZoneInfoImpl
 ZoneInfo: Any = _ZoneInfo
 
 
@@ -26,8 +28,8 @@ GENERATION_RUNS = FACTORY_ROOT / "generation_runs"
 
 
 def kolkata_now() -> datetime:
-    if ZoneInfo is not None:
-        return datetime.now(ZoneInfo("Asia/Kolkata"))
+    if _ZONE_INFO_CLS is not None:
+        return datetime.now(_ZONE_INFO_CLS("Asia/Kolkata"))
     return datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
 
 
