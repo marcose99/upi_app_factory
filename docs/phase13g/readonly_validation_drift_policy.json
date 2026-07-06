@@ -1,0 +1,13 @@
+{
+  "allowed_legacy_tracked_drift": [
+    "workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_operator_handover_closure_portal.html",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13f/operator_handover_audit.json"
+  ],
+  "default_mode": "read_only",
+  "deterministic_evidence_required": true,
+  "legacy_drift_handling": "detect_restore_and_report",
+  "mutation_allowed_during_validation": false,
+  "phase": "Phase 13G",
+  "policy_name": "read_only_validation_drift_guardrails",
+  "truth_boundary": "Validation is a gate, not a generator. Known legacy evidence rewrites are detected, restored, and reported until those legacy validators are made fully read-only."
+}

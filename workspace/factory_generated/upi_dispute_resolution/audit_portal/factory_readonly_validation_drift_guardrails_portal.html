@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FactoryFromNothing Phase 13G Read-only Validation Drift Guardrails</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.45; }
+h1, h2 { color: #1f2937; }
+.card { border: 1px solid #d1d5db; border-radius: 10px; padding: 1rem; margin: 1rem 0; background: #f9fafb; }
+.pass { color: #047857; font-weight: bold; }
+.fail { color: #b91c1c; font-weight: bold; }
+table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+th, td { border: 1px solid #d1d5db; padding: 0.5rem; vertical-align: top; font-size: 0.92rem; }
+th { background: #e5e7eb; }
+code { background: #eef2ff; padding: 0.15rem 0.3rem; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>Phase 13G: Read-only Validation Drift Guardrails</h1>
+<div class="card">
+  <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+  <p><strong>Commands executed:</strong> 2</p>
+  <p><strong>Drift events detected/restored:</strong> 0</p>
+  <p><strong>Unexpected tracked drift after restore:</strong> <code>[]</code></p>
+</div>
+<h2>Commands checked</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Return code</th>
+<th>Allowed drift detected</th>
+<th>Allowed drift restored</th>
+<th>Unexpected drift after restore</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>phase13f_operator_handover_closure_validator</td><td>Detect validators that still rewrite generated evidence during read-only validation.</td><td>0</td><td>[]</td><td>[]</td><td>[]</td></tr>
+<tr><td>factoryctl_handover</td><td>Confirm the operator handover command remains clean and complete.</td><td>0</td><td>[]</td><td>[]</td><td>[]</td></tr>
+</tbody>
+</table>
+<h2>Truth boundary</h2>
+<p>Validation commands are treated as read-only gates. If a legacy validator rewrites known generated evidence, the Phase 13G guardrail detects, restores, and reports that drift instead of leaving the workspace dirty.</p>
+</body>
+</html>
