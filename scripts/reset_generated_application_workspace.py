@@ -9,9 +9,11 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from zoneinfo import ZoneInfo
+    from zoneinfo import ZoneInfo as _ZoneInfo
 except Exception:  # pragma: no cover
-    ZoneInfo = None
+    _ZoneInfo = None
+
+ZoneInfo: Any = _ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
