@@ -15,7 +15,6 @@ except ImportError:  # pragma: no cover - Python 3.9+ provides zoneinfo.
     pass
 else:
     _ZONE_INFO_CLS = _ZoneInfoImpl
-ZoneInfo: Any = _ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
