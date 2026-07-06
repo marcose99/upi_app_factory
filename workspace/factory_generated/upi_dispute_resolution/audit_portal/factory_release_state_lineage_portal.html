@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Factory Release-State Lineage</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.45; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    th { background: #f4f4f4; }
+    code { background: #f6f6f6; padding: 0.1rem 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Factory Release-State Lineage</h1>
+  <p><strong>Phase:</strong> Phase 13H</p>
+  <p><strong>Application:</strong> upi_dispute_resolution</p>
+  <p><strong>Status:</strong> PASSED</p>
+  <p><strong>Baseline tag:</strong> v0.13.6-readonly-validation-drift-guardrails</p>
+  <h2>Release lineage</h2>
+  <table>
+    <thead><tr><th>Phase</th><th>Tag</th><th>Capability</th><th>Tag status</th></tr></thead>
+    <tbody><tr><td>Phase 13C</td><td>v0.13.2-real-governed-agent-runtime-foundation</td><td>real local governed agent-runtime foundation</td><td>OK</td></tr>
+<tr><td>Phase 13D</td><td>v0.13.3-governed-agent-adapter-execution-layer</td><td>governed adapter execution layer</td><td>OK</td></tr>
+<tr><td>Phase 13E</td><td>v0.13.4-factory-cli-operator-command-surface</td><td>factoryctl operator command surface</td><td>OK</td></tr>
+<tr><td>Phase 13F</td><td>v0.13.5-operator-handover-closure</td><td>operator handover closure</td><td>OK</td></tr>
+<tr><td>Phase 13G</td><td>v0.13.6-readonly-validation-drift-guardrails</td><td>read-only validation drift guardrails</td><td>OK</td></tr></tbody>
+  </table>
+  <h2>Operator commands</h2>
+  <ul><li><code>./factoryctl status</code></li>
+<li><code>./factoryctl adapters</code></li>
+<li><code>./factoryctl validate --quick</code></li>
+<li><code>./factoryctl validate</code></li>
+<li><code>./factoryctl portals</code></li>
+<li><code>./factoryctl handover</code></li>
+<li><code>./factoryctl logs</code></li></ul>
+  <h2>Required files</h2>
+  <table>
+    <thead><tr><th>Path</th><th>Status</th></tr></thead>
+    <tbody><tr><td>docs/phase13d/agent_adapter_execution_layer.md</td><td>OK</td></tr>
+<tr><td>docs/phase13e/factory_cli_operator_surface.md</td><td>OK</td></tr>
+<tr><td>docs/phase13f/operator_handover_closure.md</td><td>OK</td></tr>
+<tr><td>docs/phase13g/readonly_validation_drift_guardrails.md</td><td>OK</td></tr>
+<tr><td>factoryctl</td><td>OK</td></tr>
+<tr><td>scripts/validate_phase13e_factory_cli_operator_surface.py</td><td>OK</td></tr>
+<tr><td>scripts/validate_phase13f_operator_handover_closure.py</td><td>OK</td></tr>
+<tr><td>scripts/validate_phase13g_readonly_validation_guardrails.py</td><td>OK</td></tr></tbody>
+  </table>
+  <h2>Truth boundary</h2>
+  <p>Local deterministic execution remains the default; LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active.</p>
+</body>
+</html>

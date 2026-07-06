@@ -1,0 +1,65 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tag": "v0.13.6-readonly-validation-drift-guardrails",
+  "baseline_tag_present": true,
+  "evidence_determinism": {
+    "reason": "Avoids post-commit and post-validation drift for release-state evidence.",
+    "uses_current_commit_hash": false,
+    "uses_wall_clock_timestamp": false
+  },
+  "operator_commands": [
+    "./factoryctl status",
+    "./factoryctl adapters",
+    "./factoryctl validate --quick",
+    "./factoryctl validate",
+    "./factoryctl portals",
+    "./factoryctl handover",
+    "./factoryctl logs"
+  ],
+  "passed": true,
+  "phase": "Phase 13H",
+  "release_lineage": [
+    {
+      "capability": "real local governed agent-runtime foundation",
+      "phase": "Phase 13C",
+      "tag": "v0.13.2-real-governed-agent-runtime-foundation",
+      "tag_present": true
+    },
+    {
+      "capability": "governed adapter execution layer",
+      "phase": "Phase 13D",
+      "tag": "v0.13.3-governed-agent-adapter-execution-layer",
+      "tag_present": true
+    },
+    {
+      "capability": "factoryctl operator command surface",
+      "phase": "Phase 13E",
+      "tag": "v0.13.4-factory-cli-operator-command-surface",
+      "tag_present": true
+    },
+    {
+      "capability": "operator handover closure",
+      "phase": "Phase 13F",
+      "tag": "v0.13.5-operator-handover-closure",
+      "tag_present": true
+    },
+    {
+      "capability": "read-only validation drift guardrails",
+      "phase": "Phase 13G",
+      "tag": "v0.13.6-readonly-validation-drift-guardrails",
+      "tag_present": true
+    }
+  ],
+  "required_files": {
+    "docs/phase13d/agent_adapter_execution_layer.md": true,
+    "docs/phase13e/factory_cli_operator_surface.md": true,
+    "docs/phase13f/operator_handover_closure.md": true,
+    "docs/phase13g/readonly_validation_drift_guardrails.md": true,
+    "factoryctl": true,
+    "scripts/validate_phase13e_factory_cli_operator_surface.py": true,
+    "scripts/validate_phase13f_operator_handover_closure.py": true,
+    "scripts/validate_phase13g_readonly_validation_guardrails.py": true
+  },
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Local deterministic execution remains the default; LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active."
+}
