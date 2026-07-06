@@ -1,0 +1,28 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "name": "operator_handover_closure_policy",
+  "phase": "Phase 13F",
+  "rules": [
+    {
+      "enforcement": "validator_and_test",
+      "id": "PH13F-001",
+      "rule": "The operator handover command must not report missing required handover documents."
+    },
+    {
+      "enforcement": "file_presence_validation",
+      "id": "PH13F-002",
+      "rule": "The canonical Phase 13C agent runtime handover document must exist."
+    },
+    {
+      "enforcement": "documentation_truth_boundary",
+      "id": "PH13F-003",
+      "rule": "Phase 13F must not claim LangGraph/OpenAI execution is active by default."
+    },
+    {
+      "enforcement": "local_scripts",
+      "id": "PH13F-004",
+      "rule": "All validation and handover closure evidence must be deterministic and locally runnable."
+    }
+  ],
+  "run_id": "first_governed_generation_run_001"
+}

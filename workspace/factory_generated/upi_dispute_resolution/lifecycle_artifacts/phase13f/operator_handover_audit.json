@@ -1,0 +1,24 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "factoryctl_handover_returncode": 0,
+  "generated_at_utc": "2026-07-06T09:42:13.629534+00:00",
+  "missing_documents": [],
+  "missing_output_lines": [],
+  "ok_output_lines": [
+    "- [OK] docs/phase13e/factory_cli_operator_surface.md",
+    "- [OK] docs/phase13e/factory_cli_operator_commands.json",
+    "- [OK] docs/phase13e/factory_cli_architecture.json",
+    "- [OK] docs/phase13d/agent_adapter_execution_layer.md",
+    "- [OK] docs/phase13c/agent_runtime_handover.md"
+  ],
+  "passed": true,
+  "phase": "Phase 13F",
+  "required_handover_documents": [
+    "docs/phase13c/agent_runtime_handover.md",
+    "docs/phase13f/operator_handover_closure.md",
+    "docs/phase13f/operator_handover_closure_policy.json",
+    "docs/phase13f/operator_handover_closure_architecture.json"
+  ],
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Phase 13F closes operator handover documentation only; it does not activate LangGraph/OpenAI execution."
+}
