@@ -261,3 +261,18 @@ Human validator portal requirement:
 - After generation, produce an offline HTML human-validator portal with factory overview, capabilities, architecture, guardrails, agent workflow, tool policy, memory/RAG policy, metrics/cost, validations, tests, evaluations, risks, audit evidence, generated application capabilities, generated application architecture, generated application data flow, diagrams, and traceability.
 - The portal must be evidence-backed and must not claim production readiness, regulatory compliance, RBI/NPCI certification, or live payment capability.
 <!-- /PHASE_12A_INDEPENDENT_AUDIT_ASSURANCE_VALUE_VALIDATION -->
+
+<!-- PHASE_12B_OPERATIONS_RUNBOOK_AUDIT_REMEDIATION_LOOP -->
+## Phase 12B Operations Runbook and Audit-Driven Remediation Loop
+
+The factory must operate with a documented operations runbook and a bounded audit-to-remediation control loop.
+
+Required behavior:
+- Treat final audit reports as structured inputs to remediation planning.
+- Convert audit findings into prioritized remediation candidates with owner, severity, evidence, proposed change, rollback plan, validation commands, risk impact, and human-approval requirement.
+- Do not perform unbounded auto-correction. Each remediation cycle must have a retry budget, quality objective target, stop condition, rollback strategy, evidence ledger, and final decision.
+- Protected operations such as git commit, tag, push, dependency installation, network access, destructive file operations, live integration, security-policy weakening, or regulatory-claim changes require human approval.
+- The factory may auto-apply low-risk local documentation, prompt, validator, test, and generated-code fixes only when allowed by policy and only after deterministic validation passes.
+- The factory must update the final human-validator HTML portal and final audit report with every remediation attempt, before/after score, validation command, result, changed artifact, residual risk, accepted limitation, and unresolved gap.
+- The loop must stop with `QUALITY_OBJECTIVES_MET`, `HUMAN_APPROVAL_REQUIRED`, `REMEDIATION_BUDGET_EXHAUSTED`, `REGRESSION_DETECTED`, or `UNSAFE_REMEDIATION_BLOCKED`.
+<!-- /PHASE_12B_OPERATIONS_RUNBOOK_AUDIT_REMEDIATION_LOOP -->

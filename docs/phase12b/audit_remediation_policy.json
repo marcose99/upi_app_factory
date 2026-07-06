@@ -1,0 +1,39 @@
+{
+  "allowed_auto_apply_categories": [
+    "documentation_gap",
+    "prompt_reference_gap",
+    "validator_missing_term",
+    "test_case_gap_low_risk",
+    "static_analysis_formatting",
+    "local_generated_code_low_risk_fix",
+    "audit_portal_population_gap"
+  ],
+  "default": "human_review_for_uncertain_or_high_risk_changes",
+  "final_report_required": true,
+  "human_approval_required_for": [
+    "git commit",
+    "git tag",
+    "git push",
+    "dependency installation",
+    "network access",
+    "destructive file operation",
+    "security policy weakening",
+    "tool authorization expansion",
+    "regulatory claim wording",
+    "live integration",
+    "customer data handling change",
+    "quality objective waiver"
+  ],
+  "ledger_required": true,
+  "max_attempts_per_finding": 2,
+  "max_remediation_cycles": 3,
+  "phase": "Phase 12B",
+  "rollback_required": true,
+  "stop_conditions": [
+    "QUALITY_OBJECTIVES_MET",
+    "HUMAN_APPROVAL_REQUIRED",
+    "REMEDIATION_BUDGET_EXHAUSTED",
+    "REGRESSION_DETECTED",
+    "UNSAFE_REMEDIATION_BLOCKED"
+  ]
+}

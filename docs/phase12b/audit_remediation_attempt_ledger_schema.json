@@ -1,0 +1,27 @@
+{
+  "ledger": "audit_remediation_attempt_ledger.jsonl",
+  "phase": "Phase 12B",
+  "required_fields": [
+    "remediation_attempt_id",
+    "cycle_id",
+    "finding_id",
+    "finding_source_report",
+    "severity",
+    "category",
+    "agent_or_script",
+    "proposed_change_summary",
+    "artifacts_before",
+    "artifacts_after",
+    "before_scores",
+    "after_scores",
+    "commands_run",
+    "validation_results",
+    "rollback_plan",
+    "rollback_status",
+    "human_approval_required",
+    "human_approval_id",
+    "status",
+    "residual_risk",
+    "timestamp_ist"
+  ]
+}

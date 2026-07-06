@@ -1,0 +1,31 @@
+{
+  "must_include_facts": [
+    "commands executed",
+    "exit codes",
+    "logs",
+    "artifact paths",
+    "hashes where available",
+    "test counts",
+    "coverage where available",
+    "score changes",
+    "unresolved gaps",
+    "no compliance/certification claim statement"
+  ],
+  "phase": "Phase 12B",
+  "required_sections": [
+    "executive_summary",
+    "factory_version_and_tags",
+    "generated_application_version",
+    "quality_objectives",
+    "audit_inputs",
+    "initial_findings",
+    "remediation_cycles",
+    "before_after_scores",
+    "validations_and_tests",
+    "remaining_risks",
+    "accepted_limitations",
+    "evidence_manifest",
+    "human_validator_portal_link",
+    "final_decision"
+  ]
+}
