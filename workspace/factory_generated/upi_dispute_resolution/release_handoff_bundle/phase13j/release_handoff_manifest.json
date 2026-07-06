@@ -1,0 +1,110 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tag": "v0.13.8-release-readiness-operator-acceptance",
+  "baseline_tag_present": true,
+  "bundle_directory": "workspace/factory_generated/upi_dispute_resolution/release_handoff_bundle/phase13j",
+  "bundle_files": [
+    "release_handoff_manifest.json",
+    "README.md",
+    "OPERATOR_COMMANDS.md",
+    "TRUTH_BOUNDARY.md",
+    "CHECKSUMS.sha256"
+  ],
+  "bundle_name": "upi_dispute_resolution_factory_phase13j_release_handoff_bundle",
+  "determinism_policy": {
+    "reason": "The handoff bundle must be stable across validation runs and machine handoff checks.",
+    "uses_current_commit_hash": false,
+    "uses_wall_clock_timestamp": false
+  },
+  "errors": [],
+  "operator_commands": [
+    "./factoryctl status",
+    "./factoryctl adapters",
+    "./factoryctl validate --quick",
+    "./factoryctl validate",
+    "./factoryctl portals",
+    "./factoryctl handover",
+    "./factoryctl logs"
+  ],
+  "passed": true,
+  "phase": "Phase 13J",
+  "required_release_files": [
+    {
+      "exists": true,
+      "path": "README.md",
+      "sha256": "8466b53814fe3e640b189f2ec305dc8306a1e9e26bb6273db54f221aaeefa09d"
+    },
+    {
+      "exists": true,
+      "path": "factoryctl",
+      "sha256": "ee30e5a0bb4b29c16c9df0c02309dd00f68e3ed8b9e89b4faa1e0de7ba023187"
+    },
+    {
+      "exists": true,
+      "path": "scripts/factory_cli.py",
+      "sha256": "22ee8d26d22572708e0268c8d4ce3396fe66bfeb65f3b8aead230d8e9f258809"
+    },
+    {
+      "exists": true,
+      "path": "docs/phase13d/agent_adapter_execution_layer.md",
+      "sha256": "d044387f8bd359e28541be41c6426e052ff178d7e3f312a3e849c18f0d64cd31"
+    },
+    {
+      "exists": true,
+      "path": "docs/phase13e/factory_cli_operator_surface.md",
+      "sha256": "13357da2292bdb14fc4006b2f160864143231b02d5e6a1e359abd1fa4e983b06"
+    },
+    {
+      "exists": true,
+      "path": "docs/phase13f/operator_handover_closure.md",
+      "sha256": "cfba4d77770c24cf5a2a229b7eba350d2a423debc2abb6caf91308c2baea02f5"
+    },
+    {
+      "exists": true,
+      "path": "docs/phase13g/readonly_validation_drift_guardrails.md",
+      "sha256": "c67575156365491fe0548fef6a84419defc90a6771899a021f4a5a138d6a13d7"
+    },
+    {
+      "exists": true,
+      "path": "docs/phase13h/release_state_lineage_registry.md",
+      "sha256": "e337c8cdeacab7bb0092397548bf45c43b00a4ee0695833c3ff9eabcb1bcf02f"
+    },
+    {
+      "exists": true,
+      "path": "docs/phase13i/release_readiness_operator_acceptance.md",
+      "sha256": "ce067ed49504270018bf6b917ac619f8c830c5c4ab587bb3e942a6275151c907"
+    },
+    {
+      "exists": true,
+      "path": "scripts/validate_phase13d_agent_adapter_execution.py",
+      "sha256": "669465068aaeeb561f1e2670d0cd41c2fb3d140631cdec7153c84652ba6b0a26"
+    },
+    {
+      "exists": true,
+      "path": "scripts/validate_phase13e_factory_cli_operator_surface.py",
+      "sha256": "a2b57b7564356871bfb51a304d401f27ff011e1fc2df0c05aca45c15d564e37d"
+    },
+    {
+      "exists": true,
+      "path": "scripts/validate_phase13f_operator_handover_closure.py",
+      "sha256": "d8fd09e554f8e4bf8e767a98cad41134c63080bae0d14fdf3f48b44c1427f25e"
+    },
+    {
+      "exists": true,
+      "path": "scripts/validate_phase13g_readonly_validation_guardrails.py",
+      "sha256": "2bbf11b853b260e173bbf5705f29c66a8ead4013b6762152fc64eb2b3198e1ef"
+    },
+    {
+      "exists": true,
+      "path": "scripts/validate_phase13h_release_state_lineage.py",
+      "sha256": "9595aef7b87adc5073e0cc89546064f917980e6bac601541ebdef694b390d7b8"
+    },
+    {
+      "exists": true,
+      "path": "scripts/validate_phase13i_release_readiness.py",
+      "sha256": "f1cf0170e65baceb5f8afc800c7bf8acad55096100510ae565e3f66a8a793199"
+    }
+  ],
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "This handoff bundle describes a locally runnable, deterministic governed factory release. Local deterministic execution remains the default. LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active."
+}
