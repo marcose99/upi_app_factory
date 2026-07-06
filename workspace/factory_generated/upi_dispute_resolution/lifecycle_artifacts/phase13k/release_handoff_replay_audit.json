@@ -184,7 +184,7 @@
       "command": "./factoryctl status",
       "contains_missing_marker": false,
       "exit_code": 0,
-      "output_preview": "FactoryFromNothing operator status\nApp ID        : upi_dispute_resolution\nPhase         : Phase 13E\nRun ID        : first_governed_generation_run_001\nRoot command  : ./factoryctl\nBranch        : phase13k/release-handoff-replay-verification\nLatest tag    : v0.13.9-release-handoff-bundle-pack\nDefault mode  : local_deterministic\n\nThe operator CLI does not claim active LangGraph/OpenAI execution. The default execution path remains local deterministic. External adapters remain detected and policy-gated.\n",
+      "output_preview": "FactoryFromNothing operator status\nApp ID        : upi_dispute_resolution\nPhase         : Phase 13E\nRun ID        : first_governed_generation_run_001\nRoot command  : ./factoryctl\nBranch        : <normalized>\nLatest tag    : <normalized>\nDefault mode  : local_deterministic\n\nThe operator CLI does not claim active LangGraph/OpenAI execution. The default execution path remains local deterministic. External adapters remain detected and policy-gated.",
       "passed": true
     },
     {
@@ -198,7 +198,7 @@
       "command": "./factoryctl handover",
       "contains_missing_marker": false,
       "exit_code": 0,
-      "output_preview": "Factory operator handover\n\nPrimary commands:\n- ./factoryctl status\n- ./factoryctl adapters\n- ./factoryctl validate --quick\n- ./factoryctl validate\n- ./factoryctl portals\n- ./factoryctl handover\n- ./factoryctl logs\n\nUseful documents:\n- [OK] docs/phase13e/factory_cli_operator_surface.md\n- [OK] docs/phase13e/factory_cli_operator_commands.json\n- [OK] docs/phase13e/factory_cli_architecture.json\n- [OK] docs/phase13d/agent_adapter_execution_layer.md\n- [OK] docs/phase13c/agent_runtime_handover.md\n",
+      "output_preview": "Factory operator handover\n\nPrimary commands:\n- ./factoryctl status\n- ./factoryctl adapters\n- ./factoryctl validate --quick\n- ./factoryctl validate\n- ./factoryctl portals\n- ./factoryctl handover\n- ./factoryctl logs\n\nUseful documents:\n- [OK] docs/phase13e/factory_cli_operator_surface.md\n- [OK] docs/phase13e/factory_cli_operator_commands.json\n- [OK] docs/phase13e/factory_cli_architecture.json\n- [OK] docs/phase13d/agent_adapter_execution_layer.md\n- [OK] docs/phase13c/agent_runtime_handover.md",
       "passed": true
     }
   ],

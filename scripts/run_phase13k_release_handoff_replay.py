@@ -8,6 +8,23 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+
+def _normalize_command_output_preview(command: str, output: str) -> str:
+    """Normalize volatile operator status lines before storing replay previews.
+
+    The replay evidence must survive branch/tag changes during finalization.
+    The full command result is still evaluated for exit code and [MISSING]
+    markers; only the human-readable preview is normalized.
+    """
+    normalized_lines: list[str] = []
+    for line in output.splitlines():
+        label = line.split(":", 1)[0].strip() if ":" in line else ""
+        if command == "./factoryctl status" and label in {"Branch", "Latest tag"}:
+            normalized_lines.append(f"{label:<14}: <normalized>")
+        else:
+            normalized_lines.append(line)
+    return "\n".join(normalized_lines)
+
 APP_ID = "upi_dispute_resolution"
 PHASE = "Phase 13K"
 BASELINE_TAG = "v0.13.9-release-handoff-bundle-pack"
@@ -108,7 +125,7 @@ def run_operator_command(command: str) -> dict[str, Any]:
         "command": command,
         "exit_code": result.returncode,
         "contains_missing_marker": "[MISSING]" in output,
-        "output_preview": output[:1200],
+        "output_preview": _normalize_command_output_preview(command, output)[:1200],
         "passed": result.returncode == 0 and "[MISSING]" not in output,
     }
 
