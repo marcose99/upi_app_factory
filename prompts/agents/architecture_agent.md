@@ -262,3 +262,17 @@ Required behavior:
 - The factory must update the final human-validator HTML portal and final audit report with every remediation attempt, before/after score, validation command, result, changed artifact, residual risk, accepted limitation, and unresolved gap.
 - The loop must stop with `QUALITY_OBJECTIVES_MET`, `HUMAN_APPROVAL_REQUIRED`, `REMEDIATION_BUDGET_EXHAUSTED`, `REGRESSION_DETECTED`, or `UNSAFE_REMEDIATION_BLOCKED`.
 <!-- /PHASE_12B_OPERATIONS_RUNBOOK_AUDIT_REMEDIATION_LOOP -->
+
+<!-- PHASE_13A_FIRST_GOVERNED_APPLICATION_GENERATION_RUN -->
+## Phase 13A First Governed Application Generation Run Contract
+
+The factory may begin the first governed application-generation run only through the Phase 13A generation-run scaffold and evidence controls.
+
+Required behavior:
+- Use generation run id `first_governed_generation_run_001`.
+- Generate a real, locally runnable primary UPI/payment dispute-resolution application while keeping NPCI, RBI, banks, PSPs, ODR systems, payment rails, settlement systems, customer systems, and all external ecosystem integrations mock/simulated.
+- Generate and preserve evidence for requirements, domain policy inputs, architecture, HLD, LLD, API contracts, data model, workflow/state-machine, security design, observability design, test strategy, generated code, tests, validations, audit results, remediation plan, and final human-validator portal population.
+- Do not use real customer data, production secrets, live integrations, production payment rails, or false regulatory/compliance/certification claims.
+- Every agent handoff, tool use, validation, test, audit finding, remediation recommendation, and portal update must be traceable to evidence paths.
+- The generated application is not reviewer-ready until deterministic validators, tests, post-generation audit, controlled remediation plan, and final HTML portal population pass.
+<!-- /PHASE_13A_FIRST_GOVERNED_APPLICATION_GENERATION_RUN -->

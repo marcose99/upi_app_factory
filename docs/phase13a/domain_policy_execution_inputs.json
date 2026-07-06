@@ -1,0 +1,26 @@
+{
+  "claim_boundary": "awareness and local simulation only; no compliance or certification claim",
+  "domain_reference_areas": [
+    "UPI dispute intake",
+    "failed transaction lifecycle",
+    "TAT/customer compensation awareness",
+    "ODR complaint flow awareness",
+    "unauthorized electronic transaction handling awareness",
+    "RB-IOS escalation awareness",
+    "DPDP/privacy awareness",
+    "PII masking",
+    "fraud-risk scenarios",
+    "idempotency/replay controls"
+  ],
+  "phase": "Phase 13A",
+  "policy_execution_artifact_candidates": [
+    "upi_domain_policy_matrix.json",
+    "failed_transaction_tat_rules.json",
+    "complaint_lifecycle_state_machine.json",
+    "unauthorized_transaction_handling_rules.json",
+    "odr_escalation_policy.json",
+    "pii_masking_policy.json",
+    "regulatory_gap_register.md"
+  ],
+  "run_id": "first_governed_generation_run_001"
+}

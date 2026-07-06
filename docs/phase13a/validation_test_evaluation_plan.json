@@ -1,0 +1,27 @@
+{
+  "hard_stop_failures": [
+    "live integration attempt",
+    "real customer data",
+    "secret leakage",
+    "false compliance/certification claim",
+    "deterministic validator failure",
+    "unsafe tool expansion"
+  ],
+  "minimum_validation_set": [
+    "static quality checks",
+    "type checks",
+    "unit tests",
+    "integration tests",
+    "domain scenario tests",
+    "negative tests",
+    "regression tests",
+    "limited local load tests",
+    "limited local stress tests",
+    "security/privacy tests",
+    "mock-boundary tests",
+    "audit-ledger tests",
+    "HTML portal validation"
+  ],
+  "phase": "Phase 13A",
+  "run_id": "first_governed_generation_run_001"
+}

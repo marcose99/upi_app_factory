@@ -1,0 +1,20 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tags_required": [
+    "v0.11.5-requirement-intake-payment-capability-classification",
+    "v0.11.6-pre-agent-generation-readiness",
+    "v0.12.0-independent-audit-foundation",
+    "v0.12.1-operations-runbook-audit-remediation-loop"
+  ],
+  "decision": "READY_TO_START_CONTROLLED_GENERATION",
+  "generation_scope": {
+    "external_ecosystem": "mock/simulated only",
+    "no_live_integrations": true,
+    "no_real_customer_data": true,
+    "no_regulatory_compliance_claim": true,
+    "primary_application": "real locally runnable UPI/payment dispute-resolution application"
+  },
+  "phase": "Phase 13A",
+  "purpose": "Prepare the first governed application generation run.",
+  "run_id": "first_governed_generation_run_001"
+}
