@@ -1,0 +1,44 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "boundary": "real_primary_upi_payment_application_with_mock_simulated_external_ecosystem",
+  "contract_name": "Generated Application Type and Quality Contract",
+  "mandatory_prompt_requirements": [
+    "Adopt every best practice of the generated application type.",
+    "Use input/output contracts and explicit contracts for generated primary application boundaries.",
+    "Adopt technology-specific SDLC best practices for every tool, framework, library, database, testing tool, security tool, observability tool, and runtime component.",
+    "Generate code quality report evidence.",
+    "Generate unit test report evidence.",
+    "Generate integration test report evidence.",
+    "Generate scenario coverage report evidence.",
+    "Generate regression test and release-readiness evidence.",
+    "Preserve the real primary payment application plus mock external ecosystem boundary."
+  ],
+  "phase": "Phase 11C",
+  "quality_report_categories": [
+    "lint",
+    "type_check",
+    "formatting",
+    "unit_tests",
+    "integration_tests",
+    "scenario_coverage",
+    "regression",
+    "security_review",
+    "observability",
+    "release_readiness"
+  ],
+  "scenario_coverage_categories": [
+    "positive",
+    "negative",
+    "edge",
+    "validation_failure",
+    "idempotency",
+    "retry",
+    "timeout",
+    "mock_unavailable",
+    "unsupported_requirement",
+    "out_of_scope_requirement",
+    "audit",
+    "governance",
+    "traceability"
+  ]
+}

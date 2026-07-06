@@ -1,0 +1,47 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "boundary": "real locally runnable primary UPI/payment application with mock/simulated external ecosystem",
+  "guardrails": {
+    "prohibited_claims": [
+      "regulatory compliance",
+      "RBI certified",
+      "NPCI certified",
+      "regulator approved",
+      "bank approved",
+      "production compliant",
+      "fully compliant",
+      "legally complete",
+      "live payment capability"
+    ],
+    "prohibited_data_or_connectivity": [
+      "real customer UPI ID",
+      "real customer bank account",
+      "real customer PII",
+      "production secrets",
+      "live NPCI/RBI/bank/PSP/ODR/payment-rail calls"
+    ],
+    "reference_awareness": [
+      "RBI",
+      "NPCI",
+      "UPI procedural requirements",
+      "ODR",
+      "failed transaction TAT",
+      "customer compensation",
+      "unauthorised electronic banking transaction",
+      "RB-IOS",
+      "DPDP/privacy"
+    ],
+    "required_evidence": [
+      "requirement traceability",
+      "policy/source category mapping",
+      "unit tests",
+      "integration tests",
+      "scenario coverage",
+      "security review evidence",
+      "audit evidence",
+      "release-readiness evidence"
+    ]
+  },
+  "phase": "Phase 11C",
+  "timestamp_policy": "script run logs use Asia/Kolkata local timestamp with IST suffix"
+}
