@@ -1,0 +1,85 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tag": "v0.13.7-release-state-lineage-registry",
+  "baseline_tag_present": true,
+  "evidence_determinism": {
+    "reason": "Release-readiness evidence avoids volatile timestamps and current commit hashes.",
+    "uses_current_commit_hash": false,
+    "uses_wall_clock_timestamp": false
+  },
+  "operator_smoke_checks": [
+    {
+      "command": "./factoryctl status",
+      "exit_code": 0,
+      "handover_missing_entries": false,
+      "passed": true
+    },
+    {
+      "command": "./factoryctl adapters",
+      "exit_code": 0,
+      "handover_missing_entries": false,
+      "passed": true
+    },
+    {
+      "command": "./factoryctl handover",
+      "exit_code": 0,
+      "handover_missing_entries": false,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "phase": "Phase 13I",
+  "release_lineage": [
+    {
+      "capability": "real local governed agent-runtime foundation",
+      "phase": "Phase 13C",
+      "tag": "v0.13.2-real-governed-agent-runtime-foundation",
+      "tag_present": true
+    },
+    {
+      "capability": "governed adapter execution layer",
+      "phase": "Phase 13D",
+      "tag": "v0.13.3-governed-agent-adapter-execution-layer",
+      "tag_present": true
+    },
+    {
+      "capability": "factoryctl operator command surface",
+      "phase": "Phase 13E",
+      "tag": "v0.13.4-factory-cli-operator-command-surface",
+      "tag_present": true
+    },
+    {
+      "capability": "operator handover closure",
+      "phase": "Phase 13F",
+      "tag": "v0.13.5-operator-handover-closure",
+      "tag_present": true
+    },
+    {
+      "capability": "read-only validation drift guardrails",
+      "phase": "Phase 13G",
+      "tag": "v0.13.6-readonly-validation-drift-guardrails",
+      "tag_present": true
+    },
+    {
+      "capability": "release-state lineage registry",
+      "phase": "Phase 13H",
+      "tag": "v0.13.7-release-state-lineage-registry",
+      "tag_present": true
+    }
+  ],
+  "required_files": {
+    "docs/phase13d/agent_adapter_execution_layer.md": true,
+    "docs/phase13e/factory_cli_operator_surface.md": true,
+    "docs/phase13f/operator_handover_closure.md": true,
+    "docs/phase13g/readonly_validation_drift_guardrails.md": true,
+    "docs/phase13h/release_state_lineage_registry.md": true,
+    "factoryctl": true,
+    "scripts/validate_phase13d_agent_adapter_execution.py": true,
+    "scripts/validate_phase13e_factory_cli_operator_surface.py": true,
+    "scripts/validate_phase13f_operator_handover_closure.py": true,
+    "scripts/validate_phase13g_readonly_validation_guardrails.py": true,
+    "scripts/validate_phase13h_release_state_lineage.py": true
+  },
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Local deterministic execution remains the default; LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active."
+}

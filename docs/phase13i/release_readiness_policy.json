@@ -1,0 +1,21 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "phase": "Phase 13I",
+  "policy_name": "release_readiness_operator_acceptance_policy",
+  "baseline_tag": "v0.13.7-release-state-lineage-registry",
+  "default_execution_mode": "local_deterministic",
+  "release_readiness_requires": [
+    "required Phase 13C to Phase 13H tags are present",
+    "factoryctl operator command is present",
+    "operator handover command has no missing document entries",
+    "release-state lineage snapshot remains deterministic",
+    "LangGraph/OpenAI execution is not claimed active unless explicitly policy-approved"
+  ],
+  "forbidden_claims": [
+    "Do not claim LangGraph execution is active by default.",
+    "Do not claim OpenAI-agent execution is active by default.",
+    "Do not require network access for default release readiness validation.",
+    "Do not use wall-clock timestamps or current commit hashes in deterministic release evidence."
+  ],
+  "operator_acceptance_result": "The release is operator-ready only when every acceptance gate passes with no missing handover entries."
+}
