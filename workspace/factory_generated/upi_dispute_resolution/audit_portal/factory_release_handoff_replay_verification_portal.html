@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Phase 13K Release Handoff Replay Verification</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.45; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; vertical-align: top; }
+    th { background: #f5f5f5; }
+    .pass { color: #0a6b2b; font-weight: bold; }
+    .fail { color: #9b1c1c; font-weight: bold; }
+    pre { white-space: pre-wrap; margin: 0; }
+  </style>
+</head>
+<body>
+  <h1>Phase 13K Release Handoff Replay Verification</h1>
+  <p class="pass">Passed: True</p>
+  <table>
+    <tr><th>Phase</th><td><pre>Phase 13K</pre></td></tr>
+    <tr><th>App ID</th><td><pre>upi_dispute_resolution</pre></td></tr>
+    <tr><th>Baseline tag</th><td><pre>v0.13.9-release-handoff-bundle-pack</pre></td></tr>
+    <tr><th>Baseline tag present</th><td><pre>True</pre></td></tr>
+    <tr><th>Bundle directory</th><td><pre>workspace/factory_generated/upi_dispute_resolution/release_handoff_bundle/phase13j</pre></td></tr>
+    <tr><th>Checksum scope</th><td><pre>repository_root</pre></td></tr>
+    <tr><th>Truth boundary</th><td><pre>Phase 13K verifies local deterministic handoff replay only. LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active.</pre></td></tr>
+  </table>
+  <h2>Checksum replay</h2>
+  <table><tr><th>Path</th><th>Exists</th><th>Matches</th><th>Scope</th></tr><tr><td>README.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>factoryctl</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/factory_cli.py</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>docs/phase13d/agent_adapter_execution_layer.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>docs/phase13e/factory_cli_operator_surface.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>docs/phase13f/operator_handover_closure.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>docs/phase13g/readonly_validation_drift_guardrails.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>docs/phase13h/release_state_lineage_registry.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>docs/phase13i/release_readiness_operator_acceptance.md</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/validate_phase13d_agent_adapter_execution.py</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/validate_phase13e_factory_cli_operator_surface.py</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/validate_phase13f_operator_handover_closure.py</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/validate_phase13g_readonly_validation_guardrails.py</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/validate_phase13h_release_state_lineage.py</td><td>True</td><td>True</td><td>repository_root</td></tr>
+<tr><td>scripts/validate_phase13i_release_readiness.py</td><td>True</td><td>True</td><td>repository_root</td></tr></table>
+  <h2>Operator smoke replay</h2>
+  <table><tr><th>Command</th><th>Passed</th><th>Exit code</th></tr><tr><td>./factoryctl status</td><td>True</td><td>0</td></tr>
+<tr><td>./factoryctl adapters</td><td>True</td><td>0</td></tr>
+<tr><td>./factoryctl handover</td><td>True</td><td>0</td></tr></table>
+  <h2>Errors</h2>
+  <ul><li>None</li></ul>
+</body>
+</html>

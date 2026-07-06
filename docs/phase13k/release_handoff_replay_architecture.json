@@ -1,0 +1,15 @@
+{
+  "phase": "Phase 13K",
+  "components": [
+    "bundle-file verifier",
+    "repository-root checksum verifier",
+    "factoryctl smoke replay runner",
+    "truth-boundary verifier",
+    "replay evidence validator",
+    "release handoff replay portal"
+  ],
+  "checksum_scope": {
+    "bundle_members": "release_handoff_manifest.json, README.md, OPERATOR_COMMANDS.md, TRUTH_BOUNDARY.md, CHECKSUMS.sha256",
+    "checksum_entries": "repository-root release files listed by Phase 13J"
+  }
+}

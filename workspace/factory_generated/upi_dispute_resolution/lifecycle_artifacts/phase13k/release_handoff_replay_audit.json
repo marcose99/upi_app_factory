@@ -1,0 +1,245 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tag": "v0.13.9-release-handoff-bundle-pack",
+  "baseline_tag_present": true,
+  "bundle_directory": "workspace/factory_generated/upi_dispute_resolution/release_handoff_bundle/phase13j",
+  "checksum_entries": [
+    {
+      "actual_sha256": "8466b53814fe3e640b189f2ec305dc8306a1e9e26bb6273db54f221aaeefa09d",
+      "exists": true,
+      "expected_sha256": "8466b53814fe3e640b189f2ec305dc8306a1e9e26bb6273db54f221aaeefa09d",
+      "matches": true,
+      "parse_error": false,
+      "path": "README.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "ee30e5a0bb4b29c16c9df0c02309dd00f68e3ed8b9e89b4faa1e0de7ba023187",
+      "exists": true,
+      "expected_sha256": "ee30e5a0bb4b29c16c9df0c02309dd00f68e3ed8b9e89b4faa1e0de7ba023187",
+      "matches": true,
+      "parse_error": false,
+      "path": "factoryctl",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "22ee8d26d22572708e0268c8d4ce3396fe66bfeb65f3b8aead230d8e9f258809",
+      "exists": true,
+      "expected_sha256": "22ee8d26d22572708e0268c8d4ce3396fe66bfeb65f3b8aead230d8e9f258809",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/factory_cli.py",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "d044387f8bd359e28541be41c6426e052ff178d7e3f312a3e849c18f0d64cd31",
+      "exists": true,
+      "expected_sha256": "d044387f8bd359e28541be41c6426e052ff178d7e3f312a3e849c18f0d64cd31",
+      "matches": true,
+      "parse_error": false,
+      "path": "docs/phase13d/agent_adapter_execution_layer.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "13357da2292bdb14fc4006b2f160864143231b02d5e6a1e359abd1fa4e983b06",
+      "exists": true,
+      "expected_sha256": "13357da2292bdb14fc4006b2f160864143231b02d5e6a1e359abd1fa4e983b06",
+      "matches": true,
+      "parse_error": false,
+      "path": "docs/phase13e/factory_cli_operator_surface.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "cfba4d77770c24cf5a2a229b7eba350d2a423debc2abb6caf91308c2baea02f5",
+      "exists": true,
+      "expected_sha256": "cfba4d77770c24cf5a2a229b7eba350d2a423debc2abb6caf91308c2baea02f5",
+      "matches": true,
+      "parse_error": false,
+      "path": "docs/phase13f/operator_handover_closure.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "c67575156365491fe0548fef6a84419defc90a6771899a021f4a5a138d6a13d7",
+      "exists": true,
+      "expected_sha256": "c67575156365491fe0548fef6a84419defc90a6771899a021f4a5a138d6a13d7",
+      "matches": true,
+      "parse_error": false,
+      "path": "docs/phase13g/readonly_validation_drift_guardrails.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "e337c8cdeacab7bb0092397548bf45c43b00a4ee0695833c3ff9eabcb1bcf02f",
+      "exists": true,
+      "expected_sha256": "e337c8cdeacab7bb0092397548bf45c43b00a4ee0695833c3ff9eabcb1bcf02f",
+      "matches": true,
+      "parse_error": false,
+      "path": "docs/phase13h/release_state_lineage_registry.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "ce067ed49504270018bf6b917ac619f8c830c5c4ab587bb3e942a6275151c907",
+      "exists": true,
+      "expected_sha256": "ce067ed49504270018bf6b917ac619f8c830c5c4ab587bb3e942a6275151c907",
+      "matches": true,
+      "parse_error": false,
+      "path": "docs/phase13i/release_readiness_operator_acceptance.md",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "669465068aaeeb561f1e2670d0cd41c2fb3d140631cdec7153c84652ba6b0a26",
+      "exists": true,
+      "expected_sha256": "669465068aaeeb561f1e2670d0cd41c2fb3d140631cdec7153c84652ba6b0a26",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/validate_phase13d_agent_adapter_execution.py",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "a2b57b7564356871bfb51a304d401f27ff011e1fc2df0c05aca45c15d564e37d",
+      "exists": true,
+      "expected_sha256": "a2b57b7564356871bfb51a304d401f27ff011e1fc2df0c05aca45c15d564e37d",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/validate_phase13e_factory_cli_operator_surface.py",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "d8fd09e554f8e4bf8e767a98cad41134c63080bae0d14fdf3f48b44c1427f25e",
+      "exists": true,
+      "expected_sha256": "d8fd09e554f8e4bf8e767a98cad41134c63080bae0d14fdf3f48b44c1427f25e",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/validate_phase13f_operator_handover_closure.py",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "2bbf11b853b260e173bbf5705f29c66a8ead4013b6762152fc64eb2b3198e1ef",
+      "exists": true,
+      "expected_sha256": "2bbf11b853b260e173bbf5705f29c66a8ead4013b6762152fc64eb2b3198e1ef",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/validate_phase13g_readonly_validation_guardrails.py",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "9595aef7b87adc5073e0cc89546064f917980e6bac601541ebdef694b390d7b8",
+      "exists": true,
+      "expected_sha256": "9595aef7b87adc5073e0cc89546064f917980e6bac601541ebdef694b390d7b8",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/validate_phase13h_release_state_lineage.py",
+      "scope": "repository_root"
+    },
+    {
+      "actual_sha256": "f1cf0170e65baceb5f8afc800c7bf8acad55096100510ae565e3f66a8a793199",
+      "exists": true,
+      "expected_sha256": "f1cf0170e65baceb5f8afc800c7bf8acad55096100510ae565e3f66a8a793199",
+      "matches": true,
+      "parse_error": false,
+      "path": "scripts/validate_phase13i_release_readiness.py",
+      "scope": "repository_root"
+    }
+  ],
+  "checksum_scope": "repository_root",
+  "determinism_policy": {
+    "reason": "Replay evidence is stable across validation and handoff checks.",
+    "uses_current_commit_hash": false,
+    "uses_wall_clock_timestamp": false
+  },
+  "errors": [],
+  "handoff_manifest_bundle_name": "upi_dispute_resolution_factory_phase13j_release_handoff_bundle",
+  "handoff_manifest_loaded": true,
+  "operator_command_documentation": [
+    {
+      "command": "./factoryctl status",
+      "documented": true
+    },
+    {
+      "command": "./factoryctl adapters",
+      "documented": true
+    },
+    {
+      "command": "./factoryctl validate --quick",
+      "documented": true
+    },
+    {
+      "command": "./factoryctl validate",
+      "documented": true
+    },
+    {
+      "command": "./factoryctl portals",
+      "documented": true
+    },
+    {
+      "command": "./factoryctl handover",
+      "documented": true
+    },
+    {
+      "command": "./factoryctl logs",
+      "documented": true
+    }
+  ],
+  "operator_smoke_checks": [
+    {
+      "command": "./factoryctl status",
+      "contains_missing_marker": false,
+      "exit_code": 0,
+      "output_preview": "FactoryFromNothing operator status\nApp ID        : upi_dispute_resolution\nPhase         : Phase 13E\nRun ID        : first_governed_generation_run_001\nRoot command  : ./factoryctl\nBranch        : phase13k/release-handoff-replay-verification\nLatest tag    : v0.13.9-release-handoff-bundle-pack\nDefault mode  : local_deterministic\n\nThe operator CLI does not claim active LangGraph/OpenAI execution. The default execution path remains local deterministic. External adapters remain detected and policy-gated.\n",
+      "passed": true
+    },
+    {
+      "command": "./factoryctl adapters",
+      "contains_missing_marker": false,
+      "exit_code": 0,
+      "output_preview": "+ /home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python3 /home/marcose/projects/upi_dispute_resolution_factory/scripts/run_phase13d_agent_adapter_execution.py\n{\n  \"capabilities\": [\n    {\n      \"adapter_name\": \"local_deterministic\",\n      \"reason\": \"Built into this factory and does not need network access.\",\n      \"requires_human_approval\": false,\n      \"requires_network\": false,\n      \"requires_secret\": false,\n      \"status\": \"available\"\n    },\n    {\n      \"adapter_name\": \"langgraph\",\n      \"reason\": \"langgraph package is not installed in the active environment.\",\n      \"requires_human_approval\": true,\n      \"requires_network\": false,\n      \"requires_secret\": false,\n      \"status\": \"not_installed\"\n    },\n    {\n      \"adapter_name\": \"openai_agents\",\n      \"reason\": \"openai package is not installed in the active environment.\",\n      \"requires_human_approval\": true,\n      \"requires_network\": true,\n      \"requires_secret\": true,\n      \"status\": \"not_installed\"\n    }\n  ],\n  \"default_adapter_execution\": {\n    \"adapter_name\": \"local_deterministic\",\n    \"message\": \"Executed local deterministic governed agent adapter.\",\n    \"metrics\": {\n      \"completed_agents\": 8,\n      \"r",
+      "passed": true
+    },
+    {
+      "command": "./factoryctl handover",
+      "contains_missing_marker": false,
+      "exit_code": 0,
+      "output_preview": "Factory operator handover\n\nPrimary commands:\n- ./factoryctl status\n- ./factoryctl adapters\n- ./factoryctl validate --quick\n- ./factoryctl validate\n- ./factoryctl portals\n- ./factoryctl handover\n- ./factoryctl logs\n\nUseful documents:\n- [OK] docs/phase13e/factory_cli_operator_surface.md\n- [OK] docs/phase13e/factory_cli_operator_commands.json\n- [OK] docs/phase13e/factory_cli_architecture.json\n- [OK] docs/phase13d/agent_adapter_execution_layer.md\n- [OK] docs/phase13c/agent_runtime_handover.md\n",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "phase": "Phase 13K",
+  "required_bundle_files": [
+    {
+      "exists": true,
+      "path": "release_handoff_manifest.json",
+      "scope": "bundle_directory",
+      "sha256": "b13c3f739c70f8e5305a14754b540682e468c6fced91831a88d4500d1a40c798"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "scope": "bundle_directory",
+      "sha256": "a2301bb1327c3cb870c25b185684b1148bf3a1cb4bebd3047f0cdcc334253796"
+    },
+    {
+      "exists": true,
+      "path": "OPERATOR_COMMANDS.md",
+      "scope": "bundle_directory",
+      "sha256": "3c56e601eb91ab4aa47a88d10bb12b1f2dfa37e0a38394c560b3da20febbb9e8"
+    },
+    {
+      "exists": true,
+      "path": "TRUTH_BOUNDARY.md",
+      "scope": "bundle_directory",
+      "sha256": "d12d040cdb75cbb972584513640b3af3ac4720eed518e6bd5020b47e44f0a075"
+    },
+    {
+      "exists": true,
+      "path": "CHECKSUMS.sha256",
+      "scope": "bundle_directory",
+      "sha256": "df32c20c204b7dade3fee245fb8c9bc1eb7b3f1aa040416242564ffd67a6afe4"
+    }
+  ],
+  "truth_boundary": "Phase 13K verifies local deterministic handoff replay only. LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active.",
+  "truth_boundary_checks": {
+    "mentions_langgraph_openai_policy_gate": true,
+    "mentions_local_deterministic": true,
+    "mentions_not_falsely_claimed": true
+  }
+}

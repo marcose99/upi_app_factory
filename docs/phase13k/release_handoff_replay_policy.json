@@ -1,0 +1,12 @@
+{
+  "phase": "Phase 13K",
+  "name": "release handoff replay verification",
+  "baseline_tag": "v0.13.9-release-handoff-bundle-pack",
+  "rules": [
+    "Replay verification is local deterministic and dependency-free by default.",
+    "Phase 13J bundle files are verified inside the bundle directory.",
+    "Checksum entries from CHECKSUMS.sha256 are verified relative to the repository root because they describe release files, not copied bundle members.",
+    "factoryctl smoke replay must run without [MISSING] handover entries.",
+    "LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active."
+  ]
+}
