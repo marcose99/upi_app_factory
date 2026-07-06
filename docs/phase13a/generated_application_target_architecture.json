@@ -1,0 +1,36 @@
+{
+  "application_modules": [
+    "dispute intake API",
+    "complaint lifecycle workflow",
+    "failed transaction handling model",
+    "unauthorized transaction handling model",
+    "mock bank adapter",
+    "mock PSP adapter",
+    "mock NPCI/ODR adapter",
+    "audit evidence logger",
+    "PII masking utilities",
+    "domain scenario test suite"
+  ],
+  "boundaries": [
+    "no live NPCI/RBI/bank/PSP/ODR/payment rail calls",
+    "no real customer data",
+    "no production readiness claim",
+    "no regulatory compliance/certification claim"
+  ],
+  "phase": "Phase 13A",
+  "recommended_stack": {
+    "api": "FastAPI",
+    "contracts": "Pydantic v2",
+    "language": "Python 3.10.12",
+    "observability": "structured JSON logs with request_id/trace_id",
+    "quality": [
+      "ruff",
+      "mypy",
+      "pytest"
+    ],
+    "storage": "SQLite for local evidence/demo state",
+    "tests": "pytest"
+  },
+  "run_id": "first_governed_generation_run_001",
+  "runtime": "local single-machine"
+}

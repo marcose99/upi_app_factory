@@ -1,0 +1,102 @@
+{
+  "agents": [
+    {
+      "name": "requirement_intake_agent",
+      "order": 1,
+      "output": "requirements_manifest.json"
+    },
+    {
+      "name": "upi_domain_policy_agent",
+      "order": 2,
+      "output": "domain_policy_execution_inputs.json"
+    },
+    {
+      "name": "architecture_agent",
+      "order": 3,
+      "output": "architecture.md"
+    },
+    {
+      "name": "hld_agent",
+      "order": 4,
+      "output": "hld.md"
+    },
+    {
+      "name": "lld_agent",
+      "order": 5,
+      "output": "lld.md"
+    },
+    {
+      "name": "api_contract_agent",
+      "order": 6,
+      "output": "openapi.yaml"
+    },
+    {
+      "name": "data_model_agent",
+      "order": 7,
+      "output": "data_model.md"
+    },
+    {
+      "name": "workflow_state_machine_agent",
+      "order": 8,
+      "output": "workflow_state_machine.md"
+    },
+    {
+      "name": "security_agent",
+      "order": 9,
+      "output": "security_design.md"
+    },
+    {
+      "name": "observability_agent",
+      "order": 10,
+      "output": "observability_design.md"
+    },
+    {
+      "name": "test_design_agent",
+      "order": 11,
+      "output": "test_strategy.md"
+    },
+    {
+      "name": "developer_agent",
+      "order": 12,
+      "output": "generated_application_code"
+    },
+    {
+      "name": "mock_ecosystem_agent",
+      "order": 13,
+      "output": "mock_ecosystem_code"
+    },
+    {
+      "name": "validation_agent",
+      "order": 14,
+      "output": "validation_report.md"
+    },
+    {
+      "name": "audit_agent",
+      "order": 15,
+      "output": "post_generation_audit_report.md"
+    },
+    {
+      "name": "remediation_planner_agent",
+      "order": 16,
+      "output": "audit_remediation_plan.json"
+    },
+    {
+      "name": "portal_agent",
+      "order": 17,
+      "output": "human_validator_audit_portal.html"
+    }
+  ],
+  "handoff_required_fields": [
+    "handoff_id",
+    "from_agent",
+    "to_agent",
+    "input_artifacts",
+    "output_artifacts",
+    "open_risks",
+    "evidence_paths",
+    "validation_status"
+  ],
+  "phase": "Phase 13A",
+  "run_id": "first_governed_generation_run_001",
+  "tool_policy": "deny-by-default; follow docs/phase11d/tool_authorization_policy.json and docs/phase12b/audit_remediation_policy.json"
+}
