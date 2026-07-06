@@ -1,0 +1,57 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "commands_checked": [
+    {
+      "allowed_tracked_drift_detected": [],
+      "allowed_tracked_drift_restored": [],
+      "name": "phase13f_operator_handover_closure_validator",
+      "preexisting_allowed_tracked_drift_restored": [],
+      "purpose": "Detect validators that still rewrite generated evidence during read-only validation.",
+      "returncode": 0,
+      "unexpected_tracked_after_restore": [],
+      "unexpected_tracked_drift_after_command": [],
+      "untracked_drift_detected": [
+        "docs/phase13g/",
+        "scripts/generate_phase13g_readonly_validation_portal.py",
+        "scripts/run_phase13g_readonly_validation_audit.py",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py",
+        "tests/test_phase13g_readonly_validation_guardrails.py"
+      ]
+    },
+    {
+      "allowed_tracked_drift_detected": [],
+      "allowed_tracked_drift_restored": [],
+      "name": "factoryctl_handover",
+      "preexisting_allowed_tracked_drift_restored": [],
+      "purpose": "Confirm the operator handover command remains clean and complete.",
+      "returncode": 0,
+      "unexpected_tracked_after_restore": [],
+      "unexpected_tracked_drift_after_command": [],
+      "untracked_drift_detected": [
+        "docs/phase13g/",
+        "scripts/generate_phase13g_readonly_validation_portal.py",
+        "scripts/run_phase13g_readonly_validation_audit.py",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py",
+        "tests/test_phase13g_readonly_validation_guardrails.py"
+      ]
+    }
+  ],
+  "guardrail_result": {
+    "all_commands_succeeded": true,
+    "allowed_legacy_drift_restored": true,
+    "commands_executed": 2,
+    "drift_events_detected": 0,
+    "unexpected_tracked_after_restore": [],
+    "unexpected_untracked_after_restore": []
+  },
+  "passed": true,
+  "phase": "Phase 13G",
+  "readonly_validation_policy": {
+    "default_mode": "read_only",
+    "deterministic_evidence_required": true,
+    "legacy_drift_handling": "detect_restore_and_report",
+    "mutation_allowed_during_validation": false
+  },
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Validation commands are treated as read-only gates. If a legacy validator rewrites known generated evidence, the Phase 13G guardrail detects, restores, and reports that drift instead of leaving the workspace dirty."
+}

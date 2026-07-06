@@ -1,0 +1,16 @@
+{
+  "component": "readonly_validation_drift_guardrails",
+  "flow": [
+    "Run selected legacy validation/operator commands in guarded mode.",
+    "Detect tracked generated-evidence drift.",
+    "Restore known allowed legacy drift.",
+    "Fail only on unexpected generated workspace drift or command failure.",
+    "Persist deterministic audit evidence and portal."
+  ],
+  "operator_value": [
+    "Prevents validation from leaving a dirty workspace.",
+    "Keeps finalization scripts safer after post-merge validation.",
+    "Makes legacy mutation visible without falsely treating it as business progress."
+  ],
+  "phase": "Phase 13G"
+}
