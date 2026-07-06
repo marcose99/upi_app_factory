@@ -1,0 +1,31 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "components": [
+    {
+      "name": "root_operator_command",
+      "path": "factoryctl",
+      "responsibility": "Stable shell entry point for local factory operators."
+    },
+    {
+      "name": "factory_cli",
+      "path": "scripts/factory_cli.py",
+      "responsibility": "Python command dispatcher for status, adapters, validation, portals, handover, and logs."
+    },
+    {
+      "name": "operator_policy_document",
+      "path": "docs/phase13e/factory_cli_operator_commands.json",
+      "responsibility": "Machine-readable command policy and operator intent."
+    },
+    {
+      "name": "operator_portal",
+      "path": "workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_cli_operator_portal.html",
+      "responsibility": "Human-readable audit portal for Phase 13E commands."
+    }
+  ],
+  "default_execution": "local deterministic",
+  "external_adapter_execution": "detected and policy-gated, not activated by Phase 13E",
+  "phase": "Phase 13E",
+  "root_command": "./factoryctl",
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "The CLI is an operator command surface for local deterministic factory workflows. It does not claim active LangGraph/OpenAI execution. External execution remains policy-gated."
+}
