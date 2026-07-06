@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Phase 13F Operator Handover Closure</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.45; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 0.55rem; text-align: left; }
+    th { background: #f5f5f5; }
+    .badge { border-radius: 999px; padding: 0.2rem 0.55rem; font-weight: 700; font-size: 0.85rem; }
+    .pass { background: #e7f7ec; color: #136c2e; }
+    .fail { background: #fdecec; color: #9f1d1d; }
+    .card { border: 1px solid #ddd; border-radius: 0.6rem; padding: 1rem; margin: 1rem 0; }
+    code { background: #f5f5f5; padding: 0.1rem 0.25rem; border-radius: 0.2rem; }
+  </style>
+</head>
+<body>
+  <h1>Phase 13F Operator Handover Closure</h1>
+  <div class="card">
+    <p><strong>Application:</strong> upi_dispute_resolution</p>
+    <p><strong>Run ID:</strong> first_governed_generation_run_001</p>
+    <p><strong>Status:</strong> <span class="badge pass">PASS</span></p>
+    <p><strong>Generated at UTC:</strong> 2026-07-06T09:42:13.650328+00:00</p>
+  </div>
+  <h2>Required handover documents</h2>
+  <table>
+    <thead><tr><th>Document</th><th>Status</th></tr></thead>
+    <tbody><tr><td>docs/phase13c/agent_runtime_handover.md</td><td><span class='badge pass'>OK</span></td></tr><tr><td>docs/phase13f/operator_handover_closure.md</td><td><span class='badge pass'>OK</span></td></tr><tr><td>docs/phase13f/operator_handover_closure_policy.json</td><td><span class='badge pass'>OK</span></td></tr><tr><td>docs/phase13f/operator_handover_closure_architecture.json</td><td><span class='badge pass'>OK</span></td></tr></tbody>
+  </table>
+  <h2>factoryctl handover missing lines</h2>
+  <ul><li>None</li></ul>
+  <h2>Truth boundary</h2>
+  <p>Phase 13F closes operator handover documentation only; it does not activate LangGraph/OpenAI execution.</p>
+</body>
+</html>

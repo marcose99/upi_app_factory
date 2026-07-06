@@ -1,0 +1,29 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "components": [
+    {
+      "name": "factoryctl handover",
+      "responsibility": "Displays operator handover entry points and document availability."
+    },
+    {
+      "name": "Phase 13C canonical handover document",
+      "responsibility": "Provides stable runtime handover instructions and truth boundary."
+    },
+    {
+      "name": "Phase 13F handover audit",
+      "responsibility": "Runs factoryctl handover and records missing/available handover entries."
+    },
+    {
+      "name": "Phase 13F portal",
+      "responsibility": "Shows handover closure status in the local audit portal."
+    },
+    {
+      "name": "Phase 13F validator/tests",
+      "responsibility": "Prevents regressions where handover entries become missing again."
+    }
+  ],
+  "name": "operator_handover_closure_architecture",
+  "phase": "Phase 13F",
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Phase 13F closes operator handover documentation gaps only; it does not enable networked LLM execution."
+}
