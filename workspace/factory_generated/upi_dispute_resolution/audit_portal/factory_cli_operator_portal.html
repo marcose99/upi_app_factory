@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Phase 13E Factory CLI Operator Portal</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.5; color: #17202a; }
+    h1, h2 { color: #1f4e79; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccd1d1; padding: 0.6rem; text-align: left; vertical-align: top; }
+    th { background: #eef3f8; }
+    code { background: #f4f6f7; padding: 0.1rem 0.25rem; border-radius: 0.2rem; }
+    .truth { border-left: 4px solid #1f4e79; background: #f8fbfd; padding: 1rem; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Phase 13E Factory CLI Operator Portal</h1>
+  <p><strong>App ID:</strong> upi_dispute_resolution</p>
+  <p><strong>Run ID:</strong> first_governed_generation_run_001</p>
+  <p><strong>Generated at UTC:</strong> 2026-07-06T09:25:11.387640+00:00</p>
+  <p><strong>Root command:</strong> <code>./factoryctl</code></p>
+  <div class="truth"><strong>Truth boundary:</strong> Phase 13E adds an operator command surface only. It does not activate LangGraph/OpenAI execution. Default execution remains local deterministic, while external adapters remain detected and policy-gated.</div>
+  <h2>Operator Commands</h2>
+  <table>
+    <thead><tr><th>Command</th><th>Purpose</th><th>Risk level</th></tr></thead>
+    <tbody><tr><td><code>./factoryctl status</code></td><td>Show local factory status, branch, latest tag, portals, and truth boundary.</td><td>read_only</td></tr>
+<tr><td><code>./factoryctl adapters</code></td><td>Run Phase 13D adapter capability check and default deterministic adapter execution.</td><td>local_deterministic_write_evidence</td></tr>
+<tr><td><code>./factoryctl validate --quick</code></td><td>Run Phase 13E and Phase 13D validation gates for fast operator confidence.</td><td>local_validation</td></tr>
+<tr><td><code>./factoryctl validate</code></td><td>Run full validation chain, generated application tests, and repo quality gates.</td><td>local_validation</td></tr>
+<tr><td><code>./factoryctl portals</code></td><td>Regenerate operator and adapter audit portals.</td><td>local_deterministic_write_evidence</td></tr>
+<tr><td><code>./factoryctl handover</code></td><td>Print primary operator commands and relevant handover documents.</td><td>read_only</td></tr>
+<tr><td><code>./factoryctl logs</code></td><td>Show latest factory run logs from the generated application evidence area.</td><td>read_only</td></tr></tbody>
+  </table>
+</body>
+</html>

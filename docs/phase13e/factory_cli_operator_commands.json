@@ -1,0 +1,51 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "commands": [
+    {
+      "command": "./factoryctl status",
+      "name": "status",
+      "purpose": "Show local factory status, branch, latest tag, portals, and truth boundary.",
+      "risk_level": "read_only"
+    },
+    {
+      "command": "./factoryctl adapters",
+      "name": "adapters",
+      "purpose": "Run Phase 13D adapter capability check and default deterministic adapter execution.",
+      "risk_level": "local_deterministic_write_evidence"
+    },
+    {
+      "command": "./factoryctl validate --quick",
+      "name": "validate_quick",
+      "purpose": "Run Phase 13E and Phase 13D validation gates for fast operator confidence.",
+      "risk_level": "local_validation"
+    },
+    {
+      "command": "./factoryctl validate",
+      "name": "validate_full",
+      "purpose": "Run full validation chain, generated application tests, and repo quality gates.",
+      "risk_level": "local_validation"
+    },
+    {
+      "command": "./factoryctl portals",
+      "name": "portals",
+      "purpose": "Regenerate operator and adapter audit portals.",
+      "risk_level": "local_deterministic_write_evidence"
+    },
+    {
+      "command": "./factoryctl handover",
+      "name": "handover",
+      "purpose": "Print primary operator commands and relevant handover documents.",
+      "risk_level": "read_only"
+    },
+    {
+      "command": "./factoryctl logs",
+      "name": "logs",
+      "purpose": "Show latest factory run logs from the generated application evidence area.",
+      "risk_level": "read_only"
+    }
+  ],
+  "phase": "Phase 13E",
+  "root_command": "./factoryctl",
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Phase 13E adds an operator command surface only. It does not activate LangGraph/OpenAI execution. Default execution remains local deterministic and external adapters remain policy-gated."
+}
