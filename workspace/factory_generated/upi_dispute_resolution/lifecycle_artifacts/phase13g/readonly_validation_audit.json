@@ -10,13 +10,7 @@
       "returncode": 0,
       "unexpected_tracked_after_restore": [],
       "unexpected_tracked_drift_after_command": [],
-      "untracked_drift_detected": [
-        "docs/phase13g/",
-        "scripts/generate_phase13g_readonly_validation_portal.py",
-        "scripts/run_phase13g_readonly_validation_audit.py",
-        "scripts/validate_phase13g_readonly_validation_guardrails.py",
-        "tests/test_phase13g_readonly_validation_guardrails.py"
-      ]
+      "untracked_drift_detected": []
     },
     {
       "allowed_tracked_drift_detected": [],
@@ -27,13 +21,7 @@
       "returncode": 0,
       "unexpected_tracked_after_restore": [],
       "unexpected_tracked_drift_after_command": [],
-      "untracked_drift_detected": [
-        "docs/phase13g/",
-        "scripts/generate_phase13g_readonly_validation_portal.py",
-        "scripts/run_phase13g_readonly_validation_audit.py",
-        "scripts/validate_phase13g_readonly_validation_guardrails.py",
-        "tests/test_phase13g_readonly_validation_guardrails.py"
-      ]
+      "untracked_drift_detected": []
     }
   ],
   "guardrail_result": {
