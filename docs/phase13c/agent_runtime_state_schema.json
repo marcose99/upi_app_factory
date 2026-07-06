@@ -1,0 +1,11 @@
+{
+  "required_fields": [
+    "run_id",
+    "app_id",
+    "runtime_mode",
+    "current_agent",
+    "completed_agents",
+    "blocked_reason",
+    "metrics"
+  ]
+}

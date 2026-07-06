@@ -1,0 +1,9 @@
+{
+  "coverage_rule": "findings_seen == decisions_made and untriaged == 0",
+  "portal_rule": "Portal must show self-correction coverage and governance outcomes.",
+  "release_rule": "No phase may be frozen while untriaged warnings/errors exist.",
+  "required_ledgers": [
+    "self_correction_decision_ledger.jsonl",
+    "self_correction_attempt_ledger.jsonl"
+  ]
+}

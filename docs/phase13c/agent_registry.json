@@ -1,0 +1,55 @@
+[
+  {
+    "name": "requirement_intake_agent",
+    "outputs": [
+      "requirements_manifest.json",
+      "acceptance_criteria.json"
+    ],
+    "purpose": "Convert business intent into structured requirements and acceptance criteria."
+  },
+  {
+    "name": "upi_domain_policy_agent",
+    "outputs": [
+      "upi_domain_policy_matrix.json",
+      "regulatory_gap_register.md"
+    ],
+    "purpose": "Create UPI/payment-domain simulation constraints without compliance claims."
+  },
+  {
+    "name": "architecture_agent",
+    "outputs": [
+      "architecture.md",
+      "component_boundary_map.json"
+    ],
+    "purpose": "Create local app and mock ecosystem boundaries."
+  },
+  {
+    "name": "implementation_agent",
+    "outputs": [
+      "generated_application"
+    ],
+    "purpose": "Generate local application artifacts under generated_application only."
+  },
+  {
+    "name": "test_validation_agent",
+    "outputs": [
+      "validation_report.json"
+    ],
+    "purpose": "Run deterministic validators and tests."
+  },
+  {
+    "name": "audit_agent",
+    "outputs": [
+      "audit_findings_register.json",
+      "scorecard_results.json"
+    ],
+    "purpose": "Create independent findings and scorecards."
+  },
+  {
+    "name": "portal_agent",
+    "outputs": [
+      "factory_generation_progress_portal.html"
+    ],
+    "purpose": "Update evidence-backed portal progress and telemetry."
+  }
+]

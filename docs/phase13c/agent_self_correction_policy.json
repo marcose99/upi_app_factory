@@ -1,0 +1,48 @@
+{
+  "allowed_decisions": [
+    "auto_remediate",
+    "plan_only",
+    "human_approval_required",
+    "blocked",
+    "no_change_needed"
+  ],
+  "app_id": "upi_dispute_resolution",
+  "auto_remediable_categories": [
+    "formatting",
+    "lint",
+    "import_path",
+    "test_fixture",
+    "portal_population",
+    "documentation_gap",
+    "validator_message",
+    "low_risk_generated_app_fix"
+  ],
+  "blocked_categories": [
+    "real_payment_execution",
+    "real_customer_data_use",
+    "false_compliance_claim",
+    "credential_exposure"
+  ],
+  "human_approval_categories": [
+    "git_release",
+    "dependency_install",
+    "security_policy_weakening",
+    "tool_authorization_expansion",
+    "destructive_reset",
+    "regulatory_claim",
+    "live_integration",
+    "customer_data_handling",
+    "quality_objective_waiver"
+  ],
+  "max_attempts_per_finding": 3,
+  "phase": "Phase 13C",
+  "principle": "Every warning and error must be triaged; nothing may be silently ignored.",
+  "run_id": "first_governed_generation_run_001",
+  "stop_conditions": [
+    "regression_detected",
+    "human_approval_required",
+    "blocked_category_detected",
+    "remediation_budget_exhausted",
+    "security_policy_weakening_attempted"
+  ]
+}

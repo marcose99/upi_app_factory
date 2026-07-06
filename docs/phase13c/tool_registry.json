@@ -1,0 +1,32 @@
+[
+  {
+    "destructive": false,
+    "name": "artifact_writer",
+    "requires_human_approval": false
+  },
+  {
+    "destructive": false,
+    "name": "generated_app_writer",
+    "requires_human_approval": false
+  },
+  {
+    "destructive": false,
+    "name": "validator_runner",
+    "requires_human_approval": false
+  },
+  {
+    "destructive": false,
+    "name": "portal_generator",
+    "requires_human_approval": false
+  },
+  {
+    "destructive": false,
+    "name": "git_release_tool",
+    "requires_human_approval": true
+  },
+  {
+    "destructive": true,
+    "name": "reset_generated_application",
+    "requires_human_approval": true
+  }
+]
