@@ -1,0 +1,22 @@
+{
+  "adapter_status": {
+    "langgraph": "optional_dependency_detected_but_human_approval_required",
+    "local_deterministic": "enabled",
+    "openai_agents": "optional_dependency_and_secret_detected_but_human_approval_required"
+  },
+  "app_id": "upi_dispute_resolution",
+  "default_execution_adapter": "local_deterministic",
+  "governance_rules": [
+    "No dependency installation without human approval.",
+    "No OpenAI/network-backed execution without explicit approval.",
+    "No real payment integration.",
+    "No real customer data.",
+    "All adapter capability checks must be ledgered.",
+    "All adapter executions must be ledgered.",
+    "Warnings/errors must flow through self-correction governance."
+  ],
+  "phase": "Phase 13D",
+  "purpose": "Introduce governed adapter execution layer for local deterministic, LangGraph, and OpenAI-agent paths.",
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Phase 13D creates adapter execution controls and executes the local deterministic adapter. It does not falsely claim LangGraph/OpenAI execution unless those adapters are explicitly enabled."
+}

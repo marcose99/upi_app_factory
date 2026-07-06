@@ -14,6 +14,12 @@ __all__ = [
     "CorrectionDecision",
     "FindingSeverity",
     "GovernedAgentRuntime",
+    "GovernedAdapterExecutor",
+    "AdapterCapability",
+    "AdapterCapabilityDetector",
+    "AdapterExecutionResult",
+    "AdapterName",
+    "AdapterStatus",
     "JsonlLedger",
     "RuntimeMode",
     "SelfCorrectionController",
@@ -21,3 +27,6 @@ __all__ = [
     "ToolDefinition",
     "ValidationFinding",
 ]
+from .adapters import AdapterCapability, AdapterCapabilityDetector, AdapterExecutionResult
+from .adapters import AdapterName, AdapterStatus, GovernedAdapterExecutor
+
