@@ -1,0 +1,24 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "boundaries": [
+    "no live NPCI/RBI/bank/PSP/ODR/payment rail calls",
+    "no real customer data",
+    "no production readiness claim",
+    "no regulatory compliance/certification claim"
+  ],
+  "capabilities": [
+    "local FastAPI dispute API",
+    "strict Pydantic contracts",
+    "SQLite repository",
+    "mock ecosystem gateway",
+    "workflow state transitions",
+    "audit JSONL writer",
+    "UPI ID masking",
+    "local pytest suite",
+    "architecture and design docs"
+  ],
+  "decision": "GENERATED_APPLICATION_IMPLEMENTED",
+  "generated_application_path": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "phase": "Phase 13B",
+  "run_id": "first_governed_generation_run_001"
+}
