@@ -228,3 +228,22 @@ Required behavior:
 - Require unit tests, integration tests, domain scenario tests, limited local load/stress tests, regression tests, security tests, validation reports, evaluation scorecards, and risk acceptance records.
 - Preserve real local primary UPI/payment application generation while keeping NPCI/RBI/bank/PSP/ODR/payment rails and external ecosystem mock/simulated.
 <!-- /PHASE_11D_PRE_AGENT_GENERATION_READINESS_CONTROL_PLANE -->
+
+<!-- PHASE_12A_INDEPENDENT_AUDIT_ASSURANCE_VALUE_VALIDATION -->
+## Phase 12A Independent Audit, Assurance, and Value Validation Contract
+
+Before and after governed application generation, the factory must support independent audit across two separately scored subjects:
+- the Agentic AI software factory, and
+- the generated real local primary UPI/payment dispute-resolution application with mock/simulated external ecosystem.
+
+Mandatory audit dimensions:
+- factory governance, repeatability, prompt policy, orchestration, tool authorization, memory/RAG/context engineering, metrics/cost, observability, audit logging, and release governance.
+- agentic AI safety, prompt injection, excessive agency, tool misuse, RAG poisoning, sensitive information disclosure, secret handling, and human approval gates.
+- UPI domain value, ODR/failed-transaction/unauthorised-transaction/privacy guideline awareness, mock-boundary correctness, and no regulatory compliance/certification claim.
+- architecture, HLD, LLD, API contracts, data model, workflow/state-machine, security design, observability design, test strategy, and release-readiness evidence.
+- code quality, unit tests, integration tests, domain scenario tests, regression tests, limited local load/stress tests, security tests, validation reports, evaluation scorecards, risk registers, and value scorecards.
+
+Human validator portal requirement:
+- After generation, produce an offline HTML human-validator portal with factory overview, capabilities, architecture, guardrails, agent workflow, tool policy, memory/RAG policy, metrics/cost, validations, tests, evaluations, risks, audit evidence, generated application capabilities, generated application architecture, generated application data flow, diagrams, and traceability.
+- The portal must be evidence-backed and must not claim production readiness, regulatory compliance, RBI/NPCI certification, or live payment capability.
+<!-- /PHASE_12A_INDEPENDENT_AUDIT_ASSURANCE_VALUE_VALIDATION -->
