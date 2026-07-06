@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
-from typing import Iterable
+from typing import Any, Iterable, Mapping, Sequence, cast
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_ID = "upi_dispute_resolution"
@@ -82,11 +82,10 @@ def restore_allowed_legacy_drift() -> list[str]:
     return restored
 
 
-def command_result(command_spec: dict[str, object]) -> dict[str, object]:
+def command_result(command_spec: Mapping[str, object]) -> dict[str, object]:
     preexisting_restored = restore_allowed_legacy_drift()
 
-    completed = subprocess.run(
-        command_spec["command"],  # type: ignore[arg-type]
+    completed = subprocess.run(cast(Sequence[str], command_spec[\"command\"]),
         cwd=ROOT,
         text=True,
         stdout=subprocess.PIPE,
@@ -128,13 +127,13 @@ def main() -> int:
         {
             path
             for item in command_results
-            for path in item["unexpected_tracked_after_restore"]  # type: ignore[index]
+            for path in item["unexpected_tracked_after_restore"]
         }
     )
 
     drift_events_detected = sum(
-        len(item["preexisting_allowed_tracked_drift_restored"])  # type: ignore[arg-type]
-        + len(item["allowed_tracked_drift_detected"])  # type: ignore[arg-type]
+        len(item["preexisting_allowed_tracked_drift_restored"])
+        + len(item["allowed_tracked_drift_detected"])
         for item in command_results
     )
 

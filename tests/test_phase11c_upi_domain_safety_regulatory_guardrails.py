@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Any
 
 import importlib.util
 import json
@@ -9,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR_PATH = ROOT / "scripts" / "validate_phase11c_upi_domain_safety_regulatory_guardrails.py"
 
 
-def load_validator():
+def load_validator() -> Any:
     spec = importlib.util.spec_from_file_location(
         "validate_phase11c_upi_domain_safety_regulatory_guardrails",
         VALIDATOR_PATH,

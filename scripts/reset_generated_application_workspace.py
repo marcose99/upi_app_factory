@@ -11,7 +11,7 @@ from typing import Any
 try:
     from zoneinfo import ZoneInfo
 except Exception:  # pragma: no cover
-    ZoneInfo = None  # type: ignore[assignment]
+    ZoneInfo = None
 
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Any, cast
 
 import json
 import subprocess
@@ -13,8 +14,8 @@ BUNDLE_DIR = APP_WORKSPACE / "release_handoff_bundle" / "phase13j"
 MANIFEST_PATH = PHASE_DIR / "release_handoff_bundle_manifest.json"
 
 
-def load_manifest() -> dict:
-    return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+def load_manifest() -> dict[str, Any]:
+    return cast(dict[str, Any], json.loads(MANIFEST_PATH.read_text(encoding="utf-8")))
 
 
 def test_release_handoff_manifest_exists_and_passes() -> None:

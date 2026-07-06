@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from typing import Any, cast
 
 import html
 import json
@@ -14,8 +15,8 @@ MANIFEST_PATH = PHASE_DIR / "release_handoff_bundle_manifest.json"
 PORTAL_PATH = PORTAL_DIR / "factory_release_handoff_bundle_portal.html"
 
 
-def load_manifest() -> dict:
-    return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+def load_manifest() -> dict[str, Any]:
+    return cast(dict[str, Any], json.loads(MANIFEST_PATH.read_text(encoding="utf-8")))
 
 
 def status_text(value: bool) -> str:

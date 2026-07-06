@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Any
 
 import importlib.util
 import json
@@ -13,7 +14,7 @@ VALIDATOR_PATH = ROOT / "scripts" / "validate_phase13b_generated_application.py"
 APP_ROOT = ROOT / "workspace" / "factory_generated" / "upi_dispute_resolution" / "generated_application"
 
 
-def load_validator():
+def load_validator() -> Any:
     spec = importlib.util.spec_from_file_location(
         "validate_phase13b_generated_application",
         VALIDATOR_PATH,
