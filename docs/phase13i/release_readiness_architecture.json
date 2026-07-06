@@ -1,0 +1,28 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "phase": "Phase 13I",
+  "architecture_name": "release_readiness_operator_acceptance_architecture",
+  "components": [
+    {
+      "name": "release_readiness_audit",
+      "path": "scripts/run_phase13i_release_readiness_audit.py",
+      "responsibility": "Create deterministic release-readiness evidence from tags, required files, and operator smoke checks."
+    },
+    {
+      "name": "release_readiness_validator",
+      "path": "scripts/validate_phase13i_release_readiness.py",
+      "responsibility": "Fail if release-readiness evidence is missing, incomplete, or violates the truth boundary."
+    },
+    {
+      "name": "release_readiness_portal",
+      "path": "workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_release_readiness_operator_acceptance_portal.html",
+      "responsibility": "Provide a human-readable operator acceptance view."
+    },
+    {
+      "name": "operator_command_surface",
+      "path": "factoryctl",
+      "responsibility": "Expose local operator commands for status, adapters, validation, portals, handover, and logs."
+    }
+  ],
+  "truth_boundary": "Default execution remains local deterministic. LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active."
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Phase 13I Release Readiness Operator Acceptance</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.45; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0 2rem; }
+    th, td { border: 1px solid #c8c8c8; padding: 0.45rem; text-align: left; }
+    th { background: #f2f2f2; }
+    .pass { color: #0a6b2b; font-weight: bold; }
+    .boundary { background: #f8f8f8; border-left: 4px solid #555; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Phase 13I — Release Readiness Operator Acceptance</h1>
+  <p>Status: <span class="pass">True</span></p>
+  <p>Baseline tag: <code>v0.13.7-release-state-lineage-registry</code></p>
+  <div class="boundary">Local deterministic execution remains the default; LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active.</div>
+
+  <h2>Release Lineage</h2>
+  <table>
+    <thead><tr><th>Phase</th><th>Capability</th><th>Tag</th><th>Present</th></tr></thead>
+    <tbody><tr><td>Phase 13C</td><td>real local governed agent-runtime foundation</td><td>v0.13.2-real-governed-agent-runtime-foundation</td><td>True</td></tr>
+<tr><td>Phase 13D</td><td>governed adapter execution layer</td><td>v0.13.3-governed-agent-adapter-execution-layer</td><td>True</td></tr>
+<tr><td>Phase 13E</td><td>factoryctl operator command surface</td><td>v0.13.4-factory-cli-operator-command-surface</td><td>True</td></tr>
+<tr><td>Phase 13F</td><td>operator handover closure</td><td>v0.13.5-operator-handover-closure</td><td>True</td></tr>
+<tr><td>Phase 13G</td><td>read-only validation drift guardrails</td><td>v0.13.6-readonly-validation-drift-guardrails</td><td>True</td></tr>
+<tr><td>Phase 13H</td><td>release-state lineage registry</td><td>v0.13.7-release-state-lineage-registry</td><td>True</td></tr></tbody>
+  </table>
+
+  <h2>Operator Smoke Checks</h2>
+  <table>
+    <thead><tr><th>Command</th><th>Exit Code</th><th>Passed</th><th>Handover Missing Entries</th></tr></thead>
+    <tbody><tr><td>./factoryctl status</td><td>0</td><td>True</td><td>False</td></tr>
+<tr><td>./factoryctl adapters</td><td>0</td><td>True</td><td>False</td></tr>
+<tr><td>./factoryctl handover</td><td>0</td><td>True</td><td>False</td></tr></tbody>
+  </table>
+
+  <h2>Required Files</h2>
+  <table>
+    <thead><tr><th>Path</th><th>Present</th></tr></thead>
+    <tbody><tr><td>docs/phase13d/agent_adapter_execution_layer.md</td><td>True</td></tr>
+<tr><td>docs/phase13e/factory_cli_operator_surface.md</td><td>True</td></tr>
+<tr><td>docs/phase13f/operator_handover_closure.md</td><td>True</td></tr>
+<tr><td>docs/phase13g/readonly_validation_drift_guardrails.md</td><td>True</td></tr>
+<tr><td>docs/phase13h/release_state_lineage_registry.md</td><td>True</td></tr>
+<tr><td>factoryctl</td><td>True</td></tr>
+<tr><td>scripts/validate_phase13d_agent_adapter_execution.py</td><td>True</td></tr>
+<tr><td>scripts/validate_phase13e_factory_cli_operator_surface.py</td><td>True</td></tr>
+<tr><td>scripts/validate_phase13f_operator_handover_closure.py</td><td>True</td></tr>
+<tr><td>scripts/validate_phase13g_readonly_validation_guardrails.py</td><td>True</td></tr>
+<tr><td>scripts/validate_phase13h_release_state_lineage.py</td><td>True</td></tr></tbody>
+  </table>
+</body>
+</html>
