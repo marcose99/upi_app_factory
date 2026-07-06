@@ -1,0 +1,28 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "blocked_generation_conditions": [
+    "missing tool authorization policy",
+    "missing handoff contract",
+    "missing memory/RAG policy",
+    "missing architecture/HLD/LLD gate",
+    "missing test/evaluation gate",
+    "unresolved live integration request",
+    "unresolved real customer data request",
+    "unresolved regulatory compliance claim"
+  ],
+  "decision": "GO",
+  "go_conditions": [
+    "prompt_policy_manifest_exists",
+    "agent_orchestration_contract_exists",
+    "tool_authorization_policy_exists",
+    "memory_retrieval_context_policy_exists",
+    "architecture_hld_lld_quality_gate_exists",
+    "test_evaluation_quality_gate_exists",
+    "risk_policy_control_matrix_exists",
+    "observability_audit_logging_contract_exists",
+    "upi_domain_policy_execution_gap_register_exists",
+    "all_validators_pass"
+  ],
+  "next_phase": "first governed agent application generation run",
+  "phase": "Phase 11D"
+}
