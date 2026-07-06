@@ -1,0 +1,19 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "components": [
+    {
+      "name": "create_phase13j_release_handoff_bundle.py",
+      "responsibility": "Creates deterministic release handoff bundle files and checksum manifest."
+    },
+    {
+      "name": "validate_phase13j_release_handoff_bundle.py",
+      "responsibility": "Validates bundle integrity without mutating repository state."
+    },
+    {
+      "name": "generate_phase13j_release_handoff_portal.py",
+      "responsibility": "Generates a human-readable release handoff portal from deterministic evidence."
+    }
+  ],
+  "phase": "Phase 13J",
+  "truth_boundary": "Local deterministic execution remains the default. LangGraph/OpenAI execution remains detected and policy-gated, not falsely claimed as active."
+}

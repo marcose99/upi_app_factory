@@ -1,0 +1,18 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "baseline_tag": "v0.13.8-release-readiness-operator-acceptance",
+  "default_release_handoff_mode": "deterministic_local_operator_bundle",
+  "forbidden_claims": [
+    "Do not claim LangGraph/OpenAI execution is active by default.",
+    "Do not include volatile timestamps or current commit hashes in deterministic handoff evidence.",
+    "Do not require network access for the default release handoff bundle validation."
+  ],
+  "phase": "Phase 13J",
+  "required_controls": [
+    "operator_commands",
+    "required_release_file_checksums",
+    "truth_boundary",
+    "read_only_validation",
+    "portal"
+  ]
+}
