@@ -1,0 +1,13 @@
+{
+  "components": [
+    "AdapterCapabilityDetector",
+    "GovernedAdapterExecutor",
+    "LocalDeterministicAdapter",
+    "LangGraph optional capability check",
+    "OpenAI optional capability check",
+    "adapter_execution_ledger.jsonl",
+    "adapter_capability_ledger.jsonl",
+    "adapter execution portal"
+  ],
+  "phase": "Phase 13D"
+}
