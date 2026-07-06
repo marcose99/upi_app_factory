@@ -1,0 +1,42 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "conflict_resolution_order": [
+    "safety_and_regulatory_guardrails",
+    "mock_external_ecosystem_boundary",
+    "human_approval_policy",
+    "tool_authorization_policy",
+    "phase_specific_prompt",
+    "agent_role_prompt"
+  ],
+  "phase": "Phase 11D",
+  "policy_contracts": [
+    "llm_call_metrics_and_expense",
+    "agentic_ai_best_practices",
+    "generated_application_type_quality",
+    "upi_domain_safety_regulatory_guardrails",
+    "pre_agent_generation_readiness_control_plane"
+  ],
+  "prompt_inheritance_model": {
+    "agent_prompts": [
+      "role_scope",
+      "inputs_outputs",
+      "tool_permissions",
+      "handoffs"
+    ],
+    "governance_contracts": [
+      "versioned_external_policy_contracts"
+    ],
+    "phase_prompts": [
+      "phase_specific_artifacts",
+      "validators",
+      "go_no_go"
+    ],
+    "system_prompt": [
+      "non_negotiable_boundary",
+      "metrics",
+      "safety",
+      "audit"
+    ]
+  },
+  "purpose": "Make prompt governance structural instead of repeatedly appending large policy text to every prompt."
+}

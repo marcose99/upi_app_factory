@@ -199,3 +199,30 @@ Mandatory UPI business-domain safety and regulatory guideline awareness:
 - Agents must preserve fairness, customer harm prevention, safe error messages, tamper-evident audit records, immutable evidence where appropriate, replay protection, idempotency, authorization checks, least-privilege access, and fail-closed handling for uncertain regulatory/domain conditions.
 - If a requirement appears to require live integration, regulated certification, legal interpretation, customer data, production money movement, or direct regulator/bank/PSP connectivity, classify it as out-of-scope for local generation and route it to mock ecosystem simulation plus gap/escalation reporting.
 <!-- /PHASE_11C_UPI_DOMAIN_SAFETY_REGULATORY_GUARDRAILS -->
+
+<!-- PHASE_11D_PRE_AGENT_GENERATION_READINESS_CONTROL_PLANE -->
+## Phase 11D Pre-Agent Generation Readiness Control Plane
+
+Before any agent generates, modifies, validates, or releases application code, the agent must follow the Phase 11D pre-agent generation readiness control plane.
+
+Mandatory control-plane artifacts:
+- `docs/phase11d/prompt_policy_manifest.json`
+- `docs/phase11d/agent_orchestration_contract.json`
+- `docs/phase11d/tool_authorization_policy.json`
+- `docs/phase11d/memory_retrieval_context_policy.json`
+- `docs/phase11d/architecture_hld_lld_quality_gate.md`
+- `docs/phase11d/test_evaluation_quality_gate.md`
+- `docs/phase11d/risk_policy_control_matrix.json`
+- `docs/phase11d/observability_audit_logging_contract.json`
+- `docs/phase11d/upi_domain_policy_execution_gap_register.md`
+- `docs/phase11d/pre_generation_go_no_go_report.json`
+
+Required behavior:
+- Do not run autonomous generation until the go/no-go report is `GO`.
+- Enforce agent orchestration order, handoff contracts, retry budgets, failure recovery, and human approval checkpoints.
+- Enforce tool authorization by role, operation type, path scope, network permission, write permission, and audit requirements.
+- Enforce memory, RAG, retrieval, context engineering, source allowlist, citation, provenance, and context-budget policies.
+- Require architecture, HLD, LLD, API, data model, workflow/state-machine, security, observability, testing, and release-readiness artifacts before implementation expansion.
+- Require unit tests, integration tests, domain scenario tests, limited local load/stress tests, regression tests, security tests, validation reports, evaluation scorecards, and risk acceptance records.
+- Preserve real local primary UPI/payment application generation while keeping NPCI/RBI/bank/PSP/ODR/payment rails and external ecosystem mock/simulated.
+<!-- /PHASE_11D_PRE_AGENT_GENERATION_READINESS_CONTROL_PLANE -->
