@@ -1,0 +1,50 @@
+{
+  "schema_version": "governed-autonomous-application-engineering-policy.v1",
+  "policy_id": "phase13al.governed_autonomous_application_engineering_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_SANDBOX_APPLICATION_ENGINEERING_REHEARSAL",
+  "terminology": {
+    "preferred": "application engineering",
+    "avoid_as_primary_term": "application generation"
+  },
+  "requires_phase13ak_sandbox_rehearsal": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "real_generated_application_delete_allowed": false,
+  "real_generated_application_write_allowed": false,
+  "sandbox_write_allowed": true,
+  "sandbox_root": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13al/engineered_application_sandbox",
+  "engineering_stages": [
+    "requirements",
+    "domain_model",
+    "architecture",
+    "design",
+    "implementation",
+    "tests",
+    "security_policy",
+    "certification",
+    "evidence",
+    "handoff"
+  ],
+  "required_controls": [
+    "sandbox_only",
+    "phase13ak_rehearsal_required",
+    "deterministic_local_artifacts",
+    "no_live_provider_calls",
+    "no_external_system_calls",
+    "policy_evidence_required",
+    "certification_required",
+    "handoff_required",
+    "human_release_gate_preserved"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AL rehearses complete governed autonomous application engineering in a sandbox only. It must not delete or overwrite the real generated_application."
+}
