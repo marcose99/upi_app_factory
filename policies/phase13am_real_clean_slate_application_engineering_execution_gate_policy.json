@@ -1,0 +1,39 @@
+{
+  "schema_version": "real-clean-slate-application-engineering-execution-gate-policy.v1",
+  "policy_id": "phase13am.real_clean_slate_application_engineering_execution_gate_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_REAL_EXECUTION_GATE_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13al_application_engineering_sandbox": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "future_destructive_phase_requires": [
+    "valid_human_approval_token",
+    "explicit_operator_confirmation",
+    "backup_restore_plan",
+    "preflight_ready",
+    "dry_run_ready",
+    "sandbox_rehearsal_ready",
+    "application_engineering_sandbox_ready",
+    "post_engineering_certification_plan",
+    "human_merge_tag_release_gate"
+  ],
+  "execution_gate_statuses": [
+    "REAL_EXECUTION_GATE_READY_FOR_FUTURE_HUMAN_APPROVED_PHASE",
+    "REAL_EXECUTION_BLOCKED_APPROVAL_TOKEN_REQUIRED",
+    "REAL_EXECUTION_BLOCKED_OPERATOR_CONFIRMATION_REQUIRED",
+    "REAL_EXECUTION_BLOCKED_APPLICATION_ENGINEERING_SANDBOX"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AM creates the real execution gate only. It must not delete or overwrite the real generated_application; future destructive execution requires a separate explicit phase and human approval."
+}
