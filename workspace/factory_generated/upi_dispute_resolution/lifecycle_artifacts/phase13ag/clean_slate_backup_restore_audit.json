@@ -1,0 +1,28 @@
+{
+  "schema_version": "clean-slate-backup-restore-audit.v1",
+  "phase": "13AG",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_BACKUP_RESTORE_PLAN",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "destructive_delete_performed": false,
+  "backup_required_before_delete": true,
+  "restore_plan_required_before_delete": true,
+  "evidence_preservation_required": true,
+  "human_approval_required_before_delete": true,
+  "policy_ref": "policies/phase13ag_clean_slate_backup_restore_policy.json",
+  "planner_ref": "scripts/build_clean_slate_backup_restore_plan.py",
+  "validator_ref": "scripts/validate_phase13ag_clean_slate_backup_restore.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AG creates deterministic backup, restore, and evidence-preservation planning without performing destructive operations."
+  },
+  "governance_controls": [
+    "non_destructive_backup_plan",
+    "file_hash_manifest",
+    "manifest_digest",
+    "restore_plan_required",
+    "evidence_preservation_required",
+    "human_approval_required"
+  ]
+}
