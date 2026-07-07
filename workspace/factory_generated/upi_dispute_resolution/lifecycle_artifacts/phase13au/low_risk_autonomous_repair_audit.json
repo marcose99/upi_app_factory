@@ -1,0 +1,34 @@
+{
+  "schema_version": "low-risk-autonomous-repair-audit.v1",
+  "phase": "13AU",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_LOW_RISK_REPAIR_SANDBOX_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "project_worktree_modified_by_autonomous_repair": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13at_autonomous_runner": true,
+  "applier_ref": "scripts/apply_governed_low_risk_repair.py",
+  "policy_ref": "policies/phase13au_low_risk_autonomous_repair_policy.json",
+  "validator_ref": "scripts/validate_phase13au_low_risk_repair_applier.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AU permits automatic known low-risk repairs only in explicit local sandbox targets."
+  },
+  "governance_controls": [
+    "low_risk_repair_classes_only",
+    "explicit_sandbox_required",
+    "worktree_auto_repair_blocked",
+    "protected_paths_blocked",
+    "backup_snapshot_required",
+    "rollback_plan_required",
+    "deterministic_evidence_required",
+    "human_approval_boundaries_preserved"
+  ]
+}
