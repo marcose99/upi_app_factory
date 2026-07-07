@@ -1,0 +1,38 @@
+{
+  "schema_version": "human-approved-promotion-certification-boundary-audit.v1",
+  "phase": "14C",
+  "app_id": "upi_dispute_resolution",
+  "mode": "HUMAN_APPROVED_PROMOTION_GATE_AND_CERTIFICATION_READY_BOUNDARY",
+  "preferred_term": "application engineering",
+  "factory_does_not_self_certify": true,
+  "certification_ready_not_certified": true,
+  "official_certification_boundary_required": true,
+  "certification_authority_verification_required": true,
+  "promotion_requires_human_approval": true,
+  "automatic_promotion_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "arbitrary_shell_execution_performed": false,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "promotion_gate_ref": "scripts/build_human_approved_promotion_certification_boundary.py",
+  "policy_ref": "policies/phase14c_human_approved_promotion_certification_boundary_policy.json",
+  "validator_ref": "scripts/validate_phase14c_promotion_certification_boundary.py",
+  "certification_boundary": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ],
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 14C establishes certification-ready evidence and promotion gates. It does not claim official certification; final certification remains with authorized certifying authorities."
+  }
+}
