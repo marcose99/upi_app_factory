@@ -1,0 +1,12 @@
+{
+  "factory_may_generate_rollback_plan": true,
+  "factory_must_not_execute_production_rollback": true,
+  "rollback_evidence": [
+    "previous_tag",
+    "release_notes",
+    "regression_report",
+    "operator_approval"
+  ],
+  "rollback_execution_is_human_gated": true,
+  "schema_version": "phase20-rollback-model.v1"
+}
