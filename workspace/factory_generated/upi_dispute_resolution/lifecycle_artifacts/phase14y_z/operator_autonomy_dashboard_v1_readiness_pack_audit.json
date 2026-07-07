@@ -1,0 +1,283 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "auto_certification_performed": false,
+  "auto_merge_performed": false,
+  "auto_promotion_performed": false,
+  "auto_push_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "batch_phases": [
+    "14Y",
+    "14Z"
+  ],
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "certification_ready_not_certified_boundary_preserved": true,
+  "created_at_utc": "2026-07-07T19:46:42.623397+00:00",
+  "destructive_cleanup_performed": false,
+  "doc_path": "docs/phase14y_z/operator_autonomy_dashboard_v1_readiness_pack.md",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "final_verification_is_non_mutating": true,
+  "full_regression_requires_clean_committed_tree": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "live_provider_calls_performed": false,
+  "mode": "governed_operator_autonomy_dashboard_v1_readiness_pack",
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "operator_autonomy_dashboard_enabled": true,
+  "operator_dashboard_sections": [
+    "phase_status_timeline",
+    "quality_gate_matrix",
+    "audit_evidence_index",
+    "safe_repair_catalog_summary",
+    "human_approval_queue",
+    "generated_application_readiness_snapshot",
+    "certification_boundary_panel",
+    "release_handoff_replay_evidence_links",
+    "blocked_autonomous_action_ledger",
+    "recommended_next_operator_actions"
+  ],
+  "parallel_execution_limited_to_readonly_gates": true,
+  "parallel_readonly_gates_enabled": true,
+  "phase": "14Y-Z",
+  "policy_path": "policies/phase14yz_operator_autonomy_v1_readiness_policy.json",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 427 source files\n",
+      "tier": "static_typing"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "gate_id": "phase13g_legacy_drift_guardrail",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"allowed_legacy_drift_restored_during_validation\": [],\n  \"app_id\": \"upi_dispute_resolution\",\n  \"errors\": [],\n  \"passed\": true,\n  \"phase\": \"Phase 13G\",\n  \"run_id\": \"first_governed_generation_run_001\"\n}\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14v_autonomous_quality_gate_pipeline.py"
+      ],
+      "gate_id": "phase14v_artifact_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14V autonomous quality-gate pipeline artifacts validated.\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14wx_generated_app_depth_release_evidence.py"
+      ],
+      "gate_id": "phase14wx_artifact_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14W-X generated application depth and release evidence artifacts validated.\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14wx_generated_app_depth_release_evidence.py"
+      ],
+      "gate_id": "phase14wx_targeted_tests",
+      "mutation_profile": "tracked-state-read-only-after-phase14wx-audit-isolation",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 6 items\n\ntests/test_phase14wx_generated_app_depth_release_evidence.py ......      [100%]\n\n============================== 6 passed in 0.02s ===============================\n",
+      "tier": "targeted_tests"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n",
+      "tier": "static_hygiene"
+    }
+  ],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "gate_id": "phase13g_legacy_drift_guardrail",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14v_autonomous_quality_gate_pipeline.py"
+      ],
+      "gate_id": "phase14v_artifact_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14wx_generated_app_depth_release_evidence.py"
+      ],
+      "gate_id": "phase14wx_artifact_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14wx_generated_app_depth_release_evidence.py"
+      ],
+      "gate_id": "phase14wx_targeted_tests",
+      "mutation_profile": "tracked-state-read-only-after-phase14wx-audit-isolation",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "targeted_tests"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "static_hygiene"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "static_typing"
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "recommended_post_v1_backlog": [
+    "deeper generated application business workflows",
+    "stronger supply_chain_security_attestations",
+    "fresh_machine_replay_against_tagged_v1_pack",
+    "operator_portal_visual_dashboard_runtime_polish",
+    "independent_certifier_workspace_trial",
+    "enterprise_scaling_reference_architecture"
+  ],
+  "schema_version": "operator-autonomy-dashboard-v1-readiness-pack.v1",
+  "stable_endgame_runner_rule_locked": true,
+  "status": "OPERATOR_AUTONOMY_DASHBOARD_V1_READINESS_PACK_READY",
+  "tests_use_temporary_audit_outputs": true,
+  "v1_autonomous_readiness_pack_enabled": true,
+  "v1_readiness_assessment": {
+    "generated_application_certification_ready_not_certified": true,
+    "handoff_pack_ready_for_independent_review": true,
+    "local_replay_ready": true,
+    "phase14_endgame_sequence_complete_after_this_phase": true,
+    "remaining_work_is_independent_review_and_real_certification_path": true
+  },
+  "v1_readiness_pack_sections": [
+    "local_checkout_replay_readiness",
+    "generated_application_local_run_readiness",
+    "governance_policy_evidence_index",
+    "quality_gate_regression_evidence",
+    "release_evidence_handoff_index",
+    "certification_boundary_statement",
+    "known_limitations_next_hardening_backlog",
+    "human_approval_boundaries",
+    "official_certification_authority_dependency"
+  ],
+  "validators_are_read_only": true,
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
