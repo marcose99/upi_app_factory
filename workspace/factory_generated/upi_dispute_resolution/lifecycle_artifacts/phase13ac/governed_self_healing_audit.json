@@ -1,0 +1,23 @@
+{
+  "schema_version": "governed-self-healing-audit.v1",
+  "phase": "13AC",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_BOUNDED_DETERMINISTIC_REPAIR",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "human_approval_required_for_release": true,
+  "policy_ref": "policies/phase13ac_governed_autonomous_self_healing_policy.json",
+  "classifier_ref": "scripts/governed_self_healing.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AC defines a reusable governed autonomous self-healing policy and classifier. Future phases should wire this classifier into all phase runner scripts."
+  },
+  "governance_controls": [
+    "bounded_iterations",
+    "known_failure_classification",
+    "blocked_high_risk_actions",
+    "local_only_execution",
+    "post_repair_gate_rerun",
+    "human_release_approval"
+  ]
+}

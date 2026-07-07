@@ -1,0 +1,94 @@
+{
+  "schema_version": "governed-autonomous-self-healing-policy.v1",
+  "policy_id": "phase13ac.governed_autonomous_self_healing_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_BOUNDED_DETERMINISTIC_REPAIR",
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "human_approval_required_for_release": true,
+  "max_repair_iterations": 5,
+  "required_gates_after_repair": [
+    "ruff",
+    "mypy",
+    "targeted_pytest",
+    "full_pytest"
+  ],
+  "allowed_failure_categories": [
+    "MYPY_ACTIVE_SOURCE_SCOPE",
+    "MYPY_PACKAGE_MAPPING",
+    "RUFF_SAFE_AUTOFIX",
+    "DETERMINISTIC_ARTIFACT_REGENERATION",
+    "VALIDATOR_SCHEMA_DRIFT_KNOWN_SAFE"
+  ],
+  "blocked_failure_categories": [
+    "UNKNOWN_FAILURE_PATTERN",
+    "LIVE_PROVIDER_CALL_REQUIRED",
+    "EXTERNAL_SYSTEM_CALL_REQUIRED",
+    "POLICY_WEAKENING_REQUIRED",
+    "SECURITY_SUPPRESSION_REQUIRED",
+    "DEPENDENCY_CHANGE_REQUIRED",
+    "DATA_DELETION_REQUIRED",
+    "REGULATORY_RULE_CHANGE_REQUIRED",
+    "MERGE_TAG_RELEASE_APPROVAL_REQUIRED",
+    "SECRETS_OR_CREDENTIALS_EXPOSURE"
+  ],
+  "allowed_repair_actions": [
+    {
+      "action_id": "NORMALIZE_MYPY_ACTIVE_SOURCE_SCOPE",
+      "category": "MYPY_ACTIVE_SOURCE_SCOPE",
+      "description": "Normalize strict MyPy scanning to active factory source while excluding archived baseline and ignored generated workspace evidence.",
+      "requires_human_approval": false
+    },
+    {
+      "action_id": "ADD_PACKAGE_BOUNDARY_INIT",
+      "category": "MYPY_PACKAGE_MAPPING",
+      "description": "Add explicit __init__.py package boundary for governed local scripts where it stabilizes deterministic module mapping.",
+      "requires_human_approval": false
+    },
+    {
+      "action_id": "RUN_RUFF_SAFE_FIX",
+      "category": "RUFF_SAFE_AUTOFIX",
+      "description": "Run ruff --fix only for safe lint/format repairs and re-run ruff after the repair.",
+      "requires_human_approval": false
+    },
+    {
+      "action_id": "REGENERATE_DETERMINISTIC_LOCAL_ARTIFACTS",
+      "category": "DETERMINISTIC_ARTIFACT_REGENERATION",
+      "description": "Regenerate deterministic source-controlled local evidence artifacts from policy-controlled templates.",
+      "requires_human_approval": false
+    }
+  ],
+  "blocked_repair_actions": [
+    {
+      "action_id": "CALL_LIVE_LLM_PROVIDER",
+      "reason": "Live provider calls require explicit policy gate and human approval."
+    },
+    {
+      "action_id": "CALL_EXTERNAL_PAYMENT_OR_BANKING_SYSTEM",
+      "reason": "External ecosystem calls must remain mocked unless future governance explicitly approves them."
+    },
+    {
+      "action_id": "WEAKEN_POLICY_OR_TEST_GATE",
+      "reason": "Self-healing must repair the system, not bypass quality gates."
+    },
+    {
+      "action_id": "ADD_SECURITY_SUPPRESSION",
+      "reason": "Security suppressions require human risk acceptance."
+    },
+    {
+      "action_id": "CHANGE_DEPENDENCIES",
+      "reason": "Dependency changes require supply-chain review."
+    },
+    {
+      "action_id": "DELETE_DATA_OR_EVIDENCE",
+      "reason": "Evidence deletion requires explicit human approval."
+    }
+  ],
+  "audit_requirements": [
+    "record_failure_category",
+    "record_repair_action",
+    "record_iteration_count",
+    "record_before_after_gate_results",
+    "record_human_escalation_reason_when_blocked"
+  ]
+}
