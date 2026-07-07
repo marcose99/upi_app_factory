@@ -1,0 +1,40 @@
+{
+  "schema_version": "autonomous-lifecycle-plan-executor-policy.v1",
+  "policy_id": "phase14a.autonomous_lifecycle_plan_executor_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "PLAN_ONLY_AUTONOMOUS_LIFECYCLE_EXECUTOR",
+  "preferred_term": "application engineering",
+  "requires_phase13az_autonomy_control_plane": true,
+  "plan_only": true,
+  "real_command_execution_allowed": false,
+  "worktree_mutation_allowed": false,
+  "release_action_allowed": false,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "arbitrary_shell_execution_allowed": false,
+  "real_generated_application_delete_allowed": false,
+  "real_generated_application_overwrite_allowed": false,
+  "factory_self_modification_allowed": false,
+  "auto_merge_allowed": false,
+  "auto_tag_allowed": false,
+  "auto_release_allowed": false,
+  "required_lifecycle_steps": [
+    "requirement_intake_preview",
+    "domain_analysis_plan",
+    "architecture_plan",
+    "sandbox_generation_plan",
+    "validation_plan",
+    "self_healing_plan",
+    "evidence_packaging_plan",
+    "handover_replay_plan",
+    "worktree_promotion_gate",
+    "release_candidate_gate"
+  ],
+  "required_decision_statuses": [
+    "APPROVED",
+    "HUMAN_APPROVAL_REQUIRED",
+    "SANDBOX_EVIDENCE_REQUIRED",
+    "BLOCKED"
+  ],
+  "policy_rule": "Phase 14A may build an autonomous lifecycle execution plan using the Phase 13AZ control plane, but it must not execute shell commands, mutate the real worktree, delete or overwrite the generated application, call live providers, call external systems, merge, tag, or release."
+}
