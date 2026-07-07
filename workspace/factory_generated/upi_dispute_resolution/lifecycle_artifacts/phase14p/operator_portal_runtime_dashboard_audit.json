@@ -1,0 +1,102 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "arbitrary_shell_execution_performed": false,
+  "auto_merge_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "boundary_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ],
+  "certification_ready_not_certified": true,
+  "created_at_utc": "2026-07-07T17:10:03+00:00",
+  "dashboard_cards": [
+    "certification_boundary",
+    "evidence_pack",
+    "fresh_recipient_replay",
+    "actual_clean_checkout_replay",
+    "operator_runtime_probe",
+    "official_decision_boundary",
+    "safety_controls"
+  ],
+  "external_ecosystem_integrations_remain_mock": true,
+  "external_system_calls_performed": false,
+  "factory_does_not_self_certify": true,
+  "factory_self_modification_without_policy_performed": false,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_release_candidate_declaration": true,
+  "human_approval_required_for_tag": true,
+  "live_provider_calls_performed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "operator_visible_status_must_be_not_certified": true,
+  "operator_visible_wording": [
+    "Certification-ready, not certified.",
+    "Factory does not self-certify.",
+    "Official certification decision remains with authorized certifying authorities.",
+    "External ecosystem integrations remain mock or simulated."
+  ],
+  "portal_runtime_probe_performed": true,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "release_execution_performed": false,
+  "requirement_id": "upi_dispute_resolution.default_requirement",
+  "runtime_probe_results": [
+    {
+      "contains_required_wording": true,
+      "content_type": "text/html; charset=utf-8",
+      "response_excerpt": "<!doctype html>\n<html lang=\"en\">\n<head><title>Certification Readiness Dashboard</title></head>\n<body>\n<h1>Certification Readiness Dashboard</h1>\n<p>Certification-ready, not certified.</p>\n<p>Factory does not self-certify.</p>\n<p>Official certification decision remains with authorized certifying authorities.</p>\n<p>External ecosystem integrations remain mock or simulated.</p>\n<h2>Operator Visible Wording</h2>\n<ul><li>Certification-ready, not certified.</li>\n<li>Factory does not self-certify.</li>\n<li>Official certification decision remains with authorized certifying authorities.</li>\n<li>External ecosystem integrations remain mock or simulated.</li></ul>\n<h2>Dashboard Cards</h2>\n<ul><li>certification_boundary</li>\n<li>evidence_pack</li>\n<li>fresh_recipient_replay</li>\n<li>actual_clean_checkout_replay</li>\n<li>operator_runtime_probe</li>\n<li>official_decision_boundary</li>\n<li>safety_controls</li></ul>\n</body>\n</html>\n",
+      "route": "/dashboards/certification-readiness",
+      "status_code": 200
+    },
+    {
+      "contains_required_wording": true,
+      "content_type": "application/json",
+      "response_excerpt": "{\n  \"app_id\": \"upi_dispute_resolution\",\n  \"cards\": [\n    \"certification_boundary\",\n    \"evidence_pack\",\n    \"fresh_recipient_replay\",\n    \"actual_clean_checkout_replay\",\n    \"operator_runtime_probe\",\n    \"official_decision_boundary\",\n    \"safety_controls\"\n  ],\n  \"certification_ready_not_certified\": true,\n  \"external_ecosystem_integrations_remain_mock\": true,\n  \"factory_does_not_self_certify\": true,\n  \"mode\": \"OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF\",\n  \"official_certification_claimed\": false,\n  \"official_certification_granted_by_factory\": false,\n  \"operator_visible_wording\": [\n    \"Certification-ready, not certified.\",\n    \"Factory does not self-certify.\",\n    \"Official certification decision remains with authorized certifying authorities.\",\n    \"External ecosystem integrations remain mock or simulated.\"\n  ],\n  \"release_execution_performed\": false,\n  \"requirement_id\": \"upi_dispute_resolution.default_requirement\",\n  \"status\": \"OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF_READY\",\n  \"what_sits_between_generated_application_and_certification\": [\n    \"certifying_authority_review\",\n    \"independent_verification\",\n    \"formal_audit_or_compliance_assessment\",\n    \"regulatory_or_industry_standar",
+      "route": "/api/dashboards/certification-readiness",
+      "status_code": 200
+    },
+    {
+      "contains_required_wording": true,
+      "content_type": "application/json",
+      "response_excerpt": "{\n  \"app_id\": \"upi_dispute_resolution\",\n  \"cards\": [\n    \"certification_boundary\",\n    \"evidence_pack\",\n    \"fresh_recipient_replay\",\n    \"actual_clean_checkout_replay\",\n    \"operator_runtime_probe\",\n    \"official_decision_boundary\",\n    \"safety_controls\"\n  ],\n  \"certification_ready_not_certified\": true,\n  \"external_ecosystem_integrations_remain_mock\": true,\n  \"factory_does_not_self_certify\": true,\n  \"mode\": \"OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF\",\n  \"official_certification_claimed\": false,\n  \"official_certification_granted_by_factory\": false,\n  \"operator_visible_wording\": [\n    \"Certification-ready, not certified.\",\n    \"Factory does not self-certify.\",\n    \"Official certification decision remains with authorized certifying authorities.\",\n    \"External ecosystem integrations remain mock or simulated.\"\n  ],\n  \"release_execution_performed\": false,\n  \"requirement_id\": \"upi_dispute_resolution.default_requirement\",\n  \"status\": \"OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF_READY\",\n  \"what_sits_between_generated_application_and_certification\": [\n    \"certifying_authority_review\",\n    \"independent_verification\",\n    \"formal_audit_or_compliance_assessment\",\n    \"regulatory_or_industry_standar",
+      "route": "/api/certification-readiness",
+      "status_code": 200
+    },
+    {
+      "contains_required_wording": true,
+      "content_type": "application/json",
+      "response_excerpt": "{\"dashboard\": \"OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF_READY\", \"status\": \"ok\"}",
+      "route": "/health",
+      "status_code": 200
+    }
+  ],
+  "runtime_routes": [
+    "/dashboards/certification-readiness",
+    "/api/dashboards/certification-readiness",
+    "/api/certification-readiness",
+    "/health"
+  ],
+  "schema_version": "operator-portal-runtime-dashboard-proof.v1",
+  "status": "OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF_READY",
+  "supporting_actual_clean_checkout_replay_expected_status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_READY",
+  "supporting_actual_clean_checkout_replay_status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_READY",
+  "supporting_portal_integration_expected_status": "OPERATOR_PORTAL_CERTIFICATION_READINESS_DASHBOARD_INTEGRATION_READY",
+  "supporting_portal_integration_status": "OPERATOR_PORTAL_CERTIFICATION_READINESS_DASHBOARD_INTEGRATION_READY",
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
