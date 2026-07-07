@@ -1,0 +1,72 @@
+{
+  "schema_version": "governed-autonomous-self-evolving-policy.v1",
+  "phase": "14R",
+  "mode": "governed_autonomous_self_evolving",
+  "allowed_autonomous_actions": [
+    "plan_phase",
+    "generate_local_artifacts",
+    "run_read_only_validation_gates",
+    "run_parallel_read_only_gates_where_safe",
+    "classify_failures",
+    "propose_repairs",
+    "apply_cataloged_low_risk_local_repairs_in_future_phases",
+    "produce_audit_evidence",
+    "propose_prompt_policy_script_test_doc_improvements"
+  ],
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "human_approval_required_for": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "parallel_execution_policy": {
+    "allowed_for": [
+      "validators",
+      "targeted_tests",
+      "ruff",
+      "mypy",
+      "policy_checks",
+      "audit_inspection"
+    ],
+    "forbidden_for": [
+      "git_merge",
+      "git_tag",
+      "git_push",
+      "release",
+      "promotion",
+      "live_calls",
+      "destructive_cleanup"
+    ]
+  },
+  "certification_boundary": {
+    "factory_does_not_self_certify": true,
+    "official_certification_claims_forbidden": true,
+    "required_external_steps": [
+      "certifying_authority_review",
+      "independent_verification",
+      "formal_audit_or_compliance_assessment",
+      "regulatory_or_industry_standard_assessment",
+      "production_environment_validation_where_required",
+      "security_privacy_resilience_and_operational_review",
+      "official_certification_decision"
+    ]
+  }
+}

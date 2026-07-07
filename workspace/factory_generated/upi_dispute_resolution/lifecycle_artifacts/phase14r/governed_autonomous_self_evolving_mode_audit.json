@@ -1,0 +1,202 @@
+{
+  "auto_certification_performed": false,
+  "auto_merge_performed": false,
+  "auto_promotion_performed": false,
+  "auto_push_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "certification_ready_not_certified_boundary_preserved": true,
+  "created_at_utc": "2026-07-07T18:34:29.264028+00:00",
+  "destructive_cleanup_performed": false,
+  "doc_path": "docs/phase14r/governed_autonomous_self_evolving_mode.md",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "governed_autonomy_enabled": true,
+  "human_approval_required_for_certification_claims": true,
+  "human_approval_required_for_live_provider_calls": true,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_push": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_tag": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "live_provider_calls_performed": false,
+  "max_parallel_workers": 3,
+  "mode": "governed_autonomous_self_evolving",
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "parallel_execution_limited_to_readonly_gates": true,
+  "parallel_readonly_gates_enabled": true,
+  "phase": "14R",
+  "policy_path": "policies/phase14r_governed_autonomous_self_evolving_policy.json",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 409 source files\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14q_generated_application_deep_quality.py"
+      ],
+      "gate_id": "phase14q_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14Q generated application deep quality artifacts validated.\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14q_generated_application_deep_quality.py"
+      ],
+      "gate_id": "phase14q_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 12 items\n\ntests/test_phase14q_generated_application_deep_quality.py ............   [100%]\n\n============================== 12 passed in 0.63s ==============================\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n"
+    }
+  ],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14q_generated_application_deep_quality.py"
+      ],
+      "gate_id": "phase14q_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14q_generated_application_deep_quality.py"
+      ],
+      "gate_id": "phase14q_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "safe_repair_classes_known": [
+    "ruff_unused_variable_cleanup",
+    "mypy_test_typing_cast",
+    "ruff_e402_import_order_cleanup",
+    "validator_direct_execution_pythonpath_environment",
+    "validator_direct_script_import_path_bootstrap",
+    "mypy_validator_json_object_cast",
+    "generated_app_runtime_cache_cleanup",
+    "ignored_workspace_audit_artifact_forced_staging",
+    "validator_rerun_ordering",
+    "adoption_gate_sample_runner_reference"
+  ],
+  "safe_repairs_auto_applied_this_phase": [],
+  "safe_repairs_auto_apply_allowed_without_policy": false,
+  "schema_version": "governed-autonomous-self-evolving-mode.v1",
+  "self_evolution_capabilities": [
+    "propose_prompt_improvements",
+    "propose_policy_improvements",
+    "propose_script_improvements",
+    "propose_test_improvements",
+    "propose_documentation_improvements",
+    "classify_validation_failures",
+    "map_failures_to_repair_catalog",
+    "produce_audit_evidence",
+    "preserve_certification_boundary"
+  ],
+  "self_evolving_mode_enabled": true,
+  "self_modification_requires_policy_and_evidence": true,
+  "status": "GOVERNED_AUTONOMOUS_SELF_EVOLVING_MODE_READY",
+  "supports_next_phase_goal": "parallel_read_only_gates_with_governed_self_evolution",
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
