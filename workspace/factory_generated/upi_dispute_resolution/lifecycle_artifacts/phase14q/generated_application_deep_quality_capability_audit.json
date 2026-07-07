@@ -1,0 +1,173 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "arbitrary_shell_execution_performed": false,
+  "auto_merge_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "banned_live_call_findings": [],
+  "boundary_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ],
+  "certification_ready_not_certified": true,
+  "command_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py"
+      ],
+      "command_id": "generated_app_local_tests",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 10 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py . [ 10%]\n....                                                                     [ 50%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py . [ 60%]\n.                                                                        [ 70%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py . [ 80%]\n..                                                                       [100%]\n\n============================== 10 passed in 0.19s ==============================\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/phase13u_self_repairing_sla_escalation/generated_tests/test_generated_sla_escalation.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/phase13v_policy_governed_dispute_triage/generated_tests/test_generated_policy_governed_triage.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py"
+      ],
+      "command_id": "capability_slice_tests",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 5 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13u_self_repairing_sla_escalation/generated_tests/test_generated_sla_escalation.py . [ 20%]\n                                                                         [ 20%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13v_policy_governed_dispute_triage/generated_tests/test_generated_policy_governed_triage.py . [ 40%]\n                                                                         [ 40%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py . [ 60%]\n..                                                                       [100%]\n\n============================== 5 passed in 0.03s ===============================\n"
+    }
+  ],
+  "created_at_utc": "2026-07-07T18:10:44+00:00",
+  "deep_quality_sweep_executed": true,
+  "deep_quality_sweep_only": true,
+  "external_ecosystem_integrations_remain_mock": true,
+  "external_system_calls_performed": false,
+  "factory_does_not_self_certify": true,
+  "factory_self_modification_without_policy_performed": false,
+  "generated_app_root": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "generated_app_root_exists": true,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_release_candidate_declaration": true,
+  "human_approval_required_for_tag": true,
+  "live_provider_calls_performed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "primary_generated_application_must_be_real_local_app": true,
+  "quality_dimensions": [
+    {
+      "dimension_id": "generated_app_local_test_execution",
+      "evidence": "generated_application/tests",
+      "status": "PASS",
+      "summary": "Core generated application tests are executable locally."
+    },
+    {
+      "dimension_id": "capability_slice_test_execution",
+      "evidence": "phase13u/phase13v/phase13w generated tests",
+      "status": "PASS",
+      "summary": "Generated capability slice tests are executable locally."
+    },
+    {
+      "dimension_id": "api_contract_negative_boundary",
+      "evidence": "test_api.py and main.py",
+      "status": "PASS",
+      "summary": "API contract and validation boundaries are covered by tests/source inspection."
+    },
+    {
+      "dimension_id": "workflow_state_machine_consistency",
+      "evidence": "workflow.py",
+      "status": "PASS",
+      "summary": "Workflow source exists and is included in generated app payload."
+    },
+    {
+      "dimension_id": "pii_redaction_and_leakage_resistance",
+      "evidence": "pii.py and test_pii.py",
+      "status": "PASS",
+      "summary": "PII protection/redaction evidence and tests are present/executable."
+    },
+    {
+      "dimension_id": "audit_trail_presence",
+      "evidence": "audit.py",
+      "status": "PASS",
+      "summary": "Audit trail source is present in generated app payload."
+    },
+    {
+      "dimension_id": "mock_ecosystem_boundary",
+      "evidence": "mock_ecosystem.py",
+      "status": "PASS",
+      "summary": "External ecosystem boundary remains mock/simulated."
+    },
+    {
+      "dimension_id": "no_live_external_dependency_calls",
+      "evidence": "generated_application/app source scan",
+      "status": "PASS",
+      "summary": "Generated app source avoids banned live/external call patterns."
+    },
+    {
+      "dimension_id": "error_handling_and_validation",
+      "evidence": "app source scan",
+      "status": "PASS",
+      "summary": "Generated app includes explicit error/validation paths for local review."
+    },
+    {
+      "dimension_id": "replay_payload_hygiene",
+      "evidence": "generated_application payload scan",
+      "status": "PASS",
+      "summary": "Replay payload excludes bytecode/cache artifacts."
+    },
+    {
+      "dimension_id": "operator_readiness_linkage",
+      "evidence": "Phase 14P runtime dashboard proof",
+      "status": "PASS",
+      "summary": "Operator runtime proof is linked to generated app quality evidence."
+    },
+    {
+      "dimension_id": "certification_boundary_preserved",
+      "evidence": "Phase 14C-14Q certification boundary",
+      "status": "PASS",
+      "summary": "Certification-ready-not-certified boundary remains preserved."
+    }
+  ],
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "release_execution_performed": false,
+  "replay_payload_bytecode_findings": [],
+  "required_domain_terms_present": true,
+  "required_source_files": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/models.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/workflow.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/pii.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/audit.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/mock_ecosystem.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py"
+  ],
+  "required_source_files_exist": true,
+  "requirement_id": "upi_dispute_resolution.default_requirement",
+  "schema_version": "generated-application-deep-quality-capability-sweep.v1",
+  "status": "GENERATED_APPLICATION_DEEP_QUALITY_CAPABILITY_SWEEP_READY",
+  "supporting_actual_clean_checkout_replay_expected_status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_READY",
+  "supporting_actual_clean_checkout_replay_status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_READY",
+  "supporting_generated_application_maturity_expected_status": "GENERATED_APPLICATION_MATURITY_SWEEP_READY",
+  "supporting_generated_application_maturity_status": "GENERATED_APPLICATION_MATURITY_SWEEP_READY",
+  "supporting_operator_runtime_dashboard_expected_status": "OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF_READY",
+  "supporting_operator_runtime_dashboard_status": "OPERATOR_PORTAL_RUNTIME_DASHBOARD_PROOF_READY",
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
