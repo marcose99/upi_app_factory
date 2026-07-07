@@ -1,0 +1,15 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "evidence_sources": [
+    "docs/phase11c",
+    "docs/phase11d",
+    "docs/phase12a",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+    "scripts/validate_*",
+    "tests/test_*",
+    "workspace/run_logs"
+  ],
+  "phase": "Phase 12A",
+  "post_generation_status": "to be populated after first governed agent generation run",
+  "pre_generation_status": "audit framework created before generated application run"
+}

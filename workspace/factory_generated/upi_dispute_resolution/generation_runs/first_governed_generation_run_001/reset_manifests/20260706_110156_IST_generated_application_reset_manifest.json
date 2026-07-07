@@ -1,0 +1,45 @@
+{
+  "after_path_count": 9,
+  "after_paths": [
+    "README.md",
+    "app",
+    "app/.gitkeep",
+    "docs",
+    "docs/.gitkeep",
+    "evidence",
+    "evidence/.gitkeep",
+    "tests",
+    "tests/.gitkeep"
+  ],
+  "app_id": "upi_dispute_resolution",
+  "archive_path": "workspace/factory_generated/upi_dispute_resolution/generated_application_archives/20260706_110156_IST_generated_application",
+  "before_path_count": 9,
+  "before_paths_sample": [
+    ".gitkeep",
+    "app",
+    "app/.gitkeep",
+    "docs",
+    "docs/.gitkeep",
+    "evidence",
+    "evidence/.gitkeep",
+    "tests",
+    "tests/.gitkeep"
+  ],
+  "dry_run": false,
+  "mode": "delete_recreate",
+  "protected_paths": [
+    "docs",
+    "factory_governance",
+    "prompts",
+    "scripts",
+    "src",
+    "tests",
+    "workspace/run_logs",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs",
+    "workspace/factory_generated/upi_dispute_resolution/audit_portal"
+  ],
+  "run_id": "first_governed_generation_run_001",
+  "target": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "timestamp_ist": "2026-07-06T11:01:56.769004+05:30"
+}

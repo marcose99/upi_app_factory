@@ -1,0 +1,32 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "archive_root": "workspace/factory_generated/upi_dispute_resolution/generated_application_archives",
+  "canonical_recreated_skeleton": [
+    "generated_application/app",
+    "generated_application/tests",
+    "generated_application/docs",
+    "generated_application/evidence",
+    "generated_application/README.md"
+  ],
+  "default_behavior": "archive then delete and recreate generated_application",
+  "dry_run_option": "writes a reset manifest without deleting files",
+  "no_archive_option": "allowed only when previous generated application is intentionally disposable",
+  "phase": "Phase 13A",
+  "protected_paths": [
+    "docs",
+    "factory_governance",
+    "prompts",
+    "scripts",
+    "src",
+    "tests",
+    "workspace/run_logs",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs",
+    "workspace/factory_generated/upi_dispute_resolution/audit_portal"
+  ],
+  "purpose": "Make generated application deletion and recreation a governed first-class factory capability.",
+  "reset_manifest_root": "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/reset_manifests",
+  "reset_script": "scripts/reset_generated_application_workspace.py",
+  "reset_target": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "run_id": "first_governed_generation_run_001"
+}

@@ -1,0 +1,40 @@
+{
+  "capabilities": [
+    {
+      "adapter_name": "local_deterministic",
+      "reason": "Built into this factory and does not need network access.",
+      "requires_human_approval": false,
+      "requires_network": false,
+      "requires_secret": false,
+      "status": "available"
+    },
+    {
+      "adapter_name": "langgraph",
+      "reason": "langgraph package is importable; execution adapter remains policy-gated.",
+      "requires_human_approval": true,
+      "requires_network": false,
+      "requires_secret": false,
+      "status": "available"
+    },
+    {
+      "adapter_name": "openai_agents",
+      "reason": "openai package is not installed in the active environment.",
+      "requires_human_approval": true,
+      "requires_network": true,
+      "requires_secret": true,
+      "status": "not_installed"
+    }
+  ],
+  "default_adapter_execution": {
+    "adapter_name": "local_deterministic",
+    "message": "Executed local deterministic governed agent adapter.",
+    "metrics": {
+      "completed_agents": 8,
+      "runtime_mode": "local_deterministic"
+    },
+    "status": "executed"
+  },
+  "phase": "Phase 13D",
+  "run_id": "first_governed_generation_run_001",
+  "truth_boundary": "Only the local deterministic adapter is executed by default. LangGraph/OpenAI execution remains policy-gated."
+}

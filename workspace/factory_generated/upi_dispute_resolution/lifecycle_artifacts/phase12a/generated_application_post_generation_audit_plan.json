@@ -1,0 +1,21 @@
+{
+  "go_no_go_rule": "generated application is not considered reviewer-ready until post-generation audit and portal generation pass",
+  "phase": "Phase 12A",
+  "post_generation_audit": [
+    "generated app requirements traceability",
+    "architecture/HLD/LLD review",
+    "code quality review",
+    "unit/integration/scenario/regression/limited-load/limited-stress/security test review",
+    "observability and audit logging review",
+    "UPI domain value review",
+    "business value review",
+    "human validator portal publication"
+  ],
+  "pre_generation_audit": [
+    "factory readiness",
+    "agent control plane",
+    "tool policy",
+    "prompt policy",
+    "audit portal contract"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "audit_properties": [
+    "append_only",
+    "timestamped",
+    "artifact_paths",
+    "hashes",
+    "status",
+    "failure_reason"
+  ],
+  "phase": "Phase 11D",
+  "required_ledgers": [
+    "llm_call_metrics_ledger.jsonl",
+    "llm_call_expense_ledger.jsonl",
+    "tool_execution_ledger.jsonl",
+    "agent_handoff_ledger.jsonl",
+    "validation_evidence_ledger.jsonl",
+    "release_evidence_ledger.jsonl"
+  ],
+  "required_trace_events": [
+    "agent_started",
+    "agent_completed",
+    "llm_call",
+    "tool_call",
+    "handoff",
+    "guardrail_tripwire",
+    "validation_started",
+    "validation_completed",
+    "human_approval",
+    "release_decision"
+  ]
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FactoryFromNothing Audit and Human Validator Portal</title>
+<style>
+    :root { --bg:#07111f; --panel:#0d1b2f; --ink:#eaf2ff; --muted:#a9bad6; --ok:#4ade80; --warn:#facc15; --accent:#60a5fa; --danger:#fb7185; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Segoe UI,Arial,sans-serif; color:var(--ink); background:radial-gradient(circle at top,#12365e,#07111f 45%); }
+    header { padding:36px 44px; border-bottom:1px solid rgba(255,255,255,.12); position:sticky; top:0; background:rgba(7,17,31,.92); backdrop-filter:blur(10px); z-index:5; }
+    h1 { margin:0; font-size:32px; letter-spacing:.2px; }
+    h2 { margin-top:34px; color:#dbeafe; }
+    h3 { color:#bfdbfe; }
+    .subtitle { color:var(--muted); margin-top:8px; }
+    main { padding:28px 44px 64px; max-width:1500px; margin:auto; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .card { background:linear-gradient(145deg,rgba(13,27,47,.96),rgba(16,42,74,.84)); border:1px solid rgba(148,163,184,.22); border-radius:18px; padding:18px; box-shadow:0 12px 40px rgba(0,0,0,.25); }
+    .metric { font-size:30px; font-weight:700; color:var(--ok); }
+    .muted { color:var(--muted); }
+    .pill { display:inline-block; padding:5px 10px; border-radius:999px; background:rgba(96,165,250,.14); color:#bfdbfe; border:1px solid rgba(96,165,250,.28); margin:3px; font-size:12px; }
+    .warn { color:var(--warn); }
+    .ok { color:var(--ok); }
+    .danger { color:var(--danger); }
+    .diagram { width:100%; min-height:260px; border-radius:16px; background:#081527; border:1px solid rgba(148,163,184,.2); padding:14px; overflow:auto; }
+    svg { width:100%; height:auto; }
+    .node { fill:#122949; stroke:#60a5fa; stroke-width:1.4; filter:drop-shadow(0 0 8px rgba(96,165,250,.35)); }
+    .edge { stroke:#93c5fd; stroke-width:2; fill:none; stroke-dasharray:8 8; animation:dash 2.8s linear infinite; }
+    .pulse { animation:pulse 2.2s ease-in-out infinite; }
+    @keyframes dash { to { stroke-dashoffset:-32; } }
+    @keyframes pulse { 0%,100% { opacity:.78; transform:scale(1); } 50% { opacity:1; transform:scale(1.015); } }
+    table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px; }
+    th,td { border-bottom:1px solid rgba(148,163,184,.16); padding:10px; text-align:left; vertical-align:top; }
+    th { color:#bfdbfe; background:rgba(96,165,250,.08); }
+    code { color:#bae6fd; }
+    .section { margin-top:28px; }
+    </style>
+</head>
+<body>
+<header>
+  <h1>FactoryFromNothing — Audit and Human Validator Portal</h1>
+  <div class="subtitle">Offline evidence-backed portal for factory audit, generated application validation, diagrams, risks, tests, metrics, and business value.</div>
+</header>
+<main>
+  <section class="grid">
+    <div class="card"><div class="metric">Phase 12A</div><div class="muted">Independent audit foundation</div></div>
+    <div class="card"><div class="metric">2 Subjects</div><div class="muted">Factory + generated UPI application</div></div>
+    <div class="card"><div class="metric">Offline</div><div class="muted">No CDN or network required</div></div>
+    <div class="card"><div class="metric">Evidence</div><div class="muted">Every score must trace to files and validation logs</div></div>
+  </section>
+  <section class="section card">
+    <h2>Animated Agentic Factory Flow</h2>
+    <div class="diagram">
+    <svg viewBox="0 0 1080 300" role="img" aria-label="Agentic factory flow">
+      <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#93c5fd"/></marker></defs>
+      <path class="edge" marker-end="url(#arrow)" d="M130 145 C210 70, 280 70, 360 145"/>
+      <path class="edge" marker-end="url(#arrow)" d="M440 145 C520 70, 590 70, 670 145"/>
+      <path class="edge" marker-end="url(#arrow)" d="M750 145 C830 70, 900 70, 980 145"/>
+      <g class="pulse"><rect class="node" x="30" y="105" width="160" height="80" rx="18"/><text x="110" y="140" text-anchor="middle" fill="#eaf2ff">Requirements</text><text x="110" y="164" text-anchor="middle" fill="#a9bad6">+ Policies</text></g>
+      <g class="pulse"><rect class="node" x="315" y="105" width="170" height="80" rx="18"/><text x="400" y="140" text-anchor="middle" fill="#eaf2ff">Agent Workflow</text><text x="400" y="164" text-anchor="middle" fill="#a9bad6">Guarded tools</text></g>
+      <g class="pulse"><rect class="node" x="635" y="105" width="170" height="80" rx="18"/><text x="720" y="140" text-anchor="middle" fill="#eaf2ff">Generated App</text><text x="720" y="164" text-anchor="middle" fill="#a9bad6">Real local core</text></g>
+      <g class="pulse"><rect class="node" x="920" y="105" width="130" height="80" rx="18"/><text x="985" y="140" text-anchor="middle" fill="#eaf2ff">Audit Portal</text><text x="985" y="164" text-anchor="middle" fill="#a9bad6">Evidence</text></g>
+    </svg>
+    </div>
+  </section>
+  <section class="section card">
+    <h2>Animated Generated UPI Application Data Flow</h2>
+    <div class="diagram">
+    <svg viewBox="0 0 1080 330" role="img" aria-label="UPI generated app data flow">
+      <defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#93c5fd"/></marker></defs>
+      <path class="edge" marker-end="url(#arrow2)" d="M155 165 L310 165"/>
+      <path class="edge" marker-end="url(#arrow2)" d="M455 165 L610 165"/>
+      <path class="edge" marker-end="url(#arrow2)" d="M760 165 L915 165"/>
+      <path class="edge" marker-end="url(#arrow2)" d="M690 205 C650 280, 430 280, 380 205"/>
+      <rect class="node pulse" x="35" y="120" width="160" height="90" rx="18"/><text x="115" y="155" text-anchor="middle" fill="#eaf2ff">API</text><text x="115" y="180" text-anchor="middle" fill="#a9bad6">Dispute Intake</text>
+      <rect class="node pulse" x="310" y="120" width="170" height="90" rx="18"/><text x="395" y="155" text-anchor="middle" fill="#eaf2ff">Workflow</text><text x="395" y="180" text-anchor="middle" fill="#a9bad6">State Machine</text>
+      <rect class="node pulse" x="610" y="120" width="180" height="90" rx="18"/><text x="700" y="155" text-anchor="middle" fill="#eaf2ff">Mock Ecosystem</text><text x="700" y="180" text-anchor="middle" fill="#a9bad6">Bank/PSP/NPCI</text>
+      <rect class="node pulse" x="915" y="120" width="130" height="90" rx="18"/><text x="980" y="155" text-anchor="middle" fill="#eaf2ff">Evidence</text><text x="980" y="180" text-anchor="middle" fill="#a9bad6">Audit Logs</text>
+    </svg>
+    </div>
+  </section>
+  <section class="section grid">
+    <div class="card"><h3>Factory Audit</h3><p class="muted">Prompt policy, orchestration, tools, memory/RAG, metrics, audit logs, release governance.</p></div>
+    <div class="card"><h3>Agentic AI Safety</h3><p class="muted">Prompt injection, excessive agency, tool misuse, RAG poisoning, data leakage, approval gates.</p></div>
+    <div class="card"><h3>UPI Domain Audit</h3><p class="muted">ODR, failed transaction, TAT, compensation, unauthorized transaction, DPDP, mock boundary.</p></div>
+    <div class="card"><h3>Generated Product Value</h3><p class="muted">Capabilities, architecture, tests, scenario coverage, observability, demo narrative, reviewer confidence.</p></div>
+  </section>
+  <section class="section card">
+    <h2>Human Validator Checklist</h2>
+    <table>
+      <tr><th>Area</th><th>Evidence expected after generation</th><th>Status</th></tr>
+      <tr><td>Requirements</td><td>Requirement manifest, traceability matrix, gap report</td><td class="warn">Populate after generation</td></tr>
+      <tr><td>Architecture/HLD/LLD</td><td>Architecture, HLD, LLD, ADRs, API/data/workflow/security/observability designs</td><td class="warn">Populate after generation</td></tr>
+      <tr><td>Tests</td><td>Unit, integration, scenario, negative, regression, limited load/stress, security tests</td><td class="warn">Populate after generation</td></tr>
+      <tr><td>Audit</td><td>LLM metrics, tool ledger, handoff ledger, validation evidence, release evidence</td><td class="warn">Populate after generation</td></tr>
+      <tr><td>Safety</td><td>No real customer data, no live rails, no false compliance/certification claims</td><td class="ok">Guardrail defined</td></tr>
+    </table>
+  </section>
+  <section class="section card">
+    <h2>Important Boundary</h2>
+    <p>The primary UPI/payment dispute-resolution application is intended to be a real, locally runnable generated application. NPCI, RBI, banks, PSPs, ODR systems, payment rails, ledgers, notification systems, and customer systems remain mock/simulated. This portal must not claim regulatory compliance, certification, production readiness, or live payment capability.</p>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "phase": "Phase 13B",
+  "purpose": "Charts and graphs for the evidence-backed human validator portal.",
+  "required_visuals": [
+    "completion_donuts",
+    "phase_progress_bars",
+    "validation_bar_chart",
+    "observability_readiness_chart",
+    "maturity_trend_svg",
+    "metric_cards"
+  ],
+  "truthfulness_rule": "Do not claim active LangChain/LangGraph agent execution until implemented."
+}

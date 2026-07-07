@@ -1,0 +1,25 @@
+{
+  "schema_version": "phase16-self-contained-handoff-replay-policy.v1",
+  "phase": "16",
+  "mode": "governed_self_contained_handoff_replay_hardening",
+  "allowed_autonomous_changes": [
+    "documentation",
+    "policy_indexes",
+    "test_portability_repair",
+    "legacy_workspace_evidence_packaging",
+    "fresh_clone_replay_evidence",
+    "handoff_replay_validation"
+  ],
+  "blocked_autonomous_actions": [
+    "official_certification_claims",
+    "live_provider_calls",
+    "destructive_operations",
+    "production_release_promotion",
+    "secret_exfiltration",
+    "risky_generated_application_business_logic_changes"
+  ],
+  "full_fresh_clone_replay_required": true,
+  "validators_are_read_only": true,
+  "tests_use_temporary_audit_outputs": true,
+  "certification_ready_not_certified_boundary_preserved": true
+}

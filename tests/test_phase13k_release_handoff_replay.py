@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 import json
 import subprocess
 from pathlib import Path
@@ -27,7 +28,7 @@ def test_phase13k_checksum_entries_are_repository_root_scoped() -> None:
 
 def test_phase13k_validator_passes() -> None:
     result = subprocess.run(
-        [str(ROOT / ".venv" / "bin" / "python3"), "scripts/validate_phase13k_release_handoff_replay.py"],
+        [sys.executable, "scripts/validate_phase13k_release_handoff_replay.py"],
         cwd=ROOT,
         text=True,
         stdout=subprocess.PIPE,

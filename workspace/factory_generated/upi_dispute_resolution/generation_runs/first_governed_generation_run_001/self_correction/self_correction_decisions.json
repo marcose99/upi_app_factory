@@ -1,0 +1,76 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "coverage_rule": "every finding receives a governed decision",
+  "decisions": [
+    {
+      "action": "auto_remediate",
+      "category": "formatting",
+      "finding_id": "warn_formatting_001",
+      "max_attempts": 3,
+      "reason": "Finding category is low-risk and eligible for bounded auto-remediation.",
+      "requires_human_approval": false,
+      "severity": "warning",
+      "status": "decided"
+    },
+    {
+      "action": "auto_remediate",
+      "category": "import_path",
+      "finding_id": "err_import_path_001",
+      "max_attempts": 3,
+      "reason": "Finding category is low-risk and eligible for bounded auto-remediation.",
+      "requires_human_approval": false,
+      "severity": "error",
+      "status": "decided"
+    },
+    {
+      "action": "auto_remediate",
+      "category": "portal_population",
+      "finding_id": "warn_portal_population_001",
+      "max_attempts": 3,
+      "reason": "Finding category is low-risk and eligible for bounded auto-remediation.",
+      "requires_human_approval": false,
+      "severity": "warning",
+      "status": "decided"
+    },
+    {
+      "action": "human_approval_required",
+      "category": "regulatory_claim",
+      "finding_id": "err_regulatory_claim_001",
+      "max_attempts": 3,
+      "reason": "Finding category requires human approval before correction.",
+      "requires_human_approval": true,
+      "severity": "error",
+      "status": "decided"
+    },
+    {
+      "action": "human_approval_required",
+      "category": "dependency_install",
+      "finding_id": "warn_dependency_install_001",
+      "max_attempts": 3,
+      "reason": "Finding category requires human approval before correction.",
+      "requires_human_approval": true,
+      "severity": "warning",
+      "status": "decided"
+    },
+    {
+      "action": "blocked",
+      "category": "real_payment_execution",
+      "finding_id": "err_real_payment_001",
+      "max_attempts": 3,
+      "reason": "Finding category is blocked by governance policy.",
+      "requires_human_approval": true,
+      "severity": "error",
+      "status": "decided"
+    }
+  ],
+  "phase": "Phase 13C",
+  "run_id": "first_governed_generation_run_001",
+  "summary": {
+    "auto_remediate": 3,
+    "blocked": 1,
+    "human_approval_required": 2,
+    "plan_only": 0,
+    "total_decisions": 6,
+    "untriaged": 0
+  }
+}

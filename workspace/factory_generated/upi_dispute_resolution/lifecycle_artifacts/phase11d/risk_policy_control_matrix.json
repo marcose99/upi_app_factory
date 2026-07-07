@@ -1,0 +1,29 @@
+{
+  "mandatory_risk_categories": [
+    "regulatory_misclaim",
+    "mock_boundary_violation",
+    "real_customer_data_leakage",
+    "tool_overreach",
+    "prompt_injection",
+    "rag_poisoning",
+    "missing_traceability",
+    "insufficient_test_coverage",
+    "observability_gap",
+    "audit_gap",
+    "release_readiness_gap"
+  ],
+  "phase": "Phase 11D",
+  "risk_acceptance_requires_human_review": true,
+  "risk_register_schema": [
+    "risk_id",
+    "description",
+    "severity",
+    "likelihood",
+    "impact",
+    "owner",
+    "control",
+    "evidence",
+    "residual_risk",
+    "decision"
+  ]
+}

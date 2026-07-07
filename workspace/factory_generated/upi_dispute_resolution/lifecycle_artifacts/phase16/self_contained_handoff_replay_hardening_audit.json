@@ -1,0 +1,197 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase16/self_contained_handoff_replay_hardening_audit.json",
+  "base_tag_required": "v0.15.0-autonomous-post-v1-industrialization-batch",
+  "certification_ready_not_certified_boundary_preserved": true,
+  "clone_local_virtualenv_assumption_removed": true,
+  "created_at_utc": "2026-07-07T20:13:14.889624+00:00",
+  "destructive_cleanup_performed": false,
+  "doc_path": "docs/phase16/self_contained_handoff_replay_hardening.md",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "final_verification_is_non_mutating": true,
+  "full_regression_requires_clean_committed_tree": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "official_certification_claims",
+    "live_provider_calls",
+    "destructive_operations",
+    "risky_generated_application_business_logic_changes"
+  ],
+  "legacy_workspace_evidence_packaging_enabled": true,
+  "live_provider_calls_performed": false,
+  "mode": "governed_self_contained_handoff_replay_hardening",
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "phase": "16",
+  "policy_path": "policies/phase16_self_contained_handoff_replay_policy.json",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 433 source files\n",
+      "tier": "static_typing"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "gate_id": "phase13g_legacy_drift_guardrail",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"allowed_legacy_drift_restored_during_validation\": [],\n  \"app_id\": \"upi_dispute_resolution\",\n  \"errors\": [],\n  \"passed\": true,\n  \"phase\": \"Phase 13G\",\n  \"run_id\": \"first_governed_generation_run_001\"\n}\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase15_autonomous_post_v1_industrialization.py"
+      ],
+      "gate_id": "phase15_artifact_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 15 autonomous post-v1 industrialization artifacts validated.\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase15_autonomous_post_v1_industrialization.py"
+      ],
+      "gate_id": "phase15_targeted_tests",
+      "mutation_profile": "tracked-state-read-only-after-audit-isolation",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 5 items\n\ntests/test_phase15_autonomous_post_v1_industrialization.py .....         [100%]\n\n============================== 5 passed in 0.08s ===============================\n",
+      "tier": "targeted_tests"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n",
+      "tier": "static_hygiene"
+    }
+  ],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "gate_id": "phase13g_legacy_drift_guardrail",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase15_autonomous_post_v1_industrialization.py"
+      ],
+      "gate_id": "phase15_artifact_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase15_autonomous_post_v1_industrialization.py"
+      ],
+      "gate_id": "phase15_targeted_tests",
+      "mutation_profile": "tracked-state-read-only-after-audit-isolation",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "targeted_tests"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "static_hygiene"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "static_typing"
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "replay_result_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase16/self_contained_full_fresh_clone_replay_result.json",
+  "schema_version": "self-contained-handoff-replay-hardening.v1",
+  "self_contained_full_fresh_clone_gate_enabled": true,
+  "status": "SELF_CONTAINED_HANDOFF_REPLAY_HARDENING_READY",
+  "tests_use_temporary_audit_outputs": true,
+  "validators_are_read_only": true,
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_dimensions": [
+    "factory_governance",
+    "agentic_ai_safety",
+    "upi_domain_regulatory_awareness",
+    "architecture_hld_lld",
+    "code_quality",
+    "test_quality",
+    "security_privacy",
+    "rag_context_engineering",
+    "observability_audit_logging",
+    "business_value",
+    "human_validator_portal"
+  ],
+  "audit_subjects": [
+    "agentic_ai_factory",
+    "generated_upi_application"
+  ],
+  "phase": "Phase 12A",
+  "reference_alignment": [
+    "NIST AI RMF",
+    "ISO/IEC 42001 alignment only, no certification claim",
+    "OWASP Top 10 for LLM Applications",
+    "OpenAI Agents/Tracing/Guardrails concepts",
+    "RBI/NPCI/UPI domain reference awareness",
+    "DPDP/privacy awareness",
+    "ISO/IEC 25010-style software quality characteristics"
+  ]
+}

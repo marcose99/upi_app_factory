@@ -1,0 +1,39 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "deployment_guides": [
+    "docs/deployment/FACTORY_LOCAL_DEPLOYMENT_GUIDE.md",
+    "docs/deployment/GENERATED_APPLICATION_LOCAL_DEPLOYMENT_GUIDE.md",
+    "docs/deployment/PORTAL_LOCAL_DEPLOYMENT_GUIDE.md",
+    "docs/deployment/DEPLOYMENT_BOUNDARIES_AND_NON_CLAIMS.md"
+  ],
+  "future_cli_contract": [
+    "./factory doctor",
+    "./factory bootstrap",
+    "./factory generate",
+    "./factory validate",
+    "./factory portal",
+    "./factory package-handover"
+  ],
+  "handover_docs": [
+    "docs/handover/README_HANDOVER.md",
+    "docs/handover/QUICKSTART.md",
+    "docs/handover/ENVIRONMENT_SPEC.md",
+    "docs/handover/COMMAND_REFERENCE.md",
+    "docs/handover/FACTORY_ARCHITECTURE.md",
+    "docs/handover/GENERATED_APPLICATION_REGENERATION_GUIDE.md",
+    "docs/handover/GOVERNANCE_AUDIT_SELF_CORRECTION_GUIDE.md",
+    "docs/handover/PORTAL_GUIDE.md",
+    "docs/handover/TROUBLESHOOTING.md",
+    "docs/handover/RELEASE_PACKAGE_SPEC.md"
+  ],
+  "phase": "Phase 13C",
+  "purpose": "Handover, deployment, and runbook documentation for recipient-machine reproducibility.",
+  "run_id": "first_governed_generation_run_001",
+  "runbooks": [
+    "docs/runbooks/factory_handover_runbook.md",
+    "docs/runbooks/recipient_operator_runbook.md",
+    "docs/runbooks/handover_validation_runbook.md",
+    "docs/runbooks/handover_release_package_runbook.md",
+    "docs/runbooks/generated_app_regeneration_runbook.md"
+  ]
+}

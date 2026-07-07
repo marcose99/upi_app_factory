@@ -1,0 +1,17 @@
+{
+  "phase": "Phase 13C",
+  "portal": "workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_agent_runtime_portal.html",
+  "required_visuals": [
+    "agent_sequence_graph",
+    "handoff_count_chart",
+    "tool_authorization_chart",
+    "runtime_mode_card",
+    "agent_runtime_readiness_gauge"
+  ],
+  "telemetry_sources": [
+    "runtime_event_ledger.jsonl",
+    "handoff_ledger.jsonl",
+    "tool_execution_ledger.jsonl",
+    "factory_progress_observability_snapshot.json"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "animated_diagrams_policy": "prefer inline SVG/CSS animations in offline HTML; generated diagrams must remain evidence-backed",
+  "must_populate_after_generation": [
+    "actual factory run metadata",
+    "actual generated application capability summary",
+    "actual architecture and data-flow diagrams",
+    "actual validation/test/evaluation results",
+    "actual post-generation audit findings",
+    "actual before/after remediation scores",
+    "actual evidence manifest",
+    "actual known gaps and limitations"
+  ],
+  "phase": "Phase 13A",
+  "portal": "workspace/factory_generated/upi_dispute_resolution/audit_portal/human_validator_audit_portal.html",
+  "run_id": "first_governed_generation_run_001"
+}
