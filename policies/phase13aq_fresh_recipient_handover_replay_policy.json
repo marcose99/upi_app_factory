@@ -1,0 +1,39 @@
+{
+  "schema_version": "fresh-recipient-handover-replay-policy.v1",
+  "policy_id": "phase13aq.fresh_recipient_handover_replay_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_FRESH_RECIPIENT_REPLAY_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13ap_command_pack": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "factory_self_healing_diagnostics_allowed": true,
+  "factory_self_healing_auto_apply_allowed": false,
+  "factory_self_engineering_auto_apply_allowed": false,
+  "human_review_required_before_self_modification": true,
+  "required_replay_items": [
+    "command_pack_ready",
+    "fresh_clone_bootstrap_steps_documented",
+    "recipient_validation_commands_documented",
+    "evidence_locations_documented",
+    "self_healing_diagnostics_present",
+    "self_engineering_proposals_present",
+    "rollback_guidance_documented",
+    "human_approval_boundaries_documented",
+    "destructive_actions_remain_blocked"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "apply_factory_self_healing_repair",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AQ creates a fresh-recipient replay and safe diagnostics pack only. It must not delete or overwrite the real generated_application."
+}
