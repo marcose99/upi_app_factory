@@ -1,0 +1,28 @@
+{
+  "schema_version": "clean-slate-human-approval-audit.v1",
+  "phase": "13AH",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_APPROVAL_TOKEN_GATE",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "destructive_delete_performed": false,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "requires_phase13af_guard": true,
+  "requires_phase13ag_backup_restore_plan": true,
+  "policy_ref": "policies/phase13ah_clean_slate_human_approval_policy.json",
+  "approval_validator_ref": "scripts/validate_clean_slate_human_approval.py",
+  "phase_validator_ref": "scripts/validate_phase13ah_clean_slate_human_approval.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AH defines and validates the human approval-token gate without enabling destructive clean-slate operations."
+  },
+  "governance_controls": [
+    "explicit_human_approval_token",
+    "guard_plan_reference_required",
+    "backup_restore_plan_reference_required",
+    "evidence_preservation_reference_required",
+    "required_acknowledgements",
+    "non_destructive_phase"
+  ]
+}
