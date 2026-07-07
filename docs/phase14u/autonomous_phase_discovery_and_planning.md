@@ -16,3 +16,8 @@ The factory may self-evolve by proposing and generating local prompts, policies,
 ## Learned Safe Repair Applied During Phase 14U
 
 - `ruff_unused_import_cleanup`: removed an unused validator import and reran impacted gates.
+
+
+## Learned continuation repair
+
+- `legacy_drift_guardrail_audit_ordering`: stage explicit lifecycle audit evidence before full regression when continuing from a locally merged but not-yet-pushed phase.
