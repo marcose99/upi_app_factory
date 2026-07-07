@@ -1,0 +1,11 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "external_ecosystem": "mock/simulated only",
+  "generated_application": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "no_live_integrations": true,
+  "no_real_customer_data": true,
+  "no_regulatory_compliance_claim": true,
+  "phase": "Phase 13B",
+  "primary_application": "real locally runnable FastAPI application",
+  "run_id": "first_governed_generation_run_001"
+}
