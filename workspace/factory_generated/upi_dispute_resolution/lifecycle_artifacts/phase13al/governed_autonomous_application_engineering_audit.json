@@ -1,0 +1,28 @@
+{
+  "schema_version": "governed-autonomous-application-engineering-audit.v1",
+  "phase": "13AL",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_SANDBOX_APPLICATION_ENGINEERING_REHEARSAL",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "sandbox_write_allowed": true,
+  "sandbox_root": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13al/engineered_application_sandbox",
+  "policy_ref": "policies/phase13al_governed_autonomous_application_engineering_policy.json",
+  "engineering_harness_ref": "scripts/run_governed_application_engineering_sandbox.py",
+  "phase_validator_ref": "scripts/validate_phase13al_governed_application_engineering.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AL rehearses the complete governed autonomous application engineering lifecycle in a sandbox without deleting or overwriting the real generated application."
+  },
+  "governance_controls": [
+    "sandbox_only_application_engineering",
+    "requirements_to_handoff_trace",
+    "deterministic_local_artifacts",
+    "certification_required",
+    "evidence_manifest_required",
+    "human_release_gate_preserved"
+  ]
+}
