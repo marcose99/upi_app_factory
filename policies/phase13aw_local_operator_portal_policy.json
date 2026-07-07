@@ -1,0 +1,42 @@
+{
+  "schema_version": "local-operator-portal-policy.v1",
+  "policy_id": "phase13aw.local_operator_portal_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_OPERATOR_PORTAL_READ_ONLY_FOUNDATION",
+  "preferred_term": "application engineering",
+  "requires_phase13av_agentic_threat_tests": true,
+  "portal_host": "127.0.0.1",
+  "portal_port": 8088,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "arbitrary_shell_execution_allowed_from_ui": false,
+  "destructive_delete_allowed_from_ui": false,
+  "real_generated_application_write_allowed_from_ui": false,
+  "factory_self_modification_allowed_from_ui": false,
+  "auto_merge_allowed_from_ui": false,
+  "auto_tag_allowed_from_ui": false,
+  "auto_release_allowed_from_ui": false,
+  "portal_sections_required": [
+    "factory_health",
+    "phase_status",
+    "evidence_summary",
+    "standards_summary",
+    "self_healing_summary",
+    "agentic_threat_summary",
+    "handover_summary",
+    "safe_command_catalog"
+  ],
+  "safe_command_catalog_mode": "DISPLAY_ONLY_IN_PHASE_13AW",
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "execute_arbitrary_shell_command",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "portal_rule": "The Phase 13AW portal is read-only and local-only. It may display status, evidence, and safe command descriptions, but it must not execute arbitrary commands, mutate protected targets, call live providers, call external systems, merge, tag, or release."
+}

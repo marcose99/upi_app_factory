@@ -1,0 +1,37 @@
+{
+  "schema_version": "local-operator-portal-audit.v1",
+  "phase": "13AW",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_OPERATOR_PORTAL_READ_ONLY_FOUNDATION",
+  "preferred_term": "application engineering",
+  "portal_host": "127.0.0.1",
+  "portal_port": 8088,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "arbitrary_shell_execution_exposed_from_ui": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13av_agentic_threat_tests": true,
+  "portal_status_ref": "scripts/build_local_operator_portal_status.py",
+  "portal_app_ref": "scripts/start_factory_operator_portal.py",
+  "policy_ref": "policies/phase13aw_local_operator_portal_policy.json",
+  "validator_ref": "scripts/validate_phase13aw_operator_portal.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AW adds a read-only local operator portal foundation without command execution, live calls, external calls, protected mutations, or release automation."
+  },
+  "governance_controls": [
+    "read_only_portal_required",
+    "local_host_only",
+    "safe_command_catalog_display_only",
+    "evidence_summary_required",
+    "standards_summary_required",
+    "self_healing_summary_required",
+    "agentic_threat_summary_required",
+    "handover_summary_required"
+  ]
+}
