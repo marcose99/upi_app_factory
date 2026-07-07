@@ -1,0 +1,23 @@
+{
+  "policy_id": "POL-13Z-GOVERNED-LIVE-LLM-DRY-RUN-GATE",
+  "version": "1.0.0",
+  "description": "Controls live LLM enablement through a dry-run gate before any provider call can occur.",
+  "default_runtime_mode": "deterministic_local_dry_run",
+  "live_llm_default_allowed": false,
+  "human_approval_required_before_live_llm": true,
+  "allowed_secret_sources": ["environment", "secret_manager"],
+  "forbidden_secret_locations": ["source", "tests", "logs", "lifecycle_artifacts", "generated_docs"],
+  "required_evidence_fields": [
+    "live_llm_requested",
+    "live_llm_call_performed",
+    "policy_decision_id",
+    "secret_presence_checked",
+    "secret_value_serialized",
+    "human_approval_required_before_live_llm",
+    "dry_run_block_reason"
+  ],
+  "release_gate": {
+    "human_approval_required": true,
+    "merge_tag_push_release_blocked_without_approval": true
+  }
+}
