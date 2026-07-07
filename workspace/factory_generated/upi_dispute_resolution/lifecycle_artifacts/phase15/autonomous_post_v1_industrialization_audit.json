@@ -1,0 +1,243 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "auto_certification_performed": false,
+  "auto_merge_performed": false,
+  "auto_promotion_performed": false,
+  "auto_push_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "base_tag_required": "v0.14.23-operator-autonomy-dashboard-v1-readiness-pack",
+  "batch_phases": [
+    "15A",
+    "15B",
+    "15C",
+    "15D",
+    "15E",
+    "15F"
+  ],
+  "certification_ready_not_certified_boundary_preserved": true,
+  "created_at_utc": "2026-07-07T19:56:45.366531+00:00",
+  "destructive_cleanup_performed": false,
+  "enterprise_scaling_reference_domains": [
+    "identity_and_access_governance",
+    "secrets_and_key_management",
+    "policy_as_code_and_approvals",
+    "supply_chain_attestation",
+    "observability_and_sre",
+    "environment_promotion_and_release_governance",
+    "multi_domain_factory_templates",
+    "independent_certifier_workspaces"
+  ],
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "final_verification_is_non_mutating": true,
+  "fresh_clone_replay_required": true,
+  "full_regression_requires_clean_committed_tree": true,
+  "governed_self_evolution_enabled": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims",
+    "unknown_failure_classes",
+    "risky_generated_application_changes"
+  ],
+  "live_provider_calls_performed": false,
+  "mode": "governed_autonomous_self_evolving_post_v1_industrialization",
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "phase": "15A-F",
+  "phase15_scope": {
+    "15A": "tagged_v1_fresh_clone_replay_and_handoff_verification",
+    "15B": "recipient_handoff_automation_and_one_command_setup_verification",
+    "15C": "generated_application_runtime_demo_and_operator_walkthrough",
+    "15D": "independent_reviewer_certifier_evidence_dossier_consolidation",
+    "15E": "post_v1_hardening_backlog_prioritization",
+    "15F": "enterprise_scaling_reference_architecture"
+  },
+  "post_v1_backlog_priorities": [
+    "deeper_generated_application_business_workflows",
+    "stronger_supply_chain_security_attestations",
+    "fresh_machine_replay_against_tagged_v1_pack",
+    "operator_portal_visual_dashboard_runtime_polish",
+    "independent_certifier_workspace_trial",
+    "enterprise_scaling_reference_architecture"
+  ],
+  "read_only_gate_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "gate_id": "phase13g_legacy_drift_guardrail",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"allowed_legacy_drift_restored_during_validation\": [],\n  \"app_id\": \"upi_dispute_resolution\",\n  \"errors\": [],\n  \"passed\": true,\n  \"phase\": \"Phase 13G\",\n  \"run_id\": \"first_governed_generation_run_001\"\n}\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14yz_operator_autonomy_v1_readiness.py"
+      ],
+      "gate_id": "phase14yz_v1_readiness_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14Y-Z operator autonomy dashboard and v1 readiness pack artifacts validated.\n",
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14yz_operator_autonomy_v1_readiness.py"
+      ],
+      "gate_id": "phase14yz_targeted_tests",
+      "mutation_profile": "tracked-state-read-only-after-audit-isolation",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 6 items\n\ntests/test_phase14yz_operator_autonomy_v1_readiness.py ......            [100%]\n\n============================== 6 passed in 0.08s ===============================\n",
+      "tier": "targeted_tests"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n",
+      "tier": "static_hygiene"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 430 source files\n",
+      "tier": "static_typing"
+    }
+  ],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "gate_id": "phase13g_legacy_drift_guardrail",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14yz_operator_autonomy_v1_readiness.py"
+      ],
+      "gate_id": "phase14yz_v1_readiness_validator",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "phase_artifact_validators"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14yz_operator_autonomy_v1_readiness.py"
+      ],
+      "gate_id": "phase14yz_targeted_tests",
+      "mutation_profile": "tracked-state-read-only-after-audit-isolation",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "targeted_tests"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "static_hygiene"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "mutation_profile": "tracked-state-read-only",
+      "parallel_safe": true,
+      "read_only": true,
+      "tier": "static_typing"
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "safe_self_evolution_scope": [
+    "documentation",
+    "policy_indexes",
+    "validator_hardening",
+    "test_evidence",
+    "handoff_automation",
+    "operator_readiness_reports"
+  ],
+  "schema_version": "autonomous-post-v1-industrialization-batch.v1",
+  "status": "AUTONOMOUS_POST_V1_INDUSTRIALIZATION_READY",
+  "tests_use_temporary_audit_outputs": true,
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy",
+  "validators_are_read_only": true,
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
