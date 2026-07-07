@@ -16,3 +16,11 @@ The factory may autonomously harden documentation, policy, tests, validators, an
 
 ## Certification boundary
 This phase improves evidence readiness only. The generated application remains certification-ready-not-certified. Official certification still requires certifying authority review, independent verification, formal audit or compliance assessment, regulatory or industry standard assessment, production validation where required, security/privacy/resilience/operational review, and an official certification decision.
+
+## Phase 16 v3 replay repair
+
+The governed self-contained fresh-clone replay exposed one remaining mirrored-evidence gap: the Phase 13C handover deployment documentation manifest existed in the generation-run evidence path but was absent from the lifecycle-artifact mirror path required by the legacy Phase 13C validator. Phase 16 v3 performs a safe evidence-packaging repair by mirroring the already generated manifest into lifecycle artifacts. This does not claim certification, does not mutate external systems, and does not alter generated application business logic.
+
+## Phase 16 v4 replay sequencing repair
+
+Phase 16 v4 replay sequencing repair: the Phase 13C handover manifest is mirrored before the candidate fresh-clone replay; the Phase 16 validator is intentionally run only after the replay evidence is regenerated with PASS status. This is evidence packaging only and does not alter generated application business logic.
