@@ -1,0 +1,17 @@
+{
+  "certification_claimed_by_factory": false,
+  "handoff_audience": [
+    "operator",
+    "reviewer",
+    "security",
+    "certifying authority"
+  ],
+  "handoff_contents": [
+    "source repository",
+    "evidence artifacts",
+    "runbooks",
+    "gap register",
+    "replay instructions"
+  ],
+  "phase": "Phase 25"
+}

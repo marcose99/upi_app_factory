@@ -1,0 +1,11 @@
+{
+  "evidence_pack_location": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+  "phase": "Phase 25",
+  "runbooks": [
+    "factory_operations_runbook",
+    "generated_application_operations_runbook",
+    "release_and_rollback_runbook",
+    "incident_response_runbook",
+    "independent_reviewer_workspace_trial"
+  ]
+}
