@@ -1,0 +1,29 @@
+{
+  "schema_version": "clean-slate-regeneration-preflight-policy.v1",
+  "policy_id": "phase13ai.clean_slate_regeneration_preflight_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_PREFLIGHT_ORCHESTRATOR",
+  "requires_phase13af_guard": true,
+  "requires_phase13ag_backup_restore_plan": true,
+  "requires_phase13ah_human_approval_token": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "regeneration_allowed_in_this_phase": false,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "preflight_controls": [
+    "clean_slate_delete_guard",
+    "backup_restore_manifest",
+    "evidence_preservation_paths",
+    "human_approval_token_validation",
+    "non_destructive_readiness_report",
+    "future_post_regeneration_validation_required"
+  ],
+  "readiness_statuses": [
+    "PREFLIGHT_READY_NON_DESTRUCTIVE",
+    "BLOCKED_APPROVAL_TOKEN_REQUIRED",
+    "BLOCKED_GUARD_OR_BACKUP_FAILURE"
+  ],
+  "clean_slate_rule": "A future destructive clean-slate regeneration must first pass this preflight with a valid human approval token, deletion guard plan, backup/restore plan, and evidence preservation plan."
+}
