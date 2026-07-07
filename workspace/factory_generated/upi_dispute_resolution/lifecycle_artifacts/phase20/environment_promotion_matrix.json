@@ -1,0 +1,49 @@
+{
+  "automatic_production_promotion_allowed": false,
+  "environments": [
+    {
+      "human_approval_required": false,
+      "name": "local",
+      "promotion_allowed": true
+    },
+    {
+      "human_approval_required": false,
+      "name": "developer_workstation",
+      "promotion_allowed": true
+    },
+    {
+      "human_approval_required": false,
+      "name": "ci_shadow",
+      "promotion_allowed": true
+    },
+    {
+      "human_approval_required": true,
+      "name": "independent_reviewer_workspace",
+      "promotion_allowed": true
+    },
+    {
+      "human_approval_required": true,
+      "name": "controlled_nonprod",
+      "promotion_allowed": true
+    },
+    {
+      "human_approval_required": true,
+      "name": "production_candidate",
+      "promotion_allowed": true
+    },
+    {
+      "human_approval_required": true,
+      "name": "production",
+      "promotion_allowed": false
+    }
+  ],
+  "evidence_required_before_handoff": [
+    "passing_full_regression",
+    "replay_evidence",
+    "policy_validation",
+    "rollback_plan",
+    "certification_boundary_statement"
+  ],
+  "phase": "20",
+  "schema_version": "phase20-promotion-matrix.v1"
+}

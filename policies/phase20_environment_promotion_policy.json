@@ -1,0 +1,28 @@
+{
+  "schema_version": "phase20-environment-promotion-policy.v1",
+  "phase": "20",
+  "policy_name": "environment_promotion_governance",
+  "certification_ready_not_certified": true,
+  "factory_may_prepare_promotion_evidence": true,
+  "automatic_production_promotion_allowed": false,
+  "live_provider_calls_allowed": false,
+  "external_system_mutation_allowed": false,
+  "destructive_cleanup_allowed": false,
+  "official_certification_claim_allowed": false,
+  "human_gated_actions": [
+    "environment_promotion",
+    "production_release",
+    "rollback_execution",
+    "external_integration_enablement",
+    "official_certification_claims"
+  ],
+  "environments": [
+    "local",
+    "developer_workstation",
+    "ci_shadow",
+    "independent_reviewer_workspace",
+    "controlled_nonprod",
+    "production_candidate",
+    "production"
+  ]
+}
