@@ -1,0 +1,27 @@
+{
+  "identities": [
+    {
+      "name": "local_operator",
+      "real_account_required": false,
+      "scope": "local-only"
+    },
+    {
+      "name": "factory_agent",
+      "real_account_required": false,
+      "scope": "simulated-local-agent"
+    },
+    {
+      "name": "reviewer",
+      "real_account_required": false,
+      "scope": "independent-reviewer-workspace"
+    },
+    {
+      "name": "production_service_account",
+      "real_account_required": true,
+      "scope": "future-human-approved-enterprise-integration"
+    }
+  ],
+  "identity_provider_mutation_performed": false,
+  "schema_version": "phase21-identity-boundary-matrix.v1",
+  "service_account_creation_performed": false
+}
