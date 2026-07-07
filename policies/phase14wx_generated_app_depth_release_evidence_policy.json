@@ -1,0 +1,39 @@
+{
+  "schema_version": "generated-app-depth-release-evidence-batch-policy.v1",
+  "phase": "14W-X",
+  "batch_phases": ["14W", "14X"],
+  "policy_name": "governed_generated_application_depth_release_evidence_batch",
+  "allowed_autonomous_actions": [
+    "generate_local_artifacts",
+    "generate_local_audit_evidence",
+    "run_parallel_read_only_gates",
+    "run_targeted_tests",
+    "run_static_hygiene",
+    "run_static_typing",
+    "run_full_regression",
+    "commit_explicit_lifecycle_audit_evidence_after_human_started_wrapper"
+  ],
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "audit_mutation_rules": {
+    "validators_read_only": true,
+    "tests_use_temporary_audit_outputs": true,
+    "full_regression_requires_clean_committed_tree": true,
+    "final_verification_is_non_mutating": true
+  },
+  "certification_boundary": {
+    "factory_does_not_self_certify": true,
+    "official_certification_claims_require_external_authority": true
+  }
+}
