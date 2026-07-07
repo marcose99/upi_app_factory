@@ -1,0 +1,21 @@
+{
+  "policy_id": "phase24_multi_domain_template_policy",
+  "phase": "Phase 24",
+  "allowed_automation": [
+    "domain_template_inventory",
+    "adapter_boundary_mapping",
+    "cross_domain_gap_register_generation",
+    "governance_invariant_validation"
+  ],
+  "forbidden_automation": [
+    "automatic_cross_domain_certification",
+    "live_external_domain_provider_calls",
+    "production_template_promotion_without_review"
+  ],
+  "governance_invariants": [
+    "human_approved_release_boundary",
+    "certification_ready_not_certified",
+    "mock_external_integration_boundary",
+    "evidence_gated_generation"
+  ]
+}

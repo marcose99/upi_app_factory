@@ -1,0 +1,11 @@
+{
+  "automatic_certification_claimed": false,
+  "gaps_before_true_multi_domain_operation": [
+    "domain-specific regulatory source packs",
+    "domain-specific mock ecosystem contracts",
+    "domain-specific threat and privacy model",
+    "independent review per domain",
+    "business workflow acceptance criteria per domain"
+  ],
+  "phase": "Phase 24"
+}

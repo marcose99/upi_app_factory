@@ -1,0 +1,10 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "cross_domain_application_generated": false,
+  "live_provider_calls": false,
+  "official_certification_claimed": false,
+  "phase": "Phase 24",
+  "read_only_gates_executed": true,
+  "status": "MULTI_DOMAIN_FACTORY_TEMPLATE_READY"
+}

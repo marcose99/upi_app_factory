@@ -1,0 +1,14 @@
+{
+  "cross_domain_application_generated": false,
+  "domain_template_layers": [
+    "requirement_intake",
+    "domain_policy_pack",
+    "mock_ecosystem_boundary",
+    "generated_app_contracts",
+    "local_validation_matrix",
+    "certification_ready_evidence_pack"
+  ],
+  "governance_invariants_preserved": true,
+  "phase": "Phase 24",
+  "template_status": "readiness_model_only"
+}
