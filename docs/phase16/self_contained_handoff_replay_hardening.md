@@ -28,3 +28,7 @@ Phase 16 v4 replay sequencing repair: the Phase 13C handover manifest is mirrore
 ## Phase 16 v5 force-stage manifest repair
 
 The self-contained fresh-clone replay exposed that the Phase 13C handover deployment documentation manifest must be present in both the generation-run evidence path and the lifecycle artifact mirror path. The factory therefore performs a governed safe evidence-packaging repair by force-staging `workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13c/handover_deployment_documentation_manifest.json` before candidate replay. This is an evidence packaging repair only; it does not change generated application business logic and does not claim certification.
+
+## Phase 16 v7 validator direct-execution bootstrap repair
+
+A governed self-healing repair was applied to older Phase 14 validator CLIs that were executable as files but imported sibling modules with `from scripts...`. The repair adds an explicit repository-root bootstrap before those imports so full branch regression and fresh-clone replay do not depend on ambient `PYTHONPATH`. This is a safe test/validator harness repair only; it does not alter generated UPI application business logic and does not make any certification claim.
