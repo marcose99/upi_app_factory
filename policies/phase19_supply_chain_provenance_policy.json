@@ -1,0 +1,15 @@
+{
+  "schema_version": "phase19-supply-chain-provenance-policy.v1",
+  "phase": "19",
+  "local_attestation_readiness_only": true,
+  "official_slsa_claim_made": false,
+  "artifact_publication_allowed": false,
+  "registry_push_allowed": false,
+  "signing_key_access_allowed": false,
+  "human_gated_actions": [
+    "artifact_publication",
+    "production_registry_push",
+    "signing_key_use",
+    "formal_supply_chain_certification_claim"
+  ]
+}
