@@ -1,0 +1,41 @@
+{
+  "schema_version": "final-clean-slate-application-engineering-readiness-policy.v1",
+  "policy_id": "phase13ao.final_clean_slate_application_engineering_readiness_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_FINAL_READINESS_PACK_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13an_controlled_harness": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "final_readiness_pack_required": true,
+  "human_review_required_before_next_phase": true,
+  "required_readiness_items": [
+    "controlled_harness_ready",
+    "backup_manifest_digest_present",
+    "execution_package_digest_present",
+    "approval_token_reference_present",
+    "operator_confirmation_present",
+    "post_engineering_certification_planned",
+    "handoff_replay_planned",
+    "human_merge_tag_release_gate_planned",
+    "destructive_actions_remain_blocked"
+  ],
+  "next_phase_boundary": {
+    "next_phase_may_be_destructive_only_if_explicitly_requested": true,
+    "next_phase_requires_new_human_approval": true,
+    "next_phase_requires_backup_evidence": true,
+    "next_phase_requires_post_engineering_certification": true
+  },
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AO produces a final readiness pack only. It must not delete or overwrite the real generated_application."
+}
