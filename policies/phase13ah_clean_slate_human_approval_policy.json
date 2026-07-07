@@ -1,0 +1,37 @@
+{
+  "schema_version": "clean-slate-human-approval-policy.v1",
+  "policy_id": "phase13ah.clean_slate_human_approval_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_APPROVAL_TOKEN_GATE",
+  "requires_phase13af_guard": true,
+  "requires_phase13ag_backup_restore_plan": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "approval_token_schema": "clean-slate-human-approval.v1",
+  "approval_operation": "CLEAN_SLATE_GENERATED_APPLICATION_REGENERATION",
+  "approval_target_path": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "required_acknowledgements": [
+    "ACK_TARGET_LIMITED_TO_GENERATED_APPLICATION",
+    "ACK_BACKUP_RESTORE_PLAN_REQUIRED",
+    "ACK_EVIDENCE_PRESERVATION_REQUIRED",
+    "ACK_REGENERATION_REVALIDATION_REQUIRED",
+    "ACK_RELEASE_REMAINS_HUMAN_GATED"
+  ],
+  "required_token_fields": [
+    "schema_version",
+    "app_id",
+    "operation",
+    "target_path",
+    "approved_by",
+    "approval_reason",
+    "approved_at_utc",
+    "guard_plan_ref",
+    "backup_restore_plan_ref",
+    "evidence_preservation_ref",
+    "acknowledgements"
+  ],
+  "clean_slate_rule": "A future destructive clean-slate regeneration must present a valid human approval token that references the deletion guard, backup/restore plan, evidence preservation plan, and required risk acknowledgements."
+}
