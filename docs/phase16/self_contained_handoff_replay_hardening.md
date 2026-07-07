@@ -24,3 +24,7 @@ The governed self-contained fresh-clone replay exposed one remaining mirrored-ev
 ## Phase 16 v4 replay sequencing repair
 
 Phase 16 v4 replay sequencing repair: the Phase 13C handover manifest is mirrored before the candidate fresh-clone replay; the Phase 16 validator is intentionally run only after the replay evidence is regenerated with PASS status. This is evidence packaging only and does not alter generated application business logic.
+
+## Phase 16 v5 force-stage manifest repair
+
+The self-contained fresh-clone replay exposed that the Phase 13C handover deployment documentation manifest must be present in both the generation-run evidence path and the lifecycle artifact mirror path. The factory therefore performs a governed safe evidence-packaging repair by force-staging `workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13c/handover_deployment_documentation_manifest.json` before candidate replay. This is an evidence packaging repair only; it does not change generated application business logic and does not claim certification.
