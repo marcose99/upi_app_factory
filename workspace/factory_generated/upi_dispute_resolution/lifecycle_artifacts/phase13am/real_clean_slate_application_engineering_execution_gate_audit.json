@@ -1,0 +1,30 @@
+{
+  "schema_version": "real-clean-slate-application-engineering-execution-gate-audit.v1",
+  "phase": "13AM",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_REAL_EXECUTION_GATE_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "destructive_execution_enabled": false,
+  "requires_phase13al_application_engineering_sandbox": true,
+  "human_approval_required": true,
+  "explicit_operator_confirmation_required": true,
+  "policy_ref": "policies/phase13am_real_clean_slate_application_engineering_execution_gate_policy.json",
+  "execution_gate_ref": "scripts/gate_real_clean_slate_application_engineering.py",
+  "phase_validator_ref": "scripts/validate_phase13am_real_execution_gate.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AM creates a real clean-slate application engineering execution gate without enabling destructive delete or real generated application overwrite."
+  },
+  "governance_controls": [
+    "real_execution_gate",
+    "human_approval_token_required",
+    "operator_confirmation_required",
+    "sandbox_application_engineering_required",
+    "destructive_actions_blocked",
+    "human_release_gate_preserved"
+  ]
+}
