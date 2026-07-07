@@ -1,0 +1,30 @@
+{
+  "schema_version": "clean-slate-regeneration-dry-run-audit.v1",
+  "phase": "13AJ",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_DRY_RUN_EXECUTION_HARNESS",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "destructive_delete_performed": false,
+  "regeneration_performed": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13ai_preflight_orchestrator": true,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "policy_ref": "policies/phase13aj_clean_slate_regeneration_dry_run_policy.json",
+  "dry_run_harness_ref": "scripts/plan_clean_slate_regeneration_dry_run.py",
+  "phase_validator_ref": "scripts/validate_phase13aj_clean_slate_regeneration_dry_run.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AJ creates a non-destructive dry-run execution harness and blocks delete, regeneration, provider calls, merge, tag, and release actions."
+  },
+  "governance_controls": [
+    "preflight_required",
+    "dry_run_only",
+    "blocked_destructive_actions",
+    "post_regeneration_certification_planned",
+    "human_release_gate_preserved"
+  ]
+}

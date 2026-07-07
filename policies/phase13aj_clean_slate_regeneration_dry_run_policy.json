@@ -1,0 +1,36 @@
+{
+  "schema_version": "clean-slate-regeneration-dry-run-policy.v1",
+  "policy_id": "phase13aj.clean_slate_regeneration_dry_run_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_DRY_RUN_EXECUTION_HARNESS",
+  "requires_phase13ai_preflight_orchestrator": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "regeneration_allowed_in_this_phase": false,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "dry_run_statuses": [
+    "DRY_RUN_READY_NON_DESTRUCTIVE",
+    "DRY_RUN_BLOCKED_BY_PREFLIGHT"
+  ],
+  "planned_sequence": [
+    "run_preflight",
+    "verify_backup_manifest",
+    "preserve_evidence",
+    "plan_generated_application_delete",
+    "plan_regeneration",
+    "plan_post_regeneration_certification",
+    "plan_human_release_gate"
+  ],
+  "blocked_actions": [
+    "delete_generated_application",
+    "write_regenerated_application",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AJ may only create a dry-run execution report. It must not delete files, regenerate code, call providers, merge, tag, or release."
+}
