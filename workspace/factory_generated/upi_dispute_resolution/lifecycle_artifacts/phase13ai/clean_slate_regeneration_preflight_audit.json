@@ -1,0 +1,30 @@
+{
+  "schema_version": "clean-slate-regeneration-preflight-audit.v1",
+  "phase": "13AI",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_PREFLIGHT_ORCHESTRATOR",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "destructive_delete_performed": false,
+  "regeneration_performed": false,
+  "requires_phase13af_guard": true,
+  "requires_phase13ag_backup_restore_plan": true,
+  "requires_phase13ah_human_approval_token": true,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "policy_ref": "policies/phase13ai_clean_slate_regeneration_preflight_policy.json",
+  "orchestrator_ref": "scripts/run_clean_slate_regeneration_preflight.py",
+  "phase_validator_ref": "scripts/validate_phase13ai_clean_slate_regeneration_preflight.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AI orchestrates clean-slate guard, backup/restore, evidence preservation, and human approval checks without enabling destructive operations."
+  },
+  "governance_controls": [
+    "guard_plan_required",
+    "backup_restore_plan_required",
+    "human_approval_token_required",
+    "evidence_preservation_required",
+    "non_destructive_preflight",
+    "future_regeneration_validation_required"
+  ]
+}
