@@ -1,0 +1,22 @@
+{
+  "adapter_boundaries": [
+    {
+      "adapter": "regulatory_source_registry",
+      "mode": "official_source_reference_only"
+    },
+    {
+      "adapter": "external_payment_or_domain_rails",
+      "mode": "mock_or_simulated_by_default"
+    },
+    {
+      "adapter": "llm_provider",
+      "mode": "secret_safe_and_human_gated_for_live_calls"
+    },
+    {
+      "adapter": "certifying_authority",
+      "mode": "independent_external_review_required"
+    }
+  ],
+  "live_calls": false,
+  "phase": "Phase 24"
+}
