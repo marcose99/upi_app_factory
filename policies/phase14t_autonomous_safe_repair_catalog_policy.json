@@ -1,0 +1,45 @@
+{
+  "certification_boundary": {
+    "factory_does_not_self_certify": true,
+    "official_certification_claims_require_human_authority": true,
+    "what_sits_between_generated_application_and_certification": [
+      "certifying_authority_review",
+      "independent_verification",
+      "formal_audit_or_compliance_assessment",
+      "regulatory_or_industry_standard_assessment",
+      "production_environment_validation_where_required",
+      "security_privacy_resilience_and_operational_review",
+      "official_certification_decision"
+    ]
+  },
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "parallel_execution_limited_to_readonly_gates": true,
+  "phase": "14T",
+  "policy_name": "governed autonomous safe repair catalog operator loop",
+  "safe_repair_auto_apply_allowed_only_when_policy_cataloged": true,
+  "safe_repair_catalog": [
+    "ruff_unused_variable_cleanup",
+    "ruff_unused_import_cleanup",
+    "mypy_test_typing_cast",
+    "mypy_validator_json_object_cast",
+    "mypy_redundant_cast_cleanup",
+    "ruff_e402_import_order_cleanup",
+    "validator_direct_execution_pythonpath_environment",
+    "generated_app_runtime_cache_cleanup",
+    "ignored_workspace_audit_artifact_forced_staging",
+    "validator_rerun_ordering",
+    "adoption_gate_sample_runner_reference"
+  ],
+  "schema_version": "autonomous-safe-repair-catalog-operator-loop-policy.v1",
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy"
+}
