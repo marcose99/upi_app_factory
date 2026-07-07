@@ -1,0 +1,12 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "generated_app_business_logic_mutated": false,
+  "generated_application_present": true,
+  "live_provider_calls": false,
+  "official_certification_claimed": false,
+  "phase": "Phase 23",
+  "production_data_accessed": false,
+  "read_only_gates_executed": true,
+  "status": "GENERATED_APP_DOMAIN_DEPTH_HARDENING_READY"
+}

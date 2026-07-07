@@ -1,0 +1,13 @@
+{
+  "execution_mode": "local_or_simulated_only",
+  "live_provider_calls": false,
+  "phase": "Phase 23",
+  "scenario_catalog": [
+    "malformed_dispute_payload",
+    "missing_required_case_fields",
+    "duplicate_case_reference",
+    "pii_leakage_attempt",
+    "simulated_downstream_unavailable",
+    "audit_event_integrity_check"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "policy_id": "phase23_generated_app_domain_depth_policy",
+  "phase": "Phase 23",
+  "allowed_automation": [
+    "read_only_generated_app_depth_assessment",
+    "local_negative_resilience_scenario_cataloging",
+    "quality_gap_register_generation",
+    "validator_and_test_harness_hardening"
+  ],
+  "forbidden_automation": [
+    "live_payment_rail_calls",
+    "production_data_access",
+    "generated_app_business_logic_mutation_without_review",
+    "official_certification_claim"
+  ],
+  "certification_boundary": "certification_ready_not_certified"
+}

@@ -1,0 +1,24 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "external_integrations": "simulated_only",
+  "generated_app_business_logic_mutated": false,
+  "phase": "Phase 23",
+  "scope": "local_generated_upi_dispute_application",
+  "workflows": [
+    {
+      "depth_status": "locally_tested_baseline",
+      "local_evidence": "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
+      "name": "dispute_case_creation_and_validation"
+    },
+    {
+      "depth_status": "locally_tested_baseline",
+      "local_evidence": "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py",
+      "name": "pii_redaction_and_safe_observability"
+    },
+    {
+      "depth_status": "locally_tested_baseline",
+      "local_evidence": "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py",
+      "name": "workflow_orchestration_and_status_progression"
+    }
+  ]
+}
