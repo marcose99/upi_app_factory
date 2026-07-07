@@ -1,0 +1,18 @@
+{
+  "external_audit_lake_mutation_performed": false,
+  "local_evidence_only": true,
+  "retention_classes": [
+    "development",
+    "audit",
+    "release",
+    "certification_review"
+  ],
+  "schema_version": "phase22-audit-lake-model.v1",
+  "suggested_partitions": [
+    "app_id",
+    "phase",
+    "run_id",
+    "event_date",
+    "event_class"
+  ]
+}
