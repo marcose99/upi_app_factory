@@ -1,0 +1,37 @@
+{
+  "schema_version": "human-approved-application-engineering-command-pack-audit.v1",
+  "phase": "13AP",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_COMMAND_PACK_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "destructive_execution_performed": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13ao_final_readiness_pack": true,
+  "factory_self_engineering_proposals_allowed": true,
+  "factory_self_engineering_auto_apply_allowed": false,
+  "policy_ref": "policies/phase13ap_human_approved_application_engineering_command_pack_policy.json",
+  "command_pack_ref": "scripts/build_human_approved_application_engineering_command_pack.py",
+  "self_engineering_ref": "scripts/propose_factory_self_engineering_improvements.py",
+  "phase_validator_ref": "scripts/validate_phase13ap_command_pack.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AP assembles a human-approved command pack and governed factory self-engineering proposals without destructive execution or self-modification."
+  },
+  "governance_controls": [
+    "command_pack_required",
+    "human_review_required",
+    "destructive_actions_blocked",
+    "factory_self_engineering_proposals_only",
+    "factory_self_modification_blocked",
+    "post_engineering_certification_required",
+    "handoff_replay_required",
+    "human_release_gate_preserved"
+  ]
+}
