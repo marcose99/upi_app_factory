@@ -1,0 +1,338 @@
+{
+  "auto_certification_performed": false,
+  "auto_merge_performed": false,
+  "auto_promotion_performed": false,
+  "auto_push_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "certification_ready_not_certified_boundary_preserved": true,
+  "created_at_utc": "2026-07-07T18:52:55.356457+00:00",
+  "destructive_cleanup_performed": false,
+  "doc_path": "docs/phase14t/autonomous_safe_repair_catalog_operator_loop.md",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "governed_self_evolution_enabled": true,
+  "human_approval_required_for_certification_claims": true,
+  "human_approval_required_for_live_provider_calls": true,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_push": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_tag": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "live_provider_calls_performed": false,
+  "max_parallel_workers": 3,
+  "mode": "governed_autonomous_safe_repair_catalog_operator_loop",
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "operator_loop_steps": [
+    "capture_failed_gate_evidence",
+    "classify_failure_signature",
+    "match_policy_cataloged_repair_class",
+    "apply_bounded_low_risk_local_repair_when_allowed",
+    "rerun_impacted_read_only_gates",
+    "produce_repair_evidence",
+    "stop_at_human_gated_boundaries"
+  ],
+  "parallel_execution_limited_to_readonly_gates": true,
+  "parallel_readonly_gates_enabled": true,
+  "phase": "14T",
+  "policy_path": "policies/phase14t_autonomous_safe_repair_catalog_policy.json",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 415 source files\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14r_governed_autonomous_self_evolving_mode.py"
+      ],
+      "gate_id": "phase14r_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14R governed autonomous self-evolving mode artifacts validated.\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14s_multi_phase_autonomous_continuation.py"
+      ],
+      "gate_id": "phase14s_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14S multi-phase autonomous continuation artifacts validated.\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14s_multi_phase_autonomous_continuation.py"
+      ],
+      "gate_id": "phase14s_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 7 items\n\ntests/test_phase14s_multi_phase_autonomous_continuation.py .......       [100%]\n\n============================== 7 passed in 0.07s ===============================\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n"
+    }
+  ],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14s_multi_phase_autonomous_continuation.py"
+      ],
+      "gate_id": "phase14s_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14s_multi_phase_autonomous_continuation.py"
+      ],
+      "gate_id": "phase14s_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14r_governed_autonomous_self_evolving_mode.py"
+      ],
+      "gate_id": "phase14r_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "safe_repair_auto_apply_allowed_only_when_policy_cataloged": true,
+  "safe_repair_catalog": [
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "F841",
+        "local variable",
+        "assigned to but never used"
+      ],
+      "repair_id": "ruff_unused_variable_cleanup",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Remove unused local variable when value has no side effect."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "F401",
+        "imported but unused"
+      ],
+      "repair_id": "ruff_unused_import_cleanup",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Remove unused import only when symbol is not referenced."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "object has no attribute",
+        "not iterable",
+        "attr-defined"
+      ],
+      "repair_id": "mypy_test_typing_cast",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Add explicit typing or cast in tests without weakening production contracts."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "Returning Any",
+        "no-any-return"
+      ],
+      "repair_id": "mypy_validator_json_object_cast",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Narrow json.loads results with isinstance checks and cast."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "Redundant cast",
+        "redundant-cast"
+      ],
+      "repair_id": "mypy_redundant_cast_cleanup",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Remove redundant cast only when inferred type already satisfies the expected contract."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "E402",
+        "Module level import not at top of file"
+      ],
+      "repair_id": "ruff_e402_import_order_cleanup",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Keep imports at module top and use runner environment for PYTHONPATH."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "ModuleNotFoundError",
+        "No module named 'scripts'"
+      ],
+      "repair_id": "validator_direct_execution_pythonpath_environment",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Set PYTHONPATH in runner scripts instead of unsafe in-file path mutation."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "__pycache__",
+        ".pyc",
+        "replay payload contains bytecode/cache"
+      ],
+      "repair_id": "generated_app_runtime_cache_cleanup",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Delete generated runtime cache files only, never source files."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "ignored by one of your .gitignore files",
+        "git add -f"
+      ],
+      "repair_id": "ignored_workspace_audit_artifact_forced_staging",
+      "requires_impacted_gate_rerun": false,
+      "scope_limit": "Force-stage only explicitly named lifecycle audit evidence files."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "validator failed before audit refresh",
+        "stale audit"
+      ],
+      "repair_id": "validator_rerun_ordering",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Regenerate audit evidence before validator execution."
+    },
+    {
+      "allowed_auto_apply_when_policy_cataloged": true,
+      "failure_signatures": [
+        "does not use the governed runner",
+        "uses_governed_runner: false"
+      ],
+      "repair_id": "adoption_gate_sample_runner_reference",
+      "requires_impacted_gate_rerun": true,
+      "scope_limit": "Use scripts/governed_phase_runner.py in adoption gate samples."
+    }
+  ],
+  "safe_repair_catalog_operator_loop_enabled": true,
+  "safe_repair_classes_known": [
+    "ruff_unused_variable_cleanup",
+    "ruff_unused_import_cleanup",
+    "mypy_test_typing_cast",
+    "mypy_validator_json_object_cast",
+    "mypy_redundant_cast_cleanup",
+    "ruff_e402_import_order_cleanup",
+    "validator_direct_execution_pythonpath_environment",
+    "generated_app_runtime_cache_cleanup",
+    "ignored_workspace_audit_artifact_forced_staging",
+    "validator_rerun_ordering",
+    "adoption_gate_sample_runner_reference"
+  ],
+  "safe_repairs_auto_applied_this_phase": [],
+  "schema_version": "autonomous-safe-repair-catalog-operator-loop.v1",
+  "status": "AUTONOMOUS_SAFE_REPAIR_CATALOG_OPERATOR_LOOP_READY",
+  "supports_next_phase_goal": "autonomous_phase_discovery_and_planning",
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy",
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
