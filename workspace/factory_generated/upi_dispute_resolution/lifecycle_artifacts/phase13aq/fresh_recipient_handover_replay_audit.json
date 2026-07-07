@@ -1,0 +1,36 @@
+{
+  "schema_version": "fresh-recipient-handover-replay-audit.v1",
+  "phase": "13AQ",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_FRESH_RECIPIENT_REPLAY_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "destructive_execution_performed": false,
+  "factory_self_healing_repair_applied": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13ap_command_pack": true,
+  "factory_self_healing_diagnostics_allowed": true,
+  "factory_self_healing_auto_apply_allowed": false,
+  "policy_ref": "policies/phase13aq_fresh_recipient_handover_replay_policy.json",
+  "replay_pack_ref": "scripts/build_fresh_recipient_handover_replay_pack.py",
+  "validator_ref": "scripts/validate_phase13aq_fresh_recipient_replay.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AQ creates a fresh-recipient replay pack and safe self-healing diagnostics without destructive execution or self-modification."
+  },
+  "governance_controls": [
+    "fresh_recipient_replay",
+    "self_healing_diagnostics_only",
+    "self_engineering_proposals_only",
+    "destructive_actions_blocked",
+    "human_approval_boundaries_preserved",
+    "rollback_guidance_required",
+    "human_release_gate_preserved"
+  ]
+}
