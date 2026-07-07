@@ -1,0 +1,22 @@
+{
+  "schema_version": "phase17-enterprise-autonomous-hardening-policy.v1",
+  "phase": "17",
+  "allowed_autonomous_actions": [
+    "write_evidence_artifacts",
+    "write_policy_artifacts",
+    "write_validator_and_tests",
+    "execute_read_only_validation",
+    "prepare_reviewer_workspace_trial",
+    "prepare_release_dossier_index"
+  ],
+  "human_gated_actions": [
+    "official_certification_claims",
+    "release_publication",
+    "production_promotion",
+    "live_provider_calls",
+    "destructive_operations",
+    "external_system_mutation"
+  ],
+  "certification_ready_not_certified": true,
+  "factory_does_not_self_certify": true
+}
