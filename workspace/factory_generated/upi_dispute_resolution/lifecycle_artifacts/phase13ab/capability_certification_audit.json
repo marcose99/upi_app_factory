@@ -1,0 +1,27 @@
+{
+  "schema_version": "capability-certification-audit.v1",
+  "phase": "13AB",
+  "app_id": "upi_dispute_resolution",
+  "audit_mode": "LOCAL_DETERMINISTIC_SOURCE_CONTROLLED",
+  "live_provider_calls_performed": false,
+  "human_approval_required_for_release": true,
+  "inputs": [
+    "capability_certification_policy.json",
+    "capability_certification_matrix.json",
+    "requirement_traceability_matrix.json",
+    "capability_certification_report.md"
+  ],
+  "validator": "scripts/validate_capability_certification.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AB establishes the local certification matrix foundation. Later phases should wire measured generated-application execution evidence into the release gate."
+  },
+  "governance_controls": [
+    "local_first_only",
+    "no_live_provider_calls",
+    "deterministic_artifacts",
+    "source_controlled_policy",
+    "evidence_required_per_quality_dimension",
+    "human_approval_required_before_release"
+  ]
+}
