@@ -1,0 +1,35 @@
+{
+  "schema_version": "sandbox-autonomous-generation-validation-policy.v1",
+  "policy_id": "phase14b.sandbox_autonomous_generation_validation_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "SANDBOX_ONLY_AUTONOMOUS_GENERATION_AND_VALIDATION",
+  "preferred_term": "application engineering",
+  "requires_phase13az_autonomy_control_plane": true,
+  "requires_phase14a_lifecycle_plan_executor": true,
+  "sandbox_only": true,
+  "real_generated_application_write_allowed": false,
+  "real_generated_application_delete_allowed": false,
+  "real_generated_application_overwrite_allowed": false,
+  "real_worktree_mutation_allowed": false,
+  "arbitrary_shell_execution_allowed": false,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "factory_self_modification_allowed": false,
+  "auto_merge_allowed": false,
+  "auto_tag_allowed": false,
+  "auto_release_allowed": false,
+  "required_outputs": [
+    "sandbox_run_manifest",
+    "sandbox_generated_preview",
+    "sandbox_validation_report",
+    "sandbox_evidence_record",
+    "promotion_gate_record"
+  ],
+  "required_control_plane_decisions": [
+    "GENERATE_IN_SANDBOX",
+    "RUN_TESTS",
+    "SELF_HEAL_LOW_RISK_IN_SANDBOX",
+    "PROMOTE_SANDBOX_TO_WORKTREE"
+  ],
+  "policy_rule": "Phase 14B may autonomously create deterministic sandbox artifacts and validation evidence, but it must not mutate the real generated application, promote to worktree, execute arbitrary shell commands, call live providers, call external systems, merge, tag, or release."
+}
