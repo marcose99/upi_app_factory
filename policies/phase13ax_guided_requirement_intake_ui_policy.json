@@ -1,0 +1,52 @@
+{
+  "schema_version": "guided-requirement-intake-ui-policy.v1",
+  "policy_id": "phase13ax.guided_requirement_intake_ui_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_REQUIREMENT_INTAKE_PREVIEW_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13aw_operator_portal": true,
+  "preview_only": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "arbitrary_shell_execution_allowed_from_ui": false,
+  "destructive_delete_allowed_from_ui": false,
+  "real_generated_application_write_allowed_from_ui": false,
+  "requirement_package_write_allowed_from_ui": false,
+  "generation_execution_allowed_from_ui": false,
+  "factory_self_modification_allowed_from_ui": false,
+  "auto_merge_allowed_from_ui": false,
+  "auto_tag_allowed_from_ui": false,
+  "auto_release_allowed_from_ui": false,
+  "required_intake_fields": [
+    "business_domain",
+    "application_name",
+    "capabilities",
+    "regulatory_constraints",
+    "mock_ecosystem",
+    "data_sensitivity",
+    "llm_mode",
+    "approval_mode"
+  ],
+  "required_preview_sections": [
+    "normalized_requirement",
+    "risk_classification",
+    "governance_controls",
+    "mock_boundary",
+    "evidence_plan",
+    "blocked_actions"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "execute_arbitrary_shell_command",
+    "write_requirement_package_without_human_terminal_command",
+    "run_application_generation",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "portal_rule": "The Phase 13AX requirement intake UI is preview-only. It may normalize user-provided requirement text into a deterministic preview package, but it must not write project files, trigger generation, call live providers, call external systems, execute commands, merge, tag, or release."
+}
