@@ -1,0 +1,28 @@
+{
+  "policy_id": "POL-13X-AGENT-RUNTIME-ABSTRACTION",
+  "policy_version": "1.0.0",
+  "phase": "Phase 13X",
+  "intent": "Keep the governed factory core independent from any single agent framework while permitting framework-specific adapters.",
+  "runtime_independence_rules": {
+    "factory_core_must_use_ports": true,
+    "framework_specific_imports_allowed_only_in_adapters": true,
+    "active_adapter": "langgraph",
+    "required_adapters": ["deterministic", "langgraph"],
+    "forbidden_core_couplings": ["direct StateGraph dependency in factory core contracts", "secrets in source", "framework-specific policy decisions"]
+  },
+  "llm_runtime_policy": {
+    "default_mode": "deterministic_local",
+    "openai_api_key_required_for_this_phase": false,
+    "future_llm_mode_requires_external_secret_injection": true,
+    "secrets_must_not_be_committed": true
+  },
+  "evidence_requirements": [
+    "runtime contract inventory",
+    "adapter inventory",
+    "framework independence decision",
+    "traceability matrix",
+    "audit event log",
+    "migration notes for alternate runtimes"
+  ],
+  "human_release_gate_required": true
+}
