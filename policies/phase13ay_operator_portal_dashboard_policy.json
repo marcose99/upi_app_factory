@@ -1,0 +1,53 @@
+{
+  "schema_version": "operator-portal-dashboard-policy.v1",
+  "policy_id": "phase13ay.operator_portal_dashboard_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_OPERATOR_PORTAL_DASHBOARDS_READ_ONLY",
+  "preferred_term": "application engineering",
+  "requires_phase13ax_requirement_intake_ui": true,
+  "read_only_dashboards": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "arbitrary_shell_execution_allowed_from_ui": false,
+  "destructive_delete_allowed_from_ui": false,
+  "real_generated_application_write_allowed_from_ui": false,
+  "requirement_package_write_allowed_from_ui": false,
+  "generation_execution_allowed_from_ui": false,
+  "factory_self_modification_allowed_from_ui": false,
+  "auto_merge_allowed_from_ui": false,
+  "auto_tag_allowed_from_ui": false,
+  "auto_release_allowed_from_ui": false,
+  "required_dashboard_panels": [
+    "evidence_audit",
+    "standards_controls",
+    "self_healing",
+    "agentic_threats",
+    "requirement_intake",
+    "handover_replay",
+    "generated_application"
+  ],
+  "required_routes": [
+    "/dashboards",
+    "/dashboards/evidence",
+    "/dashboards/standards",
+    "/dashboards/self-healing",
+    "/dashboards/threats",
+    "/dashboards/handover",
+    "/dashboards/generated-app",
+    "/api/dashboards"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "execute_arbitrary_shell_command",
+    "write_requirement_package_without_human_terminal_command",
+    "run_application_generation",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "portal_rule": "The Phase 13AY dashboard expansion is read-only. It may display evidence, standards, self-healing, agentic threat, handover, requirement intake, and generated application status, but it must not write project files, trigger generation, execute commands, call live providers, call external systems, merge, tag, or release."
+}
