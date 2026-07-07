@@ -1,0 +1,229 @@
+{
+  "auto_certification_performed": false,
+  "auto_merge_performed": false,
+  "auto_promotion_performed": false,
+  "auto_push_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "autonomous_loop_capabilities": [
+    "discover_next_phase_candidate",
+    "generate_phase_plan",
+    "generate_local_artifacts",
+    "run_parallel_read_only_gates",
+    "classify_failures",
+    "map_failures_to_safe_repair_catalog",
+    "apply_policy_cataloged_low_risk_repairs",
+    "rerun_impacted_gates",
+    "produce_audit_evidence",
+    "stop_at_human_gated_boundaries"
+  ],
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "certification_ready_not_certified_boundary_preserved": true,
+  "created_at_utc": "2026-07-07T18:42:56.721658+00:00",
+  "destructive_cleanup_performed": false,
+  "doc_path": "docs/phase14s/multi_phase_autonomous_continuation_runner.md",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "from_phase": "phase14s",
+  "governed_self_evolution_enabled": true,
+  "human_approval_required_for_certification_claims": true,
+  "human_approval_required_for_live_provider_calls": true,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_push": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_tag": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "live_provider_calls_performed": false,
+  "manual_command_reduction_goal": true,
+  "max_parallel_workers": 3,
+  "mode": "governed_multi_phase_autonomous_continuation",
+  "multi_phase_autonomous_continuation_enabled": true,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "parallel_execution_limited_to_readonly_gates": true,
+  "parallel_readonly_gates_enabled": true,
+  "phase": "14S",
+  "planned_phase_sequence": [
+    "phase14t/autonomous-safe-repair-catalog-operator-loop",
+    "phase14u/autonomous-phase-discovery-and-planning",
+    "phase14v/autonomous-quality-gate-pipeline-hardening",
+    "phase14w/generated-application-depth-roadmap-executor",
+    "phase14x/release-evidence-industrialization",
+    "phase14y/operator-autonomy-dashboard",
+    "phase14z/v1-autonomous-readiness-pack"
+  ],
+  "policy_path": "policies/phase14s_multi_phase_autonomous_continuation_policy.json",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14r_governed_autonomous_self_evolving_mode.py"
+      ],
+      "gate_id": "phase14r_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14R governed autonomous self-evolving mode artifacts validated.\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14r_governed_autonomous_self_evolving_mode.py"
+      ],
+      "gate_id": "phase14r_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 6 items\n\ntests/test_phase14r_governed_autonomous_self_evolving_mode.py ......     [100%]\n\n============================== 6 passed in 0.05s ===============================\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14q_generated_application_deep_quality.py"
+      ],
+      "gate_id": "phase14q_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14Q generated application deep quality artifacts validated.\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true,
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 412 source files\n"
+    }
+  ],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14r_governed_autonomous_self_evolving_mode.py"
+      ],
+      "gate_id": "phase14r_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14r_governed_autonomous_self_evolving_mode.py"
+      ],
+      "gate_id": "phase14r_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14q_generated_application_deep_quality.py"
+      ],
+      "gate_id": "phase14q_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "safe_repair_classes_known": [
+    "ruff_unused_variable_cleanup",
+    "ruff_unused_import_cleanup",
+    "mypy_test_typing_cast",
+    "mypy_validator_json_object_cast",
+    "ruff_e402_import_order_cleanup",
+    "validator_direct_execution_pythonpath_environment",
+    "generated_app_runtime_cache_cleanup",
+    "ignored_workspace_audit_artifact_forced_staging",
+    "validator_rerun_ordering",
+    "adoption_gate_sample_runner_reference"
+  ],
+  "safe_repairs_auto_applied_this_phase": [],
+  "safe_repairs_auto_apply_allowed_only_when_policy_cataloged": true,
+  "schema_version": "multi-phase-autonomous-continuation-runner.v1",
+  "sequential_human_gates_preserved": true,
+  "status": "MULTI_PHASE_AUTONOMOUS_CONTINUATION_RUNNER_READY",
+  "supports_next_phase_goal": "complete_remaining_safe_phases_with_governed_autonomous_continuation",
+  "to_phase": "phase14z",
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy"
+}
