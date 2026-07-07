@@ -1,0 +1,84 @@
+{
+  "schema_version": "capability-certification-matrix.v1",
+  "phase": "13AB",
+  "app_id": "upi_dispute_resolution",
+  "certification_mode": "LOCAL_FIRST_DETERMINISTIC",
+  "live_provider_calls_allowed": false,
+  "human_approval_required_for_release": true,
+  "status_vocabulary": [
+    "CERTIFIED_LOCAL",
+    "CERTIFIED_WITH_WARNINGS",
+    "NOT_CERTIFIED",
+    "BLOCKED_BY_POLICY"
+  ],
+  "quality_dimensions": [
+    "unit_tests",
+    "integration_tests",
+    "contract_api_tests",
+    "domain_rule_tests",
+    "negative_error_path_tests",
+    "boundary_mock_ecosystem_tests",
+    "regression_tests",
+    "policy_governance_tests",
+    "audit_evidence_tests",
+    "type_checks",
+    "lint_static_quality_checks",
+    "security_static_scanning_hooks",
+    "dependency_supply_chain_checks",
+    "performance_smoke_load_checks",
+    "resilience_idempotency_replay_checks",
+    "operator_handover_runbook_checks",
+    "capability_certification_report_generation"
+  ],
+  "capabilities": [
+    {
+      "capability_id": "capability.llm_evidence_replay_redaction_validator",
+      "capability_name": "LLM evidence replay and redaction validator",
+      "release_status": "CERTIFIED_LOCAL",
+      "quality_results": {
+        "unit_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["tests.phase13aa", "pytest.full_suite"]},
+        "integration_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["tests.phase13aa", "pytest.full_suite"]},
+        "contract_api_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["pytest.full_suite"]},
+        "domain_rule_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["tests.phase13aa"]},
+        "negative_error_path_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["tests.phase13aa"]},
+        "boundary_mock_ecosystem_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["local_only_no_provider_calls"]},
+        "regression_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["pytest.full_suite"]},
+        "policy_governance_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["capability_certification_policy.json", "validate_capability_certification.py"]},
+        "audit_evidence_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["capability_certification_audit.json"]},
+        "type_checks": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["mypy.no_issues"]},
+        "lint_static_quality_checks": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["ruff.passed"]},
+        "security_static_scanning_hooks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.security_hook_required"]},
+        "dependency_supply_chain_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.supply_chain_hook_required"]},
+        "performance_smoke_load_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.local_performance_smoke_required"]},
+        "resilience_idempotency_replay_checks": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["llm_evidence_replay.local_deterministic_replay"]},
+        "operator_handover_runbook_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.runbook_required"]},
+        "capability_certification_report_generation": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["capability_certification_report.md"]}
+      }
+    },
+    {
+      "capability_id": "capability.generated_application_release_gate",
+      "capability_name": "Generated application release certification gate",
+      "release_status": "CERTIFIED_WITH_WARNINGS",
+      "warning_reason": "Phase 13AB defines the certification matrix foundation. Future phases should wire measured generated-application execution outputs into this gate.",
+      "quality_results": {
+        "unit_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["phase13ab.foundation_tests"]},
+        "integration_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["future.release_gate_integration_required"]},
+        "contract_api_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["future.release_gate_contract_required"]},
+        "domain_rule_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["capability_certification_policy.json"]},
+        "negative_error_path_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["validate_capability_certification.py"]},
+        "boundary_mock_ecosystem_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["local_only_no_provider_calls"]},
+        "regression_tests": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["phase13ab.foundation_tests"]},
+        "policy_governance_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["capability_certification_policy.json", "validate_capability_certification.py"]},
+        "audit_evidence_tests": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["capability_certification_audit.json"]},
+        "type_checks": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["mypy.no_issues"]},
+        "lint_static_quality_checks": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["ruff.passed"]},
+        "security_static_scanning_hooks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.security_hook_required"]},
+        "dependency_supply_chain_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.supply_chain_hook_required"]},
+        "performance_smoke_load_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.local_performance_smoke_required"]},
+        "resilience_idempotency_replay_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.replay_required"]},
+        "operator_handover_runbook_checks": {"status": "CERTIFIED_WITH_WARNINGS", "evidence_refs": ["policy.runbook_required"]},
+        "capability_certification_report_generation": {"status": "CERTIFIED_LOCAL", "evidence_refs": ["capability_certification_report.md"]}
+      }
+    }
+  ]
+}

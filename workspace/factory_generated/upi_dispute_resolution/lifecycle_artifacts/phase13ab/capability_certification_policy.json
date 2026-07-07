@@ -1,0 +1,76 @@
+{
+  "schema_version": "capability-certification-policy.v1",
+  "policy_id": "phase13ab.local_generated_application_capability_certification_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_FIRST_ONLY",
+  "live_provider_calls_allowed": false,
+  "human_approval_required_for_release": true,
+  "determinism_required": true,
+  "evidence_required": true,
+  "governance_control_required": true,
+  "allowed_statuses": [
+    "CERTIFIED_LOCAL",
+    "CERTIFIED_WITH_WARNINGS",
+    "NOT_CERTIFIED",
+    "BLOCKED_BY_POLICY"
+  ],
+  "minimum_required_quality_dimensions": [
+    "unit_tests",
+    "integration_tests",
+    "contract_api_tests",
+    "domain_rule_tests",
+    "negative_error_path_tests",
+    "boundary_mock_ecosystem_tests",
+    "regression_tests",
+    "policy_governance_tests",
+    "audit_evidence_tests",
+    "type_checks",
+    "lint_static_quality_checks",
+    "security_static_scanning_hooks",
+    "dependency_supply_chain_checks",
+    "performance_smoke_load_checks",
+    "resilience_idempotency_replay_checks",
+    "operator_handover_runbook_checks",
+    "capability_certification_report_generation"
+  ],
+  "blocking_rules": [
+    {
+      "rule_id": "no_live_provider_calls",
+      "description": "Certification must not perform live LLM, payment rail, bank, NPCI, RBI, or external ecosystem calls unless a future explicit approval gate enables it.",
+      "on_violation_status": "BLOCKED_BY_POLICY"
+    },
+    {
+      "rule_id": "all_required_dimensions_present",
+      "description": "Every generated application capability must map to every minimum required quality dimension.",
+      "on_violation_status": "NOT_CERTIFIED"
+    },
+    {
+      "rule_id": "evidence_backed_results",
+      "description": "Every quality dimension result must include deterministic evidence references.",
+      "on_violation_status": "NOT_CERTIFIED"
+    },
+    {
+      "rule_id": "human_approval_before_release",
+      "description": "Certification may produce release evidence, but final release remains human-approval-gated.",
+      "on_violation_status": "BLOCKED_BY_POLICY"
+    }
+  ],
+  "references": [
+    {
+      "name": "NIST Secure Software Development Framework SP 800-218",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final"
+    },
+    {
+      "name": "OWASP Software Component Verification Standard",
+      "url": "https://owasp.org/www-project-software-component-verification-standard/"
+    },
+    {
+      "name": "OWASP Application Security Verification Standard",
+      "url": "https://owasp.org/www-project-application-security-verification-standard/"
+    },
+    {
+      "name": "SLSA Supply-chain Levels for Software Artifacts",
+      "url": "https://slsa.dev/"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": "requirement-traceability-matrix.v1",
+  "phase": "13AB",
+  "app_id": "upi_dispute_resolution",
+  "traceability_policy": "Map requirement to capability, local certification dimensions, evidence, and release decision.",
+  "requirements": [
+    {
+      "requirement_id": "REQ-13AB-001",
+      "requirement": "The factory must certify generated application capabilities in local mode before release.",
+      "capability_ids": ["capability.generated_application_release_gate", "capability.llm_evidence_replay_redaction_validator"],
+      "artifact_refs": ["capability_certification_matrix.json", "capability_certification_report.md", "capability_certification_audit.json"],
+      "governance_status": "CERTIFIED_WITH_WARNINGS"
+    },
+    {
+      "requirement_id": "REQ-13AB-002",
+      "requirement": "Certification must cover all required local quality dimensions.",
+      "capability_ids": ["capability.generated_application_release_gate", "capability.llm_evidence_replay_redaction_validator"],
+      "artifact_refs": ["capability_certification_policy.json", "capability_certification_matrix.json", "scripts/validate_capability_certification.py"],
+      "governance_status": "CERTIFIED_LOCAL"
+    },
+    {
+      "requirement_id": "REQ-13AB-003",
+      "requirement": "Certification must be deterministic, evidence-backed, governed, and human-approval-gated.",
+      "capability_ids": ["capability.generated_application_release_gate"],
+      "artifact_refs": ["capability_certification_policy.json", "capability_certification_audit.json"],
+      "governance_status": "CERTIFIED_LOCAL"
+    }
+  ]
+}
