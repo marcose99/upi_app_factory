@@ -1,0 +1,32 @@
+{
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "cataloged_safe_repairs_may_be_applied": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "mode": "governed_autonomous_phase_discovery_and_planning",
+  "parallel_readonly_gates_enabled": true,
+  "phase": "14U",
+  "schema_version": "autonomous-phase-discovery-policy.v1",
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy"
+}

@@ -1,0 +1,161 @@
+{
+  "auto_certification_performed": false,
+  "auto_merge_performed": false,
+  "auto_promotion_performed": false,
+  "auto_push_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "certification_ready_not_certified_boundary_preserved": true,
+  "created_at_utc": "2026-07-07T19:00:24.544254+00:00",
+  "destructive_cleanup_performed": false,
+  "discovered_next_phase": "phase14v/autonomous-quality-gate-pipeline-hardening",
+  "doc_path": "docs/phase14u/autonomous_phase_discovery_and_planning.md",
+  "end_phase_target": "phase14z/v1-autonomous-readiness-pack",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "fast_distance_strategy": [
+    "batch_read_only_validation_where_safe",
+    "auto_apply_policy_cataloged_low_risk_repairs",
+    "rerun_impacted_gates_after_repair",
+    "stop_on_unknown_failure_classes",
+    "preserve_human_gated_irreversible_boundaries",
+    "generate_audit_evidence_for_every_step"
+  ],
+  "governed_self_evolution_enabled": true,
+  "human_approval_required_for_certification_claims": true,
+  "human_approval_required_for_live_provider_calls": true,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_push": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_tag": true,
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "live_provider_calls_performed": false,
+  "mode": "governed_autonomous_phase_discovery_and_planning",
+  "multi_phase_autonomous_continuation_enabled": true,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "parallel_execution_limited_to_readonly_gates": true,
+  "parallel_readonly_gates_enabled": true,
+  "phase": "14U",
+  "phase_batching_recommendation": [
+    "phase14v_quality_gate_pipeline_hardening_single_phase",
+    "phase14w_to_phase14x_batch_generated_app_depth_and_release_evidence_when_safe",
+    "phase14y_to_phase14z_batch_operator_dashboard_and_readiness_pack_when_safe"
+  ],
+  "planned_phase_count": 5,
+  "planned_phase_sequence": [
+    "phase14v/autonomous-quality-gate-pipeline-hardening",
+    "phase14w/generated-application-depth-roadmap-executor",
+    "phase14x/release-evidence-industrialization",
+    "phase14y/operator-autonomy-dashboard",
+    "phase14z/v1-autonomous-readiness-pack"
+  ],
+  "policy_path": "policies/phase14u_autonomous_phase_discovery_policy.json",
+  "read_only_gate_results": [],
+  "read_only_gate_specs": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14t_autonomous_safe_repair_catalog_operator_loop.py"
+      ],
+      "gate_id": "phase14t_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14t_autonomous_safe_repair_catalog_operator_loop.py"
+      ],
+      "gate_id": "phase14t_targeted_tests",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14s_multi_phase_autonomous_continuation.py"
+      ],
+      "gate_id": "phase14s_artifact_validator",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "gate_id": "ruff_static_hygiene",
+      "parallel_safe": true,
+      "read_only": true
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "gate_id": "mypy_static_typing",
+      "parallel_safe": true,
+      "read_only": true
+    }
+  ],
+  "read_only_gates_executed": false,
+  "read_only_gates_passed": false,
+  "safe_repair_catalog_operator_loop_enabled": true,
+  "safe_repair_classes_known": [
+    "ruff_unused_variable_cleanup",
+    "ruff_unused_import_cleanup",
+    "mypy_test_typing_cast",
+    "mypy_validator_json_object_cast",
+    "mypy_redundant_cast_cleanup",
+    "ruff_e402_import_order_cleanup",
+    "validator_direct_execution_pythonpath_environment",
+    "generated_app_runtime_cache_cleanup",
+    "ignored_workspace_audit_artifact_forced_staging",
+    "validator_rerun_ordering",
+    "adoption_gate_sample_runner_reference"
+  ],
+  "schema_version": "autonomous-phase-discovery-and-planning.v1",
+  "status": "AUTONOMOUS_PHASE_DISCOVERY_AND_PLANNING_READY",
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy",
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
+}
