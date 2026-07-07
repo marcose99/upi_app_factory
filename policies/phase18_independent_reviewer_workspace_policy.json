@@ -1,0 +1,15 @@
+{
+  "schema_version": "phase18-independent-reviewer-workspace-policy.v1",
+  "phase": "18",
+  "review_mode": "local_read_only_replay",
+  "factory_does_not_self_certify": true,
+  "official_certification_claimed": false,
+  "external_system_mutation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "human_gated_actions": [
+    "certification_decision",
+    "audit_signoff",
+    "release_publication",
+    "production_promotion"
+  ]
+}
