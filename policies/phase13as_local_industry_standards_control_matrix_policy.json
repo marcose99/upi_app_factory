@@ -1,0 +1,43 @@
+{
+  "schema_version": "local-industry-standards-control-matrix-policy.v1",
+  "policy_id": "phase13as.local_industry_standards_control_matrix_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_STANDARDS_CONTROL_MATRIX_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13ar_repair_catalog": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "automatic_repair_application_allowed_in_this_phase": false,
+  "factory_self_modification_allowed_in_this_phase": false,
+  "standards_control_matrix_required": true,
+  "required_standard_families": [
+    "NIST_SSDF",
+    "OWASP_SAMM",
+    "NIST_AI_RMF",
+    "OWASP_LLM_TOP_10",
+    "SLSA_PROVENANCE",
+    "CYCLONEDX_SBOM",
+    "OPENSFF_SCORECARD_STYLE",
+    "OPENTELEMETRY_OBSERVABILITY",
+    "PAYMENT_COMPLIANCE_TRACEABILITY",
+    "FACTORY_SELF_HEALING"
+  ],
+  "required_control_statuses": [
+    "LOCAL_CONTROL_PRESENT",
+    "LOCAL_CONTROL_PLANNED"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "apply_factory_self_healing_repair",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "gap_elimination_rule": "A gap is locally eliminated only when it has a policy, validator, test, evidence artifact, replay command, and self-healing diagnostic or repair-catalog linkage."
+}
