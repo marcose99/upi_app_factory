@@ -1,0 +1,43 @@
+{
+  "schema_version": "autonomous-phase-engineering-runner-policy.v1",
+  "policy_id": "phase13at.autonomous_phase_engineering_runner_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_AUTONOMOUS_PHASE_PLANNING_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13as_standards_control_matrix": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "automatic_repair_application_allowed_in_this_phase": false,
+  "factory_self_modification_allowed_in_this_phase": false,
+  "auto_branch_push_allowed_after_all_gates_pass": true,
+  "auto_merge_allowed": false,
+  "auto_tag_allowed": false,
+  "auto_release_allowed": false,
+  "autonomous_phase_blueprints_required": true,
+  "required_blueprint_items": [
+    "source_standard_control",
+    "future_phase_id",
+    "artifact_plan",
+    "validator_plan",
+    "test_plan",
+    "evidence_plan",
+    "self_healing_linkage",
+    "risk_tier",
+    "human_approval_boundary",
+    "blocked_actions"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "apply_factory_self_healing_repair",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "autonomy_rule": "The runner may produce deterministic phase blueprints and branch artifacts. It must not merge, tag, release, self-modify, apply repairs, call live providers, call external systems, delete, or overwrite the real generated_application."
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "autonomous-phase-engineering-runner-audit.v1",
+  "phase": "13AT",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_AUTONOMOUS_PHASE_PLANNING_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "destructive_execution_performed": false,
+  "factory_self_healing_repair_applied": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13as_standards_control_matrix": true,
+  "runner_ref": "scripts/run_autonomous_phase_engineering.py",
+  "policy_ref": "policies/phase13at_autonomous_phase_engineering_runner_policy.json",
+  "validator_ref": "scripts/validate_phase13at_autonomous_runner.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AT creates autonomous standards-gap phase blueprints without applying repairs, self-modifying the factory, or performing destructive execution."
+  },
+  "governance_controls": [
+    "autonomous_phase_blueprints_required",
+    "standards_matrix_dependency_required",
+    "self_healing_linkage_required",
+    "human_approval_boundaries_preserved",
+    "auto_merge_blocked",
+    "auto_tag_blocked",
+    "auto_release_blocked"
+  ]
+}
