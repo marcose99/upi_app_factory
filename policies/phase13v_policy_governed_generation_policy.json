@@ -1,0 +1,49 @@
+{
+  "policy_id": "POL-13V-POLICY-GOVERNED-GENERATION",
+  "policy_version": "2026-07-07.v1",
+  "purpose": "Govern requirement-driven generation, validation, diagnosis, and bounded repair for generated UPI dispute capabilities.",
+  "llm_runtime": {
+    "mode": "deterministic_local",
+    "openai_api_key_required": false,
+    "secrets_required": [],
+    "future_provider_configuration": {
+      "env_var": "OPENAI_API_KEY",
+      "required_only_when_mode": "openai_llm",
+      "store_secret_in_repo": false
+    }
+  },
+  "repair_budget": {
+    "max_attempts": 2,
+    "require_diagnosis_before_repair": true,
+    "require_policy_decision_before_repair": true,
+    "require_validation_after_repair": true
+  },
+  "allowed_repair_targets": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/phase13v_policy_governed_dispute_triage/**"
+  ],
+  "forbidden_repair_targets": [
+    "src/**",
+    "scripts/**",
+    "tests/**",
+    "docs/**",
+    "policies/**",
+    ".github/**",
+    "pyproject.toml",
+    "requirements*.txt"
+  ],
+  "mandatory_evidence": [
+    "requirement_package",
+    "policy_decisions",
+    "diagnoses",
+    "repair_evidence",
+    "validation_results",
+    "traceability_matrix",
+    "human_release_gate"
+  ],
+  "mock_boundary": {
+    "external_rails": "mock_only",
+    "banks": "mock_only",
+    "npcI_rbi_style_interfaces": "mock_only",
+    "real_money_movement": false
+  }
+}
