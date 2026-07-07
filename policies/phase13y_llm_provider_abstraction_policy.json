@@ -1,0 +1,48 @@
+{
+  "policy_id": "POL-13Y-LLM-PROVIDER-ABSTRACTION",
+  "version": "1.0.0",
+  "status": "active",
+  "intent": "Keep the software factory secret-safe and provider-portable before enabling real LLM-backed agents.",
+  "default_runtime_mode": "deterministic_local",
+  "allowed_provider_modes": [
+    "deterministic_local",
+    "openai_config_only"
+  ],
+  "allowed_provider_adapters": [
+    "deterministic",
+    "openai_config_only"
+  ],
+  "forbidden_secret_locations": [
+    "source_code",
+    "committed_files",
+    "logs",
+    "generated_artifacts",
+    "test_fixtures"
+  ],
+  "required_secret_source_for_openai": "environment_or_external_secret_manager",
+  "required_environment_variables_when_openai_enabled": [
+    "OPENAI_API_KEY"
+  ],
+  "required_llm_call_evidence_fields": [
+    "call_id",
+    "provider",
+    "model",
+    "prompt_hash",
+    "response_hash",
+    "token_usage",
+    "cost_estimate",
+    "policy_decision_id",
+    "requirement_ids",
+    "trace_id"
+  ],
+  "required_controls": {
+    "deterministic_fallback": true,
+    "no_api_key_required_for_validation": true,
+    "no_secret_material_in_outputs": true,
+    "provider_adapter_boundary": true,
+    "human_approval_before_live_llm_mode": true,
+    "llm_call_evidence_schema": true,
+    "prompt_response_traceability_contract": true,
+    "cost_and_token_metadata_placeholders": true
+  }
+}
