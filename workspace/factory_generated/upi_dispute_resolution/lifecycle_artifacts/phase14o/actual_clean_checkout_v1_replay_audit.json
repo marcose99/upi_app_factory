@@ -1,37 +1,166 @@
 {
-  "schema_version": "actual-clean-checkout-v1-replay-proof-audit.v1",
-  "phase": "14O",
+  "actual_clean_checkout_performed": true,
+  "allowlisted_subprocess_commands_only": true,
   "app_id": "upi_dispute_resolution",
-  "mode": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF",
-  "preferred_term": "application engineering",
-  "actual_clean_checkout_performed": false,
-  "clean_checkout_is_non_destructive": true,
-  "external_ecosystem_integrations_remain_mock": true,
-  "factory_does_not_self_certify": true,
+  "arbitrary_shell_execution_performed": false,
+  "auto_merge_performed": false,
+  "auto_release_performed": false,
+  "auto_tag_performed": false,
+  "boundary_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ],
   "certification_ready_not_certified": true,
+  "checkout_ref": "1e6efb3c10121511d943bd6719a88985438c4b05",
+  "clean_checkout_is_non_destructive": true,
+  "command_results": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--no-hardlinks",
+        "/home/marcose/projects/upi_dispute_resolution_factory",
+        "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory"
+      ],
+      "command_id": "git_clone_local_repository",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST",
+      "returncode": 0,
+      "stderr_tail": "Cloning into '/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory'...\ndone.\n",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "checkout",
+        "1e6efb3c10121511d943bd6719a88985438c4b05"
+      ],
+      "command_id": "checkout_replay_capable_candidate_ref",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "Note: switching to '1e6efb3c10121511d943bd6719a88985438c4b05'.\n\nYou are in 'detached HEAD' state. You can look around, make experimental\nchanges and commit them, and you can discard any commits you make in this\nstate without impacting any branches by switching back to a branch.\n\nIf you want to create a new branch to retain commits you create, you may\ndo so (now or later) by using -c with the switch command. Example:\n\n  git switch -c <new-branch-name>\n\nOr undo this operation with:\n\n  git switch -\n\nTurn off this advice by setting config variable advice.detachedHead to false\n\nHEAD is now at 1e6efb3 Phase 14O: clean checkout replay proof scaffolding\n",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "command_id": "verify_clean_checkout_status",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "--version"
+      ],
+      "command_id": "verify_python_310_runtime",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "Python 3.10.12\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase14n_v1_release_candidate_replay_gate.py"
+      ],
+      "command_id": "validate_phase14n_replay_gate",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "Phase 14N v1 release-candidate replay gate artifacts validated.\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_phase14n_v1_release_candidate_replay_gate.py"
+      ],
+      "command_id": "run_phase14n_targeted_tests",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 10 items\n\ntests/test_phase14n_v1_release_candidate_replay_gate.py ..........       [100%]\n\n============================== 10 passed in 0.43s ==============================\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "-m",
+        "pytest",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py"
+      ],
+      "command_id": "run_generated_application_tests",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 10 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py . [ 10%]\n....                                                                     [ 50%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py . [ 60%]\n.                                                                        [ 70%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py . [ 80%]\n..                                                                       [100%]\n\n============================== 10 passed in 0.18s ==============================\n"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/build_v1_release_candidate_replay_gate.py"
+      ],
+      "command_id": "build_replay_gate_evidence_from_checkout",
+      "cwd": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "n tests must pass locally.\"\n    },\n    {\n      \"evidence\": \"scripts/start_factory_operator_portal.py\",\n      \"human_gate_required\": false,\n      \"status\": \"READY_FOR_REPLAY\",\n      \"step_id\": \"operator_portal_start_check\",\n      \"summary\": \"Operator portal must start locally.\"\n    },\n    {\n      \"evidence\": \"Phase 14L dashboard integration\",\n      \"human_gate_required\": false,\n      \"status\": \"READY_FOR_REPLAY\",\n      \"step_id\": \"certification_readiness_dashboard_check\",\n      \"summary\": \"Operator can inspect certification readiness.\"\n    },\n    {\n      \"evidence\": \"phase14d_to_phase14m_artifacts\",\n      \"human_gate_required\": false,\n      \"status\": \"READY_FOR_REPLAY\",\n      \"step_id\": \"evidence_artifact_inventory_check\",\n      \"summary\": \"Evidence inventory must be present.\"\n    },\n    {\n      \"evidence\": \"handover docs and replay scripts\",\n      \"human_gate_required\": false,\n      \"status\": \"READY_FOR_REPLAY\",\n      \"step_id\": \"handover_runbook_check\",\n      \"summary\": \"Recipient handover instructions must be available.\"\n    },\n    {\n      \"evidence\": \"human approval record\",\n      \"human_gate_required\": true,\n      \"status\": \"HUMAN_APPROVAL_REQUIRED\",\n      \"step_id\": \"human_release_candidate_approval_gate\",\n      \"summary\": \"Human approval is required before RC declaration.\"\n    }\n  ],\n  \"requirement_id\": \"upi_dispute_resolution.default_requirement\",\n  \"schema_version\": \"v1-release-candidate-replay-gate.v1\",\n  \"status\": \"V1_RELEASE_CANDIDATE_REPLAY_GATE_READY\",\n  \"supporting_execution_loop_expected_status\": \"GOVERNED_AUTONOMOUS_PHASE_EXECUTION_LOOP_READY\",\n  \"supporting_execution_loop_status\": \"GOVERNED_AUTONOMOUS_PHASE_EXECUTION_LOOP_READY\",\n  \"supporting_generated_application_maturity_expected_status\": \"GENERATED_APPLICATION_MATURITY_SWEEP_READY\",\n  \"supporting_generated_application_maturity_status\": \"GENERATED_APPLICATION_MATURITY_SWEEP_READY\",\n  \"supporting_portal_dashboard_expected_status\": \"OPERATOR_PORTAL_CERTIFICATION_READINESS_DASHBOARD_INTEGRATION_READY\",\n  \"supporting_portal_dashboard_status\": \"OPERATOR_PORTAL_CERTIFICATION_READINESS_DASHBOARD_INTEGRATION_READY\",\n  \"what_sits_between_generated_application_and_certification\": [\n    \"certifying_authority_review\",\n    \"independent_verification\",\n    \"formal_audit_or_compliance_assessment\",\n    \"regulatory_or_industry_standard_assessment\",\n    \"production_environment_validation_where_required\",\n    \"security_privacy_resilience_and_operational_review\",\n    \"official_certification_decision\"\n  ]\n}\n"
+    }
+  ],
+  "created_at_utc": "2026-07-07T16:32:04+00:00",
+  "external_ecosystem_integrations_remain_mock": true,
+  "external_system_calls_performed": false,
+  "factory_does_not_self_certify": true,
+  "factory_self_modification_without_policy_performed": false,
+  "human_approval_required_for_merge": true,
+  "human_approval_required_for_promotion": true,
+  "human_approval_required_for_release": true,
+  "human_approval_required_for_release_candidate_declaration": true,
+  "human_approval_required_for_tag": true,
+  "live_provider_calls_performed": false,
   "official_certification_claimed": false,
   "official_certification_granted_by_factory": false,
-  "release_execution_performed": false,
-  "human_approval_required_for_release_candidate_declaration": true,
-  "human_approval_required_for_promotion": true,
-  "human_approval_required_for_merge": true,
-  "human_approval_required_for_tag": true,
-  "human_approval_required_for_release": true,
   "real_generated_application_deleted": false,
   "real_generated_application_overwritten": false,
-  "arbitrary_shell_execution_performed": false,
-  "allowlisted_subprocess_commands_only": true,
-  "live_provider_calls_performed": false,
-  "external_system_calls_performed": false,
-  "factory_self_modification_without_policy_performed": false,
-  "auto_merge_performed": false,
-  "auto_tag_performed": false,
-  "auto_release_performed": false,
-  "proof_ref": "scripts/build_actual_clean_checkout_v1_replay_proof.py",
-  "policy_ref": "policies/phase14o_actual_clean_checkout_replay_policy.json",
-  "validator_ref": "scripts/validate_phase14o_actual_clean_checkout_replay.py",
-  "decision": {
-    "overall_status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_PENDING_EXECUTION",
-    "reason": "Seed audit is replaced by executed proof during Phase 14O script run."
-  }
+  "release_execution_performed": false,
+  "replay_checkout_dir": "/tmp/upi_factory_v1_phase14o_repair_replay_20260707_220202_IST/upi_dispute_resolution_factory",
+  "replay_steps": [
+    "create_temp_replay_workspace",
+    "git_clone_local_repository",
+    "checkout_replay_capable_candidate_ref",
+    "verify_clean_checkout_status",
+    "verify_python_310_runtime",
+    "validate_phase14n_replay_gate",
+    "run_phase14n_targeted_tests",
+    "run_generated_application_tests",
+    "build_replay_gate_evidence_from_checkout",
+    "emit_actual_replay_proof"
+  ],
+  "requirement_id": "upi_dispute_resolution.default_requirement",
+  "schema_version": "actual-clean-checkout-v1-replay-proof.v1",
+  "source_root": "/home/marcose/projects/upi_dispute_resolution_factory",
+  "status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_READY",
+  "supporting_replay_gate_expected_status": "V1_RELEASE_CANDIDATE_REPLAY_GATE_READY",
+  "supporting_replay_gate_status": "V1_RELEASE_CANDIDATE_REPLAY_GATE_READY",
+  "what_sits_between_generated_application_and_certification": [
+    "certifying_authority_review",
+    "independent_verification",
+    "formal_audit_or_compliance_assessment",
+    "regulatory_or_industry_standard_assessment",
+    "production_environment_validation_where_required",
+    "security_privacy_resilience_and_operational_review",
+    "official_certification_decision"
+  ]
 }
