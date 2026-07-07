@@ -1,0 +1,36 @@
+{
+  "schema_version": "governed-self-healing-repair-catalog-audit.v1",
+  "phase": "13AR",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_REPAIR_CATALOG_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "destructive_execution_performed": false,
+  "factory_self_healing_repair_applied": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13aq_fresh_recipient_replay": true,
+  "automatic_repair_application_allowed_in_this_phase": false,
+  "policy_ref": "policies/phase13ar_governed_self_healing_repair_catalog_policy.json",
+  "repair_catalog_ref": "scripts/build_governed_self_healing_repair_catalog.py",
+  "validator_ref": "scripts/validate_phase13ar_self_healing_repair_catalog.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AR creates a governed self-healing repair catalog without applying repairs or self-modifying the factory."
+  },
+  "governance_controls": [
+    "repair_catalog_required",
+    "risk_tiers_required",
+    "evidence_required",
+    "rollback_required",
+    "human_approval_required",
+    "repair_application_blocked",
+    "factory_self_modification_blocked",
+    "human_release_gate_preserved"
+  ]
+}

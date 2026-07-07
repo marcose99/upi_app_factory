@@ -1,0 +1,38 @@
+{
+  "schema_version": "governed-self-healing-repair-catalog-policy.v1",
+  "policy_id": "phase13ar.governed_self_healing_repair_catalog_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_REPAIR_CATALOG_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13aq_fresh_recipient_replay": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "automatic_repair_application_allowed_in_this_phase": false,
+  "factory_self_modification_allowed_in_this_phase": false,
+  "human_review_required_before_any_repair_application": true,
+  "required_repair_catalog_items": [
+    "repair_classes_defined",
+    "risk_tiers_defined",
+    "evidence_requirements_defined",
+    "rollback_requirements_defined",
+    "approval_requirements_defined",
+    "blocked_actions_defined",
+    "fresh_recipient_replay_dependency_verified",
+    "self_engineering_proposal_dependency_verified",
+    "repair_application_remains_blocked"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "apply_factory_self_healing_repair",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AR creates a governed self-healing repair catalog only. It must not apply repairs, self-modify the factory, delete, or overwrite the real generated_application."
+}
