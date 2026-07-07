@@ -1,0 +1,10 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "auto_production_deployment": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "destructive_actions_automated": false,
+  "official_certification_claimed": false,
+  "phase": "Phase 25",
+  "read_only_gates_executed": true,
+  "status": "ENTERPRISE_OPERATING_MODEL_PACK_READY"
+}

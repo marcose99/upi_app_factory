@@ -1,0 +1,25 @@
+{
+  "human_approval_required_for_release": true,
+  "phase": "Phase 25",
+  "roles": {
+    "certifying_authority": [
+      "independent verification",
+      "formal certification decision"
+    ],
+    "factory_operator": [
+      "run local validations",
+      "collect evidence",
+      "raise findings"
+    ],
+    "human_reviewer": [
+      "approve risky changes",
+      "review evidence",
+      "approve release boundaries"
+    ],
+    "security_reviewer": [
+      "review secrets",
+      "review threat controls",
+      "approve production security posture"
+    ]
+  }
+}

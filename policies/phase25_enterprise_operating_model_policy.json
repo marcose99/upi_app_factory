@@ -1,0 +1,23 @@
+{
+  "policy_id": "phase25_enterprise_operating_model_policy",
+  "phase": "Phase 25",
+  "allowed_automation": [
+    "operating_model_pack_generation",
+    "raci_and_runbook_index_generation",
+    "change_release_incident_governance_mapping",
+    "support_handoff_model_generation"
+  ],
+  "forbidden_automation": [
+    "auto_production_deployment",
+    "destructive_incident_actions",
+    "human_approval_bypass",
+    "official_certification_claim"
+  ],
+  "human_approval_boundaries": [
+    "merge",
+    "tag",
+    "release",
+    "production_promotion",
+    "certification_submission"
+  ]
+}

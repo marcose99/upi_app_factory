@@ -1,0 +1,8 @@
+{
+  "change_management": "evidence_gated_and_reviewed",
+  "destructive_actions_automated": false,
+  "incident_response": "diagnose_and_propose_repair_by_default",
+  "phase": "Phase 25",
+  "production_promotion": "not_automated_in_this_factory_phase",
+  "release_governance": "human_approved_merge_tag_release"
+}
