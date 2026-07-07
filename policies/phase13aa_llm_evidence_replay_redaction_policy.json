@@ -1,0 +1,41 @@
+{
+  "policy_id": "POL-13AA-LLM-EVIDENCE-REPLAY-REDACTION",
+  "version": "1.0.0",
+  "purpose": "Validate that LLM call evidence can be replayed from metadata while secrets and raw sensitive values remain redacted.",
+  "live_llm_call_allowed": false,
+  "human_approval_required_before_live_llm": true,
+  "secret_policy": "external_environment_or_secret_manager_only",
+  "forbidden_secret_locations": [
+    "source",
+    "logs",
+    "tests",
+    "docs",
+    "lifecycle_artifacts",
+    "generated_application"
+  ],
+  "required_evidence_fields": [
+    "trace_id",
+    "policy_decision_id",
+    "provider",
+    "model",
+    "prompt_hash",
+    "response_hash",
+    "token_usage",
+    "cost_estimate",
+    "live_call_performed",
+    "requirement_ids"
+  ],
+  "redaction_rules": {
+    "raw_prompt_allowed": false,
+    "raw_response_allowed": false,
+    "secret_value_allowed": false,
+    "hash_only_prompt_response": true,
+    "secret_presence_allowed": true,
+    "secret_env_var_name_allowed": true
+  },
+  "replay_rules": {
+    "metadata_replay_required": true,
+    "live_provider_replay_allowed": false,
+    "deterministic_validation_required": true
+  }
+}
