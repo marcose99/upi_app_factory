@@ -1,0 +1,34 @@
+{
+  "schema_version": "autonomous-post-v1-industrialization-policy.v1",
+  "phase": "15A-F",
+  "policy_name": "Governed autonomous post-v1 industrialization batch policy",
+  "batch_phases": ["15A", "15B", "15C", "15D", "15E", "15F"],
+  "base_tag_required": "v0.14.23-operator-autonomy-dashboard-v1-readiness-pack",
+  "validators_must_be_read_only": true,
+  "tests_must_use_temporary_audit_outputs": true,
+  "fresh_clone_replay_required": true,
+  "full_regression_requires_clean_committed_tree": true,
+  "final_verification_must_be_non_mutating": true,
+  "safe_self_evolution_allowed_for": [
+    "documentation",
+    "policy_indexes",
+    "validator_hardening",
+    "test_evidence",
+    "handoff_automation",
+    "operator_readiness_reports"
+  ],
+  "human_approval_required_for": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims",
+    "unknown_failure_classes",
+    "risky_generated_application_changes"
+  ],
+  "factory_must_not_self_certify": true,
+  "certification_ready_not_certified_boundary_required": true
+}
