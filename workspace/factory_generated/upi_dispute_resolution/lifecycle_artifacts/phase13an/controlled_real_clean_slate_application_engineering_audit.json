@@ -1,0 +1,32 @@
+{
+  "schema_version": "controlled-real-clean-slate-application-engineering-audit.v1",
+  "phase": "13AN",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_CONTROLLED_HARNESS_DRY_RUN_ONLY",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "destructive_execution_performed": false,
+  "dry_run_default": true,
+  "requires_phase13am_execution_gate": true,
+  "operator_approval_required": true,
+  "approval_token_required": true,
+  "policy_ref": "policies/phase13an_controlled_real_clean_slate_application_engineering_policy.json",
+  "controlled_harness_ref": "scripts/controlled_real_clean_slate_application_engineering.py",
+  "phase_validator_ref": "scripts/validate_phase13an_controlled_harness.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AN creates a controlled dry-run harness and execution package without deleting or overwriting the real generated application."
+  },
+  "governance_controls": [
+    "execution_gate_required",
+    "dry_run_default",
+    "execution_package_required",
+    "real_delete_blocked",
+    "real_overwrite_blocked",
+    "post_engineering_certification_planned",
+    "human_release_gate_preserved"
+  ]
+}
