@@ -1,0 +1,27 @@
+{
+  "schema_version": "clean-slate-regeneration-safety-audit.v1",
+  "phase": "13AF",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_DRY_RUN_DELETE_GUARD",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "destructive_delete_performed": false,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "policy_ref": "policies/phase13af_clean_slate_regeneration_safety_policy.json",
+  "guard_ref": "scripts/guard_clean_slate_regeneration.py",
+  "validator_ref": "scripts/validate_phase13af_clean_slate_regeneration_safety.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AF establishes clean-slate regeneration safety boundaries without deleting the generated application."
+  },
+  "governance_controls": [
+    "allowed_target_boundary",
+    "blocked_target_boundary",
+    "symlink_rejection",
+    "dry_run_only",
+    "backup_required",
+    "evidence_preservation_required",
+    "human_approval_required"
+  ]
+}
