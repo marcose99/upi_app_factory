@@ -1,0 +1,37 @@
+{
+  "schema_version": "autonomous-lifecycle-plan-executor-audit.v1",
+  "phase": "14A",
+  "app_id": "upi_dispute_resolution",
+  "mode": "PLAN_ONLY_AUTONOMOUS_LIFECYCLE_EXECUTOR",
+  "preferred_term": "application engineering",
+  "plan_only": true,
+  "requires_phase13az_autonomy_control_plane": true,
+  "real_command_execution_performed": false,
+  "real_worktree_mutated": false,
+  "release_action_performed": false,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "arbitrary_shell_execution_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "executor_ref": "scripts/build_autonomous_lifecycle_plan_executor.py",
+  "policy_ref": "policies/phase14a_autonomous_lifecycle_plan_executor_policy.json",
+  "validator_ref": "scripts/validate_phase14a_lifecycle_plan_executor.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 14A converts autonomy decisions into deterministic lifecycle plans only. It does not execute commands, mutate the worktree, call providers, call external systems, merge, tag, or release."
+  },
+  "governance_controls": [
+    "plan_only_execution",
+    "control_plane_decision_required",
+    "command_preview_without_execution",
+    "evidence_required_per_step",
+    "sandbox_first_step_required",
+    "human_gate_required_for_worktree_promotion",
+    "release_gate_required_for_release_candidate"
+  ]
+}
