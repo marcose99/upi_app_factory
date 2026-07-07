@@ -1,0 +1,40 @@
+{
+  "schema_version": "human-approved-application-engineering-command-pack-policy.v1",
+  "policy_id": "phase13ap.human_approved_application_engineering_command_pack_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_COMMAND_PACK_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13ao_final_readiness_pack": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "command_pack_required": true,
+  "factory_self_engineering_proposals_allowed": true,
+  "factory_self_engineering_auto_apply_allowed": false,
+  "human_review_required_before_any_destructive_execution": true,
+  "human_review_required_before_factory_self_modification": true,
+  "required_command_pack_items": [
+    "final_readiness_pack_ready",
+    "backup_manifest_digest_present",
+    "execution_package_digest_present",
+    "approval_token_reference_present",
+    "operator_confirmation_present",
+    "future_real_execution_command_documented",
+    "post_engineering_certification_required",
+    "handoff_replay_required",
+    "factory_self_engineering_proposals_validated",
+    "destructive_actions_remain_blocked"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AP produces the human-approved command pack and self-engineering proposal pack only. It must not delete or overwrite the real generated_application."
+}
