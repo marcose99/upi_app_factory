@@ -1,0 +1,37 @@
+{
+  "schema_version": "governed-self-healing-adoption-policy.v1",
+  "policy_id": "phase13ae.governed_self_healing_adoption_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_FUTURE_PHASE_SCRIPT_ADOPTION_GATE",
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "human_approval_required_for_release": true,
+  "required_runner_refs": [
+    "scripts/governed_phase_runner.py",
+    "scripts.governed_phase_runner",
+    "build_governed_phase_run_plan"
+  ],
+  "equivalent_control_marker": "GOVERNED_SELF_HEALING_EQUIVALENT_CONTROL",
+  "equivalent_control_required_phrases": [
+    "classify",
+    "unknown",
+    "human",
+    "post-repair",
+    "audit"
+  ],
+  "adoption_rule": "Every future phase automation script must use the governed phase runner or declare an equivalent governed control with classification, unknown-failure escalation, post-repair gates, audit evidence, and human approval boundaries.",
+  "blocked_bypass_patterns": [
+    "skip mypy",
+    "skip ruff",
+    "skip pytest",
+    "ignore governance",
+    "auto approve release",
+    "disable policy",
+    "bypass gate"
+  ],
+  "allowed_non_runner_exception": {
+    "requires_marker": true,
+    "requires_documented_equivalent_controls": true,
+    "requires_human_review_for_exception": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "governed-self-healing-adoption-audit.v1",
+  "phase": "13AE",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_FUTURE_PHASE_SCRIPT_ADOPTION_GATE",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "human_approval_required_for_release": true,
+  "policy_ref": "policies/phase13ae_governed_self_healing_adoption_policy.json",
+  "checker_ref": "scripts/check_governed_self_healing_adoption.py",
+  "validator_ref": "scripts/validate_phase13ae_governed_self_healing_adoption.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AE establishes an adoption gate. Future phases should invoke this checker against newly added phase automation scripts."
+  },
+  "governance_controls": [
+    "future_phase_script_runner_adoption_check",
+    "equivalent_control_documentation",
+    "blocked_bypass_pattern_detection",
+    "human_exception_review",
+    "no_live_provider_or_external_calls"
+  ]
+}
