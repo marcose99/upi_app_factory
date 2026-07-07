@@ -1,0 +1,31 @@
+{
+  "schema_version": "certification-readiness-dashboard-index-audit.v1",
+  "phase": "14I",
+  "app_id": "upi_dispute_resolution",
+  "mode": "CERTIFICATION_READINESS_DASHBOARD_INDEX",
+  "preferred_term": "application engineering",
+  "factory_does_not_self_certify": true,
+  "certification_ready_not_certified": true,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "certification_authority_verification_required": true,
+  "official_certification_decision_required": true,
+  "dashboard_index_only": true,
+  "release_execution_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "arbitrary_shell_execution_performed": false,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "dashboard_index_ref": "scripts/build_certification_readiness_dashboard_index.py",
+  "policy_ref": "policies/phase14i_certification_readiness_dashboard_index_policy.json",
+  "validator_ref": "scripts/validate_phase14i_certification_readiness_dashboard_index.py",
+  "decision": {
+    "overall_status": "CERTIFICATION_READINESS_DASHBOARD_INDEX_READY",
+    "reason": "Phase 14I creates a dashboard-ready evidence index. It does not grant or claim official certification."
+  }
+}
