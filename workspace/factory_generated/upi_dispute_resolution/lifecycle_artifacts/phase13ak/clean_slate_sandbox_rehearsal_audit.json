@@ -1,0 +1,27 @@
+{
+  "schema_version": "clean-slate-sandbox-rehearsal-audit.v1",
+  "phase": "13AK",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_SANDBOX_REHEARSAL",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "sandbox_write_allowed": true,
+  "sandbox_root": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13ak/sandbox",
+  "policy_ref": "policies/phase13ak_clean_slate_sandbox_rehearsal_policy.json",
+  "rehearsal_ref": "scripts/rehearse_clean_slate_regeneration_sandbox.py",
+  "phase_validator_ref": "scripts/validate_phase13ak_clean_slate_sandbox_rehearsal.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AK validates clean-slate regeneration sandbox rehearsal controls without deleting or overwriting the real generated application."
+  },
+  "governance_controls": [
+    "sandbox_only_writes",
+    "real_generated_application_untouched",
+    "manifest_digest_required",
+    "live_provider_blocked",
+    "external_system_blocked",
+    "human_release_gate_preserved"
+  ]
+}
