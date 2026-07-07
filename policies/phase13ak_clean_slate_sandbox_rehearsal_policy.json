@@ -1,0 +1,33 @@
+{
+  "schema_version": "clean-slate-sandbox-rehearsal-policy.v1",
+  "policy_id": "phase13ak.clean_slate_sandbox_rehearsal_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_SANDBOX_REHEARSAL",
+  "requires_phase13aj_dry_run_harness": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "real_generated_application_delete_allowed": false,
+  "real_generated_application_write_allowed": false,
+  "sandbox_write_allowed": true,
+  "sandbox_root": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13ak/sandbox",
+  "real_generated_application_path": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "required_controls": [
+    "dry_run_plan_required",
+    "sandbox_path_boundary_check",
+    "real_generated_application_untouched",
+    "sandbox_manifest_required",
+    "sandbox_digest_required",
+    "post_rehearsal_cleanup_or_audit_required",
+    "human_release_gate_preserved"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AK may write only into the phase sandbox. It must not delete or overwrite the real generated_application."
+}
