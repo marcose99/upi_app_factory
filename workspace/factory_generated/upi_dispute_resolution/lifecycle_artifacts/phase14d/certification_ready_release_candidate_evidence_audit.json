@@ -1,0 +1,30 @@
+{
+  "schema_version": "certification-ready-release-candidate-evidence-audit.v1",
+  "phase": "14D",
+  "app_id": "upi_dispute_resolution",
+  "mode": "CERTIFICATION_READY_RELEASE_CANDIDATE_EVIDENCE_PACK",
+  "preferred_term": "application engineering",
+  "factory_does_not_self_certify": true,
+  "certification_ready_not_certified": true,
+  "official_certification_claimed": false,
+  "certification_authority_verification_required": true,
+  "official_certification_decision_required": true,
+  "release_execution_performed": false,
+  "automatic_promotion_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "arbitrary_shell_execution_performed": false,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "evidence_pack_ref": "scripts/build_certification_ready_release_candidate_evidence_pack.py",
+  "policy_ref": "policies/phase14d_certification_ready_release_candidate_evidence_policy.json",
+  "validator_ref": "scripts/validate_phase14d_certification_ready_rc_pack.py",
+  "decision": {
+    "overall_status": "CERTIFICATION_READY_EVIDENCE_PACK_READY",
+    "reason": "Phase 14D assembles release-candidate evidence for independent certification authority review. It does not claim official certification."
+  }
+}
