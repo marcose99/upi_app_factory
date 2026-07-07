@@ -1,0 +1,50 @@
+{
+  "schema_version": "authority-findings-remediation-policy.v1",
+  "policy_id": "phase14g.authority_findings_remediation_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "AUTHORITY_FINDINGS_REGISTER_AND_REMEDIATION_LOOP",
+  "preferred_term": "application engineering",
+  "requires_phase14f_certifying_authority_review_workspace": true,
+  "factory_does_not_self_certify": true,
+  "certification_ready_not_certified": true,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "certification_authority_verification_required": true,
+  "official_certification_decision_required": true,
+  "remediation_loop_only": true,
+  "automatic_remediation_execution_allowed": false,
+  "release_execution_allowed": false,
+  "real_generated_application_delete_allowed": false,
+  "real_generated_application_overwrite_allowed_without_approval": false,
+  "arbitrary_shell_execution_allowed": false,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "factory_self_modification_allowed": false,
+  "auto_merge_allowed": false,
+  "auto_tag_allowed": false,
+  "auto_release_allowed": false,
+  "allowed_finding_severities": [
+    "INFO",
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL"
+  ],
+  "required_finding_statuses": [
+    "OPEN",
+    "REMEDIATION_PLANNED",
+    "EVIDENCE_REQUESTED",
+    "READY_FOR_REVIEW",
+    "AUTHORITY_ACCEPTED",
+    "AUTHORITY_REJECTED"
+  ],
+  "required_registers": [
+    "authority_findings_register",
+    "remediation_plan_register",
+    "evidence_request_register",
+    "retest_gate_register",
+    "authority_rereview_register",
+    "official_decision_boundary"
+  ],
+  "policy_rule": "Phase 14G organizes authority findings and remediation planning only. It does not self-certify, grant certification, execute remediation automatically, release, call live providers, call external systems, or mutate the generated application."
+}
