@@ -1,0 +1,37 @@
+{
+  "schema_version": "controlled-real-clean-slate-application-engineering-policy.v1",
+  "policy_id": "phase13an.controlled_real_clean_slate_application_engineering_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_CONTROLLED_HARNESS_DRY_RUN_ONLY",
+  "preferred_term": "application engineering",
+  "requires_phase13am_execution_gate": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "dry_run_default": true,
+  "operator_approval_required": true,
+  "approval_token_required": true,
+  "execution_package_required": true,
+  "planned_engineering_sequence": [
+    "verify_execution_gate",
+    "capture_pre_state",
+    "verify_backup_restore_plan",
+    "verify_evidence_preservation",
+    "plan_delete_real_generated_application",
+    "plan_engineer_application_from_requirement_package",
+    "plan_full_post_engineering_certification",
+    "plan_handoff_replay",
+    "plan_human_merge_tag_release_gate"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "clean_slate_rule": "Phase 13AN creates a controlled dry-run harness and execution package only. It must not delete or overwrite the real generated_application."
+}
