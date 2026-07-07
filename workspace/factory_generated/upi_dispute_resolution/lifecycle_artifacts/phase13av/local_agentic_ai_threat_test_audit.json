@@ -1,0 +1,33 @@
+{
+  "schema_version": "local-agentic-ai-threat-test-audit.v1",
+  "phase": "13AV",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_DETERMINISTIC_AGENTIC_AI_THREAT_TESTS_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13au_low_risk_repair_applier": true,
+  "threat_suite_ref": "scripts/build_local_agentic_ai_threat_tests.py",
+  "policy_ref": "policies/phase13av_local_agentic_ai_threat_test_policy.json",
+  "validator_ref": "scripts/validate_phase13av_agentic_ai_threat_tests.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AV adds deterministic local agentic-AI threat tests without live calls, external calls, protected mutations, or release automation."
+  },
+  "governance_controls": [
+    "deterministic_local_threat_tests_required",
+    "prompt_injection_controls_required",
+    "tool_abuse_controls_required",
+    "rag_poisoning_controls_required",
+    "sensitive_data_redaction_controls_required",
+    "human_approval_boundaries_preserved",
+    "live_provider_calls_blocked",
+    "external_system_calls_blocked"
+  ]
+}
