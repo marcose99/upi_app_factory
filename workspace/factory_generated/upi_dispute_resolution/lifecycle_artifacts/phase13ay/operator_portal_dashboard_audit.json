@@ -1,0 +1,38 @@
+{
+  "schema_version": "operator-portal-dashboard-audit.v1",
+  "phase": "13AY",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_OPERATOR_PORTAL_DASHBOARDS_READ_ONLY",
+  "preferred_term": "application engineering",
+  "read_only_dashboards": true,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "arbitrary_shell_execution_exposed_from_ui": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "requirement_package_written_from_ui": false,
+  "application_generation_triggered_from_ui": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13ax_requirement_intake_ui": true,
+  "dashboard_builder_ref": "scripts/build_operator_portal_dashboard_panels.py",
+  "portal_app_ref": "scripts/start_factory_operator_portal.py",
+  "policy_ref": "policies/phase13ay_operator_portal_dashboard_policy.json",
+  "validator_ref": "scripts/validate_phase13ay_operator_dashboards.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AY adds read-only evidence and governance dashboards without command execution, file writes, live calls, external calls, generation execution, protected mutations, or release automation."
+  },
+  "governance_controls": [
+    "read_only_dashboards",
+    "evidence_audit_panel_required",
+    "standards_controls_panel_required",
+    "self_healing_panel_required",
+    "agentic_threat_panel_required",
+    "handover_panel_required",
+    "generated_application_panel_required",
+    "ui_command_execution_blocked"
+  ]
+}
