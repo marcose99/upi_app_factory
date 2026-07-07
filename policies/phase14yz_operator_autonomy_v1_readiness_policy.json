@@ -1,0 +1,52 @@
+{
+  "schema_version": "operator-autonomy-dashboard-v1-readiness-policy.v1",
+  "phase": "14Y-Z",
+  "policy_name": "Governed operator autonomy dashboard and v1 readiness pack policy",
+  "batch_phases": ["14Y", "14Z"],
+  "validators_must_be_read_only": true,
+  "tests_must_use_temporary_audit_outputs": true,
+  "full_regression_requires_clean_committed_tree": true,
+  "final_verification_must_be_non_mutating": true,
+  "certification_ready_not_certified_boundary_required": true,
+  "factory_must_not_self_certify": true,
+  "operator_dashboard_required_sections": [
+    "phase_status_timeline",
+    "quality_gate_matrix",
+    "audit_evidence_index",
+    "safe_repair_catalog_summary",
+    "human_approval_queue",
+    "certification_boundary_panel"
+  ],
+  "v1_readiness_pack_required_sections": [
+    "local_checkout_replay_readiness",
+    "generated_application_run_readiness",
+    "governance_policy_evidence_index",
+    "quality_regression_evidence",
+    "handoff_replay_evidence",
+    "known_limitations_backlog"
+  ],
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ]
+}
