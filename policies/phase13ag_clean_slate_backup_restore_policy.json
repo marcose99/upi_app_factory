@@ -1,0 +1,31 @@
+{
+  "schema_version": "clean-slate-backup-restore-policy.v1",
+  "policy_id": "phase13ag.clean_slate_backup_restore_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_NON_DESTRUCTIVE_BACKUP_RESTORE_PLAN",
+  "requires_phase13af_guard": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "backup_required_before_delete": true,
+  "restore_plan_required_before_delete": true,
+  "evidence_preservation_required": true,
+  "human_approval_required_before_delete": true,
+  "human_approval_required_before_regeneration": true,
+  "backup_source": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "backup_root": "workspace/factory_generated/upi_dispute_resolution/clean_slate_backups",
+  "evidence_preservation_paths": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+    "workspace/factory_generated/upi_dispute_resolution/release_handoff"
+  ],
+  "required_manifest_fields": [
+    "file_count",
+    "total_bytes",
+    "manifest_digest",
+    "source_exists",
+    "dry_run_only",
+    "destructive_delete_performed",
+    "restore_verification_required"
+  ],
+  "clean_slate_rule": "A future destructive clean-slate regeneration must first produce a backup manifest, restore plan, evidence-preservation manifest, and human approval evidence."
+}
