@@ -1,0 +1,20 @@
+{
+  "audit_inputs": [
+    "docs/phase12a/audit_control_catalog.json",
+    "docs/phase12b/quality_objectives.json",
+    "docs/phase12b/audit_remediation_policy.json",
+    "generated application artifacts",
+    "validation/test logs",
+    "LLM/tool/handoff ledgers"
+  ],
+  "audit_outputs": [
+    "post_generation_audit_report.md",
+    "scorecard_results.json",
+    "audit_findings_register.json",
+    "audit_remediation_plan.json",
+    "final_human_validator_portal_population_report.md"
+  ],
+  "phase": "Phase 13A",
+  "remediation_mode": "controlled plan-first; low-risk auto-apply only in later approved phase",
+  "run_id": "first_governed_generation_run_001"
+}

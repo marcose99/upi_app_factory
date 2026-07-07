@@ -1,0 +1,48 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "governance": {
+    "no_code_generation_before_go": true,
+    "record_llm_metrics_for_every_agent_call": true,
+    "record_tool_execution_for_every_tool_call": true
+  },
+  "handoff_contract": {
+    "fail_closed_on_missing_fields": true,
+    "required_fields": [
+      "handoff_id",
+      "from_agent",
+      "to_agent",
+      "inputs",
+      "outputs",
+      "open_risks",
+      "evidence_paths",
+      "validation_status",
+      "human_approval_required"
+    ]
+  },
+  "orchestration_order": [
+    "requirement_intake_agent",
+    "domain_policy_agent",
+    "architecture_agent",
+    "hld_agent",
+    "lld_agent",
+    "api_contract_agent",
+    "data_model_agent",
+    "workflow_state_machine_agent",
+    "security_agent",
+    "test_design_agent",
+    "implementation_planner_agent",
+    "developer_agent",
+    "mock_ecosystem_agent",
+    "integration_agent",
+    "observability_agent",
+    "evaluation_agent",
+    "release_readiness_agent",
+    "governance_reviewer_agent"
+  ],
+  "phase": "Phase 11D",
+  "retry_budget": {
+    "max_attempts_per_agent": 2,
+    "max_total_generation_attempts": 3,
+    "requires_human_review_after_retry_exhaustion": true
+  }
+}

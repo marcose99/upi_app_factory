@@ -1,0 +1,32 @@
+{
+  "context_engineering": {
+    "context_budget_required": true,
+    "must_keep_requirements_policies_tests_traceable": true,
+    "must_not_hide_gaps_by_overwriting_context": true,
+    "must_summarize_large_logs": true
+  },
+  "memory_policy": {
+    "memory_is_run_scoped": true,
+    "no_real_customer_data": true,
+    "no_unbounded_cross_run_memory": true,
+    "summaries_must_preserve_evidence_paths": true
+  },
+  "phase": "Phase 11D",
+  "retrieval_policy": {
+    "citation_required": true,
+    "provenance_required": true,
+    "rag_sources_allowed": [
+      "repo_files",
+      "official_source_registry_artifacts",
+      "phase_lifecycle_artifacts",
+      "uploaded_run_logs",
+      "deterministic_policy_files"
+    ],
+    "rag_sources_forbidden": [
+      "uncited internet content",
+      "real customer records",
+      "secrets",
+      "production systems"
+    ]
+  }
+}

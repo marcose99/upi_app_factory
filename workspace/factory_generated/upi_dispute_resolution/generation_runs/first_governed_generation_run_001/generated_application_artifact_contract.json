@@ -1,0 +1,28 @@
+{
+  "phase": "Phase 13A",
+  "required_evidence_artifacts": [
+    "llm_call_metrics_ledger.jsonl",
+    "tool_execution_ledger.jsonl",
+    "agent_handoff_ledger.jsonl",
+    "validation_evidence_ledger.jsonl",
+    "post_generation_audit_report.md",
+    "audit_remediation_plan.json",
+    "final_generation_run_report.md"
+  ],
+  "required_generated_application_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/README.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/tests",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/architecture.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/hld.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/lld.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/api_contract.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/data_model.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/workflow_state_machine.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/security_design.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/observability_design.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/test_strategy.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence"
+  ],
+  "run_id": "first_governed_generation_run_001"
+}

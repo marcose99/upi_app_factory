@@ -1,0 +1,102 @@
+{
+  "generated_at_ist": "2026-07-06T11:24:46.802008+05:30",
+  "langgraph_runtime_status": "not_yet_in_place",
+  "metrics": {
+    "external_ecosystem_mode": "mock_simulated_only",
+    "generated_app_doc_files": 9,
+    "generated_app_modules": 7,
+    "generated_app_test_files": 4,
+    "live_payment_integrations": "not_allowed",
+    "real_customer_data": "not_allowed"
+  },
+  "observability_chart": [
+    {
+      "signal": "Run logs",
+      "value": 100
+    },
+    {
+      "signal": "Reset manifests",
+      "value": 100
+    },
+    {
+      "signal": "App audit JSONL",
+      "value": 70
+    },
+    {
+      "signal": "LLM call ledger",
+      "value": 35
+    },
+    {
+      "signal": "Tool ledger",
+      "value": 35
+    },
+    {
+      "signal": "Handoff ledger",
+      "value": 35
+    }
+  ],
+  "phase": "Phase 13B",
+  "progress_steps": [
+    {
+      "phase": "11C Prompt governance",
+      "progress": 100,
+      "status": "complete"
+    },
+    {
+      "phase": "11D Readiness",
+      "progress": 100,
+      "status": "complete"
+    },
+    {
+      "phase": "12A Audit foundation",
+      "progress": 100,
+      "status": "complete"
+    },
+    {
+      "phase": "12B Operations controls",
+      "progress": 100,
+      "status": "complete"
+    },
+    {
+      "phase": "13A Generation scaffold",
+      "progress": 100,
+      "status": "complete"
+    },
+    {
+      "phase": "13B Scripted baseline",
+      "progress": 100,
+      "status": "validated"
+    },
+    {
+      "phase": "13C Agent runtime",
+      "progress": 0,
+      "status": "planned"
+    },
+    {
+      "phase": "Final portal cockpit",
+      "progress": 62,
+      "status": "foundation_live"
+    }
+  ],
+  "run_id": "first_governed_generation_run_001",
+  "runtime_mode": "deterministic_scripted_generation",
+  "validation_chart": [
+    {
+      "category": "Generated app tests",
+      "value": 10
+    },
+    {
+      "category": "Factory validators",
+      "value": 10
+    },
+    {
+      "category": "Portal checks",
+      "value": 2
+    },
+    {
+      "category": "Boundary checks",
+      "value": 4
+    }
+  ],
+  "validation_state": "validated"
+}

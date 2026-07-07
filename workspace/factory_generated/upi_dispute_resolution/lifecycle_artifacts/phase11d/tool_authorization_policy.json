@@ -1,0 +1,106 @@
+{
+  "approval_required_for": [
+    "git commit",
+    "git tag",
+    "git push",
+    "network access",
+    "dependency installation",
+    "destructive file operations"
+  ],
+  "audit_fields": [
+    "tool_call_id",
+    "agent_name",
+    "tool_name",
+    "operation",
+    "path_scope",
+    "input_hash",
+    "output_hash",
+    "started_at",
+    "completed_at",
+    "status",
+    "human_approval_id"
+  ],
+  "default": "deny",
+  "forbidden": [
+    "live NPCI calls",
+    "live RBI calls",
+    "live bank calls",
+    "live PSP calls",
+    "live ODR calls",
+    "production payment rail calls",
+    "real customer data access",
+    "secret exfiltration",
+    "unapproved delete operations"
+  ],
+  "network_access": "disabled_for_local_generation_unless_explicitly_approved",
+  "phase": "Phase 11D",
+  "roles": {
+    "architecture_agent": {
+      "network": false,
+      "read": [
+        "docs",
+        "factory_governance",
+        "prompts",
+        "workspace"
+      ],
+      "write": [
+        "docs/phase11d",
+        "workspace/factory_generated"
+      ]
+    },
+    "developer_agent": {
+      "network": false,
+      "read": [
+        "docs",
+        "factory_governance",
+        "prompts",
+        "src",
+        "tests",
+        "workspace"
+      ],
+      "write": [
+        "src",
+        "tests",
+        "workspace/factory_generated"
+      ]
+    },
+    "release_readiness_agent": {
+      "network": false,
+      "read": [
+        "docs",
+        "src",
+        "tests",
+        "workspace"
+      ],
+      "write": [
+        "docs/phase11d",
+        "workspace/factory_generated"
+      ]
+    },
+    "requirement_intake_agent": {
+      "network": false,
+      "read": [
+        "docs",
+        "prompts",
+        "workspace"
+      ],
+      "write": [
+        "docs/phase11d",
+        "workspace/factory_generated"
+      ]
+    },
+    "test_validation_agent": {
+      "network": false,
+      "read": [
+        "src",
+        "tests",
+        "docs",
+        "workspace"
+      ],
+      "write": [
+        "tests",
+        "workspace/factory_generated"
+      ]
+    }
+  }
+}

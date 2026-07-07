@@ -1,0 +1,4 @@
+{"created_at_utc": "2026-07-06T06:09:47+00:00", "event_type": "self_correction_batch_triaged", "payload": {"auto_remediate": 3, "blocked": 1, "decisions_made": 6, "findings_seen": 6, "human_approval_required": 2, "plan_only": 0}}
+{"created_at_utc": "2026-07-06T06:11:50+00:00", "event_type": "self_correction_batch_triaged", "payload": {"auto_remediate": 3, "blocked": 1, "decisions_made": 6, "findings_seen": 6, "human_approval_required": 2, "plan_only": 0}}
+{"created_at_utc": "2026-07-06T06:21:41+00:00", "event_type": "self_correction_batch_triaged", "payload": {"auto_remediate": 3, "blocked": 1, "decisions_made": 6, "findings_seen": 6, "human_approval_required": 2, "plan_only": 0}}
+{"created_at_utc": "2026-07-06T06:29:08+00:00", "event_type": "self_correction_batch_triaged", "payload": {"auto_remediate": 3, "blocked": 1, "decisions_made": 6, "findings_seen": 6, "human_approval_required": 2, "plan_only": 0}}

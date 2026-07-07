@@ -1,14 +1,29 @@
 #!/usr/bin/env python3
-"""Validate Phase 14R governed autonomous self-evolving mode artifacts."""
-
 from __future__ import annotations
 
-import json
-import sys
 from pathlib import Path
+import sys
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+# ruff: noqa: E402
+# PHASE16_DIRECT_EXECUTION_IMPORT_BOOTSTRAP
+from pathlib import Path as _Phase16BootstrapPath
+import sys as _phase16_bootstrap_sys
+
+_PHASE16_BOOTSTRAP_REPO_ROOT = _Phase16BootstrapPath(__file__).resolve().parents[1]
+if str(_PHASE16_BOOTSTRAP_REPO_ROOT) not in _phase16_bootstrap_sys.path:
+    _phase16_bootstrap_sys.path.insert(0, str(_PHASE16_BOOTSTRAP_REPO_ROOT))
+# END_PHASE16_DIRECT_EXECUTION_IMPORT_BOOTSTRAP
+
+"""Validate Phase 14R governed autonomous self-evolving mode artifacts."""
+
+import json
 from typing import Any, cast
 
-from scripts.build_governed_autonomous_self_evolving_mode import (
+from scripts.build_governed_autonomous_self_evolving_mode import (  # noqa: E402
     DEFAULT_AUDIT_PATH,
     DOC_PATH,
     POLICY_PATH,
