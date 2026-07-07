@@ -1,0 +1,45 @@
+{
+  "schema_version": "autonomous-quality-gate-pipeline-policy.v1",
+  "phase": "14V",
+  "policy_name": "autonomous_quality_gate_pipeline_hardening",
+  "quality_gate_pipeline_enabled": true,
+  "parallel_readonly_gates_enabled": true,
+  "full_regression_requires_clean_committed_tree": true,
+  "audit_mutation_isolation_required": true,
+  "targeted_tests_must_use_temporary_audit_outputs": true,
+  "safe_repair_auto_apply_allowed_only_when_policy_cataloged": true,
+  "unknown_failure_class_behavior": "stop_and_require_human_review_or_new_policy",
+  "human_gated_actions": [
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "promotion",
+    "release_candidate_declaration",
+    "live_provider_calls",
+    "destructive_operations",
+    "official_certification_claims"
+  ],
+  "blocked_autonomous_actions": [
+    "auto_merge",
+    "auto_tag",
+    "auto_push",
+    "auto_release",
+    "auto_promote",
+    "auto_certify",
+    "live_provider_call",
+    "destructive_cleanup",
+    "secret_exfiltration",
+    "external_system_mutation",
+    "unreviewed_factory_self_modification"
+  ],
+  "required_gate_tiers": [
+    "syntax_compile",
+    "phase_artifact_validators",
+    "targeted_tests",
+    "static_hygiene",
+    "static_typing",
+    "full_regression",
+    "final_non_mutating_verification"
+  ]
+}
