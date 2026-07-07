@@ -1,0 +1,16 @@
+{
+  "event_classes": [
+    "requirement_intake",
+    "policy_decision",
+    "agent_plan",
+    "tool_execution",
+    "validation_gate",
+    "self_healing_attempt",
+    "human_approval_boundary",
+    "release_evidence",
+    "certification_boundary"
+  ],
+  "pii_allowed": false,
+  "schema_version": "phase22-observability-event-taxonomy.v1",
+  "secret_values_allowed": false
+}

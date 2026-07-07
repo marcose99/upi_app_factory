@@ -1,0 +1,6 @@
+{
+  "external_retention_policy_activated": false,
+  "local_replay_evidence_retained_in_repo": true,
+  "production_retention_activation_is_human_gated": true,
+  "schema_version": "phase22-telemetry-retention-model.v1"
+}
