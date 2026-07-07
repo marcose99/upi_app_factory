@@ -1,0 +1,17 @@
+{
+  "policy_id": "phase26_v1_release_candidate_policy",
+  "phase": "Phase 26",
+  "allowed_automation": [
+    "release_candidate_evidence_index_generation",
+    "gap_register_consolidation",
+    "local_validation_summary_generation",
+    "certification_boundary_validation"
+  ],
+  "forbidden_automation": [
+    "official_certification_grant",
+    "production_release_without_human_approval",
+    "live_provider_call",
+    "external_regulator_submission_without_review"
+  ],
+  "release_candidate_boundary": "v1_candidate_not_certified"
+}

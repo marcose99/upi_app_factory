@@ -1,0 +1,8 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "decision": "V1_RELEASE_CANDIDATE_READY_FOR_INDEPENDENT_REVIEW",
+  "human_approval_required_for_release": true,
+  "official_certification_granted": false,
+  "phase": "Phase 26",
+  "production_release_authorized": false
+}

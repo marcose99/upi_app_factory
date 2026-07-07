@@ -1,0 +1,11 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "live_provider_calls": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "Phase 26",
+  "production_release_authorized": false,
+  "read_only_gates_executed": true,
+  "status": "V1_RELEASE_CANDIDATE_CONSOLIDATED"
+}

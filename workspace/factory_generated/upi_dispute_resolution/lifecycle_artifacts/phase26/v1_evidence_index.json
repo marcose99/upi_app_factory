@@ -1,0 +1,34 @@
+{
+  "artifact_root": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+  "evidence_domains": [
+    "self_contained_handoff_replay",
+    "enterprise_hardening",
+    "independent_reviewer_workspace",
+    "supply_chain_provenance",
+    "environment_promotion_governance",
+    "secrets_identity_governance",
+    "enterprise_observability_audit_lake",
+    "generated_app_domain_depth",
+    "multi_domain_template_readiness",
+    "enterprise_operating_model"
+  ],
+  "expected_recent_tags": [
+    "v0.16.0-self-contained-handoff-replay-hardening",
+    "v0.17.0-enterprise-autonomous-hardening-batch",
+    "v0.18.0-independent-reviewer-workspace-trial",
+    "v0.19.0-supply-chain-provenance-hardening",
+    "v0.20.0-environment-promotion-governance",
+    "v0.21.0-secrets-identity-governance",
+    "v0.22.0-enterprise-observability-audit-lake-model"
+  ],
+  "expected_recent_tags_present": [
+    "v0.16.0-self-contained-handoff-replay-hardening",
+    "v0.17.0-enterprise-autonomous-hardening-batch",
+    "v0.18.0-independent-reviewer-workspace-trial",
+    "v0.19.0-supply-chain-provenance-hardening",
+    "v0.20.0-environment-promotion-governance",
+    "v0.21.0-secrets-identity-governance",
+    "v0.22.0-enterprise-observability-audit-lake-model"
+  ],
+  "phase": "Phase 26"
+}
