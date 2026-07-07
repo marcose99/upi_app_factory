@@ -1,0 +1,18 @@
+{
+  "base_tag": "v0.15.0-autonomous-post-v1-industrialization-batch",
+  "candidate_head": "6d0936193a37c9848f0ef8945b6b623f744dd577",
+  "certification_claimed": false,
+  "certification_ready_not_certified_boundary_preserved": true,
+  "clone_local_virtualenv_required": false,
+  "ended_at_utc": "2026-07-07T20:28:03Z",
+  "fresh_clone_checkout_mode": "local_clone_candidate_head",
+  "full_pytest_collected_items": 579,
+  "full_pytest_passed_items": 579,
+  "full_pytest_returncode": 0,
+  "hidden_local_workspace_state_required": false,
+  "official_certification_granted_by_factory": false,
+  "phase": "16",
+  "phase13c_handover_manifest_mirrored_and_forced_staged": true,
+  "schema_version": "phase16-self-contained-full-fresh-clone-replay-result.v2",
+  "status": "PASS"
+}
