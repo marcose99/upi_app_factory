@@ -1,0 +1,47 @@
+{
+  "schema_version": "low-risk-autonomous-repair-policy.v1",
+  "policy_id": "phase13au.low_risk_autonomous_repair_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_LOW_RISK_REPAIR_SANDBOX_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "requires_phase13at_autonomous_runner": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "destructive_delete_allowed_in_this_phase": false,
+  "real_generated_application_write_allowed_in_this_phase": false,
+  "automatic_low_risk_repair_allowed_in_explicit_sandbox": true,
+  "automatic_worktree_repair_allowed_without_human_approval": false,
+  "factory_self_modification_allowed_in_this_phase": false,
+  "auto_merge_allowed": false,
+  "auto_tag_allowed": false,
+  "auto_release_allowed": false,
+  "allowed_repair_classes": [
+    "REPAIR-DOC-001",
+    "REPAIR-TYPE-001",
+    "REPAIR-TERM-001"
+  ],
+  "required_repair_result_items": [
+    "repair_class",
+    "risk_tier",
+    "target_path",
+    "before_digest",
+    "after_digest",
+    "backup_snapshot",
+    "rollback_plan",
+    "evidence",
+    "blocked_actions_checked",
+    "sandbox_acknowledged"
+  ],
+  "blocked_actions": [
+    "delete_real_generated_application",
+    "overwrite_real_generated_application",
+    "modify_project_worktree_without_human_approval",
+    "apply_factory_self_modification",
+    "call_live_llm_provider",
+    "call_external_system",
+    "auto_merge",
+    "auto_tag",
+    "auto_release"
+  ],
+  "autonomy_rule": "The applier may automatically perform known low-risk repairs only in an explicit local sandbox target. It must not modify the project worktree, self-modify the factory, call live providers, call external systems, merge, tag, release, delete, or overwrite the real generated_application."
+}
