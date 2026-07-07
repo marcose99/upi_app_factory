@@ -1,0 +1,43 @@
+{
+  "schema_version": "governed-autonomy-control-plane-audit.v1",
+  "phase": "13AZ",
+  "app_id": "upi_dispute_resolution",
+  "mode": "GOVERNED_A_TO_Z_AUTONOMY_CONTROL_PLANE_POLICY_ONLY",
+  "preferred_term": "application engineering",
+  "control_plane_only": true,
+  "a_to_z_autonomy_initiated": true,
+  "default_maximum_autonomy_level": 4,
+  "release_gates_require_human_approval": true,
+  "worktree_mutation_requires_human_approval": true,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "arbitrary_shell_execution_performed": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "real_worktree_mutated_by_control_plane": false,
+  "application_generation_triggered_by_control_plane": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13ay_operator_dashboards": true,
+  "control_plane_ref": "scripts/build_governed_autonomy_control_plane.py",
+  "policy_ref": "policies/phase13az_governed_autonomy_control_plane_policy.json",
+  "validator_ref": "scripts/validate_phase13az_autonomy_control_plane.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AZ initiates governed A-to-Z autonomy as a policy decision plane only. Later phases may execute approved actions through governed runners and human approval gates."
+  },
+  "governance_controls": [
+    "risk_tiered_action_catalog",
+    "autonomy_level_matrix",
+    "human_approval_boundary_matrix",
+    "sandbox_first_execution",
+    "evidence_required_per_action",
+    "rollback_required_for_mutation",
+    "provider_and_external_call_gates",
+    "release_gate_protection",
+    "blocked_action_catalog",
+    "audit_replayability"
+  ]
+}
