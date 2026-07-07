@@ -1,0 +1,37 @@
+{
+  "schema_version": "sandbox-autonomous-generation-validation-audit.v1",
+  "phase": "14B",
+  "app_id": "upi_dispute_resolution",
+  "mode": "SANDBOX_ONLY_AUTONOMOUS_GENERATION_AND_VALIDATION",
+  "preferred_term": "application engineering",
+  "sandbox_only": true,
+  "requires_phase13az_autonomy_control_plane": true,
+  "requires_phase14a_lifecycle_plan_executor": true,
+  "real_generated_application_written": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "real_worktree_mutated": false,
+  "arbitrary_shell_execution_performed": false,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "loop_ref": "scripts/run_sandbox_autonomous_generation_validation_loop.py",
+  "policy_ref": "policies/phase14b_sandbox_autonomous_generation_validation_policy.json",
+  "validator_ref": "scripts/validate_phase14b_sandbox_loop.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 14B creates deterministic sandbox artifacts and validation evidence only. Real worktree promotion remains blocked behind future human approval gates."
+  },
+  "governance_controls": [
+    "sandbox_only_execution",
+    "control_plane_decision_required",
+    "lifecycle_plan_required",
+    "real_worktree_mutation_blocked",
+    "real_generated_application_mutation_blocked",
+    "promotion_gate_record_required",
+    "validation_evidence_required"
+  ]
+}
