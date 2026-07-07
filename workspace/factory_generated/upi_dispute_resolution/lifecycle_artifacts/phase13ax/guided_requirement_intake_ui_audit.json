@@ -1,0 +1,38 @@
+{
+  "schema_version": "guided-requirement-intake-ui-audit.v1",
+  "phase": "13AX",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_REQUIREMENT_INTAKE_PREVIEW_NON_DESTRUCTIVE",
+  "preferred_term": "application engineering",
+  "preview_only": true,
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "arbitrary_shell_execution_exposed_from_ui": false,
+  "real_generated_application_deleted": false,
+  "real_generated_application_overwritten": false,
+  "requirement_package_written_from_ui": false,
+  "application_generation_triggered_from_ui": false,
+  "factory_self_modification_applied": false,
+  "auto_merge_performed": false,
+  "auto_tag_performed": false,
+  "auto_release_performed": false,
+  "requires_phase13aw_operator_portal": true,
+  "intake_preview_ref": "scripts/build_guided_requirement_intake_preview.py",
+  "portal_app_ref": "scripts/start_factory_operator_portal.py",
+  "policy_ref": "policies/phase13ax_guided_requirement_intake_ui_policy.json",
+  "validator_ref": "scripts/validate_phase13ax_requirement_intake_ui.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AX adds preview-only guided requirement intake without command execution, file writes, live calls, external calls, generation execution, protected mutations, or release automation."
+  },
+  "governance_controls": [
+    "preview_only_requirement_intake",
+    "required_field_normalization",
+    "risk_classification_required",
+    "mock_boundary_required",
+    "evidence_plan_required",
+    "blocked_actions_required",
+    "generation_execution_blocked",
+    "requirement_package_ui_write_blocked"
+  ]
+}
