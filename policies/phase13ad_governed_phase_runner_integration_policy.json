@@ -1,0 +1,35 @@
+{
+  "schema_version": "governed-phase-runner-integration-policy.v1",
+  "policy_id": "phase13ad.governed_phase_runner_integration_policy",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_GOVERNED_PHASE_RUNNER",
+  "requires_phase13ac_classifier": true,
+  "live_provider_calls_allowed": false,
+  "external_system_calls_allowed": false,
+  "human_approval_required_for_release": true,
+  "max_repair_iterations": 5,
+  "required_gate_names": [
+    "ruff",
+    "mypy",
+    "targeted_pytest",
+    "full_pytest"
+  ],
+  "runner_integration_requirements": [
+    "all_future_phase_scripts_must_call_governed_phase_runner_or_equivalent_policy_gate",
+    "known_failures_must_be_classified_before_repair",
+    "unknown_failures_must_escalate_to_human",
+    "post_repair_gates_must_rerun",
+    "repair_attempts_must_be_auditable",
+    "release_merge_and_tag_actions_remain_human_approval_gated"
+  ],
+  "blocked_actions": [
+    "live_provider_call",
+    "external_ecosystem_call",
+    "policy_weakening",
+    "test_gate_bypass",
+    "security_suppression",
+    "dependency_change_without_review",
+    "data_or_evidence_deletion",
+    "unknown_autonomous_repair"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "governed-phase-runner-integration-audit.v1",
+  "phase": "13AD",
+  "app_id": "upi_dispute_resolution",
+  "mode": "LOCAL_ONLY_GOVERNED_PHASE_RUNNER",
+  "live_provider_calls_performed": false,
+  "external_system_calls_performed": false,
+  "human_approval_required_for_release": true,
+  "policy_ref": "policies/phase13ad_governed_phase_runner_integration_policy.json",
+  "runner_ref": "scripts/governed_phase_runner.py",
+  "classifier_ref": "scripts/governed_self_healing.py",
+  "validator_ref": "scripts/validate_phase13ad_governed_phase_runner.py",
+  "decision": {
+    "overall_status": "CERTIFIED_WITH_WARNINGS",
+    "reason": "Phase 13AD introduces a reusable governed phase-runner integration harness. Future phases should adopt it as the standard execution wrapper."
+  },
+  "governance_controls": [
+    "bounded_repair_iterations",
+    "known_failure_classification",
+    "human_escalation_for_unknown_patterns",
+    "post_repair_gate_rerun",
+    "audit_ready_repair_plan",
+    "no_live_provider_or_external_calls"
+  ]
+}
