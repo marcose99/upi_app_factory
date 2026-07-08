@@ -1,0 +1,40 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "dashboard_must_not_fake_success": true,
+  "dashboard_service": "factory/operator_portal/evidence_dashboard.py",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "mandatory_gate": "PHASE33-OPERATOR-PORTAL-EVIDENCE-DASHBOARD-GATE",
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase33_operator_portal_run_validation_evidence_dashboard",
+  "policy_id": "phase33_operator_portal_evidence_dashboard_policy",
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "official certification claim",
+    "production readiness claim",
+    "fake validator success",
+    "fake evidence success",
+    "merge",
+    "tag",
+    "push"
+  ],
+  "real_secrets_allowed": false,
+  "required_outputs": [
+    "current app id",
+    "phase coverage",
+    "latest relevant tags when available",
+    "Phase 28 through Phase 32 lifecycle artifact availability",
+    "Phase 31 export bundle metadata when available",
+    "Phase 32 download-center service status",
+    "validator command list",
+    "test command list",
+    "safety and certification boundaries"
+  ],
+  "status": "active",
+  "version": "1.0.0"
+}

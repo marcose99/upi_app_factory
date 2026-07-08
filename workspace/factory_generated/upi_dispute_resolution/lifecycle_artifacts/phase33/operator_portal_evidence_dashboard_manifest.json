@@ -1,0 +1,23 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "dashboard_response_fields": [
+    "app_id",
+    "phase_coverage",
+    "latest_relevant_tags",
+    "lifecycle_artifact_availability",
+    "phase31_export_bundle_metadata",
+    "phase32_download_center_service_status",
+    "validator_commands",
+    "test_commands",
+    "safety_boundaries",
+    "dashboard_success_claim"
+  ],
+  "dashboard_service": "factory/operator_portal/evidence_dashboard.py",
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "operator_entrypoint": "factory.operator_portal.evidence_dashboard.build_dashboard_summary",
+  "phase": "phase33_operator_portal_run_validation_evidence_dashboard",
+  "production_readiness_claimed": false,
+  "show_script": "scripts/show_phase33_operator_portal_evidence_dashboard.py",
+  "validation_entrypoint": "scripts/validate_phase33_operator_portal_evidence_dashboard.py"
+}
