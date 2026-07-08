@@ -1,0 +1,21 @@
+{
+  "status": "PHASE30_DEEP_REGENERATION_VALIDATION_DEFINED",
+  "phase": "phase30_deep_generated_application_regeneration_validation",
+  "phase29_generator_output_required": true,
+  "controlled_output_strategy": "temporary_directory_regeneration",
+  "existing_generated_workspace_destructively_replaced": false,
+  "phase28_architecture_depth_inputs_required": true,
+  "phase29_deep_structure_policy_required": true,
+  "live_provider_calls": false,
+  "deployment_performed": false,
+  "real_secrets_created": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "risky_self_evolution_requires_human_approval": true,
+  "destructive_actions_require_human_approval": true,
+  "merge_tag_release_promotion_require_human_approval": true,
+  "live_provider_calls_require_human_approval": true,
+  "certification_related_claims_require_human_approval": true
+}

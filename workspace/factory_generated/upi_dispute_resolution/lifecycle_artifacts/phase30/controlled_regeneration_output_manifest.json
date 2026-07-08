@@ -1,0 +1,9 @@
+{
+  "phase": "phase30_deep_generated_application_regeneration_validation",
+  "output_location": "temporary_directory_created_by_validator",
+  "persistent_generated_output_committed": false,
+  "existing_generated_workspace_destructively_replaced": false,
+  "generator": "factory/generators/mock_dispute_app_generator.py",
+  "generator_run_id": "phase30_deep_generated_application_regeneration",
+  "evidence_policy": "policies/phase30_deep_generated_application_regeneration_policy.json"
+}

@@ -32,7 +32,9 @@
     "generated_application/app/tests/negative/",
     "generated_application/app/tests/resilience/",
     "generated_application/app/tests/security/",
-    "generated_application/app/tests/performance/"
+    "generated_application/app/tests/performance/",
+    "generated_application/app/tests/replay/",
+    "generated_application/app/tests/audit/"
   ],
   "evidence_labels_required": [
     "MISSING_OFFICIAL_SOURCE",

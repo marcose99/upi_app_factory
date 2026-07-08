@@ -1,0 +1,11 @@
+{
+  "gate_id": "PHASE30-GA-DEEP-REGENERATION-CERTIFICATION-READINESS-GATE",
+  "required_before_application_generation_success": true,
+  "status": "defined",
+  "failure_mode": "BLOCK_REGENERATION_SUCCESS_CLAIM",
+  "validator": "scripts/validate_phase30_deep_generated_application_regeneration.py",
+  "policy": "policies/phase30_deep_generated_application_regeneration_policy.json",
+  "phase29_generator_output_required": true,
+  "controlled_output_required": true,
+  "destructive_workspace_replacement_allowed": false
+}
