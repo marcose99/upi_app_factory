@@ -1,0 +1,19 @@
+{
+  "bundle_downloadable_zip_required": true,
+  "certification_boundary": "certification_ready_not_certified",
+  "controlled_export_workspace": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/workspace/",
+  "deployment_performed": false,
+  "destructive_workspace_replacement": false,
+  "export_bundle_directory": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generator": "factory/generators/mock_dispute_app_generator.py",
+  "live_provider_calls": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase31_deep_generated_application_export_download_center",
+  "phase28_architecture_depth_inputs_included": true,
+  "phase29_deep_structure_policy_included": true,
+  "phase30_regeneration_evidence_included": true,
+  "real_secrets_created": false,
+  "status": "PHASE31_EXPORT_DOWNLOAD_CENTER_DEFINED"
+}
