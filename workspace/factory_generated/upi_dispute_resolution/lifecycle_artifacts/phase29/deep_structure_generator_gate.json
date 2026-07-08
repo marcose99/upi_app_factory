@@ -1,0 +1,9 @@
+{
+  "gate_id": "PHASE29-GA-DEEP-STRUCTURE-GENERATOR-GATE",
+  "required_before_application_generation_success": true,
+  "status": "defined",
+  "failure_mode": "BLOCK_GENERATION_SUCCESS_CLAIM",
+  "validator": "scripts/validate_phase29_generated_application_deep_structure_generator.py",
+  "policy": "policies/phase29_generated_application_deep_structure_policy.json",
+  "phase28_architecture_depth_inputs_required": true
+}
