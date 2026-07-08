@@ -1,0 +1,39 @@
+{
+  "bundle_downloadable_zip_required": true,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "destructive_workspace_replacement_allowed": false,
+  "download_center_service": "factory/operator_portal/download_center.py",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "mandatory_gate": "PHASE32-OPERATOR-PORTAL-DOWNLOAD-CENTER-GATE",
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase32_operator_portal_download_center_integration",
+  "phase31_export_capability_required": "scripts/export_phase31_deep_generated_application_bundle.py",
+  "policy_id": "phase32_operator_portal_download_center_policy",
+  "portal_success_requires_existing_validated_bundle": true,
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "official certification claim",
+    "production readiness claim",
+    "destructive generated workspace replacement",
+    "merge",
+    "tag",
+    "push"
+  ],
+  "real_secrets_allowed": false,
+  "required_outputs": [
+    "bundle metadata",
+    "local bundle path",
+    "download-ready path",
+    "export manifest contents",
+    "generation manifest contents",
+    "evidence summary contents"
+  ],
+  "status": "active",
+  "version": "1.0.0"
+}

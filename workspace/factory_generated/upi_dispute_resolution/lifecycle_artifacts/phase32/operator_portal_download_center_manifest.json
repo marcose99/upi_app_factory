@@ -1,0 +1,20 @@
+{
+  "bundle_downloadable_zip_required": true,
+  "certification_boundary": "certification_ready_not_certified",
+  "download_center_service": "factory/operator_portal/download_center.py",
+  "download_response_fields": [
+    "bundle_metadata",
+    "bundle_path",
+    "local_bundle_path",
+    "download_ready_path",
+    "export_manifest",
+    "generation_manifest",
+    "evidence_summaries"
+  ],
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "operator_entrypoint": "factory.operator_portal.download_center.trigger_export",
+  "phase": "phase32_operator_portal_download_center_integration",
+  "phase31_export_entrypoint": "scripts/export_phase31_deep_generated_application_bundle.py",
+  "validation_entrypoint": "scripts/validate_phase32_operator_portal_download_center.py"
+}

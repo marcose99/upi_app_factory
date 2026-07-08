@@ -1,0 +1,15 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_performed": false,
+  "destructive_workspace_replacement": false,
+  "download_center_service": "factory/operator_portal/download_center.py",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase32_operator_portal_download_center_integration",
+  "phase31_export_function_wrapped": "scripts.export_phase31_deep_generated_application_bundle.export_bundle",
+  "portal_success_requires_existing_validated_bundle": true,
+  "real_secrets_created": false,
+  "status": "PHASE32_OPERATOR_PORTAL_DOWNLOAD_CENTER_DEFINED"
+}

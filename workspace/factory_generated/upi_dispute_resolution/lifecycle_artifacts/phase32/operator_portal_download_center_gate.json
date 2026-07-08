@@ -1,0 +1,16 @@
+{
+  "bundle_downloadable_zip_required": true,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_performed": false,
+  "destructive_workspace_replacement": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE32-OPERATOR-PORTAL-DOWNLOAD-CENTER-GATE",
+  "generation_manifest_required": true,
+  "live_provider_calls_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase32_operator_portal_download_center_integration",
+  "portal_success_requires_validated_existing_bundle": true,
+  "real_secrets_allowed": false,
+  "required_before_operator_download_success": true
+}
