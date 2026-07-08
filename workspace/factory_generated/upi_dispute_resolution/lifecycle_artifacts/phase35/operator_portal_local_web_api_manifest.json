@@ -1,0 +1,26 @@
+{
+  "api_service": "factory/operator_portal/local_web_api.py",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "lifecycle_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase35/operator_portal_local_web_api_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase35/operator_portal_local_web_api_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase35/operator_portal_local_web_api_manifest.json"
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase35_operator_portal_local_web_api",
+  "policy": "policies/phase35_operator_portal_local_web_api_policy.json",
+  "production_readiness_claimed": false,
+  "prompt": "prompts/phase35/operator_portal_local_web_api_prompt.md",
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "server_entrypoint": "scripts/run_phase35_operator_portal_local_web_api.py",
+  "tag_allowed": false,
+  "test": "tests/test_phase35_operator_portal_local_web_api.py",
+  "validator": "scripts/validate_phase35_operator_portal_local_web_api.py"
+}

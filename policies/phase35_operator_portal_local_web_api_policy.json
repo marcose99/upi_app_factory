@@ -1,0 +1,51 @@
+{
+  "api_service": "factory/operator_portal/local_web_api.py",
+  "arbitrary_command_execution_allowed": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "endpoints": [
+    "GET /health",
+    "GET /portal/evidence-dashboard",
+    "GET /portal/download-center/status",
+    "POST /portal/download-center/export",
+    "GET /portal/validation-runner/dry-run",
+    "POST /portal/validation-runner/run",
+    "GET /portal/validation-runner/latest-report"
+  ],
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_operator_portal_api_only",
+  "mandatory_gate": "PHASE35-OPERATOR-PORTAL-LOCAL-WEB-API-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase35_operator_portal_local_web_api",
+  "policy_id": "phase35_operator_portal_local_web_api_policy",
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "production readiness claim",
+    "uncontrolled command execution",
+    "arbitrary shell text execution"
+  ],
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_outputs": [
+    "local FastAPI create_app entrypoint",
+    "TestClient-backed endpoint coverage",
+    "safe wrappers over evidence dashboard, download center, and validation runner",
+    "validation runner latest report endpoint",
+    "explicit local-only safety boundaries"
+  ],
+  "status": "active",
+  "tag_allowed": false,
+  "validation_entrypoint": "scripts/validate_phase35_operator_portal_local_web_api.py",
+  "version": "1.0.0"
+}

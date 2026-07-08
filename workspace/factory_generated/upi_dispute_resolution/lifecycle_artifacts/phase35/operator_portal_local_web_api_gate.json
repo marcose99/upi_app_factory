@@ -1,0 +1,18 @@
+{
+  "api_service": "factory/operator_portal/local_web_api.py",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE35-OPERATOR-PORTAL-LOCAL-WEB-API-GATE",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase35_operator_portal_local_web_api",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "status": "passed",
+  "tag_allowed": false
+}
