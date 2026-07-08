@@ -11,6 +11,7 @@ PHASE = "phase33_operator_portal_run_validation_evidence_dashboard"
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 VALIDATOR_COMMANDS = [
+    "python scripts/validate_phase34_operator_portal_validation_runner.py",
     "python scripts/validate_phase33_operator_portal_evidence_dashboard.py",
     "python scripts/validate_phase32_operator_portal_download_center.py",
     "python scripts/validate_phase31_deep_generated_application_export_download_center.py",
@@ -20,6 +21,7 @@ VALIDATOR_COMMANDS = [
 ]
 
 TEST_COMMANDS = [
+    "python -m pytest tests/test_phase34_operator_portal_validation_runner.py",
     "python -m pytest tests/test_phase33_operator_portal_evidence_dashboard.py",
     "python -m pytest tests/test_phase32_operator_portal_download_center.py",
     "python -m pytest tests/test_phase31_deep_generated_application_export_download_center.py",
@@ -56,6 +58,11 @@ PHASE_ARTIFACTS = {
         "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_audit.json",
         "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_gate.json",
         "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_manifest.json",
+    ],
+    "phase34": [
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_audit.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_gate.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_manifest.json",
     ],
 }
 
@@ -138,13 +145,22 @@ class EvidenceDashboardService:
             "phase": PHASE,
             "phase_coverage": {
                 "current": "phase33",
-                "covered_phases": ["phase28", "phase29", "phase30", "phase31", "phase32", "phase33"],
+                "covered_phases": [
+                    "phase28",
+                    "phase29",
+                    "phase30",
+                    "phase31",
+                    "phase32",
+                    "phase33",
+                    "phase34",
+                ],
                 "posture": "certification_ready_not_certified",
             },
             "latest_relevant_tags": self._latest_relevant_tags(),
             "lifecycle_artifact_availability": lifecycle_artifacts,
             "phase31_export_bundle_metadata": export_metadata,
             "phase32_download_center_service_status": self._phase32_status(),
+            "phase34_validation_runner_report_status": self._phase34_status(),
             "validator_commands": VALIDATOR_COMMANDS,
             "test_commands": TEST_COMMANDS,
             "safety_boundaries": {
@@ -256,6 +272,33 @@ class EvidenceDashboardService:
             "validation_entrypoint": (
                 manifest.get("validation_entrypoint", "unknown")
                 if manifest is not None
+                else "unknown"
+            ),
+        }
+
+    def _phase34_status(self) -> dict[str, Any]:
+        service_path = self.project_root / "factory/operator_portal/validation_runner.py"
+        report_path = (
+            self.project_root
+            / "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json"
+        )
+        report = _read_json(report_path)
+        return {
+            "status": "available" if service_path.is_file() and report is not None else "missing",
+            "service_path": "factory/operator_portal/validation_runner.py",
+            "service_exists": service_path.is_file(),
+            "run_report_path": (
+                "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json"
+            ),
+            "run_report_status": "available" if report is not None else "missing",
+            "run_status": report.get("status", "unknown") if report is not None else "unknown",
+            "dry_run": report.get("dry_run", "unknown") if report is not None else "unknown",
+            "command_count": (
+                len(report.get("command_results", [])) if report is not None else 0
+            ),
+            "certification_boundary": (
+                report.get("safety_boundaries", {}).get("certification_boundary", "unknown")
+                if report is not None
                 else "unknown"
             ),
         }

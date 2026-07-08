@@ -1,0 +1,141 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "approved_command_ids": [
+    "phase34_validator",
+    "phase33_validator",
+    "phase32_validator",
+    "phase31_validator",
+    "phase30_validator",
+    "phase29_validator",
+    "phase28_validator"
+  ],
+  "collect_all": false,
+  "command_results": [
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase34_operator_portal_validation_runner.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase34_operator_portal_validation_runner.py",
+      "command_id": "phase34_validator",
+      "description": "Validate the Phase 34 governed validation runner.",
+      "duration_seconds": 0.0816,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 34 operator portal governed validation runner validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase33_operator_portal_evidence_dashboard.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase33_operator_portal_evidence_dashboard.py",
+      "command_id": "phase33_validator",
+      "description": "Validate the Phase 33 operator portal evidence dashboard.",
+      "duration_seconds": 0.057062,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 33 operator portal evidence dashboard validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase32_operator_portal_download_center.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase32_operator_portal_download_center.py",
+      "command_id": "phase32_validator",
+      "description": "Validate the Phase 32 operator portal download center.",
+      "duration_seconds": 0.056888,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 32 operator portal download center integration validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase31_deep_generated_application_export_download_center.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase31_deep_generated_application_export_download_center.py",
+      "command_id": "phase31_validator",
+      "description": "Validate the Phase 31 export/download center.",
+      "duration_seconds": 0.083262,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 31 deep generated application export/download center validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase30_deep_generated_application_regeneration.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase30_deep_generated_application_regeneration.py",
+      "command_id": "phase30_validator",
+      "description": "Validate the Phase 30 deep generated application regeneration.",
+      "duration_seconds": 0.035158,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 30 deep generated application regeneration artifacts validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase29_generated_application_deep_structure_generator.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase29_generated_application_deep_structure_generator.py",
+      "command_id": "phase29_validator",
+      "description": "Validate the Phase 29 generated application deep structure generator.",
+      "duration_seconds": 0.03501,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 29 generated application deep-structure generator artifacts validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    },
+    {
+      "command": [
+        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "scripts/validate_phase28_generated_application_architecture_depth_blueprint.py"
+      ],
+      "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python scripts/validate_phase28_generated_application_architecture_depth_blueprint.py",
+      "command_id": "phase28_validator",
+      "description": "Validate the Phase 28 generated application architecture depth blueprint.",
+      "duration_seconds": 0.018977,
+      "return_code": 0,
+      "status": "passed",
+      "stderr_preview": "",
+      "stdout_preview": "Phase 28 generated application architecture-depth blueprint artifacts validated.\n",
+      "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+    }
+  ],
+  "dry_run": false,
+  "duration_seconds": 0.368085,
+  "phase": "phase34_operator_portal_governed_validation_runner",
+  "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+  "safety_boundaries": {
+    "arbitrary_shell_text_allowed": false,
+    "certification_boundary": "certification_ready_not_certified",
+    "deployment_allowed": false,
+    "external_ecosystem_integrations": "mocked_or_simulated_only",
+    "live_provider_calls_allowed": false,
+    "merge_allowed": false,
+    "official_certification_claimed": false,
+    "official_certification_granted": false,
+    "production_readiness_claimed": false,
+    "push_allowed": false,
+    "real_secrets_allowed": false,
+    "shell_true_used": false,
+    "tag_allowed": false
+  },
+  "status": "passed",
+  "stop_on_first_failure": true
+}

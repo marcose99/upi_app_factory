@@ -1,0 +1,21 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "default_command_ids": [
+    "phase34_validator",
+    "phase33_validator",
+    "phase32_validator",
+    "phase31_validator",
+    "phase30_validator",
+    "phase29_validator",
+    "phase28_validator"
+  ],
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "operator_entrypoint": "factory.operator_portal.validation_runner.run_validation",
+  "phase": "phase34_operator_portal_governed_validation_runner",
+  "production_readiness_claimed": false,
+  "run_report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+  "run_script": "scripts/run_phase34_operator_portal_validation_runner.py",
+  "validation_entrypoint": "scripts/validate_phase34_operator_portal_validation_runner.py",
+  "validation_runner_service": "factory/operator_portal/validation_runner.py"
+}

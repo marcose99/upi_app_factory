@@ -8,11 +8,14 @@ import tempfile
 from pathlib import Path
 from typing import Any, cast
 
-from factory.operator_portal.evidence_dashboard import build_dashboard_summary
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from factory.operator_portal.evidence_dashboard import build_dashboard_summary  # noqa: E402
 
 
 APP_ID = "upi_dispute_resolution"
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SERVICE_PATH = Path("factory/operator_portal/evidence_dashboard.py")
 SCRIPT_PATH = Path("scripts/show_phase33_operator_portal_evidence_dashboard.py")
 POLICY_PATH = Path("policies/phase33_operator_portal_evidence_dashboard_policy.json")
