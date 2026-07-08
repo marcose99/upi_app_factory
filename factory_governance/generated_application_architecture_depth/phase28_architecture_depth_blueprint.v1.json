@@ -1,0 +1,148 @@
+{
+  "schema_version": "factory.generated_application_architecture_depth.phase28.v1",
+  "phase": "phase28_generated_application_architecture_depth_blueprint",
+  "status": "ARCHITECTURE_DEPTH_BLUEPRINT_REQUIRED",
+  "purpose": "Require generated UPI dispute resolution applications to produce deep architecture, domain, design, engineering, security, observability, testing, self-evolution, and certification-boundary artifacts before generation can be considered successful.",
+  "required_architecture_depth_artifacts": [
+    "architecture_blueprint.md",
+    "domain_model.md",
+    "bounded_contexts.md",
+    "dispute_state_machine.md",
+    "api_contracts.md",
+    "data_contracts.md",
+    "security_model.md",
+    "observability_model.md",
+    "test_obligation_matrix.md",
+    "self_evolution_backlog.json",
+    "certification_readiness_boundary.md"
+  ],
+  "architecture_depth_gate": {
+    "gate_id": "PHASE28-GA-ARCHITECTURE-DEPTH-GATE",
+    "required_before_application_generation_success": true,
+    "failure_mode": "BLOCK_GENERATION_SUCCESS_CLAIM",
+    "checks": [
+      "all required architecture-depth artifact names are present",
+      "architecture_blueprint.md describes the target generated_application structure",
+      "domain_model.md defines entities, value objects, policies, events, and domain exceptions",
+      "bounded_contexts.md separates dispute intake, evidence, lifecycle, policy, audit, notification, and mocked external ecosystem contexts",
+      "dispute_state_machine.md defines allowed states, transitions, guards, terminal states, replay behavior, and invalid transition handling",
+      "api_contracts.md and data_contracts.md define typed requests, responses, errors, persistence records, event records, idempotency keys, and audit records",
+      "security_model.md defines PII redaction, input validation, secret avoidance, least privilege, and fail-closed behavior",
+      "observability_model.md defines structured logs, metrics, tracing, correlation IDs, audit events, and redaction-safe evidence",
+      "test_obligation_matrix.md maps requirements to positive, negative, contract, security, resilience, replay, audit, and performance-smoke tests",
+      "certification_readiness_boundary.md states certification-ready-not-certified and prohibits official certification claims"
+    ]
+  },
+  "target_generated_application_structure": [
+    "generated_application/",
+    "generated_application/app/",
+    "generated_application/app/domain/",
+    "generated_application/app/domain/entities.py",
+    "generated_application/app/domain/value_objects.py",
+    "generated_application/app/domain/policies.py",
+    "generated_application/app/domain/domain_events.py",
+    "generated_application/app/domain/exceptions.py",
+    "generated_application/app/application/",
+    "generated_application/app/application/commands.py",
+    "generated_application/app/application/queries.py",
+    "generated_application/app/application/services.py",
+    "generated_application/app/application/unit_of_work.py",
+    "generated_application/app/application/ports.py",
+    "generated_application/app/infrastructure/",
+    "generated_application/app/infrastructure/persistence/",
+    "generated_application/app/infrastructure/persistence/repositories.py",
+    "generated_application/app/infrastructure/persistence/migrations/",
+    "generated_application/app/infrastructure/persistence/sqlite_unit_of_work.py",
+    "generated_application/app/infrastructure/persistence/postgres_unit_of_work.py",
+    "generated_application/app/infrastructure/persistence/outbox.py",
+    "generated_application/app/infrastructure/persistence/idempotency_store.py",
+    "generated_application/app/interfaces/",
+    "generated_application/app/interfaces/api/",
+    "generated_application/app/interfaces/api/main.py",
+    "generated_application/app/interfaces/api/routers/",
+    "generated_application/app/interfaces/api/schemas.py",
+    "generated_application/app/interfaces/api/error_handlers.py",
+    "generated_application/app/interfaces/cli/",
+    "generated_application/app/interfaces/workers/",
+    "generated_application/app/observability/",
+    "generated_application/app/observability/logging.py",
+    "generated_application/app/observability/metrics.py",
+    "generated_application/app/observability/tracing.py",
+    "generated_application/app/security/",
+    "generated_application/app/security/pii_redaction.py",
+    "generated_application/app/security/input_validation.py",
+    "generated_application/app/tests/",
+    "generated_application/app/tests/unit/",
+    "generated_application/app/tests/integration/",
+    "generated_application/app/tests/contract/",
+    "generated_application/app/tests/negative/",
+    "generated_application/app/tests/resilience/",
+    "generated_application/app/tests/security/",
+    "generated_application/app/tests/performance/"
+  ],
+  "architecture_conformance_expectations": {
+    "import_boundaries": [
+      "domain imports only Python standard library or domain-local modules",
+      "application may import domain and application ports but not infrastructure adapters directly except through unit-of-work abstractions",
+      "infrastructure may implement application ports and may import domain models for mapping",
+      "interfaces may call application services and schemas but must not embed domain policy logic",
+      "observability and security utilities must not create live payment, bank, NPCI, PSP, or provider calls",
+      "tests may import across layers only to verify contracts, conformance, and behavior"
+    ],
+    "state_machine": [
+      "dispute lifecycle states are enumerated in one canonical model",
+      "state transitions are explicit and guard-checked",
+      "invalid transitions fail closed with typed domain exceptions",
+      "terminal states cannot be reopened without a governed appeal or remediation transition",
+      "idempotent replay of an accepted command returns the prior outcome without duplicating side effects",
+      "every state transition emits an audit-safe domain event"
+    ],
+    "domain_model": [
+      "entities and value objects encode dispute identity, transaction references, complaint references, evidence references, timestamps, status, parties, policy versions, and audit identifiers",
+      "policies define deterministic UPI dispute decision support without claiming bank, NPCI, RBI, legal, or official certification authority"
+    ],
+    "api_contracts": [
+      "requests, responses, error payloads, idempotency headers, correlation IDs, and pagination or filtering behavior are typed and versioned"
+    ],
+    "data_contracts": [
+      "persistence records, outbox records, audit events, replay keys, PII redaction fields, and schema migration boundaries are explicit"
+    ]
+  },
+  "test_obligation_matrix": {
+    "positive": ["valid dispute intake", "valid evidence attachment", "valid status query", "valid escalation path"],
+    "negative": ["missing required fields", "invalid state transition", "tampered evidence reference", "unsupported out-of-scope request"],
+    "contract": ["API schema compatibility", "data schema compatibility", "port-adapter contract behavior", "error contract stability"],
+    "security": ["PII redaction", "secret absence", "input validation", "prompt-injection-style untrusted text handling"],
+    "resilience": ["mock provider timeout", "retry budget exhaustion", "dead-letter or outbox handling", "degraded read behavior"],
+    "replay": ["idempotency key replay", "duplicate complaint replay", "event replay without duplicated side effects"],
+    "audit": ["state transition audit event", "policy version trace", "correlation ID propagation", "redaction-safe audit export"],
+    "performance_smoke": ["health endpoint latency smoke", "dispute intake local throughput smoke", "state query local latency smoke"]
+  },
+  "boundary_rules": {
+    "official_certification_claimed": false,
+    "official_certification_granted": false,
+    "certification_boundary": "certification_ready_not_certified",
+    "live_provider_calls_allowed": false,
+    "external_ecosystem_integrations": "mocked_or_simulated_only",
+    "real_secrets_allowed": false,
+    "deployment_allowed": false
+  },
+  "self_evolution_controls": {
+    "may_propose_improvements": true,
+    "proposal_artifact": "self_evolution_backlog.json",
+    "risky_changes_require_human_approval": true,
+    "risky_change_classes": [
+      "generated application business logic mutation",
+      "security control weakening",
+      "test or validator weakening",
+      "live provider integration",
+      "external payment ecosystem mutation",
+      "secret creation",
+      "deployment",
+      "merge",
+      "tag",
+      "release",
+      "official certification claim"
+    ]
+  }
+}

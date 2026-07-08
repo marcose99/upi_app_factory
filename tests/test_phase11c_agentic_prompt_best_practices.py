@@ -39,6 +39,68 @@ def test_phase11c_generated_application_quality_terms_are_enforced() -> None:
         assert expected_check in checks
 
 
+def test_prompt_include_syntax_resolves_shared_contract_files(tmp_path: Path) -> None:
+    validator = load_validator()
+    contract_dir = tmp_path / "prompts" / "_contracts"
+    contract_dir.mkdir(parents=True)
+    contract_path = contract_dir / "agentic_ai_best_practice_contract.md"
+    contract_path.write_text("FactoryFromNothing Agentic AI Best-Practice Contract\n", encoding="utf-8")
+    prompt_path = tmp_path / "prompts" / "phase99" / "prompt.md"
+    prompt_path.parent.mkdir(parents=True)
+    prompt_path.write_text(
+        "{{ include: prompts/_contracts/agentic_ai_best_practice_contract.md }}\n",
+        encoding="utf-8",
+    )
+
+    resolved = validator.resolve_prompt_includes(prompt_path, root=tmp_path)
+
+    assert "FactoryFromNothing Agentic AI Best-Practice Contract" in resolved
+
+
+def test_missing_prompt_include_target_fails_safely(tmp_path: Path) -> None:
+    validator = load_validator()
+    prompt_path = tmp_path / "prompts" / "phase99" / "prompt.md"
+    prompt_path.parent.mkdir(parents=True)
+    prompt_path.write_text(
+        "{{ include: prompts/_contracts/missing_contract.md }}\n",
+        encoding="utf-8",
+    )
+
+    try:
+        validator.resolve_prompt_includes(prompt_path, root=tmp_path)
+    except validator.PromptIncludeError as exc:
+        assert "Missing prompt include target" in str(exc)
+    else:
+        raise AssertionError("missing include target did not fail")
+
+
+def test_phase11c_best_practice_validator_uses_resolved_prompt_text() -> None:
+    validator = load_validator()
+    phase28_prompt = ROOT / "prompts/phase28/generated_application_architecture_depth_prompt.md"
+    raw_text = phase28_prompt.read_text(encoding="utf-8")
+    resolved_text = validator.resolve_prompt_includes(phase28_prompt, root=ROOT)
+
+    assert "{{ include: prompts/_contracts/agentic_ai_best_practice_contract.md }}" in raw_text
+    assert validator.AGENTIC_CONTRACT_MARKER in resolved_text
+    assert validator.GENERATED_APP_CONTRACT_MARKER in resolved_text
+    for terms in validator.BEST_PRACTICE_TERMS.values():
+        assert validator._contains_all_terms(resolved_text, terms)
+
+
+def test_phase28_prompt_inherits_shared_contracts_without_repair_blocks() -> None:
+    validator = load_validator()
+    phase28_prompt = ROOT / "prompts/phase28/generated_application_architecture_depth_prompt.md"
+    raw_text = phase28_prompt.read_text(encoding="utf-8")
+    resolved_text = validator.resolve_prompt_includes(phase28_prompt, root=ROOT)
+
+    assert "PHASE28_REPAIR_AGENTIC_BEST_PRACTICE_AND_LLM_METRICS_CONTRACT_V1" not in raw_text
+    assert "PHASE28_PROMPT_GOVERNANCE_REPAIR_V2_EXACT_MARKERS" not in raw_text
+    assert "PHASE28_V3_CANONICAL_PHASE11C_PROMPT_CONTRACT_REPAIR" not in raw_text
+    assert "FactoryFromNothing Agentic AI Best-Practice Contract" in resolved_text
+    assert "Phase 11C Generated Application Type and Quality Contract" in resolved_text
+    assert "Mandatory every-LLM-call metrics and expense evidence" in resolved_text
+
+
 def test_phase11c_prompt_scope_excludes_reference_docs() -> None:
     validator = load_validator()
     prompt_paths = {str(path.relative_to(ROOT)) for path in validator.prompt_files()}

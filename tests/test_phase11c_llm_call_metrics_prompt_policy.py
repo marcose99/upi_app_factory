@@ -49,3 +49,27 @@ def test_phase11c_llm_call_metrics_required_terms_are_complete() -> None:
         "mock/simulated",
     ):
         assert expected in terms
+
+
+def test_phase11c_llm_metrics_validator_uses_resolved_prompt_text() -> None:
+    validator = load_validator()
+    phase28_prompt = ROOT / "prompts/phase28/generated_application_architecture_depth_prompt.md"
+    raw_text = phase28_prompt.read_text(encoding="utf-8")
+    resolved_text = validator.resolve_prompt_includes(phase28_prompt, root=ROOT)
+
+    assert "{{ include: prompts/_contracts/llm_call_metrics_and_expense_contract.md }}" in raw_text
+    for expected in validator.required_terms():
+        assert expected in resolved_text
+
+
+def test_phase28_prompt_inherits_llm_metrics_shared_contract() -> None:
+    validator = load_validator()
+    phase28_prompt = ROOT / "prompts/phase28/generated_application_architecture_depth_prompt.md"
+    resolved_text = validator.resolve_prompt_includes(phase28_prompt, root=ROOT)
+
+    assert "call_id" in resolved_text
+    assert "build_id" in resolved_text
+    assert "phase" in resolved_text
+    assert "llm_call_metrics_ledger.jsonl" in resolved_text
+    assert "llm_expense_summary.json" in resolved_text
+    assert "no additional LLM calls are allowed" in resolved_text

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "factory.generated_application_architecture_depth.phase28.schema.v1",
+  "title": "Phase 28 generated application architecture-depth blueprint",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "phase",
+    "status",
+    "required_architecture_depth_artifacts",
+    "architecture_depth_gate",
+    "target_generated_application_structure",
+    "architecture_conformance_expectations",
+    "test_obligation_matrix",
+    "boundary_rules",
+    "self_evolution_controls"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "factory.generated_application_architecture_depth.phase28.v1"
+    },
+    "phase": {
+      "const": "phase28_generated_application_architecture_depth_blueprint"
+    },
+    "status": {
+      "const": "ARCHITECTURE_DEPTH_BLUEPRINT_REQUIRED"
+    },
+    "required_architecture_depth_artifacts": {
+      "type": "array",
+      "minItems": 11,
+      "items": {
+        "type": "string"
+      },
+      "contains": {
+        "const": "architecture_blueprint.md"
+      }
+    },
+    "architecture_depth_gate": {
+      "type": "object",
+      "required": [
+        "gate_id",
+        "required_before_application_generation_success",
+        "failure_mode",
+        "checks"
+      ],
+      "properties": {
+        "gate_id": {
+          "const": "PHASE28-GA-ARCHITECTURE-DEPTH-GATE"
+        },
+        "required_before_application_generation_success": {
+          "const": true
+        },
+        "failure_mode": {
+          "const": "BLOCK_GENERATION_SUCCESS_CLAIM"
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "target_generated_application_structure": {
+      "type": "array",
+      "minItems": 30,
+      "items": {
+        "type": "string"
+      }
+    },
+    "architecture_conformance_expectations": {
+      "type": "object",
+      "required": [
+        "import_boundaries",
+        "state_machine",
+        "domain_model",
+        "api_contracts",
+        "data_contracts"
+      ]
+    },
+    "test_obligation_matrix": {
+      "type": "object",
+      "required": [
+        "positive",
+        "negative",
+        "contract",
+        "security",
+        "resilience",
+        "replay",
+        "audit",
+        "performance_smoke"
+      ]
+    },
+    "boundary_rules": {
+      "type": "object",
+      "required": [
+        "official_certification_claimed",
+        "live_provider_calls_allowed",
+        "external_ecosystem_integrations"
+      ]
+    },
+    "self_evolution_controls": {
+      "type": "object",
+      "required": [
+        "may_propose_improvements",
+        "risky_changes_require_human_approval"
+      ]
+    }
+  }
+}
