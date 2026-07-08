@@ -1,0 +1,18 @@
+{
+  "arbitrary_command_execution_allowed": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_performed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls": false,
+  "merge_performed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase34_operator_portal_governed_validation_runner",
+  "production_readiness_claimed": false,
+  "push_performed": false,
+  "real_secrets_created": false,
+  "reports_missing_validation_run_without_success_claim": true,
+  "status": "PHASE34_OPERATOR_PORTAL_VALIDATION_RUNNER_DEFINED",
+  "tag_performed": false,
+  "validation_runner_service": "factory/operator_portal/validation_runner.py"
+}

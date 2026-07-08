@@ -3,14 +3,18 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any, cast
 
-from factory.operator_portal.download_center import DownloadCenterService
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from factory.operator_portal.download_center import DownloadCenterService  # noqa: E402
 
 
 APP_ID = "upi_dispute_resolution"
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
 POLICY_PATH = Path("policies/phase32_operator_portal_download_center_policy.json")
 PROMPT_PATH = Path("prompts/phase32/operator_portal_download_center_prompt.md")
 SERVICE_PATH = Path("factory/operator_portal/download_center.py")

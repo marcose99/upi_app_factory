@@ -1,0 +1,18 @@
+{
+  "arbitrary_command_execution_allowed": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE34-OPERATOR-PORTAL-VALIDATION-RUNNER-GATE",
+  "live_provider_calls_allowed": false,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase34_operator_portal_governed_validation_runner",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_before_operator_validation_success": true,
+  "structured_run_report_required": true,
+  "tag_allowed": false
+}

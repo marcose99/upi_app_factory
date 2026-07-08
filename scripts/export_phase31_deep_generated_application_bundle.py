@@ -6,17 +6,21 @@ import hashlib
 import json
 import shutil
 import subprocess
+import sys
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, cast
 
-from factory.generators.mock_dispute_app_generator import generate
-
-
 APP_ID = "upi_dispute_resolution"
 PHASE = "phase31_deep_generated_application_export_download_center"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from factory.generators.mock_dispute_app_generator import generate  # noqa: E402
+
+
 EXPORT_ROOT = (
     PROJECT_ROOT
     / "workspace/factory_generated"

@@ -1,0 +1,43 @@
+{
+  "arbitrary_command_execution_allowed": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "mandatory_gate": "PHASE34-OPERATOR-PORTAL-VALIDATION-RUNNER-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase34_operator_portal_governed_validation_runner",
+  "policy_id": "phase34_operator_portal_validation_runner_policy",
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "arbitrary command execution",
+    "shell text execution",
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "production readiness claim",
+    "fake validation success"
+  ],
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_outputs": [
+    "approved validation command allowlist",
+    "dry-run command listing",
+    "structured JSON run report",
+    "command status and return code",
+    "stdout and stderr previews",
+    "duration where practical",
+    "Phase 34 dashboard run-report availability"
+  ],
+  "shell_true_allowed": false,
+  "status": "active",
+  "tag_allowed": false,
+  "validation_runner_service": "factory/operator_portal/validation_runner.py",
+  "version": "1.0.0"
+}
