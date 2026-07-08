@@ -25,7 +25,17 @@ REQUIRED_GOVERNANCE_FILES = [
     "factory_governance/phase2/upi_dispute_requirements.v1.json",
     "factory_governance/phase2/mock_external_system_contracts.v1.json",
     "factory_governance/phase3/architecture_design_contract.v1.json",
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json",
 ]
+
+PHASE28_BLUEPRINT_PATH = (
+    "factory_governance/generated_application_architecture_depth/"
+    "phase28_architecture_depth_blueprint.v1.json"
+)
+PHASE28_POLICY_PATH = "policies/phase28_generated_application_architecture_depth_policy.json"
+
+PHASE29_POLICY_PATH = "policies/phase29_generated_application_deep_structure_policy.json"
 
 
 @dataclass(frozen=True)
@@ -99,6 +109,32 @@ def validate_governance_inputs() -> None:
     if architecture.get("real_payment_calls_allowed") is not False:
         raise ValueError("Architecture contract must forbid real payment calls")
 
+    phase28_blueprint = read_json(PHASE28_BLUEPRINT_PATH)
+    if phase28_blueprint.get("status") != "ARCHITECTURE_DEPTH_BLUEPRINT_REQUIRED":
+        raise ValueError("Phase 28 architecture-depth blueprint must be required")
+    phase28_gate = phase28_blueprint.get("architecture_depth_gate", {})
+    if phase28_gate.get("required_before_application_generation_success") is not True:
+        raise ValueError("Phase 28 architecture-depth gate must block generation success")
+    phase28_boundary = phase28_blueprint.get("boundary_rules", {})
+    if phase28_boundary.get("certification_boundary") != "certification_ready_not_certified":
+        raise ValueError("Phase 28 boundary must remain certification_ready_not_certified")
+    if phase28_boundary.get("live_provider_calls_allowed") is not False:
+        raise ValueError("Phase 28 boundary must forbid live provider calls")
+    if phase28_boundary.get("external_ecosystem_integrations") != "mocked_or_simulated_only":
+        raise ValueError("Phase 28 boundary must keep external ecosystem integrations mocked")
+
+    phase28_policy = read_json(PHASE28_POLICY_PATH)
+    if phase28_policy.get("required_before_generation_success") is not True:
+        raise ValueError("Phase 28 policy must be required before generation success")
+
+    phase29_policy = read_json(PHASE29_POLICY_PATH)
+    if phase29_policy.get("phase28_blueprint_required_as_generator_input") is not True:
+        raise ValueError("Phase 29 policy must require Phase 28 blueprint as generator input")
+    if phase29_policy.get("live_provider_calls_allowed") is not False:
+        raise ValueError("Phase 29 policy must forbid live provider calls")
+    if phase29_policy.get("certification_boundary") != "certification_ready_not_certified":
+        raise ValueError("Phase 29 policy must preserve certification-ready-not-certified")
+
 
 def load_template_manifest() -> dict[str, Any]:
     path = TEMPLATE_ROOT / "template_manifest.v1.json"
@@ -132,6 +168,13 @@ def copy_templates(output_dir: Path, template_files: list[str]) -> list[Generate
     return generated_files
 
 
+def create_deep_structure_directories(output_dir: Path, directories: list[str]) -> None:
+    for relative_path in directories:
+        if not relative_path.endswith("/"):
+            raise ValueError(f"Deep-structure directory must end with '/': {relative_path}")
+        (output_dir / "generated" / relative_path).mkdir(parents=True, exist_ok=True)
+
+
 def generate(
     *,
     run_id: str | None = None,
@@ -144,6 +187,9 @@ def generate(
     template_files = template_manifest.get("template_files", [])
     if not isinstance(template_files, list) or not template_files:
         raise ValueError("Template manifest must define template_files")
+    deep_structure_directories = template_manifest.get("deep_structure_directories", [])
+    if not isinstance(deep_structure_directories, list):
+        raise ValueError("Template manifest deep_structure_directories must be a list")
 
     resolved_run_id = (
         run_id
@@ -158,6 +204,10 @@ def generate(
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    create_deep_structure_directories(
+        output_dir,
+        [str(item) for item in deep_structure_directories],
+    )
     generated_files = copy_templates(output_dir, [str(item) for item in template_files])
 
     generation_manifest = {
@@ -168,8 +218,18 @@ def generate(
         "generation_mode": "deterministic_template_regeneration",
         "source_template_manifest": "factory/templates/mock_dispute_app/template_manifest.v1.json",
         "governance_inputs": REQUIRED_GOVERNANCE_FILES,
+        "phase28_architecture_depth_inputs": [
+            PHASE28_BLUEPRINT_PATH,
+            PHASE28_POLICY_PATH,
+            "prompts/phase28/generated_application_architecture_depth_prompt.md",
+        ],
+        "phase29_deep_structure_policy": PHASE29_POLICY_PATH,
         "evidence_labels": sorted(REQUIRED_EVIDENCE_LABELS),
         "real_payment_calls_allowed": False,
+        "live_provider_calls_allowed": False,
+        "certification_boundary": "certification_ready_not_certified",
+        "external_ecosystem_integrations": "mocked_or_simulated_only",
+        "deep_structure_directories": [str(item) for item in deep_structure_directories],
         "generated_files": [
             {
                 "relative_path": item.relative_path,
