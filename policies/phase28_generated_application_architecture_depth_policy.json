@@ -1,0 +1,41 @@
+{
+  "policy_id": "phase28_generated_application_architecture_depth_policy",
+  "version": "1.0.0",
+  "phase": "phase28_generated_application_architecture_depth_blueprint",
+  "status": "active",
+  "scope": "generated UPI dispute resolution applications produced by the factory",
+  "mandatory_gate": "PHASE28-GA-ARCHITECTURE-DEPTH-GATE",
+  "required_before_generation_success": true,
+  "required_artifact_manifest": "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+  "required_schema": "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.schema.json",
+  "blocked_success_claims": [
+    "generated application complete",
+    "generated application successful",
+    "release candidate ready",
+    "certified",
+    "officially compliant",
+    "production ready"
+  ],
+  "success_conditions": [
+    "all required architecture-depth artifact names are present",
+    "architecture-first generation is followed before business logic expansion",
+    "target generated_application package structure is defined",
+    "import boundaries are defined and testable",
+    "dispute state-machine expectations are defined and testable",
+    "test obligation matrix covers positive, negative, contract, security, resilience, replay, audit, and performance-smoke obligations",
+    "external UPI, bank, NPCI, PSP, ODR, notification, ledger, and payment ecosystem integrations remain mocked or simulated",
+    "generated application does not claim official certification",
+    "self-evolution backlog may propose improvements while risky changes remain human-approved"
+  ],
+  "prohibited_without_separate_human_approval": [
+    "live provider calls",
+    "real bank or NPCI integration",
+    "real secrets or credentials",
+    "deployment",
+    "merge",
+    "tag",
+    "release",
+    "official certification claim",
+    "generated application business logic rewrite"
+  ]
+}

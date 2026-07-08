@@ -7,6 +7,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.prompt_contract_registry import PromptIncludeError, resolve_prompt_includes  # noqa: E402
 
 REQUIRED_LLM_CALL_METRIC_FIELDS: tuple[str, ...] = (
     "call_id",
@@ -82,6 +86,8 @@ INCLUDED_WORKSPACE_PROMPTS: tuple[str, ...] = (
     "phase11b_prompt_enhancement_contract.md",
 )
 
+CONTRACT_PROMPT_PREFIX = "prompts/_contracts/"
+
 
 def _is_excluded(path: Path) -> bool:
     rel_parts = path.relative_to(ROOT).parts
@@ -96,6 +102,9 @@ def is_prompt_source_file(path: Path) -> bool:
         return False
 
     rel = path.relative_to(ROOT).as_posix()
+
+    if rel.startswith(CONTRACT_PROMPT_PREFIX):
+        return False
 
     if rel.startswith("prompts/"):
         return True
@@ -142,7 +151,13 @@ def validate() -> dict[str, Any]:
     files = prompt_files()
 
     for prompt_file in files:
-        text = prompt_file.read_text(encoding="utf-8")
+        try:
+            text = resolve_prompt_includes(prompt_file, root=ROOT)
+        except PromptIncludeError as exc:
+            missing_by_file[str(prompt_file.relative_to(ROOT))] = [
+                f"prompt_include_resolution_failed:{exc}"
+            ]
+            continue
         missing = [term for term in required_terms() if term not in text]
         if missing:
             missing_by_file[str(prompt_file.relative_to(ROOT))] = missing
