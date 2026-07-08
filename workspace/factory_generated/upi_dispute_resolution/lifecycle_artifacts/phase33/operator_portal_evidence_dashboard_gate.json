@@ -1,0 +1,15 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "dashboard_must_not_fake_success": true,
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE33-OPERATOR-PORTAL-EVIDENCE-DASHBOARD-GATE",
+  "live_provider_calls_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase33_operator_portal_run_validation_evidence_dashboard",
+  "production_readiness_claimed": false,
+  "real_secrets_allowed": false,
+  "required_before_operator_dashboard_success": true,
+  "validator_and_test_commands_required": true
+}
