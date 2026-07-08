@@ -1,0 +1,38 @@
+{
+  "bundle_downloadable_zip_required": true,
+  "certification_boundary": "certification_ready_not_certified",
+  "controlled_export_workspace_required": true,
+  "deployment_allowed": false,
+  "destructive_workspace_replacement_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "mandatory_gate": "PHASE31-GA-EXPORT-DOWNLOAD-CENTER-GATE",
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase31_deep_generated_application_export_download_center",
+  "policy_id": "phase31_deep_generated_application_export_download_policy",
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "official certification claim",
+    "destructive generated workspace replacement",
+    "merge",
+    "tag",
+    "push"
+  ],
+  "real_secrets_allowed": false,
+  "required_evidence": [
+    "generation manifest",
+    "Phase 28 architecture-depth inputs summary",
+    "Phase 29 deep-structure policy summary",
+    "Phase 30 regeneration and certification-readiness evidence summary",
+    "certification-ready-not-certified boundary",
+    "no-live-provider/no-real-secret/no-deployment/no-official-certification evidence",
+    "mocked or simulated ecosystem boundary"
+  ],
+  "required_generator": "factory/generators/mock_dispute_app_generator.py",
+  "safe_local_artifact_directory": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/",
+  "status": "active",
+  "version": "1.0.0"
+}

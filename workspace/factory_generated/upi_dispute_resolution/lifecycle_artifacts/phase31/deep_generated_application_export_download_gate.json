@@ -1,0 +1,17 @@
+{
+  "bundle_downloadable_zip_required": true,
+  "certification_boundary": "certification_ready_not_certified",
+  "controlled_export_workspace_required": true,
+  "deployment_allowed": false,
+  "destructive_workspace_replacement": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE31-GA-EXPORT-DOWNLOAD-CENTER-GATE",
+  "generated_application_output_required": true,
+  "generation_manifest_required": true,
+  "live_provider_calls_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase31_deep_generated_application_export_download_center",
+  "real_secrets_allowed": false,
+  "required_before_operator_download_success": true
+}
