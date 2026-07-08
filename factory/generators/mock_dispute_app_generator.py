@@ -37,6 +37,18 @@ PHASE28_POLICY_PATH = "policies/phase28_generated_application_architecture_depth
 
 PHASE29_POLICY_PATH = "policies/phase29_generated_application_deep_structure_policy.json"
 
+CERTIFICATION_READINESS_TEST_OBLIGATIONS = [
+    "unit",
+    "integration",
+    "contract",
+    "negative",
+    "resilience",
+    "security",
+    "performance_smoke",
+    "replay",
+    "audit",
+]
+
 
 @dataclass(frozen=True)
 class GeneratedFile:
@@ -224,9 +236,27 @@ def generate(
             "prompts/phase28/generated_application_architecture_depth_prompt.md",
         ],
         "phase29_deep_structure_policy": PHASE29_POLICY_PATH,
+        "phase29_deep_structure_policy_recorded": True,
         "evidence_labels": sorted(REQUIRED_EVIDENCE_LABELS),
+        "certification_readiness_test_obligations": (
+            CERTIFICATION_READINESS_TEST_OBLIGATIONS
+        ),
+        "risky_actions_require_human_approval": [
+            "risky self-evolution",
+            "destructive actions",
+            "merge",
+            "tag",
+            "release",
+            "promotion",
+            "live provider calls",
+            "certification-related claims",
+        ],
         "real_payment_calls_allowed": False,
         "live_provider_calls_allowed": False,
+        "real_secrets_allowed": False,
+        "deployment_allowed": False,
+        "official_certification_claimed": False,
+        "official_certification_granted": False,
         "certification_boundary": "certification_ready_not_certified",
         "external_ecosystem_integrations": "mocked_or_simulated_only",
         "deep_structure_directories": [str(item) for item in deep_structure_directories],

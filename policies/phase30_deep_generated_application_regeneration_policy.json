@@ -1,0 +1,67 @@
+{
+  "policy_id": "phase30_deep_generated_application_regeneration_policy",
+  "version": "1.0.0",
+  "phase": "phase30_deep_generated_application_regeneration_validation",
+  "status": "active",
+  "scope": "governed local regeneration validation of the generated UPI dispute resolution application",
+  "mandatory_gate": "PHASE30-GA-DEEP-REGENERATION-CERTIFICATION-READINESS-GATE",
+  "required_generator": "factory/generators/mock_dispute_app_generator.py",
+  "required_template_manifest": "factory/templates/mock_dispute_app/template_manifest.v1.json",
+  "phase29_generator_output_required": true,
+  "controlled_output_required": true,
+  "destructive_workspace_replacement_allowed": false,
+  "required_phase28_inputs": [
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json",
+    "prompts/phase28/generated_application_architecture_depth_prompt.md"
+  ],
+  "required_phase29_policy": "policies/phase29_generated_application_deep_structure_policy.json",
+  "required_generated_modules": [
+    "domain",
+    "application",
+    "infrastructure",
+    "interfaces",
+    "observability",
+    "security",
+    "tests"
+  ],
+  "certification_readiness_test_obligations": [
+    "unit",
+    "integration",
+    "contract",
+    "negative",
+    "resilience",
+    "security",
+    "performance_smoke",
+    "replay",
+    "audit"
+  ],
+  "certification_boundary": "certification_ready_not_certified",
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "live_provider_calls_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "real_secrets_allowed": false,
+  "deployment_allowed": false,
+  "human_approval_required_for": [
+    "risky self-evolution",
+    "destructive actions",
+    "merge",
+    "tag",
+    "release",
+    "promotion",
+    "live provider calls",
+    "certification-related claims"
+  ],
+  "prohibited_without_separate_human_approval": [
+    "live provider calls",
+    "real NPCI/RBI/bank/PSP/payment rail integration",
+    "real secrets or credentials",
+    "destructive generated-application overwrite",
+    "merge",
+    "tag",
+    "release",
+    "promotion",
+    "official certification claim"
+  ]
+}

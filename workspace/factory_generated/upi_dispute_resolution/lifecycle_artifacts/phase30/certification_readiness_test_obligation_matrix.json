@@ -1,0 +1,11 @@
+{
+  "unit": "Generated domain and application service behavior must have isolated unit coverage.",
+  "integration": "Generated persistence and interface seams must have local mocked integration coverage.",
+  "contract": "Generated API schemas and external mock adapter contracts must be contract-tested.",
+  "negative": "Invalid dispute transitions, invalid evidence, and rejected live endpoints must be tested.",
+  "resilience": "Idempotency, replay tolerance, and local adapter failure behavior must be tested.",
+  "security": "PII redaction, input validation, and secret-free execution must be tested.",
+  "performance_smoke": "Local smoke checks must cover bounded latency and non-production load assumptions.",
+  "replay": "Audit-safe regeneration and dispute lifecycle replay must be represented.",
+  "audit": "Generated audit trail, manifest evidence, and governance boundary checks must be represented."
+}
