@@ -1,0 +1,26 @@
+{
+  "api_service": "factory/operator_portal/local_web_api.py",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase35_operator_portal_local_web_api",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "summary": "Phase 35 adds a local-only FastAPI facade over governed operator portal services with TestClient validation and no deployment, live-provider, secret, merge, tag, or push capability.",
+  "tag_allowed": false,
+  "validated_endpoints": [
+    "GET /health",
+    "GET /portal/evidence-dashboard",
+    "GET /portal/download-center/status",
+    "POST /portal/download-center/export",
+    "GET /portal/validation-runner/dry-run",
+    "POST /portal/validation-runner/run",
+    "GET /portal/validation-runner/latest-report"
+  ]
+}
