@@ -1,0 +1,30 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "criteria": [
+    "release evidence bundle artifacts exist",
+    "policy, prompt, validator, lifecycle artifacts, and tests exist",
+    "official certification is not claimed",
+    "production readiness is not claimed beyond local-readiness evidence",
+    "live provider calls are not enabled",
+    "real secrets are not created",
+    "deployment, merge, tag, and push actions are not enabled",
+    "external ecosystem integrations remain mocked or simulated",
+    "SBOM availability is recorded truthfully"
+  ],
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE44-RELEASE-EVIDENCE-BUNDLE-GATE",
+  "generated_export_bundle_zip_creation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase44_release_evidence_bundle",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "status": "passed",
+  "tag_allowed": false
+}
