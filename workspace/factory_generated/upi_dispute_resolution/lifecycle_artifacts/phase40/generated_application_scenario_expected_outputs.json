@@ -1,0 +1,29 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_scenario_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase40_generated_application_test_scenario_expansion",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "scenario_expected_outputs_source": "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/scenario_catalog/phase40_scenario_catalog.json",
+  "scenario_ids": [
+    "positive_duplicate_debit_submission",
+    "negative_invalid_request_id",
+    "edge_high_value_more_evidence_path",
+    "contract_runtime_health_metrics",
+    "replay_idempotent_duplicate_submission",
+    "audit_local_boundary_metadata",
+    "resilience_missing_dispute_structured_error",
+    "security_sensitive_numeric_description_rejected",
+    "performance_smoke_bulk_local_submissions"
+  ],
+  "status": "available",
+  "tag_allowed": false
+}

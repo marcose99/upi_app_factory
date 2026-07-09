@@ -1,0 +1,36 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/scenario_catalog/phase40_scenario_catalog.json",
+    "scripts/run_phase40_generated_application_scenario_report.py",
+    "scripts/validate_phase40_generated_application_test_scenario_expansion.py",
+    "tests/test_phase40_generated_application_test_scenario_expansion.py"
+  ],
+  "categories_covered": [
+    "positive",
+    "negative",
+    "edge",
+    "contract",
+    "replay",
+    "audit",
+    "resilience",
+    "security",
+    "performance-smoke"
+  ],
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_scenario_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase40_generated_application_test_scenario_expansion",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "scenario_count": 9,
+  "status": "available",
+  "tag_allowed": false
+}

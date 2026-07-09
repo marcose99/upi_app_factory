@@ -1,0 +1,29 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate": "PHASE40-GENERATED-APPLICATION-TEST-SCENARIO-EXPANSION-GATE",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_scenario_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase40_generated_application_test_scenario_expansion",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_checks": [
+    "scenario catalog includes required categories",
+    "each scenario includes expected outputs",
+    "each scenario includes traceability to generated app behavior",
+    "local scenario runner produces structured report",
+    "scenario report passes without live provider calls",
+    "scenario report makes no official certification claim",
+    "scenario report makes no broad production readiness claim",
+    "governance boundaries remain closed"
+  ],
+  "status": "passed",
+  "tag_allowed": false
+}
