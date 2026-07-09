@@ -9,6 +9,7 @@ from pydantic import BaseModel, ConfigDict
 
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.evidence_dashboard import build_dashboard_summary
+from factory.operator_portal.operator_guides import build_operator_guide_index
 from factory.operator_portal.validation_runner import CommandNotAllowedError, ValidationRunnerService
 
 
@@ -73,6 +74,7 @@ class OperatorPortalLocalWebAPI:
         return {
             "status": "available",
             "payload": payload,
+            "operator_message": "Evidence dashboard loaded from local lifecycle artifacts.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -85,14 +87,32 @@ class OperatorPortalLocalWebAPI:
                 "phase31_export_bundle_metadata",
                 {},
             ),
+            "operator_message": "Download status is read from local export metadata.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
     def export_download_bundle(self) -> dict[str, Any]:
-        result = self.download_center.trigger_governed_export()
+        try:
+            result = self.download_center.trigger_governed_export()
+        except Exception as exc:
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "status": "error",
+                    "operator_message": "The governed local export did not complete.",
+                    "next_steps": [
+                        "Run the Phase 32 download center validator.",
+                        "Check workspace write permissions for local export artifacts.",
+                        "Do not retry by using deployment, merge, tag, or push commands.",
+                    ],
+                    "error": str(exc),
+                    "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+                },
+            ) from exc
         return {
             "status": result.get("status", "unknown"),
             "export": result,
+            "operator_message": "Governed local export completed through the download center.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -101,6 +121,7 @@ class OperatorPortalLocalWebAPI:
         return {
             "status": "dry_run",
             "report": report,
+            "operator_message": "Dry run listed approved validation commands without execution.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -114,10 +135,24 @@ class OperatorPortalLocalWebAPI:
                 write_report=request.write_report,
             )
         except CommandNotAllowedError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "status": "rejected",
+                    "operator_message": "Validation request rejected: use approved command IDs only.",
+                    "next_steps": [
+                        "Run the validation dry-run endpoint to list approved command IDs.",
+                        "Use phase34_runner_self_check for the local portal self-check.",
+                        "Do not paste arbitrary shell text into the portal API.",
+                    ],
+                    "error": str(exc),
+                    "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+                },
+            ) from exc
         return {
             "status": report.get("status", "unknown"),
             "report": report,
+            "operator_message": "Validation run finished; inspect command_results for details.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -131,16 +166,41 @@ class OperatorPortalLocalWebAPI:
                 "status": "missing",
                 "report_path": self._relative_path(report_path),
                 "report": None,
+                "operator_message": "No latest validation report exists yet.",
+                "next_steps": [
+                    "Run a validation dry-run to confirm approved commands.",
+                    "Run the safe self-check to create a local report.",
+                ],
                 "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
             }
 
         value = json.loads(report_path.read_text(encoding="utf-8"))
         if not isinstance(value, dict):
-            raise HTTPException(status_code=500, detail="Latest validation report is not an object")
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "status": "error",
+                    "operator_message": "Latest validation report is malformed.",
+                    "next_steps": [
+                        "Re-run the safe validation self-check.",
+                        "If the report remains malformed, inspect the local report path.",
+                    ],
+                    "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+                },
+            )
         return {
             "status": "available",
             "report_path": self._relative_path(report_path),
             "report": cast(dict[str, Any], value),
+            "operator_message": "Latest validation report loaded from local workspace.",
+            "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+        }
+
+    def operator_guides(self) -> dict[str, Any]:
+        return {
+            "status": "available",
+            "payload": build_operator_guide_index(project_root=self.project_root),
+            "operator_message": "Operator guides and status taxonomy are available locally.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -196,6 +256,10 @@ def create_app(
     @app.get("/portal/validation-runner/latest-report")
     async def latest_validation_report() -> dict[str, Any]:
         return api.latest_validation_report()
+
+    @app.get("/portal/operator-guides")
+    async def operator_guides() -> dict[str, Any]:
+        return api.operator_guides()
 
     return app
 

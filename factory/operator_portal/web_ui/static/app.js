@@ -24,16 +24,53 @@
     }
   }
 
+  function formatErrorDetail(detail, status) {
+    if (detail && typeof detail === "object") {
+      return {
+        status: detail.status || "error",
+        operator_message:
+          detail.operator_message || `Request failed with HTTP status ${status}.`,
+        next_steps: Array.isArray(detail.next_steps) ? detail.next_steps : [],
+        error: detail.error || undefined,
+        safety_boundaries: detail.safety_boundaries || undefined,
+      };
+    }
+    return {
+      status: "error",
+      operator_message: detail || `Request failed with HTTP status ${status}.`,
+      next_steps: ["Check that the local portal server is running and retry the action."],
+    };
+  }
+
   async function request(path, options) {
+    let response;
+    try {
+      response = await fetch(path, {
+        headers: { "Content-Type": "application/json" },
+        ...options,
+      });
+    } catch (error) {
+      throw new Error(
+        `Local portal request could not be sent. Check the local server process. ${String(error)}`,
+      );
+    }
+    const payload = await response.json();
+    if (!response.ok) {
+      const detail = formatErrorDetail(payload.detail, response.status);
+      throw new Error(JSON.stringify(detail, null, 2));
+    }
+    return payload;
+  }
+
+  async function requestPlain(path, options) {
     const response = await fetch(path, {
       headers: { "Content-Type": "application/json" },
       ...options,
     });
-    const payload = await response.json();
     if (!response.ok) {
-      throw new Error(payload.detail || `Request failed: ${response.status}`);
+      throw new Error(`Request failed with HTTP status ${response.status}.`);
     }
-    return payload;
+    return response.text();
   }
 
   async function refreshHealth() {
@@ -99,6 +136,26 @@
     showReport(payload);
   }
 
+  async function refreshGuides() {
+    const payload = await request("/portal/operator-guides");
+    const guidePayload = payload.payload || {};
+    const guides = Array.isArray(guidePayload.guides) ? guidePayload.guides : [];
+    const taxonomy = guidePayload.status_taxonomy || {};
+    setField("guides-status", guidePayload.status || payload.status);
+    setField("guides-count", guides.length);
+    setField("taxonomy-count", Object.keys(taxonomy).length);
+
+    const list = document.getElementById("guide-list");
+    if (list) {
+      list.textContent = "";
+      guides.forEach((guide) => {
+        const item = document.createElement("li");
+        item.textContent = `${guide.title}: ${guide.path}`;
+        list.appendChild(item);
+      });
+    }
+  }
+
   const actions = {
     "refresh-health": refreshHealth,
     "refresh-evidence": refreshEvidence,
@@ -107,6 +164,7 @@
     "validation-dry-run": validationDryRun,
     "validation-run": validationRun,
     "latest-report": latestReport,
+    "refresh-guides": refreshGuides,
   };
 
   function bindActions() {
@@ -131,7 +189,7 @@
 
   async function boot() {
     bindActions();
-    await Promise.all([refreshHealth(), refreshEvidence(), refreshDownload()]);
+    await Promise.all([refreshHealth(), refreshEvidence(), refreshDownload(), refreshGuides()]);
   }
 
   window.addEventListener("DOMContentLoaded", () => {

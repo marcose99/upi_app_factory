@@ -95,6 +95,19 @@
         </ul>
       </section>
 
+      <section class="panel guide-panel" aria-labelledby="guides-title">
+        <div class="panel-header">
+          <h2 id="guides-title">Operator Guides</h2>
+          <button type="button" data-action="refresh-guides" title="Refresh operator guides">Refresh</button>
+        </div>
+        <dl class="metric-grid">
+          <div><dt>Status</dt><dd data-field="guides-status">Loading</dd></div>
+          <div><dt>Guide count</dt><dd data-field="guides-count">Loading</dd></div>
+          <div><dt>Taxonomy terms</dt><dd data-field="taxonomy-count">Loading</dd></div>
+        </dl>
+        <ul id="guide-list" class="guide-list" aria-live="polite"></ul>
+      </section>
+
       <section class="panel report-panel" aria-labelledby="report-title">
         <div class="panel-header">
           <h2 id="report-title">Latest Validation Report</h2>

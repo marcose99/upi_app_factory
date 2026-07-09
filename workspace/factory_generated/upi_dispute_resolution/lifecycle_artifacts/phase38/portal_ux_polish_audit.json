@@ -1,0 +1,25 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_result": "passed",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "findings": [
+    "Local operator guides added.",
+    "Troubleshooting and portal workflow guides added.",
+    "Status taxonomy added for operator-facing portal states.",
+    "Portal API and UI expose clearer local error messages.",
+    "No live ecosystem integration was enabled."
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_operator_guides_and_portal_workflows_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase38_portal_ux_polish_and_operator_guides",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false
+}
