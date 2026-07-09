@@ -1,0 +1,33 @@
+{
+  "automatic_release_actions_enabled": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "criteria": [
+    "Phase 45 required files and lifecycle artifacts exist",
+    "final v1 candidate manifest and release gate exist",
+    "final runbook and local demo instructions exist",
+    "README, architecture, operator portal, generated app, validation, limitation, and roadmap summaries exist",
+    "official certification is not claimed",
+    "production readiness is not claimed beyond local-readiness evidence",
+    "live provider calls are not enabled",
+    "real secrets are not created",
+    "deployment, merge, tag, and push actions are not enabled",
+    "external ecosystem integrations remain mocked or simulated"
+  ],
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE45-FINAL-V1-CANDIDATE-GATE",
+  "gate_status": "ready_for_human_review_after_local_validation",
+  "generated_export_bundle_zip_creation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "manual_next_step": "A future maintainer may create the prepared tag only after independent human review and the full local validation stack pass.",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase45_final_v1_candidate_consolidation",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false
+}
