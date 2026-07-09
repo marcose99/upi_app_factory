@@ -1,0 +1,48 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_checks_allowed": true,
+  "long_running_server_auto_start_allowed": false,
+  "mandatory_gate": "PHASE43-ONE-COMMAND-DEMO-REVIEWER-PACK-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase43_one_command_demo_reviewer_pack",
+  "policy_id": "phase43_one_command_demo_reviewer_pack_policy",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness checks only",
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "broad production readiness claim",
+    "real payment rail enablement",
+    "generated export bundle zip creation",
+    "fake validation success"
+  ],
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "required_outputs": [
+    "one-command demo reviewer script",
+    "Makefile one-command target",
+    "reviewer pack",
+    "staged command manifest",
+    "Phase 43 validator",
+    "Phase 43 tests",
+    "policy, prompt, lifecycle artifacts"
+  ],
+  "safe_automated_execution_scope": [
+    "generated app local smoke test",
+    "generated app local run-pack validation"
+  ],
+  "status": "active",
+  "tag_allowed": false,
+  "version": "1.0.0"
+}
