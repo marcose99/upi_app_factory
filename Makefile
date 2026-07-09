@@ -1,4 +1,4 @@
-.PHONY: setup validate validate-governance test lint type run release-pack
+.PHONY: setup validate validate-governance test lint type run release-pack phase43-demo-reviewer-pack
 
 setup:
 	python3 -m venv .venv
@@ -28,6 +28,9 @@ run:
 
 release-pack:
 	python -m factory.release_pack.generate
+
+phase43-demo-reviewer-pack:
+	python scripts/run_phase43_one_command_demo_reviewer_pack.py
 
 validate-phase1:
 	python -m factory.validators.validate_phase1_foundation
