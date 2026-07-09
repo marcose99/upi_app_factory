@@ -1,0 +1,70 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "final_candidate_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_v1_candidate_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_v1_candidate_release_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_runbook.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/architecture_summary.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/operator_portal_summary.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/generated_application_summary.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/validation_summary.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/limitation_statement.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/next_roadmap.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_evidence_index.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_local_demo_instructions.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/phase45_lifecycle_audit.json"
+  ],
+  "generated_application_evidence": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/README.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/.env.example",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/architecture.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/security_design.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/test_strategy.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/start_local.sh",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/health_check.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/smoke_test.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/validate_local_run_pack.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/generation_summary.json"
+  ],
+  "generated_export_bundle_zip_creation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "operator_portal_evidence": [
+    "factory/operator_portal/demo_reviewer_pack.py",
+    "factory/operator_portal/validation_runner.py",
+    "factory/operator_portal/evidence_dashboard.py",
+    "factory/operator_portal/download_center.py",
+    "factory/operator_portal/local_web_api.py",
+    "factory/operator_portal/web_ui/app.py",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase33/operator_portal_evidence_dashboard_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_manifest.json"
+  ],
+  "phase": "phase45_final_v1_candidate_consolidation",
+  "policy_and_prompt": [
+    "policies/phase45_final_v1_candidate_policy.json",
+    "prompts/phase45/final_v1_candidate_consolidation_prompt.md"
+  ],
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "release_evidence_bundle": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_index.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_validation_summary.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_boundary_statement.md"
+  ],
+  "tag_allowed": false,
+  "validators_and_tests": [
+    "scripts/validate_phase45_final_v1_candidate_consolidation.py",
+    "tests/test_phase45_final_v1_candidate_consolidation.py",
+    "scripts/validate_phase44_release_evidence_bundle.py",
+    "tests/test_phase44_release_evidence_bundle.py"
+  ]
+}

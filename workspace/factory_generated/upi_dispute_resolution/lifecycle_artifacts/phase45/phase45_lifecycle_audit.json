@@ -1,0 +1,42 @@
+{
+  "audit_id": "phase45_final_v1_candidate_lifecycle_audit",
+  "audited_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_v1_candidate_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_v1_candidate_release_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_runbook.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/architecture_summary.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/operator_portal_summary.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/generated_application_summary.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/validation_summary.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/limitation_statement.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/next_roadmap.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_evidence_index.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_local_demo_instructions.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/phase45_lifecycle_audit.json"
+  ],
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generated_export_bundle_zip_creation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "merge_allowed": false,
+  "non_actions": [
+    "no live provider calls",
+    "no real secrets",
+    "no deployment",
+    "no merge",
+    "no tag creation",
+    "no push",
+    "no generated export ZIP creation"
+  ],
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase45_final_v1_candidate_consolidation",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "status": "consolidated_for_human_review",
+  "tag_allowed": false
+}
