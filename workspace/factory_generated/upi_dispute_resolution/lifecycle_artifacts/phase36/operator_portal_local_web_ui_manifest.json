@@ -1,0 +1,29 @@
+{
+  "api_service": "factory/operator_portal/local_web_api.py",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_cdn_dependencies_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "lifecycle_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase36/operator_portal_local_web_ui_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase36/operator_portal_local_web_ui_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase36/operator_portal_local_web_ui_manifest.json"
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase36_operator_portal_local_web_ui",
+  "policy": "policies/phase36_operator_portal_local_web_ui_policy.json",
+  "production_readiness_claimed": false,
+  "prompt": "prompts/phase36/operator_portal_local_web_ui_prompt.md",
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "server_entrypoint": "scripts/run_phase36_operator_portal_local_web_ui.py",
+  "tag_allowed": false,
+  "test": "tests/test_phase36_operator_portal_local_web_ui.py",
+  "ui_asset_directory": "factory/operator_portal/web_ui/static",
+  "ui_service": "factory/operator_portal/web_ui/app.py",
+  "validator": "scripts/validate_phase36_operator_portal_local_web_ui.py"
+}
