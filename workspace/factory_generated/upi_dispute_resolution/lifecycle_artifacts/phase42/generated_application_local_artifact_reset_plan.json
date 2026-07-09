@@ -1,0 +1,30 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_run_pack_review_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase42_generated_application_local_run_pack",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "reset_command": "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/clean_local_artifacts.sh",
+  "reset_scope": "known_local_runtime_noise_only",
+  "safe_to_remove": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/var/local_runtime",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/.pytest_cache",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/**/__pycache__"
+  ],
+  "must_not_remove": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/tests",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+    "workspace/factory_generated/upi_dispute_resolution/export_bundles"
+  ],
+  "tag_allowed": false
+}
