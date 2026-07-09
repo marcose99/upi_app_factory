@@ -1,0 +1,23 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_id": "phase41_generated_application_architecture_audit",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "findings": [
+    "Generated application has explicit command/query intent objects.",
+    "Generated application has typed application errors and repository-specific error subclasses.",
+    "Generated application emits local domain events into audit details.",
+    "Generated application keeps ecosystem integrations mocked or simulated."
+  ],
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_architecture_and_code_quality_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase41_generated_application_architecture_code_quality_upgrade",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false
+}

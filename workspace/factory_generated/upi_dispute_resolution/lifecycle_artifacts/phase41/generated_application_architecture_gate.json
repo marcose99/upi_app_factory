@@ -1,0 +1,19 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate_id": "PHASE41-GENERATED-APPLICATION-ARCHITECTURE-CODE-QUALITY-UPGRADE-GATE",
+  "gate_status": "passed",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_architecture_and_code_quality_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase41_generated_application_architecture_code_quality_upgrade",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_validator": "scripts/validate_phase41_generated_application_architecture_code_quality_upgrade.py",
+  "tag_allowed": false
+}
