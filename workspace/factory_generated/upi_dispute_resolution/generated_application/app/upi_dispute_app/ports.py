@@ -11,6 +11,7 @@ class DisputeRepositoryPort(Protocol):
         record: DisputeRecord,
         *,
         request_fingerprint: str | None = None,
+        business_fingerprint: str | None = None,
     ) -> DisputeRecord: ...
 
     def get_by_client_request_id(self, client_request_id: str) -> DisputeRecord: ...
