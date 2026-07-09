@@ -18,6 +18,8 @@ class DisputeNotFoundError(Exception):
 
 class DisputeRepository:
     def __init__(self, db_path: str | Path = ":memory:") -> None:
+        if str(db_path) != ":memory:":
+            Path(db_path).parent.mkdir(parents=True, exist_ok=True)
         self.connection = sqlite3.connect(str(db_path), check_same_thread=False)
         self.connection.row_factory = sqlite3.Row
         self.create_schema()
@@ -27,20 +29,33 @@ class DisputeRepository:
             "CREATE TABLE IF NOT EXISTS disputes ("
             "dispute_id TEXT PRIMARY KEY, "
             "client_request_id TEXT NOT NULL UNIQUE, "
+            "request_fingerprint TEXT, "
             "payload_json TEXT NOT NULL, "
             "status TEXT NOT NULL, "
             "created_at_utc TEXT NOT NULL, "
             "updated_at_utc TEXT NOT NULL)"
         )
+        columns = {
+            str(row["name"])
+            for row in self.connection.execute("PRAGMA table_info(disputes)").fetchall()
+        }
+        if "request_fingerprint" not in columns:
+            self.connection.execute("ALTER TABLE disputes ADD COLUMN request_fingerprint TEXT")
         self.connection.commit()
 
-    def add(self, record: DisputeRecord) -> DisputeRecord:
+    def add(
+        self,
+        record: DisputeRecord,
+        *,
+        request_fingerprint: str | None = None,
+    ) -> DisputeRecord:
         try:
             self.connection.execute(
-                "INSERT INTO disputes VALUES (?, ?, ?, ?, ?, ?)",
+                "INSERT INTO disputes VALUES (?, ?, ?, ?, ?, ?, ?)",
                 (
                     record.dispute_id,
                     record.client_request_id,
+                    request_fingerprint,
                     record.model_dump_json(),
                     record.status.value,
                     record.created_at_utc,
@@ -51,6 +66,25 @@ class DisputeRepository:
         except sqlite3.IntegrityError as exc:
             raise DuplicateClientRequestError(record.client_request_id) from exc
         return record
+
+    def get_by_client_request_id(self, client_request_id: str) -> DisputeRecord:
+        row = self.connection.execute(
+            "SELECT payload_json FROM disputes WHERE client_request_id = ?",
+            (client_request_id,),
+        ).fetchone()
+        if row is None:
+            raise DisputeNotFoundError(client_request_id)
+        return DisputeRecord.model_validate_json(str(row["payload_json"]))
+
+    def get_request_fingerprint(self, client_request_id: str) -> str | None:
+        row = self.connection.execute(
+            "SELECT request_fingerprint FROM disputes WHERE client_request_id = ?",
+            (client_request_id,),
+        ).fetchone()
+        if row is None:
+            raise DisputeNotFoundError(client_request_id)
+        fingerprint = row["request_fingerprint"]
+        return str(fingerprint) if fingerprint is not None else None
 
     def get(self, dispute_id: str) -> DisputeRecord:
         row = self.connection.execute(
