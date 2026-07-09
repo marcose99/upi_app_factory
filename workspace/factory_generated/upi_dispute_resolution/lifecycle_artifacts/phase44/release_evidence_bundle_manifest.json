@@ -1,0 +1,50 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "bundle_format": "directory_artifacts",
+  "bundle_id": "phase44_release_evidence_bundle",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generated_export_bundle_zip_creation_allowed": false,
+  "included_sections": [
+    "manifests",
+    "policy summaries",
+    "validation summaries",
+    "evidence index",
+    "run instructions",
+    "boundary statements",
+    "supply-chain availability statement",
+    "operator portal evidence",
+    "generated application evidence"
+  ],
+  "live_provider_calls_allowed": false,
+  "mandatory_gate": "PHASE44-RELEASE-EVIDENCE-BUNDLE-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase44_release_evidence_bundle",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "required_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_policy_summary.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_validation_summary.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_index.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_run_instructions.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_boundary_statement.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_supply_chain.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_audit.json"
+  ],
+  "review_entrypoints": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_index.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_run_instructions.md",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase44/release_evidence_bundle_boundary_statement.md"
+  ],
+  "status": "reviewable",
+  "tag_allowed": false,
+  "zip_export_created": false
+}

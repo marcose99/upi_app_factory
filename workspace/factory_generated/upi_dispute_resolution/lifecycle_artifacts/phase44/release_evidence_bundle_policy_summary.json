@@ -1,0 +1,40 @@
+{
+  "boundary_controls": {
+    "certification_boundary": "certification_ready_not_certified",
+    "deployment_allowed": false,
+    "external_ecosystem_integrations": "mocked_or_simulated_only",
+    "generated_export_bundle_zip_creation_allowed": false,
+    "live_provider_calls_allowed": false,
+    "merge_allowed": false,
+    "official_certification_claimed": false,
+    "official_certification_granted": false,
+    "production_readiness_claimed": false,
+    "production_readiness_scope": "not_claimed; local-readiness evidence only",
+    "push_allowed": false,
+    "real_payment_rails_enabled": false,
+    "real_secrets_allowed": false,
+    "tag_allowed": false
+  },
+  "governance_posture": "certification_ready_not_certified",
+  "phase": "phase44_release_evidence_bundle",
+  "policy": "policies/phase44_release_evidence_bundle_policy.json",
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets or credentials",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "broad production readiness claim",
+    "real payment rail enablement",
+    "generated export bundle zip creation",
+    "fake validation success"
+  ],
+  "prompt": "prompts/phase44/release_evidence_bundle_prompt.md",
+  "shared_prompt_contracts": [
+    "prompts/_contracts/agentic_ai_best_practice_contract.md",
+    "prompts/_contracts/generated_application_quality_contract.md",
+    "prompts/_contracts/llm_call_metrics_and_expense_contract.md"
+  ]
+}

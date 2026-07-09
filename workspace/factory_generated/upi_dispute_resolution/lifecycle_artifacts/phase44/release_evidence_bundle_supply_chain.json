@@ -1,0 +1,27 @@
+{
+  "available_tools": [],
+  "certification_boundary": "certification_ready_not_certified",
+  "checked_tools": [
+    "syft",
+    "cyclonedx-py",
+    "pip-audit"
+  ],
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "external_network_calls_allowed": false,
+  "generated_export_bundle_zip_creation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase44_release_evidence_bundle",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "reason": "No supported local SBOM or supply-chain evidence tools were found on PATH.",
+  "sbom_generated": false,
+  "status": "unavailable",
+  "tag_allowed": false
+}

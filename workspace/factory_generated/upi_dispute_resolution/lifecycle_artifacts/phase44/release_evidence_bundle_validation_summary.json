@@ -1,0 +1,41 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "evidence_status": "validator_required_before_release_review",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generated_export_bundle_zip_creation_allowed": false,
+  "live_provider_calls_allowed": false,
+  "merge_allowed": false,
+  "minimum_validation_commands": [
+    "python scripts/validate_phase44_release_evidence_bundle.py",
+    "python -m pytest tests/test_phase44_release_evidence_bundle.py",
+    "python scripts/validate_phase34_operator_portal_validation_runner.py",
+    "python scripts/validate_phase33_operator_portal_evidence_dashboard.py",
+    "python scripts/validate_phase32_operator_portal_download_center.py",
+    "python scripts/validate_phase31_deep_generated_application_export_download_center.py",
+    "python scripts/validate_phase30_deep_generated_application_regeneration.py",
+    "python scripts/validate_phase29_generated_application_deep_structure_generator.py",
+    "python scripts/validate_phase28_generated_application_architecture_depth_blueprint.py"
+  ],
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase44_release_evidence_bundle",
+  "production_readiness_claimed": false,
+  "production_readiness_scope": "not_claimed; local-readiness evidence only",
+  "push_allowed": false,
+  "real_payment_rails_enabled": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false,
+  "validation_scope": [
+    "required Phase 44 files and lifecycle artifacts",
+    "official-certification boundary",
+    "local-readiness-only scope",
+    "mocked or simulated external integrations",
+    "no live provider calls",
+    "no real secrets",
+    "no deployment, merge, tag, or push actions",
+    "operator portal evidence availability",
+    "generated application evidence availability"
+  ],
+  "validator": "scripts/validate_phase44_release_evidence_bundle.py"
+}
