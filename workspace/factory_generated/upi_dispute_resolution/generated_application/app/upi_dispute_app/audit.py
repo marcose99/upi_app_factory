@@ -25,7 +25,11 @@ class AuditLogger:
             event_type=event_type,
             dispute_id=dispute_id,
             actor=actor,
-            details=details,
+            details={
+                "certification_boundary": "certification_ready_not_certified",
+                "external_ecosystem_integrations": "mocked_or_simulated_only",
+                **details,
+            },
             created_at_utc=utc_now_iso(),
         )
         with self.audit_path.open("a", encoding="utf-8") as handle:
