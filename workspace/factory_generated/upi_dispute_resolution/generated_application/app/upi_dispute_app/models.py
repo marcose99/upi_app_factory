@@ -46,6 +46,19 @@ class DisputeCreate(BaseModel):
     description: str = Field(min_length=10, max_length=1000)
     evidence: dict[str, Any] = Field(default_factory=dict)
 
+    @field_validator("client_request_id")
+    @classmethod
+    def validate_client_request_id(cls, value: str) -> str:
+        allowed = set(
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "abcdefghijklmnopqrstuvwxyz"
+            "0123456789"
+            "-_"
+        )
+        if any(character not in allowed for character in value):
+            raise ValueError("client_request_id must be alphanumeric with - or _ only")
+        return value
+
     @field_validator("customer_upi_id")
     @classmethod
     def validate_upi_id_shape(cls, value: str) -> str:
@@ -66,6 +79,19 @@ class DisputeCreate(BaseModel):
             raise ValueError(
                 "transaction_reference must be alphanumeric with - or _ only"
             )
+        return value
+
+    @field_validator("evidence")
+    @classmethod
+    def validate_evidence_boundary(cls, value: dict[str, Any]) -> dict[str, Any]:
+        if len(value) > 10:
+            raise ValueError("evidence can include at most 10 fields")
+        encoded_length = len(str(value))
+        if encoded_length > 4000:
+            raise ValueError("evidence payload is too large for the local runtime")
+        for key in value:
+            if not isinstance(key, str) or len(key) > 80:
+                raise ValueError("evidence keys must be strings up to 80 characters")
         return value
 
 
