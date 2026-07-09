@@ -32,3 +32,4 @@ Thumbs.db
 .idea/
 workspace/runs/
 workspace/regeneration_runs/
+*.pyc
