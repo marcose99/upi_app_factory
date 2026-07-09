@@ -1,0 +1,61 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "configuration_example": "workspace/factory_generated/upi_dispute_resolution/generated_application/.env.example",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generated_runtime_modules": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/settings.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/runtime.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/models.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/audit.py"
+  ],
+  "hardening_controls": [
+    "typed local runtime settings",
+    "startup configuration checks",
+    "structured HTTP and validation errors",
+    "input validation for request IDs and evidence payloads",
+    "idempotent duplicate request replay for identical payloads",
+    "SQLite and audit-log persistence path boundaries",
+    "structured local audit events",
+    "local runtime health and metrics endpoints"
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_runtime_only",
+  "mandatory_gate": "PHASE39-GENERATED-APPLICATION-RUNTIME-HARDENING-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase39_generated_application_runtime_hardening",
+  "policy_id": "phase39_generated_application_runtime_hardening_policy",
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "broad production readiness claim",
+    "real UPI, bank, NPCI, RBI, payment rail, upstream, downstream, or third-party calls",
+    "faked success"
+  ],
+  "prompt": "prompts/phase39/generated_application_runtime_hardening_prompt.md",
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase39/runtime_hardening_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase39/runtime_hardening_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase39/runtime_hardening_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase39/runtime_configuration_contract.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase39/local_runtime_observability_contract.json"
+  ],
+  "status": "active",
+  "tag_allowed": false,
+  "validation_entrypoint": "scripts/validate_phase39_generated_application_runtime_hardening.py",
+  "version": "1.0.0"
+}

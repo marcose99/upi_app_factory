@@ -1,0 +1,28 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate": "PHASE39-GENERATED-APPLICATION-RUNTIME-HARDENING-GATE",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_runtime_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase39_generated_application_runtime_hardening",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_checks": [
+    "required policy, prompt, lifecycle, validator, and test files exist",
+    "generated app has local runtime settings and startup checks",
+    "generated app rejects live-provider, real-secret, and non-mock ecosystem modes",
+    "generated app exposes local runtime health and metrics",
+    "generated app handles validation errors with structured error payloads",
+    "generated app replays identical idempotent requests",
+    "governance boundaries remain closed"
+  ],
+  "status": "passed",
+  "tag_allowed": false
+}

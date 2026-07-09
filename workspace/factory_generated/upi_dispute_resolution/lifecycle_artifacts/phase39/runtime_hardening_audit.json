@@ -1,0 +1,27 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_result": "passed",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "findings": [
+    "Generated app runtime settings now validate local-only configuration.",
+    "Startup checks fail closed for live providers, real secrets, and non-mock ecosystem mode.",
+    "FastAPI error responses include structured error envelopes.",
+    "Request validation was tightened for client request IDs and evidence payloads.",
+    "Identical duplicate client_request_id submissions replay the existing dispute response.",
+    "SQLite and audit-log persistence are constrained to local runtime paths.",
+    "Runtime health and metrics endpoints expose local observability hooks."
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_runtime_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase39_generated_application_runtime_hardening",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false
+}
