@@ -1,10 +1,10 @@
 {
   "app_id": "upi_dispute_resolution",
   "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
   "external_ecosystem_integrations": "mocked_or_simulated_only",
   "live_provider_calls_allowed": false,
   "local_readiness_scope": "local_generated_application_scenario_validation_only",
-  "deployment_allowed": false,
   "merge_allowed": false,
   "official_certification_claimed": false,
   "official_certification_granted": false,
@@ -129,7 +129,7 @@
       "description": "Return structured errors for missing disputes without crashing the app.",
       "expected_outputs": {
         "boundary_notice_contains": "mock/simulated",
-        "error_code": "http_error",
+        "error_code": "dispute_not_found",
         "status_code": 404
       },
       "id": "resilience_missing_dispute_structured_error",
@@ -143,7 +143,7 @@
       "category": "security",
       "description": "Reject obvious long numeric sensitive values in request descriptions.",
       "expected_outputs": {
-        "error_code": "http_error",
+        "error_code": "validation_boundary",
         "message_contains": "long numeric sensitive data",
         "status_code": 422
       },

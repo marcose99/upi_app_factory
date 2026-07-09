@@ -274,7 +274,7 @@ async def run_resilience(app: Any) -> dict[str, object]:
         "boundary_notice_contains": "mock/simulated" in body["error"]["boundary_notice"],
     }
     assert_equal(response.status_code, 404, "status_code")
-    assert_equal(body["error"]["code"], "http_error", "error_code")
+    assert_equal(body["error"]["code"], "dispute_not_found", "error_code")
     assert_equal(observed["boundary_notice_contains"], True, "boundary_notice_contains")
     return observed
 
@@ -296,7 +296,7 @@ async def run_security(app: Any) -> dict[str, object]:
         "message_contains": "long numeric sensitive data" in body["error"]["message"],
     }
     assert_equal(response.status_code, 422, "status_code")
-    assert_equal(body["error"]["code"], "http_error", "error_code")
+    assert_equal(body["error"]["code"], "validation_boundary", "error_code")
     assert_equal(observed["message_contains"], True, "message_contains")
     return observed
 
