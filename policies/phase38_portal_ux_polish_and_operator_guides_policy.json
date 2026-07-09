@@ -1,0 +1,61 @@
+{
+  "arbitrary_command_execution_allowed": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "guide_service": "factory/operator_portal/operator_guides.py",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_operator_guides_and_portal_workflows_only",
+  "mandatory_gate": "PHASE38-PORTAL-UX-POLISH-AND-OPERATOR-GUIDES-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase38_portal_ux_polish_and_operator_guides",
+  "policy_id": "phase38_portal_ux_polish_and_operator_guides_policy",
+  "portal_guides_endpoint": "GET /portal/operator-guides",
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "live provider calls",
+    "real credentials",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "broad readiness claim",
+    "real UPI, bank, NPCI, RBI, payment rail, upstream, downstream, or third-party calls",
+    "faked success"
+  ],
+  "prompt": "prompts/phase38/portal_ux_polish_and_operator_guides_prompt.md",
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_guides": [
+    "docs/phase38/local_operator_guide.md",
+    "docs/phase38/troubleshooting_guide.md",
+    "docs/phase38/portal_workflow_guide.md",
+    "docs/phase38/status_taxonomy.md"
+  ],
+  "required_status_vocabulary": [
+    "ok",
+    "available",
+    "missing",
+    "configured",
+    "unavailable",
+    "dry_run",
+    "passed",
+    "failed",
+    "skipped",
+    "export_ready",
+    "error"
+  ],
+  "status": "active",
+  "tag_allowed": false,
+  "ui_assets": [
+    "factory/operator_portal/web_ui/static/index.html",
+    "factory/operator_portal/web_ui/static/app.js",
+    "factory/operator_portal/web_ui/static/styles.css"
+  ],
+  "validation_entrypoint": "scripts/validate_phase38_portal_ux_polish_and_operator_guides.py",
+  "version": "1.0.0"
+}

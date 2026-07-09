@@ -1,0 +1,40 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "guides": [
+    {
+      "id": "local_operator_guide",
+      "path": "docs/phase38/local_operator_guide.md",
+      "purpose": "Start, validate, and stop the local factory without live integrations."
+    },
+    {
+      "id": "troubleshooting_guide",
+      "path": "docs/phase38/troubleshooting_guide.md",
+      "purpose": "Map common portal statuses and failures to local recovery steps."
+    },
+    {
+      "id": "portal_workflow_guide",
+      "path": "docs/phase38/portal_workflow_guide.md",
+      "purpose": "Use Health, Evidence, Download, Validation, and Guides panels safely."
+    },
+    {
+      "id": "status_taxonomy",
+      "path": "docs/phase38/status_taxonomy.md",
+      "purpose": "Explain operator-facing status values and governance boundaries."
+    }
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_operator_guides_and_portal_workflows_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase38_portal_ux_polish_and_operator_guides",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "status": "available",
+  "tag_allowed": false
+}

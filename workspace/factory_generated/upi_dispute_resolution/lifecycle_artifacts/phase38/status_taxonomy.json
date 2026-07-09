@@ -1,0 +1,29 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_operator_guides_and_portal_workflows_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase38_portal_ux_polish_and_operator_guides",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "status_taxonomy": {
+    "available": "A local artifact or report exists and can be read.",
+    "configured": "A local command or workflow is known, but this phase did not execute it.",
+    "dry_run": "The validation runner listed approved commands without executing them.",
+    "error": "The portal could not complete the request; inspect the returned next steps.",
+    "export_ready": "A governed local export bundle was created by the existing download center.",
+    "failed": "The local validation command completed with a non-zero return code.",
+    "missing": "A local artifact is absent; run the documented local command that creates it.",
+    "ok": "The local API process is responding.",
+    "passed": "The local validation command completed with return code 0.",
+    "skipped": "The workflow intentionally did not run that action.",
+    "unavailable": "The local command or workflow is not configured in this checkout."
+  },
+  "tag_allowed": false
+}
