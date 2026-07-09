@@ -27,6 +27,7 @@ from .models import (
 )
 from .pii import assert_no_obvious_real_sensitive_values, mask_upi_id
 from .repository import DisputeNotFoundError, DisputeRepository
+from .repository import DuplicateBusinessSubmissionError
 from .repository import DuplicateClientRequestError
 from .runtime import (
     RuntimeState,
@@ -56,6 +57,19 @@ def build_dispute_record(command: SubmitDisputeCommand) -> DisputeRecord:
         created_at_utc=now,
         updated_at_utc=now,
         domain_notes=["Initial local dispute simulation record created."],
+    )
+
+
+def business_duplicate_fingerprint(command: SubmitDisputeCommand) -> str:
+    return payload_fingerprint(
+        {
+            "dispute_type": command.dispute_type.value,
+            "transaction_reference": command.transaction_reference,
+            "customer_upi_id": command.customer_upi_id,
+            "amount_paise": command.amount_paise,
+            "description": command.description,
+            "evidence": command.evidence,
+        }
     )
 
 
@@ -192,15 +206,28 @@ def create_app(
 
         record = build_dispute_record(command)
         fingerprint = payload_fingerprint(command)
+        business_fingerprint = business_duplicate_fingerprint(command)
         try:
-            current_repo.add(record, request_fingerprint=fingerprint)
+            current_repo.add(
+                record,
+                request_fingerprint=fingerprint,
+                business_fingerprint=business_fingerprint,
+            )
             unit_of_work.commit()
         except DuplicateClientRequestError as exc:
             stored_fingerprint = current_repo.get_request_fingerprint(command.client_request_id)
             if stored_fingerprint == fingerprint:
-                response.status_code = status.HTTP_200_OK
-                runtime_state.counters.idempotency_replays += 1
                 existing = current_repo.get_by_client_request_id(command.client_request_id)
+                runtime_state.counters.idempotency_replays += 1
+                response.status_code = status.HTTP_200_OK
+                log_runtime_event(
+                    runtime_logger,
+                    event_type="idempotency_replay",
+                    details={
+                        "dispute_id": existing.dispute_id,
+                        "client_request_id": existing.client_request_id,
+                    },
+                )
                 return DisputeResponse(
                     dispute=existing,
                     next_actions=next_actions_for(existing),
@@ -209,6 +236,12 @@ def create_app(
             raise ApplicationError(
                 AppErrorCode.PAYLOAD_CONFLICT,
                 "client_request_id already exists with a different payload",
+                http_status=409,
+            ) from exc
+        except DuplicateBusinessSubmissionError as exc:
+            raise ApplicationError(
+                AppErrorCode.PAYLOAD_CONFLICT,
+                "duplicate business dispute submission already exists",
                 http_status=409,
             ) from exc
 

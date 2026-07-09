@@ -18,6 +18,15 @@ class DuplicateClientRequestError(ApplicationError):
         )
 
 
+class DuplicateBusinessSubmissionError(ApplicationError):
+    def __init__(self) -> None:
+        super().__init__(
+            AppErrorCode.PAYLOAD_CONFLICT,
+            "duplicate business dispute submission already exists",
+            http_status=409,
+        )
+
+
 class DisputeNotFoundError(ApplicationError):
     def __init__(self, dispute_id: str) -> None:
         super().__init__(
@@ -41,6 +50,7 @@ class DisputeRepository:
             "dispute_id TEXT PRIMARY KEY, "
             "client_request_id TEXT NOT NULL UNIQUE, "
             "request_fingerprint TEXT, "
+            "business_fingerprint TEXT UNIQUE, "
             "payload_json TEXT NOT NULL, "
             "status TEXT NOT NULL, "
             "created_at_utc TEXT NOT NULL, "
@@ -52,6 +62,12 @@ class DisputeRepository:
         }
         if "request_fingerprint" not in columns:
             self.connection.execute("ALTER TABLE disputes ADD COLUMN request_fingerprint TEXT")
+        if "business_fingerprint" not in columns:
+            self.connection.execute("ALTER TABLE disputes ADD COLUMN business_fingerprint TEXT")
+            self.connection.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_disputes_business_fingerprint "
+                "ON disputes (business_fingerprint)"
+            )
         self.connection.commit()
 
     def add(
@@ -59,14 +75,19 @@ class DisputeRepository:
         record: DisputeRecord,
         *,
         request_fingerprint: str | None = None,
+        business_fingerprint: str | None = None,
     ) -> DisputeRecord:
         try:
             self.connection.execute(
-                "INSERT INTO disputes VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO disputes ("
+                "dispute_id, client_request_id, request_fingerprint, "
+                "business_fingerprint, payload_json, status, created_at_utc, updated_at_utc"
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     record.dispute_id,
                     record.client_request_id,
                     request_fingerprint,
+                    business_fingerprint,
                     record.model_dump_json(),
                     record.status.value,
                     record.created_at_utc,
@@ -75,8 +96,29 @@ class DisputeRepository:
             )
             self.connection.commit()
         except sqlite3.IntegrityError as exc:
+            if self.exists_for_client_request_id(record.client_request_id):
+                raise DuplicateClientRequestError(record.client_request_id) from exc
+            if (
+                business_fingerprint is not None
+                and self.exists_for_business_fingerprint(business_fingerprint)
+            ):
+                raise DuplicateBusinessSubmissionError() from exc
             raise DuplicateClientRequestError(record.client_request_id) from exc
         return record
+
+    def exists_for_client_request_id(self, client_request_id: str) -> bool:
+        row = self.connection.execute(
+            "SELECT 1 FROM disputes WHERE client_request_id = ?",
+            (client_request_id,),
+        ).fetchone()
+        return row is not None
+
+    def exists_for_business_fingerprint(self, business_fingerprint: str) -> bool:
+        row = self.connection.execute(
+            "SELECT 1 FROM disputes WHERE business_fingerprint = ?",
+            (business_fingerprint,),
+        ).fetchone()
+        return row is not None
 
     def get_by_client_request_id(self, client_request_id: str) -> DisputeRecord:
         row = self.connection.execute(

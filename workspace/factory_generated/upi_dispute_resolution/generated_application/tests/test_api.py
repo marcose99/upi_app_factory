@@ -54,9 +54,30 @@ def test_create_and_get_dispute_masks_upi_id(tmp_path: Path) -> None:
 
 def test_duplicate_client_request_is_rejected(tmp_path: Path) -> None:
     client = make_client(tmp_path)
-    assert client.post("/disputes", json=valid_payload()).status_code == 201
-    duplicate = client.post("/disputes", json=valid_payload())
-    assert duplicate.status_code == 409
+
+    created = client.post("/disputes", json=valid_payload())
+    assert created.status_code == 201, created.text
+
+    replayed = client.post("/disputes", json=valid_payload())
+    assert replayed.status_code == 200, replayed.text
+    assert replayed.json()["dispute"]["dispute_id"] == created.json()["dispute"]["dispute_id"]
+
+    conflicting_payload = valid_payload()
+    if "description" in conflicting_payload:
+        conflicting_payload["description"] = (
+            str(conflicting_payload["description"]) + " changed duplicate payload"
+        )
+    elif "amount" in conflicting_payload:
+        conflicting_payload["amount"] = 999999
+    elif "complaint_category" in conflicting_payload:
+        conflicting_payload["complaint_category"] = "PENDING_TRANSACTION"
+    else:
+        conflicting_payload["customer_reference"] = "changed-duplicate-payload"
+
+    conflict = client.post("/disputes", json=conflicting_payload)
+    assert conflict.status_code == 409, conflict.text
+    assert conflict.json()["error"]["code"] == "payload_conflict"
+
 
 
 def test_mock_ecosystem_check_updates_status(tmp_path: Path) -> None:
