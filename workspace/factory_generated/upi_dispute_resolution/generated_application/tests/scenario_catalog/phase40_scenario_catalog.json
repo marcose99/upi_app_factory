@@ -1,0 +1,177 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_scenario_validation_only",
+  "deployment_allowed": false,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase40_generated_application_test_scenario_expansion",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "scenario_categories": [
+    "positive",
+    "negative",
+    "edge",
+    "contract",
+    "replay",
+    "audit",
+    "resilience",
+    "security",
+    "performance-smoke"
+  ],
+  "scenarios": [
+    {
+      "category": "positive",
+      "description": "Create a duplicate-debit dispute and verify the local generated app response.",
+      "expected_outputs": {
+        "boundary_notice_contains": "mock/simulated",
+        "dispute_status": "validation_pending",
+        "masked_customer_upi_id": "ph***r@upi",
+        "status_code": 201
+      },
+      "id": "positive_duplicate_debit_submission",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.main.create_dispute",
+        "upi_dispute_app.workflow.initial_status",
+        "upi_dispute_app.pii.mask_upi_id"
+      ]
+    },
+    {
+      "category": "negative",
+      "description": "Reject malformed client request IDs with a structured validation error.",
+      "expected_outputs": {
+        "error_code": "validation_error",
+        "status_code": 422
+      },
+      "id": "negative_invalid_request_id",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.models.DisputeCreate.validate_client_request_id",
+        "upi_dispute_app.main.validation_error_handler"
+      ]
+    },
+    {
+      "category": "edge",
+      "description": "Route a high-value merchant-service dispute through the mock more-evidence path.",
+      "expected_outputs": {
+        "decision": "more_evidence_required",
+        "mock_sources_checked": [
+          "mock_bank_adapter",
+          "mock_psp_adapter"
+        ],
+        "new_status": "customer_action_required",
+        "status_code": 200
+      },
+      "id": "edge_high_value_more_evidence_path",
+      "traceability": [
+        "POST /disputes",
+        "POST /disputes/{dispute_id}/actions/mock-ecosystem-check",
+        "upi_dispute_app.mock_ecosystem.MockEcosystemGateway.decide",
+        "upi_dispute_app.workflow.status_from_ecosystem_decision"
+      ]
+    },
+    {
+      "category": "contract",
+      "description": "Verify local runtime health and metrics contracts expose boundary metadata.",
+      "expected_outputs": {
+        "certification_boundary": "certification_ready_not_certified",
+        "live_provider_calls_allowed": false,
+        "metrics_scope": "local_structured_runtime_counters_only",
+        "status_code": 200
+      },
+      "id": "contract_runtime_health_metrics",
+      "traceability": [
+        "GET /runtime/health",
+        "GET /runtime/metrics",
+        "upi_dispute_app.runtime.RuntimeHardeningReport.as_dict",
+        "upi_dispute_app.runtime.RuntimeCounters.as_dict"
+      ]
+    },
+    {
+      "category": "replay",
+      "description": "Replay an identical create request and verify idempotent response behavior.",
+      "expected_outputs": {
+        "first_status_code": 201,
+        "idempotency_replays": 1,
+        "replay_status_code": 200,
+        "same_dispute_id": true
+      },
+      "id": "replay_idempotent_duplicate_submission",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.repository.get_request_fingerprint",
+        "upi_dispute_app.repository.get_by_client_request_id",
+        "upi_dispute_app.runtime.payload_fingerprint"
+      ]
+    },
+    {
+      "category": "audit",
+      "description": "Verify audit events are written locally with certification boundary metadata.",
+      "expected_outputs": {
+        "audit_event_type": "dispute_created",
+        "certification_boundary": "certification_ready_not_certified",
+        "external_ecosystem_integrations": "mocked_or_simulated_only"
+      },
+      "id": "audit_local_boundary_metadata",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.audit.AuditLogger.record",
+        "var/local runtime audit JSONL"
+      ]
+    },
+    {
+      "category": "resilience",
+      "description": "Return structured errors for missing disputes without crashing the app.",
+      "expected_outputs": {
+        "boundary_notice_contains": "mock/simulated",
+        "error_code": "http_error",
+        "status_code": 404
+      },
+      "id": "resilience_missing_dispute_structured_error",
+      "traceability": [
+        "GET /disputes/{dispute_id}",
+        "upi_dispute_app.repository.DisputeNotFoundError",
+        "upi_dispute_app.main.http_error_handler"
+      ]
+    },
+    {
+      "category": "security",
+      "description": "Reject obvious long numeric sensitive values in request descriptions.",
+      "expected_outputs": {
+        "error_code": "http_error",
+        "message_contains": "long numeric sensitive data",
+        "status_code": 422
+      },
+      "id": "security_sensitive_numeric_description_rejected",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.pii.assert_no_obvious_real_sensitive_values",
+        "upi_dispute_app.main.http_error_handler"
+      ]
+    },
+    {
+      "category": "performance-smoke",
+      "description": "Create multiple local disputes within a small smoke threshold.",
+      "expected_outputs": {
+        "created_count": 10,
+        "disputes_created_metric": 10,
+        "max_duration_seconds": 2.0
+      },
+      "id": "performance_smoke_bulk_local_submissions",
+      "traceability": [
+        "POST /disputes",
+        "GET /runtime/metrics",
+        "upi_dispute_app.repository.DisputeRepository.add",
+        "upi_dispute_app.runtime.RuntimeCounters"
+      ]
+    }
+  ],
+  "status": "available",
+  "tag_allowed": false,
+  "version": "1.0.0"
+}

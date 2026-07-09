@@ -1,0 +1,235 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "catalog": "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/scenario_catalog/phase40_scenario_catalog.json",
+  "categories_covered": [
+    "audit",
+    "contract",
+    "edge",
+    "negative",
+    "performance-smoke",
+    "positive",
+    "replay",
+    "resilience",
+    "security"
+  ],
+  "failed_count": 0,
+  "passed_count": 9,
+  "phase": "phase40_generated_application_test_scenario_expansion",
+  "safety_boundaries": {
+    "certification_boundary": "certification_ready_not_certified",
+    "deployment_allowed": false,
+    "external_ecosystem_integrations": "mocked_or_simulated_only",
+    "live_provider_calls_allowed": false,
+    "local_readiness_scope": "local_generated_application_scenario_validation_only",
+    "merge_allowed": false,
+    "official_certification_claimed": false,
+    "official_certification_granted": false,
+    "production_readiness_claimed": false,
+    "push_allowed": false,
+    "real_secrets_allowed": false,
+    "tag_allowed": false
+  },
+  "scenario_count": 9,
+  "scenario_results": [
+    {
+      "category": "positive",
+      "expected_outputs": {
+        "boundary_notice_contains": "mock/simulated",
+        "dispute_status": "validation_pending",
+        "masked_customer_upi_id": "ph***r@upi",
+        "status_code": 201
+      },
+      "observed_outputs": {
+        "boundary_notice_contains": true,
+        "dispute_status": "validation_pending",
+        "masked_customer_upi_id": "ph***r@upi",
+        "status_code": 201
+      },
+      "scenario_id": "positive_duplicate_debit_submission",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.main.create_dispute",
+        "upi_dispute_app.workflow.initial_status",
+        "upi_dispute_app.pii.mask_upi_id"
+      ]
+    },
+    {
+      "category": "negative",
+      "expected_outputs": {
+        "error_code": "validation_error",
+        "status_code": 422
+      },
+      "observed_outputs": {
+        "error_code": "validation_error",
+        "status_code": 422
+      },
+      "scenario_id": "negative_invalid_request_id",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.models.DisputeCreate.validate_client_request_id",
+        "upi_dispute_app.main.validation_error_handler"
+      ]
+    },
+    {
+      "category": "edge",
+      "expected_outputs": {
+        "decision": "more_evidence_required",
+        "mock_sources_checked": [
+          "mock_bank_adapter",
+          "mock_psp_adapter"
+        ],
+        "new_status": "customer_action_required",
+        "status_code": 200
+      },
+      "observed_outputs": {
+        "decision": "more_evidence_required",
+        "mock_sources_checked": [
+          "mock_bank_adapter",
+          "mock_psp_adapter"
+        ],
+        "new_status": "customer_action_required",
+        "status_code": 200
+      },
+      "scenario_id": "edge_high_value_more_evidence_path",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "POST /disputes/{dispute_id}/actions/mock-ecosystem-check",
+        "upi_dispute_app.mock_ecosystem.MockEcosystemGateway.decide",
+        "upi_dispute_app.workflow.status_from_ecosystem_decision"
+      ]
+    },
+    {
+      "category": "contract",
+      "expected_outputs": {
+        "certification_boundary": "certification_ready_not_certified",
+        "live_provider_calls_allowed": false,
+        "metrics_scope": "local_structured_runtime_counters_only",
+        "status_code": 200
+      },
+      "observed_outputs": {
+        "certification_boundary": "certification_ready_not_certified",
+        "health_status_code": 200,
+        "live_provider_calls_allowed": false,
+        "metrics_scope": "local_structured_runtime_counters_only",
+        "metrics_status_code": 200
+      },
+      "scenario_id": "contract_runtime_health_metrics",
+      "status": "passed",
+      "traceability": [
+        "GET /runtime/health",
+        "GET /runtime/metrics",
+        "upi_dispute_app.runtime.RuntimeHardeningReport.as_dict",
+        "upi_dispute_app.runtime.RuntimeCounters.as_dict"
+      ]
+    },
+    {
+      "category": "replay",
+      "expected_outputs": {
+        "first_status_code": 201,
+        "idempotency_replays": 1,
+        "replay_status_code": 200,
+        "same_dispute_id": true
+      },
+      "observed_outputs": {
+        "first_status_code": 201,
+        "idempotency_replays": 1,
+        "replay_status_code": 200,
+        "same_dispute_id": true
+      },
+      "scenario_id": "replay_idempotent_duplicate_submission",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.repository.get_request_fingerprint",
+        "upi_dispute_app.repository.get_by_client_request_id",
+        "upi_dispute_app.runtime.payload_fingerprint"
+      ]
+    },
+    {
+      "category": "audit",
+      "expected_outputs": {
+        "audit_event_type": "dispute_created",
+        "certification_boundary": "certification_ready_not_certified",
+        "external_ecosystem_integrations": "mocked_or_simulated_only"
+      },
+      "observed_outputs": {
+        "audit_event_type": "dispute_created",
+        "certification_boundary": "certification_ready_not_certified",
+        "external_ecosystem_integrations": "mocked_or_simulated_only"
+      },
+      "scenario_id": "audit_local_boundary_metadata",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.audit.AuditLogger.record",
+        "var/local runtime audit JSONL"
+      ]
+    },
+    {
+      "category": "resilience",
+      "expected_outputs": {
+        "boundary_notice_contains": "mock/simulated",
+        "error_code": "http_error",
+        "status_code": 404
+      },
+      "observed_outputs": {
+        "boundary_notice_contains": true,
+        "error_code": "http_error",
+        "status_code": 404
+      },
+      "scenario_id": "resilience_missing_dispute_structured_error",
+      "status": "passed",
+      "traceability": [
+        "GET /disputes/{dispute_id}",
+        "upi_dispute_app.repository.DisputeNotFoundError",
+        "upi_dispute_app.main.http_error_handler"
+      ]
+    },
+    {
+      "category": "security",
+      "expected_outputs": {
+        "error_code": "http_error",
+        "message_contains": "long numeric sensitive data",
+        "status_code": 422
+      },
+      "observed_outputs": {
+        "error_code": "http_error",
+        "message_contains": true,
+        "status_code": 422
+      },
+      "scenario_id": "security_sensitive_numeric_description_rejected",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "upi_dispute_app.pii.assert_no_obvious_real_sensitive_values",
+        "upi_dispute_app.main.http_error_handler"
+      ]
+    },
+    {
+      "category": "performance-smoke",
+      "expected_outputs": {
+        "created_count": 10,
+        "disputes_created_metric": 10,
+        "max_duration_seconds": 2.0
+      },
+      "observed_outputs": {
+        "created_count": 10,
+        "disputes_created_metric": 10,
+        "duration_seconds": 0.04326,
+        "max_duration_seconds": 2.0
+      },
+      "scenario_id": "performance_smoke_bulk_local_submissions",
+      "status": "passed",
+      "traceability": [
+        "POST /disputes",
+        "GET /runtime/metrics",
+        "upi_dispute_app.repository.DisputeRepository.add",
+        "upi_dispute_app.runtime.RuntimeCounters"
+      ]
+    }
+  ],
+  "status": "passed"
+}

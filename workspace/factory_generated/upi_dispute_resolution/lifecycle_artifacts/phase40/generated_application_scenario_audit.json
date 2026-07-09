@@ -1,0 +1,24 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_summary": [
+    "Scenario execution uses in-process ASGI transport against the local generated app.",
+    "All external ecosystem behavior remains mocked or simulated.",
+    "Expected outputs are captured in the scenario catalog and compared by the local runner.",
+    "Reports retain certification_ready_not_certified posture and do not claim official certification."
+  ],
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_scenario_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase40_generated_application_test_scenario_expansion",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "status": "available",
+  "tag_allowed": false
+}
