@@ -8,6 +8,20 @@ Local production-disciplined factory prototype.
 
 Not NPCI certified. Not RBI certified. Not live-bank integrated. No real money movement.
 
+Phase 45 consolidates the final v1.0 local candidate at the professional
+stopping point. The posture remains `certification_ready_not_certified`.
+Readiness language is limited to local-readiness evidence, and UPI rails, banks,
+NPCI/RBI interfaces, payment rails, upstream/downstream systems, and third-party
+services remain mocked or simulated.
+
+Prepared future release label text:
+`v1.0.0-local-governed-upi-factory-candidate`. Phase 45 does not create that
+label, deploy, merge, push, create real secrets, call live providers, or claim
+official certification.
+
+Final candidate evidence starts at
+`workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase45/final_evidence_index.json`.
+
 ## Start
 
 ```bash
