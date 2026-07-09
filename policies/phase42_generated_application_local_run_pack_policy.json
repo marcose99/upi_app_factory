@@ -1,0 +1,53 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_run_pack_review_only",
+  "mandatory_gate": "PHASE42-GENERATED-APPLICATION-LOCAL-RUN-PACK-GATE",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase42_generated_application_local_run_pack",
+  "policy_id": "phase42_generated_application_local_run_pack_policy",
+  "production_readiness_claimed": false,
+  "prohibited_actions": [
+    "live provider calls",
+    "real secrets",
+    "deployment",
+    "merge",
+    "tag",
+    "push",
+    "official certification claim",
+    "broad production readiness claim",
+    "real UPI, bank, NPCI, RBI, payment rail, upstream, downstream, or third-party calls",
+    "faked success",
+    "generated export bundle ZIP files"
+  ],
+  "prompt": "prompts/phase42/generated_application_local_run_pack_prompt.md",
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase42/generated_application_local_run_pack_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase42/generated_application_local_run_readiness_gate.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase42/generated_application_local_smoke_test_plan.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase42/generated_application_local_artifact_reset_plan.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase42/generated_application_local_run_pack_audit.json"
+  ],
+  "required_run_pack_files": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/.env.example",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/local_run_pack/README.md",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/start_local.sh",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/health_check.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/smoke_test.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/validate_local_run_pack.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/clean_local_artifacts.sh"
+  ],
+  "status": "active",
+  "tag_allowed": false,
+  "test_entrypoint": "tests/test_phase42_generated_application_local_run_pack.py",
+  "validation_entrypoint": "scripts/validate_phase42_generated_application_local_run_pack.py",
+  "version": "1.0.0"
+}

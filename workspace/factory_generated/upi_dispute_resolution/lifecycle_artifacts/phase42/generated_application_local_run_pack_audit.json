@@ -1,0 +1,23 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "audit_id": "phase42_generated_application_local_run_pack_audit",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "findings": [
+    "Generated app local run documentation is present.",
+    "Startup, health check, smoke test, validation, and reset scripts are present.",
+    "The smoke test exercises local FastAPI behavior without live external providers.",
+    "Reset instructions are scoped to known local runtime artifacts."
+  ],
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_run_pack_review_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase42_generated_application_local_run_pack",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false
+}
