@@ -1,0 +1,84 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "evidence_id": "phase41_generated_application_architecture_evidence",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_architecture_and_code_quality_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase41_generated_application_architecture_code_quality_upgrade",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false,
+  "architecture_controls": [
+    {
+      "control": "ddd_layered_boundaries",
+      "evidence_files": [
+        "app/upi_dispute_app/models.py",
+        "app/upi_dispute_app/workflow.py",
+        "app/upi_dispute_app/main.py"
+      ],
+      "expectation": "Domain models and workflow decisions are separated from API transport."
+    },
+    {
+      "control": "ports_and_adapters",
+      "evidence_files": [
+        "app/upi_dispute_app/ports.py",
+        "app/upi_dispute_app/mock_ecosystem.py",
+        "app/upi_dispute_app/audit.py"
+      ],
+      "expectation": "External-facing behavior is represented through local ports and mock adapters."
+    },
+    {
+      "control": "command_query_separation",
+      "evidence_files": [
+        "app/upi_dispute_app/cqrs.py",
+        "app/upi_dispute_app/main.py"
+      ],
+      "expectation": "Write actions use commands and read actions use queries."
+    },
+    {
+      "control": "domain_events",
+      "evidence_files": [
+        "app/upi_dispute_app/domain_events.py",
+        "app/upi_dispute_app/audit.py"
+      ],
+      "expectation": "Business transitions emit local domain events that are persisted through audit evidence."
+    },
+    {
+      "control": "repository_and_unit_of_work",
+      "evidence_files": [
+        "app/upi_dispute_app/repository.py",
+        "app/upi_dispute_app/unit_of_work.py"
+      ],
+      "expectation": "Persistence is behind a repository with an explicit local unit-of-work boundary."
+    },
+    {
+      "control": "error_taxonomy",
+      "evidence_files": [
+        "app/upi_dispute_app/errors.py",
+        "app/upi_dispute_app/repository.py",
+        "app/upi_dispute_app/main.py"
+      ],
+      "expectation": "Application errors use typed codes and structured API responses."
+    },
+    {
+      "control": "local_mock_ecosystem_boundary",
+      "evidence_files": [
+        "app/upi_dispute_app/mock_ecosystem.py",
+        "app/upi_dispute_app/workflow.py",
+        "app/upi_dispute_app/runtime.py"
+      ],
+      "expectation": "Bank, PSP, ODR, NPCI/RBI, and payment rail activity remains mocked or simulated."
+    }
+  ],
+  "review_readiness": {
+    "boundary_review": "Explicit local-only and mocked/simulated constraints are present in policy, prompt, runtime, and workflow notice.",
+    "maintainability_review": "Application logic is decomposed into domain, API, repository, runtime, adapter, command/query, event, and error modules.",
+    "test_review": "Phase validator and tests check evidence files, architectural markers, and governance boundaries."
+  }
+}

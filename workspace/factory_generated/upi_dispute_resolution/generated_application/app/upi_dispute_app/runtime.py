@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field, is_dataclass
 from typing import Any
 
 from .settings import RuntimeSettings
@@ -127,6 +127,8 @@ def log_runtime_event(
 def payload_fingerprint(payload: Any) -> str:
     if hasattr(payload, "model_dump"):
         serializable = payload.model_dump(mode="json")
+    elif is_dataclass(payload) and not isinstance(payload, type):
+        serializable = asdict(payload)
     else:
         serializable = payload
     encoded = json.dumps(serializable, sort_keys=True, separators=(",", ":")).encode("utf-8")

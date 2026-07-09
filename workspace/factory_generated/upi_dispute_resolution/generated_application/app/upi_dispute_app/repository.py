@@ -5,15 +5,26 @@ import sqlite3
 from pathlib import Path
 from typing import Iterable
 
+from .errors import AppErrorCode, ApplicationError
 from .models import DisputeRecord, DisputeStatus
 
 
-class DuplicateClientRequestError(Exception):
-    pass
+class DuplicateClientRequestError(ApplicationError):
+    def __init__(self, client_request_id: str) -> None:
+        super().__init__(
+            AppErrorCode.DUPLICATE_CLIENT_REQUEST,
+            f"client_request_id already exists: {client_request_id}",
+            http_status=409,
+        )
 
 
-class DisputeNotFoundError(Exception):
-    pass
+class DisputeNotFoundError(ApplicationError):
+    def __init__(self, dispute_id: str) -> None:
+        super().__init__(
+            AppErrorCode.DISPUTE_NOT_FOUND,
+            f"dispute not found: {dispute_id}",
+            http_status=404,
+        )
 
 
 class DisputeRepository:

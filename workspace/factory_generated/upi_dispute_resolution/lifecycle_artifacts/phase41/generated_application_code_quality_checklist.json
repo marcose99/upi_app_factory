@@ -1,0 +1,68 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "checklist_id": "phase41_generated_application_code_quality_checklist",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_architecture_and_code_quality_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase41_generated_application_architecture_code_quality_upgrade",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "rules": [
+    {
+      "id": "CQ-001",
+      "name": "Layered dependency clarity",
+      "required": true,
+      "status": "implemented",
+      "validation": "Domain models, workflow, repository, adapters, and API entrypoint are separate modules."
+    },
+    {
+      "id": "CQ-002",
+      "name": "Ports before external adapters",
+      "required": true,
+      "status": "implemented",
+      "validation": "Ports are declared for repository, audit, unit-of-work, and mock ecosystem adapter behavior."
+    },
+    {
+      "id": "CQ-003",
+      "name": "Command/query intent objects",
+      "required": true,
+      "status": "implemented",
+      "validation": "Write and read workflows use explicit command/query dataclasses."
+    },
+    {
+      "id": "CQ-004",
+      "name": "Domain event traceability",
+      "required": true,
+      "status": "implemented",
+      "validation": "Dispute creation and mock ecosystem checks emit local domain events into audit details."
+    },
+    {
+      "id": "CQ-005",
+      "name": "Typed application errors",
+      "required": true,
+      "status": "implemented",
+      "validation": "Application errors expose stable error codes and structured response payloads."
+    },
+    {
+      "id": "CQ-006",
+      "name": "No live integration drift",
+      "required": true,
+      "status": "implemented",
+      "validation": "Generated app and Phase 41 artifacts do not enable live UPI, bank, NPCI/RBI, PSP, payment rail, upstream, downstream, or third-party calls."
+    },
+    {
+      "id": "CQ-007",
+      "name": "No release operations",
+      "required": true,
+      "status": "implemented",
+      "validation": "Deployment, merge, tag, and push actions remain disabled by policy and validator."
+    }
+  ],
+  "tag_allowed": false
+}

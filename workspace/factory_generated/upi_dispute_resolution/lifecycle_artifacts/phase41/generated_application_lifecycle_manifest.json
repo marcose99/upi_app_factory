@@ -1,0 +1,26 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "lifecycle_artifacts": [
+    "generated_application_architecture_evidence.json",
+    "generated_application_code_quality_checklist.json",
+    "generated_application_architecture_gate.json",
+    "generated_application_architecture_audit.json",
+    "generated_application_lifecycle_manifest.json"
+  ],
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_architecture_and_code_quality_validation_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase41_generated_application_architecture_code_quality_upgrade",
+  "policy": "policies/phase41_generated_application_architecture_code_quality_upgrade_policy.json",
+  "production_readiness_claimed": false,
+  "prompt": "prompts/phase41/generated_application_architecture_code_quality_upgrade_prompt.md",
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "tag_allowed": false,
+  "validator": "scripts/validate_phase41_generated_application_architecture_code_quality_upgrade.py"
+}
