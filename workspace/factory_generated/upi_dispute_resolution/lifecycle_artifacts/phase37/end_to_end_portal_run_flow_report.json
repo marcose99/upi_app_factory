@@ -1,0 +1,456 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "evidence_dashboard_summary": {
+    "app_id": "upi_dispute_resolution",
+    "dashboard_success_claim": {
+      "missing_or_partial_phases": [],
+      "reason": "all_configured_local_evidence_paths_available",
+      "status": "local_evidence_visible"
+    },
+    "latest_relevant_tags": {
+      "status": "available",
+      "tags": [
+        "v0.32.0-operator-portal-download-center-integration",
+        "v0.31.0-deep-generated-application-export-download-center",
+        "v0.30.0-deep-generated-application-regeneration-validation",
+        "v0.29.0-generated-application-deep-structure-generator",
+        "v0.28.0-generated-application-architecture-depth-blueprint"
+      ]
+    },
+    "lifecycle_artifact_availability": {
+      "phase28": {
+        "files": [
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/architecture_depth_artifact_manifest.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/certification_boundary.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/phase28_architecture_depth_audit.json",
+            "status": "available"
+          }
+        ],
+        "status": "available"
+      },
+      "phase29": {
+        "files": [
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase29/deep_structure_generator_audit.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase29/deep_structure_generator_gate.json",
+            "status": "available"
+          }
+        ],
+        "status": "available"
+      },
+      "phase30": {
+        "files": [
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase30/deep_generated_application_regeneration_audit.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase30/deep_generated_application_regeneration_gate.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase30/controlled_regeneration_output_manifest.json",
+            "status": "available"
+          }
+        ],
+        "status": "available"
+      },
+      "phase31": {
+        "files": [
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase31/deep_generated_application_export_download_audit.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase31/deep_generated_application_export_download_gate.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase31/operator_download_center_manifest.json",
+            "status": "available"
+          }
+        ],
+        "status": "available"
+      },
+      "phase32": {
+        "files": [
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_audit.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_gate.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase32/operator_portal_download_center_manifest.json",
+            "status": "available"
+          }
+        ],
+        "status": "available"
+      },
+      "phase34": {
+        "files": [
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_audit.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_gate.json",
+            "status": "available"
+          },
+          {
+            "exists": true,
+            "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_runner_manifest.json",
+            "status": "available"
+          }
+        ],
+        "status": "available"
+      }
+    },
+    "phase": "phase33_operator_portal_run_validation_evidence_dashboard",
+    "phase31_export_bundle_metadata": {
+      "app_id": "upi_dispute_resolution",
+      "bundle_id": "phase31_deep_generated_application_bundle",
+      "bundle_ready": true,
+      "certification_boundary": "certification_ready_not_certified",
+      "deployment_allowed": false,
+      "evidence_files": [
+        "evidence/certification_ready_not_certified_boundary.json",
+        "evidence/generated_application_generation_manifest_summary.json",
+        "evidence/mocked_simulated_ecosystem_boundary.json",
+        "evidence/no_live_provider_no_real_secret_no_deployment_no_official_certification_evidence.json",
+        "evidence/phase28_architecture_depth_inputs_summary.json",
+        "evidence/phase29_deep_structure_policy_summary.json",
+        "evidence/phase30_regeneration_certification_readiness_evidence_summary.json",
+        "evidence/source_evidence_file_index.json"
+      ],
+      "external_ecosystem_integrations": "mocked_or_simulated_only",
+      "generation_manifest_status": "available",
+      "included_files_count": 41,
+      "live_provider_calls_allowed": false,
+      "official_certification_claimed": false,
+      "official_certification_granted": false,
+      "phase": "phase31_deep_generated_application_export_download_center",
+      "production_readiness_claimed": false,
+      "real_secrets_allowed": false,
+      "status": "available",
+      "validation_commands": [
+        "python scripts/validate_phase31_deep_generated_application_export_download_center.py",
+        "python scripts/validate_phase30_deep_generated_application_regeneration.py",
+        "python scripts/validate_phase29_generated_application_deep_structure_generator.py",
+        "python scripts/validate_phase28_generated_application_architecture_depth_blueprint.py",
+        "python -m pytest tests/test_phase31_deep_generated_application_export_download_center.py"
+      ],
+      "zip_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+      "zip_size_bytes": 30122,
+      "zip_status": "available"
+    },
+    "phase32_download_center_service_status": {
+      "manifest_status": "available",
+      "phase31_export_entrypoint": "scripts/export_phase31_deep_generated_application_bundle.py",
+      "service_exists": true,
+      "service_path": "factory/operator_portal/download_center.py",
+      "status": "available",
+      "validation_entrypoint": "scripts/validate_phase32_operator_portal_download_center.py"
+    },
+    "phase34_validation_runner_report_status": {
+      "certification_boundary": "certification_ready_not_certified",
+      "command_count": 1,
+      "dry_run": false,
+      "run_report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+      "run_report_status": "available",
+      "run_status": "passed",
+      "service_exists": true,
+      "service_path": "factory/operator_portal/validation_runner.py",
+      "status": "available"
+    },
+    "phase_coverage": {
+      "covered_phases": [
+        "phase28",
+        "phase29",
+        "phase30",
+        "phase31",
+        "phase32",
+        "phase33",
+        "phase34"
+      ],
+      "current": "phase33",
+      "posture": "certification_ready_not_certified"
+    },
+    "safety_boundaries": {
+      "certification_boundary": "certification_ready_not_certified",
+      "deployment_allowed": false,
+      "external_ecosystem_integrations": "mocked_or_simulated_only",
+      "live_provider_calls_allowed": false,
+      "mocked_simulated_ecosystem_boundary": true,
+      "official_certification_claimed": false,
+      "official_certification_granted": false,
+      "production_readiness_claimed": false,
+      "real_secrets_allowed": false
+    },
+    "test_commands": [
+      "python -m pytest tests/test_phase34_operator_portal_validation_runner.py",
+      "python -m pytest tests/test_phase33_operator_portal_evidence_dashboard.py",
+      "python -m pytest tests/test_phase32_operator_portal_download_center.py",
+      "python -m pytest tests/test_phase31_deep_generated_application_export_download_center.py",
+      "python -m pytest tests/test_phase30_deep_generated_application_regeneration.py",
+      "python -m pytest tests/test_phase29_generated_application_deep_structure_generator.py",
+      "python -m pytest tests/test_phase11c_agentic_prompt_best_practices.py tests/test_phase11c_llm_call_metrics_prompt_policy.py tests/test_phase28_generated_application_architecture_depth_blueprint.py"
+    ],
+    "validator_commands": [
+      "python scripts/validate_phase34_operator_portal_validation_runner.py",
+      "python scripts/validate_phase33_operator_portal_evidence_dashboard.py",
+      "python scripts/validate_phase32_operator_portal_download_center.py",
+      "python scripts/validate_phase31_deep_generated_application_export_download_center.py",
+      "python scripts/validate_phase30_deep_generated_application_regeneration.py",
+      "python scripts/validate_phase29_generated_application_deep_structure_generator.py",
+      "python scripts/validate_phase28_generated_application_architecture_depth_blueprint.py"
+    ]
+  },
+  "export_result": {
+    "bundle_metadata": {
+      "app_id": "upi_dispute_resolution",
+      "bundle_id": "phase31_deep_generated_application_bundle",
+      "certification_boundary": "certification_ready_not_certified",
+      "deployment_allowed": false,
+      "external_ecosystem_integrations": "mocked_or_simulated_only",
+      "included_files_count": 41,
+      "live_provider_calls_allowed": false,
+      "official_certification_claimed": false,
+      "phase31_export_phase": "phase31_deep_generated_application_export_download_center",
+      "phase32_service_phase": "phase32_operator_portal_download_center_integration",
+      "real_secrets_allowed": false,
+      "zip_size_bytes": 30122
+    },
+    "bundle_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+    "download_ready_path": "/home/marcose/projects/upi_dispute_resolution_factory/workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+    "phase31_export_invoked": true,
+    "status": "export_ready"
+  },
+  "generation_status": {
+    "generation_executed_by_phase37": false,
+    "reason": "Phase 37 only reports configured/unavailable generation command state.",
+    "success_claimed": false
+  },
+  "phase": "phase37_end_to_end_portal_run_flow",
+  "safety_boundaries": {
+    "certification_boundary": "certification_ready_not_certified",
+    "deployment_allowed": false,
+    "destructive_workspace_replacement_allowed": false,
+    "external_ecosystem_integrations": "mocked_or_simulated_only",
+    "generation_success_claimed": false,
+    "live_provider_calls_allowed": false,
+    "local_readiness_scope": "local_end_to_end_operator_portal_run_flow_only",
+    "merge_allowed": false,
+    "official_certification_claimed": false,
+    "official_certification_granted": false,
+    "production_readiness_claimed": false,
+    "push_allowed": false,
+    "real_secrets_allowed": false,
+    "tag_allowed": false
+  },
+  "stages": {
+    "download_available": {
+      "download_ready_path": "/home/marcose/projects/upi_dispute_resolution_factory/workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+      "state": "available",
+      "status": "passed"
+    },
+    "evidence_dashboard_updated": {
+      "dashboard_phase": "phase33_operator_portal_run_validation_evidence_dashboard",
+      "state": "updated",
+      "status": "passed",
+      "validation_report_status": "available"
+    },
+    "export_bundle_ready": {
+      "bundle_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+      "export_manifest_path": "/home/marcose/projects/upi_dispute_resolution_factory/workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/staging/phase31_deep_generated_application_bundle/export_manifest.json",
+      "state": "ready",
+      "status": "passed"
+    },
+    "generation_command": {
+      "executed": false,
+      "execution_mode": "not_executed_by_phase37_portal_flow",
+      "execution_status": "skipped",
+      "generator_exists": true,
+      "generator_path": "factory/generators/mock_dispute_app_generator.py",
+      "policy_exists": true,
+      "policy_path": "policies/phase30_deep_generated_application_regeneration_policy.json",
+      "portal_command_id": "phase30_deep_generated_application_regeneration",
+      "skip_reason": "Phase 37 does not execute generation or claim generation success.",
+      "state": "configured",
+      "status": "configured",
+      "success_claimed": false
+    },
+    "intake_requirements_available": {
+      "files": [
+        {
+          "exists": true,
+          "path": "factory_governance/phase2/upi_dispute_requirements.v1.json"
+        },
+        {
+          "exists": true,
+          "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase10/requirements_analysis.json"
+        }
+      ],
+      "state": "available",
+      "status": "available"
+    },
+    "validation_dry_run_ready": {
+      "command_ids": [
+        "phase34_runner_self_check"
+      ],
+      "state": "ready",
+      "status": "passed"
+    },
+    "validation_run": {
+      "command_results": [
+        {
+          "command": [
+            "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+            "-c",
+            "print('phase34 validation runner self-check')"
+          ],
+          "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python -c print('phase34 validation runner self-check')",
+          "command_id": "phase34_runner_self_check",
+          "description": "Small safe self-check used by the Phase 34 validator.",
+          "duration_seconds": 0.014889,
+          "return_code": 0,
+          "status": "passed",
+          "stderr_preview": "",
+          "stdout_preview": "phase34 validation runner self-check\n",
+          "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+        }
+      ],
+      "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+      "runner_status": "passed",
+      "state": "passed",
+      "status": "passed"
+    }
+  },
+  "status": "passed",
+  "validation_dry_run_report": {
+    "app_id": "upi_dispute_resolution",
+    "approved_command_ids": [
+      "phase34_validator",
+      "phase33_validator",
+      "phase32_validator",
+      "phase31_validator",
+      "phase30_validator",
+      "phase29_validator",
+      "phase28_validator"
+    ],
+    "collect_all": true,
+    "command_results": [
+      {
+        "command": [
+          "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+          "-c",
+          "print('phase34 validation runner self-check')"
+        ],
+        "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python -c print('phase34 validation runner self-check')",
+        "command_id": "phase34_runner_self_check",
+        "description": "Small safe self-check used by the Phase 34 validator.",
+        "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+      }
+    ],
+    "dry_run": true,
+    "phase": "phase34_operator_portal_governed_validation_runner",
+    "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "safety_boundaries": {
+      "arbitrary_shell_text_allowed": false,
+      "certification_boundary": "certification_ready_not_certified",
+      "deployment_allowed": false,
+      "external_ecosystem_integrations": "mocked_or_simulated_only",
+      "live_provider_calls_allowed": false,
+      "merge_allowed": false,
+      "official_certification_claimed": false,
+      "official_certification_granted": false,
+      "production_readiness_claimed": false,
+      "push_allowed": false,
+      "real_secrets_allowed": false,
+      "shell_true_used": false,
+      "tag_allowed": false
+    },
+    "status": "dry_run",
+    "stop_on_first_failure": false
+  },
+  "validation_run_report": {
+    "app_id": "upi_dispute_resolution",
+    "approved_command_ids": [
+      "phase34_validator",
+      "phase33_validator",
+      "phase32_validator",
+      "phase31_validator",
+      "phase30_validator",
+      "phase29_validator",
+      "phase28_validator"
+    ],
+    "collect_all": true,
+    "command_results": [
+      {
+        "command": [
+          "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+          "-c",
+          "print('phase34 validation runner self-check')"
+        ],
+        "command_display": "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python -c print('phase34 validation runner self-check')",
+        "command_id": "phase34_runner_self_check",
+        "description": "Small safe self-check used by the Phase 34 validator.",
+        "duration_seconds": 0.014889,
+        "return_code": 0,
+        "status": "passed",
+        "stderr_preview": "",
+        "stdout_preview": "phase34 validation runner self-check\n",
+        "working_directory": "/home/marcose/projects/upi_dispute_resolution_factory"
+      }
+    ],
+    "dry_run": false,
+    "duration_seconds": 0.014907,
+    "phase": "phase34_operator_portal_governed_validation_runner",
+    "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "safety_boundaries": {
+      "arbitrary_shell_text_allowed": false,
+      "certification_boundary": "certification_ready_not_certified",
+      "deployment_allowed": false,
+      "external_ecosystem_integrations": "mocked_or_simulated_only",
+      "live_provider_calls_allowed": false,
+      "merge_allowed": false,
+      "official_certification_claimed": false,
+      "official_certification_granted": false,
+      "production_readiness_claimed": false,
+      "push_allowed": false,
+      "real_secrets_allowed": false,
+      "shell_true_used": false,
+      "tag_allowed": false
+    },
+    "status": "passed",
+    "stop_on_first_failure": false
+  }
+}

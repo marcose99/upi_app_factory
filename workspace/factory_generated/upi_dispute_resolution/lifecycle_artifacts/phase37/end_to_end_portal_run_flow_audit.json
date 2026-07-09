@@ -1,0 +1,30 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "download_source": "factory/operator_portal/download_center.py",
+  "evidence_dashboard_source": "factory/operator_portal/evidence_dashboard.py",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generation_command_handling": "report_configured_or_unavailable_without_execution_success_claim",
+  "generation_success_claimed": false,
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_end_to_end_operator_portal_run_flow_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase37_end_to_end_portal_run_flow",
+  "portal_flow_source": "factory/operator_portal/end_to_end_run_flow.py",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "stage_status_model": [
+    "configured",
+    "unavailable",
+    "missing",
+    "passed",
+    "failed",
+    "skipped",
+    "available"
+  ],
+  "tag_allowed": false,
+  "validation_runner_source": "factory/operator_portal/validation_runner.py"
+}
