@@ -1,0 +1,27 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "gate": "PHASE37-END-TO-END-PORTAL-RUN-FLOW-GATE",
+  "generation_success_claimed": false,
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_end_to_end_operator_portal_run_flow_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase37_end_to_end_portal_run_flow",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_stage_statuses": [
+    "intake_requirements_available",
+    "generation_command",
+    "export_bundle_ready",
+    "validation_dry_run_ready",
+    "validation_run",
+    "evidence_dashboard_updated",
+    "download_available"
+  ],
+  "status": "active",
+  "tag_allowed": false
+}
