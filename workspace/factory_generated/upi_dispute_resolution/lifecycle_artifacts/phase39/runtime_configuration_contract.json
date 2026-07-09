@@ -1,0 +1,27 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_readiness_scope": "local_generated_application_runtime_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase39_generated_application_runtime_hardening",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "required_environment_variables": {
+    "UPI_DISPUTE_ALLOW_REAL_SECRETS": "must remain false",
+    "UPI_DISPUTE_APP_ENV": "local or test only",
+    "UPI_DISPUTE_AUDIT_LOG_PATH": "relative path inside UPI_DISPUTE_DATA_DIR",
+    "UPI_DISPUTE_DATA_DIR": "relative local runtime directory",
+    "UPI_DISPUTE_ENABLE_LIVE_PROVIDER_CALLS": "must remain false",
+    "UPI_DISPUTE_EXTERNAL_ECOSYSTEM_MODE": "mock only",
+    "UPI_DISPUTE_IDEMPOTENCY_RETENTION_HOURS": "1 through 168",
+    "UPI_DISPUTE_LOG_LEVEL": "DEBUG, INFO, WARNING, ERROR, or CRITICAL",
+    "UPI_DISPUTE_SQLITE_PATH": "relative path inside UPI_DISPUTE_DATA_DIR"
+  },
+  "tag_allowed": false
+}

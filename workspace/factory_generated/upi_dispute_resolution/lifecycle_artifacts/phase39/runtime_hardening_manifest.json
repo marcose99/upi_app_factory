@@ -1,0 +1,37 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifacts": [
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/.env.example",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/settings.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/runtime.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/models.py",
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/audit.py"
+  ],
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "hardening_controls": [
+    "runtime configuration",
+    "startup checks",
+    "structured errors",
+    "input validation",
+    "idempotency replay",
+    "local persistence boundaries",
+    "structured audit logging",
+    "runtime health and metrics"
+  ],
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "local_readiness_scope": "local_generated_application_runtime_only",
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase39_generated_application_runtime_hardening",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "status": "available",
+  "tag_allowed": false
+}
