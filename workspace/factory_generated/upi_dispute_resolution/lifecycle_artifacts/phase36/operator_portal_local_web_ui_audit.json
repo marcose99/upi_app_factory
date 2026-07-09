@@ -1,0 +1,26 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "external_cdn_dependencies_allowed": false,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "local_only": true,
+  "merge_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase36_operator_portal_local_web_ui",
+  "production_readiness_claimed": false,
+  "push_allowed": false,
+  "real_secrets_allowed": false,
+  "summary": "Phase 36 adds a local browser UI over the Phase 35 API with static assets, loopback-only serving, governed validation controls, and explicit no-certification, no-production, no-live-provider, no-secret, no-deployment, no-merge, no-tag, and no-push boundaries.",
+  "tag_allowed": false,
+  "validated_ui_sections": [
+    "health/status",
+    "evidence dashboard",
+    "download-center status/export action",
+    "validation dry-run",
+    "validation run",
+    "latest validation report",
+    "safety/certification boundaries"
+  ]
+}

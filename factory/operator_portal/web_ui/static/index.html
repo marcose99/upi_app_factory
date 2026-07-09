@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operator Portal - Local Web UI</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">UPI dispute resolution factory</p>
+        <h1>Operator Portal</h1>
+      </div>
+      <div class="posture" id="posture-badge">certification_ready_not_certified</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel status-panel" aria-labelledby="health-title">
+        <div class="panel-header">
+          <h2 id="health-title">Health</h2>
+          <button type="button" data-action="refresh-health" title="Refresh health">Refresh</button>
+        </div>
+        <dl id="health-card" class="metric-grid">
+          <div><dt>Status</dt><dd data-field="health-status">Loading</dd></div>
+          <div><dt>Phase</dt><dd data-field="health-phase">Loading</dd></div>
+          <div><dt>Service</dt><dd data-field="health-service">Loading</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="evidence-title">
+        <div class="panel-header">
+          <h2 id="evidence-title">Evidence Dashboard</h2>
+          <button type="button" data-action="refresh-evidence" title="Refresh evidence dashboard">Refresh</button>
+        </div>
+        <dl id="evidence-card" class="metric-grid">
+          <div><dt>Posture</dt><dd data-field="evidence-posture">Loading</dd></div>
+          <div><dt>Current coverage</dt><dd data-field="evidence-current">Loading</dd></div>
+          <div><dt>Dashboard claim</dt><dd data-field="evidence-claim">Loading</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="download-title">
+        <div class="panel-header">
+          <h2 id="download-title">Download Center</h2>
+          <div class="button-row">
+            <button type="button" data-action="refresh-download" title="Refresh download status">Refresh</button>
+            <button type="button" data-action="export-download" title="Create local governed export">Export</button>
+          </div>
+        </div>
+        <dl id="download-card" class="metric-grid">
+          <div><dt>Status</dt><dd data-field="download-status">Loading</dd></div>
+          <div><dt>Bundle ready</dt><dd data-field="download-ready">Loading</dd></div>
+          <div><dt>Bundle path</dt><dd data-field="download-path">Not requested</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="validation-title">
+        <div class="panel-header">
+          <h2 id="validation-title">Validation</h2>
+          <div class="button-row">
+            <button type="button" data-action="validation-dry-run" title="List approved validation commands">Dry run</button>
+            <button type="button" data-action="validation-run" title="Run safe validation self-check">Run</button>
+            <button type="button" data-action="latest-report" title="Load latest validation report">Latest</button>
+          </div>
+        </div>
+        <div class="validation-grid">
+          <article id="validation-dry-run-card">
+            <h3>Dry-run</h3>
+            <p data-field="dry-run-status">Waiting</p>
+          </article>
+          <article id="validation-run-card">
+            <h3>Run</h3>
+            <p data-field="run-status">Waiting</p>
+          </article>
+          <article id="latest-report-card">
+            <h3>Latest report</h3>
+            <p data-field="latest-status">Waiting</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel boundaries" aria-labelledby="boundaries-title">
+        <div class="panel-header">
+          <h2 id="boundaries-title">Safety Boundaries</h2>
+        </div>
+        <ul id="boundary-list">
+          <li>Local-only browser UI over the Phase 35 API.</li>
+          <li>Posture: certification_ready_not_certified.</li>
+          <li>No official certification or official approval is claimed.</li>
+          <li>No broad production-readiness claim is made; scope is local-readiness only.</li>
+          <li>No live provider calls, real secrets, deployment, merge, tag, or push action is enabled.</li>
+          <li>External ecosystem integrations remain mocked or simulated.</li>
+          <li>No external CDN dependency is used.</li>
+        </ul>
+      </section>
+
+      <section class="panel report-panel" aria-labelledby="report-title">
+        <div class="panel-header">
+          <h2 id="report-title">Latest Validation Report</h2>
+        </div>
+        <pre id="report-output" aria-live="polite">No report loaded.</pre>
+      </section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
