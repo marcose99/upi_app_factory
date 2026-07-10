@@ -1,0 +1,25 @@
+{
+  "certification_claim": "PROHIBITED",
+  "closed_run_requirements": [
+    "ALL_REQUIRED_LIFECYCLE_STATES",
+    "VALID_STEP_EVIDENCE_HASHES",
+    "FEATURE_COMMIT_IN_MAIN",
+    "FEATURE_COMMIT_IN_ORIGIN_MAIN",
+    "MANIFEST_IDENTITY_MATCH",
+    "PROTECTED_ACTIONS_SUBSET_COMMIT_MERGE_PUSH",
+    "NO_TAG",
+    "NO_RELEASE",
+    "ZERO_LLM_CALLS"
+  ],
+  "conflicting_closed_runs": "FAIL_CLOSED",
+  "mutation_permitted": false,
+  "phase": "46O",
+  "policy_id": "AUTHORITATIVE_LIFECYCLE_RUN_RESOLUTION",
+  "posture": "READ_ONLY_FAIL_CLOSED",
+  "schema_version": 1,
+  "selection_precedence": [
+    "VALID_CLOSED_RUN",
+    "LATEST_DISCOVERABLE_RUN_WHEN_NO_VALID_CLOSED_RUN_EXISTS"
+  ],
+  "superseded_run_deletion": "PROHIBITED"
+}

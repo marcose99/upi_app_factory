@@ -1,0 +1,26 @@
+{
+  "autonomy_posture": "READ_ONLY_FAIL_CLOSED",
+  "candidate_paths": [
+    "tools/lifecycle_orchestrator/run_resolution.py",
+    "policies/authoritative_lifecycle_run_policy.json",
+    "config/lifecycle/phases/phase46o.json",
+    "docs/phase46o/README.md",
+    "tests/test_phase46o_run_resolution.py"
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "mutation_performed_by_resolver": false,
+  "name": "Authoritative Lifecycle Run Resolution",
+  "phase": "46O",
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "release": false,
+  "schema_version": 1,
+  "status": "COMMITTED",
+  "tag": false
+}
