@@ -1,0 +1,15 @@
+{
+  "conflicting_closed_runs": "FAIL_CLOSED",
+  "consumers": [
+    "lifecycle_campaign",
+    "autonomous_supervisor",
+    "operator_portal",
+    "operator_reporting_cli"
+  ],
+  "llm_calls": 0,
+  "mutation_permitted": false,
+  "phase": "46P",
+  "policy_id": "AUTHORITATIVE_RUN_INTEGRATION",
+  "posture": "READ_ONLY_FAIL_CLOSED",
+  "schema_version": 1
+}

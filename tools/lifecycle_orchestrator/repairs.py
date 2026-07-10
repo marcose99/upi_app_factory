@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from tools.lifecycle_orchestrator.run_resolution import preferred_phase_run
+
 
 class RepairError(RuntimeError):
     """Raised when a bounded repair cannot be applied safely."""
@@ -28,16 +30,34 @@ def write_object_atomic(path: Path, value: dict[str, Any]) -> None:
     os.replace(temporary, path)
 
 
-def latest_phase_run(state_root: Path, phase: str) -> Path | None:
-    runs_root = state_root / "lifecycle_runs"
-    if not runs_root.is_dir():
+def latest_phase_run(
+    state_root: Path,
+    phase: str,
+) -> Path | None:
+    configured = os.environ.get("UPI_APP_FACTORY_SOURCE_REPO")
+    candidates = [Path(configured)] if configured else []
+    candidates.append(Path.cwd())
+    for candidate in candidates:
+        project_root = candidate.resolve()
+        if (
+            (project_root / ".git").exists()
+            and (project_root / "tools/lifecycle_orchestrator").is_dir()
+        ):
+            return preferred_phase_run(
+                state_root,
+                phase,
+                project_root=project_root,
+            )
+    lifecycle_root = state_root / "lifecycle_runs"
+    if not lifecycle_root.is_dir():
         return None
-    candidates = sorted(
+    runs = sorted(
         path
-        for path in runs_root.glob(f"{phase.lower()}-*")
+        for path in lifecycle_root.glob(f"{phase.lower()}-*")
         if path.is_dir() and (path / "run.json").is_file()
     )
-    return candidates[-1] if candidates else None
+    return runs[-1] if runs else None
+
 
 
 def relative_diagnostic_path(filename: str, worktree: Path) -> str:
