@@ -1,0 +1,134 @@
+{
+  "$defs": {
+    "commands": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "argv": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "argv"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "$id": "https://upi-app-factory.local/schemas/lifecycle/phase-manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "base_branch": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "candidate_paths": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "commit_message": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "feature_branch": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "full_validation_commands": {
+      "$ref": "#/$defs/commands"
+    },
+    "implementation_commands": {
+      "$ref": "#/$defs/commands"
+    },
+    "llm": {
+      "additionalProperties": true,
+      "properties": {
+        "allowed_calls": {
+          "const": 0
+        },
+        "enabled": {
+          "const": false
+        }
+      },
+      "required": [
+        "enabled",
+        "allowed_calls"
+      ],
+      "type": "object"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "phase": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "post_restore_validation_commands": {
+      "$ref": "#/$defs/commands"
+    },
+    "protected_actions": {
+      "items": {
+        "enum": [
+          "commit",
+          "merge",
+          "push"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "runtime_noise_paths": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "ACTIVE",
+        "RETIRED"
+      ]
+    },
+    "targeted_validation_commands": {
+      "$ref": "#/$defs/commands"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "phase",
+    "name",
+    "base_branch",
+    "feature_branch",
+    "commit_message",
+    "protected_actions",
+    "candidate_paths",
+    "implementation_commands",
+    "targeted_validation_commands",
+    "full_validation_commands",
+    "llm"
+  ],
+  "title": "UPI App Factory Lifecycle Phase Manifest",
+  "type": "object"
+}

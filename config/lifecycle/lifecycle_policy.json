@@ -1,0 +1,46 @@
+{
+  "approval_model": {
+    "always_human_only": [
+      "tag",
+      "release",
+      "remote_repository_rename",
+      "local_checkout_rename",
+      "production_deployment",
+      "live_provider_enablement"
+    ],
+    "one_time_run_approval": true,
+    "supported_actions": [
+      "commit",
+      "merge",
+      "push"
+    ]
+  },
+  "default_timing": "synchronous",
+  "evidence": {
+    "append_only_run_state": true,
+    "closure_bundle": true,
+    "closure_bundle_checksum": true,
+    "step_evidence_hashing": "SHA-256"
+  },
+  "execution": {
+    "fast_forward_merge_only": true,
+    "feature_branch_push": false,
+    "llm_calls_allowed": 0,
+    "push_main_only": true,
+    "resume_enabled": true,
+    "shell_control_operators_in_manifest": false
+  },
+  "name": "Unified governed lifecycle orchestration policy",
+  "repairs": {
+    "automatic_low_risk_wrapper_repairs": true,
+    "maximum_attempts": 2,
+    "repository_behavior_changes_require_phase_governance": true
+  },
+  "schema_version": 1,
+  "validation": {
+    "machine_readable_evidence_preferred": true,
+    "primary_gate": "COMMAND_EXIT_STATUS",
+    "reuse_allowed_when_commit_and_evidence_hashes_match": true,
+    "test_counts": "OBSERVE_NOT_HARDCODE"
+  }
+}
