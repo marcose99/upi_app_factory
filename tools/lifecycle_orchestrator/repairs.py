@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from tools.governed_repairs.bounded_mypy import BoundedMyPyRepairError, apply_bounded_mypy_repair
 from tools.lifecycle_orchestrator.run_resolution import preferred_phase_run
 
 
@@ -347,6 +348,19 @@ def try_bounded_repair(
         raise RepairError(f"No lifecycle run found for {phase}")
     run = load_object(run_dir / "run.json", "Lifecycle run")
     gate = classify_failure_gate(run)
+    if gate == "MyPy":
+        try:
+            report = apply_bounded_mypy_repair(
+                phase=phase,
+                manifest_path=manifest_path,
+                run_dir=run_dir,
+                python=python,
+                attempt=attempt,
+            )
+        except BoundedMyPyRepairError as exc:
+            raise RepairError(str(exc)) from exc
+        report["rollback"] = rollback_to_implemented(run_dir)
+        return report
     if gate != "Ruff":
         raise RepairError(
             f"{gate} failure classified; no automatic semantic "

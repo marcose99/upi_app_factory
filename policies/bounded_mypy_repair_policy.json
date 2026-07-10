@@ -1,0 +1,14 @@
+{
+  "allowed_diagnostic": "\"BaseRoute\" has no attribute \"path\" [attr-defined]",
+  "allowed_path_prefix": "tests/",
+  "candidate_scope_required": true,
+  "llm_calls": 0,
+  "max_attempts": 2,
+  "phase": "46R",
+  "repair_id": "MYPY_FASTAPI_APIROUTE_NARROWING",
+  "required_ast_shape": "single_unfiltered_route_path_comprehension",
+  "rollback_required": true,
+  "schema_version": 1,
+  "transformation": "APIRoute_isinstance_narrowing",
+  "unknown_diagnostics": "FAIL_CLOSED"
+}

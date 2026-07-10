@@ -1,0 +1,29 @@
+{
+  "campaign_id": "campaign-a-46p-46t-autonomous-lifecycle-productization",
+  "candidate_paths": [
+    "tools/governed_repairs/bounded_mypy.py",
+    "tools/lifecycle_orchestrator/repairs.py",
+    "tools/autonomous_supervisor/engine.py",
+    "config/autonomous/repair_catalog.json",
+    "policies/autonomous_self_healing_policy.json",
+    "policies/bounded_mypy_repair_policy.json",
+    "tests/test_phase46r_bounded_mypy_repair.py",
+    "config/lifecycle/phases/phase46r.json",
+    "docs/phase46r/README.md"
+  ],
+  "certification_posture": "certification_ready_not_certified",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "phase": "46R",
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "release": false,
+  "schema_version": 1,
+  "status": "COMMITTED",
+  "tag": false
+}

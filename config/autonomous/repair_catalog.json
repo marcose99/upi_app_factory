@@ -1,6 +1,6 @@
 {
   "authorization_model": "DECLARATIVE_CATALOG_AND_POLICY_ENGINE",
-  "policy_version": "46L",
+  "policy_version": "46R",
   "repairs": [
     {
       "automatic": true,
@@ -33,6 +33,17 @@
       ],
       "max_attempts": 2,
       "repair_id": "RUNTIME_NOISE_RESTORE",
+      "risk": "LOW",
+      "safe_fix_only": false
+    },
+    {
+      "automatic": true,
+      "candidate_scope_required": true,
+      "eligible_gates": [
+        "MyPy"
+      ],
+      "max_attempts": 2,
+      "repair_id": "MYPY_FASTAPI_APIROUTE_NARROWING",
       "risk": "LOW",
       "safe_fix_only": false
     }

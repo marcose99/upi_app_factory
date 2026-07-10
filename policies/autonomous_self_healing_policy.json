@@ -2,7 +2,8 @@
   "automatic_repairs": [
     "RUFF_SAFE_FIX",
     "PYTEST_PREREQUISITE_REPLAY",
-    "RUNTIME_NOISE_RESTORE"
+    "RUNTIME_NOISE_RESTORE",
+    "MYPY_FASTAPI_APIROUTE_NARROWING"
   ],
   "autonomy_posture": "BOUNDED_DETERMINISTIC_SELF_HEALING",
   "candidate_scope_required": true,

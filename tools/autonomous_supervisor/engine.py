@@ -3,10 +3,10 @@ from __future__ import annotations
 import datetime as dt
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any, Iterable
 
 from tools.autonomous_supervisor.catalog import RepairCatalog
@@ -17,6 +17,7 @@ from tools.autonomous_supervisor.state import (
     utc_now,
     write_json_atomic,
 )
+from tools.governed_repairs.bounded_mypy import apply_bounded_mypy_repair
 
 
 class SupervisorError(RuntimeError):
@@ -731,6 +732,28 @@ class AutonomousCampaignSupervisor:
                     f"{phase} has an unapproved semantic test failure"
                 )
             verify_candidate_scope(worktree, expected)
+            reason = rule.repair_id
+        elif rule.repair_id == "MYPY_FASTAPI_APIROUTE_NARROWING":
+            report = apply_bounded_mypy_repair(
+                phase=phase,
+                manifest_path=manifest_path,
+                run_dir=run_dir,
+                python=str(self.python),
+                attempt=attempt,
+                evidence_dir=(
+                    self.execution_dir
+                    / f"{phase.lower()}_mypy_repair_attempt_{attempt}"
+                ),
+            )
+            self.event(
+                "MYPY_REPAIR_VERIFIED",
+                phase=phase,
+                details={
+                    "repair_id": rule.repair_id,
+                    "attempt": attempt,
+                    "diagnostic": report["diagnostic"],
+                },
+            )
             reason = rule.repair_id
         elif rule.repair_id == "RUNTIME_NOISE_RESTORE":
             verify_candidate_scope(worktree, expected)
