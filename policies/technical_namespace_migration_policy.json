@@ -1,0 +1,19 @@
+{
+  "canonical_writes_required": true,
+  "checkout_rename_allowed": false,
+  "compatibility_reads_required": true,
+  "historical_evidence_rewrite_allowed": false,
+  "human_approval_required_for": [
+    "physical package rename",
+    "checkout rename",
+    "remote repository rename",
+    "legacy alias retirement"
+  ],
+  "legacy_alias_removal_allowed": false,
+  "llm_calls_allowed": 0,
+  "phase": "46I",
+  "physical_package_rename_allowed": false,
+  "remote_repository_rename_allowed": false,
+  "schema_version": 1,
+  "status": "ACTIVE"
+}

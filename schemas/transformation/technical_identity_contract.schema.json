@@ -1,0 +1,41 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/technical-identity-contract.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "canonical_technical_identifier": {
+      "const": "upi_app_factory"
+    },
+    "canonical_write_posture": {
+      "const": "CANONICAL_ONLY"
+    },
+    "compatibility_read_posture": {
+      "const": "CANONICAL_AND_LEGACY_ACCEPTED"
+    },
+    "legacy_technical_identifiers": {
+      "contains": {
+        "const": "upi_dispute_resolution_factory"
+      },
+      "type": "array"
+    },
+    "phase": {
+      "const": "46I"
+    },
+    "physical_package_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "schema_version": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "canonical_technical_identifier",
+    "legacy_technical_identifiers",
+    "canonical_write_posture",
+    "compatibility_read_posture",
+    "physical_package_rename"
+  ],
+  "type": "object"
+}

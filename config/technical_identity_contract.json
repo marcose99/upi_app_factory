@@ -1,0 +1,15 @@
+{
+  "canonical_technical_identifier": "upi_app_factory",
+  "canonical_write_posture": "CANONICAL_ONLY",
+  "certification_posture": "CERTIFICATION_READY_NOT_CERTIFIED",
+  "compatibility_read_posture": "CANONICAL_AND_LEGACY_ACCEPTED",
+  "legacy_alias_retirement": "HUMAN_APPROVAL_REQUIRED",
+  "legacy_technical_identifiers": [
+    "upi_dispute_resolution_factory"
+  ],
+  "phase": "46I",
+  "physical_checkout_rename": "NOT_PERFORMED",
+  "physical_package_rename": "NOT_PERFORMED",
+  "remote_repository_rename": "NOT_PERFORMED",
+  "schema_version": 1
+}
