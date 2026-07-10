@@ -1,0 +1,137 @@
+{
+  "compatibility_aliases": [
+    {
+      "alias_id": "display-factoryfromnothing",
+      "alias_type": "display_identity",
+      "canonical": "UPI App Factory",
+      "legacy": "FactoryFromNothing",
+      "removal": "HUMAN_APPROVAL_REQUIRED",
+      "status": "PLAN_CONTRACT_FIRST"
+    },
+    {
+      "alias_id": "display-upi-dispute-resolution-factory",
+      "alias_type": "display_identity",
+      "canonical": "UPI App Factory",
+      "legacy": "UPI Dispute Resolution Factory",
+      "removal": "HUMAN_APPROVAL_REQUIRED",
+      "status": "PLAN_CONTRACT_FIRST"
+    },
+    {
+      "alias_id": "technical-python-repository-identifier",
+      "alias_type": "technical_identifier",
+      "canonical": "upi_app_factory",
+      "legacy": "upi_dispute_resolution_factory",
+      "removal": "HUMAN_APPROVAL_REQUIRED",
+      "status": "COMPATIBILITY_REQUIRED_BEFORE_MIGRATION"
+    },
+    {
+      "alias_id": "physical-local-checkout",
+      "alias_type": "physical_path",
+      "canonical": "upi_app_factory",
+      "legacy": "upi_dispute_resolution_factory",
+      "removal": "NOT_APPLICABLE",
+      "status": "HUMAN_GATE"
+    },
+    {
+      "alias_id": "remote-repository-name",
+      "alias_type": "remote_repository",
+      "canonical": "upi_app_factory",
+      "legacy": "upi_dispute_resolution_factory",
+      "removal": "NOT_APPLICABLE",
+      "status": "HUMAN_GATE"
+    }
+  ],
+  "display_identity_categories": [
+    "IDENTITY_FACTORYFROMNOTHING",
+    "IDENTITY_LEGACY_DISPLAY"
+  ],
+  "generated_application_prefixes": [
+    "workspace/factory_generated/"
+  ],
+  "historical_classifications": [
+    "HISTORICAL_EVIDENCE",
+    "MIGRATION_CONTROL"
+  ],
+  "human_gates": [
+    "commit",
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "local_checkout_rename",
+    "remote_repository_rename",
+    "technical_namespace_cutover",
+    "compatibility_layer_removal",
+    "destructive_delete"
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false,
+    "reason": "Repository identity planning is deterministic."
+  },
+  "max_findings": 50000,
+  "migration_waves": [
+    {
+      "mutation_allowed": false,
+      "name": "Control-plane and evidence preservation",
+      "objective": "Freeze historical evidence and establish migration contracts.",
+      "wave": "W0"
+    },
+    {
+      "mutation_allowed": false,
+      "name": "Display identity contract migration",
+      "objective": "Migrate display identity together with validators, tests, and documentation contracts.",
+      "wave": "W1"
+    },
+    {
+      "mutation_allowed": false,
+      "name": "Path-neutral runtime migration",
+      "objective": "Replace absolute and legacy repository paths with repository-relative or XDG-derived paths.",
+      "wave": "W2"
+    },
+    {
+      "mutation_allowed": false,
+      "name": "Technical namespace compatibility",
+      "objective": "Add canonical namespace aliases before moving imports, packages, service IDs, or reports.",
+      "wave": "W3"
+    },
+    {
+      "mutation_allowed": false,
+      "name": "Physical checkout and remote repository rename",
+      "objective": "Perform only after explicit human approval and successful recipient replay.",
+      "wave": "W4"
+    },
+    {
+      "mutation_allowed": false,
+      "name": "Compatibility retirement",
+      "objective": "Remove legacy aliases only after evidence-backed deprecation and human approval.",
+      "wave": "W5"
+    }
+  ],
+  "mode": "planning_only",
+  "name": "Governed compatibility and identity migration planning",
+  "path_reference_categories": [
+    "PATH_ABSOLUTE",
+    "PATH_LEGACY_REPOSITORY"
+  ],
+  "phase": "46C",
+  "prohibited_actions": [
+    "repository_file_mutation",
+    "generated_application_mutation",
+    "historical_evidence_mutation",
+    "technical_namespace_mutation",
+    "local_checkout_rename",
+    "remote_repository_rename",
+    "commit",
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "live_provider_enablement",
+    "production_deployment"
+  ],
+  "schema_version": 1,
+  "technical_identity_categories": [
+    "IDENTITY_LEGACY_TECHNICAL"
+  ]
+}

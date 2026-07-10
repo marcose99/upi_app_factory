@@ -1,0 +1,45 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/compatibility-alias.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alias_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "alias_type": {
+      "enum": [
+        "display_identity",
+        "technical_identifier",
+        "physical_path",
+        "remote_repository"
+      ]
+    },
+    "canonical": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "legacy": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "removal": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "status": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "alias_id",
+    "alias_type",
+    "legacy",
+    "canonical",
+    "status",
+    "removal"
+  ],
+  "title": "UPI App Factory Compatibility Alias",
+  "type": "object"
+}

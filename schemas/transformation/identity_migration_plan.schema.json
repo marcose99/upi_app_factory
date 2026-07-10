@@ -1,0 +1,54 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/identity-migration-plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "compatibility_aliases": {
+      "minItems": 1,
+      "type": "array"
+    },
+    "decisions": {
+      "type": "array"
+    },
+    "human_gates": {
+      "minItems": 1,
+      "type": "array"
+    },
+    "llm_calls": {
+      "const": 0
+    },
+    "migration_waves": {
+      "minItems": 6,
+      "type": "array"
+    },
+    "mode": {
+      "const": "planning_only"
+    },
+    "mutation_allowed": {
+      "const": false
+    },
+    "phase": {
+      "const": "46C"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "PLANNED"
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "mode",
+    "status",
+    "decisions",
+    "migration_waves",
+    "compatibility_aliases",
+    "human_gates",
+    "mutation_allowed",
+    "llm_calls"
+  ],
+  "title": "Phase 46C Identity Migration Plan",
+  "type": "object"
+}
