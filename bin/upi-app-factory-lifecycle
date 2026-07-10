@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PYTHON="${UPI_APP_FACTORY_PYTHON:-$ROOT/.venv/bin/python}"
+exec "$PYTHON" -m tools.lifecycle_orchestrator.maintenance_cli "$@"

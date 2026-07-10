@@ -1,0 +1,24 @@
+{
+  "commands": {
+    "repair-resume": {
+      "approvals": [
+        "commit",
+        "merge",
+        "push"
+      ],
+      "catalogued_repairs_only": true,
+      "max_attempts": 2,
+      "release_allowed": false,
+      "tag_allowed": false
+    },
+    "supersede-run": {
+      "deletion_allowed": false,
+      "evidence_preservation_required": true,
+      "explicit_approval_required": true,
+      "failed_uncommitted_runs_only": true
+    }
+  },
+  "llm_calls": 0,
+  "phase": "46T",
+  "schema_version": 1
+}

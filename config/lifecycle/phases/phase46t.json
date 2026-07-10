@@ -1,0 +1,27 @@
+{
+  "campaign_id": "campaign-a-46p-46t-autonomous-lifecycle-productization",
+  "candidate_paths": [
+    "tools/lifecycle_orchestrator/maintenance.py",
+    "tools/lifecycle_orchestrator/maintenance_cli.py",
+    "bin/upi-app-factory-lifecycle",
+    "tests/test_phase46t_lifecycle_maintenance_commands.py",
+    "policies/lifecycle_maintenance_command_policy.json",
+    "config/lifecycle/phases/phase46t.json",
+    "docs/phase46t/README.md"
+  ],
+  "certification_posture": "certification_ready_not_certified",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "phase": "46T",
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "release": false,
+  "schema_version": 1,
+  "status": "COMMITTED",
+  "tag": false
+}
