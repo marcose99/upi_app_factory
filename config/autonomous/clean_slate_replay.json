@@ -1,0 +1,19 @@
+{
+  "certification_posture": "CERTIFICATION_READY_NOT_CERTIFIED",
+  "generation_command_priority": [
+    "scripts/run_phase30_deep_generated_application_regeneration.py",
+    "factory/generators/mock_dispute_app_generator.py"
+  ],
+  "mode": "ISOLATED_CLEAN_SLATE_REPLAY",
+  "remove_only_inside_sandbox": true,
+  "sandbox_location": "UPI_APP_FACTORY_STATE_DIR/clean_slate_replays",
+  "schema_version": 1,
+  "source": "CURRENT_CLEAN_MAIN",
+  "status": "ACTIVE",
+  "validators": [
+    "scripts/validate_phase30_deep_generated_application_regeneration.py",
+    "scripts/validate_phase31_deep_generated_application_export_download_center.py",
+    "scripts/validate_phase32_operator_portal_download_center.py",
+    "scripts/validate_phase37_end_to_end_portal_run_flow.py"
+  ]
+}

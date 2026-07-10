@@ -1,0 +1,34 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/autonomous/clean-slate-replay.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "certification_posture": {
+      "const": "CERTIFICATION_READY_NOT_CERTIFIED"
+    },
+    "generation": {
+      "type": "object"
+    },
+    "mode": {
+      "const": "ISOLATED_CLEAN_SLATE_REPLAY"
+    },
+    "sandbox": {
+      "type": "string"
+    },
+    "status": {
+      "const": "PASSED"
+    },
+    "validation_results": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "status",
+    "mode",
+    "sandbox",
+    "generation",
+    "validation_results",
+    "certification_posture"
+  ],
+  "type": "object"
+}

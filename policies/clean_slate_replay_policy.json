@@ -1,0 +1,11 @@
+{
+  "handoff_package_required": true,
+  "live_provider_calls_allowed": false,
+  "live_workspace_deletion_allowed": false,
+  "official_certification_claimed": false,
+  "production_deployment_allowed": false,
+  "real_secrets_allowed": false,
+  "sandbox_deletion_allowed": true,
+  "schema_version": 1,
+  "status": "ACTIVE"
+}
