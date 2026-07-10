@@ -1,0 +1,30 @@
+{
+  "campaign_id": "campaign-a-46p-46t-autonomous-lifecycle-productization",
+  "candidate_paths": [
+    "tools/governed_repairs/__init__.py",
+    "tools/governed_repairs/contracts.py",
+    "tools/governed_repairs/registry.py",
+    "tools/governed_repairs/scope.py",
+    "tools/governed_repairs/evidence.py",
+    "tools/governed_repairs/rollback.py",
+    "tests/test_phase46q_governed_repair_framework.py",
+    "policies/governed_repair_framework_policy.json",
+    "config/lifecycle/phases/phase46q.json",
+    "docs/phase46q/README.md"
+  ],
+  "certification_posture": "certification_ready_not_certified",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "phase": "46Q",
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "release": false,
+  "schema_version": 1,
+  "status": "COMMITTED",
+  "tag": false
+}

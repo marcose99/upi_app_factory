@@ -1,0 +1,12 @@
+{
+  "candidate_scope_required": true,
+  "dependency_direction": "lifecycle_and_supervisor_depend_on_neutral_framework",
+  "evidence_required": true,
+  "llm_calls": 0,
+  "max_attempts_default": 2,
+  "phase": "46Q",
+  "policy_id": "NEUTRAL_GOVERNED_REPAIR_FRAMEWORK",
+  "rollback_required": true,
+  "schema_version": 1,
+  "unknown_repairs": "FAIL_CLOSED"
+}
