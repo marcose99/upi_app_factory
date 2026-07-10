@@ -1,0 +1,48 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/identity-resolution.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alias_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "alias_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canonical_value": {
+      "type": "string"
+    },
+    "compatibility_applied": {
+      "type": "boolean"
+    },
+    "input_value": {
+      "type": "string"
+    },
+    "requires_human_approval": {
+      "type": "boolean"
+    },
+    "result": {
+      "enum": [
+        "ALIAS_RESOLVED",
+        "CANONICAL_IDENTITY",
+        "HUMAN_GATE",
+        "UNRECOGNIZED_PRESERVED"
+      ]
+    }
+  },
+  "required": [
+    "input_value",
+    "canonical_value",
+    "result",
+    "compatibility_applied",
+    "requires_human_approval"
+  ],
+  "title": "UPI App Factory Identity Resolution",
+  "type": "object"
+}

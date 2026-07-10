@@ -1,0 +1,49 @@
+{
+  "allowed_execution_statuses": [
+    "COMPLETED",
+    "NO_ELIGIBLE_ALIASES"
+  ],
+  "human_gate_alias_types": [
+    "physical_path",
+    "remote_repository"
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false,
+    "reason": "Identity compatibility routing is deterministic."
+  },
+  "max_aliases_per_wave": 10,
+  "mode": "state_only_additive",
+  "name": "Additive compatibility execution policy",
+  "phase": "46D",
+  "prohibited_actions": [
+    "repository_file_mutation_by_wave_executor",
+    "generated_application_mutation",
+    "historical_evidence_mutation",
+    "local_checkout_rename",
+    "remote_repository_rename",
+    "destructive_delete",
+    "live_provider_enablement",
+    "production_deployment"
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "tag",
+    "push",
+    "release",
+    "local_checkout_rename",
+    "remote_repository_rename",
+    "technical_namespace_cutover",
+    "compatibility_layer_removal"
+  ],
+  "schema_version": 1,
+  "wave_alias_types": {
+    "W1": [
+      "display_identity"
+    ],
+    "W3": [
+      "technical_identifier"
+    ]
+  }
+}

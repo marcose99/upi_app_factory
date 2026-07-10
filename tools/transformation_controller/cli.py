@@ -3,7 +3,12 @@ from __future__ import annotations
 import sys
 from typing import Sequence
 
-from tools.transformation_controller import phase46a, phase46b, phase46c
+from tools.transformation_controller import (
+    phase46a,
+    phase46b,
+    phase46c,
+    phase46d,
+)
 
 
 PHASE46B_ACTIONS = {
@@ -18,6 +23,13 @@ PHASE46C_ACTIONS = {
     "verify-migration-plan",
 }
 
+PHASE46D_ACTIONS = {
+    "resolve-identity",
+    "execute-compatibility-wave",
+    "verify-compatibility-run",
+    "compatibility-run-status",
+}
+
 
 def main(argv: Sequence[str] | None = None) -> int:
     arguments = list(sys.argv[1:] if argv is None else argv)
@@ -26,6 +38,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return phase46b.main(arguments)
         if arguments[1] in PHASE46C_ACTIONS:
             return phase46c.main(arguments)
+        if arguments[1] in PHASE46D_ACTIONS:
+            return phase46d.main(arguments)
     return phase46a.main(arguments)
 
 

@@ -1,0 +1,20 @@
+{
+  "alias_registry": "config/compatibility_aliases.json",
+  "canonical_product": {
+    "cli": "upi-app-factory",
+    "display_name": "UPI App Factory",
+    "identifier": "upi_app_factory"
+  },
+  "compatibility_removal_requires_human_approval": true,
+  "human_gate_alias_types": [
+    "physical_path",
+    "remote_repository"
+  ],
+  "phase": "46D",
+  "schema_version": 1,
+  "supported_execution_waves": [
+    "W1",
+    "W3"
+  ],
+  "unknown_identity_posture": "PRESERVE"
+}

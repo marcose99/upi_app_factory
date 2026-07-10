@@ -1,0 +1,47 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/compatibility-execution-run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "alias_count": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "llm_calls": {
+      "const": 0
+    },
+    "phase": {
+      "const": "46D"
+    },
+    "repository_mutations": {
+      "const": 0
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "COMPLETED",
+        "NO_ELIGIBLE_ALIASES"
+      ]
+    },
+    "wave": {
+      "enum": [
+        "W1",
+        "W3"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "phase",
+    "status",
+    "wave",
+    "alias_count",
+    "repository_mutations",
+    "llm_calls"
+  ],
+  "title": "Phase 46D Compatibility Execution Run",
+  "type": "object"
+}
