@@ -1,0 +1,56 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/path-identity-contract.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "canonical_repo_token": {
+      "const": "${REPO_ROOT}"
+    },
+    "canonical_state_token": {
+      "const": "${STATE_ROOT}"
+    },
+    "phase": {
+      "const": "46H"
+    },
+    "physical_checkout_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "remote_repository_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "resolution_probes": {
+      "items": {
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "type": "object"
+      },
+      "minItems": 3,
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "canonical_repo_token",
+    "canonical_state_token",
+    "physical_checkout_rename",
+    "remote_repository_rename",
+    "resolution_probes"
+  ],
+  "type": "object"
+}

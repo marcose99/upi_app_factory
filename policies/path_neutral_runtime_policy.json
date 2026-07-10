@@ -1,0 +1,24 @@
+{
+  "absolute_checkout_paths_allowed": false,
+  "canonical_tokens": [
+    "${REPO_ROOT}",
+    "${STATE_ROOT}"
+  ],
+  "llm_calls_allowed": 0,
+  "phase": "46H",
+  "prohibited_actions": [
+    "physical checkout rename",
+    "remote repository rename",
+    "historical evidence rewrite",
+    "legacy alias retirement"
+  ],
+  "required_behaviors": [
+    "resolve repository roots at runtime",
+    "prefer relative paths inside repository contracts",
+    "keep local checkout rename human-gated",
+    "keep remote repository rename human-gated",
+    "fail closed on unapproved absolute paths"
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE"
+}

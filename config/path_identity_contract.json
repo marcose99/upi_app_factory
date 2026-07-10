@@ -1,0 +1,29 @@
+{
+  "absolute_checkout_paths_allowed": false,
+  "canonical_repo_token": "${REPO_ROOT}",
+  "canonical_state_token": "${STATE_ROOT}",
+  "legacy_checkout_path_reads": "NOT_REQUIRED",
+  "phase": "46H",
+  "physical_checkout_rename": "NOT_PERFORMED",
+  "relative_path_posture": "PREFERRED",
+  "remote_repository_rename": "NOT_PERFORMED",
+  "resolution_probes": [
+    {
+      "name": "repository",
+      "value": "${REPO_ROOT}"
+    },
+    {
+      "name": "configuration",
+      "value": "${REPO_ROOT}/config"
+    },
+    {
+      "name": "state",
+      "value": "${STATE_ROOT}"
+    },
+    {
+      "name": "campaign_runs",
+      "value": "${STATE_ROOT}/campaign_runs"
+    }
+  ],
+  "schema_version": 1
+}
