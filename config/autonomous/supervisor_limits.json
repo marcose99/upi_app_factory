@@ -1,0 +1,7 @@
+{
+  "fail_closed_on_unknown_failure": true,
+  "max_campaign_cycles": 20,
+  "max_repair_attempts_per_phase": 3,
+  "maximum_parallel_phases": 1,
+  "schema_version": 1
+}

@@ -1,0 +1,79 @@
+{
+  "artifacts": [
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase17/enterprise_autonomous_hardening_audit.json",
+      "sha256": "a83b01caa3c2372786644e7d4e002a00b21333b4a1f35879e3e09714d857e230"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase17/generated_app_depth_backlog.json",
+      "sha256": "4940248d9aa5d3f3468b66affd6bd12bf7f66f31c3818b6da3920d0b1fa6e62c"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase17/independent_reviewer_workspace_trial.json",
+      "sha256": "e85ca5d9aa0e6883872c3f3502582f3fc6ce13f855092f2f5875ec905ef2a37f"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase17/release_dossier_index.json",
+      "sha256": "898e03cabcc67fcf4a2fc1d5b1c9b84917c2e5e88e1cfd640aad658a86b779d7"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase18/independent_reviewer_checklist.json",
+      "sha256": "b259d8fa83986d55d882bd0327214a6c4daf0d171c32558bd507a88e46f3d56b"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase18/independent_reviewer_workspace_pack.json",
+      "sha256": "549a65903d8f09a14ac7b8fbbed0cb270591e18396108eaaeda2e1f8143ec642"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase18/independent_reviewer_workspace_trial_audit.json",
+      "sha256": "544dbb7c24926555c6c2713b179547e5851b05ce7361f9eea5bc5c2a5357ce7b"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/local_dependency_inventory.json",
+      "sha256": "9fe4ef9d891b8dee02aa798f67de37000e9c8ca237f945b659986b30a1262373"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/provenance_readiness_statement.json",
+      "sha256": "611652275ff358376241203932018954a773b1ff4956683ea33bd05c0c3afc0b"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/supply_chain_gate_summary.json",
+      "sha256": "5799d93079a6adf43139c38bb9e63914ce9b0b9297d57e7590d552c69328481b"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/supply_chain_provenance_hardening_audit.json",
+      "sha256": "f99316397cf3c4555d6b0cadae84884a20c8a66693e82423e58a9db65c675f15"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/architecture_conformance_expectations.json",
+      "sha256": "c04a4f68eec31d7fda94efad2dd6a407f9e2ec1b029e83036c30906746b39f99"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/architecture_depth_artifact_manifest.json",
+      "sha256": "152ca08cf56b37c8725af3584e313cabe395cc0b2dfb8893ba3edfb5cbac57d3"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/architecture_depth_gate.json",
+      "sha256": "fa9f9d617b67354bc7cfa65a1882c10fe26cd8511d32285967994e38a54bfa44"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/certification_boundary.json",
+      "sha256": "a6fcd4f4d10def615ae40eca621f2fc60790a620272c280950c64016340f84de"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/phase28_architecture_depth_audit.json",
+      "sha256": "e93fd14a92e216b2c41047d179ec36f38ab54a8eefd9c4186015e0c95220d21e"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/self_evolution_backlog_policy.json",
+      "sha256": "a04bac3422133e6b670fee0691987d0a162120411d93105158f18d9849f6f105"
+    },
+    {
+      "path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase28/test_obligation_matrix.json",
+      "sha256": "dcd374cbe4ee5644feeb2814f20d6b06487d4cd3bc03984adb0b1c24595a09cb"
+    }
+  ],
+  "schema_version": 1,
+  "source": "CLEAN_MAIN_WORKTREE",
+  "status": "ACTIVE"
+}

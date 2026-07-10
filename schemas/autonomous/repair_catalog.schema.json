@@ -1,0 +1,59 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/autonomous/repair-catalog.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "repairs": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "automatic": {
+            "type": "boolean"
+          },
+          "candidate_scope_required": {
+            "type": "boolean"
+          },
+          "eligible_gates": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "max_attempts": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "repair_id": {
+            "type": "string"
+          },
+          "risk": {
+            "type": "string"
+          },
+          "safe_fix_only": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "repair_id",
+          "automatic",
+          "eligible_gates",
+          "max_attempts",
+          "candidate_scope_required",
+          "safe_fix_only",
+          "risk"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "repairs"
+  ],
+  "type": "object"
+}

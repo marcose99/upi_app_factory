@@ -1,0 +1,167 @@
+{
+  "base_branch": "main",
+  "candidate_paths": [
+    "config/lifecycle/phases/phase46k.json",
+    "config/lifecycle/phases/phase46l.json",
+    "config/lifecycle/phases/phase46m.json",
+    "config/lifecycle/phases/phase46n.json",
+    "config/lifecycle/campaigns/autonomy_productization_46l_46n.json",
+    "config/autonomous_campaigns/autonomy_productization_46l_46n.json",
+    "bin/upi-app-factory-autonomous",
+    "tools/autonomous_supervisor/__init__.py",
+    "tools/autonomous_supervisor/catalog.py",
+    "tools/autonomous_supervisor/state.py",
+    "tools/autonomous_supervisor/evidence.py",
+    "tools/autonomous_supervisor/engine.py",
+    "tools/autonomous_supervisor/cli.py",
+    "tools/autonomous_supervisor/phase_payloads.py",
+    "config/autonomous/repair_catalog.json",
+    "config/autonomous/prerequisite_artifact_manifest.json",
+    "config/autonomous/runtime_noise_policy.json",
+    "config/autonomous/supervisor_limits.json",
+    "schemas/autonomous/repair_catalog.schema.json",
+    "schemas/autonomous/supervisor_state.schema.json",
+    "schemas/autonomous/incident.schema.json",
+    "docs/phase46k/README.md",
+    "tests/autonomous_supervisor/test_phase46k_repository_native_supervisor.py"
+  ],
+  "commit_message": "feat(factory): productize repository-native autonomous supervisor",
+  "feature_branch": "phase46k/repository-native-autonomous-supervisor",
+  "full_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "name": "Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "name": "MyPy"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "name": "Pytest"
+    }
+  ],
+  "implementation_commands": [
+    {
+      "argv": [
+        "{worktree}/bin/upi-app-factory-autonomous",
+        "validate",
+        "config/autonomous_campaigns/autonomy_productization_46l_46n.json",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Validate installed repository-native supervisor"
+    }
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "name": "Repository-native autonomous supervisor productization",
+  "phase": "46K",
+  "post_restore_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G validation"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G tests"
+    }
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "runtime_noise_paths": [
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_capability_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/handoff_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/runtime_event_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/tool_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase14u/autonomous_phase_discovery_and_planning_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase37/end_to_end_portal_run_flow_report.json"
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE",
+  "targeted_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/autonomous_supervisor/test_phase46k_repository_native_supervisor.py"
+      ],
+      "name": "Phase 46K supervisor tests"
+    },
+    {
+      "argv": [
+        "{worktree}/bin/upi-app-factory-autonomous",
+        "validate",
+        "config/autonomous_campaigns/autonomy_productization_46l_46n.json",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Phase 46K supervisor configuration validation"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "tools/autonomous_supervisor/catalog.py",
+        "tools/autonomous_supervisor/state.py",
+        "tools/autonomous_supervisor/evidence.py",
+        "tools/autonomous_supervisor/engine.py",
+        "tools/autonomous_supervisor/cli.py",
+        "tools/autonomous_supervisor/phase_payloads.py",
+        "tests/autonomous_supervisor/test_phase46k_repository_native_supervisor.py"
+      ],
+      "name": "Phase 46K Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "tools/autonomous_supervisor/catalog.py",
+        "tools/autonomous_supervisor/state.py",
+        "tools/autonomous_supervisor/evidence.py",
+        "tools/autonomous_supervisor/engine.py",
+        "tools/autonomous_supervisor/cli.py",
+        "tools/autonomous_supervisor/phase_payloads.py",
+        "tests/autonomous_supervisor/test_phase46k_repository_native_supervisor.py"
+      ],
+      "name": "Phase 46K MyPy"
+    }
+  ]
+}

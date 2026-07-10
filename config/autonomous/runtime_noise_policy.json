@@ -1,0 +1,15 @@
+{
+  "paths": [
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_capability_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/handoff_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/runtime_event_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/tool_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase14u/autonomous_phase_discovery_and_planning_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase37/end_to_end_portal_run_flow_report.json"
+  ],
+  "posture": "RESTORE_APPROVED_PATHS_ONLY",
+  "schema_version": 1,
+  "status": "ACTIVE"
+}

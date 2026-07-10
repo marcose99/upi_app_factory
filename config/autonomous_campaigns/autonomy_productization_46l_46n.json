@@ -1,0 +1,28 @@
+{
+  "campaign_id": "autonomy-productization-46l-46n",
+  "campaign_manifest": "config/lifecycle/campaigns/autonomy_productization_46l_46n.json",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "name": "Repository-native autonomy productization campaign",
+  "phases": [
+    "46L",
+    "46M",
+    "46N"
+  ],
+  "prerequisite_manifest": "config/autonomous/prerequisite_artifact_manifest.json",
+  "prohibited_actions": [
+    "tag",
+    "release"
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "repair_catalog": "config/autonomous/repair_catalog.json",
+  "runtime_noise_policy": "config/autonomous/runtime_noise_policy.json",
+  "schema_version": 1,
+  "supervisor_limits": "config/autonomous/supervisor_limits.json"
+}

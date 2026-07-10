@@ -1,0 +1,39 @@
+{
+  "repairs": [
+    {
+      "automatic": true,
+      "candidate_scope_required": true,
+      "eligible_gates": [
+        "Ruff"
+      ],
+      "max_attempts": 2,
+      "repair_id": "RUFF_SAFE_FIX",
+      "risk": "LOW",
+      "safe_fix_only": true
+    },
+    {
+      "automatic": true,
+      "candidate_scope_required": true,
+      "eligible_gates": [
+        "Pytest"
+      ],
+      "max_attempts": 2,
+      "repair_id": "PYTEST_PREREQUISITE_REPLAY",
+      "risk": "LOW",
+      "safe_fix_only": false
+    },
+    {
+      "automatic": true,
+      "candidate_scope_required": true,
+      "eligible_gates": [
+        "candidate",
+        "Phase 13G"
+      ],
+      "max_attempts": 2,
+      "repair_id": "RUNTIME_NOISE_RESTORE",
+      "risk": "LOW",
+      "safe_fix_only": false
+    }
+  ],
+  "schema_version": 1
+}

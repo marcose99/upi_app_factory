@@ -1,0 +1,30 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/autonomous/incident.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "created_at": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "repair_attempts": {
+      "type": "object"
+    },
+    "status": {
+      "const": "FAIL_CLOSED"
+    }
+  },
+  "required": [
+    "status",
+    "phase",
+    "reason",
+    "created_at",
+    "repair_attempts"
+  ],
+  "type": "object"
+}

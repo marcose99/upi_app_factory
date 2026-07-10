@@ -1,0 +1,133 @@
+{
+  "base_branch": "main",
+  "candidate_paths": [
+    "tools/autonomous_supervisor/policy.py",
+    "config/autonomous/repair_catalog.json",
+    "policies/autonomous_self_healing_policy.json",
+    "schemas/autonomous/repair_decision.schema.json",
+    "tests/autonomous_supervisor/test_phase46l_declarative_repair_policy.py",
+    "docs/phase46l/README.md"
+  ],
+  "commit_message": "feat(factory): add declarative autonomous repair policy engine",
+  "feature_branch": "phase46l/declarative-repair-policy-engine",
+  "full_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "name": "Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "name": "MyPy"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "name": "Pytest"
+    }
+  ],
+  "implementation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "tools.autonomous_supervisor.phase_payloads",
+        "install",
+        "--phase",
+        "46L",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Install 46L deterministic payload"
+    }
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "name": "Declarative repair catalog and policy engine",
+  "phase": "46L",
+  "post_restore_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G validation"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G tests"
+    }
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "runtime_noise_paths": [
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_capability_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/handoff_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/runtime_event_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/tool_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase14u/autonomous_phase_discovery_and_planning_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase37/end_to_end_portal_run_flow_report.json"
+  ],
+  "schema_version": 1,
+  "status": "DRAFT",
+  "targeted_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/autonomous_supervisor/test_phase46l_declarative_repair_policy.py"
+      ],
+      "name": "Phase 46L policy tests"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "tools/autonomous_supervisor/policy.py",
+        "tests/autonomous_supervisor/test_phase46l_declarative_repair_policy.py"
+      ],
+      "name": "Phase 46L Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "tools/autonomous_supervisor/policy.py",
+        "tests/autonomous_supervisor/test_phase46l_declarative_repair_policy.py"
+      ],
+      "name": "Phase 46L MyPy"
+    }
+  ]
+}

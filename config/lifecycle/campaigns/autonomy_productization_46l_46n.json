@@ -1,0 +1,36 @@
+{
+  "approval_model": "ONE_SET_AT_CAMPAIGN_LAUNCH",
+  "campaign": "autonomy-productization-46l-46n",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "max_repair_attempts": 3,
+  "name": "UPI App Factory repository-native autonomy productization",
+  "phases": [
+    {
+      "manifest": "config/lifecycle/phases/phase46l.json",
+      "phase": "46L"
+    },
+    {
+      "manifest": "config/lifecycle/phases/phase46m.json",
+      "phase": "46M"
+    },
+    {
+      "manifest": "config/lifecycle/phases/phase46n.json",
+      "phase": "46N"
+    }
+  ],
+  "prohibited_actions": [
+    "tag",
+    "release"
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE",
+  "stop_policy": "FAIL_CLOSED_ON_UNREPAIRABLE_FAILURE"
+}

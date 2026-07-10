@@ -1,0 +1,42 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/autonomous/supervisor-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "current_phase": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "details": {
+      "type": "object"
+    },
+    "repair_attempts": {
+      "type": "object"
+    },
+    "schema_version": {
+      "type": "integer"
+    },
+    "start_commit": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "campaign_id",
+    "status",
+    "updated_at",
+    "repair_attempts"
+  ],
+  "type": "object"
+}
