@@ -1,0 +1,33 @@
+schema_version: 1
+default_mode: disabled
+deterministic_first: true
+normal_execution_max_calls: 0
+phase_hard_max_calls: 3
+eligible_tasks:
+  - summarize_deterministic_inventory
+  - classify_batched_ambiguous_findings
+  - diagnose_unmatched_failure
+prohibited_tasks:
+  - file_discovery
+  - path_scanning
+  - import_extraction
+  - dependency_graph_creation
+  - test_execution
+  - lint_execution
+  - type_checking
+  - hash_calculation
+  - kpi_arithmetic
+  - state_transition
+  - approval_enforcement
+requirements:
+  explicit_enablement: true
+  batch_ambiguous_items: true
+  cache_before_call: true
+  sanitize_input: true
+  strict_output_schema: true
+  independent_validation: true
+  no_per_file_calls: true
+  no_uncontrolled_retries: true
+retry:
+  transport_failure_max: 1
+  unsatisfactory_output_max: 0

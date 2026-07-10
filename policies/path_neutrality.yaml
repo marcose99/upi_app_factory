@@ -1,0 +1,20 @@
+schema_version: 1
+prohibited_runtime_dependencies:
+  - /home/marcose
+  - /home/marcose/projects
+  - /home/marcose/Downloads
+  - fixed_checkout_directory_name
+  - ubuntu_only_path
+approved_path_sources:
+  - explicit_configuration
+  - environment_variables
+  - pathlib
+  - tempfile_api
+  - xdg_base_directories
+  - package_resource_discovery
+  - script_relative_discovery
+requirements:
+  use_pathlib_in_python: true
+  quote_shell_paths: true
+  configurable_runtime_directories: true
+  arbitrary_checkout_name_supported: true

@@ -33,3 +33,7 @@ Thumbs.db
 workspace/runs/
 workspace/regeneration_runs/
 *.pyc
+
+# BEGIN UPI APP FACTORY LOCAL RUNTIME STATE
+/var/
+# END UPI APP FACTORY LOCAL RUNTIME STATE

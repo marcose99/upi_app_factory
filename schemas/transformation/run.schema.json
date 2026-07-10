@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:upi-app-factory:transformation:run:v1",
+  "title": "Transformation Run",
+  "type": "object",
+  "required": ["run_id", "schema_version", "status", "created_at", "current_stage"],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": 1},
+    "status": {
+      "enum": ["CREATED", "BASELINE_VERIFIED", "READ_ONLY_INVENTORY",
+               "PLAN_GENERATED", "AWAITING_RUN_AUTHORIZATION", "COMPLETED",
+               "BLOCKED", "FAILED", "CANCELLED"]
+    },
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"},
+    "current_stage": {"type": "string"},
+    "llm_calls": {"type": "integer", "minimum": 0, "maximum": 0},
+    "evidence": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

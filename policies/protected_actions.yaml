@@ -1,0 +1,18 @@
+schema_version: 1
+human_approval_required:
+  - destructive_delete
+  - destructive_overwrite
+  - protected_policy_change
+  - governance_weakening
+  - safety_weakening
+  - compatibility_layer_removal
+  - commit
+  - merge
+  - tag
+  - push
+  - release
+  - remote_repository_rename
+  - unrestricted_network_enablement
+  - live_provider_enablement
+  - real_payment_integration_enablement
+  - production_deployment_authorization

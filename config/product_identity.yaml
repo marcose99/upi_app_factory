@@ -1,0 +1,18 @@
+schema_version: 1
+product:
+  display_name: UPI App Factory
+  canonical_id: upi_app_factory
+  python_namespace: upi_app_factory
+generated_applications:
+  demonstration:
+    display_name: UPI Dispute Resolution
+    canonical_id: upi_dispute_resolution
+legacy:
+  factory_id: upi_dispute_resolution_factory
+  legacy_display_name: UPI Dispute Resolution Factory
+  permitted_usage:
+    - historical_evidence
+    - migration_record
+    - temporary_compatibility
+excluded_product_labels:
+  - FactoryFromNothing
