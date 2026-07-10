@@ -1,0 +1,11 @@
+{
+  "arbitrary_command_text_allowed": false,
+  "pause_cancel_are_cooperative": true,
+  "production_deployment_allowed": false,
+  "protected_actions_require_approval": true,
+  "release_allowed": false,
+  "schema_version": 1,
+  "shell_true_allowed": false,
+  "status": "ACTIVE",
+  "tag_allowed": false
+}

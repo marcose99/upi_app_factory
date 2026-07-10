@@ -1,0 +1,15 @@
+{
+  "actions": [
+    "run",
+    "status",
+    "pause",
+    "resume",
+    "cancel"
+  ],
+  "campaign_config": "config/autonomous_campaigns/autonomy_productization_46l_46n.json",
+  "event_limit_default": 100,
+  "run_requires_approval": true,
+  "schema_version": 1,
+  "shell_execution": false,
+  "status": "ACTIVE"
+}

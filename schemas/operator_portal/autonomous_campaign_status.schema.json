@@ -1,0 +1,30 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/operator-portal/autonomous-campaign-status.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "current_phase": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "details": {
+      "type": "object"
+    },
+    "repair_attempts": {
+      "type": "object"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "campaign_id"
+  ],
+  "type": "object"
+}
