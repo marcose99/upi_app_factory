@@ -1,0 +1,54 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/display-identity-contract.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "compatibility_layer": {
+      "const": "RETAINED"
+    },
+    "contract_id": {
+      "const": "upi-app-factory-display-identity-v1"
+    },
+    "historical_evidence_rewrite": {
+      "const": "PROHIBITED"
+    },
+    "llm_calls": {
+      "const": 0
+    },
+    "phase": {
+      "const": "46F"
+    },
+    "physical_checkout_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "remote_repository_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "technical_identifier_migration": {
+      "const": "NOT_PERFORMED"
+    },
+    "write_posture": {
+      "const": "CANONICAL_ONLY"
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "contract_id",
+    "canonical_display_identity",
+    "accepted_legacy_display_identities",
+    "read_posture",
+    "write_posture",
+    "compatibility_layer",
+    "technical_identifier_migration",
+    "physical_checkout_rename",
+    "remote_repository_rename",
+    "historical_evidence_rewrite",
+    "llm_calls"
+  ],
+  "title": "UPI App Factory Display Identity Contract",
+  "type": "object"
+}

@@ -1,0 +1,34 @@
+{
+  "accepted_legacy_display_identities": [
+    {
+      "alias_id": "display-factoryfromnothing",
+      "name": "FactoryFromNothing",
+      "read_status": "ACCEPTED_FOR_COMPATIBILITY",
+      "removal": "HUMAN_APPROVAL_REQUIRED",
+      "write_status": "PROHIBITED"
+    },
+    {
+      "alias_id": "display-upi-dispute-resolution-factory",
+      "name": "UPI Dispute Resolution Factory",
+      "read_status": "ACCEPTED_FOR_COMPATIBILITY",
+      "removal": "HUMAN_APPROVAL_REQUIRED",
+      "write_status": "PROHIBITED"
+    }
+  ],
+  "canonical_display_identity": {
+    "name": "UPI App Factory",
+    "write_status": "REQUIRED"
+  },
+  "certification_posture": "CERTIFICATION_READY_NOT_CERTIFIED",
+  "compatibility_layer": "RETAINED",
+  "contract_id": "upi-app-factory-display-identity-v1",
+  "historical_evidence_rewrite": "PROHIBITED",
+  "llm_calls": 0,
+  "phase": "46F",
+  "physical_checkout_rename": "NOT_PERFORMED",
+  "read_posture": "CANONICAL_AND_GOVERNED_LEGACY_ACCEPTED",
+  "remote_repository_rename": "NOT_PERFORMED",
+  "schema_version": 1,
+  "technical_identifier_migration": "NOT_PERFORMED",
+  "write_posture": "CANONICAL_ONLY"
+}

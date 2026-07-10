@@ -1,0 +1,18 @@
+{
+  "canonical_display_identity": "UPI App Factory",
+  "generated_application_mutation": "PROHIBITED",
+  "historical_evidence_rewrite": "PROHIBITED",
+  "legacy_alias_removal": "HUMAN_APPROVAL_REQUIRED",
+  "live_provider_enablement": "PROHIBITED",
+  "llm_calls_allowed": 0,
+  "mode": "CONTRACT_FIRST_BOUNDED",
+  "name": "Contract-first bounded display identity migration policy",
+  "phase": "46F",
+  "physical_checkout_rename": "PROHIBITED",
+  "production_deployment": "PROHIBITED",
+  "read_posture": "CANONICAL_AND_GOVERNED_LEGACY_ACCEPTED",
+  "remote_repository_rename": "PROHIBITED",
+  "schema_version": 1,
+  "technical_identifier_migration": "DEFERRED",
+  "write_posture": "CANONICAL_ONLY"
+}

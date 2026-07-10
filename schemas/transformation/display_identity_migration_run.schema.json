@@ -1,0 +1,54 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/display-identity-migration-run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "compatibility_layer": {
+      "const": "RETAINED"
+    },
+    "display_alias_count": {
+      "const": 2
+    },
+    "llm_calls": {
+      "const": 0
+    },
+    "phase": {
+      "const": "46F"
+    },
+    "physical_checkout_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "remote_repository_rename": {
+      "const": "NOT_PERFORMED"
+    },
+    "repository_mutations_outside_candidate": {
+      "const": 0
+    },
+    "status": {
+      "const": "PASSED"
+    },
+    "technical_identifier_migration": {
+      "const": "NOT_PERFORMED"
+    },
+    "write_posture": {
+      "const": "CANONICAL_ONLY"
+    }
+  },
+  "required": [
+    "status",
+    "phase",
+    "canonical_display_identity",
+    "legacy_display_aliases_retained",
+    "display_alias_count",
+    "write_posture",
+    "read_posture",
+    "compatibility_layer",
+    "technical_identifier_migration",
+    "physical_checkout_rename",
+    "remote_repository_rename",
+    "repository_mutations_outside_candidate",
+    "llm_calls"
+  ],
+  "title": "Phase 46F Display Identity Migration Verification",
+  "type": "object"
+}

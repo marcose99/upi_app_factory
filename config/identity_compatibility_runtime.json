@@ -5,12 +5,16 @@
     "display_name": "UPI App Factory",
     "identifier": "upi_app_factory"
   },
+  "compatibility_layer": "RETAINED",
   "compatibility_removal_requires_human_approval": true,
+  "display_identity_contract": "config/display_identity_contract.json",
+  "display_read_posture": "CANONICAL_AND_GOVERNED_LEGACY_ACCEPTED",
+  "display_write_posture": "CANONICAL_ONLY",
   "human_gate_alias_types": [
     "physical_path",
     "remote_repository"
   ],
-  "phase": "46D",
+  "phase": "46F",
   "schema_version": 1,
   "supported_execution_waves": [
     "W1",

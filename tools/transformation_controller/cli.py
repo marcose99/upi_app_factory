@@ -9,6 +9,7 @@ from tools.transformation_controller import (
     phase46b,
     phase46c,
     phase46d,
+    phase46f,
 )
 
 
@@ -30,6 +31,12 @@ PHASE46D_ACTIONS = {
     "verify-compatibility-run",
     "compatibility-run-status",
 }
+PHASE46F_ACTIONS = {
+    "implement-display-identity-contract",
+    "verify-display-identity-contract",
+    "display-identity-status",
+}
+
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -43,6 +50,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return phase46c.main(arguments)
         if arguments[1] in PHASE46D_ACTIONS:
             return phase46d.main(arguments)
+        if arguments[1] in PHASE46F_ACTIONS:
+            return phase46f.main(arguments)
     return phase46a.main(arguments)
 
 

@@ -5,91 +5,18 @@
   ],
   "commit_message": "feat(transformation): add bounded display identity migration",
   "feature_branch": "phase46f/contract-first-bounded-display-migration",
-  "full_validation_commands": [
-    {
-      "argv": [
-        "{python}",
-        "-m",
-        "ruff",
-        "check",
-        "."
-      ],
-      "name": "Ruff"
-    },
-    {
-      "argv": [
-        "{python}",
-        "-m",
-        "mypy",
-        "."
-      ],
-      "name": "MyPy"
-    },
-    {
-      "argv": [
-        "{python}",
-        "-m",
-        "pytest",
-        "-q"
-      ],
-      "name": "Pytest"
-    }
-  ],
-  "implementation_commands": [
-    {
-      "argv": [
-        "{python}",
-        "-m",
-        "tools.transformation_controller.phase46f",
-        "--project-root",
-        "{worktree}"
-      ],
-      "name": "Implement Phase 46F"
-    }
-  ],
+  "full_validation_commands": [],
+  "implementation_commands": [],
   "llm": {
     "allowed_calls": 0,
     "enabled": false
   },
-  "name": "Contract-first bounded display migration",
+  "name": "Retired Phase 46F draft; see phase46f.json",
   "phase": "46F",
-  "post_restore_validation_commands": [
-    {
-      "argv": [
-        "{python}",
-        "scripts/validate_phase13g_readonly_validation_guardrails.py"
-      ],
-      "name": "Phase 13G after runtime restoration"
-    },
-    {
-      "argv": [
-        "{python}",
-        "-m",
-        "pytest",
-        "-q",
-        "tests/test_phase13g_readonly_validation_guardrails.py"
-      ],
-      "name": "Phase 13G tests after runtime restoration"
-    }
-  ],
-  "protected_actions": [
-    "commit",
-    "merge",
-    "push"
-  ],
+  "post_restore_validation_commands": [],
+  "protected_actions": [],
   "runtime_noise_paths": [],
   "schema_version": 1,
-  "status": "DRAFT",
-  "targeted_validation_commands": [
-    {
-      "argv": [
-        "{python}",
-        "-m",
-        "pytest",
-        "-q",
-        "tests/transformation"
-      ],
-      "name": "Targeted transformation tests"
-    }
-  ]
+  "status": "RETIRED",
+  "targeted_validation_commands": []
 }

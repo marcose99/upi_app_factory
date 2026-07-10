@@ -1,0 +1,136 @@
+{
+  "base_branch": "main",
+  "candidate_paths": [
+    "config/lifecycle/phases/phase46f.json",
+    "config/lifecycle/phases/phase46f.draft.json",
+    "config/display_identity_contract.json",
+    "config/compatibility_aliases.json",
+    "config/identity_compatibility_runtime.json",
+    "policies/display_identity_migration_policy.json",
+    "schemas/transformation/display_identity_contract.schema.json",
+    "schemas/transformation/display_identity_migration_run.schema.json",
+    "docs/phase46f/README.md",
+    "tools/transformation_controller/phase46f.py",
+    "tests/transformation/test_phase46f_display_migration.py",
+    "tools/transformation_controller/cli.py"
+  ],
+  "commit_message": "feat(transformation): add bounded display identity migration",
+  "feature_branch": "phase46f/contract-first-bounded-display-migration",
+  "full_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "name": "Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "name": "MyPy"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "name": "Pytest"
+    }
+  ],
+  "implementation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "tools.transformation_controller.phase46f",
+        "implement-display-identity-contract",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Implement bounded display identity contract"
+    }
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "name": "Contract-first bounded display migration",
+  "phase": "46F",
+  "post_restore_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G after runtime restoration"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G tests after runtime restoration"
+    },
+    {
+      "argv": [
+        "{worktree}/bin/upi-app-factory",
+        "transform",
+        "verify-display-identity-contract",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Display identity contract after restoration"
+    }
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "runtime_noise_paths": [
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_capability_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/handoff_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/runtime_event_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/tool_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase14u/autonomous_phase_discovery_and_planning_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase37/end_to_end_portal_run_flow_report.json"
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE",
+  "targeted_validation_commands": [
+    {
+      "argv": [
+        "{worktree}/bin/upi-app-factory",
+        "transform",
+        "verify-display-identity-contract",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Verify display identity contract"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/transformation"
+      ],
+      "name": "Targeted transformation tests"
+    }
+  ]
+}

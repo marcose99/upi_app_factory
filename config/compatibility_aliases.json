@@ -4,17 +4,19 @@
       "alias_id": "display-factoryfromnothing",
       "alias_type": "display_identity",
       "canonical": "UPI App Factory",
+      "contract": "config/display_identity_contract.json",
       "legacy": "FactoryFromNothing",
       "removal": "HUMAN_APPROVAL_REQUIRED",
-      "status": "PLAN_CONTRACT_FIRST"
+      "status": "CONTRACT_ACTIVE_COMPATIBILITY_RETAINED"
     },
     {
       "alias_id": "display-upi-dispute-resolution-factory",
       "alias_type": "display_identity",
       "canonical": "UPI App Factory",
+      "contract": "config/display_identity_contract.json",
       "legacy": "UPI Dispute Resolution Factory",
       "removal": "HUMAN_APPROVAL_REQUIRED",
-      "status": "PLAN_CONTRACT_FIRST"
+      "status": "CONTRACT_ACTIVE_COMPATIBILITY_RETAINED"
     },
     {
       "alias_id": "technical-python-repository-identifier",
@@ -47,7 +49,8 @@
     "identifier": "upi_app_factory"
   },
   "default_posture": "ADDITIVE_COMPATIBILITY_BEFORE_MIGRATION",
+  "display_contract_status": "ACTIVE",
   "legacy_removal_requires_human_approval": true,
-  "phase": "46C",
+  "phase": "46F",
   "schema_version": 1
 }
