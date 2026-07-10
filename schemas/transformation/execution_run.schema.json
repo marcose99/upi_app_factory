@@ -1,0 +1,49 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/execution-run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "llm_calls": {
+      "const": 0
+    },
+    "mode": {
+      "enum": [
+        "rehearsal",
+        "apply-safe"
+      ]
+    },
+    "phase": {
+      "const": "46B"
+    },
+    "protected_actions_performed": {
+      "maxItems": 0,
+      "type": "array"
+    },
+    "repair_attempts": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "run_id": {
+      "pattern": "^phase46b-",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "phase",
+    "status",
+    "mode",
+    "llm_calls",
+    "protected_actions_performed"
+  ],
+  "title": "Phase 46B Execution Run",
+  "type": "object"
+}

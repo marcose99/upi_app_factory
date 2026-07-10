@@ -7,4 +7,5 @@ if [[ ! -x "$PYTHON" ]]; then
   PYTHON="$(command -v python3)"
 fi
 export PYTHONPATH="${PROJECT_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
-exec "$PYTHON" -m tools.transformation_controller.phase46a "$@"
+exec "$PYTHON" -m tools.transformation_controller.cli "$@"
+

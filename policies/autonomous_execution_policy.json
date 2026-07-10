@@ -1,0 +1,94 @@
+{
+  "default_mode": "rehearsal",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false,
+    "reason": "Deterministic catalog execution is sufficient."
+  },
+  "name": "Governed deterministic execution",
+  "phase": "46B",
+  "protected_actions": {
+    "allow": [],
+    "human_approval_required": [
+      "commit",
+      "merge",
+      "tag",
+      "push",
+      "release",
+      "local_checkout_rename",
+      "remote_repository_rename",
+      "technical_namespace_migration",
+      "compatibility_layer_removal",
+      "destructive_delete",
+      "live_provider_enablement",
+      "production_deployment"
+    ]
+  },
+  "repair": {
+    "allowed_repairs": [
+      "FULL_BATCH_ROLLBACK"
+    ],
+    "failure_posture": "FAIL_CLOSED",
+    "max_attempts": 1
+  },
+  "safe_branding_batch": {
+    "allowed_categories": [
+      "IDENTITY_FACTORYFROMNOTHING",
+      "IDENTITY_LEGACY_DISPLAY"
+    ],
+    "allowed_classifications": [
+      "CURRENT_PRODUCT_IDENTITY"
+    ],
+    "allowed_suffixes": [
+      ".md",
+      ".rst",
+      ".txt",
+      ".yaml",
+      ".yml",
+      ".json",
+      ".toml",
+      ".ini",
+      ".cfg",
+      ".conf",
+      ".html",
+      ".htm",
+      ".css",
+      ".scss",
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx"
+    ],
+    "description": "Current product display branding only; technical identifiers are excluded.",
+    "excluded_prefixes": [
+      "workspace/factory_generated/",
+      "factory_governance/",
+      "tests/",
+      "docs/phase46a/",
+      "docs/phase46b/",
+      "policies/",
+      "requirements/master_consolidated_requirements.md",
+      "schemas/",
+      "tools/transformation_controller/",
+      "AGENTS.md"
+    ],
+    "max_file_bytes": 2000000,
+    "max_files": 100,
+    "max_total_bytes": 5000000,
+    "replacements": {
+      "FactoryFromNothing": "UPI App Factory",
+      "UPI Dispute Resolution Factory": "UPI App Factory"
+    }
+  },
+  "schema_version": 1,
+  "validation_runtime_noise_paths": [
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_capability_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/handoff_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/runtime_event_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/tool_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase14u/autonomous_phase_discovery_and_planning_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase37/end_to_end_portal_run_flow_report.json"
+  ]
+}

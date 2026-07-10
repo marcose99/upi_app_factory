@@ -1,0 +1,37 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/checkpoint.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "checkpoint_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "previous_checkpoint_hash": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "sequence",
+    "stage",
+    "status",
+    "previous_checkpoint_hash",
+    "checkpoint_hash"
+  ],
+  "title": "Phase 46B Checkpoint",
+  "type": "object"
+}
