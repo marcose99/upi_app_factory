@@ -1,4 +1,6 @@
 {
+  "authorization_model": "DECLARATIVE_CATALOG_AND_POLICY_ENGINE",
+  "policy_version": "46L",
   "repairs": [
     {
       "automatic": true,
