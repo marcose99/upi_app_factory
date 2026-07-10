@@ -1,0 +1,25 @@
+{
+  "campaign_id": "campaign-a-46p-46t-autonomous-lifecycle-productization",
+  "candidate_paths": [
+    "tools/lifecycle_orchestrator/incident_replay.py",
+    "tests/test_phase46s_incident_replay.py",
+    "policies/lifecycle_incident_replay_policy.json",
+    "config/lifecycle/phases/phase46s.json",
+    "docs/phase46s/README.md"
+  ],
+  "certification_posture": "certification_ready_not_certified",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "phase": "46S",
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "release": false,
+  "schema_version": 1,
+  "status": "COMMITTED",
+  "tag": false
+}

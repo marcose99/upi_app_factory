@@ -1,0 +1,14 @@
+{
+  "incidents": [
+    "newer_failed_duplicate_hides_closed_run",
+    "conflicting_closed_run_identities",
+    "exact_bounded_mypy_repair",
+    "unknown_mypy_failure"
+  ],
+  "llm_calls": 0,
+  "mutation_permitted": false,
+  "phase": "46S",
+  "policy_id": "LIFECYCLE_INCIDENT_REPLAY",
+  "schema_version": 1,
+  "unknown_outcomes": "FAIL_CLOSED"
+}
