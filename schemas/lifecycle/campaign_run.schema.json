@@ -1,0 +1,51 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/lifecycle/campaign-run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "approvals": {
+      "contains": {
+        "const": "commit"
+      },
+      "type": "array"
+    },
+    "campaign": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "completed_phases": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "phase_results": {
+      "type": "object"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "CREATED",
+        "RUNNING",
+        "FAILED",
+        "CLOSED"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "campaign",
+    "run_id",
+    "status",
+    "completed_phases",
+    "phase_results",
+    "approvals"
+  ],
+  "type": "object"
+}

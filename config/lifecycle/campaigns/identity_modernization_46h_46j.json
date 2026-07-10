@@ -1,0 +1,36 @@
+{
+  "approval_model": "ONE_SET_AT_CAMPAIGN_LAUNCH",
+  "campaign": "identity-modernization-46h-46j",
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "max_repair_attempts": 2,
+  "name": "UPI App Factory identity modernization campaign",
+  "phases": [
+    {
+      "manifest": "config/lifecycle/phases/phase46h.json",
+      "phase": "46H"
+    },
+    {
+      "manifest": "config/lifecycle/phases/phase46i.json",
+      "phase": "46I"
+    },
+    {
+      "manifest": "config/lifecycle/phases/phase46j.json",
+      "phase": "46J"
+    }
+  ],
+  "prohibited_actions": [
+    "tag",
+    "release"
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE",
+  "stop_policy": "FAIL_CLOSED_ON_UNREPAIRABLE_FAILURE"
+}

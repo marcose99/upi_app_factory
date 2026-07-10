@@ -1,0 +1,153 @@
+{
+  "base_branch": "main",
+  "candidate_paths": [
+    "config/lifecycle/phases/phase46g.json",
+    "config/lifecycle/phases/phase46h.json",
+    "config/lifecycle/phases/phase46i.json",
+    "config/lifecycle/phases/phase46j.json",
+    "config/lifecycle/repair_catalog.json",
+    "config/lifecycle/campaigns/identity_modernization_46h_46j.json",
+    "policies/governed_lifecycle_self_repair_policy.json",
+    "schemas/lifecycle/repair_catalog.schema.json",
+    "schemas/lifecycle/campaign_run.schema.json",
+    "docs/phase46g/README.md",
+    "tools/lifecycle_orchestrator/campaign.py",
+    "tools/lifecycle_orchestrator/repairs.py",
+    "tools/lifecycle_orchestrator/campaign_payloads.py",
+    "tests/lifecycle_orchestrator/test_phase46g_campaign.py",
+    "bin/upi-app-factory-campaign"
+  ],
+  "commit_message": "feat(factory): add governed multi-phase campaign orchestration",
+  "feature_branch": "phase46g/governed-campaign-bounded-self-repair",
+  "full_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "name": "Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "name": "MyPy"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "name": "Pytest"
+    }
+  ],
+  "implementation_commands": [
+    {
+      "argv": [
+        "{worktree}/bin/upi-app-factory-campaign",
+        "validate",
+        "config/lifecycle/campaigns/identity_modernization_46h_46j.json",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Validate installed Phase 46G campaign controller"
+    }
+  ],
+  "llm": {
+    "allowed_calls": 0,
+    "enabled": false
+  },
+  "name": "Governed multi-phase campaign and bounded self-repair",
+  "phase": "46G",
+  "post_restore_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "scripts/validate_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G validation"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_phase13g_readonly_validation_guardrails.py"
+      ],
+      "name": "Phase 13G tests"
+    }
+  ],
+  "protected_actions": [
+    "commit",
+    "merge",
+    "push"
+  ],
+  "runtime_noise_paths": [
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_capability_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/adapter_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/handoff_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/runtime_event_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs/first_governed_generation_run_001/agent_runtime_ledgers/tool_execution_ledger.jsonl",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase14u/autonomous_phase_discovery_and_planning_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase37/end_to_end_portal_run_flow_report.json"
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE",
+  "targeted_validation_commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/lifecycle_orchestrator/test_phase46g_campaign.py"
+      ],
+      "name": "Phase 46G campaign tests"
+    },
+    {
+      "argv": [
+        "{worktree}/bin/upi-app-factory-campaign",
+        "validate",
+        "config/lifecycle/campaigns/identity_modernization_46h_46j.json",
+        "--project-root",
+        "{worktree}"
+      ],
+      "name": "Phase 46G campaign validation"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "ruff",
+        "check",
+        "tools/lifecycle_orchestrator/campaign.py",
+        "tools/lifecycle_orchestrator/repairs.py",
+        "tools/lifecycle_orchestrator/campaign_payloads.py",
+        "tests/lifecycle_orchestrator/test_phase46g_campaign.py"
+      ],
+      "name": "Phase 46G Ruff"
+    },
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "mypy",
+        "tools/lifecycle_orchestrator/campaign.py",
+        "tools/lifecycle_orchestrator/repairs.py",
+        "tools/lifecycle_orchestrator/campaign_payloads.py",
+        "tests/lifecycle_orchestrator/test_phase46g_campaign.py"
+      ],
+      "name": "Phase 46G MyPy"
+    }
+  ]
+}

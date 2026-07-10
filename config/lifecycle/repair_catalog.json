@@ -1,0 +1,61 @@
+{
+  "llm_calls_allowed": 0,
+  "max_repair_attempts_per_phase": 2,
+  "phase": "46G",
+  "prohibited_automatic_actions": [
+    "business logic modification",
+    "schema migration",
+    "file deletion",
+    "package rename",
+    "checkout rename",
+    "remote repository rename",
+    "legacy alias retirement",
+    "tag",
+    "release"
+  ],
+  "repairs": [
+    {
+      "automatic": true,
+      "detector": "failed lifecycle message contains Ruff",
+      "preconditions": [
+        "all diagnostics are inside candidate scope",
+        "all diagnostics expose Ruff safe fixes",
+        "no non-Python file is passed to Ruff"
+      ],
+      "repair_id": "RUFF_SAFE_FIX",
+      "required_revalidation": [
+        "targeted validation",
+        "candidate verification",
+        "full validation",
+        "post-restore validation"
+      ],
+      "risk": "LOW",
+      "rollback_state": "IMPLEMENTED",
+      "scope": "manifest candidate Python files only"
+    },
+    {
+      "automatic": false,
+      "detector": "formatter-only diagnostic",
+      "human_approval_required": true,
+      "repair_id": "RUFF_FORMAT",
+      "risk": "LOW",
+      "scope": "manifest candidate Python files only"
+    },
+    {
+      "automatic": false,
+      "detector": "known explicit narrowing template",
+      "human_approval_required": true,
+      "repair_id": "MYPY_TYPE_NARROWING",
+      "risk": "MEDIUM",
+      "scope": "candidate files only"
+    },
+    {
+      "automatic": false,
+      "human_approval_required": true,
+      "repair_id": "SEMANTIC_OR_BUSINESS_LOGIC_CHANGE",
+      "risk": "HIGH"
+    }
+  ],
+  "schema_version": 1,
+  "status": "ACTIVE"
+}

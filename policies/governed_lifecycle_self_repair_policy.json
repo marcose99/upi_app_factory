@@ -1,0 +1,29 @@
+{
+  "automatic_repairs": [
+    "RUFF_SAFE_FIX"
+  ],
+  "before_after_evidence_required": true,
+  "candidate_scope_required": true,
+  "default_posture": "FAIL_CLOSED",
+  "full_revalidation_required": true,
+  "human_only_actions": [
+    "business logic change",
+    "destructive action",
+    "tag",
+    "release",
+    "checkout rename",
+    "remote repository rename",
+    "legacy alias retirement"
+  ],
+  "llm_calls_allowed": 0,
+  "maximum_attempts": 2,
+  "phase": "46G",
+  "proposal_only_repairs": [
+    "RUFF_FORMAT",
+    "MYPY_TYPE_NARROWING",
+    "CHECKPOINT_SELECTOR_CHANGE"
+  ],
+  "schema_version": 1,
+  "stale_evidence_invalidation_required": true,
+  "status": "ACTIVE"
+}
