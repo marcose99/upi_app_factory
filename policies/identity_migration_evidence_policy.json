@@ -1,0 +1,18 @@
+{
+  "certification_authority_required": true,
+  "evidence_hash_replay_required": true,
+  "human_approval_required_for": [
+    "physical checkout rename",
+    "remote repository rename",
+    "legacy alias retirement",
+    "formal certification submission",
+    "tag",
+    "release"
+  ],
+  "independent_review_required": true,
+  "llm_calls_allowed": 0,
+  "official_certification_claim_allowed": false,
+  "phase": "46J",
+  "schema_version": 1,
+  "status": "ACTIVE"
+}

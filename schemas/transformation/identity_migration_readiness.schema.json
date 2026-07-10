@@ -1,0 +1,39 @@
+{
+  "$id": "https://upi-app-factory.local/schemas/transformation/identity-migration-readiness.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "certification_posture": {
+      "const": "CERTIFICATION_READY_NOT_CERTIFIED"
+    },
+    "controls": {
+      "required": [
+        "display_identity_contract",
+        "path_neutral_runtime",
+        "technical_namespace_compatibility",
+        "physical_checkout_rename",
+        "remote_repository_rename",
+        "legacy_alias_retirement",
+        "formal_certification"
+      ],
+      "type": "object"
+    },
+    "phase": {
+      "const": "46J"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "READY_FOR_INDEPENDENT_REVIEW"
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "status",
+    "controls",
+    "certification_posture"
+  ],
+  "type": "object"
+}
