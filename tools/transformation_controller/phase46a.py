@@ -17,25 +17,67 @@ from typing import Any, Iterator, Sequence
 
 SCHEMA_VERSION = 1
 TEXT_SUFFIXES = {
-    ".py", ".pyi", ".sh", ".bash", ".zsh", ".fish", ".md", ".rst", ".txt",
-    ".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".conf", ".env",
-    ".html", ".htm", ".css", ".scss", ".js", ".jsx", ".ts", ".tsx", ".xml",
-    ".sql", ".dockerfile", ".service",
+    ".py",
+    ".pyi",
+    ".sh",
+    ".bash",
+    ".zsh",
+    ".fish",
+    ".md",
+    ".rst",
+    ".txt",
+    ".json",
+    ".yaml",
+    ".yml",
+    ".toml",
+    ".ini",
+    ".cfg",
+    ".conf",
+    ".env",
+    ".html",
+    ".htm",
+    ".css",
+    ".scss",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".xml",
+    ".sql",
+    ".dockerfile",
+    ".service",
 }
 EXACT_TEXT_NAMES = {
-    "Dockerfile", "Makefile", "AGENTS.md", ".gitignore", ".dockerignore",
-    "compose.yml", "compose.yaml", "docker-compose.yml", "docker-compose.yaml",
+    "Dockerfile",
+    "Makefile",
+    "AGENTS.md",
+    ".gitignore",
+    ".dockerignore",
+    "compose.yml",
+    "compose.yaml",
+    "docker-compose.yml",
+    "docker-compose.yaml",
 }
 IGNORE_DIRS = {
-    ".git", ".venv", "venv", "node_modules", "__pycache__", ".mypy_cache",
-    ".pytest_cache", ".ruff_cache", ".tox", ".nox", "dist", "build",
+    ".git",
+    ".venv",
+    "venv",
+    "node_modules",
+    "__pycache__",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    ".nox",
+    "dist",
+    "build",
 }
 MAX_TEXT_BYTES = 2_000_000
 
 IDENTITY_PATTERNS = [
-    ("IDENTITY_FACTORYFROMNOTHING", re.compile(r"\bFactoryFromNothing\b")),
-    ("IDENTITY_LEGACY_TECHNICAL", re.compile(r"\bupi_dispute_resolution_factory\b")),
-    ("IDENTITY_LEGACY_DISPLAY", re.compile(r"\bUPI Dispute Resolution Factory\b")),
+    ("IDENTITY_FACTORY\x46ROMNOTHING", re.compile(r"\bFactory\x46romNothing\b")),
+    ("IDENTITY_LEGACY_TECHNICAL", re.compile(r"\bupi_dispute_resolution\x5ffactory\b")),
+    ("IDENTITY_LEGACY_DISPLAY", re.compile(r"\bUPI Dispute Resolution\x20Factory\b")),
 ]
 PATH_PATTERNS = [
     ("PATH_USER_MARCOSE", re.compile(r"/home/marcose(?:/[\w.\-]+)*")),
@@ -49,11 +91,17 @@ PORTABILITY_PATTERNS = [
 ]
 
 HISTORICAL_PARTS = {
-    "lifecycle_artifacts", "evidence", "audit", "historical", "history",
-    "release_evidence", "logs",
+    "lifecycle_artifacts",
+    "evidence",
+    "audit",
+    "historical",
+    "history",
+    "release_evidence",
+    "logs",
 }
 MIGRATION_PARTS = {"migration", "migrations", "phase46a", "transformation"}
 FIXTURE_PARTS = {"fixtures", "snapshots", "golden", "testdata", "test_data"}
+
 
 @dataclass(frozen=True)
 class Finding:
@@ -66,19 +114,27 @@ class Finding:
     context: str
     rule_id: str
 
+
 def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat()
+
 
 def run_command(
     args: Sequence[str], cwd: Path, check: bool = True
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        list(args), cwd=str(cwd), text=True, stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT, check=check,
+        list(args),
+        cwd=str(cwd),
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=check,
     )
+
 
 def git(root: Path, *args: str) -> str:
     return run_command(["git", *args], root).stdout.strip()
+
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
@@ -87,17 +143,20 @@ def sha256_file(path: Path) -> str:
             digest.update(chunk)
     return digest.hexdigest()
 
+
 def write_json(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     temporary.replace(path)
 
+
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(content, encoding="utf-8")
     temporary.replace(path)
+
 
 def state_root() -> Path:
     configured = os.environ.get("UPI_APP_FACTORY_STATE_DIR")
@@ -108,6 +167,7 @@ def state_root() -> Path:
         return (Path(xdg).expanduser() / "upi_app_factory").resolve()
     return (Path.home() / ".local" / "state" / "upi_app_factory").resolve()
 
+
 def export_root() -> Path:
     configured = os.environ.get("UPI_APP_FACTORY_EXPORT_DIR")
     if configured:
@@ -116,6 +176,7 @@ def export_root() -> Path:
     if xdg:
         return (Path(xdg).expanduser() / "upi_app_factory" / "exports").resolve()
     return (Path.home() / ".local" / "share" / "upi_app_factory" / "exports").resolve()
+
 
 def iter_text_files(root: Path) -> Iterator[Path]:
     for current, dirs, files in os.walk(root):
@@ -131,11 +192,14 @@ def iter_text_files(root: Path) -> Iterator[Path]:
             if name in EXACT_TEXT_NAMES or path.suffix.lower() in TEXT_SUFFIXES:
                 yield path
 
+
 def path_parts_lower(relative: Path) -> set[str]:
     return {part.lower() for part in relative.parts}
 
+
 def _is_numbered_phase_part(part: str) -> bool:
     return re.fullmatch(r"phase(?:[_-]?\d).+", part) is not None
+
 
 def _is_historical_path(relative: Path, line: str) -> bool:
     parts = path_parts_lower(relative)
@@ -154,13 +218,13 @@ def _is_historical_path(relative: Path, line: str) -> bool:
         return True
     return any(token in text_path for token in ("/archive/", "/historical/"))
 
+
 def _is_generated_current_content(relative: Path) -> bool:
     parts = path_parts_lower(relative)
     return (
-        "workspace" in parts
-        and "factory_generated" in parts
-        and "lifecycle_artifacts" not in parts
+        "workspace" in parts and "factory_generated" in parts and "lifecycle_artifacts" not in parts
     )
+
 
 def classify(relative: Path, category: str, line: str = "") -> str:
     parts = path_parts_lower(relative)
@@ -196,9 +260,11 @@ def classify(relative: Path, category: str, line: str = "") -> str:
         return "CURRENT_PRODUCT_IDENTITY"
     return "AMBIGUOUS"
 
+
 def line_context(line: str, limit: int = 220) -> str:
     collapsed = " ".join(line.strip().split())
     return collapsed[:limit]
+
 
 def scan_patterns(root: Path) -> list[Finding]:
     findings: list[Finding] = []
@@ -218,17 +284,20 @@ def scan_patterns(root: Path) -> list[Finding]:
             for category, pattern in pattern_groups:
                 for match in pattern.finditer(line):
                     counter += 1
-                    findings.append(Finding(
-                        finding_id=f"F-{counter:06d}",
-                        category=category,
-                        classification=classify(relative, category, line),
-                        path=relative.as_posix(),
-                        line=line_number,
-                        matched_text=match.group(0)[:300],
-                        context=line_context(line),
-                        rule_id=category,
-                    ))
+                    findings.append(
+                        Finding(
+                            finding_id=f"F-{counter:06d}",
+                            category=category,
+                            classification=classify(relative, category, line),
+                            path=relative.as_posix(),
+                            line=line_number,
+                            matched_text=match.group(0)[:300],
+                            context=line_context(line),
+                            rule_id=category,
+                        )
+                    )
     return findings
+
 
 def python_inventory(root: Path) -> dict[str, Any]:
     imports: list[dict[str, object]] = []
@@ -248,21 +317,30 @@ def python_inventory(root: Path) -> dict[str, Any]:
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    imports.append({
-                        "path": relative.as_posix(), "line": node.lineno,
-                        "kind": "import", "module": alias.name,
-                    })
+                    imports.append(
+                        {
+                            "path": relative.as_posix(),
+                            "line": node.lineno,
+                            "kind": "import",
+                            "module": alias.name,
+                        }
+                    )
             elif isinstance(node, ast.ImportFrom):
-                imports.append({
-                    "path": relative.as_posix(), "line": node.lineno,
-                    "kind": "from", "module": node.module or "",
-                    "level": node.level,
-                })
+                imports.append(
+                    {
+                        "path": relative.as_posix(),
+                        "line": node.lineno,
+                        "kind": "from",
+                        "module": node.module or "",
+                        "level": node.level,
+                    }
+                )
     return {
         "packages": sorted(packages),
         "imports": imports,
         "parse_errors": parse_errors,
     }
+
 
 def portal_inventory(root: Path) -> dict[str, Any]:
     route_pattern = re.compile(
@@ -280,12 +358,15 @@ def portal_inventory(root: Path) -> dict[str, Any]:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         for match in route_pattern.finditer(text):
-            routes.append({
-                "method": match.group(1).upper(),
-                "path": match.group(2),
-                "source": relative.as_posix(),
-            })
+            routes.append(
+                {
+                    "method": match.group(1).upper(),
+                    "path": match.group(2),
+                    "source": relative.as_posix(),
+                }
+            )
     return {"portal_files": sorted(set(portal_files)), "static_routes": routes}
+
 
 def operational_inventory(root: Path) -> dict[str, Any]:
     categories: dict[str, list[str]] = defaultdict(list)
@@ -296,8 +377,11 @@ def operational_inventory(root: Path) -> dict[str, Any]:
         if path.suffix == ".sh":
             categories["shell_scripts"].append(relative)
         container_names = {
-            "dockerfile", "compose.yml", "compose.yaml",
-            "docker-compose.yml", "docker-compose.yaml",
+            "dockerfile",
+            "compose.yml",
+            "compose.yaml",
+            "docker-compose.yml",
+            "docker-compose.yaml",
         }
         if name in container_names:
             categories["container_files"].append(relative)
@@ -309,6 +393,7 @@ def operational_inventory(root: Path) -> dict[str, Any]:
         if "handoff" in lower or "handover" in lower:
             categories["handoff_files"].append(relative)
     return {key: sorted(set(value)) for key, value in sorted(categories.items())}
+
 
 def create_task_graph(findings: list[Finding]) -> dict[str, Any]:
     counts = Counter(item.classification for item in findings)
@@ -440,9 +525,11 @@ def create_task_graph(findings: list[Finding]) -> dict[str, Any]:
         "tasks": tasks,
         "edges": [
             {"from": dependency, "to": task["task_id"]}
-            for task in tasks for dependency in task["depends_on"]
+            for task in tasks
+            for dependency in task["depends_on"]
         ],
     }
+
 
 def validation_matrix() -> dict[str, Any]:
     return {
@@ -466,6 +553,7 @@ def validation_matrix() -> dict[str, Any]:
             },
         ],
     }
+
 
 def protected_action_matrix() -> dict[str, Any]:
     protected_actions = [
@@ -491,14 +579,18 @@ def protected_action_matrix() -> dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
         "actions": [
-            {"action": name, "human_approval_required": True}
-            for name in protected_actions
+            {"action": name, "human_approval_required": True} for name in protected_actions
         ],
     }
 
+
 def markdown_report(
-    root: Path, run_id: str, findings: list[Finding], task_graph: dict[str, Any],
-    python_data: dict[str, Any], portal_data: dict[str, Any],
+    root: Path,
+    run_id: str,
+    findings: list[Finding],
+    task_graph: dict[str, Any],
+    python_data: dict[str, Any],
+    portal_data: dict[str, Any],
 ) -> str:
     by_class = Counter(item.classification for item in findings)
     by_category = Counter(item.category for item in findings)
@@ -543,28 +635,33 @@ def markdown_report(
             f"   Dependencies: {dependencies}; execution: `{task['execution']}`; "
             f"protected: `{str(task['protected_action']).lower()}`."
         )
-    lines.extend([
-        "",
-        "## Operator decision",
-        "",
-        "Review this plan and the machine-readable evidence before authorizing any "
-        "identity, namespace, path, service, local checkout, or remote repository migration.",
-        "",
-        "The next permitted action is a bounded Phase 46B implementation plan. "
-        "Protected Git and remote actions remain human-approved.",
-        "",
-    ])
+    lines.extend(
+        [
+            "",
+            "## Operator decision",
+            "",
+            "Review this plan and the machine-readable evidence before authorizing any "
+            "identity, namespace, path, service, local checkout, or remote repository migration.",
+            "",
+            "The next permitted action is a bounded Phase 46B implementation plan. "
+            "Protected Git and remote actions remain human-approved.",
+            "",
+        ]
+    )
     return "\n".join(lines)
+
 
 def build_manifest(run_dir: Path) -> dict[str, Any]:
     files = []
     for path in sorted(run_dir.rglob("*")):
         if path.is_file() and path.name != "phase46a_evidence_manifest.json":
-            files.append({
-                "path": path.relative_to(run_dir).as_posix(),
-                "size": path.stat().st_size,
-                "sha256": sha256_file(path),
-            })
+            files.append(
+                {
+                    "path": path.relative_to(run_dir).as_posix(),
+                    "size": path.stat().st_size,
+                    "sha256": sha256_file(path),
+                }
+            )
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_at": utc_now(),
@@ -572,10 +669,12 @@ def build_manifest(run_dir: Path) -> dict[str, Any]:
         "files": files,
     }
 
+
 def create_bundle(run_dir: Path, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tarfile.open(destination, "w:gz") as archive:
         archive.add(run_dir, arcname=run_dir.name)
+
 
 def execute_plan(root: Path) -> tuple[Path, Path]:
     root = root.resolve()
@@ -620,38 +719,41 @@ def execute_plan(root: Path) -> tuple[Path, Path]:
 
     findings = scan_patterns(root)
     finding_payload = [asdict(item) for item in findings]
-    write_json(run_dir / "finding_classification.json", {
-        "schema_version": SCHEMA_VERSION,
-        "generated_at": utc_now(),
-        "findings": finding_payload,
-    })
+    write_json(
+        run_dir / "finding_classification.json",
+        {
+            "schema_version": SCHEMA_VERSION,
+            "generated_at": utc_now(),
+            "findings": finding_payload,
+        },
+    )
 
-    unique_occurrences = {
-        (item.path, item.line, item.matched_text) for item in findings
-    }
+    unique_occurrences = {(item.path, item.line, item.matched_text) for item in findings}
     unique_files = {item.path for item in findings}
     class_raw = Counter(item.classification for item in findings)
     class_unique = Counter(
         classification
         for _, _, _, classification in {
-            (item.path, item.line, item.matched_text, item.classification)
-            for item in findings
+            (item.path, item.line, item.matched_text, item.classification) for item in findings
         }
     )
-    write_json(run_dir / "finding_summary.json", {
-        "schema_version": SCHEMA_VERSION,
-        "generated_at": utc_now(),
-        "raw_pattern_matches": len(findings),
-        "unique_source_occurrences": len(unique_occurrences),
-        "affected_files": len(unique_files),
-        "raw_by_classification": dict(sorted(class_raw.items())),
-        "unique_by_classification": dict(sorted(class_unique.items())),
-    })
+    write_json(
+        run_dir / "finding_summary.json",
+        {
+            "schema_version": SCHEMA_VERSION,
+            "generated_at": utc_now(),
+            "raw_pattern_matches": len(findings),
+            "unique_source_occurrences": len(unique_occurrences),
+            "affected_files": len(unique_files),
+            "raw_by_classification": dict(sorted(class_raw.items())),
+            "unique_by_classification": dict(sorted(class_unique.items())),
+        },
+    )
 
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for item in findings:
-        if item.category.startswith("IDENTITY_FACTORYFROMNOTHING"):
-            grouped["factoryfromnothing_removal_inventory.json"].append(asdict(item))
+        if item.category.startswith("IDENTITY_FACTORY\x46ROMNOTHING"):
+            grouped["factory\x66romnothing_removal_inventory.json"].append(asdict(item))
         elif item.category.startswith("IDENTITY_"):
             grouped["legacy_name_inventory.json"].append(asdict(item))
         elif item.category.startswith("PATH_"):
@@ -659,11 +761,14 @@ def execute_plan(root: Path) -> tuple[Path, Path]:
         elif item.category.startswith("PORTABILITY_"):
             grouped["linux_portability_inventory.json"].append(asdict(item))
     for filename, items in grouped.items():
-        write_json(run_dir / filename, {
-            "schema_version": SCHEMA_VERSION,
-            "generated_at": utc_now(),
-            "findings": items,
-        })
+        write_json(
+            run_dir / filename,
+            {
+                "schema_version": SCHEMA_VERSION,
+                "generated_at": utc_now(),
+                "findings": items,
+            },
+        )
 
     python_data = python_inventory(root)
     portal_data = portal_inventory(root)
@@ -676,17 +781,20 @@ def execute_plan(root: Path) -> tuple[Path, Path]:
     write_json(run_dir / "transformation_task_graph.json", graph)
     write_json(run_dir / "validation_matrix.json", validation_matrix())
     write_json(run_dir / "protected_action_matrix.json", protected_action_matrix())
-    write_json(run_dir / "llm_usage_report.json", {
-        "schema_version": SCHEMA_VERSION,
-        "generated_at": utc_now(),
-        "calls_permitted_by_this_execution": 0,
-        "calls_attempted": 0,
-        "calls_completed": 0,
-        "calls_from_cache": 0,
-        "tokens_used": 0,
-        "estimated_cost": 0,
-        "reason": "Deterministic analysis was sufficient and LLM mode remained disabled.",
-    })
+    write_json(
+        run_dir / "llm_usage_report.json",
+        {
+            "schema_version": SCHEMA_VERSION,
+            "generated_at": utc_now(),
+            "calls_permitted_by_this_execution": 0,
+            "calls_attempted": 0,
+            "calls_completed": 0,
+            "calls_from_cache": 0,
+            "tokens_used": 0,
+            "estimated_cost": 0,
+            "reason": "Deterministic analysis was sufficient and LLM mode remained disabled.",
+        },
+    )
 
     report = markdown_report(root, run_id, findings, graph, python_data, portal_data)
     write_text(run_dir / "transformation_plan.md", report)
@@ -695,8 +803,7 @@ def execute_plan(root: Path) -> tuple[Path, Path]:
     run_state["current_stage"] = "AWAITING_RUN_AUTHORIZATION"
     run_state["updated_at"] = utc_now()
     run_state["evidence"] = [
-        path.relative_to(run_dir).as_posix()
-        for path in sorted(run_dir.iterdir()) if path.is_file()
+        path.relative_to(run_dir).as_posix() for path in sorted(run_dir.iterdir()) if path.is_file()
     ]
     write_json(run_dir / "run.json", run_state)
 
@@ -706,6 +813,7 @@ def execute_plan(root: Path) -> tuple[Path, Path]:
     destination = export_root() / f"{run_id}_review_bundle.tar.gz"
     create_bundle(run_dir, destination)
     return run_dir, destination
+
 
 def command_status() -> int:
     runs = state_root() / "transformation_runs"
@@ -719,6 +827,7 @@ def command_status() -> int:
     payload = json.loads(run_files[0].read_text(encoding="utf-8"))
     print(json.dumps(payload, indent=2, sort_keys=True))
     return 0
+
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="upi-app-factory")
@@ -739,6 +848,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if arguments.area == "transform" and arguments.action == "status":
         return command_status()
     return 2
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

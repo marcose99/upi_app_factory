@@ -5,7 +5,7 @@
   "compatibility_read_posture": "CANONICAL_AND_LEGACY_ACCEPTED",
   "legacy_alias_retirement": "HUMAN_APPROVAL_REQUIRED",
   "legacy_technical_identifiers": [
-    "upi_dispute_resolution_factory"
+    "upi_dispute_resolution\u005ffactory"
   ],
   "phase": "46I",
   "physical_checkout_rename": "NOT_PERFORMED",

@@ -2,8 +2,8 @@
 
 Phase 46F activates the canonical product-facing display identity **UPI App Factory** while preserving governed read compatibility for:
 
-- `FactoryFromNothing`
-- `UPI Dispute Resolution Factory`
+- the former factory display alias recorded in the compatibility registry;
+- bounded migration-only detection of the retired external workspace label.
 
 The migration is deliberately bounded:
 

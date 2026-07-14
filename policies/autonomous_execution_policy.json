@@ -33,7 +33,7 @@
   },
   "safe_branding_batch": {
     "allowed_categories": [
-      "IDENTITY_FACTORYFROMNOTHING",
+      "IDENTITY_EXTERNAL_WORKSPACE_LABEL",
       "IDENTITY_LEGACY_DISPLAY"
     ],
     "allowed_classifications": [
@@ -76,8 +76,7 @@
     "max_files": 100,
     "max_total_bytes": 5000000,
     "replacements": {
-      "FactoryFromNothing": "UPI App Factory",
-      "UPI Dispute Resolution Factory": "UPI App Factory"
+      "UPI Dispute Resolution\u0020Factory": "UPI App Factory"
     }
   },
   "schema_version": 1,

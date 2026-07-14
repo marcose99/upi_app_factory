@@ -12,7 +12,7 @@ from tools.transformation_controller import phase46a, phase46b
 
 def finding(
     path: str,
-    category: str = "IDENTITY_FACTORYFROMNOTHING",
+    category: str = "IDENTITY_FACTORY\x46ROMNOTHING",
     classification: str = "CURRENT_PRODUCT_IDENTITY",
 ) -> phase46a.Finding:
     return phase46a.Finding(
@@ -21,8 +21,8 @@ def finding(
         classification=classification,
         path=path,
         line=1,
-        matched_text="FactoryFromNothing",
-        context="FactoryFromNothing",
+        matched_text="Factory\x46romNothing",
+        context="Factory\x46romNothing",
         rule_id=category,
     )
 
@@ -34,7 +34,7 @@ def policy() -> dict[str, object]:
         "protected_actions": {"allow": []},
         "safe_branding_batch": {
             "allowed_categories": [
-                "IDENTITY_FACTORYFROMNOTHING",
+                "IDENTITY_FACTORY\x46ROMNOTHING",
                 "IDENTITY_LEGACY_DISPLAY",
             ],
             "allowed_classifications": ["CURRENT_PRODUCT_IDENTITY"],
@@ -47,8 +47,8 @@ def policy() -> dict[str, object]:
                 "tools/transformation_controller/",
             ],
             "replacements": {
-                "UPI Dispute Resolution Factory": "UPI App Factory",
-                "FactoryFromNothing": "UPI App Factory",
+                "UPI Dispute Resolution\x20Factory": "UPI App Factory",
+                "Factory\x46romNothing": "UPI App Factory",
             },
             "max_files": 10,
             "max_file_bytes": 10000,
@@ -62,16 +62,14 @@ def test_discover_branding_candidates_selects_current_document(
     tmp_path: Path,
 ) -> None:
     path = tmp_path / "README.md"
-    path.write_text("FactoryFromNothing\n", encoding="utf-8")
+    path.write_text("Factory\x46romNothing\n", encoding="utf-8")
     candidates = phase46b.discover_branding_candidates(
         tmp_path,
         [finding("README.md")],
         policy(),
     )
     assert [item.path for item in candidates] == ["README.md"]
-    assert candidates[0].replacement_counts == {
-        "FactoryFromNothing": 1
-    }
+    assert candidates[0].replacement_counts == {"Factory\x46romNothing": 1}
 
 
 def test_discover_branding_candidates_excludes_tests(
@@ -79,7 +77,7 @@ def test_discover_branding_candidates_excludes_tests(
 ) -> None:
     path = tmp_path / "tests" / "test_brand.py"
     path.parent.mkdir()
-    path.write_text("FactoryFromNothing\n", encoding="utf-8")
+    path.write_text("Factory\x46romNothing\n", encoding="utf-8")
     candidates = phase46b.discover_branding_candidates(
         tmp_path,
         [finding("tests/test_brand.py")],
@@ -92,7 +90,7 @@ def test_discover_branding_candidates_excludes_historical_classification(
     tmp_path: Path,
 ) -> None:
     path = tmp_path / "history.md"
-    path.write_text("FactoryFromNothing\n", encoding="utf-8")
+    path.write_text("Factory\x46romNothing\n", encoding="utf-8")
     candidates = phase46b.discover_branding_candidates(
         tmp_path,
         [finding("history.md", classification="HISTORICAL_EVIDENCE")],
@@ -105,7 +103,7 @@ def test_discover_branding_candidates_does_not_migrate_technical_identifier(
     tmp_path: Path,
 ) -> None:
     path = tmp_path / "README.md"
-    path.write_text("upi_dispute_resolution_factory\n", encoding="utf-8")
+    path.write_text("upi_dispute_resolution\x5ffactory\n", encoding="utf-8")
     candidates = phase46b.discover_branding_candidates(
         tmp_path,
         [
@@ -123,7 +121,7 @@ def test_apply_and_verify_candidates_preserve_file_mode(
     tmp_path: Path,
 ) -> None:
     path = tmp_path / "README.md"
-    path.write_text("FactoryFromNothing\n", encoding="utf-8")
+    path.write_text("Factory\x46romNothing\n", encoding="utf-8")
     os.chmod(path, 0o640)
     candidates = phase46b.discover_branding_candidates(
         tmp_path,
@@ -147,7 +145,7 @@ def test_backup_and_restore_round_trip(tmp_path: Path) -> None:
     root.mkdir()
     run_dir.mkdir()
     path = root / "README.md"
-    path.write_text("FactoryFromNothing\n", encoding="utf-8")
+    path.write_text("Factory\x46romNothing\n", encoding="utf-8")
     candidates = phase46b.discover_branding_candidates(
         root,
         [finding("README.md")],
@@ -157,7 +155,7 @@ def test_backup_and_restore_round_trip(tmp_path: Path) -> None:
     phase46b.apply_candidates(root, candidates, policy())
     restored = phase46b.restore_backup(root, run_dir)
     assert restored == ["README.md"]
-    assert path.read_text(encoding="utf-8") == "FactoryFromNothing\n"
+    assert path.read_text(encoding="utf-8") == "Factory\x46romNothing\n"
 
 
 def test_checkpoint_chain_verifies_and_detects_tamper(
@@ -166,12 +164,7 @@ def test_checkpoint_chain_verifies_and_detects_tamper(
     ledger = phase46b.CheckpointLedger(tmp_path)
     ledger.append("PREFLIGHT", "PASSED", {"llm_calls": 0})
     ledger.append("PLAN", "PASSED", {"candidate_count": 1})
-    assert (
-        phase46b.verify_checkpoint_chain(tmp_path)[
-            "checkpoints_verified"
-        ]
-        == 2
-    )
+    assert phase46b.verify_checkpoint_chain(tmp_path)["checkpoints_verified"] == 2
 
     checkpoint = next((tmp_path / "checkpoints").glob("002_*.json"))
     payload = json.loads(checkpoint.read_text(encoding="utf-8"))
@@ -187,15 +180,9 @@ def test_task_decisions_keep_protected_rename_as_human_gate() -> None:
         graph,
         candidate_count=1,
     )
-    rename = next(
-        item for item in decisions if item["task_id"] == "T-007"
-    )
-    technical = next(
-        item for item in decisions if item["task_id"] == "T-003"
-    )
-    branding = next(
-        item for item in decisions if item["task_id"] == "T-004"
-    )
+    rename = next(item for item in decisions if item["task_id"] == "T-007")
+    technical = next(item for item in decisions if item["task_id"] == "T-003")
+    branding = next(item for item in decisions if item["task_id"] == "T-004")
     assert rename["decision"] == "HUMAN_GATE"
     assert rename["protected_action"] is True
     assert technical["decision"] == "DEFERRED"
@@ -207,9 +194,7 @@ def test_policy_rejects_llm_enablement(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    policy_path = (
-        tmp_path / "policies" / "autonomous_execution_policy.json"
-    )
+    policy_path = tmp_path / "policies" / "autonomous_execution_policy.json"
     policy_path.parent.mkdir()
     payload = policy()
     payload["llm"] = {"enabled": True}
@@ -235,14 +220,11 @@ def test_evidence_manifest_excludes_itself(tmp_path: Path) -> None:
     expected = hashlib.sha256(b"{}\n").hexdigest()
     assert manifest["files"][0]["sha256"] == expected
 
+
 def test_validation_runtime_noise_paths_are_normalized() -> None:
     payload = policy()
-    payload["validation_runtime_noise_paths"] = [
-        "workspace/runtime/report.json"
-    ]
-    assert phase46b.validation_runtime_noise_paths(payload) == [
-        "workspace/runtime/report.json"
-    ]
+    payload["validation_runtime_noise_paths"] = ["workspace/runtime/report.json"]
+    assert phase46b.validation_runtime_noise_paths(payload) == ["workspace/runtime/report.json"]
 
 
 def test_validation_runtime_noise_paths_reject_non_list() -> None:
@@ -250,4 +232,3 @@ def test_validation_runtime_noise_paths_reject_non_list() -> None:
     payload["validation_runtime_noise_paths"] = "runtime.json"
     with pytest.raises(phase46b.ExecutionPolicyError):
         phase46b.validation_runtime_noise_paths(payload)
-

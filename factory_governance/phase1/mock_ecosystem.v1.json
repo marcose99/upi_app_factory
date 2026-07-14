@@ -1,6 +1,6 @@
 {
   "schema_version": "mock_ecosystem.v1",
-  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "project": "upi_app_factory / UPI App Factory",
   "purpose": "Define mock-only upstream and downstream systems for local development and demonstrations.",
   "global_boundary_rule": {
     "boundary_type": "MOCK_BOUNDARY",

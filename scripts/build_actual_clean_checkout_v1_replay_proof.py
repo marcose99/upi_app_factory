@@ -111,7 +111,7 @@ def execute_clean_checkout_replay(
     replay_root: Path | None,
 ) -> tuple[Path, tuple[CommandResult, ...]]:
     root = _prepare_replay_root(replay_root)
-    checkout_dir = root / "upi_dispute_resolution_factory"
+    checkout_dir = root / "upi_app_factory"
 
     commands: list[CommandResult] = []
     commands.append(

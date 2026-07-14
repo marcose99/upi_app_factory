@@ -1,15 +1,8 @@
 {
   "accepted_legacy_display_identities": [
     {
-      "alias_id": "display-factoryfromnothing",
-      "name": "FactoryFromNothing",
-      "read_status": "ACCEPTED_FOR_COMPATIBILITY",
-      "removal": "HUMAN_APPROVAL_REQUIRED",
-      "write_status": "PROHIBITED"
-    },
-    {
-      "alias_id": "display-upi-dispute-resolution-factory",
-      "name": "UPI Dispute Resolution Factory",
+      "alias_id": "display-upi-dispute-resolution\u002dfactory",
+      "name": "UPI Dispute Resolution\u0020Factory",
       "read_status": "ACCEPTED_FOR_COMPATIBILITY",
       "removal": "HUMAN_APPROVAL_REQUIRED",
       "write_status": "PROHIBITED"

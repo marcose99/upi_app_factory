@@ -189,7 +189,7 @@
     {
       "exists": true,
       "path": "README.md",
-      "sha256": "a2301bb1327c3cb870c25b185684b1148bf3a1cb4bebd3047f0cdcc334253796"
+      "sha256": "2927c6dfae91a630949013114ce54fbdd62a9c37b30cd2c98be6aca02fcf7e10"
     },
     {
       "exists": true,
@@ -213,7 +213,7 @@
       "command": "./factoryctl status",
       "contains_missing_marker": false,
       "exit_code": 0,
-      "output_preview": "FactoryFromNothing operator status\nApp ID        : upi_dispute_resolution\nPhase         : Phase 13E\nRun ID        : first_governed_generation_run_001\nRoot command  : ./factoryctl\nBranch        : phase13k/release-handoff-replay-verification\nLatest tag    : v0.13.9-release-handoff-bundle-pack\nDefault mode  : local_deterministic\n\nThe operator CLI does not claim active LangGraph/OpenAI execution. The default execution path remains local deterministic. External adapters remain detected and policy-gated.\n",
+      "output_preview": "upi_app_factory operator status\nApp ID        : upi_dispute_resolution\nPhase         : Phase 13E\nRun ID        : first_governed_generation_run_001\nRoot command  : ./factoryctl\nBranch        : phase13k/release-handoff-replay-verification\nLatest tag    : v0.13.9-release-handoff-bundle-pack\nDefault mode  : local_deterministic\n\nThe operator CLI does not claim active LangGraph/OpenAI execution. The default execution path remains local deterministic. External adapters remain detected and policy-gated.\n",
       "passed": true
     },
     {

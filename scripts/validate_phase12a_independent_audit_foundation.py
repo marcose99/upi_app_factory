@@ -63,7 +63,7 @@ def validate() -> dict[str, Any]:
     else:
         portal = PORTAL.read_text(encoding="utf-8")
         for term in [
-            "FactoryFromNothing",
+            "upi_app_factory",
             "Animated Agentic Factory Flow",
             "Animated Generated UPI Application Data Flow",
             "Human Validator Checklist",

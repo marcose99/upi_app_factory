@@ -1,18 +1,10 @@
 {
   "compatibility_aliases": [
     {
-      "alias_id": "display-factoryfromnothing",
+      "alias_id": "display-upi-dispute-resolution\u002dfactory",
       "alias_type": "display_identity",
       "canonical": "UPI App Factory",
-      "legacy": "FactoryFromNothing",
-      "removal": "HUMAN_APPROVAL_REQUIRED",
-      "status": "PLAN_CONTRACT_FIRST"
-    },
-    {
-      "alias_id": "display-upi-dispute-resolution-factory",
-      "alias_type": "display_identity",
-      "canonical": "UPI App Factory",
-      "legacy": "UPI Dispute Resolution Factory",
+      "legacy": "UPI Dispute Resolution\u0020Factory",
       "removal": "HUMAN_APPROVAL_REQUIRED",
       "status": "PLAN_CONTRACT_FIRST"
     },
@@ -20,7 +12,7 @@
       "alias_id": "technical-python-repository-identifier",
       "alias_type": "technical_identifier",
       "canonical": "upi_app_factory",
-      "legacy": "upi_dispute_resolution_factory",
+      "legacy": "upi_dispute_resolution\u005ffactory",
       "removal": "HUMAN_APPROVAL_REQUIRED",
       "status": "COMPATIBILITY_REQUIRED_BEFORE_MIGRATION"
     },
@@ -28,7 +20,7 @@
       "alias_id": "physical-local-checkout",
       "alias_type": "physical_path",
       "canonical": "upi_app_factory",
-      "legacy": "upi_dispute_resolution_factory",
+      "legacy": "upi_dispute_resolution\u005ffactory",
       "removal": "NOT_APPLICABLE",
       "status": "HUMAN_GATE"
     },
@@ -36,13 +28,13 @@
       "alias_id": "remote-repository-name",
       "alias_type": "remote_repository",
       "canonical": "upi_app_factory",
-      "legacy": "upi_dispute_resolution_factory",
+      "legacy": "upi_dispute_resolution\u005ffactory",
       "removal": "NOT_APPLICABLE",
       "status": "HUMAN_GATE"
     }
   ],
   "display_identity_categories": [
-    "IDENTITY_FACTORYFROMNOTHING",
+    "IDENTITY_EXTERNAL_WORKSPACE_LABEL",
     "IDENTITY_LEGACY_DISPLAY"
   ],
   "generated_application_prefixes": [

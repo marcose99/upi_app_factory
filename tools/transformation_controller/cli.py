@@ -11,6 +11,7 @@ from tools.transformation_controller import (
     phase46d,
     phase46f,
 )
+from tools.identity_compat import promote_legacy_environment_aliases
 
 
 PHASE46B_ACTIONS = {
@@ -40,6 +41,7 @@ PHASE46F_ACTIONS = {
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    promote_legacy_environment_aliases()
     arguments = list(sys.argv[1:] if argv is None else argv)
     if arguments and arguments[0] == "lifecycle":
         return lifecycle_cli.main(arguments)

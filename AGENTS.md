@@ -2,8 +2,8 @@
 # UPI App Factory — governed engineering instructions
 
 - The current product name is UPI App Factory; canonical ID: `upi_app_factory`.
-- `FactoryFromNothing` is not a product identifier.
-- `upi_dispute_resolution_factory` is a legacy migration/historical identifier.
+- External conversation/workspace labels are not product identifiers and must not appear in product artifacts.
+- The pre-canonical repository identifier is retained only through governed compatibility and migration evidence.
 - Preserve immutable Git history, tags, and evidence.
 - Use deterministic mechanisms before any LLM.
 - LLM use is disabled unless explicitly permitted by policy.

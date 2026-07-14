@@ -31,7 +31,7 @@ def test_phase12a_independent_audit_foundation_passes() -> None:
 def test_phase12a_portal_exists_and_is_offline() -> None:
     portal = ROOT / "workspace" / "factory_generated" / "upi_dispute_resolution" / "audit_portal" / "human_validator_audit_portal.html"
     text = portal.read_text(encoding="utf-8")
-    assert "FactoryFromNothing" in text
+    assert "upi_app_factory" in text
     assert "https://" not in text
     assert "Animated Agentic Factory Flow" in text
 

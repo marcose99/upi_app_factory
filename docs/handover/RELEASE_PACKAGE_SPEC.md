@@ -10,7 +10,7 @@ Expected output:
 
 ```text
 release_packages/
-└── upi_dispute_resolution_factory_<tag>_handover/
+└── upi_app_factory_<tag>_handover/
     ├── README_HANDOVER.md
     ├── QUICKSTART.md
     ├── ENVIRONMENT_SPEC.md

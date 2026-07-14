@@ -1,13 +1,9 @@
 {
-  "pack_name": "Governed Agentic Software Factory Final Reusable Artifact Pack",
-  "version": "1.0",
-  "status": "FINAL_BASELINE",
-  "generated_at_note": "Generated as reusable baseline; verify and customize before production use.",
   "files": [
     {
       "path": "00_SYSTEM_PROMPT.md",
-      "sha256": "94b8de551a0e38cb646db89d21f74d5ca32a0f746e849511e3d31e60364f538c",
-      "size_bytes": 3296
+      "sha256": "9e5a34820dc87b3a91aaea83aad15dc0ef3d9cd8be8373c32275c0f4be088c6e",
+      "size_bytes": 24872
     },
     {
       "path": "01_PROJECT_CHARTER_TEMPLATE.md",
@@ -21,8 +17,8 @@
     },
     {
       "path": "03_AGENT_ROLE_PROMPTS.md",
-      "sha256": "8df18b9ccd1f16c18c3aa7a2250953293460542f675106cb5fdf4d76503ccda2",
-      "size_bytes": 7677
+      "sha256": "9a67aec265eaf5bd8b932117538b5fb7cc9881daf8dd2f2e93bcb8d98f13d37c",
+      "size_bytes": 29253
     },
     {
       "path": "04_RISK_TIERS.yaml",
@@ -116,13 +112,17 @@
     },
     {
       "path": "README.md",
-      "sha256": "938aa203ee94fe884cdc27fb6e90fc9f28f7c065a14c302c5250c8a14f328417",
-      "size_bytes": 4050
+      "sha256": "2927c6dfae91a630949013114ce54fbdd62a9c37b30cd2c98be6aca02fcf7e10",
+      "size_bytes": 1409
     },
     {
       "path": "validate_factory_pack.py",
       "sha256": "c64a9189859eb6ad5ab8a72abb581b210c1a6b4c57ea422c60ba52a68294af92",
       "size_bytes": 3669
     }
-  ]
+  ],
+  "generated_at_note": "Generated as reusable baseline; verify and customize before production use.",
+  "pack_name": "Governed Agentic Software Factory Final Reusable Artifact Pack",
+  "status": "FINAL_BASELINE",
+  "version": "1.0"
 }

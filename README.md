@@ -1,4 +1,4 @@
-# UPI Dispute Resolution Factory
+# UPI App Factory
 
 A lightweight, local-first, governed agentic software factory for generating a mock-safe UPI failed transaction and dispute resolution case management application.
 

@@ -21,7 +21,7 @@ AUDIT_PATH = ARTIFACT_DIR / "fresh_clone_handover_replay_audit.json"
 # repository-level full pytest collecting nested clone tests.
 REPLAY_ROOT = (
     PROJECT_ROOT.parent
-    / "upi_dispute_resolution_factory_phase13p_replay_workspace"
+    / "upi_app_factory_phase13p_replay_workspace"
     / "fresh_clone_replay_workspace"
 )
 CLONE_DIR = REPLAY_ROOT / "repo_clone"

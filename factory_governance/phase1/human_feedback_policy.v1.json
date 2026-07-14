@@ -1,6 +1,6 @@
 {
   "schema_version": "human_feedback_policy.v1",
-  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "project": "upi_app_factory / UPI App Factory",
   "policy": {
     "feedback_module_required": true,
     "feedback_endpoint": "/feedback",

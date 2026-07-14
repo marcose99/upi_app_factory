@@ -1,6 +1,6 @@
 # Factory Handover Guide
 
-This guide explains how a recipient should take over the FactoryFromNothing
+This guide explains how a recipient should take over the UPI App Factory
 UPI dispute-resolution factory, run it on their own machine, regenerate the
 generated application, validate the result, and inspect the evidence portals.
 
@@ -34,7 +34,7 @@ Not claimed:
 
 ```bash
 git clone <repo-url>
-cd upi_dispute_resolution_factory
+cd upi_app_factory
 git checkout <validated-release-tag>
 
 ./factory doctor

@@ -1,6 +1,6 @@
 {
   "schema_version": "evidence_label_policy.v1",
-  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "project": "upi_app_factory / UPI App Factory",
   "required_labels": [
     {
       "label": "MISSING_OFFICIAL_SOURCE",

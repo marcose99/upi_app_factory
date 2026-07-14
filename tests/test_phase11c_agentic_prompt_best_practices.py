@@ -10,7 +10,9 @@ VALIDATOR_PATH = ROOT / "scripts" / "validate_phase11c_agentic_prompt_best_pract
 
 
 def load_validator() -> Any:
-    spec = importlib.util.spec_from_file_location("phase11c_agentic_prompt_validator", VALIDATOR_PATH)
+    spec = importlib.util.spec_from_file_location(
+        "phase11c_agentic_prompt_validator", VALIDATOR_PATH
+    )
     assert spec is not None
     assert spec.loader is not None
     module = importlib.util.module_from_spec(spec)
@@ -44,7 +46,9 @@ def test_prompt_include_syntax_resolves_shared_contract_files(tmp_path: Path) ->
     contract_dir = tmp_path / "prompts" / "_contracts"
     contract_dir.mkdir(parents=True)
     contract_path = contract_dir / "agentic_ai_best_practice_contract.md"
-    contract_path.write_text("FactoryFromNothing Agentic AI Best-Practice Contract\n", encoding="utf-8")
+    contract_path.write_text(
+        "UPI App Factory Agentic AI Best-Practice Contract\n", encoding="utf-8"
+    )
     prompt_path = tmp_path / "prompts" / "phase99" / "prompt.md"
     prompt_path.parent.mkdir(parents=True)
     prompt_path.write_text(
@@ -54,7 +58,7 @@ def test_prompt_include_syntax_resolves_shared_contract_files(tmp_path: Path) ->
 
     resolved = validator.resolve_prompt_includes(prompt_path, root=tmp_path)
 
-    assert "FactoryFromNothing Agentic AI Best-Practice Contract" in resolved
+    assert "UPI App Factory Agentic AI Best-Practice Contract" in resolved
 
 
 def test_missing_prompt_include_target_fails_safely(tmp_path: Path) -> None:
@@ -96,7 +100,7 @@ def test_phase28_prompt_inherits_shared_contracts_without_repair_blocks() -> Non
     assert "PHASE28_REPAIR_AGENTIC_BEST_PRACTICE_AND_LLM_METRICS_CONTRACT_V1" not in raw_text
     assert "PHASE28_PROMPT_GOVERNANCE_REPAIR_V2_EXACT_MARKERS" not in raw_text
     assert "PHASE28_V3_CANONICAL_PHASE11C_PROMPT_CONTRACT_REPAIR" not in raw_text
-    assert "FactoryFromNothing Agentic AI Best-Practice Contract" in resolved_text
+    assert "UPI App Factory Agentic AI Best-Practice Contract" in resolved_text
     assert "Phase 11C Generated Application Type and Quality Contract" in resolved_text
     assert "Mandatory every-LLM-call metrics and expense evidence" in resolved_text
 
@@ -105,7 +109,10 @@ def test_phase11c_prompt_scope_excludes_reference_docs() -> None:
     validator = load_validator()
     prompt_paths = {str(path.relative_to(ROOT)) for path in validator.prompt_files()}
     assert "factory_governance/01_PROJECT_CHARTER.md" not in prompt_paths
-    assert "factory_governance/templates/architecture_decision_record_template.v1.md" not in prompt_paths
+    assert (
+        "factory_governance/templates/architecture_decision_record_template.v1.md"
+        not in prompt_paths
+    )
     assert "docs/phase8_governed_multi_agent_role_simulation.md" not in prompt_paths
 
 

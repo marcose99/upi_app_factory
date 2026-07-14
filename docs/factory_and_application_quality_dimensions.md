@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the two-layer quality model for `upi_dispute_resolution_factory`.
+This document defines the two-layer quality model for `upi_app_factory`.
 
 The project must evaluate quality at two levels:
 

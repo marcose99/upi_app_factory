@@ -99,9 +99,7 @@ def status_payload() -> dict[str, Any]:
             f"./{ROOT_COMMAND} logs",
         ],
         "portals": {
-            "phase13b_progress": str(
-                AUDIT_PORTAL / "factory_generation_progress_portal.html"
-            ),
+            "phase13b_progress": str(AUDIT_PORTAL / "factory_generation_progress_portal.html"),
             "phase13c_runtime": str(AUDIT_PORTAL / "factory_agent_runtime_portal.html"),
             "phase13d_adapters": str(AUDIT_PORTAL / "factory_agent_adapter_portal.html"),
             "phase13e_cli": str(AUDIT_PORTAL / "factory_cli_operator_portal.html"),
@@ -114,7 +112,7 @@ def command_status(args: argparse.Namespace) -> int:
     if args.as_json:
         print(json.dumps(payload, indent=2, sort_keys=True))
         return 0
-    print("FactoryFromNothing operator status")
+    print("UPI App Factory operator status")
     print(f"App ID        : {payload['app_id']}")
     print(f"Phase         : {payload['phase']}")
     print(f"Run ID        : {payload['run_id']}")

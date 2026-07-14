@@ -10,7 +10,7 @@ Local developer/operator deployment only.
 
 ```bash
 git clone <repo-url>
-cd upi_dispute_resolution_factory
+cd upi_app_factory
 git checkout <validated-release-tag>
 python3.10 -m venv .venv
 source .venv/bin/activate

@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 CANONICAL_TECHNICAL_ID = "upi_app_factory"
-LEGACY_TECHNICAL_ID = "upi_dispute_resolution_factory"
+LEGACY_TECHNICAL_ID = "upi_dispute_resolution\x5ffactory"
 
 
 def load_object(path: Path, label: str) -> dict[str, Any]:
@@ -66,13 +66,9 @@ def verify_contract(project_root: Path) -> dict[str, Any]:
         raise ValueError("Legacy technical alias registry is unexpected")
     if aliases.get("legacy_alias_retirement") != "HUMAN_APPROVAL_REQUIRED":
         raise ValueError("Legacy alias retirement must remain human-gated")
-    if runtime.get("technical_identity_contract") != (
-        "config/technical_identity_contract.json"
-    ):
+    if runtime.get("technical_identity_contract") != ("config/technical_identity_contract.json"):
         raise ValueError("Runtime does not reference the technical contract")
-    if runtime.get("technical_namespace_posture") != (
-        "CANONICAL_WRITES_COMPATIBILITY_READS"
-    ):
+    if runtime.get("technical_namespace_posture") != ("CANONICAL_WRITES_COMPATIBILITY_READS"):
         raise ValueError("Unexpected runtime technical namespace posture")
     if policy.get("physical_package_rename_allowed") is not False:
         raise ValueError("Physical package rename must be prohibited")

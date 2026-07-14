@@ -1,4 +1,4 @@
-# Project Charter — UPI Dispute Resolution Factory
+# Project Charter — UPI App Factory
 
 Status: LOCAL_PRODUCTION_DISCIPLINED_FACTORY_PROTOTYPE
 

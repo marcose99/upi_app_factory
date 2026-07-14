@@ -1,6 +1,6 @@
 {
   "schema_version": "phase_execution_policy.v1",
-  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "project": "upi_app_factory / UPI App Factory",
   "policy": {
     "build_in_phases": true,
     "validation_after_each_phase": true,

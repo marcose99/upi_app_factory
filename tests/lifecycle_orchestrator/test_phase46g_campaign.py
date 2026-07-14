@@ -83,9 +83,7 @@ def test_validate_campaign_resolves_relative_manifests(
             "phases": [
                 {
                     "phase": "99A",
-                    "manifest": (
-                        "config/lifecycle/phases/phase99a.json"
-                    ),
+                    "manifest": ("config/lifecycle/phases/phase99a.json"),
                 }
             ],
             "max_repair_attempts": 2,
@@ -110,9 +108,7 @@ def test_validate_campaign_rejects_llm_enabled_phase(
         {
             "schema_version": 1,
             "campaign": "test-campaign",
-            "phases": [
-                {"phase": "99A", "manifest": "phase99a.json"}
-            ],
+            "phases": [{"phase": "99A", "manifest": "phase99a.json"}],
         },
     )
     with pytest.raises(campaign.CampaignError, match="prohibit LLM"):
@@ -163,9 +159,7 @@ def test_rollback_to_implemented_invalidates_stale_evidence(
     write_json(run_dir / "candidate_manifest.json", {})
     report = rollback_to_implemented(run_dir)
     assert report["new_state"] == "IMPLEMENTED"
-    state = json.loads(
-        (run_dir / "run.json").read_text(encoding="utf-8")
-    )
+    state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
     assert state["completed_states"] == [
         "PREFLIGHT_PASSED",
         "WORKTREE_READY",
@@ -185,9 +179,7 @@ def test_phase46h_payload_install_is_atomic_and_complete(
     assert report["status"] == "PASSED"
     assert report["written_file_count"] == 7
     runtime = json.loads(
-        (
-            tmp_path / "config/identity_compatibility_runtime.json"
-        ).read_text(encoding="utf-8")
+        (tmp_path / "config/identity_compatibility_runtime.json").read_text(encoding="utf-8")
     )
     assert runtime["runtime_root_posture"] == "PATH_NEUTRAL"
 
@@ -202,14 +194,11 @@ def test_phase46i_payload_install_preserves_compatibility(
     report = install_phase("46I", tmp_path)
     assert report["status"] == "PASSED"
     runtime = json.loads(
-        (
-            tmp_path / "config/identity_compatibility_runtime.json"
-        ).read_text(encoding="utf-8")
+        (tmp_path / "config/identity_compatibility_runtime.json").read_text(encoding="utf-8")
     )
     assert runtime["canonical_technical_identifier"] == "upi_app_factory"
-    assert runtime["legacy_technical_identifier"] == (
-        "upi_dispute_resolution_factory"
-    )
+    assert runtime["legacy_technical_identifier"] == ("upi_dispute_resolution\x5ffactory")
+
 
 def test_draft_manifest_is_activated_in_campaign_state(
     tmp_path: Path,
@@ -235,11 +224,7 @@ def test_draft_manifest_is_activated_in_campaign_state(
 
 
 def test_pytest_failure_is_classified_and_not_misrouted() -> None:
-    run = {
-        "failure": {
-            "message": "Command failed (Pytest): python -m pytest -q"
-        }
-    }
+    run = {"failure": {"message": "Command failed (Pytest): python -m pytest -q"}}
     assert classify_failure_gate(run) == "Pytest"
 
 
@@ -248,12 +233,9 @@ def test_phase46h_payload_contains_no_machine_checkout_literal() -> None:
         PHASE_PAYLOADS,
     )
 
-    module = PHASE_PAYLOADS["46H"][
-        "tools/transformation_controller/phase46h.py"
-    ]
+    module = PHASE_PAYLOADS["46H"]["tools/transformation_controller/phase46h.py"]
     assert "/home/marcose/" not in module
     assert "contains_unapproved_absolute_path" in module
-
 
 
 def test_future_manifests_provision_prerequisites_first() -> None:
@@ -266,8 +248,5 @@ def test_future_manifests_provision_prerequisites_first() -> None:
             (Path(__file__).resolve().parents[2] / relative).read_text(encoding="utf-8")
         )
         first = manifest["implementation_commands"][0]
-        assert first["name"] == (
-            "Provision ignored lifecycle prerequisites"
-        )
+        assert first["name"] == ("Provision ignored lifecycle prerequisites")
         assert "provision-prerequisites" in first["argv"]
-

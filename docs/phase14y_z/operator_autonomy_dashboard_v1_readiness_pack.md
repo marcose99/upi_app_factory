@@ -1,6 +1,6 @@
 # Phase 14Y-Z: Operator autonomy dashboard and v1 autonomous readiness pack
 
-Phase 14Y-Z is the Phase 14 endgame batch for the governed FactoryFromNothing UPI dispute-resolution factory.
+Phase 14Y-Z is the Phase 14 endgame batch for the governed UPI App Factory.
 
 It combines two compatible goals:
 

@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-
 APP_ID = "upi_dispute_resolution"
 PHASE = "phase43_one_command_demo_reviewer_pack"
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -112,7 +111,7 @@ def safety_boundaries() -> dict[str, Any]:
 def reviewer_pack_sections() -> dict[str, str]:
     return {
         "what_the_factory_does": (
-            "FactoryFromNothing assembles governed software-factory artifacts and a locally "
+            "UPI App Factory assembles governed software-factory artifacts and a locally "
             "runnable generated UPI dispute-resolution application. The generated application "
             "supports synthetic dispute intake, mock ecosystem checks, local persistence, audit "
             "events, and reviewer-facing validation evidence."

@@ -25,7 +25,7 @@
     "missing_required_baseline_files": []
   },
   "alignment_to_user_factory_prompt": {
-    "project": "upi_dispute_resolution_factory",
+    "project": "upi_app_factory",
     "generated_application": "upi_dispute_case_management",
     "baseline_instruction": "Use governed_agentic_factory_final_pack as starting governance baseline; do not replace it; extend project-specifically.",
     "honesty_labels": [

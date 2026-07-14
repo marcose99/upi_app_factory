@@ -10,7 +10,7 @@
     "TRUTH_BOUNDARY.md",
     "CHECKSUMS.sha256"
   ],
-  "bundle_name": "upi_dispute_resolution_factory_phase13j_release_handoff_bundle",
+  "bundle_name": "upi_app_factory_phase13j_release_handoff_bundle",
   "determinism_policy": {
     "reason": "The handoff bundle must be stable across validation runs and machine handoff checks.",
     "uses_current_commit_hash": false,
@@ -32,7 +32,7 @@
     {
       "exists": true,
       "path": "README.md",
-      "sha256": "7016796bbc9efb72616517efd57a306f700fee89946a7e21959d717d07ac7194"
+      "sha256": "2927c6dfae91a630949013114ce54fbdd62a9c37b30cd2c98be6aca02fcf7e10"
     },
     {
       "exists": true,
@@ -42,7 +42,7 @@
     {
       "exists": true,
       "path": "scripts/factory_cli.py",
-      "sha256": "22ee8d26d22572708e0268c8d4ce3396fe66bfeb65f3b8aead230d8e9f258809"
+      "sha256": "1caad8f7a77e37c8a38d94d4c3c7694761a872792c751bb45d615c6cbe5d20fb"
     },
     {
       "exists": true,
@@ -92,7 +92,7 @@
     {
       "exists": true,
       "path": "scripts/validate_phase13g_readonly_validation_guardrails.py",
-      "sha256": "2bbf11b853b260e173bbf5705f29c66a8ead4013b6762152fc64eb2b3198e1ef"
+      "sha256": "69528a9d0e92f5b6a1978297c86a3f59c7ef2ce085f18c0995dd9853c764782c"
     },
     {
       "exists": true,

@@ -1,6 +1,6 @@
 # Generated UPI Dispute Resolution Application
 
-This is the first governed generated application output from FactoryFromNothing.
+This is the first governed generated application output from UPI App Factory.
 
 It is a real, locally runnable FastAPI application for UPI/payment dispute-resolution
 simulation. The primary application is implemented as local code. External ecosystem

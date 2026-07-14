@@ -1,4 +1,4 @@
-"""Phase 10 lifecycle artifact planner for FactoryFromNothing.
+"""Phase 10 lifecycle artifact planner for UPI App Factory.
 
 This module is intentionally deterministic, mock-safe, and beginner-readable.
 It creates planning artifacts before any code generation step.
@@ -54,9 +54,7 @@ OFFICIAL_REFERENCE_CANDIDATES: tuple[dict[str, str], ...] = (
             "failed transactions using authorised payment systems"
         ),
         "url": "https://www.rbi.org.in/commonman/English/scripts/Notification.aspx?Id=3074",
-        "use_in_phase10": (
-            "TAT awareness, compensation-risk awareness, no hard-coded live limits"
-        ),
+        "use_in_phase10": ("TAT awareness, compensation-risk awareness, no hard-coded live limits"),
         "script_status": "REFERENCE_ONLY_NOT_FETCHED_AT_RUNTIME",
     },
     {
@@ -586,7 +584,7 @@ Accepted for mock project evolution.
 
 ## Context
 
-FactoryFromNothing / {app_id} needs a requirement-to-architecture-to-plan
+upi_app_factory / {app_id} needs a requirement-to-architecture-to-plan
 pipeline before code generation. Previous phases established governance,
 mock boundaries, regeneration, evidence, prompt quality, role simulation,
 workflow orchestration, quality dimensions, and payment regulatory alignment.
@@ -1125,17 +1123,15 @@ def _wbs() -> dict[str, Any]:
     }
 
 
-def _traceability(requirements_payload: dict[str, Any], wbs_payload: dict[str, Any]) -> dict[str, Any]:
+def _traceability(
+    requirements_payload: dict[str, Any], wbs_payload: dict[str, Any]
+) -> dict[str, Any]:
     tasks = wbs_payload["tasks"]
     rows: list[dict[str, Any]] = []
 
     for requirement in requirements_payload["requirements"]:
         req_id = str(requirement["id"])
-        matched_tasks = [
-            str(task["id"])
-            for task in tasks
-            if req_id in task["requirement_ids"]
-        ]
+        matched_tasks = [str(task["id"]) for task in tasks if req_id in task["requirement_ids"]]
 
         if requirement["type"] == "economics":
             economics_refs = [
@@ -1187,7 +1183,9 @@ def _traceability(requirements_payload: dict[str, Any], wbs_payload: dict[str, A
     }
 
 
-def generate_lifecycle_artifacts(output_dir: Path, app_id: str = "upi_dispute_resolution") -> list[Path]:
+def generate_lifecycle_artifacts(
+    output_dir: Path, app_id: str = "upi_dispute_resolution"
+) -> list[Path]:
     """Generate all Phase 10 lifecycle artifacts.
 
     The output is deterministic and does not use wall-clock timestamps.
@@ -1275,10 +1273,7 @@ def validate_lifecycle_artifacts(output_dir: Path) -> dict[str, Any]:
 
     combined_text = "\n".join(text_cache.values())
 
-    missing_labels = [
-        label for label in HONESTY_LABELS
-        if label not in combined_text
-    ]
+    missing_labels = [label for label in HONESTY_LABELS if label not in combined_text]
     for label in missing_labels:
         errors.append(f"Missing required honesty label in artifacts: {label}")
 
@@ -1287,9 +1282,7 @@ def validate_lifecycle_artifacts(output_dir: Path) -> dict[str, Any]:
     architecture_text = text_cache.get("architecture_options.md", "")
     for label in HONESTY_LABELS:
         if label not in architecture_text:
-            errors.append(
-                f"Missing required honesty label in architecture_options.md: {label}"
-            )
+            errors.append(f"Missing required honesty label in architecture_options.md: {label}")
 
     required_option_terms = (
         "Option A",

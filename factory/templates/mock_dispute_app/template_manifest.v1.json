@@ -1,6 +1,6 @@
 {
   "schema_version": "mock_dispute_app_template_manifest.v2",
-  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "project": "upi_app_factory / UPI App Factory",
   "template_source": "v0.29.0-generated-application-deep-structure",
   "regeneration_mode": "deterministic_template_regeneration",
   "generation_target": "workspace/regeneration_runs/<run_id>/generated",

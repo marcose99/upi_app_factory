@@ -1,6 +1,6 @@
 {
   "schema_version": "requirements_intake_contract.v1",
-  "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+  "project": "upi_app_factory / UPI App Factory",
   "purpose": "Define the minimum governed intake contract before any agent generates application code.",
   "domain_position": {
     "domain": "UPI failed transaction and dispute resolution case management",

@@ -11,11 +11,14 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.prompt_contract_registry import PromptIncludeError, resolve_prompt_includes  # noqa: E402
+from scripts.prompt_contract_registry import (  # noqa: E402
+    PromptIncludeError,
+    resolve_prompt_includes,
+)
 
 APP_ID = "upi_dispute_resolution"
 
-AGENTIC_CONTRACT_MARKER = "FactoryFromNothing Agentic AI Best-Practice Contract"
+AGENTIC_CONTRACT_MARKER = "UPI App Factory Agentic AI Best-Practice Contract"
 GENERATED_APP_CONTRACT_MARKER = "Phase 11C Generated Application Type and Quality Contract"
 
 BEST_PRACTICE_TERMS: dict[str, tuple[str, ...]] = {
@@ -185,7 +188,7 @@ def _contains_all_terms(text: str, terms: tuple[str, ...]) -> bool:
 
 
 def _is_negated_context(text: str, start: int) -> bool:
-    prefix = text[max(0, start - 120):start].lower()
+    prefix = text[max(0, start - 120) : start].lower()
     return any(hint in prefix for hint in NEGATION_HINTS)
 
 

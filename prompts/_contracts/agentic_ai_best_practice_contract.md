@@ -1,4 +1,4 @@
-## FactoryFromNothing Agentic AI Best-Practice Contract
+## UPI App Factory Agentic AI Best-Practice Contract
 
 Every agent and every generated artifact governed by this prompt must adopt the strongest practical Agentic AI project practices appropriate to the current project stage. Treat this section as mandatory governance, not optional guidance.
 

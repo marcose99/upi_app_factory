@@ -264,7 +264,7 @@ def build_fresh_recipient_replay_pack(
 
     commands = (
         "git clone <repo-url>",
-        "cd upi_dispute_resolution_factory",
+        "cd upi_app_factory",
         "python3.10 -m venv .venv",
         "source .venv/bin/activate",
         "python -m pip install -U pip",

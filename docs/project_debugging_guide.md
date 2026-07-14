@@ -1,6 +1,6 @@
 # Project Debugging Guide
 
-This guide defines the debugging style for the `upi_dispute_resolution_factory` project.
+This guide defines the debugging style for the `upi_app_factory` project.
 It is intentionally beginner-readable and practical.
 
 ## Core rule

@@ -1,4 +1,4 @@
-# UPI Dispute Resolution Factory Release Handoff Bundle
+# UPI App Factory Release Handoff Bundle
 
 Phase: Phase 13J
 Baseline tag: `v0.13.8-release-readiness-operator-acceptance`

@@ -1,0 +1,21 @@
+{
+  "campaign_id": "campaign-b-phase47-canonical-product-identity-migration",
+  "canonical_human_name": "UPI App Factory",
+  "canonical_repository": "upi_app_factory",
+  "deferred_boundaries": [
+    "physical_checkout_path",
+    "remote_repository_url",
+    "compatibility_alias_retirement"
+  ],
+  "forbidden_project_label_posture": "REMOVE_COMPLETELY",
+  "generated_application_identity": "upi_dispute_resolution",
+  "generated_application_identity_posture": "PRESERVE",
+  "git_history_preserved": true,
+  "llm_calls": 0,
+  "phase": "47B",
+  "policy_id": "CANONICAL_PRODUCT_IDENTITY_LOGICAL_MIGRATION",
+  "release_allowed": false,
+  "schema_version": 1,
+  "tag_allowed": false,
+  "temporary_environment_aliases": true
+}

@@ -4,7 +4,7 @@
 
 ```bash
 git clone <repo-url>
-cd upi_dispute_resolution_factory
+cd upi_app_factory
 git checkout <validated-release-tag>
 ```
 

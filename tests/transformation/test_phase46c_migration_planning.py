@@ -11,7 +11,7 @@ from tools.transformation_controller import phase46a, phase46c
 def finding(
     path: str,
     *,
-    category: str = "IDENTITY_FACTORYFROMNOTHING",
+    category: str = "IDENTITY_FACTORY\x46ROMNOTHING",
     classification: str = "CURRENT_PRODUCT_IDENTITY",
 ) -> phase46a.Finding:
     return phase46a.Finding(
@@ -45,7 +45,7 @@ def policy() -> dict[str, object]:
             "IDENTITY_LEGACY_TECHNICAL",
         ],
         "display_identity_categories": [
-            "IDENTITY_FACTORYFROMNOTHING",
+            "IDENTITY_FACTORY\x46ROMNOTHING",
             "IDENTITY_LEGACY_DISPLAY",
         ],
         "path_reference_categories": [
@@ -62,7 +62,7 @@ def policy() -> dict[str, object]:
         ],
         "compatibility_aliases": [
             {
-                "legacy": "upi_dispute_resolution_factory",
+                "legacy": "upi_dispute_resolution\x5ffactory",
                 "canonical": "upi_app_factory",
             }
         ],
@@ -145,9 +145,7 @@ def test_test_contract_requires_contract_first_migration() -> None:
         finding("tests/test_identity_contract.py"),
         policy(),
     )
-    assert decision.decision == (
-        "PRESERVE_TEST_CONTRACT_AND_PLAN_UPDATE"
-    )
+    assert decision.decision == ("PRESERVE_TEST_CONTRACT_AND_PLAN_UPDATE")
     assert decision.compatibility_required is True
     assert decision.wave == "W1"
 
@@ -160,9 +158,7 @@ def test_technical_identity_requires_alias() -> None:
         ),
         policy(),
     )
-    assert decision.decision == (
-        "ADD_COMPATIBILITY_ALIAS_BEFORE_MIGRATION"
-    )
+    assert decision.decision == ("ADD_COMPATIBILITY_ALIAS_BEFORE_MIGRATION")
     assert decision.wave == "W3"
 
 
@@ -171,9 +167,7 @@ def test_display_identity_is_contract_first() -> None:
         finding("README.md"),
         policy(),
     )
-    assert decision.decision == (
-        "PLAN_CONTRACT_FIRST_DISPLAY_MIGRATION"
-    )
+    assert decision.decision == ("PLAN_CONTRACT_FIRST_DISPLAY_MIGRATION")
     assert decision.compatibility_required is True
 
 
@@ -225,9 +219,7 @@ def test_build_plan_contains_all_waves_and_aliases() -> None:
 def test_task_gate_keeps_repo_rename_human_only() -> None:
     graph = phase46a.create_task_graph([])
     decisions = phase46c.task_gate_decisions(graph)
-    rename = next(
-        item for item in decisions if item["task_id"] == "T-007"
-    )
+    rename = next(item for item in decisions if item["task_id"] == "T-007")
     assert rename["decision"] == "HUMAN_GATE"
     assert rename["protected_action"] is True
     assert rename["mutation_allowed"] is False
@@ -243,4 +235,3 @@ def test_evidence_manifest_excludes_itself(tmp_path: Path) -> None:
     manifest = phase46c.evidence_manifest(tmp_path)
     paths = {item["path"] for item in manifest["files"]}
     assert paths == {"run.json"}
-

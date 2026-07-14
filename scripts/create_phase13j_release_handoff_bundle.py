@@ -118,7 +118,7 @@ def build_manifest() -> dict[str, Any]:
         "baseline_tag_present": baseline_present,
         "bundle_directory": BUNDLE_DIR.relative_to(PROJECT_ROOT).as_posix(),
         "bundle_files": bundle_files,
-        "bundle_name": "upi_dispute_resolution_factory_phase13j_release_handoff_bundle",
+        "bundle_name": "upi_app_factory_phase13j_release_handoff_bundle",
         "determinism_policy": {
             "uses_current_commit_hash": False,
             "uses_wall_clock_timestamp": False,
@@ -147,7 +147,7 @@ def write_bundle_documents(manifest: dict[str, Any]) -> None:
 
     readme = "\n".join(
         [
-            "# UPI Dispute Resolution Factory Release Handoff Bundle",
+            "# UPI App Factory Release Handoff Bundle",
             "",
             f"Phase: {PHASE}",
             f"Baseline tag: `{BASELINE_TAG}`",

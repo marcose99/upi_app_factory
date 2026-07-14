@@ -224,7 +224,7 @@ def generate(
 
     generation_manifest = {
         "schema_version": "mock_dispute_app_generation_manifest.v1",
-        "project": "FactoryFromNothing / UPI Dispute Resolution Factory",
+        "project": "upi_app_factory / UPI App Factory",
         "run_id": resolved_run_id,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "generation_mode": "deterministic_template_regeneration",

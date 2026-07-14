@@ -173,7 +173,7 @@
     "MOCK_BOUNDARY",
     "SYNTHETIC_DATA"
   ],
-  "project": "FactoryFromNothing / upi_dispute_resolution_factory",
+  "project": "upi_app_factory / UPI App Factory",
   "purpose": "Governed, beginner-readable, debug-friendly, anti-hallucination prompts for factory role agents.",
   "schema_version": "factory.agent_prompt_manifest.v1"
 }

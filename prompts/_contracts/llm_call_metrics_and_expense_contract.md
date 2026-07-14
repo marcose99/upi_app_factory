@@ -1,6 +1,6 @@
 ## Mandatory every-LLM-call metrics and expense evidence
 
-This prompt is governed by the FactoryFromNothing LLM metrics and expense policy.
+This prompt is governed by the UPI App Factory LLM metrics and expense policy.
 
 For every LLM/model call made while executing this prompt, the agent/factory MUST record one complete call-level metrics event and one complete expense event. The records MUST be append-only, evidence-grade, and traceable to the build, phase, agent, prompt, requirements, generated artifacts, model, retry attempt, token usage, tool usage, and pricing configuration.
 

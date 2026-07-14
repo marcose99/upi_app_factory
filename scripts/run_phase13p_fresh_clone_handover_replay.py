@@ -26,7 +26,7 @@ ARTIFACT_DIR = (
 # full pytest does not recursively collect the clone's tests/conftest.py.
 REPLAY_ROOT = (
     PROJECT_ROOT.parent
-    / "upi_dispute_resolution_factory_phase13p_replay_workspace"
+    / "upi_app_factory_phase13p_replay_workspace"
     / "fresh_clone_replay_workspace"
 )
 CLONE_DIR = REPLAY_ROOT / "repo_clone"

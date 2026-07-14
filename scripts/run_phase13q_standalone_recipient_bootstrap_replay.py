@@ -26,7 +26,7 @@ ARTIFACT_DIR = (
 )
 REPLAY_ROOT = (
     PROJECT_ROOT.parent
-    / "upi_dispute_resolution_factory_phase13q_recipient_bootstrap_workspace"
+    / "upi_app_factory_phase13q_recipient_bootstrap_workspace"
     / "fresh_clone_bootstrap_workspace"
 )
 CLONE_DIR = REPLAY_ROOT / "repo_clone"

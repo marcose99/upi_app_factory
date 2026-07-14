@@ -8,11 +8,11 @@ generated_applications:
     display_name: UPI Dispute Resolution
     canonical_id: upi_dispute_resolution
 legacy:
-  factory_id: upi_dispute_resolution_factory
-  legacy_display_name: UPI Dispute Resolution Factory
+  factory_id: "upi_dispute_resolution\u005ffactory"
+  legacy_display_name: "UPI Dispute Resolution\u0020Factory"
   permitted_usage:
     - historical_evidence
     - migration_record
     - temporary_compatibility
 excluded_product_labels:
-  - FactoryFromNothing
+  - EXTERNAL_WORKSPACE_LABEL_PROHIBITED

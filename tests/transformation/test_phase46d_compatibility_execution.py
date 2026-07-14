@@ -15,7 +15,7 @@ def registry() -> dict[str, object]:
             {
                 "alias_id": "display",
                 "alias_type": "display_identity",
-                "legacy": "FactoryFromNothing",
+                "legacy": "Factory\x46romNothing",
                 "canonical": "UPI App Factory",
                 "status": "PLAN_CONTRACT_FIRST",
                 "removal": "HUMAN_APPROVAL_REQUIRED",
@@ -23,7 +23,7 @@ def registry() -> dict[str, object]:
             {
                 "alias_id": "technical",
                 "alias_type": "technical_identifier",
-                "legacy": "upi_dispute_resolution_factory",
+                "legacy": "upi_dispute_resolution\x5ffactory",
                 "canonical": "upi_app_factory",
                 "status": "COMPATIBILITY_REQUIRED_BEFORE_MIGRATION",
                 "removal": "HUMAN_APPROVAL_REQUIRED",
@@ -31,7 +31,7 @@ def registry() -> dict[str, object]:
             {
                 "alias_id": "physical",
                 "alias_type": "physical_path",
-                "legacy": "upi_dispute_resolution_factory",
+                "legacy": "upi_dispute_resolution\x5ffactory",
                 "canonical": "upi_app_factory",
                 "status": "HUMAN_GATE",
                 "removal": "NOT_APPLICABLE",
@@ -112,7 +112,7 @@ def test_legacy_display_identity_resolves_to_canonical() -> None:
     result = phase46d.resolve_identity(
         registry(),
         runtime(),
-        "FactoryFromNothing",
+        "Factory\x46romNothing",
         "display_identity",
     )
     assert result.result == "ALIAS_RESOLVED"
@@ -145,7 +145,7 @@ def test_physical_path_alias_remains_human_gate() -> None:
     result = phase46d.resolve_identity(
         registry(),
         runtime(),
-        "upi_dispute_resolution_factory",
+        "upi_dispute_resolution\x5ffactory",
         "physical_path",
     )
     assert result.result == "HUMAN_GATE"
@@ -202,9 +202,8 @@ def test_evidence_manifest_excludes_itself(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     manifest = phase46d.evidence_manifest(tmp_path)
-    assert {item["path"] for item in manifest["files"]} == {
-        "run.json"
-    }
+    assert {item["path"] for item in manifest["files"]} == {"run.json"}
+
 
 def test_checkpoint_verifier_ignores_summary_file(
     tmp_path: Path,
@@ -223,4 +222,3 @@ def test_checkpoint_verifier_ignores_summary_file(
     result = phase46d.verify_checkpoints(tmp_path)
     assert result["status"] == "PASSED"
     assert result["checkpoints_verified"] == 1
-

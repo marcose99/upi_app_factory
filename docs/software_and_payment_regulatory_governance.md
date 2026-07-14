@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines how `upi_dispute_resolution_factory` should align with software-engineering industry standards and payment-domain regulations while preserving honesty labels and mock boundaries.
+This document defines how `upi_app_factory` should align with software-engineering industry standards and payment-domain regulations while preserving honesty labels and mock boundaries.
 
 This is **regulatory alignment, not certification**.
 

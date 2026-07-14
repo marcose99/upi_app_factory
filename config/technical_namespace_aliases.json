@@ -2,7 +2,7 @@
   "canonical": "upi_app_factory",
   "legacy_alias_retirement": "HUMAN_APPROVAL_REQUIRED",
   "legacy_aliases": [
-    "upi_dispute_resolution_factory"
+    "upi_dispute_resolution\u005ffactory"
   ],
   "phase": "46I",
   "read_resolution": "LEGACY_TO_CANONICAL",

@@ -3,16 +3,16 @@
 ## Product identity
 
 The current product name is **UPI App Factory** and its canonical identifier is
-`upi_app_factory`. `FactoryFromNothing` is a ChatGPT workspace label only and
-must not appear in current product source, branding, documentation, reports,
-evidence, manifests, services, prompts, policies, generated content, or handoff
-packages.
+`upi_app_factory`. External conversation or workspace labels are not product
+identifiers and must not appear in product source, branding, documentation,
+reports, evidence, manifests, services, prompts, policies, generated content,
+or handoff packages.
 
-The existing `upi_dispute_resolution_factory` repository shall be converted
-through governed refactoring into `upi_app_factory`. The legacy identifier may
-remain only in immutable historical evidence, migration records, and temporary
-compatibility shims. The generated demonstration application remains
-`upi_dispute_resolution`.
+The repository shall be migrated through governed refactoring to the canonical
+`upi_app_factory` identity. The pre-canonical repository identifier may remain
+only through bounded compatibility mechanisms, immutable migration evidence,
+and deferred physical or remote rename records. The generated demonstration
+application remains `upi_dispute_resolution`.
 
 ## Governing posture
 

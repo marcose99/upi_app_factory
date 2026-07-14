@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "upi-dispute-resolution-factory"
+name = "upi-app-factory"
 version = "0.1.0"
 description = "Lightweight governed agentic software factory for UPI dispute resolution case management"
 requires-python = ">=3.10"

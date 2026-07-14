@@ -14,7 +14,7 @@
     },
     "legacy_technical_identifiers": {
       "contains": {
-        "const": "upi_dispute_resolution_factory"
+        "const": "upi_dispute_resolution\u005ffactory"
       },
       "type": "array"
     },

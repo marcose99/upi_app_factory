@@ -6,7 +6,7 @@ Accepted for mock project evolution.
 
 ## Context
 
-FactoryFromNothing / upi_dispute_resolution needs a requirement-to-architecture-to-plan
+UPI App Factory / upi_dispute_resolution needs a requirement-to-architecture-to-plan
 pipeline before code generation. Previous phases established governance,
 mock boundaries, regeneration, evidence, prompt quality, role simulation,
 workflow orchestration, quality dimensions, and payment regulatory alignment.

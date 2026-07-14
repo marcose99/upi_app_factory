@@ -14,7 +14,9 @@ The first bounded executions are state-only:
 Commands:
 
 ```bash
-./bin/upi-app-factory transform resolve-identity   --value FactoryFromNothing   --alias-type display_identity
+./bin/upi-app-factory transform resolve-identity \
+  --value '<legacy-display-alias>' \
+  --alias-type display_identity
 
 ./bin/upi-app-factory transform execute-compatibility-wave --wave W1
 ./bin/upi-app-factory transform execute-compatibility-wave --wave W3

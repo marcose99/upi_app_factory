@@ -3,8 +3,8 @@
   "evidence_records": [
     {
       "path": "config/display_identity_contract.json",
-      "sha256": "3ce370adf70465f521e7a67344b3425381ff401308c70af4d645bef2e0c485ad",
-      "size": 1135
+      "sha256": "0cc1b934adef832e0e41faeed872631be6b417772b97a39190a08b3771833c70",
+      "size": 918
     },
     {
       "path": "config/path_identity_contract.json",
@@ -13,23 +13,23 @@
     },
     {
       "path": "config/technical_identity_contract.json",
-      "sha256": "e3e8491c515a6a39f0ddda1d59b6fad2e766901ef424b3e0996a39bdeb4bb05e",
-      "size": 549
+      "sha256": "e8f09ee8688dfc10f9ad212095d34a90e24efeecc081b97aac1506b05d44e7db",
+      "size": 554
     },
     {
       "path": "config/compatibility_aliases.json",
-      "sha256": "f18d86d6e76254852fc4876b261f1ea6201487cce5a8cae1d99aa177a8b2b3ba",
-      "size": 1853
+      "sha256": "b0913a48365fc9fea9f6cae7720a1dd22a2c571ed3e58b80e7bc24cf4c0de03e",
+      "size": 1541
     },
     {
       "path": "config/technical_namespace_aliases.json",
-      "sha256": "915fd5a5a7812eeb3ea5da9b3008d0d73e2d90b0441e6f6a591988fb032f7f8c",
-      "size": 282
+      "sha256": "3b311f88113f673a6ec90e4295a09c5d3a2c053a3b99974d1d4173d05aabad18",
+      "size": 287
     },
     {
       "path": "config/identity_compatibility_runtime.json",
-      "sha256": "53e577efd8fd7ad4493f29076721d42fcd42a9ea85feeaad6f1e9d14f6757866",
-      "size": 1215
+      "sha256": "5129df37d36476afb6fb16f70da03ad285c03238b35941fcb39bcc6e3bf120fa",
+      "size": 1220
     }
   ],
   "llm_calls": 0,
