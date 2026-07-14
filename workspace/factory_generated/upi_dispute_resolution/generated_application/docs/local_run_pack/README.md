@@ -22,7 +22,7 @@ Out of scope:
 Run from the repository root with the project virtual environment available:
 
 ```bash
-/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python --version
+${PYTHON_BIN:-python} --version
 ```
 
 ## Configure
@@ -81,7 +81,7 @@ ecosystem check through FastAPI's in-process test client.
 From the repository root:
 
 ```bash
-/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python \
+${PYTHON_BIN:-python} \
   scripts/validate_phase42_generated_application_local_run_pack.py
 ```
 

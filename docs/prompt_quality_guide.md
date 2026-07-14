@@ -6,7 +6,7 @@ Use these patterns when asking for architecture, code, tests, governance, valida
 ## High-impact prompt template
 
 ```text
-Project: /home/marcose/projects/upi_dispute_resolution_factory
+Project: UPI App Factory checkout root (for example, `$HOME/projects/upi_app_factory`)
 Current stable branch: main
 Current restore point: <tag>
 Current HEAD: <commit>

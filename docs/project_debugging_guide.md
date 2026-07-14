@@ -85,7 +85,7 @@ Every automation script should prefer this structure:
 ## Common project commands
 
 ```bash
-cd /home/marcose/projects/upi_dispute_resolution_factory
+cd "${UPI_APP_FACTORY_ROOT:-$HOME/projects/upi_app_factory}"
 source .venv/bin/activate
 
 git status --short
