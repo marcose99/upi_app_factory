@@ -1,0 +1,8 @@
+{
+  "failure_mode": "BLOCK_GENERATION_SUCCESS_CLAIM",
+  "gate_id": "PHASE28-GA-ARCHITECTURE-DEPTH-GATE",
+  "policy": "policies/phase28_generated_application_architecture_depth_policy.json",
+  "required_before_application_generation_success": true,
+  "status": "defined",
+  "validator": "scripts/validate_phase28_generated_application_architecture_depth_blueprint.py"
+}

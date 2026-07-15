@@ -5,6 +5,8 @@ import os
 import pathlib
 import subprocess
 import sys
+
+import pytest
 from typing import Any, cast
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -29,7 +31,14 @@ def run_script(script_name: str, *args: str) -> subprocess.CompletedProcess[str]
     )
 
 
-def test_phase13q_standalone_bootstrap_replay_and_validator_pass() -> None:
+def test_phase13q_standalone_bootstrap_replay_and_validator_pass(
+    tmp_path: pathlib.Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    replay_root = tmp_path / "phase13q_recipient_bootstrap_workspace"
+    monkeypatch.setenv("PHASE13Q_REPLAY_ROOT", str(replay_root))
+    monkeypatch.setenv("PHASE13Q_FORCE_CLEAN", "1")
+
     result = run_script("run_phase13q_standalone_recipient_bootstrap_replay.py")
     output = cast(dict[str, Any], json.loads(result.stdout))
     assert output["passed"] is True

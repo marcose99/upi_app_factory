@@ -1,0 +1,17 @@
+{
+  "import_boundary_expectations": [
+    "domain layer must not import application, infrastructure, interface, observability, or security adapters",
+    "application layer may depend on domain and application ports",
+    "infrastructure layer implements ports and owns persistence, outbox, idempotency, and migrations",
+    "interfaces layer calls application services and does not contain domain policy decisions",
+    "tests verify boundary behavior without weakening production code"
+  ],
+  "state_machine_expectations": [
+    "states are canonical and enumerated",
+    "transitions are explicit and guard checked",
+    "invalid transitions fail closed with typed domain exceptions",
+    "terminal states are protected",
+    "idempotent replay avoids duplicate side effects",
+    "state transitions emit audit-safe domain events"
+  ]
+}

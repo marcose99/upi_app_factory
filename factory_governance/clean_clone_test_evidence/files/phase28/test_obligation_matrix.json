@@ -1,0 +1,48 @@
+{
+  "audit": [
+    "state transition audit event",
+    "policy version trace",
+    "correlation ID propagation",
+    "redaction-safe audit export"
+  ],
+  "contract": [
+    "API schema compatibility",
+    "data schema compatibility",
+    "port-adapter contract behavior",
+    "error contract stability"
+  ],
+  "negative": [
+    "missing required fields",
+    "invalid state transition",
+    "tampered evidence reference",
+    "unsupported out-of-scope request"
+  ],
+  "performance_smoke": [
+    "health endpoint latency smoke",
+    "dispute intake local throughput smoke",
+    "state query local latency smoke"
+  ],
+  "positive": [
+    "valid dispute intake",
+    "valid evidence attachment",
+    "valid status query",
+    "valid escalation path"
+  ],
+  "replay": [
+    "idempotency key replay",
+    "duplicate complaint replay",
+    "event replay without duplicated side effects"
+  ],
+  "resilience": [
+    "mock provider timeout",
+    "retry budget exhaustion",
+    "dead-letter or outbox handling",
+    "degraded read behavior"
+  ],
+  "security": [
+    "PII redaction",
+    "secret absence",
+    "input validation",
+    "prompt-injection-style untrusted text handling"
+  ]
+}

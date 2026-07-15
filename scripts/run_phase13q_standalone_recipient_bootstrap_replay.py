@@ -24,11 +24,21 @@ ARTIFACT_DIR = (
     / "lifecycle_artifacts"
     / "phase13q"
 )
-REPLAY_ROOT = (
+DEFAULT_REPLAY_ROOT = (
     PROJECT_ROOT.parent
     / "upi_app_factory_phase13q_recipient_bootstrap_workspace"
     / "fresh_clone_bootstrap_workspace"
 )
+
+
+def configured_replay_root() -> pathlib.Path:
+    configured = os.environ.get("PHASE13Q_REPLAY_ROOT", "").strip()
+    if configured:
+        return pathlib.Path(configured).expanduser().resolve()
+    return DEFAULT_REPLAY_ROOT
+
+
+REPLAY_ROOT = configured_replay_root()
 CLONE_DIR = REPLAY_ROOT / "repo_clone"
 RECIPIENT_VENV_DIR = CLONE_DIR / ".venv_recipient"
 AUDIT_PATH = ARTIFACT_DIR / "standalone_recipient_bootstrap_replay_audit.json"

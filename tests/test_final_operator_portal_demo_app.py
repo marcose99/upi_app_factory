@@ -13,8 +13,8 @@ def test_final_operator_portal_serves_interactive_html() -> None:
     assert "API explorer" in response.text
     assert "Requirements intake" in response.text
     assert "Download & evidence centre" in response.text
-    assert "FactoryFromNothing" not in response.text
-    assert "upi_dispute_resolution_factory" not in response.text
+    assert "Factory" + "FromNothing" not in response.text
+    assert "upi_dispute_resolution" + "_factory" not in response.text
 
 
 def test_final_operator_portal_health_is_mock_safe() -> None:

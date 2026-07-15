@@ -1,0 +1,43 @@
+{
+  "phase": "19",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "python",
+        "scripts/validate_phase18_independent_reviewer_workspace_trial.py"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 18 independent reviewer workspace trial artifacts validated.\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "All checks passed!\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "mypy",
+        "."
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Success: no issues found in 442 source files\n"
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "schema_version": "phase19-supply-chain-gate-summary.v1"
+}

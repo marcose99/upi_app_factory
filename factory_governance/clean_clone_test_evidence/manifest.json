@@ -1,0 +1,191 @@
+{
+  "application_id": "upi_dispute_resolution",
+  "certification_boundary": "certification_ready_not_certified",
+  "files": [
+    {
+      "fixture_relative_path": "files/phase17/enterprise_autonomous_hardening_audit.json",
+      "fixture_sha256": "b534c4f969b0bb76181aa6344e9ac4223c71c8beb2632ffad5166336d1781c04",
+      "normalization_count": 3,
+      "source_sha256": "a83b01caa3c2372786644e7d4e002a00b21333b4a1f35879e3e09714d857e230",
+      "target_relative_path": "phase17/enterprise_autonomous_hardening_audit.json"
+    },
+    {
+      "fixture_relative_path": "files/phase17/release_dossier_index.json",
+      "fixture_sha256": "898e03cabcc67fcf4a2fc1d5b1c9b84917c2e5e88e1cfd640aad658a86b779d7",
+      "normalization_count": 0,
+      "source_sha256": "898e03cabcc67fcf4a2fc1d5b1c9b84917c2e5e88e1cfd640aad658a86b779d7",
+      "target_relative_path": "phase17/release_dossier_index.json"
+    },
+    {
+      "fixture_relative_path": "files/phase17/independent_reviewer_workspace_trial.json",
+      "fixture_sha256": "e85ca5d9aa0e6883872c3f3502582f3fc6ce13f855092f2f5875ec905ef2a37f",
+      "normalization_count": 0,
+      "source_sha256": "e85ca5d9aa0e6883872c3f3502582f3fc6ce13f855092f2f5875ec905ef2a37f",
+      "target_relative_path": "phase17/independent_reviewer_workspace_trial.json"
+    },
+    {
+      "fixture_relative_path": "files/phase17/generated_app_depth_backlog.json",
+      "fixture_sha256": "4940248d9aa5d3f3468b66affd6bd12bf7f66f31c3818b6da3920d0b1fa6e62c",
+      "normalization_count": 0,
+      "source_sha256": "4940248d9aa5d3f3468b66affd6bd12bf7f66f31c3818b6da3920d0b1fa6e62c",
+      "target_relative_path": "phase17/generated_app_depth_backlog.json"
+    },
+    {
+      "fixture_relative_path": "files/phase18/independent_reviewer_workspace_trial_audit.json",
+      "fixture_sha256": "2e3edd8e808b9aff47b8caa5ee2b94effdd4d36a99aa84c76186e8291520b3e3",
+      "normalization_count": 2,
+      "source_sha256": "544dbb7c24926555c6c2713b179547e5851b05ce7361f9eea5bc5c2a5357ce7b",
+      "target_relative_path": "phase18/independent_reviewer_workspace_trial_audit.json"
+    },
+    {
+      "fixture_relative_path": "files/phase18/independent_reviewer_workspace_pack.json",
+      "fixture_sha256": "549a65903d8f09a14ac7b8fbbed0cb270591e18396108eaaeda2e1f8143ec642",
+      "normalization_count": 0,
+      "source_sha256": "549a65903d8f09a14ac7b8fbbed0cb270591e18396108eaaeda2e1f8143ec642",
+      "target_relative_path": "phase18/independent_reviewer_workspace_pack.json"
+    },
+    {
+      "fixture_relative_path": "files/phase18/independent_reviewer_checklist.json",
+      "fixture_sha256": "b259d8fa83986d55d882bd0327214a6c4daf0d171c32558bd507a88e46f3d56b",
+      "normalization_count": 0,
+      "source_sha256": "b259d8fa83986d55d882bd0327214a6c4daf0d171c32558bd507a88e46f3d56b",
+      "target_relative_path": "phase18/independent_reviewer_checklist.json"
+    },
+    {
+      "fixture_relative_path": "files/phase19/supply_chain_provenance_hardening_audit.json",
+      "fixture_sha256": "f99316397cf3c4555d6b0cadae84884a20c8a66693e82423e58a9db65c675f15",
+      "normalization_count": 0,
+      "source_sha256": "f99316397cf3c4555d6b0cadae84884a20c8a66693e82423e58a9db65c675f15",
+      "target_relative_path": "phase19/supply_chain_provenance_hardening_audit.json"
+    },
+    {
+      "fixture_relative_path": "files/phase19/local_dependency_inventory.json",
+      "fixture_sha256": "9fe4ef9d891b8dee02aa798f67de37000e9c8ca237f945b659986b30a1262373",
+      "normalization_count": 0,
+      "source_sha256": "9fe4ef9d891b8dee02aa798f67de37000e9c8ca237f945b659986b30a1262373",
+      "target_relative_path": "phase19/local_dependency_inventory.json"
+    },
+    {
+      "fixture_relative_path": "files/phase19/provenance_readiness_statement.json",
+      "fixture_sha256": "611652275ff358376241203932018954a773b1ff4956683ea33bd05c0c3afc0b",
+      "normalization_count": 0,
+      "source_sha256": "611652275ff358376241203932018954a773b1ff4956683ea33bd05c0c3afc0b",
+      "target_relative_path": "phase19/provenance_readiness_statement.json"
+    },
+    {
+      "fixture_relative_path": "files/phase19/supply_chain_gate_summary.json",
+      "fixture_sha256": "8d589496000fa3bde31a9ef62140252f6801d3b22388baa7a2a542278cb81029",
+      "normalization_count": 3,
+      "source_sha256": "5799d93079a6adf43139c38bb9e63914ce9b0b9297d57e7590d552c69328481b",
+      "target_relative_path": "phase19/supply_chain_gate_summary.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/architecture_depth_artifact_manifest.json",
+      "fixture_sha256": "2f9cb0d4deea2dee53b2b7b9f3011754760f23534c6bc498b11aaf419aef652e",
+      "normalization_count": 0,
+      "source_sha256": "152ca08cf56b37c8725af3584e313cabe395cc0b2dfb8893ba3edfb5cbac57d3",
+      "target_relative_path": "phase28/architecture_depth_artifact_manifest.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/architecture_depth_gate.json",
+      "fixture_sha256": "4ad457e8bff071adebddfecab0d481ab5f07b603691df41f5079d96d872e35d6",
+      "normalization_count": 0,
+      "source_sha256": "fa9f9d617b67354bc7cfa65a1882c10fe26cd8511d32285967994e38a54bfa44",
+      "target_relative_path": "phase28/architecture_depth_gate.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/architecture_conformance_expectations.json",
+      "fixture_sha256": "c04a4f68eec31d7fda94efad2dd6a407f9e2ec1b029e83036c30906746b39f99",
+      "normalization_count": 0,
+      "source_sha256": "c04a4f68eec31d7fda94efad2dd6a407f9e2ec1b029e83036c30906746b39f99",
+      "target_relative_path": "phase28/architecture_conformance_expectations.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/test_obligation_matrix.json",
+      "fixture_sha256": "d14c75c1464b0c534215630b2db38d1a0727e3144032e489097b409450f118f9",
+      "normalization_count": 0,
+      "source_sha256": "dcd374cbe4ee5644feeb2814f20d6b06487d4cd3bc03984adb0b1c24595a09cb",
+      "target_relative_path": "phase28/test_obligation_matrix.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/self_evolution_backlog_policy.json",
+      "fixture_sha256": "a7a59dc9ba21cd08cc0a9ea799b64939e1ca14359f7f8563c599841895aa7f9b",
+      "normalization_count": 0,
+      "source_sha256": "a04bac3422133e6b670fee0691987d0a162120411d93105158f18d9849f6f105",
+      "target_relative_path": "phase28/self_evolution_backlog_policy.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/certification_boundary.json",
+      "fixture_sha256": "69a4665914f7c03a0f9a599362ba3c85476c57b551ae7f8725a9da09d166fec4",
+      "normalization_count": 0,
+      "source_sha256": "a6fcd4f4d10def615ae40eca621f2fc60790a620272c280950c64016340f84de",
+      "target_relative_path": "phase28/certification_boundary.json"
+    },
+    {
+      "fixture_relative_path": "files/phase28/phase28_architecture_depth_audit.json",
+      "fixture_sha256": "5af79f3df37713725729f5d233a9a27dfe32a6b6877a3ce7da52db7d33866028",
+      "normalization_count": 0,
+      "source_sha256": "e93fd14a92e216b2c41047d179ec36f38ab54a8eefd9c4186015e0c95220d21e",
+      "target_relative_path": "phase28/phase28_architecture_depth_audit.json"
+    }
+  ],
+  "fixture_count": 18,
+  "live_provider_calls_allowed": false,
+  "llm_calls_required": false,
+  "normalization_count": 8,
+  "normalization_policy": "Only audited historical Python executable command entries are replaced with the portable token python.",
+  "normalizations": [
+    {
+      "fixture": "phase17/enterprise_autonomous_hardening_audit.json",
+      "json_pointer": "/read_only_gate_results/0/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase17/enterprise_autonomous_hardening_audit.json",
+      "json_pointer": "/read_only_gate_results/1/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase17/enterprise_autonomous_hardening_audit.json",
+      "json_pointer": "/read_only_gate_results/2/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase18/independent_reviewer_workspace_trial_audit.json",
+      "json_pointer": "/read_only_gate_results/0/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase18/independent_reviewer_workspace_trial_audit.json",
+      "json_pointer": "/read_only_gate_results/1/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase19/supply_chain_gate_summary.json",
+      "json_pointer": "/read_only_gate_results/0/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase19/supply_chain_gate_summary.json",
+      "json_pointer": "/read_only_gate_results/1/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    },
+    {
+      "fixture": "phase19/supply_chain_gate_summary.json",
+      "json_pointer": "/read_only_gate_results/2/command/0",
+      "normalization": "portable_python_executable_token",
+      "replacement": "python"
+    }
+  ],
+  "official_certification_claimed": false,
+  "purpose": "Deterministic clean-clone test evidence materialization.",
+  "schema_version": "upi-app-factory-clean-clone-test-evidence.v2",
+  "scope": "local_test_and_validation_only"
+}

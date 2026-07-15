@@ -1,0 +1,13 @@
+{
+  "items": [
+    "verify_repository_tag_and_commit",
+    "run_local_dependency_install",
+    "run_full_regression",
+    "inspect_phase16_replay_evidence",
+    "inspect_phase17_enterprise_hardening_evidence",
+    "record_independent_findings",
+    "do_not_treat_factory_output_as_certification"
+  ],
+  "phase": "18",
+  "schema_version": "phase18-independent-reviewer-checklist.v1"
+}

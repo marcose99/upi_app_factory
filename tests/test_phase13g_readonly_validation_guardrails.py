@@ -59,10 +59,43 @@ def test_phase13g_audit_passes_and_documents_policy() -> None:
     assert audit["guardrail_result"]["all_commands_succeeded"] is True
 
 
-def test_phase13g_validator_is_safe_with_legacy_drift_guardrail() -> None:
+def test_phase13g_validator_is_safe_with_legacy_drift_guardrail(
+    tmp_path: Path,
+) -> None:
     before_unexpected = unexpected_generated_drift()
-    completed = run_command(
-        [sys.executable, "scripts/validate_phase13g_readonly_validation_guardrails.py"],
+    snapshot = tmp_path / "phase13g_clean_clone"
+    head = run_command(["git", "rev-parse", "HEAD"], check=True).stdout.strip()
+
+    subprocess.run(
+        [
+            "git",
+            "clone",
+            "--no-hardlinks",
+            "--quiet",
+            str(ROOT),
+            str(snapshot),
+        ],
+        cwd=tmp_path,
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+    subprocess.run(
+        ["git", "checkout", "--detach", head],
+        cwd=snapshot,
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/validate_phase13g_readonly_validation_guardrails.py",
+        ],
+        cwd=snapshot,
+        text=True,
+        capture_output=True,
         check=True,
     )
     assert '"passed": true' in completed.stdout
