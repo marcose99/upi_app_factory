@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "name": "portal-requirements-driven-application-engineering",
+  "description": "Governed deterministic application engineering from the portal requirements input.",
+  "command": "python -m scripts.run_portal_requirements_driven_application_engineering --requirements {requirements_path} --app-id {app_id} --output-root {output_root} --evidence-root {evidence_root} --approval-mode human-gated --mock-safe",
+  "argv_template": [
+    "python",
+    "-m",
+    "scripts.run_portal_requirements_driven_application_engineering",
+    "--requirements",
+    "{requirements_path}",
+    "--app-id",
+    "{app_id}",
+    "--output-root",
+    "{output_root}",
+    "--evidence-root",
+    "{evidence_root}",
+    "--approval-mode",
+    "human-gated",
+    "--mock-safe"
+  ],
+  "required_placeholders": [
+    "requirements_path",
+    "app_id",
+    "output_root",
+    "evidence_root"
+  ],
+  "approval": {
+    "required": true,
+    "token_environment_variable": "FACTORY_PORTAL_APPROVAL_TOKEN",
+    "expected_token": "APPROVE_PORTAL_APPLICATION_ENGINEERING"
+  },
+  "environment": {
+    "FACTORY_LLM_ENABLED": "0",
+    "MOCK_BOUNDARY": "1",
+    "REAL_PAYMENT_CALLS": "disabled"
+  },
+  "protected_actions": {
+    "commit": false,
+    "push": false,
+    "tag": false,
+    "release": false,
+    "deployment": false,
+    "live_provider_calls": false
+  }
+}
