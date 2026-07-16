@@ -7,13 +7,13 @@ import sys
 from pathlib import Path
 from typing import Any, cast
 
+import httpx
+
 if __package__ in {None, ""}:
     project_root = Path(__file__).resolve().parents[1]
     project_root_text = str(project_root)
     if project_root_text not in sys.path:
         sys.path.insert(0, project_root_text)
-
-from fastapi.testclient import TestClient
 
 from scripts.build_operator_portal_dashboard_panels import (
     PANEL_IDS,
@@ -33,6 +33,17 @@ AUDIT_PATH = Path(
     "lifecycle_artifacts/phase13ay/operator_portal_dashboard_audit.json"
 )
 PHASE13AX_PREVIEW = Path("scripts/build_guided_requirement_intake_preview.py")
+
+
+def portal_request(path: str) -> httpx.Response:
+    import asyncio
+
+    async def _request() -> httpx.Response:
+        transport = httpx.ASGITransport(app=create_app(Path.cwd()))
+        async with httpx.AsyncClient(transport=transport, base_url="http://local-portal") as client:
+            return await client.get(path)
+
+    return asyncio.run(_request())
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -100,8 +111,7 @@ def validate() -> list[str]:
         failures.append("Dashboard status should be ready")
     failures.extend(validate_operator_portal_dashboard_panels(dashboard_status))
 
-    client = TestClient(create_app(Path.cwd()))
-    api = client.get("/api/dashboards")
+    api = portal_request("/api/dashboards")
     if api.status_code != 200:
         failures.append("Dashboard API failed")
     else:
@@ -120,7 +130,7 @@ def validate() -> list[str]:
         "/dashboards/handover",
         "/dashboards/generated-app",
     ]:
-        response = client.get(route)
+        response = portal_request(route)
         if response.status_code != 200:
             failures.append(f"Dashboard route failed: {route}")
 

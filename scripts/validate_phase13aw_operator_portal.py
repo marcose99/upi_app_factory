@@ -9,13 +9,13 @@ import sys
 from pathlib import Path
 from typing import Any, cast
 
+import httpx
+
 if __package__ in {None, ""}:
     project_root = Path(__file__).resolve().parents[1]
     project_root_text = str(project_root)
     if project_root_text not in sys.path:
         sys.path.insert(0, project_root_text)
-
-from fastapi.testclient import TestClient  # noqa: E402
 
 from scripts.build_local_operator_portal_status import (  # noqa: E402
     PORTAL_SECTIONS,
@@ -34,6 +34,17 @@ AUDIT_PATH = Path(
     "lifecycle_artifacts/phase13aw/local_operator_portal_audit.json"
 )
 PHASE13AV_SUITE = Path("scripts/build_local_agentic_ai_threat_tests.py")
+
+
+def portal_request(path: str, *, method: str = "GET", json_payload: dict[str, Any] | None = None) -> httpx.Response:
+    import asyncio
+
+    async def _request() -> httpx.Response:
+        transport = httpx.ASGITransport(app=create_app(Path.cwd()))
+        async with httpx.AsyncClient(transport=transport, base_url="http://local-portal") as client:
+            return await client.request(method, path, json=json_payload)
+
+    return asyncio.run(_request())
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -103,12 +114,11 @@ def validate() -> list[str]:
     status = build_local_operator_portal_status(Path.cwd())
     failures.extend(validate_local_operator_portal_status(status))
 
-    client = TestClient(create_app(Path.cwd()))
-    health = client.get("/health")
+    health = portal_request("/health")
     if health.status_code != 200 or health.json().get("status") != "ok":
         failures.append("Portal health endpoint failed")
 
-    status_response = client.get("/api/status")
+    status_response = portal_request("/api/status")
     if status_response.status_code != 200:
         failures.append("Portal status endpoint failed")
     else:
@@ -116,11 +126,11 @@ def validate() -> list[str]:
         if status_json.get("arbitrary_shell_execution_exposed_from_ui") is not False:
             failures.append("Portal status must keep arbitrary shell execution disabled")
 
-    evidence_response = client.get("/api/evidence")
+    evidence_response = portal_request("/api/evidence")
     if evidence_response.status_code != 200:
         failures.append("Portal evidence endpoint failed")
 
-    commands_response = client.get("/api/safe-commands")
+    commands_response = portal_request("/api/safe-commands")
     if commands_response.status_code != 200:
         failures.append("Portal safe commands endpoint failed")
     else:
@@ -131,7 +141,7 @@ def validate() -> list[str]:
             if command.get("execution_enabled_in_portal") is not False:
                 failures.append("Portal command execution must remain disabled")
 
-    dashboard = client.get("/")
+    dashboard = portal_request("/")
     if dashboard.status_code != 200:
         failures.append("Portal dashboard endpoint failed")
     elif "Factory Operator Portal" not in dashboard.text:

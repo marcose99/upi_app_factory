@@ -2,6 +2,8 @@
   "use strict";
 
   const fields = new Map();
+  let currentRunId = "";
+  let pollTimer = 0;
 
   function field(name) {
     if (!fields.has(name)) {
@@ -19,6 +21,27 @@
 
   function showReport(payload) {
     const output = document.getElementById("report-output");
+    if (output) {
+      output.textContent = JSON.stringify(payload, null, 2);
+    }
+  }
+
+  function showError(message) {
+    const output = document.getElementById("error-summary");
+    if (output) {
+      output.textContent = message || "No errors.";
+    }
+  }
+
+  function showRunEvents(events) {
+    const output = document.getElementById("run-events");
+    if (output) {
+      output.textContent = JSON.stringify(events || [], null, 2);
+    }
+  }
+
+  function showValidation(payload) {
+    const output = document.getElementById("validation-summary");
     if (output) {
       output.textContent = JSON.stringify(payload, null, 2);
     }
@@ -59,6 +82,7 @@
       const detail = formatErrorDetail(payload.detail, response.status);
       throw new Error(JSON.stringify(detail, null, 2));
     }
+    showError("No errors.");
     return payload;
   }
 
@@ -71,6 +95,99 @@
       throw new Error(`Request failed with HTTP status ${response.status}.`);
     }
     return response.text();
+  }
+
+  function requirementsText() {
+    const node = document.getElementById("requirements-input");
+    return node ? node.value : "";
+  }
+
+  function updateDownloadLinks(run) {
+    const artifacts = run && run.artifacts ? run.artifacts : {};
+    const appLink = document.querySelector('[data-link="download-application"]');
+    const evidenceLink = document.querySelector('[data-link="download-evidence"]');
+    if (appLink) {
+      const enabled = Boolean(
+        currentRunId && run && run.state === "SUCCEEDED" && artifacts.generated_application_available,
+      );
+      appLink.href = enabled
+        ? `/operator-portal/api/runs/${currentRunId}/downloads/application`
+        : "#";
+      appLink.classList.toggle("disabled", !enabled);
+      appLink.setAttribute("aria-disabled", enabled ? "false" : "true");
+    }
+    if (evidenceLink) {
+      const enabled = Boolean(
+        currentRunId && run && ["SUCCEEDED", "FAILED", "CANCELLED"].includes(run.state),
+      );
+      evidenceLink.href = enabled
+        ? `/operator-portal/api/runs/${currentRunId}/downloads/evidence`
+        : "#";
+      evidenceLink.classList.toggle("disabled", !enabled);
+      evidenceLink.setAttribute("aria-disabled", enabled ? "false" : "true");
+    }
+  }
+
+  function setEnabled(id, enabled) {
+    const node = document.getElementById(id);
+    if (node) {
+      node.disabled = !enabled;
+      node.setAttribute("aria-disabled", enabled ? "false" : "true");
+    }
+  }
+
+  function updateControls(run) {
+    const state = run ? run.state : "";
+    const hasRun = Boolean(currentRunId);
+    const busy = ["EXECUTION_QUEUED", "EXECUTING", "VALIDATING"].includes(state);
+    setEnabled(
+      "generate-plan-button",
+      hasRun && ["REQUIREMENTS_ACCEPTED", "PLAN_READY", "AWAITING_APPROVAL"].includes(state),
+    );
+    setEnabled("approve-engineering-button", hasRun && state === "AWAITING_APPROVAL");
+    setEnabled("start-engineering-button", hasRun && state === "APPROVED");
+    setEnabled("cancel-run-button", hasRun && !["SUCCEEDED", "FAILED", "CANCELLED"].includes(state));
+    setEnabled("refresh-run-button", hasRun);
+    setEnabled("view-validation-button", hasRun);
+    setEnabled("view-evidence-button", hasRun);
+    setEnabled("validate-requirements-button", !busy);
+    setEnabled("submit-run-button", !busy);
+  }
+
+  function renderRun(run) {
+    if (!run) {
+      return;
+    }
+    currentRunId = run.run_id || currentRunId;
+    setField("browser-run-id", currentRunId || "Not created");
+    setField("browser-run-state", run.state);
+    setField("browser-run-sha", run.requirements_sha256);
+    setField("browser-approval-state", run.approval ? "approved" : "required");
+    setField("browser-updated-at", run.updated_at_utc);
+    setField("browser-final-decision", run.final_decision || "Waiting");
+    showRunEvents(run.events || []);
+    updateDownloadLinks(run);
+    updateControls(run);
+  }
+
+  async function refreshCurrentRun() {
+    if (!currentRunId) {
+      return;
+    }
+    const run = await request(`/operator-portal/api/runs/${currentRunId}`);
+    renderRun(run);
+    if (["EXECUTION_QUEUED", "EXECUTING", "VALIDATING"].includes(run.state)) {
+      if (!pollTimer) {
+        pollTimer = window.setInterval(() => {
+          refreshCurrentRun().catch((error) =>
+            showReport({ error: error instanceof Error ? error.message : String(error) }),
+          );
+        }, 1000);
+      }
+    } else if (pollTimer) {
+      window.clearInterval(pollTimer);
+      pollTimer = 0;
+    }
   }
 
   async function refreshHealth() {
@@ -136,6 +253,96 @@
     showReport(payload);
   }
 
+  async function validateRequirements() {
+    const payload = await request("/operator-portal/api/requirements/validate", {
+      method: "POST",
+      body: JSON.stringify({ requirements: requirementsText() }),
+    });
+    setField("browser-run-sha", payload.validation.sha256);
+    showReport(payload);
+  }
+
+  async function submitRun() {
+    const payload = await request("/operator-portal/api/runs", {
+      method: "POST",
+      body: JSON.stringify({ requirements: requirementsText() }),
+    });
+    currentRunId = payload.run_id;
+    renderRun(payload.run);
+    showReport(payload);
+  }
+
+  async function generatePlan() {
+    if (!currentRunId) {
+      throw new Error("Create a run before generating a plan.");
+    }
+    const payload = await request(`/operator-portal/api/runs/${currentRunId}/plan`, {
+      method: "POST",
+    });
+    renderRun(payload.run);
+    showReport(payload);
+  }
+
+  async function approveEngineering() {
+    if (!currentRunId) {
+      throw new Error("Create a run before recording approval.");
+    }
+    const actor = document.getElementById("approval-actor");
+    const token = document.getElementById("approval-token");
+    const payload = await request(`/operator-portal/api/runs/${currentRunId}/approvals`, {
+      method: "POST",
+      body: JSON.stringify({
+        actor: actor ? actor.value : "operator",
+        approval_token: token ? token.value : "",
+      }),
+    });
+    renderRun(payload.run);
+    showReport(payload);
+  }
+
+  async function startEngineering() {
+    if (!currentRunId) {
+      throw new Error("Create a run before starting application engineering.");
+    }
+    const payload = await request(`/operator-portal/api/runs/${currentRunId}/execute`, {
+      method: "POST",
+    });
+    renderRun(payload.run);
+    showReport(payload);
+    await refreshCurrentRun();
+  }
+
+  async function cancelRun() {
+    if (!currentRunId) {
+      throw new Error("Create a run before cancelling.");
+    }
+    const payload = await request(`/operator-portal/api/runs/${currentRunId}/cancel`, {
+      method: "POST",
+    });
+    renderRun(payload.run);
+    showReport(payload);
+  }
+
+  async function viewValidationReport() {
+    if (!currentRunId) {
+      await latestReport();
+      return;
+    }
+    const payload = await request(`/operator-portal/api/runs/${currentRunId}/validation`);
+    showValidation(payload);
+    const events = await request(`/operator-portal/api/runs/${currentRunId}/events`);
+    showRunEvents(events.events || []);
+    showReport(payload);
+  }
+
+  async function viewEvidence() {
+    if (!currentRunId) {
+      throw new Error("Create a run before viewing run evidence.");
+    }
+    const payload = await request(`/operator-portal/api/runs/${currentRunId}/evidence`);
+    showReport(payload);
+  }
+
   async function refreshGuides() {
     const payload = await request("/portal/operator-guides");
     const guidePayload = payload.payload || {};
@@ -165,6 +372,15 @@
     "validation-run": validationRun,
     "latest-report": latestReport,
     "refresh-guides": refreshGuides,
+    "refresh-run": refreshCurrentRun,
+    "validate-requirements": validateRequirements,
+    "submit-run": submitRun,
+    "generate-plan": generatePlan,
+    "approve-engineering": approveEngineering,
+    "start-engineering": startEngineering,
+    "cancel-run": cancelRun,
+    "view-validation-report": viewValidationReport,
+    "view-evidence": viewEvidence,
   };
 
   function bindActions() {
@@ -179,7 +395,9 @@
         try {
           await handler();
         } catch (error) {
-          showReport({ error: error instanceof Error ? error.message : String(error) });
+          const message = error instanceof Error ? error.message : String(error);
+          showError(message);
+          showReport({ error: message });
         } finally {
           button.removeAttribute("aria-busy");
         }
@@ -189,10 +407,14 @@
 
   async function boot() {
     bindActions();
+    updateControls(null);
     await Promise.all([refreshHealth(), refreshEvidence(), refreshDownload(), refreshGuides()]);
   }
 
   window.addEventListener("DOMContentLoaded", () => {
-    boot().catch((error) => showReport({ error: String(error) }));
+    boot().catch((error) => {
+      showError(String(error));
+      showReport({ error: String(error) });
+    });
   });
 })();

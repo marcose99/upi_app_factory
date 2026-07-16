@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import tempfile
 from typing import Any, cast
 
 APP_ID = "upi_dispute_resolution"
@@ -19,7 +20,7 @@ ARTIFACT_DIR = (
 )
 AUDIT_PATH = ARTIFACT_DIR / "standalone_recipient_bootstrap_replay_audit.json"
 DEFAULT_REPLAY_ROOT = (
-    PROJECT_ROOT.parent
+    pathlib.Path(tempfile.gettempdir())
     / "upi_app_factory_phase13q_recipient_bootstrap_workspace"
     / "fresh_clone_bootstrap_workspace"
 )
@@ -93,10 +94,11 @@ def validate_audit(audit: dict[str, Any]) -> None:
             raise AssertionError(f"Missing bootstrap step: {required}")
 
 
-def validate_clone_workspace() -> None:
+def validate_clone_workspace(audit: dict[str, Any]) -> None:
     if not CLONE_DIR.is_dir():
         raise AssertionError(f"Missing fresh clone directory: {CLONE_DIR}")
-    py = venv_python()
+    recipient_python = str(audit.get("recipient_python") or "")
+    py = pathlib.Path(recipient_python) if recipient_python else venv_python()
     if not py.is_file():
         raise AssertionError(f"Missing recipient Python executable: {py}")
     pack_dir = (
@@ -123,7 +125,7 @@ def validate_clone_workspace() -> None:
 def main() -> None:
     audit = load_audit()
     validate_audit(audit)
-    validate_clone_workspace()
+    validate_clone_workspace(audit)
     result = {
         "passed": True,
         "phase": "Phase 13Q",

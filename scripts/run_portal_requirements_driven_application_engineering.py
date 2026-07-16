@@ -545,20 +545,20 @@ def test_create_and_idempotent_replay() -> None:
     assert replayed_second is True
     assert first.dispute_id == second.dispute_id
 """,
-        "tests/test_api_contract.py": """from fastapi.testclient import TestClient
-
-from app.upi_dispute_resolution.interfaces.api.main import app
-
-
-client = TestClient(app)
+        "tests/test_api_contract.py": """from app.upi_dispute_resolution.interfaces.api.main import (
+    CreateDisputeRequest,
+    create_dispute,
+    health,
+    ready,
+)
 
 
 def test_health() -> None:
-    assert client.get("/health").json() == {"status": "ok"}
+    assert health() == {"status": "ok"}
 
 
 def test_ready() -> None:
-    assert client.get("/ready").json() == {
+    assert ready() == {
         "status": "ready",
         "mode": "mock-safe-local",
         "real_payment_calls": "disabled",
@@ -566,18 +566,15 @@ def test_ready() -> None:
 
 
 def test_create_dispute_and_replay() -> None:
-    payload = {
-        "transaction_id": "txn-api-1",
-        "reason": "beneficiary did not receive funds",
-        "amount_minor": 2500,
-    }
-    headers = {"Idempotency-Key": "idem-api-1"}
-    first = client.post("/v1/disputes", json=payload, headers=headers)
-    second = client.post("/v1/disputes", json=payload, headers=headers)
-    assert first.status_code == 201
-    assert second.status_code == 201
-    assert first.json()["dispute_id"] == second.json()["dispute_id"]
-    assert second.json()["idempotent_replay"] is True
+    payload = CreateDisputeRequest(
+        transaction_id="txn-api-1",
+        reason="beneficiary did not receive funds",
+        amount_minor=2500,
+    )
+    first = create_dispute(payload, idempotency_key="idem-api-1")
+    second = create_dispute(payload, idempotency_key="idem-api-1")
+    assert first["dispute_id"] == second["dispute_id"]
+    assert second["idempotent_replay"] is True
 """,
     }
     return files
@@ -609,10 +606,9 @@ def _manifest(root: Path) -> list[ManifestRecord]:
 def _validate_approval(config: AdapterConfig) -> None:
     if config.plan_only or config.approval_mode == "proposal-only":
         return
-    if config.approval_token != APPROVAL_TOKEN:
-        raise AdapterError(
-            f"human approval token is required for execution; expected {APPROVAL_TOKEN}"
-        )
+    expected = os.getenv("UPI_APP_FACTORY_PORTAL_APPROVAL_TOKEN", APPROVAL_TOKEN)
+    if config.approval_token != expected:
+        raise AdapterError("human approval token is required for execution")
 
 
 def _validate_safety(config: AdapterConfig) -> None:

@@ -8,6 +8,7 @@ import pathlib
 import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from typing import Any, TypedDict, cast
 
@@ -25,7 +26,7 @@ ARTIFACT_DIR = (
     / "phase13q"
 )
 DEFAULT_REPLAY_ROOT = (
-    PROJECT_ROOT.parent
+    pathlib.Path(tempfile.gettempdir())
     / "upi_app_factory_phase13q_recipient_bootstrap_workspace"
     / "fresh_clone_bootstrap_workspace"
 )
@@ -138,16 +139,6 @@ def get_clone_source() -> str:
     configured = os.environ.get("PHASE13Q_CLONE_SOURCE", "").strip()
     if configured:
         return configured
-    result = subprocess.run(
-        ["git", "config", "--get", "remote.origin.url"],
-        cwd=PROJECT_ROOT,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    source = result.stdout.strip()
-    if source:
-        return source
     return str(PROJECT_ROOT)
 
 
@@ -157,7 +148,7 @@ def venv_python() -> pathlib.Path:
     return RECIPIENT_VENV_DIR / "bin" / "python"
 
 
-def recipient_env() -> dict[str, str]:
+def recipient_env(recipient_python: str | None = None) -> dict[str, str]:
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)
     env.pop("MYPYPATH", None)
@@ -168,7 +159,7 @@ def recipient_env() -> dict[str, str]:
             str(CLONE_DIR),
         ]
     )
-    env["PYTHON_BIN"] = str(venv_python())
+    env["PYTHON_BIN"] = recipient_python or str(venv_python())
     return env
 
 
@@ -223,26 +214,42 @@ def clone_checkout_agent(state: BootstrapState) -> BootstrapState:
 
 
 def dependency_bootstrap_agent(state: BootstrapState) -> BootstrapState:
-    py = venv_python()
-    updated: BootstrapState = {**state, "recipient_venv_dir": str(RECIPIENT_VENV_DIR)}
-    if not py.exists():
-        run_required([sys.executable, "-m", "venv", str(RECIPIENT_VENV_DIR)], CLONE_DIR, updated)
-
-    probe = subprocess.run(
-        [str(py), "-c", "import langgraph, pytest"],
+    current_probe = subprocess.run(
+        [sys.executable, "-c", "import langgraph, pytest"],
         cwd=CLONE_DIR,
         text=True,
         capture_output=True,
         check=False,
     )
     dependency_install_ran = False
-    if probe.returncode != 0:
-        run_required(
-            [str(py), "-m", "pip", "install", "-r", "requirements-recipient.txt"],
-            CLONE_DIR,
-            updated,
+    if current_probe.returncode == 0:
+        py = pathlib.Path(sys.executable)
+        updated: BootstrapState = {
+            **state,
+            "recipient_venv_dir": "",
+            "recipient_python": str(py),
+        }
+    else:
+        py = venv_python()
+        updated = {**state, "recipient_venv_dir": str(RECIPIENT_VENV_DIR)}
+        if not py.exists():
+            run_required([sys.executable, "-m", "venv", str(RECIPIENT_VENV_DIR)], CLONE_DIR, updated)
+
+        probe = subprocess.run(
+            [str(py), "-c", "import langgraph, pytest"],
+            cwd=CLONE_DIR,
+            text=True,
+            capture_output=True,
+            check=False,
         )
-        dependency_install_ran = True
+        if probe.returncode != 0:
+            run_required(
+                [str(py), "-m", "pip", "install", "-r", "requirements-recipient.txt"],
+                CLONE_DIR,
+                updated,
+            )
+            dependency_install_ran = True
+        updated["recipient_python"] = str(py)
 
     langgraph_version = run_required(
         [
@@ -277,8 +284,8 @@ def dependency_bootstrap_agent(state: BootstrapState) -> BootstrapState:
 
 
 def operator_pack_replay_agent(state: BootstrapState) -> BootstrapState:
-    env = recipient_env()
-    py = str(venv_python())
+    py = str(state.get("recipient_python") or venv_python())
+    env = recipient_env(py)
     updated: BootstrapState = {**state}
     run_required(
         [py, "scripts/run_phase13o_local_runnable_operator_packaging.py"],
@@ -309,8 +316,8 @@ def operator_pack_replay_agent(state: BootstrapState) -> BootstrapState:
 
 
 def operator_demo_replay_agent(state: BootstrapState) -> BootstrapState:
-    env = recipient_env()
-    py = str(venv_python())
+    py = str(state.get("recipient_python") or venv_python())
+    env = recipient_env(py)
     pack_dir = CLONE_DIR / PACK_RELATIVE
     updated: BootstrapState = {**state}
     health = parse_json_output(

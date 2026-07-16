@@ -34,7 +34,8 @@ def test_phase13b_generated_application_validator_passes() -> None:
 
 def test_generated_application_pytest_suite_passes() -> None:
     env = dict(os.environ)
-    env["PYTHONPATH"] = str(APP_ROOT / "app")
+    env["PYTHONPATH"] = os.pathsep.join([str(ROOT / "tests"), str(APP_ROOT / "app")])
+    env["PYTEST_PLUGINS"] = "conftest"
     completed = subprocess.run(
         [sys.executable, "-m", "pytest", "-q", str(APP_ROOT / "tests")],
         cwd=str(ROOT),

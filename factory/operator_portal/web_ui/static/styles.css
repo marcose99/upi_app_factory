@@ -88,7 +88,8 @@ h3 {
 }
 
 .report-panel,
-.boundaries {
+.boundaries,
+.run-panel {
   grid-column: span 12;
 }
 
@@ -127,6 +128,57 @@ button:hover {
 
 button[aria-busy="true"] {
   opacity: 0.72;
+}
+
+.button-link {
+  align-items: center;
+  background: #eef5f7;
+  border: 1px solid #c7d6dc;
+  border-radius: 6px;
+  color: #184d61;
+  display: inline-flex;
+  font-size: 0.86rem;
+  font-weight: 700;
+  min-height: 36px;
+  padding: 7px 11px;
+  text-decoration: none;
+}
+
+.button-link.disabled {
+  color: #687b84;
+  cursor: not-allowed;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+textarea,
+input {
+  border: 1px solid #cfdbe0;
+  border-radius: 6px;
+  color: #172126;
+  font: inherit;
+  padding: 10px;
+  width: 100%;
+}
+
+textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  margin-bottom: 12px;
+  min-height: 180px;
+  resize: vertical;
+}
+
+.inline-label {
+  color: #4d6470;
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin: 12px 0 6px;
+}
+
+.run-controls {
+  justify-content: flex-start;
+  margin-top: 12px;
 }
 
 .metric-grid {
@@ -169,6 +221,25 @@ dd {
   overflow-wrap: anywhere;
 }
 
+.run-output-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.run-output-grid article {
+  min-width: 0;
+}
+
+.error-summary {
+  background: #fff3f1;
+  border: 1px solid #efb4a9;
+  color: #7a2317;
+  margin-top: 12px;
+  min-height: 48px;
+}
+
 .boundaries ul {
   display: grid;
   gap: 8px;
@@ -199,12 +270,14 @@ pre {
   .panel,
   .status-panel,
   .report-panel,
-  .boundaries {
+  .boundaries,
+  .run-panel {
     grid-column: span 12;
   }
 
   .metric-grid,
-  .validation-grid {
+  .validation-grid,
+  .run-output-grid {
     grid-template-columns: 1fr;
   }
 }

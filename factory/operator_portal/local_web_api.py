@@ -4,9 +4,16 @@ import json
 from pathlib import Path
 from typing import Any, cast
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import Response
 from pydantic import BaseModel, ConfigDict
 
+from factory.operator_portal.browser_intake_orchestration import (
+    BrowserIntakeOrchestrator,
+    OrchestrationConflict,
+    OrchestrationNotFound,
+    OrchestrationValidationError,
+)
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.evidence_dashboard import build_dashboard_summary
 from factory.operator_portal.operator_guides import build_operator_guide_index
@@ -44,6 +51,19 @@ class ValidationRunRequest(BaseModel):
     write_report: bool = True
 
 
+class RequirementsRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    requirements: str
+
+
+class ApprovalRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    actor: str = "operator"
+    approval_token: str
+
+
 class OperatorPortalLocalWebAPI:
     """Local FastAPI facade over governed operator portal services."""
 
@@ -53,10 +73,14 @@ class OperatorPortalLocalWebAPI:
         project_root: Path | None = None,
         download_center: DownloadCenterService | None = None,
         validation_runner: ValidationRunnerService | None = None,
+        browser_orchestrator: BrowserIntakeOrchestrator | None = None,
     ) -> None:
         self.project_root = project_root or PROJECT_ROOT
         self.download_center = download_center or DownloadCenterService()
         self.validation_runner = validation_runner or ValidationRunnerService(
+            project_root=self.project_root,
+        )
+        self.browser_orchestrator = browser_orchestrator or BrowserIntakeOrchestrator(
             project_root=self.project_root,
         )
 
@@ -204,6 +228,108 @@ class OperatorPortalLocalWebAPI:
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
+    def validate_requirements(self, request: RequirementsRequest) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.validate_requirements(request.requirements)
+        except OrchestrationValidationError as exc:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "status": "rejected",
+                    "operator_message": "Requirements validation failed.",
+                    "errors": exc.errors,
+                    "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+                },
+            ) from exc
+
+    def create_browser_run(self, request: RequirementsRequest) -> dict[str, Any]:
+        try:
+            run = self.browser_orchestrator.create_run(request.requirements)
+        except OrchestrationValidationError as exc:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "status": "rejected",
+                    "operator_message": "Run was not created because requirements validation failed.",
+                    "errors": exc.errors,
+                    "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+                },
+            ) from exc
+        return {
+            "status": "run_created",
+            "run_id": run["run_id"],
+            "state": run["state"],
+            "requirements_sha256": run["requirements_sha256"],
+            "approval_required": run["approval_required"],
+            "mock_boundary": run["mock_boundary"],
+            "real_payment_calls": run["real_payment_calls"],
+            "llm_calls": run["llm_calls"],
+            "run": run,
+            "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+        }
+
+    def browser_run(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.get_run(run_id)
+        except (OrchestrationNotFound, FileNotFoundError):
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def plan_browser_run(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.plan(run_id)
+        except OrchestrationConflict as exc:
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": str(exc)})
+        except (OrchestrationNotFound, FileNotFoundError):
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def approve_browser_run(self, run_id: str, request: ApprovalRequest) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.approve(
+                run_id,
+                actor=request.actor,
+                approval_token=request.approval_token,
+            )
+        except OrchestrationValidationError as exc:
+            raise HTTPException(status_code=403, detail={"status": "rejected", "errors": exc.errors})
+        except OrchestrationConflict as exc:
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": str(exc)})
+        except (OrchestrationNotFound, FileNotFoundError):
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def execute_browser_run(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.execute(run_id)
+        except OrchestrationConflict as exc:
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": str(exc)})
+        except (OrchestrationNotFound, FileNotFoundError):
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def cancel_browser_run(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.cancel(run_id)
+        except OrchestrationConflict as exc:
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": str(exc)})
+        except (OrchestrationNotFound, FileNotFoundError):
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def browser_run_events(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.events(run_id)
+        except OrchestrationNotFound:
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def browser_run_evidence(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.evidence(run_id)
+        except OrchestrationNotFound:
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
+    def browser_run_validation(self, run_id: str) -> dict[str, Any]:
+        try:
+            return self.browser_orchestrator.validation(run_id)
+        except OrchestrationNotFound:
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+
     def _relative_path(self, path: Path) -> str:
         try:
             return path.relative_to(self.project_root).as_posix()
@@ -216,11 +342,13 @@ def create_app(
     project_root: Path | None = None,
     download_center: DownloadCenterService | None = None,
     validation_runner: ValidationRunnerService | None = None,
+    browser_orchestrator: BrowserIntakeOrchestrator | None = None,
 ) -> FastAPI:
     api = OperatorPortalLocalWebAPI(
         project_root=project_root,
         download_center=download_center,
         validation_runner=validation_runner,
+        browser_orchestrator=browser_orchestrator,
     )
     app = FastAPI(
         title="Operator Portal Local Web API",
@@ -260,6 +388,78 @@ def create_app(
     @app.get("/portal/operator-guides")
     async def operator_guides() -> dict[str, Any]:
         return api.operator_guides()
+
+    @app.post("/operator-portal/api/requirements/validate")
+    async def validate_requirements(request: RequirementsRequest) -> dict[str, Any]:
+        return api.validate_requirements(request)
+
+    @app.post("/operator-portal/api/runs", status_code=status.HTTP_201_CREATED)
+    async def create_browser_run(request: RequirementsRequest) -> dict[str, Any]:
+        return api.create_browser_run(request)
+
+    @app.get("/operator-portal/api/runs/{run_id}")
+    async def browser_run(run_id: str) -> dict[str, Any]:
+        return api.browser_run(run_id)
+
+    @app.post("/operator-portal/api/runs/{run_id}/plan")
+    async def plan_browser_run(run_id: str) -> dict[str, Any]:
+        return api.plan_browser_run(run_id)
+
+    @app.post("/operator-portal/api/runs/{run_id}/approvals")
+    async def approve_browser_run(run_id: str, request: ApprovalRequest) -> dict[str, Any]:
+        return api.approve_browser_run(run_id, request)
+
+    @app.post("/operator-portal/api/runs/{run_id}/execute", status_code=status.HTTP_202_ACCEPTED)
+    async def execute_browser_run(run_id: str) -> dict[str, Any]:
+        return api.execute_browser_run(run_id)
+
+    @app.post("/operator-portal/api/runs/{run_id}/cancel", status_code=status.HTTP_202_ACCEPTED)
+    async def cancel_browser_run(run_id: str) -> dict[str, Any]:
+        return api.cancel_browser_run(run_id)
+
+    @app.get("/operator-portal/api/runs/{run_id}/events")
+    async def browser_run_events(run_id: str) -> dict[str, Any]:
+        return api.browser_run_events(run_id)
+
+    @app.get("/operator-portal/api/runs/{run_id}/evidence")
+    async def browser_run_evidence(run_id: str) -> dict[str, Any]:
+        return api.browser_run_evidence(run_id)
+
+    @app.get("/operator-portal/api/runs/{run_id}/validation")
+    async def browser_run_validation(run_id: str) -> dict[str, Any]:
+        return api.browser_run_validation(run_id)
+
+    @app.get("/operator-portal/api/runs/{run_id}/downloads/application")
+    async def download_browser_application(run_id: str) -> Response:
+        try:
+            archive = api.browser_orchestrator.application_archive(run_id)
+        except OrchestrationConflict as exc:
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": str(exc)}) from exc
+        except (OrchestrationNotFound, FileNotFoundError) as exc:
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id}) from exc
+        return Response(
+            content=archive.read_bytes(),
+            media_type="application/zip",
+            headers={
+                "Content-Disposition": (
+                    f'attachment; filename="{run_id}_generated_application.zip"'
+                )
+            },
+        )
+
+    @app.get("/operator-portal/api/runs/{run_id}/downloads/evidence")
+    async def download_browser_evidence(run_id: str) -> Response:
+        try:
+            archive = api.browser_orchestrator.evidence_archive(run_id)
+        except OrchestrationConflict as exc:
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": str(exc)}) from exc
+        except (OrchestrationNotFound, FileNotFoundError) as exc:
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id}) from exc
+        return Response(
+            content=archive.read_bytes(),
+            media_type="application/zip",
+            headers={"Content-Disposition": f'attachment; filename="{run_id}_evidence_bundle.zip"'},
+        )
 
     return app
 

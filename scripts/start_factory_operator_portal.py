@@ -175,15 +175,15 @@ def create_app(project_root: Path | None = None) -> FastAPI:
     app = FastAPI(title="Factory Operator Portal", version="phase13ay")
 
     @app.get("/health")
-    def health() -> dict[str, str]:
+    async def health() -> dict[str, str]:
         return {"status": "ok", "mode": "read-only", "phase": "13AY"}
 
     @app.get("/api/status")
-    def api_status() -> dict[str, Any]:
+    async def api_status() -> dict[str, Any]:
         return build_local_operator_portal_status(root)
 
     @app.get("/api/evidence")
-    def api_evidence() -> dict[str, Any]:
+    async def api_evidence() -> dict[str, Any]:
         status = build_local_operator_portal_status(root)
         evidence_summary = status.get("evidence_summary")
         if isinstance(evidence_summary, dict):
@@ -191,7 +191,7 @@ def create_app(project_root: Path | None = None) -> FastAPI:
         return {"all_required_evidence_present": False, "items": {}}
 
     @app.get("/api/safe-commands")
-    def api_safe_commands() -> list[dict[str, object]]:
+    async def api_safe_commands() -> list[dict[str, object]]:
         status = build_local_operator_portal_status(root)
         safe_commands = status.get("safe_command_catalog")
         if not isinstance(safe_commands, list):
@@ -203,48 +203,48 @@ def create_app(project_root: Path | None = None) -> FastAPI:
         return typed_commands
 
     @app.get("/api/dashboards")
-    def api_dashboards() -> dict[str, object]:
+    async def api_dashboards() -> dict[str, object]:
         return build_operator_portal_dashboard_panels(root)
 
     @app.get("/requirements", response_class=HTMLResponse)
-    def requirement_intake_page() -> str:
+    async def requirement_intake_page() -> str:
         return render_requirement_intake_page()
 
     @app.post("/api/requirements/preview")
-    def api_requirement_preview(payload: dict[str, Any]) -> dict[str, object]:
+    async def api_requirement_preview(payload: dict[str, Any]) -> dict[str, object]:
         preview = build_requirement_intake_preview(payload)
         return preview.to_dict()
 
     @app.get("/dashboards", response_class=HTMLResponse)
-    def dashboards_page() -> str:
+    async def dashboards_page() -> str:
         return render_dashboards(build_operator_portal_dashboard_panels(root))
 
     @app.get("/dashboards/evidence", response_class=HTMLResponse)
-    def evidence_dashboard() -> str:
+    async def evidence_dashboard() -> str:
         return render_dashboard_panel(build_operator_portal_dashboard_panels(root), "evidence_audit", "Evidence and Audit Dashboard")
 
     @app.get("/dashboards/standards", response_class=HTMLResponse)
-    def standards_dashboard() -> str:
+    async def standards_dashboard() -> str:
         return render_dashboard_panel(build_operator_portal_dashboard_panels(root), "standards_controls", "Standards Controls Dashboard")
 
     @app.get("/dashboards/self-healing", response_class=HTMLResponse)
-    def self_healing_dashboard() -> str:
+    async def self_healing_dashboard() -> str:
         return render_dashboard_panel(build_operator_portal_dashboard_panels(root), "self_healing", "Self-Healing Dashboard")
 
     @app.get("/dashboards/threats", response_class=HTMLResponse)
-    def threats_dashboard() -> str:
+    async def threats_dashboard() -> str:
         return render_dashboard_panel(build_operator_portal_dashboard_panels(root), "agentic_threats", "Agentic Threat Dashboard")
 
     @app.get("/dashboards/handover", response_class=HTMLResponse)
-    def handover_dashboard() -> str:
+    async def handover_dashboard() -> str:
         return render_dashboard_panel(build_operator_portal_dashboard_panels(root), "handover_replay", "Handover Replay Dashboard")
 
     @app.get("/dashboards/generated-app", response_class=HTMLResponse)
-    def generated_app_dashboard() -> str:
+    async def generated_app_dashboard() -> str:
         return render_dashboard_panel(build_operator_portal_dashboard_panels(root), "generated_application", "Generated Application Dashboard")
 
     @app.get("/", response_class=HTMLResponse)
-    def dashboard() -> str:
+    async def dashboard() -> str:
         return render_dashboard(build_local_operator_portal_status(root))
 
     return app

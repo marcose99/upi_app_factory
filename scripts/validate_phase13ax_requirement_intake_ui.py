@@ -9,13 +9,13 @@ import sys
 from pathlib import Path
 from typing import Any, cast
 
+import httpx
+
 if __package__ in {None, ""}:
     project_root = Path(__file__).resolve().parents[1]
     project_root_text = str(project_root)
     if project_root_text not in sys.path:
         sys.path.insert(0, project_root_text)
-
-from fastapi.testclient import TestClient
 
 from scripts.build_guided_requirement_intake_preview import (
     BLOCKED_ACTIONS,
@@ -37,6 +37,17 @@ AUDIT_PATH = Path(
     "lifecycle_artifacts/phase13ax/guided_requirement_intake_ui_audit.json"
 )
 PHASE13AW_PORTAL = Path("scripts/build_local_operator_portal_status.py")
+
+
+def portal_request(path: str, *, method: str = "GET", json_payload: dict[str, Any] | None = None) -> httpx.Response:
+    import asyncio
+
+    async def _request() -> httpx.Response:
+        transport = httpx.ASGITransport(app=create_app(Path.cwd()))
+        async with httpx.AsyncClient(transport=transport, base_url="http://local-portal") as client:
+            return await client.request(method, path, json=json_payload)
+
+    return asyncio.run(_request())
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -130,14 +141,13 @@ def validate() -> list[str]:
     if blocked.ready:
         failures.append("Preview with missing fields should be blocked")
 
-    client = TestClient(create_app(Path.cwd()))
-    page = client.get("/requirements")
+    page = portal_request("/requirements")
     if page.status_code != 200:
         failures.append("Requirement intake page failed")
     elif "Guided Requirement Intake" not in page.text:
         failures.append("Requirement intake page missing title")
 
-    api = client.post("/api/requirements/preview", json=sample_payload())
+    api = portal_request("/api/requirements/preview", method="POST", json_payload=sample_payload())
     if api.status_code != 200:
         failures.append("Requirement preview API failed")
     else:

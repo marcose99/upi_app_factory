@@ -7,6 +7,7 @@ from typing import Any
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, Response
 
+from factory.operator_portal.browser_intake_orchestration import BrowserIntakeOrchestrator
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.local_web_api import create_app
 from factory.operator_portal.validation_runner import ValidationRunnerService
@@ -72,11 +73,13 @@ def create_web_ui_app(
     project_root: Path | None = None,
     download_center: DownloadCenterService | None = None,
     validation_runner: ValidationRunnerService | None = None,
+    browser_orchestrator: BrowserIntakeOrchestrator | None = None,
 ) -> FastAPI:
     app = create_app(
         project_root=project_root or PROJECT_ROOT,
         download_center=download_center,
         validation_runner=validation_runner,
+        browser_orchestrator=browser_orchestrator,
     )
 
     @app.get("/", include_in_schema=False)

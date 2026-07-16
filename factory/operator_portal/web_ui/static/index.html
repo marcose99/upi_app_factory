@@ -9,7 +9,7 @@
   <body>
     <header class="topbar">
       <div>
-        <p class="eyebrow">UPI dispute resolution factory</p>
+        <p class="eyebrow">UPI App Factory</p>
         <h1>Operator Portal</h1>
       </div>
       <div class="posture" id="posture-badge">certification_ready_not_certified</div>
@@ -78,6 +78,64 @@
             <p data-field="latest-status">Waiting</p>
           </article>
         </div>
+      </section>
+
+      <section class="panel run-panel" aria-labelledby="browser-run-title">
+        <div class="panel-header">
+          <h2 id="browser-run-title">Requirements Intake</h2>
+          <div class="button-row">
+            <button id="validate-requirements-button" type="button" data-action="validate-requirements">Validate Requirements</button>
+            <button id="submit-run-button" type="button" data-action="submit-run">Submit and Create Run</button>
+          </div>
+        </div>
+        <textarea id="requirements-input" rows="10"># UPI dispute resolution requirements
+
+Build a local mock-safe UPI dispute resolution API with health and readiness endpoints, idempotent dispute creation, deterministic tests, evidence lineage, and no live payment provider calls.</textarea>
+        <dl class="metric-grid">
+          <div><dt>Run ID</dt><dd id="run-id-value" data-field="browser-run-id">Not created</dd></div>
+          <div><dt>State</dt><dd id="run-state-value" data-field="browser-run-state">Waiting</dd></div>
+          <div><dt>SHA-256</dt><dd id="requirements-sha256-value" data-field="browser-run-sha">Waiting</dd></div>
+        </dl>
+        <div class="button-row run-controls">
+          <button id="generate-plan-button" type="button" data-action="generate-plan">Generate Plan</button>
+          <button id="approve-engineering-button" type="button" data-action="approve-engineering">Approve Application Engineering</button>
+          <button id="start-engineering-button" type="button" data-action="start-engineering">Start Engineering</button>
+          <button id="cancel-run-button" type="button" data-action="cancel-run">Cancel Run</button>
+          <button id="refresh-run-button" type="button" data-action="refresh-run">Refresh Run</button>
+          <button id="view-validation-button" type="button" data-action="view-validation-report">View Validation Report</button>
+          <button id="view-evidence-button" type="button" data-action="view-evidence">View Evidence</button>
+          <a id="download-application-button" class="button-link disabled" data-link="download-application" href="#" aria-disabled="true">Download Generated Application</a>
+          <a id="download-evidence-button" class="button-link disabled" data-link="download-evidence" href="#" aria-disabled="true">Download Evidence Bundle</a>
+        </div>
+        <label class="inline-label" for="approval-actor">Actor</label>
+        <input id="approval-actor" value="operator" autocomplete="off">
+        <label class="inline-label" for="approval-token">Approval token</label>
+        <input id="approval-token" type="password" value="" autocomplete="off">
+        <div class="validation-grid">
+          <article>
+            <h3>Approval</h3>
+            <p data-field="browser-approval-state">Waiting</p>
+          </article>
+          <article>
+            <h3>Updated</h3>
+            <p data-field="browser-updated-at">Waiting</p>
+          </article>
+          <article>
+            <h3>Decision</h3>
+            <p id="run-decision-value" data-field="browser-final-decision">Waiting</p>
+          </article>
+        </div>
+        <div class="run-output-grid">
+          <article>
+            <h3>Run Events</h3>
+            <pre id="run-events" aria-live="polite">No run events loaded.</pre>
+          </article>
+          <article>
+            <h3>Validation Summary</h3>
+            <pre id="validation-summary" aria-live="polite">No validation report loaded.</pre>
+          </article>
+        </div>
+        <pre id="error-summary" class="error-summary" aria-live="assertive">No errors.</pre>
       </section>
 
       <section class="panel boundaries" aria-labelledby="boundaries-title">

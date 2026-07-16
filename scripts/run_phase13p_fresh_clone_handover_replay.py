@@ -8,6 +8,7 @@ import pathlib
 import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from typing import Any, TypedDict, cast
 
@@ -25,7 +26,7 @@ ARTIFACT_DIR = (
 # Keep the replay clone outside the repository tree so repository-level
 # full pytest does not recursively collect the clone's tests/conftest.py.
 REPLAY_ROOT = (
-    PROJECT_ROOT.parent
+    pathlib.Path(tempfile.gettempdir())
     / "upi_app_factory_phase13p_replay_workspace"
     / "fresh_clone_replay_workspace"
 )
@@ -123,10 +124,6 @@ def get_clone_source() -> str:
     configured = os.environ.get("PHASE13P_CLONE_SOURCE", "").strip()
     if configured:
         return configured
-    result = command_output(["git", "config", "--get", "remote.origin.url"], PROJECT_ROOT)
-    source = result.stdout.strip()
-    if source:
-        return source
     return str(PROJECT_ROOT)
 
 
