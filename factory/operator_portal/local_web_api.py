@@ -17,6 +17,7 @@ from factory.operator_portal.browser_intake_orchestration import (
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.evidence_dashboard import build_dashboard_summary
 from factory.operator_portal.operator_guides import build_operator_guide_index
+from factory.operator_portal.portfolio_api import build_portfolio_router
 from factory.operator_portal.runtime_api import build_runtime_router
 from factory.operator_portal.validation_runner import CommandNotAllowedError, ValidationRunnerService
 
@@ -345,6 +346,7 @@ def create_app(
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
     runtime_state_root: Path | None = None,
+    portfolio_state_root: Path | None = None,
 ) -> FastAPI:
     api = OperatorPortalLocalWebAPI(
         project_root=project_root,
@@ -464,6 +466,7 @@ def create_app(
         )
 
     app.include_router(build_runtime_router(project_root=api.project_root, state_root=runtime_state_root))
+    app.include_router(build_portfolio_router(project_root=api.project_root, state_root=portfolio_state_root))
     return app
 
 
