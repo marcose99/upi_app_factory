@@ -17,6 +17,7 @@ APP_ID = "upi_dispute_resolution"
 PHASE = "phase36_operator_portal_local_web_ui"
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 WEB_UI_ASSET_DIR = Path(__file__).resolve().parent / "static"
+RUNTIME_ASSET_DIR = Path(__file__).resolve().parents[1] / "static"
 
 WEB_UI_ENDPOINTS = [
     "GET /health",
@@ -48,7 +49,7 @@ WEB_UI_SAFETY_BOUNDARIES: dict[str, Any] = {
 
 def get_web_ui_manifest() -> dict[str, Any]:
     assets = []
-    for path in sorted(WEB_UI_ASSET_DIR.iterdir()):
+    for path in sorted([*WEB_UI_ASSET_DIR.iterdir(), *RUNTIME_ASSET_DIR.iterdir()]):
         if path.is_file():
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
             assets.append(
@@ -74,12 +75,14 @@ def create_web_ui_app(
     download_center: DownloadCenterService | None = None,
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
+    runtime_state_root: Path | None = None,
 ) -> FastAPI:
     app = create_app(
         project_root=project_root or PROJECT_ROOT,
         download_center=download_center,
         validation_runner=validation_runner,
         browser_orchestrator=browser_orchestrator,
+        runtime_state_root=runtime_state_root,
     )
 
     @app.get("/", include_in_schema=False)
@@ -108,6 +111,20 @@ def create_web_ui_app(
     async def operator_ui_styles() -> Response:
         return Response(
             content=(WEB_UI_ASSET_DIR / "styles.css").read_text(encoding="utf-8"),
+            media_type="text/css",
+        )
+
+    @app.get("/operator-ui/runtime.js", include_in_schema=False)
+    async def operator_ui_runtime_script() -> Response:
+        return Response(
+            content=(RUNTIME_ASSET_DIR / "runtime.js").read_text(encoding="utf-8"),
+            media_type="text/javascript",
+        )
+
+    @app.get("/operator-ui/runtime.css", include_in_schema=False)
+    async def operator_ui_runtime_styles() -> Response:
+        return Response(
+            content=(RUNTIME_ASSET_DIR / "runtime.css").read_text(encoding="utf-8"),
             media_type="text/css",
         )
 

@@ -153,6 +153,28 @@ Build a local mock-safe UPI dispute resolution API with health and readiness end
         </ul>
       </section>
 
+      <section class="panel run-panel" aria-labelledby="runtime-title">
+        <div class="panel-header">
+          <h2 id="runtime-title">Runtime Operations</h2>
+          <div class="button-row">
+            <button id="runtime-approve-start-button" type="button" data-action="runtime-approve-start">Approve Start</button>
+            <button id="runtime-start-button" type="button" data-action="runtime-start">Launch Local Runtime</button>
+            <button id="runtime-openapi-button" type="button" data-action="runtime-openapi">Discover OpenAPI</button>
+            <button id="runtime-scenarios-button" type="button" data-action="runtime-scenarios">Run Scenarios</button>
+            <button id="runtime-approve-stop-button" type="button" data-action="runtime-approve-stop">Approve Stop</button>
+            <button id="runtime-stop-button" type="button" data-action="runtime-stop">Stop Runtime</button>
+            <button id="runtime-evidence-button" type="button" data-action="runtime-evidence">Runtime Evidence</button>
+          </div>
+        </div>
+        <dl class="metric-grid">
+          <div><dt>Runtime state</dt><dd data-field="runtime-state">Waiting</dd></div>
+          <div><dt>Health</dt><dd data-field="runtime-health">Waiting</dd></div>
+          <div><dt>Port</dt><dd data-field="runtime-port">18042</dd></div>
+          <div><dt>Mock-safe local</dt><dd data-field="runtime-mock-safe">Waiting</dd></div>
+        </dl>
+        <pre id="runtime-output" aria-live="polite">No runtime operation loaded.</pre>
+      </section>
+
       <section class="panel guide-panel" aria-labelledby="guides-title">
         <div class="panel-header">
           <h2 id="guides-title">Operator Guides</h2>
@@ -174,6 +196,7 @@ Build a local mock-safe UPI dispute resolution API with health and readiness end
       </section>
     </main>
 
+    <script src="./runtime.js" defer></script>
     <script src="./app.js" defer></script>
   </body>
 </html>

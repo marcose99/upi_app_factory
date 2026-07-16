@@ -4,6 +4,8 @@
   const fields = new Map();
   let currentRunId = "";
   let pollTimer = 0;
+  let runtimeStartNonce = "";
+  let runtimeStopNonce = "";
 
   function field(name) {
     if (!fields.has(name)) {
@@ -44,6 +46,19 @@
     const output = document.getElementById("validation-summary");
     if (output) {
       output.textContent = JSON.stringify(payload, null, 2);
+    }
+  }
+
+  function showRuntime(payload) {
+    const output = document.getElementById("runtime-output");
+    if (output) {
+      output.textContent = JSON.stringify(payload, null, 2);
+    }
+    if (payload && payload.state) {
+      setField("runtime-state", payload.state);
+      setField("runtime-port", payload.binding ? payload.binding.port : "18042");
+      setField("runtime-health", payload.health ? payload.health.status : "Unavailable");
+      setField("runtime-mock-safe", payload.mock_safe_local);
     }
   }
 
@@ -343,6 +358,64 @@
     showReport(payload);
   }
 
+  function runtimeRunId() {
+    return currentRunId || "phase50_clean_slate_runtime";
+  }
+
+  async function runtimeApprove(action) {
+    const token = document.getElementById("approval-token");
+    const actor = document.getElementById("approval-actor");
+    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/approvals`, {
+      method: "POST",
+      body: JSON.stringify({
+        action,
+        actor: actor ? actor.value : "operator",
+        approval_token: token ? token.value : "",
+      }),
+    });
+    if (action === "start") {
+      runtimeStartNonce = payload.nonce;
+    }
+    if (action === "stop") {
+      runtimeStopNonce = payload.nonce;
+    }
+    showRuntime(payload);
+  }
+
+  async function runtimeStart() {
+    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/start`, {
+      method: "POST",
+      body: JSON.stringify({ approval_nonce: runtimeStartNonce, port: 18042 }),
+    });
+    showRuntime(payload);
+  }
+
+  async function runtimeStop() {
+    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/stop`, {
+      method: "POST",
+      body: JSON.stringify({ approval_nonce: runtimeStopNonce, port: 18042 }),
+    });
+    showRuntime(payload);
+  }
+
+  async function runtimeOpenAPI() {
+    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/openapi`);
+    showRuntime(payload);
+  }
+
+  async function runtimeScenarios() {
+    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/scenarios`, {
+      method: "POST",
+      body: JSON.stringify({ port: 18042 }),
+    });
+    showRuntime(payload);
+  }
+
+  async function runtimeEvidence() {
+    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/evidence`);
+    showRuntime(payload);
+  }
+
   async function refreshGuides() {
     const payload = await request("/portal/operator-guides");
     const guidePayload = payload.payload || {};
@@ -381,6 +454,13 @@
     "cancel-run": cancelRun,
     "view-validation-report": viewValidationReport,
     "view-evidence": viewEvidence,
+    "runtime-approve-start": () => runtimeApprove("start"),
+    "runtime-start": runtimeStart,
+    "runtime-openapi": runtimeOpenAPI,
+    "runtime-scenarios": runtimeScenarios,
+    "runtime-approve-stop": () => runtimeApprove("stop"),
+    "runtime-stop": runtimeStop,
+    "runtime-evidence": runtimeEvidence,
   };
 
   function bindActions() {

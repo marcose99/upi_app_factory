@@ -17,6 +17,7 @@ from factory.operator_portal.browser_intake_orchestration import (
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.evidence_dashboard import build_dashboard_summary
 from factory.operator_portal.operator_guides import build_operator_guide_index
+from factory.operator_portal.runtime_api import build_runtime_router
 from factory.operator_portal.validation_runner import CommandNotAllowedError, ValidationRunnerService
 
 
@@ -343,6 +344,7 @@ def create_app(
     download_center: DownloadCenterService | None = None,
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
+    runtime_state_root: Path | None = None,
 ) -> FastAPI:
     api = OperatorPortalLocalWebAPI(
         project_root=project_root,
@@ -461,6 +463,7 @@ def create_app(
             headers={"Content-Disposition": f'attachment; filename="{run_id}_evidence_bundle.zip"'},
         )
 
+    app.include_router(build_runtime_router(project_root=api.project_root, state_root=runtime_state_root))
     return app
 
 
