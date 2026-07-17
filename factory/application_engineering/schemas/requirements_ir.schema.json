@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UPI App Factory Requirements IR",
+  "type": "object",
+  "required": [
+    "ir_version",
+    "application",
+    "source_documents",
+    "requirements",
+    "traceability",
+    "diagnostics",
+    "canonical_hash"
+  ],
+  "properties": {
+    "ir_version": {"const": "requirements-ir/v1"},
+    "application": {
+      "type": "object",
+      "required": ["app_id", "product_name", "repository_id", "real_payment_calls"],
+      "properties": {
+        "app_id": {"const": "upi_app_factory"},
+        "product_name": {"const": "UPI App Factory"},
+        "repository_id": {"const": "upi_app_factory"},
+        "real_payment_calls": {"const": "disabled"}
+      }
+    },
+    "source_documents": {"type": "array", "minItems": 1},
+    "requirements": {
+      "type": "object",
+      "required": [
+        "actors",
+        "use_cases",
+        "bounded_contexts",
+        "commands",
+        "queries",
+        "events",
+        "aggregates",
+        "invariants",
+        "workflows",
+        "apis",
+        "data",
+        "security",
+        "operations",
+        "evidence"
+      ]
+    },
+    "traceability": {"type": "array", "minItems": 1},
+    "diagnostics": {"type": "array"},
+    "canonical_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

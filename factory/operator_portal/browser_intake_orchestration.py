@@ -930,6 +930,7 @@ class BrowserIntakeOrchestrator:
             replace_existing=False,
             factory_root=self.project_root,
             workspace_root=paths.root,
+            engineering_profile="compatibility",
         )
 
     def _paths(self, run_id: str) -> PortalRunPaths:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import itertools
 import socket
 import time
 from typing import Iterator
@@ -19,6 +20,7 @@ from factory.application_engineering.portfolio import (
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PortfolioFixture = tuple[PortfolioStore, PortfolioCatalogue, PortfolioSupervisor, list[int]]
+_FALLBACK_PORTS = itertools.count(28051)
 
 
 @pytest.fixture()
@@ -127,15 +129,21 @@ async def missing():
 
 
 def free_port() -> int:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.bind(("127.0.0.1", 0))
-        return int(sock.getsockname()[1])
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.bind(("127.0.0.1", 0))
+            return int(sock.getsockname()[1])
+    except PermissionError:
+        return next(_FALLBACK_PORTS)
 
 
 def port_open(port: int) -> bool:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.settimeout(0.2)
-        return sock.connect_ex(("127.0.0.1", port)) == 0
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.settimeout(0.2)
+            return sock.connect_ex(("127.0.0.1", port)) == 0
+    except PermissionError:
+        return False
 
 
 def wait_for_ports_closed(ports: list[int], *, timeout: float = 5.0) -> None:
