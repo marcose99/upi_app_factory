@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import tempfile
+import os
 import pathlib
 from typing import Any, cast
 
@@ -19,11 +21,21 @@ ARTIFACT_DIR = (
 AUDIT_PATH = ARTIFACT_DIR / "fresh_clone_handover_replay_audit.json"
 # Replay clone is intentionally outside the repository tree to avoid
 # repository-level full pytest collecting nested clone tests.
-REPLAY_ROOT = (
-    PROJECT_ROOT.parent
+DEFAULT_REPLAY_ROOT = (
+    pathlib.Path(tempfile.gettempdir())
     / "upi_app_factory_phase13p_replay_workspace"
     / "fresh_clone_replay_workspace"
 )
+
+
+def configured_replay_root() -> pathlib.Path:
+    configured = os.environ.get("PHASE13P_REPLAY_ROOT", "").strip()
+    if configured:
+        return pathlib.Path(configured).expanduser().resolve()
+    return DEFAULT_REPLAY_ROOT
+
+
+REPLAY_ROOT = configured_replay_root()
 CLONE_DIR = REPLAY_ROOT / "repo_clone"
 
 

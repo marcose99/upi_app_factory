@@ -25,11 +25,21 @@ ARTIFACT_DIR = (
 )
 # Keep the replay clone outside the repository tree so repository-level
 # full pytest does not recursively collect the clone's tests/conftest.py.
-REPLAY_ROOT = (
+DEFAULT_REPLAY_ROOT = (
     pathlib.Path(tempfile.gettempdir())
     / "upi_app_factory_phase13p_replay_workspace"
     / "fresh_clone_replay_workspace"
 )
+
+
+def configured_replay_root() -> pathlib.Path:
+    configured = os.environ.get("PHASE13P_REPLAY_ROOT", "").strip()
+    if configured:
+        return pathlib.Path(configured).expanduser().resolve()
+    return DEFAULT_REPLAY_ROOT
+
+
+REPLAY_ROOT = configured_replay_root()
 CLONE_DIR = REPLAY_ROOT / "repo_clone"
 AUDIT_PATH = ARTIFACT_DIR / "fresh_clone_handover_replay_audit.json"
 MANIFEST_PATH = ARTIFACT_DIR / "fresh_clone_handover_replay_manifest.json"
