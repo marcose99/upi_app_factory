@@ -219,6 +219,23 @@ def _configuration(args: argparse.Namespace) -> AdapterConfig:
     )
 
 
+def _parameterize_generated_python_imports(
+    files: Mapping[str, str],
+    package: str,
+) -> dict[str, str]:
+    # Render generated Python imports for the requested application package.
+    source_prefix = "app.upi_dispute_resolution"
+    target_prefix = f"app.{package}"
+    return {
+        relative: (
+            content.replace(source_prefix, target_prefix)
+            if relative.endswith(".py")
+            else content
+        )
+        for relative, content in files.items()
+    }
+
+
 def _project_files(
     config: AdapterConfig,
     requirements_text: str,
@@ -577,7 +594,7 @@ def test_create_dispute_and_replay() -> None:
     assert second["idempotent_replay"] is True
 """,
     }
-    return files
+    return _parameterize_generated_python_imports(files, package)
 
 
 def _write_tree(root: Path, files: Mapping[str, str]) -> None:

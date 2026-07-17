@@ -211,3 +211,52 @@ def test_portal_config_points_to_adapter() -> None:
         "output_root",
         "evidence_root",
     }
+
+
+def test_non_default_app_id_parameterizes_generated_python_imports(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from typing import Any, cast
+
+    module = cast(Any, _module())
+    root = tmp_path / "factory"
+    workspace = root / "workspace"
+    workspace.mkdir(parents=True)
+    requirements = _requirements(tmp_path)
+    _environment(monkeypatch, root)
+
+    app_id = "upi_capstone_demo"
+    config = module.AdapterConfig(
+        requirements=requirements,
+        app_id=app_id,
+        output_root=workspace / "generated_application",
+        evidence_root=workspace / "evidence",
+        approval_mode="human-gated",
+        approval_token="APPROVE_PORTAL_APPLICATION_ENGINEERING",
+        mock_safe=True,
+        plan_only=False,
+        replace_existing=False,
+        factory_root=root,
+        workspace_root=workspace,
+    )
+    requirements_text, requirements_sha = module._read_requirements(
+        requirements
+    )
+    files = module._project_files(
+        config,
+        requirements_text,
+        requirements_sha,
+    )
+
+    python_source = "\n".join(
+        content
+        for relative, content in files.items()
+        if relative.endswith(".py")
+    )
+    assert "app.upi_dispute_resolution" not in python_source
+    assert f"app.{app_id}" in python_source
+    assert (
+        f"app/{app_id}/interfaces/api/main.py"
+        in files
+    )
