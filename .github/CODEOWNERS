@@ -1,0 +1,7 @@
+# UPI App Factory code ownership
+* @marcose99
+.github/ @marcose99
+factory/ @marcose99
+scripts/ @marcose99
+tests/ @marcose99
+docs/ @marcose99
