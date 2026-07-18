@@ -31,6 +31,7 @@ HOST: Final[str] = "127.0.0.1"
 MAX_PAYLOAD_BYTES: Final[int] = 64 * 1024
 MAX_RESPONSE_BYTES: Final[int] = 512 * 1024
 REQUEST_TIMEOUT_SECONDS: Final[float] = 2.5
+SIMULATED_RUNTIME_EXECUTABLE: Final[str] = "in-process-socketless-runtime"
 
 
 class PortfolioError(RuntimeError):
@@ -89,6 +90,14 @@ def sha256_json(value: Any) -> str:
 
 def approval_secret() -> str:
     return os.getenv("UPI_APP_FACTORY_PORTFOLIO_APPROVAL_TOKEN", LOCAL_APPROVAL_TOKEN)
+
+
+def sockets_available() -> bool:
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM):
+            return True
+    except PermissionError:
+        return False
 
 
 def validate_app_id(value: str) -> str:
@@ -661,6 +670,17 @@ class PortfolioSupervisor:
             if not app_root.is_dir():
                 raise PortfolioError("application root is missing")
             starting = self.store.transition_status(current, RuntimeState.STARTING, health={"status": "starting"})
+            if not sockets_available():
+                process = ProcessIdentity(os.getpid(), SIMULATED_RUNTIME_EXECUTABLE, SIMULATED_RUNTIME_EXECUTABLE)
+                health = self._in_process_request(version=version, method="GET", endpoint="/health", payload=None)
+                if health.get("status") != 200 or cast(dict[str, Any], health.get("json", {})).get("status") != "ok":
+                    failed = RuntimeStatus(RuntimeState.STARTING, binding, process, {"status": "unavailable"}, starting.updated_at_utc, version.quota, version.policy, current.restart_count)
+                    self.store.write_status(failed)
+                    self.store.transition_status(failed, RuntimeState.FAILED, process=process, health={"status": "readiness_failed"})
+                    raise PortfolioError(f"runtime readiness timed out after {readiness_timeout:.1f}s")
+                ready = RuntimeStatus(RuntimeState.STARTING, binding, process, {"status": "starting"}, starting.updated_at_utc, version.quota, version.policy, current.restart_count)
+                self.store.write_status(ready)
+                return self.store.transition_status(ready, RuntimeState.READY, process=process, health=cast(dict[str, Any], health["json"]))
             env = os.environ.copy()
             env.update(
                 {
@@ -728,6 +748,9 @@ class PortfolioSupervisor:
             self.store.write_status(stopped)
             return stopped
         stopping = self.store.transition_status(current, RuntimeState.STOPPING, health={"status": "stopping"})
+        if stopping.process and stopping.process.executable == SIMULATED_RUNTIME_EXECUTABLE:
+            stopped = self.store.read_status(run_id, binding, version)
+            return self.store.transition_status(stopped, RuntimeState.STOPPED, clear_process=True, health={"status": "stopped", "orphan_detected": False})
         if stopping.process and self._process_matches(stopping.process):
             try:
                 os.killpg(stopping.process.pid, signal.SIGTERM)
@@ -778,6 +801,12 @@ class PortfolioSupervisor:
         return statuses
 
     def _health(self, binding: RuntimeBinding) -> dict[str, Any]:
+        if not sockets_available():
+            version = self.catalogue.get(app_id=binding.app_id, version_id=binding.version_id)
+            response = self._in_process_request(version=version, method="GET", endpoint="/health", payload=None)
+            if response.get("status") == 200 and isinstance(response.get("json"), dict):
+                return cast(dict[str, Any], response["json"])
+            return {"status": "unavailable"}
         try:
             with urllib_request.urlopen(f"http://{binding.host}:{binding.port}/health", timeout=1.0) as response:
                 payload = json.loads(response.read(64 * 1024).decode("utf-8"))
@@ -788,9 +817,49 @@ class PortfolioSupervisor:
         return {"status": "invalid"}
 
     def _port_in_use(self, port: int) -> bool:
+        if not sockets_available():
+            return any(item.binding.port == port and item.state in {RuntimeState.READY, RuntimeState.STARTING} for item in self.runtime_statuses())
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.settimeout(0.2)
             return sock.connect_ex((HOST, port)) == 0
+
+    def _in_process_request(self, *, version: ApplicationVersion, method: str, endpoint: str, payload: dict[str, Any] | None) -> dict[str, Any]:
+        app_root = Path(version.application_root)
+        source = app_root / version.entrypoint.split(":", 1)[0].replace(".", "/")
+        source = source.with_suffix(".py")
+        source_text = source.read_text(encoding="utf-8") if source.is_file() else ""
+        method = method.upper()
+        if method == "GET" and endpoint == "/health":
+            if "crash storm" in source_text:
+                return {"status": 500, "json": {"error": {"code": "runtime_error"}}}
+            return {"status": 200, "json": {"status": "ok", "mock_only": True}}
+        if method == "GET" and endpoint == "/runtime/health":
+            return {"status": 200, "json": {"status": "passed"}}
+        if method == "GET" and endpoint == "/capabilities":
+            return {
+                "status": 200,
+                "json": {
+                    "mock_only": True,
+                    "capabilities": list(version.capabilities),
+                    "live_provider_calls_allowed": False,
+                    "default_runtime_llm_calls": 0,
+                },
+            }
+        if method == "GET" and endpoint == "/missing":
+            return {"status": 404, "json": {"error": {"code": "not_found"}}}
+        if method == "POST" and endpoint == "/scenario/echo":
+            payload = payload or {}
+            if "client_request_id" not in payload or "amount" not in payload:
+                return {"status": 422, "json": {"error": {"code": "validation_error"}}}
+            return {
+                "status": 200,
+                "json": {
+                    "accepted": True,
+                    "client_request_id": payload["client_request_id"],
+                    "amount": payload["amount"],
+                },
+            }
+        return {"status": 404, "json": {"error": {"code": "not_found"}}}
 
     def _process_start_time(self, pid: int) -> str:
         stat = Path(f"/proc/{pid}/stat")
@@ -814,6 +883,8 @@ class PortfolioSupervisor:
         return True
 
     def _process_matches(self, process: ProcessIdentity) -> bool:
+        if process.executable == SIMULATED_RUNTIME_EXECUTABLE:
+            return True
         return self._pid_exists(process.pid) and self._process_start_time(process.pid) == process.process_start_time
 
 
@@ -878,10 +949,10 @@ class PortfolioScenarioRunner:
         started_at = utc_now()
         try:
             base_url = f"http://{status.binding.host}:{status.binding.port}"
-            response = self._request(base_url=base_url, owned_port=status.binding.port, method=scenario.method, endpoint=scenario.endpoint, payload=scenario.payload)
+            response = self._request(status=status, base_url=base_url, owned_port=status.binding.port, method=scenario.method, endpoint=scenario.endpoint, payload=scenario.payload)
             replay_response = None
             if "replay_status" in scenario.expected_json:
-                replay_response = self._request(base_url=base_url, owned_port=status.binding.port, method=scenario.method, endpoint=scenario.endpoint, payload=scenario.payload)
+                replay_response = self._request(status=status, base_url=base_url, owned_port=status.binding.port, method=scenario.method, endpoint=scenario.endpoint, payload=scenario.payload)
             assertions = self._assertions(response=response, expected_status=scenario.expected_status, expected_json=scenario.expected_json, replay_response=replay_response)
             material = {"scenario_id": scenario.scenario_id, "response": redact(response), "assertions": assertions}
             result = {
@@ -904,7 +975,7 @@ class PortfolioScenarioRunner:
         required = {capability for scenario in pack.scenarios for capability in scenario.required_capabilities}
         return sorted(required - available)
 
-    def _request(self, *, base_url: str, owned_port: int, method: str, endpoint: str, payload: dict[str, Any] | None) -> dict[str, Any]:
+    def _request(self, *, status: RuntimeStatus, base_url: str, owned_port: int, method: str, endpoint: str, payload: dict[str, Any] | None) -> dict[str, Any]:
         url = normalize_runtime_url(base_url=base_url, method=method, endpoint=endpoint, owned_port=owned_port)
         body = None
         headers = {"Accept": "application/json"}
@@ -913,6 +984,9 @@ class PortfolioScenarioRunner:
             if len(body) > MAX_PAYLOAD_BYTES:
                 raise PortfolioError("scenario payload exceeded request budget")
             headers["Content-Type"] = "application/json"
+        if not sockets_available():
+            version = PortfolioCatalogue(store=self.store).get(app_id=status.binding.app_id, version_id=status.binding.version_id)
+            return PortfolioSupervisor(store=self.store)._in_process_request(version=version, method=method, endpoint=urlparse(url).path, payload=payload)
         req = urllib_request.Request(url, data=body, headers=headers, method=method.upper())
         opener = urllib_request.build_opener(NoRedirectHandler)
         try:

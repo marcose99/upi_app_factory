@@ -15,6 +15,10 @@ from factory.operator_portal.browser_intake_orchestration import (
     OrchestrationValidationError,
 )
 from factory.operator_portal.download_center import DownloadCenterService
+from factory.operator_portal.deep_portal_integration import (
+    DeepPortalError,
+    DeepPortalIntegration,
+)
 from factory.operator_portal.evidence_dashboard import build_dashboard_summary
 from factory.operator_portal.operator_guides import build_operator_guide_index
 from factory.operator_portal.portfolio_api import build_portfolio_router
@@ -66,6 +70,14 @@ class ApprovalRequest(BaseModel):
     approval_token: str
 
 
+class DeepPortalRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    requirements: str | None = None
+    requirements_path: str | None = None
+    approval_token: str | None = None
+
+
 class OperatorPortalLocalWebAPI:
     """Local FastAPI facade over governed operator portal services."""
 
@@ -85,6 +97,7 @@ class OperatorPortalLocalWebAPI:
         self.browser_orchestrator = browser_orchestrator or BrowserIntakeOrchestrator(
             project_root=self.project_root,
         )
+        self.deep_portal = DeepPortalIntegration(project_root=self.project_root)
 
     def health(self) -> dict[str, Any]:
         return {
@@ -332,6 +345,42 @@ class OperatorPortalLocalWebAPI:
         except OrchestrationNotFound:
             raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
 
+    def deep_overview(self) -> dict[str, Any]:
+        try:
+            return self.deep_portal.overview()
+        except DeepPortalError as exc:
+            raise HTTPException(status_code=500, detail={"status": "error", "error": str(exc)}) from exc
+
+    def deep_compile(self, request: DeepPortalRequest) -> dict[str, Any]:
+        try:
+            return self.deep_portal.compile(request.model_dump(exclude_none=True))
+        except DeepPortalError as exc:
+            raise HTTPException(status_code=400, detail={"status": "rejected", "error": str(exc)}) from exc
+
+    def deep_proposal(self, request: DeepPortalRequest) -> dict[str, Any]:
+        try:
+            return self.deep_portal.proposal(request.model_dump(exclude_none=True))
+        except DeepPortalError as exc:
+            raise HTTPException(status_code=400, detail={"status": "rejected", "error": str(exc)}) from exc
+
+    def deep_approved_run(self, request: DeepPortalRequest) -> dict[str, Any]:
+        try:
+            return self.deep_portal.approved_run(request.model_dump(exclude_none=True))
+        except DeepPortalError as exc:
+            raise HTTPException(status_code=403, detail={"status": "rejected", "error": str(exc)}) from exc
+
+    def deep_source_file(self, path: str) -> dict[str, Any]:
+        try:
+            return self.deep_portal.read_source(path)
+        except DeepPortalError as exc:
+            raise HTTPException(status_code=404, detail={"status": "missing", "error": str(exc)}) from exc
+
+    def deep_evidence_file(self, path: str) -> dict[str, Any]:
+        try:
+            return self.deep_portal.read_evidence(path)
+        except DeepPortalError as exc:
+            raise HTTPException(status_code=404, detail={"status": "missing", "error": str(exc)}) from exc
+
     def _relative_path(self, path: Path) -> str:
         try:
             return path.relative_to(self.project_root).as_posix()
@@ -432,6 +481,48 @@ def create_app(
     @app.get("/operator-portal/api/runs/{run_id}/validation")
     async def browser_run_validation(run_id: str) -> dict[str, Any]:
         return api.browser_run_validation(run_id)
+
+    @app.get("/operator-portal/api/deep-engineering/overview")
+    async def deep_engineering_overview() -> dict[str, Any]:
+        return api.deep_overview()
+
+    @app.post("/operator-portal/api/deep-engineering/compile")
+    async def deep_engineering_compile(request: DeepPortalRequest) -> dict[str, Any]:
+        return api.deep_compile(request)
+
+    @app.post("/operator-portal/api/deep-engineering/proposal")
+    async def deep_engineering_proposal(request: DeepPortalRequest) -> dict[str, Any]:
+        return api.deep_proposal(request)
+
+    @app.post("/operator-portal/api/deep-engineering/approved-run")
+    async def deep_engineering_approved_run(request: DeepPortalRequest) -> dict[str, Any]:
+        return api.deep_approved_run(request)
+
+    @app.get("/operator-portal/api/deep-engineering/source")
+    async def deep_engineering_source(path: str) -> dict[str, Any]:
+        return api.deep_source_file(path)
+
+    @app.get("/operator-portal/api/deep-engineering/evidence")
+    async def deep_engineering_evidence(path: str) -> dict[str, Any]:
+        return api.deep_evidence_file(path)
+
+    @app.get("/operator-portal/api/deep-engineering/download/source")
+    async def deep_engineering_source_archive() -> Response:
+        archive = api.deep_portal.source_archive()
+        return Response(
+            content=archive.read_bytes(),
+            media_type="application/zip",
+            headers={"Content-Disposition": 'attachment; filename="phase58_source.zip"'},
+        )
+
+    @app.get("/operator-portal/api/deep-engineering/download/evidence")
+    async def deep_engineering_evidence_archive() -> Response:
+        archive = api.deep_portal.evidence_archive()
+        return Response(
+            content=archive.read_bytes(),
+            media_type="application/zip",
+            headers={"Content-Disposition": 'attachment; filename="phase58_evidence.zip"'},
+        )
 
     @app.get("/operator-portal/api/runs/{run_id}/downloads/application")
     async def download_browser_application(run_id: str) -> Response:

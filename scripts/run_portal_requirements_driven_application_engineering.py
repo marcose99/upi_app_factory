@@ -63,6 +63,7 @@ class AdapterConfig:
     replace_existing: bool
     factory_root: Path
     workspace_root: Path
+    engineering_profile: str = "compatibility"
 
 
 def _utc_now() -> str:
@@ -147,6 +148,12 @@ def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--plan-only", action="store_true")
     parser.add_argument("--replace-existing", action="store_true")
+    parser.add_argument(
+        "--engineering-profile",
+        choices=("compatibility", "local-deep-v1"),
+        default=os.getenv("FACTORY_ENGINEERING_PROFILE", "compatibility"),
+        help="Use compatibility output or the Phase 56 versioned deep composer profile.",
+    )
     return parser.parse_args(argv)
 
 
@@ -214,6 +221,7 @@ def _configuration(args: argparse.Namespace) -> AdapterConfig:
         mock_safe=bool(args.mock_safe),
         plan_only=bool(args.plan_only),
         replace_existing=bool(args.replace_existing),
+        engineering_profile=args.engineering_profile,
         factory_root=factory_root,
         workspace_root=workspace_root,
     )
@@ -652,6 +660,7 @@ def _plan_payload(
         "approval_mode": config.approval_mode,
         "mock_safe": config.mock_safe,
         "replace_existing": config.replace_existing,
+        "engineering_profile": config.engineering_profile,
         "llm_calls": 0,
         "real_payment_calls": "disabled",
     }
@@ -671,6 +680,47 @@ def run(config: AdapterConfig) -> dict[str, object]:
             f"output root already exists: {config.output_root}; "
             "use --replace-existing only after protected approval"
         )
+
+    if config.engineering_profile == "local-deep-v1":
+        from factory.application_engineering.deep_composer import DeepApplicationComposer
+        from factory.application_engineering.requirements_compiler import compile_requirements
+
+        requirements_ir = compile_requirements([config.requirements], config.factory_root)
+        manifest = DeepApplicationComposer(config.factory_root).compose(
+            requirements_ir=requirements_ir,
+            output_root=config.output_root,
+            app_id=config.app_id,
+            replace_existing=config.replace_existing,
+        )
+        generated_tests = [
+            item["path"]
+            for item in manifest["file_manifest"]
+            if "test" in item["path"]
+        ]
+        evidence_dir = config.evidence_root / (
+            "portal_deep_"
+            + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            + "_"
+            + requirements_sha[:12]
+        )
+        evidence_dir.mkdir(parents=True, exist_ok=False)
+        result = {
+            **plan,
+            "status": SUCCESS_STATUS,
+            "composer_profile": manifest["composer_profile"],
+            "generated_file_count": manifest["file_count"],
+            "health_contract": "GET /health" in manifest["endpoints"],
+            "ready_contract": "GET /ready" in manifest["endpoints"],
+            "generated_tests": generated_tests,
+            "actual_application_root": str(config.output_root / config.app_id),
+            "evidence_directory": str(evidence_dir),
+            "completed_at_utc": _utc_now(),
+        }
+        (evidence_dir / "result.json").write_text(
+            json.dumps(result, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return result
 
     run_id = (
         "portal_"
@@ -697,7 +747,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
             requirements_sha,
         )
         _write_tree(staging, files)
-        manifest = _manifest(staging)
+        manifest_records = _manifest(staging)
 
         required_paths = {
             "pyproject.toml",
@@ -709,7 +759,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "tests/test_api_contract.py",
             (f"app/{config.app_id}/interfaces/api/main.py"),
         }
-        actual_paths: set[str] = {item["relative_path"] for item in manifest}
+        actual_paths: set[str] = {item["relative_path"] for item in manifest_records}
         missing = sorted(required_paths - actual_paths)
         if missing:
             raise AdapterError("generated output contract is incomplete: " + ", ".join(missing))

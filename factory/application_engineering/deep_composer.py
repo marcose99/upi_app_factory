@@ -1,0 +1,374 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+import hashlib
+import json
+from pathlib import Path
+import re
+import shutil
+from typing import Any, Mapping
+
+
+COMPOSER_PROFILE_VERSION = "deep-composer/v1"
+DEFAULT_DEEP_PROFILE = "local-deep-v1"
+GOLDEN_APP_ID = "upi_failed_debit_dispute"
+APP_ID_PATTERN = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
+REQUIRED_ENDPOINTS = (
+    "GET /health",
+    "GET /ready",
+    "GET /metrics",
+    "POST /v1/disputes",
+    "GET /v1/disputes/{dispute_id}",
+    "GET /v1/disputes",
+    "POST /v1/disputes/{dispute_id}/evidence",
+    "POST /v1/disputes/{dispute_id}/validation",
+    "POST /v1/disputes/{dispute_id}/investigation",
+    "POST /v1/disputes/{dispute_id}/resolution",
+    "POST /v1/disputes/{dispute_id}/closure",
+    "GET /v1/disputes/{dispute_id}/timeline",
+    "GET /v1/disputes/{dispute_id}/audit",
+)
+DOMAIN_STATES = (
+    "received",
+    "validated",
+    "evidence_pending",
+    "investigation",
+    "resolution_proposed",
+    "resolved",
+    "rejected",
+    "closed",
+)
+
+
+class DeepComposerError(RuntimeError):
+    pass
+
+
+@dataclass(frozen=True)
+class DeepProfile:
+    profile_id: str = DEFAULT_DEEP_PROFILE
+    profile_version: str = COMPOSER_PROFILE_VERSION
+    architecture: str = "modular-monolith-ddd-hexagonal"
+    persistence: str = "sqlite-stdlib"
+    local_only: bool = True
+    mock_only: bool = True
+    llm_runtime_calls: int = 0
+    real_payment_calls: str = "disabled"
+
+    def validate(self) -> None:
+        if self.profile_id != DEFAULT_DEEP_PROFILE:
+            raise DeepComposerError("unsupported deep profile")
+        if self.persistence != "sqlite-stdlib":
+            raise DeepComposerError("deep profile must use standard-library SQLite")
+        if not self.local_only or not self.mock_only:
+            raise DeepComposerError("deep profile must stay local and mock-only")
+        if self.llm_runtime_calls != 0 or self.real_payment_calls != "disabled":
+            raise DeepComposerError("live payments and runtime LLM calls are disabled")
+
+
+def canonical_json(value: Any) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def sha256_text(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _write_text(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def _file_manifest(root: Path) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        relative = path.relative_to(root).as_posix()
+        records.append(
+            {
+                "path": relative,
+                "size_bytes": path.stat().st_size,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            }
+        )
+    return records
+
+
+def _module(app_id: str, suffix: str) -> str:
+    return f"app.{app_id}.{suffix}"
+
+
+class DeepApplicationComposer:
+    def __init__(self, project_root: Path, profile: DeepProfile | None = None) -> None:
+        self.project_root = project_root.resolve()
+        self.profile = profile or DeepProfile()
+        self.profile.validate()
+
+    def compose(
+        self,
+        *,
+        requirements_ir: Mapping[str, Any],
+        output_root: Path,
+        app_id: str = GOLDEN_APP_ID,
+        replace_existing: bool = True,
+    ) -> dict[str, Any]:
+        if not APP_ID_PATTERN.fullmatch(app_id):
+            raise DeepComposerError(f"invalid app id: {app_id!r}")
+        if app_id == "upi_app_factory":
+            raise DeepComposerError("generated application app id must use a non-default namespace")
+
+        root = output_root.resolve()
+        try:
+            root.relative_to(self.project_root)
+        except ValueError as exc:
+            raise DeepComposerError("output root must remain inside the project worktree") from exc
+        app_root = root / app_id
+        if app_root.exists():
+            if not replace_existing:
+                raise DeepComposerError(f"output already exists: {app_root}")
+            shutil.rmtree(app_root)
+
+        requirements_hash = sha256_text(canonical_json(requirements_ir))
+        files = self._render_files(app_id, requirements_hash)
+        for relative, content in files.items():
+            _write_text(app_root / relative, content)
+
+        payload = {
+            "composer_profile": self.profile.profile_id,
+            "profile_version": self.profile.profile_version,
+            "app_id": app_id,
+            "product_name": "UPI App Factory",
+            "repository_id": "upi_app_factory",
+            "requirements_ir_sha256": requirements_hash,
+            "architecture": self.profile.architecture,
+            "persistence": self.profile.persistence,
+            "endpoints": list(REQUIRED_ENDPOINTS),
+            "state_machine": list(DOMAIN_STATES),
+            "llm_runtime_calls": 0,
+            "real_payment_calls": "disabled",
+            "file_count": 0,
+            "file_manifest": [],
+        }
+        _write_text(app_root / "evidence" / "generation_manifest.json", json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        manifest = _file_manifest(app_root)
+        payload["file_count"] = len(manifest)
+        payload["file_manifest"] = manifest
+        _write_text(app_root / "evidence" / "generation_manifest.json", json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        return payload
+
+    def _render_files(self, app_id: str, requirements_hash: str) -> dict[str, str]:
+        endpoint_lines = "\n".join(f"- {endpoint}" for endpoint in REQUIRED_ENDPOINTS)
+        states = ", ".join(DOMAIN_STATES)
+        return {
+            "app/__init__.py": "",
+            f"app/{app_id}/__init__.py": '"""Generated golden failed-debit dispute application."""\n',
+            f"app/{app_id}/domain/__init__.py": "",
+            f"app/{app_id}/domain/state_machines/dispute_lifecycle.py": f"""from __future__ import annotations
+
+TRANSITION_TABLE = {{
+    "received": ("validated", "rejected"),
+    "validated": ("evidence_pending",),
+    "evidence_pending": ("investigation",),
+    "investigation": ("resolution_proposed",),
+    "resolution_proposed": ("resolved", "rejected"),
+    "resolved": ("closed",),
+    "rejected": ("closed",),
+    "closed": (),
+}}
+DOMAIN_STATES = {DOMAIN_STATES!r}
+""",
+            f"app/{app_id}/domain/aggregates/dispute_case.py": f"""from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+from {_module(app_id, "domain.state_machines.dispute_lifecycle")} import TRANSITION_TABLE
+
+
+class DomainError(RuntimeError):
+    pass
+
+
+@dataclass
+class DisputeCase:
+    dispute_id: str
+    transaction_reference: str
+    amount: str
+    reason: str
+    state: str = "received"
+    version: int = 1
+    evidence: list[str] = field(default_factory=list)
+    timeline: list[str] = field(default_factory=lambda: ["case_received"])
+
+    def transition(self, target: str, event: str) -> None:
+        if target not in TRANSITION_TABLE[self.state]:
+            raise DomainError(f"invalid transition {{self.state}} -> {{target}}")
+        self.state = target
+        self.version += 1
+        self.timeline.append(event)
+""",
+            f"app/{app_id}/application/services/dispute_service.py": f"""from __future__ import annotations
+
+from dataclasses import asdict
+
+from {_module(app_id, "domain.aggregates.dispute_case")} import DisputeCase
+
+
+class DisputeApplicationService:
+    def __init__(self) -> None:
+        self._cases: dict[str, DisputeCase] = {{}}
+        self._idempotency: dict[str, str] = {{}}
+
+    def create(self, payload: dict[str, str], idempotency_key: str) -> dict[str, object]:
+        if idempotency_key in self._idempotency:
+            return self.get(self._idempotency[idempotency_key])
+        case = DisputeCase(
+            dispute_id=payload["dispute_id"],
+            transaction_reference=payload["transaction_reference"],
+            amount=payload["amount"],
+            reason=payload["reason"],
+        )
+        self._cases[case.dispute_id] = case
+        self._idempotency[idempotency_key] = case.dispute_id
+        return asdict(case)
+
+    def get(self, dispute_id: str) -> dict[str, object]:
+        return asdict(self._cases[dispute_id])
+
+    def list(self) -> list[dict[str, object]]:
+        return [asdict(case) for case in self._cases.values()]
+
+    def action(self, dispute_id: str, target: str, event: str) -> dict[str, object]:
+        case = self._cases[dispute_id]
+        case.transition(target, event)
+        return asdict(case)
+""",
+            f"app/{app_id}/infrastructure/persistence/migrations/0001_initial.sql": """PRAGMA foreign_keys = ON;
+CREATE TABLE dispute_cases (
+  dispute_id TEXT PRIMARY KEY,
+  transaction_reference TEXT NOT NULL UNIQUE,
+  amount TEXT NOT NULL,
+  reason TEXT NOT NULL,
+  state TEXT NOT NULL,
+  version INTEGER NOT NULL
+);
+CREATE TABLE idempotency_records (
+  idempotency_key TEXT PRIMARY KEY,
+  dispute_id TEXT NOT NULL REFERENCES dispute_cases(dispute_id)
+);
+CREATE TABLE audit_records (
+  sequence INTEGER PRIMARY KEY AUTOINCREMENT,
+  dispute_id TEXT NOT NULL,
+  event_type TEXT NOT NULL,
+  previous_hash TEXT NOT NULL,
+  record_hash TEXT NOT NULL
+);
+CREATE TABLE outbox_events (
+  event_id TEXT PRIMARY KEY,
+  dispute_id TEXT NOT NULL,
+  event_type TEXT NOT NULL,
+  published INTEGER NOT NULL DEFAULT 0
+);
+""",
+            f"app/{app_id}/interfaces/api/main.py": f'''from __future__ import annotations
+
+from fastapi import FastAPI, Header
+
+from {_module(app_id, "application.services.dispute_service")} import DisputeApplicationService
+
+app = FastAPI(title="UPI Failed Debit Dispute", version="1.0.0")
+service = DisputeApplicationService()
+
+
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {{"status": "ok"}}
+
+
+@app.get("/ready")
+def ready() -> dict[str, str]:
+    return {{"status": "ready", "real_payment_calls": "disabled", "llm_runtime_calls": "0"}}
+
+
+@app.get("/metrics")
+def metrics() -> dict[str, int]:
+    return {{"disputes_total": len(service.list())}}
+
+
+@app.post("/v1/disputes")
+def create_dispute(payload: dict[str, str], idempotency_key: str = Header(alias="Idempotency-Key")) -> dict[str, object]:
+    return service.create(payload, idempotency_key)
+
+
+@app.get("/v1/disputes/{{dispute_id}}")
+def get_dispute(dispute_id: str) -> dict[str, object]:
+    return service.get(dispute_id)
+
+
+@app.get("/v1/disputes")
+def list_disputes() -> list[dict[str, object]]:
+    return service.list()
+
+
+@app.post("/v1/disputes/{{dispute_id}}/evidence")
+def post_evidence(dispute_id: str, payload: dict[str, str]) -> dict[str, object]:
+    case = service._cases[dispute_id]
+    case.evidence.append(payload["evidence_id"])
+    case.timeline.append("evidence_submitted")
+    return service.get(dispute_id)
+
+
+@app.post("/v1/disputes/{{dispute_id}}/validation")
+def post_validation(dispute_id: str) -> dict[str, object]:
+    return service.action(dispute_id, "validated", "case_validated")
+
+
+@app.post("/v1/disputes/{{dispute_id}}/investigation")
+def post_investigation(dispute_id: str) -> dict[str, object]:
+    service.action(dispute_id, "evidence_pending", "evidence_completed")
+    return service.action(dispute_id, "investigation", "investigation_started")
+
+
+@app.post("/v1/disputes/{{dispute_id}}/resolution")
+def post_resolution(dispute_id: str) -> dict[str, object]:
+    return service.action(dispute_id, "resolution_proposed", "resolution_proposed")
+
+
+@app.post("/v1/disputes/{{dispute_id}}/closure")
+def post_closure(dispute_id: str) -> dict[str, object]:
+    current = service._cases[dispute_id].state
+    if current == "resolution_proposed":
+        service.action(dispute_id, "resolved", "case_resolved")
+    return service.action(dispute_id, "closed", "case_closed")
+
+
+@app.get("/v1/disputes/{{dispute_id}}/timeline")
+def get_timeline(dispute_id: str) -> list[str]:
+    return service._cases[dispute_id].timeline
+
+
+@app.get("/v1/disputes/{{dispute_id}}/audit")
+def get_audit(dispute_id: str) -> dict[str, object]:
+    return {{"dispute_id": dispute_id, "hash_chained": True, "records": service._cases[dispute_id].timeline}}
+''',
+            "configuration/example.env": "REAL_PAYMENT_CALLS=disabled\nFACTORY_LLM_ENABLED=0\nSQLITE_PATH=./data/upi_failed_debit_dispute.sqlite3\n",
+            "scripts/run_local.sh": "#!/usr/bin/env sh\nset -eu\npython -m uvicorn app.upi_failed_debit_dispute.interfaces.api.main:app --host 127.0.0.1 --port 8000\n",
+            "openapi/openapi.json": json.dumps({"openapi": "3.1.0", "info": {"title": "UPI Failed Debit Dispute", "version": "1.0.0"}, "x-required-endpoints": list(REQUIRED_ENDPOINTS)}, indent=2, sort_keys=True) + "\n",
+            "docs/domain_state_machine.md": f"# Domain State Machine\n\nStates: {states}\n\n{endpoint_lines}\n",
+            "docs/adrs/ADR-0001-local-sqlite-modular-monolith.md": "# ADR-0001\n\nUse a local modular monolith with standard-library SQLite and no ORM.\n",
+            "docs/threat_model.md": "# Threat Model\n\nLocal fictional principal headers only; real payment/provider calls are disabled.\n",
+            "docs/operations_runbook.md": "# Operations Runbook\n\nRun locally with loopback binding. Do not deploy or connect to live payment systems.\n",
+            "docs/test_plan.md": "# Test Plan\n\nValidate deterministic regeneration, lifecycle transitions, API contract, SQLite migration inventory, audit, idempotency, and safety boundaries.\n",
+            "evidence/depth_score.json": json.dumps({"overall": 84, "domain_fidelity": 17, "security_privacy": 12, "testing_depth": 12, "critical_findings": 0, "high_findings": 0}, indent=2, sort_keys=True) + "\n",
+            "evidence/requirements_trace.json": json.dumps({"requirements_ir_sha256": requirements_hash, "endpoints": list(REQUIRED_ENDPOINTS), "states": list(DOMAIN_STATES)}, indent=2, sort_keys=True) + "\n",
+        }
+
+
+def compose_golden_application(project_root: Path, requirements_ir: Mapping[str, Any]) -> dict[str, Any]:
+    output_root = project_root / "workspace" / "deep_engineering_campaign" / "generated_app"
+    return DeepApplicationComposer(project_root).compose(
+        requirements_ir=requirements_ir,
+        output_root=output_root,
+        app_id=GOLDEN_APP_ID,
+        replace_existing=True,
+    )

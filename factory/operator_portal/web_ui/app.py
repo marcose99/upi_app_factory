@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, Response
 
 from factory.operator_portal.browser_intake_orchestration import BrowserIntakeOrchestrator
+from factory.operator_portal.deep_portal_integration import DeepPortalIntegration
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.local_web_api import create_app
 from factory.operator_portal.validation_runner import ValidationRunnerService
@@ -126,6 +127,13 @@ def create_web_ui_app(
         return Response(
             content=(RUNTIME_ASSET_DIR / "runtime.css").read_text(encoding="utf-8"),
             media_type="text/css",
+        )
+
+    @app.get("/operator-portal/deep-engineering", include_in_schema=False)
+    async def deep_engineering_portal() -> Response:
+        return Response(
+            content=DeepPortalIntegration(project_root=project_root or PROJECT_ROOT).render_html(),
+            media_type="text/html",
         )
 
     return app
