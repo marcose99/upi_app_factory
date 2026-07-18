@@ -1,0 +1,6 @@
+{
+  "chunk_count": 5,
+  "corpus_sha256": "7a9afcd040af8c1f33cc5bbbf2dc2bae8dfd541653982bea6babdaaee3505960",
+  "model": "text-embedding-3-small",
+  "provider": "deterministic_fake_embeddings"
+}

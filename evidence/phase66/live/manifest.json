@@ -1,0 +1,436 @@
+{
+  "embedding_model_requested": "text-embedding-3-small",
+  "llm_model_requested": "gpt-5.6-luna",
+  "max_llm_calls": 45,
+  "prompt_metrics": {
+    "ambiguity_detection_accuracy": 1.0,
+    "estimated_cost": "NOT_CALCULATED",
+    "human_review_fields": [
+      "confidence",
+      "human_escalation",
+      "unsupported_claims"
+    ],
+    "latency_ms": [
+      5213.171572075225,
+      4850.702502997592,
+      4062.035789946094,
+      3751.4814119786024,
+      4068.0390439229086,
+      3242.795450030826,
+      4472.646009991877,
+      4056.9067749893293,
+      2933.59337199945,
+      3955.8947909390554,
+      3548.337120912038,
+      3623.5207109712064,
+      5526.623002020642,
+      3955.9805130120367,
+      5082.049171091057,
+      4266.517726005986,
+      4378.847766085528,
+      4877.019130042754,
+      3864.9918329901993,
+      4058.9852340053767,
+      3460.9219620469958,
+      3035.8103080652654,
+      3236.551574082114,
+      2827.913264045492,
+      3956.329633947462,
+      4076.158276060596,
+      3044.4032170344144,
+      3656.76202904433,
+      3048.71715803165,
+      4155.894192052074,
+      6326.946672052145,
+      2629.2404889827594,
+      3455.852958955802,
+      4263.87046999298,
+      3552.757940022275,
+      2608.4316950291395
+    ],
+    "llm_call_count": 36,
+    "requirement_coverage": 0.0,
+    "safety_policy_violation_count": 12,
+    "schema_pass_rate": 1.0,
+    "token_usage": {
+      "total_tokens": 21835
+    },
+    "unsupported_claim_rate": 0.8888888888888888
+  },
+  "retrieval_metrics": {
+    "manifest": {
+      "chunk_count": 5,
+      "corpus_sha256": "7a9afcd040af8c1f33cc5bbbf2dc2bae8dfd541653982bea6babdaaee3505960",
+      "model": "text-embedding-3-small",
+      "provider": "openai_embeddings"
+    },
+    "metrics": {
+      "hit_at_k": 1.0,
+      "irrelevant_rejection_rate": 1.0,
+      "mrr": 1.0
+    },
+    "results": [
+      {
+        "expected_source_ids": [
+          "phase66_problem"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-001",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_problem, phase66_rag, phase66_memory.",
+          "citations": [
+            "phase66_problem",
+            "phase66_rag",
+            "phase66_memory"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_problem",
+          "phase66_rag",
+          "phase66_memory"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_architecture"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-002",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_architecture, phase66_problem, phase66_safety.",
+          "citations": [
+            "phase66_architecture",
+            "phase66_problem",
+            "phase66_safety"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_architecture",
+          "phase66_problem",
+          "phase66_safety"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_safety"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-003",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_safety, phase66_memory, phase66_architecture.",
+          "citations": [
+            "phase66_safety",
+            "phase66_memory",
+            "phase66_architecture"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_safety",
+          "phase66_memory",
+          "phase66_architecture"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_rag"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-004",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_rag, phase66_safety, phase66_architecture.",
+          "citations": [
+            "phase66_rag",
+            "phase66_safety",
+            "phase66_architecture"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_rag",
+          "phase66_safety",
+          "phase66_architecture"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_memory"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-005",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_memory, phase66_architecture, phase66_problem.",
+          "citations": [
+            "phase66_memory",
+            "phase66_architecture",
+            "phase66_problem"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_memory",
+          "phase66_architecture",
+          "phase66_problem"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_problem"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-006",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_problem, phase66_rag, phase66_memory.",
+          "citations": [
+            "phase66_problem",
+            "phase66_rag",
+            "phase66_memory"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_problem",
+          "phase66_rag",
+          "phase66_memory"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_architecture"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-007",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_architecture, phase66_problem, phase66_safety.",
+          "citations": [
+            "phase66_architecture",
+            "phase66_problem",
+            "phase66_safety"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_architecture",
+          "phase66_problem",
+          "phase66_safety"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_safety"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-008",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_safety, phase66_memory, phase66_architecture.",
+          "citations": [
+            "phase66_safety",
+            "phase66_memory",
+            "phase66_architecture"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_safety",
+          "phase66_memory",
+          "phase66_architecture"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_rag"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-009",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_rag, phase66_safety, phase66_architecture.",
+          "citations": [
+            "phase66_rag",
+            "phase66_safety",
+            "phase66_architecture"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_rag",
+          "phase66_safety",
+          "phase66_architecture"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_memory"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-010",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_memory, phase66_architecture, phase66_problem.",
+          "citations": [
+            "phase66_memory",
+            "phase66_architecture",
+            "phase66_problem"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_memory",
+          "phase66_architecture",
+          "phase66_problem"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_problem"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-011",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_problem, phase66_rag, phase66_memory.",
+          "citations": [
+            "phase66_problem",
+            "phase66_rag",
+            "phase66_memory"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_problem",
+          "phase66_rag",
+          "phase66_memory"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_architecture"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-012",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_architecture, phase66_problem, phase66_safety.",
+          "citations": [
+            "phase66_architecture",
+            "phase66_problem",
+            "phase66_safety"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_architecture",
+          "phase66_problem",
+          "phase66_safety"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_safety"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-013",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_safety, phase66_memory, phase66_architecture.",
+          "citations": [
+            "phase66_safety",
+            "phase66_memory",
+            "phase66_architecture"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_safety",
+          "phase66_memory",
+          "phase66_architecture"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_rag"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-014",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_rag, phase66_safety, phase66_architecture.",
+          "citations": [
+            "phase66_rag",
+            "phase66_safety",
+            "phase66_architecture"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_rag",
+          "phase66_safety",
+          "phase66_architecture"
+        ]
+      },
+      {
+        "expected_source_ids": [
+          "phase66_memory"
+        ],
+        "no_rag_answer": {
+          "answer": "No corpus citations used.",
+          "citations": []
+        },
+        "question_id": "RQ-015",
+        "rag_answer": {
+          "answer": "Supported by approved Phase 66 sources: phase66_memory, phase66_architecture, phase66_problem.",
+          "citations": [
+            "phase66_memory",
+            "phase66_architecture",
+            "phase66_problem"
+          ],
+          "human_review": false
+        },
+        "retrieved_source_ids": [
+          "phase66_memory",
+          "phase66_architecture",
+          "phase66_problem"
+        ]
+      }
+    ]
+  },
+  "runtime": "guarded_live_openai"
+}
