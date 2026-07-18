@@ -1,0 +1,11 @@
+{
+  "benchmark_id": "phase68-offline-evaluator-benchmark",
+  "cases_evaluated": 2,
+  "deterministic": true,
+  "network_calls": 0,
+  "runtime_dependencies": [
+    "python-stdlib"
+  ],
+  "summary": "The benchmark inspects two fictional dispute cases and validates manifest integrity without credentials, Docker, network or live provider access."
+}
+

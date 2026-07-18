@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "amount_inr": "418.00",
+      "case_id": "FIC-UPI-68-0001",
+      "customer_name": "Asha Fictional",
+      "dispute_type": "failed debit",
+      "status": "mock-review-ready",
+      "upi_reference": "FICMOCK000000000001"
+    },
+    {
+      "amount_inr": "1299.00",
+      "case_id": "FIC-UPI-68-0002",
+      "customer_name": "Rohan Fictional",
+      "dispute_type": "merchant refund delay",
+      "status": "mock-evidence-requested",
+      "upi_reference": "FICMOCK000000000002"
+    }
+  ],
+  "fictional_data_only": true,
+  "live_payment_calls_disabled": true,
+  "schema_version": "phase68-fictional-mock-cases.v1"
+}
+

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://upi-app-factory.local/schemas/phase68_70/consolidated_capstone.schema.json",
+  "title": "Phase 68-70 Consolidated Capstone Summary",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "campaign_id",
+    "certification_posture",
+    "runtime_llm_calls",
+    "phase_contracts",
+    "trust_boundaries",
+    "events",
+    "evidence_records",
+    "summary_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": "phase68-70-consolidated-capstone.v1" },
+    "status": { "const": "PASS" },
+    "campaign_id": { "const": "phase68_70_consolidated_capstone_v1" },
+    "certification_posture": { "const": "certification-ready-not-certified" },
+    "official_certification_claimed": { "const": false },
+    "production_readiness_claimed": { "const": false },
+    "fictional_data_only": { "const": true },
+    "real_payment_calls": { "const": "disabled" },
+    "runtime_llm_calls": { "const": 0 },
+    "network_required": { "const": false },
+    "phase_contracts": {
+      "type": "object",
+      "required": ["phase68", "phase69", "phase70"]
+    },
+    "trust_boundaries": {
+      "type": "object",
+      "required": [
+        "external_payment_ecosystems",
+        "bank_psp_npci_rbi_card_network_calls",
+        "recipient_replay_requires_ignored_workspace",
+        "portal_progress_source",
+        "downloads"
+      ]
+    },
+    "events": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "evidence_records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/file_record" }
+    },
+    "summary_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "event": {
+      "type": "object",
+      "required": ["sequence", "phase", "event_type", "payload", "event_hash"],
+      "properties": {
+        "sequence": { "type": "integer", "minimum": 1 },
+        "phase": { "type": "string" },
+        "event_type": { "type": "string" },
+        "payload": { "type": "object" },
+        "event_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "file_record": {
+      "type": "object",
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^[^/].*" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "bytes": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "phase68-70-policy.v1",
+  "policy_id": "phase68_70_operator_accountability_policy",
+  "product": "UPI App Factory",
+  "certification_posture": "certification-ready-not-certified",
+  "human_gated_actions": [
+    "production_deployment",
+    "public_release",
+    "real_payment_rail_access",
+    "real_customer_data_access",
+    "certification_claim",
+    "live_llm_runtime"
+  ],
+  "not_claimed": [
+    "official_certification",
+    "regulatory_approval",
+    "production_readiness",
+    "live_payment_processing"
+  ]
+}

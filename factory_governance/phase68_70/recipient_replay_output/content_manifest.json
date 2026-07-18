@@ -1,0 +1,141 @@
+{
+  "certification_posture": "certification-ready-not-certified",
+  "credentials_required": false,
+  "data_policy": "fictional-data-only",
+  "docker_required": false,
+  "fail_closed_controls": [
+    "manifest_hash_verification",
+    "payload_hash_verification",
+    "path_traversal_rejection",
+    "symlink_rejection",
+    "unsupported_claim_rejection",
+    "mock_boundary_rejection"
+  ],
+  "fixture_records": [
+    {
+      "bytes": 819,
+      "path": "architecture_governance.json",
+      "sha256": "32569e729aff3ed7a1e1e40719606a1c60b1b8ed68a7756a6a46bb886a9d5d19"
+    },
+    {
+      "bytes": 347,
+      "path": "benchmark_summary.json",
+      "sha256": "6349b6111c58a837d759d7344c609527d22dff4aca6f0e68ea5a032e7e635225"
+    },
+    {
+      "bytes": 495,
+      "path": "evidence_index.json",
+      "sha256": "d09c6ea6bc44b8e2ac24a44caaf6fc7ae6b791a60e44a22deb4df62dcbd7ff54"
+    },
+    {
+      "bytes": 518,
+      "path": "generated_application/generated_app_manifest.json",
+      "sha256": "4654c0c0e610cae1e422e309e669b4d570bed38784e39299b339843d1c1232a3"
+    },
+    {
+      "bytes": 643,
+      "path": "generated_application/mock_cases.json",
+      "sha256": "e835b85c89e309e79f8f5e6656c1b42ab29ce67b891c53a0bbe6964c0430b813"
+    },
+    {
+      "bytes": 961,
+      "path": "requirements_intake.json",
+      "sha256": "6097390e907b66e1dce1d9cffa11e860bc29a62dd059d56dd438ceae16583462"
+    },
+    {
+      "bytes": 763,
+      "path": "safety_scenarios.json",
+      "sha256": "b15357495d20886cd1b7cc23451d55a974ef85225882a2646573b379b5be5e7e"
+    }
+  ],
+  "live_provider_access_required": false,
+  "manifest_sha256": "e1e1ff5db9d0a2f3881326002289a19a851fa7b7612ea1b66d6a8b2ddba24ac4",
+  "mock_boundary": "deterministic-local-mocks-only",
+  "mode": "offline_reproducible_recipient_replay",
+  "network_required": false,
+  "official_certification_claimed": false,
+  "openai_access_required": false,
+  "original_ignored_workspace_required": false,
+  "payload_records": [
+    {
+      "bytes": 819,
+      "path": "payload/architecture_governance.json",
+      "sha256": "32569e729aff3ed7a1e1e40719606a1c60b1b8ed68a7756a6a46bb886a9d5d19"
+    },
+    {
+      "bytes": 347,
+      "path": "payload/benchmark_summary.json",
+      "sha256": "6349b6111c58a837d759d7344c609527d22dff4aca6f0e68ea5a032e7e635225"
+    },
+    {
+      "bytes": 495,
+      "path": "payload/evidence_index.json",
+      "sha256": "d09c6ea6bc44b8e2ac24a44caaf6fc7ae6b791a60e44a22deb4df62dcbd7ff54"
+    },
+    {
+      "bytes": 518,
+      "path": "payload/generated_application/generated_app_manifest.json",
+      "sha256": "4654c0c0e610cae1e422e309e669b4d570bed38784e39299b339843d1c1232a3"
+    },
+    {
+      "bytes": 643,
+      "path": "payload/generated_application/mock_cases.json",
+      "sha256": "e835b85c89e309e79f8f5e6656c1b42ab29ce67b891c53a0bbe6964c0430b813"
+    },
+    {
+      "bytes": 961,
+      "path": "payload/requirements_intake.json",
+      "sha256": "6097390e907b66e1dce1d9cffa11e860bc29a62dd059d56dd438ceae16583462"
+    },
+    {
+      "bytes": 763,
+      "path": "payload/safety_scenarios.json",
+      "sha256": "b15357495d20886cd1b7cc23451d55a974ef85225882a2646573b379b5be5e7e"
+    }
+  ],
+  "phase": "68",
+  "product": "UPI App Factory",
+  "production_readiness_claimed": false,
+  "recipient_steps": [
+    {
+      "artifact": "payload/requirements_intake.json",
+      "status": "demonstrated",
+      "step": "requirements_intake"
+    },
+    {
+      "artifact": "payload/architecture_governance.json",
+      "status": "demonstrated",
+      "step": "architecture_governance_explanation"
+    },
+    {
+      "artifact": "payload/generated_application/generated_app_manifest.json",
+      "status": "demonstrated",
+      "step": "generated_application_inspection"
+    },
+    {
+      "artifact": "payload/safety_scenarios.json",
+      "status": "demonstrated",
+      "step": "safety_scenarios"
+    },
+    {
+      "artifact": "payload/benchmark_summary.json",
+      "status": "demonstrated",
+      "step": "benchmark_summary"
+    },
+    {
+      "artifact": "content_manifest.json",
+      "status": "demonstrated",
+      "step": "evidence_verification"
+    },
+    {
+      "artifact": "handoff_bundle.zip",
+      "status": "demonstrated",
+      "step": "application_download_handoff"
+    }
+  ],
+  "runtime_dependencies": [
+    "python-stdlib"
+  ],
+  "schema_version": "phase68-recipient-replay.v1",
+  "status": "PASS"
+}

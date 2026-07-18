@@ -1,0 +1,16 @@
+{
+  "app_id": "fictional_upi_dispute_assistant",
+  "application_type": "offline generated-application inspection fixture",
+  "certification_posture": "certification-ready-not-certified",
+  "inspection_targets": [
+    "case intake fields",
+    "mock dispute timeline",
+    "evidence attachment checklist",
+    "operator handoff summary"
+  ],
+  "mock_boundary": "deterministic-local-mocks-only",
+  "official_certification_claimed": false,
+  "production_readiness_claimed": false,
+  "uses_live_provider_access": false
+}
+

@@ -1,0 +1,21 @@
+{
+  "schema_version": "phase68-70-policy.v1",
+  "policy_id": "phase68_70_mock_boundary_policy",
+  "product": "UPI App Factory",
+  "data_policy": "fictional-data-only",
+  "runtime_llm_calls_default": 0,
+  "live_integrations": {
+    "bank": "disabled",
+    "psp": "disabled",
+    "npci": "disabled",
+    "rbi": "disabled",
+    "card_network": "disabled",
+    "payment_processing": "disabled"
+  },
+  "enforcement": [
+    "fail_closed_on_live_boundary_claim",
+    "fail_closed_on_production_or_certification_claim",
+    "verify_payload_hashes_before_recipient_download",
+    "write_runtime_artifacts_only_under_isolated_runtime_root"
+  ]
+}

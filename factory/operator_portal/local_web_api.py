@@ -14,6 +14,7 @@ from factory.operator_portal.browser_intake_orchestration import (
     OrchestrationNotFound,
     OrchestrationValidationError,
 )
+from factory.operator_portal.capstone_phase69_api import build_phase69_router
 from factory.operator_portal.download_center import DownloadCenterService
 from factory.operator_portal.deep_portal_integration import (
     DeepPortalError,
@@ -396,6 +397,7 @@ def create_app(
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
     runtime_state_root: Path | None = None,
     portfolio_state_root: Path | None = None,
+    phase69_state_root: Path | None = None,
 ) -> FastAPI:
     api = OperatorPortalLocalWebAPI(
         project_root=project_root,
@@ -558,6 +560,7 @@ def create_app(
 
     app.include_router(build_runtime_router(project_root=api.project_root, state_root=runtime_state_root))
     app.include_router(build_portfolio_router(project_root=api.project_root, state_root=portfolio_state_root))
+    app.include_router(build_phase69_router(project_root=api.project_root, state_root=phase69_state_root))
     return app
 
 

@@ -1,0 +1,19 @@
+{
+  "architecture_summary": [
+    "Recipient replay uses repository-tracked JSON fixtures and deterministic Python standard-library verification.",
+    "The evaluator boundary is local-only and reads payload files, manifests and checksums from the checkout.",
+    "The handoff bundle is an artifact for recipient review and does not represent deployment, approval or production operation."
+  ],
+  "certification_posture": "certification-ready-not-certified",
+  "external_dependencies_required": [],
+  "governance_controls": [
+    "fictional-data-only",
+    "deterministic-local-mocks-only",
+    "fail-closed-content-manifest",
+    "independent-recipient-verifier",
+    "unsupported-certification-and-production-claim-rejection"
+  ],
+  "official_certification_claimed": false,
+  "production_readiness_claimed": false
+}
+

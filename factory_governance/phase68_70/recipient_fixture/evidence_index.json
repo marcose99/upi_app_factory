@@ -1,0 +1,15 @@
+{
+  "evidence_items": [
+    "requirements_intake.json",
+    "architecture_governance.json",
+    "generated_application/generated_app_manifest.json",
+    "generated_application/mock_cases.json",
+    "safety_scenarios.json",
+    "benchmark_summary.json"
+  ],
+  "ignored_workspace_required": false,
+  "independent_verification": "scripts/validate_phase68_reproducible_evaluator_recipient.py",
+  "original_ignored_workspace_required": false,
+  "recipient_download_artifact": "handoff_bundle.zip"
+}
+

@@ -1,0 +1,53 @@
+{
+  "certification_posture": "certification-ready-not-certified",
+  "data_policy": "fictional-data-only",
+  "mock_boundary": "deterministic-local-mocks-only",
+  "phase": "70",
+  "product_name": "UPI App Factory",
+  "profiles": [
+    {
+      "depth_score": 90,
+      "profile_id": "upi_failed_debit_no_credit",
+      "stable_profile_sha256": "30cb537de429e60beb694985279c23e179986bf993ed190479517727d3e1c645"
+    },
+    {
+      "depth_score": 88,
+      "profile_id": "upi_reversal_refund_tracking",
+      "stable_profile_sha256": "22534ba9db03cb732c5b88c0704e01621ba34b42eb818890b7a6eb318c593508"
+    },
+    {
+      "depth_score": 89,
+      "profile_id": "upi_duplicate_debit",
+      "stable_profile_sha256": "a5df8a421707bfc116bed4d3a8db3d4607cb41cef45c679fb717d0824222ff75"
+    },
+    {
+      "depth_score": 87,
+      "profile_id": "merchant_qr_acquirer_dispute",
+      "stable_profile_sha256": "6b9dac32fcf91bccd9d5fa3ea67ee0b7cea756faeeff0a84019ed75022d1cdb7"
+    },
+    {
+      "depth_score": 91,
+      "profile_id": "fraud_mule_account_triage",
+      "stable_profile_sha256": "fba74ea158086240a4ab492aad02c40bd50d95202b6b950d74ff5f9e4d69ec6d"
+    },
+    {
+      "depth_score": 89,
+      "profile_id": "card_authorization_chargeback",
+      "stable_profile_sha256": "61a50708af1bbf504781286d0cecd895c478332da190d324ff875160e2047042"
+    }
+  ],
+  "real_payment_calls": "disabled",
+  "repository_id": "upi_app_factory",
+  "required_controls": [
+    "requirements_lineage",
+    "domain_lifecycle_guards",
+    "application_ports_services",
+    "idempotency_concurrency_replay_audit_outbox",
+    "authorization_pii_redaction_safe_validation",
+    "mock_external_boundaries",
+    "test_obligation_matrix",
+    "depth_and_residual_risk_reporting"
+  ],
+  "runtime_llm_calls_default": 0,
+  "schema_version": "phase70-profile-governance.v1"
+}

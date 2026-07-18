@@ -1,0 +1,27 @@
+{
+  "campaign": "phase68-70-consolidated-capstone-v1",
+  "data_policy": "fictional-data-only",
+  "intake_id": "phase68-fictional-merchant-refund-001",
+  "llm_runtime_enabled": false,
+  "network_required": false,
+  "payment_ecosystem_calls": "disabled",
+  "requirements": [
+    {
+      "id": "REQ-68-001",
+      "priority": "must",
+      "statement": "A recipient can replay the evaluator from a clean checkout with Python standard library only."
+    },
+    {
+      "id": "REQ-68-002",
+      "priority": "must",
+      "statement": "The generated application fixture inspects fictional UPI dispute cases without live payment, bank, PSP, NPCI, RBI or card-network calls."
+    },
+    {
+      "id": "REQ-68-003",
+      "priority": "must",
+      "statement": "The handoff bundle includes checksums and fails closed when payload content is tampered."
+    }
+  ],
+  "scenario": "Fictional merchant refund status and failed-debit support intake for evaluator replay."
+}
+

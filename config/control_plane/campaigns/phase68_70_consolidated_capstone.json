@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "campaign_id": "phase68_70_consolidated_capstone_v1",
+  "metadata": {
+    "campaign": "phase68-70-consolidated-capstone-v1",
+    "product": "UPI App Factory",
+    "product_id": "upi_app_factory",
+    "purpose": "Repository-native consolidated Phase 68, 69 and 70 offline capstone",
+    "activity_phases": {
+      "phase68_recipient_replay": "68",
+      "phase68_recipient_replay_verification": "68",
+      "phase69_control_plane_portal_checkpoint": "69",
+      "phase70_multi_domain_application_portfolio": "70",
+      "phase68_70_evidence_integrity_checkpoint": "68-70"
+    },
+    "protected_actions": [
+      "production_deployment",
+      "public_release",
+      "real_payment_rail_access",
+      "real_customer_data_access",
+      "certification_claim",
+      "live_llm_runtime"
+    ]
+  },
+  "baseline": "2f033c8591bf53495c2d472bd3d8baa1e037b581",
+  "objective": "Demonstrate requirements intake, governed campaign execution, application engineering, validation, evidence integrity and recipient download using local fictional data only.",
+  "scope": {
+    "allowed_write_paths": [
+      "factory_governance/phase68_70/recipient_replay_output",
+      "factory_governance/phase68_70/phase69_control_plane_portal"
+    ]
+  },
+  "budgets": {
+    "activity_seconds": 900,
+    "engineering_repairs": 0
+  },
+  "approvals": {
+    "human": [
+      "production_deployment",
+      "public_release",
+      "real_payment_rail_access",
+      "real_customer_data_access",
+      "certification_claim",
+      "live_llm_runtime"
+    ]
+  },
+  "validation_controls": {
+    "trusted_prerequisites": [
+      {
+        "hydrate": false,
+        "id": "phase68_recipient_fixture",
+        "kind": "directory",
+        "path": "factory_governance/phase68_70/recipient_fixture"
+      },
+      {
+        "hydrate": false,
+        "id": "phase70_requirements",
+        "kind": "directory",
+        "path": "tests/fixtures/phase68_70"
+      },
+      {
+        "hydrate": false,
+        "id": "phase70_governance",
+        "kind": "file",
+        "path": "factory_governance/phase68_70/phase70_profile_governance.json"
+      }
+    ],
+    "deterministic_runtime_noise": [
+      {
+        "id": "phase69_portal_evidence",
+        "kind": "directory",
+        "path": "factory_governance/phase68_70/phase69_control_plane_portal"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "action": "execute_engineering",
+      "allowed_write_paths": [
+        "factory_governance/phase68_70/recipient_replay_output"
+      ],
+      "argv": [
+        "python3",
+        "scripts/run_phase68_recipient_replay.py"
+      ],
+      "cwd": ".",
+      "dependencies": [],
+      "environment_allowlist": [],
+      "id": "phase68_recipient_replay",
+      "kind": "execution",
+      "risk": "LOW",
+      "target_state": "ENGINEERING",
+      "timeout_seconds": 120
+    },
+    {
+      "action": "verify_evidence",
+      "allowed_write_paths": [],
+      "argv": [
+        "python3",
+        "scripts/validate_phase68_reproducible_evaluator_recipient.py"
+      ],
+      "cwd": ".",
+      "dependencies": [
+        "phase68_recipient_replay"
+      ],
+      "environment_allowlist": [],
+      "id": "phase68_recipient_replay_verification",
+      "kind": "verification",
+      "risk": "LOW",
+      "target_state": "OFFLINE_VALIDATED",
+      "timeout_seconds": 120
+    },
+    {
+      "action": "verify_evidence",
+      "allowed_write_paths": [],
+      "argv": [
+        "python3",
+        "-c",
+        "import json; from pathlib import Path; p=Path('factory_governance/phase68_70/recipient_replay_output/content_manifest.json'); d=json.loads(p.read_text(encoding='utf-8')); raise SystemExit(0 if d.get('status') == 'PASS' and d.get('original_ignored_workspace_required') is False else 1)"
+      ],
+      "cwd": ".",
+      "dependencies": [
+        "phase68_recipient_replay_verification"
+      ],
+      "environment_allowlist": [],
+      "id": "phase69_control_plane_portal_checkpoint",
+      "kind": "verification",
+      "risk": "LOW",
+      "target_state": "OFFLINE_VALIDATED",
+      "timeout_seconds": 60
+    },
+    {
+      "action": "execute_engineering",
+      "allowed_write_paths": [],
+      "argv": [
+        "python3",
+        "scripts/validate_phase70_multi_domain_application_engineering.py"
+      ],
+      "cwd": ".",
+      "dependencies": [
+        "phase69_control_plane_portal_checkpoint"
+      ],
+      "environment_allowlist": [],
+      "id": "phase70_multi_domain_application_portfolio",
+      "kind": "execution",
+      "risk": "LOW",
+      "target_state": "OFFLINE_VALIDATED",
+      "timeout_seconds": 180
+    },
+    {
+      "action": "verify_evidence",
+      "allowed_write_paths": [],
+      "argv": [
+        "python3",
+        "-c",
+        "import json; from pathlib import Path; p=Path('factory_governance/phase68_70/recipient_replay_output/content_manifest.json'); d=json.loads(p.read_text(encoding='utf-8')); raise SystemExit(0 if d.get('status') == 'PASS' and d.get('network_required') is False and d.get('official_certification_claimed') is False else 1)"
+      ],
+      "cwd": ".",
+      "dependencies": [
+        "phase70_multi_domain_application_portfolio"
+      ],
+      "environment_allowlist": [],
+      "id": "phase68_70_evidence_integrity_checkpoint",
+      "kind": "verification",
+      "risk": "LOW",
+      "target_state": "CANDIDATE_SEALED",
+      "timeout_seconds": 60
+    }
+  ]
+}

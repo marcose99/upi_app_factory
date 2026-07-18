@@ -1,0 +1,6 @@
+{
+  "expected_manifest_sha256": "e1e1ff5db9d0a2f3881326002289a19a851fa7b7612ea1b66d6a8b2ddba24ac4",
+  "expected_status": "PASS",
+  "schema_version": "phase68-independent-verifier.v1",
+  "verifier": "scripts/validate_phase68_reproducible_evaluator_recipient.py"
+}

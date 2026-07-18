@@ -1,0 +1,30 @@
+{
+  "fail_closed_expected": true,
+  "scenarios": [
+    {
+      "expected": "reject",
+      "id": "SAFE-68-001",
+      "name": "payload tamper",
+      "trigger": "payload checksum differs from content manifest"
+    },
+    {
+      "expected": "reject",
+      "id": "SAFE-68-002",
+      "name": "path traversal",
+      "trigger": "manifest path contains parent-directory traversal"
+    },
+    {
+      "expected": "reject",
+      "id": "SAFE-68-003",
+      "name": "unsupported claim",
+      "trigger": "payload claims official certification or production readiness"
+    },
+    {
+      "expected": "reject",
+      "id": "SAFE-68-004",
+      "name": "mock-boundary violation",
+      "trigger": "fixture requires live provider or payment ecosystem access"
+    }
+  ]
+}
+
