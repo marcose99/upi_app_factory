@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UPI App Factory control-plane activity result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "activity_id",
+    "action",
+    "kind",
+    "returncode",
+    "stdout_sha256",
+    "stderr_sha256",
+    "stdout",
+    "stderr",
+    "started_at",
+    "finished_at"
+  ],
+  "properties": {
+    "activity_id": { "type": "string" },
+    "action": { "type": "string" },
+    "kind": { "enum": ["execution", "verification", "checkpoint"] },
+    "returncode": { "type": "integer" },
+    "stdout_sha256": { "type": "string" },
+    "stderr_sha256": { "type": "string" },
+    "stdout": { "type": "string" },
+    "stderr": { "type": "string" },
+    "started_at": { "type": "string" },
+    "finished_at": { "type": "string" }
+  }
+}

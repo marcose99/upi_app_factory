@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "campaign_id": "control_plane_self_test",
+  "metadata": {
+    "product": "UPI App Factory",
+    "product_id": "upi_app_factory",
+    "purpose": "local deterministic self-test"
+  },
+  "baseline": "BASELINE_COMMIT",
+  "objective": "Exercise execution, verification, cleanup, evidence, and idempotent durable closure with local mock-only activity.",
+  "scope": {
+    "allowed_write_paths": [
+      "var/control_plane_self_test"
+    ]
+  },
+  "budgets": {
+    "engineering_repairs": 0,
+    "activity_seconds": 60
+  },
+  "approvals": {
+    "human": []
+  },
+  "validation_controls": {
+    "trusted_prerequisites": [
+      {
+        "id": "self_test_runtime_root",
+        "kind": "directory",
+        "path": "var",
+        "hydrate": true
+      }
+    ],
+    "deterministic_runtime_noise": [
+      {
+        "id": "self_test_runtime_output",
+        "kind": "directory",
+        "path": "var/control_plane_self_test"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "id": "create_self_test_file",
+      "action": "execute_engineering",
+      "kind": "execution",
+      "risk": "LOW",
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; p=Path('var/control_plane_self_test'); p.mkdir(parents=True, exist_ok=True); (p/'artifact.txt').write_text('upi_app_factory control plane self-test\\n', encoding='utf-8')"
+      ],
+      "dependencies": [],
+      "target_state": "ENGINEERING",
+      "timeout_seconds": 30,
+      "cwd": ".",
+      "environment_allowlist": [],
+      "allowed_write_paths": [
+        "var/control_plane_self_test"
+      ]
+    },
+    {
+      "id": "verify_self_test_file",
+      "action": "verify_evidence",
+      "kind": "verification",
+      "risk": "LOW",
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; data=Path('var/control_plane_self_test/artifact.txt').read_text(encoding='utf-8'); raise SystemExit(0 if data == 'upi_app_factory control plane self-test\\n' else 1)"
+      ],
+      "dependencies": [
+        "create_self_test_file"
+      ],
+      "target_state": "OFFLINE_VALIDATED",
+      "timeout_seconds": 30,
+      "cwd": ".",
+      "environment_allowlist": [],
+      "allowed_write_paths": []
+    },
+    {
+      "id": "cleanup_self_test_file",
+      "action": "cleanup_campaign",
+      "kind": "execution",
+      "risk": "LOW",
+      "argv": [
+        "python3",
+        "-c",
+        "import shutil; from pathlib import Path; shutil.rmtree(Path('var/control_plane_self_test'), ignore_errors=True)"
+      ],
+      "dependencies": [
+        "verify_self_test_file"
+      ],
+      "target_state": "CLEANED",
+      "timeout_seconds": 30,
+      "cwd": ".",
+      "environment_allowlist": [],
+      "allowed_write_paths": [
+        "var/control_plane_self_test"
+      ]
+    }
+  ]
+}

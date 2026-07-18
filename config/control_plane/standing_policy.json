@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "default": "deny",
+  "max_automatic_risk": "MODERATE",
+  "automatic_actions": [
+    "inspect",
+    "normalize_requirements",
+    "plan",
+    "create_workspace",
+    "execute_engineering",
+    "run_tests",
+    "run_static_analysis",
+    "verify_evidence",
+    "commit_candidate",
+    "push_campaign_branch",
+    "open_pull_request",
+    "monitor_hosted_checks",
+    "merge_pull_request",
+    "postmerge_acceptance",
+    "build_handoff",
+    "cleanup_campaign"
+  ],
+  "human_required_actions": [
+    "production_deployment",
+    "public_release",
+    "create_tag",
+    "real_payment_rail_access",
+    "real_customer_data_access",
+    "policy_exception",
+    "destructive_migration",
+    "certification_claim"
+  ],
+  "prohibited_actions": [
+    "force_push_main",
+    "bypass_required_checks",
+    "disable_governance",
+    "commit_secret",
+    "delete_evidence",
+    "live_payment_transaction"
+  ]
+}
