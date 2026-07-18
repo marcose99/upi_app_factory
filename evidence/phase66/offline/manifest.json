@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "memory_feedback_demo.json",
+      "sha256": "f3d7790216fa28c713fe6ecd9d850eea5ef0e762b06050a0ef372cf007ce24d7"
+    },
+    {
+      "path": "offline_summary.json",
+      "sha256": "09ddcf5b46778c3b764b8346def3664903e3331bc9a5003e61ea2ac9f6462a0f"
+    },
+    {
+      "path": "phase66_corpus_manifest.json",
+      "sha256": "150b25fc9b3e70d984175e6fc649bd0fc0b45a39d449ebdbd36d78cfe14239e1"
+    },
+    {
+      "path": "phase66_vector_index.jsonl",
+      "sha256": "fc2b036743835137e0d9f5d0c588589ea04d68b634bac3a88524402941e9107e"
+    },
+    {
+      "path": "prompt_case_results.jsonl",
+      "sha256": "0578ed61a6e52cc02d0f59852d192999d68b3510fcee62f01c1fbfea0d21d108"
+    },
+    {
+      "path": "prompt_comparison.csv",
+      "sha256": "0f304eb31b5d02bba0e8c170f046f09bb9c5b9e41986e0c95bab9a4bcd2dbfde"
+    },
+    {
+      "path": "prompt_comparison_report.md",
+      "sha256": "9dda3715270e62bb08a94cf6d56840c93de16dcdca4ab2c441318004e5c6ad3b"
+    },
+    {
+      "path": "prompt_metrics.json",
+      "sha256": "ca0d306cab595100dac9aeb8c7ab38bb1fd1caf2907ec503e841a6e21a5b8d8c"
+    },
+    {
+      "path": "retrieval_results.json",
+      "sha256": "3f8b66b82c2ba1943addf91f5455c153f0f0ee890e69e3b86bce0925008387d7"
+    },
+    {
+      "path": "safety_monitoring_evidence.json",
+      "sha256": "e32a877a9151e3d2bb9f3400b2b1284f59245f7d2dc9212d9898f1c1a609ac15"
+    }
+  ]
+}
