@@ -19,12 +19,14 @@ def test_phase50_browser_runtime_controls_are_present() -> None:
     ]:
         assert label in html
     for endpoint in [
-        "/operator-portal/api/runtime/runs/",
-        "/approvals",
-        "/start",
-        "/openapi",
-        "/scenarios",
-        "/evidence",
-        "/stop",
+        "/operator-portal/api/portfolio/catalogue",
+        "/operator-portal/api/portfolio/approvals",
+        "/operator-portal/api/portfolio/runtime/start",
+        "/operator-portal/api/portfolio/runtime/openapi",
+        "/operator-portal/api/portfolio/scenarios",
+        "/operator-portal/api/portfolio/evidence",
+        "/operator-portal/api/portfolio/runtime/stop",
     ]:
         assert endpoint in script
+    assert 'id="runtime-version-selector"' in html
+    assert "/operator-portal/api/runtime/runs/" not in script

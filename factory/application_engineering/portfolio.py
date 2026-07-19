@@ -524,6 +524,10 @@ class PortfolioCatalogue:
             raise PortfolioError("arbitrary filesystem registration rejected")
         if ".." in request.entrypoint or ":" not in request.entrypoint:
             raise PortfolioError("entrypoint must be a module:app reference")
+        if request.manifest.get("app_id") not in {None, request.app_id}:
+            raise PortfolioError("manifest app_id does not match registration request")
+        if request.manifest.get("version_id") not in {None, request.version_id}:
+            raise PortfolioError("manifest version_id does not match registration request")
         evidence_checksum = sha256_json(request.evidence)
         version = ApplicationVersion(
             app_id=request.app_id,
@@ -543,7 +547,20 @@ class PortfolioCatalogue:
         catalogue = self._read_catalogue()
         versions = cast(dict[str, Any], catalogue.setdefault("versions", {}))
         if version.version_key in versions:
-            raise PortfolioError("version is already registered")
+            existing = self._version_from_payload(cast(dict[str, Any], versions[version.version_key]))
+            existing_payload = existing.as_dict()
+            replay_payload = version.as_dict()
+            if {
+                key: value
+                for key, value in existing_payload.items()
+                if key != "state"
+            } == {
+                key: value
+                for key, value in replay_payload.items()
+                if key != "state"
+            }:
+                return existing
+            raise PortfolioError("version id collision for different immutable content")
         for key, item in list(versions.items()):
             if key.startswith(f"{version.app_id}:") and item.get("state") == VersionState.ACTIVE.value:
                 item["state"] = VersionState.SUPERSEDED.value
@@ -589,7 +606,16 @@ class PortfolioCatalogue:
 
     def _read_catalogue(self) -> dict[str, Any]:
         if not self.store.catalogue_path.is_file():
-            return {"schema_version": "1.0", "updated_at_utc": utc_now(), "versions": {}, "catalogue_sha256": ""}
+            catalogue: dict[str, Any] = {
+                "schema_version": "1.0",
+                "updated_at_utc": utc_now(),
+                "versions": {},
+                "bootstrap_state": "empty_catalogue",
+                "catalogue_sha256": "",
+            }
+            catalogue["catalogue_sha256"] = self._catalogue_digest(catalogue)
+            self.store.atomic_write_json(self.store.catalogue_path, catalogue)
+            return catalogue
         return self.store.read_json(self.store.catalogue_path)
 
     def _catalogue_digest(self, catalogue: dict[str, Any]) -> str:

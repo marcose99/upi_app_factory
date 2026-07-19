@@ -231,6 +231,39 @@ def test_phase51_portal_apis_ui_approvals_and_replay(tmp_path: Path) -> None:
         assert catalogue_response.status_code == 200
         assert catalogue_response.json()["mock_only"] is True
 
+        openapi_response = client.post(
+            "/operator-portal/api/portfolio/runtime/openapi",
+            json={
+                "app_id": version.app_id,
+                "version_id": version.version_id,
+            },
+        )
+        assert openapi_response.status_code == 200
+        openapi_payload = openapi_response.json()
+        assert openapi_payload["status"] == "available"
+        assert openapi_payload["app_id"] == version.app_id
+        assert openapi_payload["version_id"] == version.version_id
+        assert openapi_payload["version_identity_sha256"] == version.identity_sha256
+        assert openapi_payload["endpoint_inventory"] == [
+            "/health",
+            "/scenario/echo",
+        ]
+        assert openapi_payload["method_inventory"] == {
+            "/health": [],
+            "/scenario/echo": [],
+        }
+        assert openapi_payload["openapi"] == version.manifest["openapi"]
+
+        missing_openapi = client.post(
+            "/operator-portal/api/portfolio/runtime/openapi",
+            json={
+                "app_id": version.app_id,
+                "version_id": "missing",
+            },
+        )
+        assert missing_openapi.status_code == 404
+        assert missing_openapi.json()["detail"]["status"] == "rejected"
+
         approval = client.post(
             "/operator-portal/api/portfolio/approvals",
             json={

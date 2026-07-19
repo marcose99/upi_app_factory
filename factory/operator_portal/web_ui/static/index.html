@@ -161,12 +161,26 @@ Build a local mock-safe UPI dispute resolution API with health and readiness end
             <button id="runtime-start-button" type="button" data-action="runtime-start">Launch Local Runtime</button>
             <button id="runtime-openapi-button" type="button" data-action="runtime-openapi">Discover OpenAPI</button>
             <button id="runtime-scenarios-button" type="button" data-action="runtime-scenarios">Run Scenarios</button>
+            <button id="runtime-approve-restart-button" type="button" data-action="runtime-approve-restart">Approve Restart</button>
+            <button id="runtime-restart-button" type="button" data-action="runtime-restart">Restart Runtime</button>
             <button id="runtime-approve-stop-button" type="button" data-action="runtime-approve-stop">Approve Stop</button>
             <button id="runtime-stop-button" type="button" data-action="runtime-stop">Stop Runtime</button>
+            <button id="runtime-approve-stop-all-button" type="button" data-action="runtime-approve-stop-all">Approve Stop All</button>
+            <button id="runtime-stop-all-button" type="button" data-action="runtime-stop-all">Stop All Runtimes</button>
             <button id="runtime-evidence-button" type="button" data-action="runtime-evidence">Runtime Evidence</button>
           </div>
         </div>
+        <div class="form-grid">
+          <label for="runtime-version-selector">Registered application/version</label>
+          <select id="runtime-version-selector" aria-label="Registered application and version selector"></select>
+          <label for="runtime-run-id">Runtime run ID</label>
+          <input id="runtime-run-id" value="portfolio_runtime_001" aria-label="Runtime run ID">
+          <label for="runtime-port-input">Runtime port</label>
+          <input id="runtime-port-input" value="18042" inputmode="numeric" aria-label="Runtime port">
+        </div>
         <dl class="metric-grid">
+          <div><dt>Selected app</dt><dd data-field="runtime-selected-app">Waiting</dd></div>
+          <div><dt>Selected version</dt><dd data-field="runtime-selected-version">Waiting</dd></div>
           <div><dt>Runtime state</dt><dd data-field="runtime-state">Waiting</dd></div>
           <div><dt>Health</dt><dd data-field="runtime-health">Waiting</dd></div>
           <div><dt>Port</dt><dd data-field="runtime-port">18042</dd></div>

@@ -28,8 +28,15 @@ import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import tempfile
 from typing import Final, Mapping, Sequence, TypedDict
+
+from factory.application_engineering.portfolio import (
+    PortfolioCatalogue,
+    PortfolioStore,
+    RegistrationRequest,
+)
 
 APP_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
 APPROVAL_TOKEN: Final[str] = "APPROVE_PORTAL_APPLICATION_ENGINEERING"
@@ -80,6 +87,27 @@ def _sha256_file(path: Path) -> str:
         while block := handle.read(1024 * 1024):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _source_commit(factory_root: Path) -> str:
+    injected = os.getenv("UPI_APP_FACTORY_SOURCE_COMMIT")
+    if injected:
+        return injected
+    completed = subprocess.run(
+        ["git", "-C", str(factory_root), "rev-parse", "HEAD"],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    commit = completed.stdout.strip()
+    if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
+        return commit
+    return "unavailable:non_git_source_root"
+
+
+def _deterministic_version_id(*, app_id: str, run_id: str, requirements_sha256: str) -> str:
+    material = f"{app_id}\n{run_id}\n{requirements_sha256}".encode("utf-8")
+    return "v1_" + _sha256_bytes(material)[:16]
 
 
 def _resolve_under(path: Path, root: Path, *, label: str) -> Path:
@@ -476,7 +504,8 @@ class InMemoryIdempotencyStore:
 from dataclasses import asdict
 import os
 
-from fastapi import FastAPI, Header, HTTPException, status
+from fastapi import FastAPI, Header, HTTPException, Request, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from app.upi_dispute_resolution.application.services import DisputeService
@@ -502,6 +531,11 @@ class CreateDisputeRequest(BaseModel):
     amount_minor: int = Field(gt=0)
 
 
+class EchoScenarioRequest(BaseModel):
+    client_request_id: str = Field(min_length=1, max_length=128)
+    amount: int = Field(ge=0)
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -517,6 +551,44 @@ def ready() -> dict[str, str]:
             "disabled",
         ),
     }
+
+
+@app.get("/runtime/health")
+def runtime_health() -> dict[str, str]:
+    return {"status": "passed", "mode": "mock-safe-local"}
+
+
+@app.get("/capabilities")
+def capabilities() -> dict[str, object]:
+    return {
+        "mock_only": True,
+        "capabilities": ["health", "echo"],
+        "live_provider_calls_allowed": False,
+        "default_runtime_llm_calls": 0,
+    }
+
+
+@app.post("/scenario/echo", response_model=None)
+async def scenario_echo(request: Request) -> object:
+    payload = await request.json()
+    try:
+        scenario = EchoScenarioRequest(**payload)
+    except ValueError:
+        return JSONResponse(
+            status_code=422,
+            content={"error": {"code": "validation_error"}},
+        )
+    return {
+        "accepted": True,
+        "client_request_id": scenario.client_request_id,
+        "amount": scenario.amount,
+        "replay_status": 200,
+    }
+
+
+@app.get("/missing")
+def missing() -> JSONResponse:
+    return JSONResponse(status_code=404, content={"error": {"code": "not_found"}})
 
 
 @app.post("/v1/disputes", status_code=status.HTTP_201_CREATED)
@@ -572,8 +644,11 @@ def test_create_and_idempotent_replay() -> None:
 """,
         "tests/test_api_contract.py": """from app.upi_dispute_resolution.interfaces.api.main import (
     CreateDisputeRequest,
+    EchoScenarioRequest,
+    capabilities,
     create_dispute,
     health,
+    runtime_health,
     ready,
 )
 
@@ -588,6 +663,12 @@ def test_ready() -> None:
         "mode": "mock-safe-local",
         "real_payment_calls": "disabled",
     }
+
+
+def test_portfolio_scenario_contracts() -> None:
+    assert runtime_health()["status"] == "passed"
+    assert capabilities()["mock_only"] is True
+    assert EchoScenarioRequest(client_request_id="scenario-1", amount=0).amount == 0
 
 
 def test_create_dispute_and_replay() -> None:
@@ -626,6 +707,97 @@ def _manifest(root: Path) -> list[ManifestRecord]:
             }
         )
     return records
+
+
+def _register_generated_application(
+    *,
+    config: AdapterConfig,
+    run_id: str,
+    requirements_text: str,
+    requirements_sha: str,
+    final_manifest: list[ManifestRecord],
+    evidence_dir: Path,
+) -> dict[str, object]:
+    version_id = _deterministic_version_id(
+        app_id=config.app_id,
+        run_id=run_id,
+        requirements_sha256=requirements_sha,
+    )
+    source_commit = _source_commit(config.factory_root)
+    manifest = {
+        "schema_version": SCHEMA_VERSION,
+        "app_id": config.app_id,
+        "version_id": version_id,
+        "source_run_id": run_id,
+        "requirements_sha256": requirements_sha,
+        "source_commit": source_commit,
+        "files": final_manifest,
+    }
+    generation_manifest_path = config.output_root / "generation_manifest.json"
+    generation_manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    evidence = {
+        "schema_version": SCHEMA_VERSION,
+        "artifact_type": "portfolio_registration_evidence",
+        "app_id": config.app_id,
+        "version_id": version_id,
+        "source_run_id": run_id,
+        "requirements_sha256": requirements_sha,
+        "source_commit": source_commit,
+        "application_root": str(config.output_root),
+        "generation_manifest_sha256": _sha256_file(generation_manifest_path),
+        "mock_boundary": "enforced",
+        "real_payment_calls": "disabled",
+        "certification_posture": "certification-ready-not-certified",
+    }
+    store = PortfolioStore(
+        project_root=config.factory_root,
+        state_root=config.workspace_root
+        / "factory_generated"
+        / config.app_id
+        / "lifecycle_artifacts"
+        / "phase51",
+    )
+    catalogue = PortfolioCatalogue(store=store)
+    version = catalogue.register(
+        RegistrationRequest(
+            app_id=config.app_id,
+            version_id=version_id,
+            generated_run_id=run_id,
+            requirements=requirements_text,
+            source_commit=source_commit,
+            evidence=evidence,
+            manifest=manifest,
+            entrypoint=f"app.{config.app_id}.interfaces.api.main:app",
+            application_root=config.output_root,
+            capabilities=("disputes", "health", "idempotency"),
+        )
+    )
+    registration = {
+        **evidence,
+        "catalogue_path": str(store.catalogue_path),
+        "catalogue_sha256": catalogue.catalogue()["catalogue_sha256"],
+        "version_identity_sha256": version.identity_sha256,
+    }
+    (evidence_dir / "portfolio_registration.json").write_text(
+        json.dumps(registration, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    metadata_path = config.output_root / "generation_metadata.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    metadata.update(
+        {
+            "version_id": version_id,
+            "source_run_id": run_id,
+            "source_commit": source_commit,
+            "application_root": str(config.output_root),
+            "portfolio_registration": registration,
+        }
+    )
+    metadata_path.write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return registration
 
 
 def _validate_approval(config: AdapterConfig) -> None:
@@ -775,6 +947,14 @@ def run(config: AdapterConfig) -> dict[str, object]:
         staging.replace(config.output_root)
 
         final_manifest = _manifest(config.output_root)
+        registration = _register_generated_application(
+            config=config,
+            run_id=run_id,
+            requirements_text=requirements_text,
+            requirements_sha=requirements_sha,
+            final_manifest=final_manifest,
+            evidence_dir=evidence_dir,
+        )
         manifest_text = "".join(
             f"{item['sha256']}  {item['relative_path']}\n" for item in final_manifest
         )
@@ -802,6 +982,10 @@ def run(config: AdapterConfig) -> dict[str, object]:
                 "tests/test_api_contract.py",
             ],
             "evidence_directory": str(evidence_dir),
+            "version_id": registration["version_id"],
+            "source_commit": registration["source_commit"],
+            "application_root": str(config.output_root),
+            "portfolio_registration": registration,
             "completed_at_utc": _utc_now(),
         }
         (evidence_dir / "result.json").write_text(

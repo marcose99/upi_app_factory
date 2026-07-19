@@ -164,13 +164,28 @@ def test_approved_execution_creates_demo_contract(
 
     metadata = json.loads((output / "generation_metadata.json").read_text(encoding="utf-8"))
     assert metadata["requirements_sha256"] == hashlib.sha256(requirements.read_bytes()).hexdigest()
+    assert metadata["version_id"].startswith("v1_")
+    assert metadata["source_run_id"].startswith("portal_")
+    assert metadata["source_commit"] == "unavailable:non_git_source_root"
+    assert metadata["application_root"] == str(output)
+    assert metadata["portfolio_registration"]["version_id"] == metadata["version_id"]
     assert metadata["real_payment_calls"] == "disabled"
     assert metadata["llm_calls"] == 0
+
+    registration_files = list(evidence.glob("portal_*/portfolio_registration.json"))
+    assert len(registration_files) == 1
+    registration = json.loads(registration_files[0].read_text(encoding="utf-8"))
+    assert registration["app_id"] == "upi_dispute_resolution"
+    assert registration["requirements_sha256"] == metadata["requirements_sha256"]
+    assert registration["source_commit"] == "unavailable:non_git_source_root"
+    assert Path(registration["catalogue_path"]).is_file()
 
     result_files = list(evidence.glob("portal_*/result.json"))
     assert len(result_files) == 1
     result = json.loads(result_files[0].read_text(encoding="utf-8"))
     assert result["status"] == ("PORTAL_REQUIREMENTS_DRIVEN_APPLICATION_ENGINEERING_COMPLETED")
+    assert result["version_id"] == metadata["version_id"]
+    assert result["portfolio_registration"]["catalogue_sha256"] == registration["catalogue_sha256"]
     assert result["health_contract"] is True
     assert result["ready_contract"] is True
 

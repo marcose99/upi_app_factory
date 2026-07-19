@@ -300,6 +300,7 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
             "schema_version",
             "artifact_type",
             "run_id",
+            "app_id",
             "requirements_sha256",
             "generator_entrypoint",
             "generated_at_utc",
@@ -308,10 +309,15 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
             "default_runtime_llm_calls",
             "certification_posture",
             "files",
-        }
+        } <= set(manifest)
         assert manifest["schema_version"] == "1.0"
         assert manifest["artifact_type"] == "generated_application"
         assert manifest["run_id"] == run_id
+        assert manifest["app_id"] == "upi_dispute_resolution"
+        if "version_id" in manifest:
+            assert re.fullmatch(r"v[0-9][A-Za-z0-9_.-]{0,63}", manifest["version_id"])
+        if "portfolio_registration" in manifest:
+            assert manifest["portfolio_registration"]["app_id"] == manifest["app_id"]
         assert manifest["requirements_sha256"] == expected_requirements_sha
         assert re.fullmatch(r"[0-9a-f]{64}", manifest["requirements_sha256"])
         assert manifest["generator_entrypoint"] == (

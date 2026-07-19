@@ -89,14 +89,24 @@ class OperatorPortalLocalWebAPI:
         download_center: DownloadCenterService | None = None,
         validation_runner: ValidationRunnerService | None = None,
         browser_orchestrator: BrowserIntakeOrchestrator | None = None,
+        browser_state_root: Path | None = None,
+        portfolio_state_root: Path | None = None,
+        runtime_state_root: Path | None = None,
+        phase69_state_root: Path | None = None,
     ) -> None:
         self.project_root = project_root or PROJECT_ROOT
+        self.browser_state_root = browser_state_root
+        self.portfolio_state_root = portfolio_state_root
+        self.runtime_state_root = runtime_state_root
+        self.phase69_state_root = phase69_state_root
         self.download_center = download_center or DownloadCenterService()
         self.validation_runner = validation_runner or ValidationRunnerService(
             project_root=self.project_root,
         )
         self.browser_orchestrator = browser_orchestrator or BrowserIntakeOrchestrator(
             project_root=self.project_root,
+            state_root=browser_state_root,
+            portfolio_state_root=portfolio_state_root,
         )
         self.deep_portal = DeepPortalIntegration(project_root=self.project_root)
 
@@ -106,6 +116,13 @@ class OperatorPortalLocalWebAPI:
             "app_id": APP_ID,
             "phase": PHASE,
             "service": "operator_portal_local_web_api",
+            "state_roots": {
+                "browser_runs": str(self.browser_orchestrator.state_root),
+                "portfolio": str(self.browser_orchestrator.portfolio_store.state_root),
+                "runtime": str(self.runtime_state_root) if self.runtime_state_root else "default",
+                "phase69": str(self.phase69_state_root) if self.phase69_state_root else "default",
+                "strategy": "explicit_portal_state_roots",
+            },
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -373,13 +390,13 @@ class OperatorPortalLocalWebAPI:
     def deep_source_file(self, path: str) -> dict[str, Any]:
         try:
             return self.deep_portal.read_source(path)
-        except DeepPortalError as exc:
+        except (DeepPortalError, FileNotFoundError) as exc:
             raise HTTPException(status_code=404, detail={"status": "missing", "error": str(exc)}) from exc
 
     def deep_evidence_file(self, path: str) -> dict[str, Any]:
         try:
             return self.deep_portal.read_evidence(path)
-        except DeepPortalError as exc:
+        except (DeepPortalError, FileNotFoundError) as exc:
             raise HTTPException(status_code=404, detail={"status": "missing", "error": str(exc)}) from exc
 
     def _relative_path(self, path: Path) -> str:
@@ -395,6 +412,7 @@ def create_app(
     download_center: DownloadCenterService | None = None,
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
+    browser_state_root: Path | None = None,
     runtime_state_root: Path | None = None,
     portfolio_state_root: Path | None = None,
     phase69_state_root: Path | None = None,
@@ -404,6 +422,10 @@ def create_app(
         download_center=download_center,
         validation_runner=validation_runner,
         browser_orchestrator=browser_orchestrator,
+        browser_state_root=browser_state_root,
+        portfolio_state_root=portfolio_state_root,
+        runtime_state_root=runtime_state_root,
+        phase69_state_root=phase69_state_root,
     )
     app = FastAPI(
         title="Operator Portal Local Web API",

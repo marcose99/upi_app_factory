@@ -10,10 +10,16 @@ from pathlib import Path
 import re
 import secrets
 import shutil
+import subprocess
 import threading
 import zipfile
 from typing import Any, Final, Literal, TypedDict, cast
 
+from factory.application_engineering.portfolio import (
+    PortfolioCatalogue,
+    PortfolioStore,
+    RegistrationRequest,
+)
 from scripts.run_portal_requirements_driven_application_engineering import (
     APPROVAL_TOKEN as APPROVAL_TOKEN,
     AdapterConfig,
@@ -213,6 +219,27 @@ def _safe_relative_file_path(path: Path, root: Path) -> str:
     return relative
 
 
+def _deterministic_version_id(*, app_id: str, run_id: str, requirements_sha256: str) -> str:
+    material = f"{app_id}\n{run_id}\n{requirements_sha256}".encode("utf-8")
+    return "v1_" + _sha256_bytes(material)[:16]
+
+
+def _source_commit(project_root: Path) -> str:
+    injected = os.getenv("UPI_APP_FACTORY_SOURCE_COMMIT")
+    if injected:
+        return injected
+    completed = subprocess.run(
+        ["git", "-C", str(project_root), "rev-parse", "HEAD"],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    commit = completed.stdout.strip()
+    if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
+        return commit
+    return "unavailable:non_git_source_root"
+
+
 def _generated_application_files(root: Path) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     seen: set[str] = set()
@@ -243,6 +270,9 @@ def _write_generation_manifest(
     run_id: str,
     requirements_sha256: str,
     generated_application: Path,
+    app_id: str = APP_ID,
+    version_id: str | None = None,
+    portfolio_registration: dict[str, Any] | None = None,
 ) -> None:
     entrypoint = project_root / GENERATOR_ENTRYPOINT
     if not entrypoint.is_file():
@@ -256,6 +286,7 @@ def _write_generation_manifest(
         "schema_version": "1.0",
         "artifact_type": "generated_application",
         "run_id": run_id,
+        "app_id": app_id,
         "requirements_sha256": requirements_sha256,
         "generator_entrypoint": generator_entrypoint,
         "generated_at_utc": _utc_now(),
@@ -265,6 +296,10 @@ def _write_generation_manifest(
         "certification_posture": CERTIFICATION_POSTURE,
         "files": _generated_application_files(generated_application),
     }
+    if version_id is not None:
+        manifest["version_id"] = version_id
+    if portfolio_registration is not None:
+        manifest["portfolio_registration"] = portfolio_registration
     _atomic_write_json(manifest_path, manifest)
 
 
@@ -348,7 +383,13 @@ def validate_requirements_text(requirements: str) -> ValidationResult:
 
 
 class BrowserIntakeOrchestrator:
-    def __init__(self, *, project_root: Path, state_root: Path | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        project_root: Path,
+        state_root: Path | None = None,
+        portfolio_state_root: Path | None = None,
+    ) -> None:
         self.project_root = project_root.resolve()
         configured_root = os.getenv("UPI_APP_FACTORY_PORTAL_RUN_ROOT")
         default_root = Path(os.getenv("XDG_STATE_HOME", Path.home() / ".local" / "state"))
@@ -360,6 +401,17 @@ class BrowserIntakeOrchestrator:
             else default_root / "upi_app_factory" / "operator_portal_runs"
         )
         self.state_root = selected_root.resolve()
+        selected_portfolio_root = (
+            portfolio_state_root
+            if portfolio_state_root is not None
+            else self.project_root
+            / "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase51"
+        )
+        self.portfolio_store = PortfolioStore(
+            project_root=self.project_root,
+            state_root=selected_portfolio_root,
+        )
+        self.portfolio_catalogue = PortfolioCatalogue(store=self.portfolio_store)
         self._active_workers: set[str] = set()
         self._worker_lock = threading.Lock()
 
@@ -901,6 +953,10 @@ class BrowserIntakeOrchestrator:
                 return
             self._transition(run_id, "VALIDATING", reason="engineering_result_recorded")
             decision = "GO" if self._mandatory_gates_passed(paths) else "NO-GO"
+            if decision == "GO":
+                registration = self._register_generated_application(run_id, paths, result)
+                result = {**result, "portfolio_registration": registration}
+                _atomic_write_json(paths.result, result)
             self._update_state(run_id, {"final_decision": decision})
             self._transition(
                 run_id,
@@ -916,6 +972,93 @@ class BrowserIntakeOrchestrator:
             self._record_event(run_id, "engineering_error", {"message": str(exc)})
         finally:
             self._active_workers.discard(run_id)
+
+    def _register_generated_application(
+        self,
+        run_id: str,
+        paths: PortalRunPaths,
+        result: dict[str, Any],
+    ) -> dict[str, Any]:
+        requirements_text = paths.requirements.read_text(encoding="utf-8")
+        requirements_sha256 = _sha256_bytes(requirements_text.encode("utf-8"))
+        version_id = _deterministic_version_id(
+            app_id=APP_ID,
+            run_id=run_id,
+            requirements_sha256=requirements_sha256,
+        )
+        metadata_path = paths.generated_application / "generation_metadata.json"
+        metadata = _read_json(metadata_path) if metadata_path.is_file() else {}
+        metadata.update(
+            {
+                "app_id": APP_ID,
+                "version_id": version_id,
+                "source_run_id": run_id,
+                "requirements_sha256": requirements_sha256,
+                "portfolio_state_root": str(self.portfolio_store.state_root),
+                "application_root": str(paths.generated_application),
+            }
+        )
+        _atomic_write_json(metadata_path, metadata)
+        _write_generation_manifest(
+            manifest_path=paths.generated_application / "generation_manifest.json",
+            project_root=self.project_root,
+            run_id=run_id,
+            app_id=APP_ID,
+            version_id=version_id,
+            requirements_sha256=requirements_sha256,
+            generated_application=paths.generated_application,
+        )
+        manifest = _read_json(paths.generated_application / "generation_manifest.json")
+        evidence = {
+            "schema_version": "1.0",
+            "artifact_type": "portfolio_registration_evidence",
+            "app_id": APP_ID,
+            "version_id": version_id,
+            "source_run_id": run_id,
+            "adapter_run_id": result.get("run_id"),
+            "requirements_sha256": requirements_sha256,
+            "application_root": str(paths.generated_application),
+            "engineering_result_sha256": _json_sha256(result),
+            "generation_manifest_sha256": _sha256_file(paths.generated_application / "generation_manifest.json"),
+            "registered_at_utc": _utc_now(),
+            "mock_boundary": "enforced",
+            "real_payment_calls": "disabled",
+            "certification_posture": CERTIFICATION_POSTURE,
+        }
+        version = self.portfolio_catalogue.register(
+            RegistrationRequest(
+                app_id=APP_ID,
+                version_id=version_id,
+                generated_run_id=run_id,
+                requirements=requirements_text,
+                source_commit=_source_commit(self.project_root),
+                evidence=evidence,
+                manifest=manifest,
+                entrypoint=f"app.{APP_ID}.interfaces.api.main:app",
+                application_root=paths.generated_application,
+                capabilities=("echo", "health"),
+            )
+        )
+        registration = {
+            **evidence,
+            "catalogue_path": str(self.portfolio_store.catalogue_path),
+            "catalogue_sha256": self.portfolio_catalogue.catalogue()["catalogue_sha256"],
+            "version_identity_sha256": version.identity_sha256,
+        }
+        _atomic_write_json(paths.engineering_evidence / "portfolio_registration.json", registration)
+        _write_generation_manifest(
+            manifest_path=paths.generated_application / "generation_manifest.json",
+            project_root=self.project_root,
+            run_id=run_id,
+            app_id=APP_ID,
+            version_id=version_id,
+            requirements_sha256=requirements_sha256,
+            generated_application=paths.generated_application,
+            portfolio_registration=registration,
+        )
+        metadata["portfolio_registration"] = registration
+        _atomic_write_json(metadata_path, metadata)
+        return registration
 
     def _adapter_config(self, paths: PortalRunPaths, *, plan_only: bool) -> AdapterConfig:
         return AdapterConfig(

@@ -5,7 +5,10 @@
   let currentRunId = "";
   let pollTimer = 0;
   let runtimeStartNonce = "";
+  let runtimeRestartNonce = "";
   let runtimeStopNonce = "";
+  let runtimeStopAllNonce = "";
+  let selectedRuntimeVersion = null;
 
   function field(name) {
     if (!fields.has(name)) {
@@ -60,6 +63,71 @@
       setField("runtime-health", payload.health ? payload.health.status : "Unavailable");
       setField("runtime-mock-safe", payload.mock_safe_local);
     }
+  }
+
+  function runtimeSelector() {
+    return document.getElementById("runtime-version-selector");
+  }
+
+  function runtimePort() {
+    const node = document.getElementById("runtime-port-input");
+    const value = node ? Number.parseInt(node.value, 10) : 18042;
+    return Number.isFinite(value) ? value : 18042;
+  }
+
+  function portfolioRuntimeRunId() {
+    const node = document.getElementById("runtime-run-id");
+    return node && node.value.trim() ? node.value.trim() : "portfolio_runtime_001";
+  }
+
+  function selectedRuntimeIdentity() {
+    if (!selectedRuntimeVersion) {
+      throw new Error("Select a registered application/version before runtime operations.");
+    }
+    return selectedRuntimeVersion;
+  }
+
+  function renderRuntimeSelector(versions) {
+    const selector = runtimeSelector();
+    if (!selector) {
+      return;
+    }
+    selector.textContent = "";
+    if (!versions.length) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "No registered versions";
+      selector.appendChild(option);
+      selectedRuntimeVersion = null;
+      setField("runtime-selected-app", "No registered version");
+      setField("runtime-selected-version", "No registered version");
+      return;
+    }
+    versions.forEach((version) => {
+      const option = document.createElement("option");
+      option.value = `${version.app_id}:${version.version_id}`;
+      option.textContent = `${version.app_id} / ${version.version_id}`;
+      option.dataset.appId = version.app_id;
+      option.dataset.versionId = version.version_id;
+      selector.appendChild(option);
+    });
+    const saved = window.localStorage.getItem("upi_app_factory_runtime_selection");
+    if (saved && versions.some((version) => `${version.app_id}:${version.version_id}` === saved)) {
+      selector.value = saved;
+    }
+    const selected = versions.find((version) => `${version.app_id}:${version.version_id}` === selector.value) || versions[0];
+    selectedRuntimeVersion = selected;
+    selector.value = `${selected.app_id}:${selected.version_id}`;
+    window.localStorage.setItem("upi_app_factory_runtime_selection", selector.value);
+    setField("runtime-selected-app", selected.app_id);
+    setField("runtime-selected-version", selected.version_id);
+  }
+
+  async function refreshPortfolioCatalogue() {
+    const payload = await request("/operator-portal/api/portfolio/catalogue");
+    const versions = Array.isArray(payload.versions) ? payload.versions : [];
+    renderRuntimeSelector(versions);
+    return payload;
   }
 
   function formatErrorDetail(detail, status) {
@@ -358,17 +426,18 @@
     showReport(payload);
   }
 
-  function runtimeRunId() {
-    return currentRunId || "phase50_clean_slate_runtime";
-  }
-
   async function runtimeApprove(action) {
+    if (action !== "stop_all") {
+      selectedRuntimeIdentity();
+    }
     const token = document.getElementById("approval-token");
     const actor = document.getElementById("approval-actor");
-    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/approvals`, {
+    const runId = portfolioRuntimeRunId();
+    const payload = await request("/operator-portal/api/portfolio/approvals", {
       method: "POST",
       body: JSON.stringify({
         action,
+        scope: action === "stop_all" ? "portfolio" : runId,
         actor: actor ? actor.value : "operator",
         approval_token: token ? token.value : "",
       }),
@@ -376,43 +445,99 @@
     if (action === "start") {
       runtimeStartNonce = payload.nonce;
     }
+    if (action === "restart") {
+      runtimeRestartNonce = payload.nonce;
+    }
     if (action === "stop") {
       runtimeStopNonce = payload.nonce;
+    }
+    if (action === "stop_all") {
+      runtimeStopAllNonce = payload.nonce;
     }
     showRuntime(payload);
   }
 
   async function runtimeStart() {
-    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/start`, {
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/runtime/start", {
       method: "POST",
-      body: JSON.stringify({ approval_nonce: runtimeStartNonce, port: 18042 }),
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+        run_id: portfolioRuntimeRunId(),
+        approval_nonce: runtimeStartNonce,
+        port: runtimePort(),
+      }),
     });
     showRuntime(payload);
   }
 
   async function runtimeStop() {
-    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/stop`, {
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/runtime/stop", {
       method: "POST",
-      body: JSON.stringify({ approval_nonce: runtimeStopNonce, port: 18042 }),
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+        run_id: portfolioRuntimeRunId(),
+        approval_nonce: runtimeStopNonce,
+        port: runtimePort(),
+      }),
     });
     showRuntime(payload);
   }
 
+  async function runtimeRestart() {
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/runtime/restart", {
+      method: "POST",
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+        run_id: portfolioRuntimeRunId(),
+        approval_nonce: runtimeRestartNonce,
+        port: runtimePort(),
+      }),
+    });
+    showRuntime(payload);
+  }
+
+  async function runtimeStopAll() {
+    const payload = await request(
+      `/operator-portal/api/portfolio/runtime/stop-all?approval_nonce=${encodeURIComponent(runtimeStopAllNonce)}`,
+      { method: "POST" },
+    );
+    showRuntime(payload);
+  }
+
   async function runtimeOpenAPI() {
-    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/openapi`);
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/runtime/openapi", {
+      method: "POST",
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+      }),
+    });
     showRuntime(payload);
   }
 
   async function runtimeScenarios() {
-    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/scenarios`, {
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/scenarios", {
       method: "POST",
-      body: JSON.stringify({ port: 18042 }),
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+        run_id: portfolioRuntimeRunId(),
+        port: runtimePort(),
+      }),
     });
     showRuntime(payload);
   }
 
   async function runtimeEvidence() {
-    const payload = await request(`/operator-portal/api/runtime/runs/${runtimeRunId()}/evidence`);
+    const payload = await request("/operator-portal/api/portfolio/evidence");
     showRuntime(payload);
   }
 
@@ -458,8 +583,12 @@
     "runtime-start": runtimeStart,
     "runtime-openapi": runtimeOpenAPI,
     "runtime-scenarios": runtimeScenarios,
+    "runtime-approve-restart": () => runtimeApprove("restart"),
+    "runtime-restart": runtimeRestart,
     "runtime-approve-stop": () => runtimeApprove("stop"),
     "runtime-stop": runtimeStop,
+    "runtime-approve-stop-all": () => runtimeApprove("stop_all"),
+    "runtime-stop-all": runtimeStopAll,
     "runtime-evidence": runtimeEvidence,
   };
 
@@ -483,12 +612,33 @@
         }
       });
     });
+    const selector = runtimeSelector();
+    if (selector) {
+      selector.addEventListener("change", () => {
+        const selected = selector.options[selector.selectedIndex];
+        selectedRuntimeVersion =
+          selected && selected.dataset.appId && selected.dataset.versionId
+            ? { app_id: selected.dataset.appId, version_id: selected.dataset.versionId }
+            : null;
+        if (selectedRuntimeVersion) {
+          window.localStorage.setItem("upi_app_factory_runtime_selection", selector.value);
+          setField("runtime-selected-app", selectedRuntimeVersion.app_id);
+          setField("runtime-selected-version", selectedRuntimeVersion.version_id);
+        }
+      });
+    }
   }
 
   async function boot() {
     bindActions();
     updateControls(null);
-    await Promise.all([refreshHealth(), refreshEvidence(), refreshDownload(), refreshGuides()]);
+    await Promise.all([
+      refreshHealth(),
+      refreshEvidence(),
+      refreshDownload(),
+      refreshGuides(),
+      refreshPortfolioCatalogue(),
+    ]);
   }
 
   window.addEventListener("DOMContentLoaded", () => {

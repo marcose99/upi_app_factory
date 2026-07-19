@@ -44,10 +44,11 @@ def test_catalogue_rejects_duplicate_versions_and_detects_digest_tampering(
 ) -> None:
     store, catalogue, _, _ = portfolio
     request = registration(app_id="digest_app", app_root=mock_app(tmp_path, "digest_app", "digest"))
-    catalogue.register(request)
+    first = catalogue.register(request)
 
-    with pytest.raises(PortfolioError, match="already registered"):
-        catalogue.register(request)
+    replay = catalogue.register(request)
+    assert replay.version_key == first.version_key
+    assert replay.identity_sha256 == first.identity_sha256
 
     payload = store.catalogue_path.read_text(encoding="utf-8")
     store.catalogue_path.write_text(

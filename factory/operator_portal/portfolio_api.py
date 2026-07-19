@@ -50,6 +50,13 @@ class PortfolioReadRequest(BaseModel):
     port: int = Field(ge=1024, le=65535)
 
 
+class PortfolioVersionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    app_id: str
+    version_id: str
+
+
 class PortfolioCompareRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -139,6 +146,89 @@ class PortfolioAPI:
                 status_code=400,
                 detail={"status": "rejected", "error": str(exc)},
             ) from exc
+
+    def openapi_document(
+        self,
+        request: PortfolioVersionRequest,
+    ) -> dict[str, Any]:
+        try:
+            version = self.catalogue.get(
+                app_id=request.app_id,
+                version_id=request.version_id,
+            )
+        except PortfolioError as exc:
+            raise HTTPException(
+                status_code=404,
+                detail={"status": "rejected", "error": str(exc)},
+            ) from exc
+
+        openapi = version.manifest.get("openapi")
+        if not isinstance(openapi, dict):
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "status": "rejected",
+                    "error": "registered version OpenAPI manifest is unavailable",
+                },
+            )
+
+        paths = openapi.get("paths")
+        if not isinstance(paths, dict):
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "status": "rejected",
+                    "error": "registered version OpenAPI paths are unavailable",
+                },
+            )
+
+        endpoint_inventory = sorted(
+            path
+            for path in paths
+            if isinstance(path, str) and path.startswith("/")
+        )
+        http_methods = {
+            "delete",
+            "get",
+            "head",
+            "options",
+            "patch",
+            "post",
+            "put",
+            "trace",
+        }
+        method_inventory: dict[str, list[str]] = {}
+
+        for path in endpoint_inventory:
+            path_item = paths[path]
+            if isinstance(path_item, dict):
+                methods = sorted(
+                    method.upper()
+                    for method in path_item
+                    if (
+                        isinstance(method, str)
+                        and method.lower() in http_methods
+                    )
+                )
+            else:
+                methods = []
+            method_inventory[path] = methods
+
+        return {
+            "status": "available",
+            "local_only": True,
+            "loopback_only": True,
+            "mock_only": True,
+            "certification_posture": (
+                "certification-ready-not-certified"
+            ),
+            "app_id": version.app_id,
+            "version_id": version.version_id,
+            "version_identity_sha256": version.identity_sha256,
+            "endpoint_inventory": endpoint_inventory,
+            "method_inventory": method_inventory,
+            "openapi": openapi,
+        }
 
     def restart(self, request: PortfolioRuntimeActionRequest) -> dict[str, Any]:
         self._consume(action="restart", scope=request.run_id, nonce=request.approval_nonce)
@@ -308,6 +398,12 @@ def build_portfolio_router(*, project_root: Path, state_root: Path | None = None
     @router.post("/runtime/status")
     async def portfolio_status(request: PortfolioReadRequest) -> dict[str, Any]:
         return api.status(request)
+
+    @router.post("/runtime/openapi")
+    async def portfolio_openapi(
+        request: PortfolioVersionRequest,
+    ) -> dict[str, Any]:
+        return api.openapi_document(request)
 
     @router.post("/runtime/restart", status_code=202)
     async def portfolio_restart(request: PortfolioRuntimeActionRequest) -> dict[str, Any]:
