@@ -130,6 +130,11 @@ button[aria-busy="true"] {
   opacity: 0.72;
 }
 
+button .spinner {
+  display: inline-block;
+  margin-right: 6px;
+}
+
 .button-link {
   align-items: center;
   background: #eef5f7;
@@ -179,6 +184,33 @@ textarea {
 .run-controls {
   justify-content: flex-start;
   margin-top: 12px;
+}
+
+.progress-panel {
+  background: #f8fafb;
+  border: 1px solid #dbe2e6;
+  border-radius: 6px;
+  margin-top: 12px;
+  padding: 12px;
+}
+
+.progress-panel label {
+  color: #4d6470;
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.progress-panel progress {
+  height: 16px;
+  width: 100%;
+}
+
+.progress-panel p {
+  color: #283941;
+  font-size: 0.86rem;
+  margin-top: 8px;
 }
 
 .metric-grid {

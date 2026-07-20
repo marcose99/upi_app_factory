@@ -17,13 +17,15 @@ from typing import Any, Final, Literal, TypedDict, cast
 
 from factory.application_engineering.portfolio import (
     PortfolioCatalogue,
+    PortfolioError,
     PortfolioStore,
     RegistrationRequest,
 )
+from factory.observability import get_logger, logging_context
+from factory.operator_portal.state_roots import resolve_state_roots
 from scripts.run_portal_requirements_driven_application_engineering import (
     APPROVAL_TOKEN as APPROVAL_TOKEN,
     AdapterConfig,
-    AdapterError,
     run as run_requirements_engineering,
 )
 
@@ -39,6 +41,7 @@ CERTIFICATION_POSTURE: Final[str] = "certification-ready-not-certified"
 GENERATOR_ENTRYPOINT: Final[str] = "scripts/run_portal_requirements_driven_application_engineering.py"
 APPLICATION_DOWNLOAD_FILENAME: Final[str] = "generated_application.zip"
 ZIP_TIMESTAMP: Final[tuple[int, int, int, int, int, int]] = (1980, 1, 1, 0, 0, 0)
+LOGGER = get_logger(__name__)
 
 RunState = Literal[
     "DRAFT",
@@ -333,6 +336,15 @@ def validate_requirements_text(requirements: str) -> ValidationResult:
     errors: list[dict[str, str]] = []
     findings: list[dict[str, str]] = []
 
+    for code, pattern in SECRET_PATTERNS:
+        if pattern.search(normalized):
+            errors.append(
+                {
+                    "code": f"secret_like_material_{code}",
+                    "message": "Secret-like material is not accepted in browser requirements.",
+                }
+            )
+
     if not normalized.strip():
         errors.append({"code": "empty_requirements", "message": "Requirements cannot be empty."})
     elif len(normalized.strip()) < MIN_REQUIREMENTS_CHARS:
@@ -349,15 +361,6 @@ def validate_requirements_text(requirements: str) -> ValidationResult:
                 "message": f"Requirements exceed {MAX_REQUIREMENTS_BYTES} bytes.",
             }
         )
-
-    for code, pattern in SECRET_PATTERNS:
-        if pattern.search(normalized):
-            errors.append(
-                {
-                    "code": f"secret_like_material_{code}",
-                    "message": "Secret-like material is not accepted in browser requirements.",
-                }
-            )
 
     for code, pattern in PROMPT_INJECTION_PATTERNS:
         if pattern.search(normalized):
@@ -390,30 +393,21 @@ class BrowserIntakeOrchestrator:
         state_root: Path | None = None,
         portfolio_state_root: Path | None = None,
     ) -> None:
-        self.project_root = project_root.resolve()
-        configured_root = os.getenv("UPI_APP_FACTORY_PORTAL_RUN_ROOT")
-        default_root = Path(os.getenv("XDG_STATE_HOME", Path.home() / ".local" / "state"))
-        selected_root = (
-            state_root
-            if state_root is not None
-            else Path(configured_root).expanduser()
-            if configured_root
-            else default_root / "upi_app_factory" / "operator_portal_runs"
+        roots = resolve_state_roots(
+            project_root=project_root,
+            browser_state_root=state_root,
+            portfolio_state_root=portfolio_state_root,
         )
-        self.state_root = selected_root.resolve()
-        selected_portfolio_root = (
-            portfolio_state_root
-            if portfolio_state_root is not None
-            else self.project_root
-            / "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase51"
-        )
+        self.project_root = roots.project_root
+        self.state_root = roots.browser_state_root
         self.portfolio_store = PortfolioStore(
             project_root=self.project_root,
-            state_root=selected_portfolio_root,
+            state_root=roots.portfolio_state_root,
         )
         self.portfolio_catalogue = PortfolioCatalogue(store=self.portfolio_store)
         self._active_workers: set[str] = set()
         self._worker_lock = threading.Lock()
+        self.recover_orphaned_runs()
 
     def validate_requirements(self, requirements: str) -> dict[str, Any]:
         result = validate_requirements_text(requirements)
@@ -540,11 +534,19 @@ class BrowserIntakeOrchestrator:
         if state["state"] != "APPROVED" or not state.get("approval"):
             raise OrchestrationConflict("Application engineering requires run-scoped approval.")
         self._assert_current_approval(run_id, state)
+        self._validate_portfolio_contract()
         with self._worker_lock:
             if run_id in self._active_workers:
                 return {"status": "already_queued", "run": self.get_run(run_id), **self._governance_payload()}
             self._active_workers.add(run_id)
         self._transition(run_id, "EXECUTION_QUEUED", reason="engineering_queued")
+        LOGGER.info(
+            "Engineering run queued.",
+            extra={
+                "event_name": "engineering.run.queued",
+                "attributes": {"run_id": run_id, "operation": "application_engineering"},
+            },
+        )
         thread = threading.Thread(
             target=self._execute_worker,
             args=(run_id,),
@@ -553,6 +555,25 @@ class BrowserIntakeOrchestrator:
         )
         thread.start()
         return {"status": "queued", "run": self.get_run(run_id), **self._governance_payload()}
+
+    def recover_orphaned_runs(self) -> list[str]:
+        recovered: list[str] = []
+        if not self.state_root.exists():
+            return recovered
+        for state_path in sorted(self.state_root.glob("run_*/state.json")):
+            try:
+                state = _read_json(state_path)
+                run_id = str(state.get("run_id") or state_path.parent.name)
+                if state.get("state") in {"EXECUTION_QUEUED", "EXECUTING", "VALIDATING"}:
+                    self._fail_run(
+                        run_id,
+                        reason="orphaned_non_terminal_run_recovered",
+                        message="Run was recovered after portal restart before a terminal result was recorded.",
+                    )
+                    recovered.append(run_id)
+            except (OSError, ValueError, json.JSONDecodeError, OrchestrationNotFound):
+                continue
+        return recovered
 
     def cancel(self, run_id: str) -> dict[str, Any]:
         state = _read_json(self._paths(run_id).state)
@@ -943,10 +964,26 @@ class BrowserIntakeOrchestrator:
 
     def _execute_worker(self, run_id: str) -> None:
         paths = self._paths(run_id)
+        with logging_context(run_id=run_id, app_id=APP_ID):
+            try:
+                self._execute_worker_transaction(run_id, paths)
+            finally:
+                with self._worker_lock:
+                    self._active_workers.discard(run_id)
+
+    def _execute_worker_transaction(self, run_id: str, paths: PortalRunPaths) -> None:
         try:
+            self._validate_portfolio_contract()
             if _read_json(paths.state)["state"] == "CANCELLED":
                 return
             self._transition(run_id, "EXECUTING", reason="engineering_started")
+            LOGGER.info(
+                "Engineering run started.",
+                extra={
+                    "event_name": "engineering.run.started",
+                    "attributes": {"run_id": run_id, "operation": "application_engineering"},
+                },
+            )
             result = run_requirements_engineering(self._adapter_config(paths, plan_only=False))
             _atomic_write_json(paths.result, result)
             if _read_json(paths.state)["state"] == "CANCELLED":
@@ -957,6 +994,18 @@ class BrowserIntakeOrchestrator:
                 registration = self._register_generated_application(run_id, paths, result)
                 result = {**result, "portfolio_registration": registration}
                 _atomic_write_json(paths.result, result)
+                LOGGER.info(
+                    "Portfolio registration completed.",
+                    extra={
+                        "event_name": "portfolio.registration.succeeded",
+                        "attributes": {
+                            "run_id": run_id,
+                            "app_id": APP_ID,
+                            "version_id": registration.get("version_id"),
+                            "outcome": "success",
+                        },
+                    },
+                )
             self._update_state(run_id, {"final_decision": decision})
             self._transition(
                 run_id,
@@ -964,14 +1013,63 @@ class BrowserIntakeOrchestrator:
                 reason="quality_gates_passed" if decision == "GO" else "quality_gates_failed",
             )
             self._record_event(run_id, "final_decision", {"decision": decision})
-        except (AdapterError, OSError, ValueError) as exc:
-            self._update_state(run_id, {"final_decision": "NO-GO", "error": str(exc)})
-            current = _read_json(paths.state)["state"]
-            if current not in TERMINAL_STATES:
-                self._transition(run_id, "FAILED", reason="engineering_failed_closed")
-            self._record_event(run_id, "engineering_error", {"message": str(exc)})
-        finally:
-            self._active_workers.discard(run_id)
+            LOGGER.info(
+                "Engineering run completed.",
+                extra={
+                    "event_name": "engineering.run.succeeded",
+                    "attributes": {
+                        "run_id": run_id,
+                        "app_id": APP_ID,
+                        "outcome": "success" if decision == "GO" else "failure",
+                    },
+                },
+            )
+        except PortfolioError as exc:
+            self._fail_run(run_id, reason="engineering_failed_closed", message=str(exc))
+        except Exception as exc:
+            self._fail_run(run_id, reason="engineering_failed_closed", message=str(exc))
+
+    def _fail_run(self, run_id: str, *, reason: str, message: str) -> None:
+        paths = self._paths(run_id)
+        safe_message = message.splitlines()[0][:500] if message else "engineering failed closed"
+        result = _read_json(paths.result) if paths.result.is_file() else {}
+        failure_result = {
+            **result,
+            "schema_version": "1.0",
+            "status": "PORTAL_APPLICATION_ENGINEERING_FAILED_CLOSED",
+            "run_id": run_id,
+            "final_decision": "NO-GO",
+            "validated": False,
+            "registered": False,
+            "error": {"type": "engineering_transaction_failed", "message": safe_message},
+            "llm_calls": 0,
+            "real_payment_calls": "disabled",
+            "completed_at_utc": _utc_now(),
+        }
+        _atomic_write_json(paths.result, failure_result)
+        self._update_state(run_id, {"final_decision": "NO-GO", "error": safe_message})
+        current = _read_json(paths.state)["state"]
+        if current not in TERMINAL_STATES:
+            self._transition(run_id, "FAILED", reason=reason)
+        self._record_event(
+            run_id,
+            "engineering_failed_closed",
+            {"reason": reason, "message": safe_message, "decision": "NO-GO"},
+        )
+        LOGGER.error(
+            "Engineering run failed closed.",
+            extra={
+                "event_name": "engineering.run.failed",
+                "attributes": {
+                    "run_id": run_id,
+                    "app_id": APP_ID,
+                    "operation": "application_engineering",
+                    "outcome": "failure",
+                    "error.type": "engineering_transaction_failed",
+                    "error.message": safe_message,
+                },
+            },
+        )
 
     def _register_generated_application(
         self,
@@ -1073,7 +1171,15 @@ class BrowserIntakeOrchestrator:
             replace_existing=False,
             factory_root=self.project_root,
             workspace_root=paths.root,
+            portfolio_state_root=self.portfolio_store.state_root,
             engineering_profile="compatibility",
+        )
+
+    def _validate_portfolio_contract(self) -> None:
+        resolve_state_roots(
+            project_root=self.project_root,
+            browser_state_root=self.state_root,
+            portfolio_state_root=self.portfolio_store.state_root,
         )
 
     def _paths(self, run_id: str) -> PortalRunPaths:

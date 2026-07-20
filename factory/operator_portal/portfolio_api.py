@@ -19,6 +19,7 @@ from factory.application_engineering.portfolio import (
     VersionState,
     approve_action,
 )
+from factory.operator_portal.state_roots import resolve_portfolio_state_root
 
 
 class PortfolioApprovalRequest(BaseModel):
@@ -77,7 +78,13 @@ class PortfolioLifecycleRequest(BaseModel):
 
 class PortfolioAPI:
     def __init__(self, *, project_root: Path, state_root: Path | None = None) -> None:
-        self.store = PortfolioStore(project_root=project_root, state_root=state_root)
+        self.store = PortfolioStore(
+            project_root=project_root,
+            state_root=resolve_portfolio_state_root(
+                project_root=project_root,
+                portfolio_state_root=state_root,
+            ),
+        )
         self.catalogue = PortfolioCatalogue(store=self.store)
         self.supervisor = PortfolioSupervisor(store=self.store, catalogue=self.catalogue)
         self.scenarios = PortfolioScenarioRunner(store=self.store)

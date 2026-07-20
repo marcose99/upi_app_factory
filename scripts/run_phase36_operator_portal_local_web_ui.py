@@ -18,6 +18,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--host", default="127.0.0.1", help="Local bind host.")
     parser.add_argument("--port", default=8036, type=int, help="Local bind port.")
+    parser.add_argument("--portfolio-state-root", type=Path, default=None)
     return parser.parse_args()
 
 
@@ -28,7 +29,15 @@ def main() -> int:
 
     import uvicorn
 
-    uvicorn.run(create_web_ui_app(project_root=PROJECT_ROOT), host=args.host, port=args.port)
+    print(f"Health path: /operator-portal/health on local loopback port {args.port}")
+    uvicorn.run(
+        create_web_ui_app(
+            project_root=PROJECT_ROOT,
+            portfolio_state_root=args.portfolio_state_root,
+        ),
+        host=args.host,
+        port=args.port,
+    )
     return 0
 
 

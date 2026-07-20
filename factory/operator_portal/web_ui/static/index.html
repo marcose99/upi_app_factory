@@ -96,6 +96,11 @@ Build a local mock-safe UPI dispute resolution API with health and readiness end
           <div><dt>State</dt><dd id="run-state-value" data-field="browser-run-state">Waiting</dd></div>
           <div><dt>SHA-256</dt><dd id="requirements-sha256-value" data-field="browser-run-sha">Waiting</dd></div>
         </dl>
+        <div id="run-progress-panel" class="progress-panel" hidden>
+          <label for="run-progress">Engineering progress</label>
+          <progress id="run-progress" max="100" value="0"></progress>
+          <p id="run-progress-status" aria-live="polite">No critical operation active.</p>
+        </div>
         <div class="button-row run-controls">
           <button id="generate-plan-button" type="button" data-action="generate-plan">Generate Plan</button>
           <button id="approve-engineering-button" type="button" data-action="approve-engineering">Approve Application Engineering</button>

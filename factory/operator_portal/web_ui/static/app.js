@@ -9,6 +9,24 @@
   let runtimeStopNonce = "";
   let runtimeStopAllNonce = "";
   let selectedRuntimeVersion = null;
+  const inFlightActions = new Map();
+  const actionLockDomains = {
+    "submit-run": ["engineering-run"],
+    "generate-plan": ["engineering-run"],
+    "approve-engineering": ["engineering-run"],
+    "start-engineering": ["engineering-run"],
+    "cancel-run": ["engineering-run"],
+    "runtime-approve-start": ["runtime"],
+    "runtime-start": ["runtime-version"],
+    "runtime-approve-restart": ["runtime"],
+    "runtime-restart": ["runtime-version"],
+    "runtime-approve-stop": ["runtime"],
+    "runtime-stop": ["runtime-version"],
+    "runtime-approve-stop-all": ["runtime-global"],
+    "runtime-stop-all": ["runtime-global", "runtime-version"],
+    "validation-run": ["validation"],
+    "export-download": ["download-export"],
+  };
 
   function field(name) {
     if (!fields.has(name)) {
@@ -219,6 +237,44 @@
     }
   }
 
+  function progressValueForState(state) {
+    const values = {
+      EXECUTION_QUEUED: 35,
+      EXECUTING: 60,
+      VALIDATING: 85,
+      SUCCEEDED: 100,
+      FAILED: 100,
+      CANCELLED: 100,
+    };
+    return values[state] || 0;
+  }
+
+  function progressValueForRun(run) {
+    if (run && typeof run.progress_percent === "number" && Number.isFinite(run.progress_percent)) {
+      return Math.max(0, Math.min(100, run.progress_percent));
+    }
+    return progressValueForState(run ? run.state : "");
+  }
+
+  function updateProgress(run) {
+    const panel = document.getElementById("run-progress-panel");
+    const progress = document.getElementById("run-progress");
+    const status = document.getElementById("run-progress-status");
+    if (!panel || !progress || !status) {
+      return;
+    }
+    const state = run ? run.state : "";
+    const active = ["EXECUTION_QUEUED", "EXECUTING", "VALIDATING"].includes(state);
+    const terminal = ["SUCCEEDED", "FAILED", "CANCELLED"].includes(state);
+    panel.hidden = !(active || terminal);
+    progress.value = progressValueForRun(run);
+    status.textContent = active
+      ? `Engineering run ${currentRunId} is ${state}.`
+      : terminal
+        ? `Engineering run ${currentRunId} reached ${state}.`
+        : "No critical operation active.";
+  }
+
   function updateControls(run) {
     const state = run ? run.state : "";
     const hasRun = Boolean(currentRunId);
@@ -242,6 +298,9 @@
       return;
     }
     currentRunId = run.run_id || currentRunId;
+    if (currentRunId) {
+      window.localStorage.setItem("upi_app_factory_current_run_id", currentRunId);
+    }
     setField("browser-run-id", currentRunId || "Not created");
     setField("browser-run-state", run.state);
     setField("browser-run-sha", run.requirements_sha256);
@@ -251,6 +310,7 @@
     showRunEvents(run.events || []);
     updateDownloadLinks(run);
     updateControls(run);
+    updateProgress(run);
   }
 
   async function refreshCurrentRun() {
@@ -592,6 +652,54 @@
     "runtime-evidence": runtimeEvidence,
   };
 
+  function domainsForAction(action) {
+    return actionLockDomains[action] || [action];
+  }
+
+  function conflictsWith(activeDomains, candidateDomains) {
+    return candidateDomains.some((domain) => {
+      if (domain === "runtime-global") {
+        return activeDomains.some((active) => active.startsWith("runtime"));
+      }
+      if (activeDomains.includes("runtime-global") && domain.startsWith("runtime")) {
+        return true;
+      }
+      return activeDomains.includes(domain);
+    });
+  }
+
+  function updateActionLocks() {
+    const activeDomains = Array.from(inFlightActions.values()).flat();
+    document.querySelectorAll("[data-action]").forEach((button) => {
+      const action = button.getAttribute("data-action") || "";
+      const locked = conflictsWith(activeDomains, domainsForAction(action));
+      button.disabled = locked;
+      button.setAttribute("aria-disabled", locked ? "true" : "false");
+    });
+  }
+
+  async function runCriticalAction(button, action, handler) {
+    const domains = domainsForAction(action);
+    const activeDomains = Array.from(inFlightActions.values()).flat();
+    if (inFlightActions.has(action) || conflictsWith(activeDomains, domains)) {
+      return;
+    }
+    const original = button.textContent || action;
+    inFlightActions.set(action, domains);
+    button.setAttribute("aria-busy", "true");
+    button.innerHTML = `<span class="spinner" aria-hidden="true">...</span>${original}`;
+    updateActionLocks();
+    try {
+      await handler();
+    } finally {
+      button.textContent = original;
+      button.removeAttribute("aria-busy");
+      inFlightActions.delete(action);
+      updateActionLocks();
+      updateControls(currentRunId ? { state: field("browser-run-state").textContent } : null);
+    }
+  }
+
   function bindActions() {
     document.querySelectorAll("[data-action]").forEach((button) => {
       button.addEventListener("click", async () => {
@@ -600,15 +708,12 @@
         if (!handler) {
           return;
         }
-        button.setAttribute("aria-busy", "true");
         try {
-          await handler();
+          await runCriticalAction(button, action, handler);
         } catch (error) {
           const message = error instanceof Error ? error.message : String(error);
           showError(message);
           showReport({ error: message });
-        } finally {
-          button.removeAttribute("aria-busy");
         }
       });
     });
@@ -632,6 +737,7 @@
   async function boot() {
     bindActions();
     updateControls(null);
+    currentRunId = window.localStorage.getItem("upi_app_factory_current_run_id") || "";
     await Promise.all([
       refreshHealth(),
       refreshEvidence(),
@@ -639,6 +745,9 @@
       refreshGuides(),
       refreshPortfolioCatalogue(),
     ]);
+    if (currentRunId) {
+      await refreshCurrentRun();
+    }
   }
 
   window.addEventListener("DOMContentLoaded", () => {

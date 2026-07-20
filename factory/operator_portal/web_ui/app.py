@@ -77,6 +77,7 @@ def create_web_ui_app(
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
     runtime_state_root: Path | None = None,
+    portfolio_state_root: Path | None = None,
 ) -> FastAPI:
     app = create_app(
         project_root=project_root or PROJECT_ROOT,
@@ -84,6 +85,7 @@ def create_web_ui_app(
         validation_runner=validation_runner,
         browser_orchestrator=browser_orchestrator,
         runtime_state_root=runtime_state_root,
+        portfolio_state_root=portfolio_state_root,
     )
 
     @app.get("/", include_in_schema=False)

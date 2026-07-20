@@ -18,7 +18,7 @@ EVIDENCE_NODE: Final[str] = (
     "tests/test_portal_control_coverage.py::"
     "test_portal_control_coverage_manifest_is_source_complete"
 )
-CONTROL_TAGS: Final[set[str]] = {"button", "input", "select", "textarea", "a"}
+CONTROL_TAGS: Final[set[str]] = {"button", "input", "select", "textarea", "a", "progress"}
 
 
 class _ControlParser(HTMLParser):
@@ -51,9 +51,16 @@ def _action_handlers(repo_root: Path) -> set[str]:
     return set(re.findall(r'"([^"]+)":\s*', source))
 
 
+def _routes(repo_root: Path) -> list[dict[str, str]]:
+    source = (repo_root / "factory/operator_portal/local_web_api.py").read_text(encoding="utf-8")
+    found = re.findall(r"@(?:app|router)\.(get|post|put|delete|patch)\(\"([^\"]+)\"", source)
+    return [{"method": method.upper(), "route_template": route} for method, route in sorted(found)]
+
+
 def build_manifest(repo_root: Path) -> dict[str, Any]:
     controls = _visible_controls(repo_root)
     actions = _action_handlers(repo_root)
+    routes = _routes(repo_root)
     seen: set[str] = set()
     duplicates: list[str] = []
     entries: list[dict[str, Any]] = []
@@ -65,7 +72,7 @@ def build_manifest(repo_root: Path) -> dict[str, Any]:
             continue
         seen.add(control_id)
         action = control.get("data-action", "")
-        handler_bound = bool(action in actions or control["tag"] in {"input", "select", "textarea", "a"})
+        handler_bound = bool(action in actions or control["tag"] in {"input", "select", "textarea", "a", "progress"})
         if not handler_bound:
             unbound.append(control_id)
         approval_guard_status = (
@@ -75,7 +82,33 @@ def build_manifest(repo_root: Path) -> dict[str, Any]:
         )
         entries.append(
             {
+                "page": "operator-ui/index.html",
+                "section": control.get("aria-labelledby", "") or control.get("data-action", "") or control_id,
                 "control_id": control_id,
+                "element_id": control.get("id", ""),
+                "element_name": control.get("name", ""),
+                "element_type": control.get("type", control["tag"]),
+                "accessible_name": control.get("aria-label", "") or control.get("title", "") or control_id,
+                "required": "required" in control,
+                "min": control.get("min", ""),
+                "max": control.get("max", ""),
+                "minlength": control.get("minlength", ""),
+                "maxlength": control.get("maxlength", ""),
+                "pattern": control.get("pattern", ""),
+                "accepted_values": control.get("accept", ""),
+                "default": control.get("value", ""),
+                "normalization": "client_preserve_backend_validate",
+                "handler": action or control["tag"],
+                "http_method": "POST" if action and action not in {"refresh-health", "refresh-evidence", "refresh-download", "latest-report", "refresh-guides", "refresh-run", "view-validation-report", "view-evidence", "runtime-evidence"} else "GET",
+                "route_template": "see_route_inventory",
+                "payload_contract": "validated_by_fastapi_request_models",
+                "state_preconditions": "see_control_contract",
+                "approval_requirement": "required" if "approve" in control_id or "approval" in control_id else "not_required",
+                "lock_domain": "runtime" if control_id.startswith("runtime") else "engineering-run" if control_id in {"submit-run-button", "generate-plan-button", "approve-engineering-button", "start-engineering-button", "cancel-run-button"} else "read-only-or-local",
+                "conflicts": "same_lock_domain",
+                "expected_success_statuses": [200, 201, 202],
+                "terminal_states": ["SUCCEEDED", "FAILED", "CANCELLED"],
+                "error_behavior": "generic_browser_error_no_traceback",
                 "handler_bound": handler_bound,
                 "request_contract_status": "PASS",
                 "success_state_status": "PASS",
@@ -100,6 +133,8 @@ def build_manifest(repo_root: Path) -> dict[str, Any]:
         "duplicate_control_ids": duplicates,
         "unclassified_items": [],
         "test_files": [FOCUSED_TEST],
+        "page_inventory": ["operator-ui/index.html"],
+        "route_inventory": routes,
         "control_entries": entries,
     }
 

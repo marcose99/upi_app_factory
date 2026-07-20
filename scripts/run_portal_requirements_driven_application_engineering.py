@@ -29,14 +29,20 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from typing import Final, Mapping, Sequence, TypedDict
 
-from factory.application_engineering.portfolio import (
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from factory.application_engineering.portfolio import (  # noqa: E402
     PortfolioCatalogue,
     PortfolioStore,
     RegistrationRequest,
 )
+from factory.operator_portal.state_roots import resolve_portfolio_state_root  # noqa: E402
 
 APP_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
 APPROVAL_TOKEN: Final[str] = "APPROVE_PORTAL_APPLICATION_ENGINEERING"
@@ -70,6 +76,7 @@ class AdapterConfig:
     replace_existing: bool
     factory_root: Path
     workspace_root: Path
+    portfolio_state_root: Path | None = None
     engineering_profile: str = "compatibility"
 
 
@@ -182,6 +189,12 @@ def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=os.getenv("FACTORY_ENGINEERING_PROFILE", "compatibility"),
         help="Use compatibility output or the Phase 56 versioned deep composer profile.",
     )
+    parser.add_argument(
+        "--portfolio-state-root",
+        type=Path,
+        default=None,
+        help="Portfolio catalogue state root; defaults under the factory worktree.",
+    )
     return parser.parse_args(argv)
 
 
@@ -224,6 +237,10 @@ def _configuration(args: argparse.Namespace) -> AdapterConfig:
             workspace_root / "portal_generation_evidence",
         )
     )
+    portfolio_state_root = resolve_portfolio_state_root(
+        project_root=factory_root,
+        portfolio_state_root=args.portfolio_state_root,
+    )
 
     if not APP_ID_PATTERN.fullmatch(args.app_id):
         raise AdapterError(f"invalid app id: {args.app_id!r}")
@@ -252,6 +269,7 @@ def _configuration(args: argparse.Namespace) -> AdapterConfig:
         engineering_profile=args.engineering_profile,
         factory_root=factory_root,
         workspace_root=workspace_root,
+        portfolio_state_root=portfolio_state_root,
     )
 
 
@@ -313,6 +331,12 @@ requirements input.
 ```bash
 python -m uvicorn app.{package}.interfaces.api.main:app --reload
 ```
+
+The application writes one JSON log object per line to stdout by default. Use
+UPI_APP_FACTORY_LOG_LEVEL, UPI_APP_FACTORY_LOG_FORMAT=json|console,
+UPI_APP_FACTORY_LOG_FILE, UPI_APP_FACTORY_LOG_MAX_BYTES,
+UPI_APP_FACTORY_LOG_BACKUP_COUNT, and
+UPI_APP_FACTORY_LOG_INCLUDE_STACKTRACE=false to control local logging.
 
 ## Validate
 
@@ -499,6 +523,166 @@ class InMemoryIdempotencyStore:
 """,
         f"app/{package}/interfaces/__init__.py": "",
         f"app/{package}/interfaces/api/__init__.py": "",
+        f"app/{package}/observability/__init__.py": """from app.upi_dispute_resolution.observability.structured_logging import configure_logging, get_logger, logging_context, trace_context_from_traceparent
+
+__all__ = ["configure_logging", "get_logger", "logging_context", "trace_context_from_traceparent"]
+""",
+        f"app/{package}/observability/structured_logging.py": '''from __future__ import annotations
+
+from contextlib import contextmanager
+from contextvars import ContextVar
+from datetime import datetime, timezone
+import json
+import logging
+import os
+import re
+import secrets
+import sys
+import time
+from typing import Any, Iterator
+
+SCHEMA_VERSION = "upi-app-factory.log.v1"
+SERVICE_INSTANCE_ID = secrets.token_hex(16)
+TRACEPARENT_RE = re.compile(r"^00-([0-9a-f]{32})-([0-9a-f]{16})-([0-9a-f]{2})$")
+SENSITIVE_KEY_RE = re.compile(
+    r"authorization|cookie|token|secret|password|api_key|credential|account|vpa|mobile|phone|email|pan|aadhaar|card|cvv|payload|body|content",
+    re.IGNORECASE,
+)
+CONTROL_RE = re.compile(r"[\\x00-\\x1f\\x7f]")
+SEVERITY_NUMBERS = {"DEBUG": 5, "INFO": 9, "WARNING": 13, "ERROR": 17, "CRITICAL": 21}
+_context: ContextVar[dict[str, str]] = ContextVar("upi_generated_log_context", default={})
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+
+
+def _clean(value: str, limit: int = 800) -> str:
+    cleaned = CONTROL_RE.sub(" ", value).replace("\\r", " ").replace("\\n", " ")
+    return cleaned[:limit] + "...[truncated]" if len(cleaned) > limit else cleaned
+
+
+def _redact(value: Any, depth: int = 0) -> Any:
+    if depth > 6:
+        return "[REDACTED:MAX_DEPTH]"
+    if isinstance(value, dict):
+        result: dict[str, Any] = {}
+        for index, (key, item) in enumerate(value.items()):
+            if index >= 80:
+                result["[truncated]"] = "max_items"
+                break
+            key_text = _clean(str(key), 120)
+            result[key_text] = "[REDACTED]" if SENSITIVE_KEY_RE.search(key_text) else _redact(item, depth + 1)
+        return result
+    if isinstance(value, (list, tuple, set)):
+        return [_redact(item, depth + 1) for item in list(value)[:80]]
+    if isinstance(value, str):
+        return _clean(value)
+    if isinstance(value, (int, float, bool)) or value is None:
+        return value
+    return f"[{type(value).__name__}]"
+
+
+def trace_context_from_traceparent(traceparent: str | None, request_id: str | None = None) -> dict[str, str]:
+    if traceparent:
+        match = TRACEPARENT_RE.fullmatch(traceparent.strip())
+        if match and int(match.group(1), 16) != 0 and int(match.group(2), 16) != 0:
+            return {
+                "trace_id": match.group(1),
+                "span_id": secrets.token_hex(8),
+                "trace_flags": match.group(3),
+                "request_id": request_id or secrets.token_hex(16),
+            }
+    return {
+        "trace_id": secrets.token_hex(16),
+        "span_id": secrets.token_hex(8),
+        "trace_flags": "01",
+        "request_id": request_id or secrets.token_hex(16),
+    }
+
+
+@contextmanager
+def logging_context(**values: str | None) -> Iterator[None]:
+    merged = {**_context.get()}
+    for key, value in values.items():
+        if value is not None:
+            merged[key] = str(value)
+    token = _context.set(merged)
+    try:
+        yield
+    finally:
+        _context.reset(token)
+
+
+class JsonFormatter(logging.Formatter):
+    def __init__(self, service_name: str, service_version: str) -> None:
+        super().__init__()
+        self.service_name = service_name
+        self.service_version = service_version
+
+    def format(self, record: logging.LogRecord) -> str:
+        timestamp = _now()
+        attributes = _redact(getattr(record, "attributes", {}) or {})
+        if not isinstance(attributes, dict):
+            attributes = {"attributes": attributes}
+        envelope = {
+            "schema_version": SCHEMA_VERSION,
+            "timestamp": timestamp,
+            "observed_timestamp": timestamp,
+            "severity_text": record.levelname,
+            "severity_number": SEVERITY_NUMBERS.get(record.levelname, record.levelno),
+            "body": _clean(record.getMessage()),
+            "event_name": _clean(str(getattr(record, "event_name", record.name)), 180),
+            "service.name": self.service_name,
+            "service.namespace": "upi_app_factory.engineered_applications",
+            "service.version": self.service_version,
+            "service.instance.id": SERVICE_INSTANCE_ID,
+            "deployment.environment.name": os.getenv("UPI_APP_FACTORY_ENVIRONMENT", "local"),
+            "source": _clean(record.name, 180),
+        }
+        envelope.update({key: _clean(value) for key, value in _context.get().items()})
+        envelope.update({key: value for key, value in attributes.items() if value is not None})
+        return json.dumps(envelope, ensure_ascii=False, separators=(",", ":"))
+
+
+def configure_logging(service_name: str, service_version: str) -> None:
+    handler = logging.StreamHandler(sys.stdout)
+    if os.getenv("UPI_APP_FACTORY_LOG_FORMAT", "json").lower() == "console":
+        handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s %(message)s"))
+    else:
+        handler.setFormatter(JsonFormatter(service_name, service_version))
+    root = logging.getLogger()
+    root.handlers = [handler]
+    root.setLevel(getattr(logging, os.getenv("UPI_APP_FACTORY_LOG_LEVEL", "INFO").upper(), logging.INFO))
+    logging.getLogger("uvicorn.access").disabled = True
+
+
+def get_logger(name: str) -> logging.Logger:
+    return logging.getLogger(name)
+
+
+async def request_logging_middleware(request: Any, call_next: Any, *, logger: logging.Logger) -> Any:
+    started = time.perf_counter()
+    context = trace_context_from_traceparent(request.headers.get("traceparent"), request.headers.get("x-request-id"))
+    with logging_context(**context, correlation_id=context["request_id"]):
+        response = await call_next(request)
+        response.headers["traceparent"] = f"00-{context['trace_id']}-{context['span_id']}-{context['trace_flags']}"
+        response.headers["x-request-id"] = context["request_id"]
+        logger.info(
+            "Request completed.",
+            extra={
+                "event_name": "http.request.completed",
+                "attributes": {
+                    "http.request.method": request.method,
+                    "url.path": request.url.path,
+                    "http.response.status_code": response.status_code,
+                    "duration_ms": round((time.perf_counter() - started) * 1000, 3),
+                    "outcome": "success" if response.status_code < 500 else "failure",
+                },
+            },
+        )
+        return response
+''',
         f"app/{package}/interfaces/api/main.py": """from __future__ import annotations
 
 from dataclasses import asdict
@@ -513,16 +697,46 @@ from app.upi_dispute_resolution.infrastructure.memory import (
     InMemoryDisputeRepository,
     InMemoryIdempotencyStore,
 )
+from app.upi_dispute_resolution.observability.structured_logging import (
+    configure_logging,
+    get_logger,
+    request_logging_middleware,
+)
+
+SERVICE_VERSION = "0.1.0"
+configure_logging(service_name=\"""" + config.app_id + """\", service_version=SERVICE_VERSION)
+logger = get_logger(__name__)
 
 app = FastAPI(
     title="UPI Dispute Resolution",
-    version="0.1.0",
+    version=SERVICE_VERSION,
 )
 
 service = DisputeService(
     repository=InMemoryDisputeRepository(),
     idempotency=InMemoryIdempotencyStore(),
 )
+
+
+@app.on_event("startup")
+async def log_startup() -> None:
+    logger.info(
+        "Generated application startup.",
+        extra={"event_name": "generated_application.startup", "attributes": {"outcome": "success"}},
+    )
+
+
+@app.on_event("shutdown")
+async def log_shutdown() -> None:
+    logger.info(
+        "Generated application shutdown.",
+        extra={"event_name": "generated_application.shutdown", "attributes": {"outcome": "success"}},
+    )
+
+
+@app.middleware("http")
+async def generated_request_logging(request: Request, call_next):
+    return await request_logging_middleware(request, call_next, logger=logger)
 
 
 class CreateDisputeRequest(BaseModel):
@@ -709,6 +923,34 @@ def _manifest(root: Path) -> list[ManifestRecord]:
     return records
 
 
+def _canonical_deep_generated_root(config: AdapterConfig) -> Path:
+    return (
+        config.factory_root
+        / "workspace"
+        / "deep_engineering_campaign"
+        / "generated_app"
+        / config.app_id
+    ).resolve()
+
+
+def _mirror_deep_generated_app(*, config: AdapterConfig, app_root: Path) -> Path:
+    canonical_app_root = _canonical_deep_generated_root(config)
+    if app_root.resolve() == canonical_app_root:
+        return canonical_app_root
+
+    workspace_root = (config.factory_root / "workspace").resolve()
+    try:
+        canonical_app_root.relative_to(workspace_root)
+    except ValueError as exc:
+        raise AdapterError("canonical deep generated application root must stay in workspace") from exc
+
+    if canonical_app_root.exists():
+        shutil.rmtree(canonical_app_root)
+    canonical_app_root.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(app_root, canonical_app_root, symlinks=False)
+    return canonical_app_root
+
+
 def _register_generated_application(
     *,
     config: AdapterConfig,
@@ -754,11 +996,10 @@ def _register_generated_application(
     }
     store = PortfolioStore(
         project_root=config.factory_root,
-        state_root=config.workspace_root
-        / "factory_generated"
-        / config.app_id
-        / "lifecycle_artifacts"
-        / "phase51",
+        state_root=resolve_portfolio_state_root(
+            project_root=config.factory_root,
+            portfolio_state_root=config.portfolio_state_root,
+        ),
     )
     catalogue = PortfolioCatalogue(store=store)
     version = catalogue.register(
@@ -829,6 +1070,12 @@ def _plan_payload(
         "requirements_sha256": requirements_sha,
         "output_root": str(config.output_root),
         "evidence_root": str(config.evidence_root),
+        "portfolio_state_root": str(
+            resolve_portfolio_state_root(
+                project_root=config.factory_root,
+                portfolio_state_root=config.portfolio_state_root,
+            )
+        ),
         "approval_mode": config.approval_mode,
         "mock_safe": config.mock_safe,
         "replace_existing": config.replace_existing,
@@ -864,6 +1111,11 @@ def run(config: AdapterConfig) -> dict[str, object]:
             app_id=config.app_id,
             replace_existing=config.replace_existing,
         )
+        actual_application_root = config.output_root / config.app_id
+        canonical_application_root = _mirror_deep_generated_app(
+            config=config,
+            app_root=actual_application_root,
+        )
         generated_tests = [
             item["path"]
             for item in manifest["file_manifest"]
@@ -884,7 +1136,8 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "health_contract": "GET /health" in manifest["endpoints"],
             "ready_contract": "GET /ready" in manifest["endpoints"],
             "generated_tests": generated_tests,
-            "actual_application_root": str(config.output_root / config.app_id),
+            "actual_application_root": str(actual_application_root),
+            "canonical_application_root": str(canonical_application_root),
             "evidence_directory": str(evidence_dir),
             "completed_at_utc": _utc_now(),
         }
@@ -899,6 +1152,8 @@ def run(config: AdapterConfig) -> dict[str, object]:
         + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         + "_"
         + requirements_sha[:12]
+        + "_"
+        + _sha256_bytes(str(config.workspace_root).encode("utf-8"))[:8]
     )
     evidence_dir = config.evidence_root / run_id
     evidence_dir.mkdir(parents=True, exist_ok=False)

@@ -2,12 +2,21 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import time
 from typing import Any, cast
 
 from fastapi import FastAPI, HTTPException, status
+from fastapi import Request
 from fastapi.responses import Response
 from pydantic import BaseModel, ConfigDict
+from starlette.middleware.base import RequestResponseEndpoint
 
+from factory.observability import (
+    configure_logging,
+    get_logger,
+    logging_context,
+    trace_context_from_traceparent,
+)
 from factory.operator_portal.browser_intake_orchestration import (
     BrowserIntakeOrchestrator,
     OrchestrationConflict,
@@ -24,12 +33,14 @@ from factory.operator_portal.evidence_dashboard import build_dashboard_summary
 from factory.operator_portal.operator_guides import build_operator_guide_index
 from factory.operator_portal.portfolio_api import build_portfolio_router
 from factory.operator_portal.runtime_api import build_runtime_router
+from factory.operator_portal.state_roots import resolve_state_roots
 from factory.operator_portal.validation_runner import CommandNotAllowedError, ValidationRunnerService
 
 
 APP_ID = "upi_dispute_resolution"
 PHASE = "phase35_operator_portal_local_web_api"
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LOGGER = get_logger(__name__)
 
 LOCAL_API_SAFETY_BOUNDARIES: dict[str, Any] = {
     "local_only": True,
@@ -94,9 +105,14 @@ class OperatorPortalLocalWebAPI:
         runtime_state_root: Path | None = None,
         phase69_state_root: Path | None = None,
     ) -> None:
-        self.project_root = project_root or PROJECT_ROOT
-        self.browser_state_root = browser_state_root
-        self.portfolio_state_root = portfolio_state_root
+        roots = resolve_state_roots(
+            project_root=project_root or PROJECT_ROOT,
+            browser_state_root=browser_state_root,
+            portfolio_state_root=portfolio_state_root,
+        )
+        self.project_root = roots.project_root
+        self.browser_state_root = roots.browser_state_root
+        self.portfolio_state_root = roots.portfolio_state_root
         self.runtime_state_root = runtime_state_root
         self.phase69_state_root = phase69_state_root
         self.download_center = download_center or DownloadCenterService()
@@ -105,8 +121,8 @@ class OperatorPortalLocalWebAPI:
         )
         self.browser_orchestrator = browser_orchestrator or BrowserIntakeOrchestrator(
             project_root=self.project_root,
-            state_root=browser_state_root,
-            portfolio_state_root=portfolio_state_root,
+            state_root=self.browser_state_root,
+            portfolio_state_root=self.portfolio_state_root,
         )
         self.deep_portal = DeepPortalIntegration(project_root=self.project_root)
 
@@ -417,6 +433,7 @@ def create_app(
     portfolio_state_root: Path | None = None,
     phase69_state_root: Path | None = None,
 ) -> FastAPI:
+    configure_logging(service_name="operator_portal_local_web_api", service_version="phase35")
     api = OperatorPortalLocalWebAPI(
         project_root=project_root,
         download_center=download_center,
@@ -434,8 +451,65 @@ def create_app(
         redoc_url=None,
     )
 
+    @app.middleware("http")
+    async def structured_request_logging(
+        request: Request,
+        call_next: RequestResponseEndpoint,
+    ) -> Response:
+        started = time.perf_counter()
+        request_id = request.headers.get("x-request-id")
+        context = trace_context_from_traceparent(
+            request.headers.get("traceparent"),
+            request_id=request_id,
+        )
+        with logging_context(**context, correlation_id=context.get("request_id")):
+            try:
+                response = await call_next(request)
+            except Exception as exc:
+                duration_ms = round((time.perf_counter() - started) * 1000, 3)
+                LOGGER.exception(
+                    "Request failed closed.",
+                    extra={
+                        "event_name": "http.request.failed",
+                        "attributes": {
+                            "http.request.method": request.method,
+                            "url.path": request.url.path,
+                            "http.response.status_code": 500,
+                            "duration_ms": duration_ms,
+                            "outcome": "failure",
+                            "error.type": type(exc).__name__,
+                            "error.message": "Internal server error.",
+                        },
+                    },
+                )
+                raise
+            headers = {
+                "traceparent": f"00-{context['trace_id']}-{context['span_id']}-{context['trace_flags']}",
+                "x-request-id": context["request_id"],
+            }
+            response.headers.update(headers)
+            duration_ms = round((time.perf_counter() - started) * 1000, 3)
+            LOGGER.info(
+                "Request completed.",
+                extra={
+                    "event_name": "http.request.completed",
+                    "attributes": {
+                        "http.request.method": request.method,
+                        "url.path": request.url.path,
+                        "http.response.status_code": response.status_code,
+                        "duration_ms": duration_ms,
+                        "outcome": "success" if response.status_code < 500 else "failure",
+                    },
+                },
+            )
+            return response
+
     @app.get("/health")
     async def health() -> dict[str, Any]:
+        return api.health()
+
+    @app.get("/operator-portal/health")
+    async def operator_portal_health() -> dict[str, Any]:
         return api.health()
 
     @app.get("/portal/evidence-dashboard")
@@ -580,9 +654,16 @@ def create_app(
             headers={"Content-Disposition": f'attachment; filename="{run_id}_evidence_bundle.zip"'},
         )
 
-    app.include_router(build_runtime_router(project_root=api.project_root, state_root=runtime_state_root))
-    app.include_router(build_portfolio_router(project_root=api.project_root, state_root=portfolio_state_root))
-    app.include_router(build_phase69_router(project_root=api.project_root, state_root=phase69_state_root))
+    runtime_router = build_runtime_router(project_root=api.project_root, state_root=runtime_state_root)
+    portfolio_router = build_portfolio_router(project_root=api.project_root, state_root=api.portfolio_state_root)
+    phase69_router = build_phase69_router(project_root=api.project_root, state_root=phase69_state_root)
+    app.include_router(runtime_router)
+    app.include_router(portfolio_router)
+    app.include_router(phase69_router)
+    for router in (runtime_router, portfolio_router, phase69_router):
+        for route in router.routes:
+            if route not in app.routes:
+                app.routes.append(route)
     return app
 
 
