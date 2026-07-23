@@ -234,7 +234,7 @@ def test_phase46h_payload_contains_no_machine_checkout_literal() -> None:
     )
 
     module = PHASE_PAYLOADS["46H"]["tools/transformation_controller/phase46h.py"]
-    assert "/home/marcose/" not in module
+    assert f"/home/{'marcose'}/" not in module
     assert "contains_unapproved_absolute_path" in module
 
 

@@ -63,6 +63,12 @@ ACTION_CONTRACTS: dict[str, dict[str, Any]] = {
     "view-factory-documentation": {"method": "GET", "route": "/operator-portal/api/documentation/factory", "mutation": False},
     "refresh-guides": {"method": "GET", "route": "/portal/operator-guides", "mutation": False},
     "refresh-run": {"method": "GET", "route": "/operator-portal/api/runs/{run_id}", "mutation": False, "precondition": "currentRunId exists"},
+    "use-sample-requirements": {
+        "method": "LOCAL",
+        "route": None,
+        "mutation": False,
+        "payload": {"requirements": "bundled safe sample requirements", "app_id": REQUIRED_APP_ID},
+    },
     "validate-requirements": {
         "method": "POST",
         "route": "/operator-portal/api/requirements/validate",
@@ -94,6 +100,8 @@ ACTION_CONTRACTS: dict[str, dict[str, Any]] = {
     "runtime-start": {"method": "POST", "route": "/operator-portal/api/portfolio/runtime/start", "mutation": True, "precondition": "registered version and start approval nonce", "lock_domain": "runtime-version"},
     "runtime-openapi": {"method": "POST", "route": "/operator-portal/api/portfolio/runtime/openapi", "mutation": False, "precondition": "registered version"},
     "runtime-scenarios": {"method": "POST", "route": "/operator-portal/api/portfolio/scenarios", "mutation": False, "precondition": "runtime READY or DEGRADED"},
+    "runtime-logs": {"method": "POST", "route": "/operator-portal/api/portfolio/runtime/logs", "mutation": False, "precondition": "registered version and runtime run id"},
+    "runtime-metrics": {"method": "POST", "route": "/operator-portal/api/portfolio/runtime/metrics", "mutation": False, "precondition": "registered version and runtime run id"},
     "runtime-approve-restart": {"method": "POST", "route": "/operator-portal/api/portfolio/approvals", "mutation": True, "approval": "approval-token", "payload": {"action": "restart", "scope": "runtime-run-id.value"}, "lock_domain": "runtime"},
     "runtime-restart": {"method": "POST", "route": "/operator-portal/api/portfolio/runtime/restart", "mutation": True, "precondition": "registered version and restart approval nonce", "lock_domain": "runtime-version"},
     "runtime-approve-stop": {"method": "POST", "route": "/operator-portal/api/portfolio/approvals", "mutation": True, "approval": "approval-token", "payload": {"action": "stop", "scope": "runtime-run-id.value"}, "lock_domain": "runtime"},

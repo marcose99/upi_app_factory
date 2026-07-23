@@ -1,9 +1,10 @@
 # Release Package Specification
 
-Future command:
+Future package command only; no root `factory` executable exists because
+`factory/` is the Python package directory:
 
 ```bash
-./factory package-handover
+python -m factory.release_pack.generate
 ```
 
 Expected output:

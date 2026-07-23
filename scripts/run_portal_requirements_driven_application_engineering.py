@@ -31,7 +31,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from typing import Final, Mapping, Sequence, TypedDict
+from typing import Any, Final, Mapping, Sequence, TypedDict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -113,15 +113,19 @@ def _source_commit(factory_root: Path) -> str:
     injected = os.getenv("UPI_APP_FACTORY_SOURCE_COMMIT")
     if injected:
         return injected
-    completed = subprocess.run(
-        ["git", "-C", str(factory_root), "rev-parse", "HEAD"],
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-    commit = completed.stdout.strip()
-    if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
-        return commit
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(factory_root), "rev-parse", "HEAD"],
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+    except FileNotFoundError:
+        completed = None
+    if completed is not None:
+        commit = completed.stdout.strip()
+        if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
+            return commit
     manifest_path = factory_root / "FACTORY_EXPORT_MANIFEST.json"
     if manifest_path.is_file():
         try:
@@ -961,6 +965,174 @@ def _manifest(root: Path) -> list[ManifestRecord]:
     return records
 
 
+def _redact_output(text: str) -> str:
+    patterns = (
+        re.compile(r"(?i)(approval[_-]?token|api[_-]?key|secret|password|token)=\S+"),
+        re.compile(r"\bBearer\s+[A-Za-z0-9._~+/=-]{12,}"),
+    )
+    redacted = text.replace("\r", "\\r")
+    for pattern in patterns:
+        redacted = pattern.sub("[REDACTED]", redacted)
+    return redacted[:8000]
+
+
+def _pytest_counts(output: str) -> dict[str, int]:
+    counts = {
+        "passed": 0,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "xfailed": 0,
+        "xpassed": 0,
+        "warnings": 0,
+        "collected": 0,
+    }
+    collected = re.search(r"collected\s+(\d+)\s+items?", output)
+    if collected:
+        counts["collected"] = int(collected.group(1))
+    for name in ("passed", "failed", "errors", "skipped", "xfailed", "xpassed", "warnings"):
+        matches = re.findall(rf"(\d+)\s+{name}\b", output)
+        if matches:
+            counts[name] = int(matches[-1])
+    if counts["collected"] == 0:
+        counts["collected"] = sum(counts[name] for name in ("passed", "failed", "errors", "skipped", "xfailed", "xpassed"))
+    return counts
+
+
+def _generated_test_inventory(root: Path) -> dict[str, Any]:
+    test_files = sorted(path.relative_to(root).as_posix() for path in (root / "tests").glob("test_*.py"))
+    return {
+        "present": {
+            "api": [path for path in test_files if "api" in path or "contract" in path],
+            "ui": [path for path in test_files if "ui" in path or "browser" in path],
+            "other": [path for path in test_files if not ("api" in path or "contract" in path or "ui" in path or "browser" in path)],
+            "all": test_files,
+            "count": len(test_files),
+        },
+    }
+
+
+def _execute_generated_tests(
+    *,
+    app_root: Path,
+    app_id: str,
+    version_id: str,
+    run_id: str,
+    requirements_sha256: str,
+) -> dict[str, Any]:
+    argv = [sys.executable, "-m", "pytest", "-q", "--disable-warnings", "tests"]
+    env = os.environ.copy()
+    env.update(
+        {
+            "PYTHONPATH": f"{app_root}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(os.pathsep),
+            "REAL_PAYMENT_CALLS": "disabled",
+            "MOCK_BOUNDARY": "1",
+            "FACTORY_LLM_ENABLED": "0",
+        }
+    )
+    completed = subprocess.run(
+        argv,
+        cwd=app_root,
+        env=env,
+        capture_output=True,
+        check=False,
+        text=True,
+        timeout=30,
+    )
+    combined_output = (completed.stdout or "") + (completed.stderr or "")
+    inventory = _generated_test_inventory(app_root)
+    executed = list(inventory["present"]["all"]) if completed.returncode == 0 else []
+    counts = _pytest_counts(combined_output)
+    report = {
+        "schema_version": "generated-application-test-execution.v1",
+        "app_id": app_id,
+        "version_id": version_id,
+        "run_id": run_id,
+        "requirements_sha256": requirements_sha256,
+        "argv": argv,
+        "argv_sha256": _sha256_bytes(json.dumps(argv, separators=(",", ":")).encode("utf-8")),
+        "cwd": str(app_root),
+        "exit_code": completed.returncode,
+        "counts": counts,
+        "tests_present": inventory["present"],
+        "tests_executed": {
+            "api": [path for path in executed if "api" in path or "contract" in path],
+            "ui": [path for path in executed if "ui" in path or "browser" in path],
+            "other": [path for path in executed if not ("api" in path or "contract" in path or "ui" in path or "browser" in path)],
+            "all": executed,
+            "count": len(executed),
+        },
+        "output_sha256": _sha256_bytes(combined_output.encode("utf-8")),
+        "redacted_output": _redact_output(combined_output),
+        "go_gate": "GO" if completed.returncode == 0 and counts["collected"] > 0 else "NO-GO",
+        "fail_closed": completed.returncode != 0 or counts["collected"] <= 0,
+    }
+    return report
+
+
+def _capture_openapi(
+    *,
+    app_root: Path,
+    app_id: str,
+    version_id: str,
+    run_id: str,
+    requirements_sha256: str,
+) -> dict[str, Any]:
+    module = f"app.{app_id}.interfaces.api.main"
+    code = (
+        "import json;"
+        f"from {module} import app;"
+        "print(json.dumps(app.openapi(), sort_keys=True, separators=(',', ':')))"
+    )
+    argv = [sys.executable, "-c", code]
+    env = os.environ.copy()
+    env["PYTHONPATH"] = f"{app_root}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(os.pathsep)
+    completed = subprocess.run(argv, cwd=app_root, env=env, capture_output=True, check=False, text=True, timeout=15)
+    if completed.returncode != 0:
+        raise AdapterError("generated application OpenAPI capture failed")
+    try:
+        document = json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        raise AdapterError("generated application OpenAPI output was not valid JSON") from exc
+    paths = document.get("paths")
+    if not isinstance(paths, dict) or not paths:
+        raise AdapterError("generated application OpenAPI paths are missing")
+    http_methods = {"delete", "get", "head", "options", "patch", "post", "put", "trace"}
+    endpoint_inventory = [
+        {"method": method.upper(), "path": path}
+        for path, methods in sorted(paths.items())
+        if isinstance(path, str) and path.startswith("/") and isinstance(methods, dict)
+        for method in sorted(methods)
+        if isinstance(method, str) and method.lower() in http_methods
+    ]
+    if not endpoint_inventory:
+        raise AdapterError("generated application OpenAPI endpoint inventory is empty")
+    document_sha256 = _sha256_bytes(json.dumps(document, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+    inventory = {
+        "schema_version": "generated-application-openapi-inventory.v1",
+        "app_id": app_id,
+        "version_id": version_id,
+        "run_id": run_id,
+        "requirements_sha256": requirements_sha256,
+        "openapi_sha256": document_sha256,
+        "title": document.get("info", {}).get("title", ""),
+        "version": document.get("info", {}).get("version", ""),
+        "endpoint_inventory": endpoint_inventory,
+        "source": "generated_application_fastapi_app.openapi",
+        "catalogue_only_fallback_used": False,
+    }
+    return {"document": document, "inventory": inventory}
+
+
+def _remove_generated_python_caches(root: Path) -> None:
+    for path in sorted(root.rglob("__pycache__")):
+        if path.is_dir():
+            shutil.rmtree(path)
+    pytest_cache = root / ".pytest_cache"
+    if pytest_cache.is_dir():
+        shutil.rmtree(pytest_cache)
+
+
 def _canonical_deep_generated_root(config: AdapterConfig) -> Path:
     return (
         config.factory_root
@@ -1004,6 +1176,12 @@ def _register_generated_application(
         requirements_sha256=requirements_sha,
     )
     source_commit = _source_commit(config.factory_root)
+    openapi_path = config.output_root / "docs" / "openapi.json"
+    openapi_inventory_path = config.output_root / "evidence" / "openapi_inventory.json"
+    if not openapi_path.is_file() or not openapi_inventory_path.is_file():
+        raise AdapterError("generated OpenAPI evidence is required for portfolio registration")
+    openapi_document = json.loads(openapi_path.read_text(encoding="utf-8"))
+    openapi_inventory = json.loads(openapi_inventory_path.read_text(encoding="utf-8"))
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "app_id": config.app_id,
@@ -1013,6 +1191,8 @@ def _register_generated_application(
         "requirements_sha256": requirements_sha,
         "source_commit": source_commit,
         "files": final_manifest,
+        "openapi": openapi_document,
+        "openapi_inventory": openapi_inventory,
     }
     generation_manifest_path = config.output_root / "generation_manifest.json"
     generation_manifest_path.write_text(
@@ -1030,6 +1210,7 @@ def _register_generated_application(
         "source_commit": source_commit,
         "application_root": str(config.output_root),
         "generation_manifest_sha256": _sha256_file(generation_manifest_path),
+        "openapi_sha256": openapi_inventory.get("openapi_sha256"),
         "mock_boundary": "enforced",
         "real_payment_calls": "disabled",
         "certification_posture": "certification-ready-not-certified",
@@ -1228,6 +1409,49 @@ def run(config: AdapterConfig) -> dict[str, object]:
             requirements_sha256=requirements_sha,
             source_commit=_source_commit(config.factory_root),
         )
+        openapi_capture = _capture_openapi(
+            app_root=staging,
+            app_id=config.app_id,
+            version_id=version_id,
+            run_id=run_id,
+            requirements_sha256=requirements_sha,
+        )
+        (staging / "docs").mkdir(parents=True, exist_ok=True)
+        (staging / "evidence").mkdir(parents=True, exist_ok=True)
+        (staging / "docs" / "openapi.json").write_text(
+            json.dumps(openapi_capture["document"], indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        (staging / "evidence" / "openapi_inventory.json").write_text(
+            json.dumps(openapi_capture["inventory"], indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        (evidence_dir / "openapi.json").write_text(
+            json.dumps(openapi_capture["document"], indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        (evidence_dir / "openapi_inventory.json").write_text(
+            json.dumps(openapi_capture["inventory"], indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        test_execution = _execute_generated_tests(
+            app_root=staging,
+            app_id=config.app_id,
+            version_id=version_id,
+            run_id=run_id,
+            requirements_sha256=requirements_sha,
+        )
+        (staging / "evidence" / "generated_test_execution.json").write_text(
+            json.dumps(test_execution, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        (evidence_dir / "generated_test_execution.json").write_text(
+            json.dumps(test_execution, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        if test_execution["go_gate"] != "GO":
+            raise AdapterError("generated application tests failed or collected zero tests")
+        _remove_generated_python_caches(staging)
         manifest_records = _manifest(staging)
 
         required_paths = {
@@ -1237,7 +1461,10 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "requirements.md",
             "generation_metadata.json",
             "docs/DEBUG_PLAN.md",
+            "docs/openapi.json",
             "evidence/debug_plan.json",
+            "evidence/generated_test_execution.json",
+            "evidence/openapi_inventory.json",
             "tests/test_service.py",
             "tests/test_api_contract.py",
             (f"app/{config.app_id}/interfaces/api/main.py"),
@@ -1296,6 +1523,11 @@ def run(config: AdapterConfig) -> dict[str, object]:
                 "tests/test_service.py",
                 "tests/test_api_contract.py",
             ],
+            "generated_test_execution": test_execution,
+            "tests_executed": test_execution["tests_executed"],
+            "tests_present": test_execution["tests_present"],
+            "openapi": openapi_capture["document"],
+            "openapi_inventory": openapi_capture["inventory"],
             "evidence_directory": str(evidence_dir),
             "version_id": registration["version_id"] if registration else None,
             "source_commit": registration["source_commit"] if registration else _source_commit(config.factory_root),

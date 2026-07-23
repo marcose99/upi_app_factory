@@ -55,3 +55,37 @@ def test_factory_start_status_repeated_start_stop_repeated_stop(tmp_path: Path) 
     repeated_stop = subprocess.run([str(PROJECT_ROOT / "stop_factory.sh")], cwd=PROJECT_ROOT, env=env, text=True, capture_output=True, check=False)
     assert repeated_stop.returncode == 0
     assert "not running" in repeated_stop.stdout
+
+
+def test_canonical_run_factory_shell_contract_and_default_state_root() -> None:
+    run_factory = PROJECT_ROOT / "run_factory.sh"
+    text = run_factory.read_text(encoding="utf-8")
+
+    assert subprocess.run(["bash", "-n", str(run_factory)], cwd=PROJECT_ROOT).returncode == 0
+    assert "--no-browser" in text
+    assert "--host" in text
+    assert "--port" in text
+    assert "--state-root" in text
+    assert "--url-file" in text
+    assert "requirements-recipient.txt" in text
+    assert ".var/upi_app_factory" in text
+    assert "/operator-ui/" in text
+    assert "no OpenAI API key is required" in text
+    assert "start_factory.sh" in text
+
+
+def test_start_stop_scripts_share_repository_relative_state_contract() -> None:
+    start_text = (PROJECT_ROOT / "start_factory.sh").read_text(encoding="utf-8")
+    stop_text = (PROJECT_ROOT / "stop_factory.sh").read_text(encoding="utf-8")
+
+    assert "${ROOT}/.var/upi_app_factory" in start_text
+    assert "${ROOT}/.var/upi_app_factory" in stop_text
+    assert "--state-root" in start_text
+    assert "--state-root" in stop_text
+    assert "runs" in start_text
+    assert "portfolio" in start_text
+    assert "runtime" in start_text
+    assert "logs" in start_text
+    assert "downloads" in start_text
+    assert "evidence" in start_text
+    assert "port 0" in start_text or "PORT" in start_text

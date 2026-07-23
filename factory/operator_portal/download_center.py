@@ -110,15 +110,17 @@ class DownloadCenterService:
             ],
         }
         relative_zip_path = zip_path.relative_to(PROJECT_ROOT).as_posix()
+        relative_manifest_path = manifest_path.relative_to(PROJECT_ROOT).as_posix()
+        relative_generation_manifest_path = generation_manifest_path.relative_to(PROJECT_ROOT).as_posix()
         return {
             "status": "export_ready",
             "phase31_export_invoked": True,
             "bundle_metadata": bundle_metadata,
             "bundle_path": relative_zip_path,
             "local_bundle_path": str(zip_path),
-            "download_ready_path": str(zip_path),
-            "export_manifest_path": str(manifest_path),
-            "generation_manifest_path": str(generation_manifest_path),
+            "download_ready_path": relative_zip_path,
+            "export_manifest_path": relative_manifest_path,
+            "generation_manifest_path": relative_generation_manifest_path,
             "export_manifest": export_manifest,
             "generation_manifest": generation_manifest,
             "evidence_summaries": evidence_summaries,

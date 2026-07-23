@@ -8,17 +8,19 @@ cd upi_app_factory
 git checkout <validated-release-tag>
 ```
 
-## 2. Create Python environment
+## 2. Start the operator portal
 
 ```bash
-python3.10 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+./run_factory.sh --no-browser
 ```
 
-If editable install is not configured yet, use the repository's current
-dependency installation guidance in the root README or pyproject.
+This is the canonical clean-clone command. It creates or reuses `.venv`,
+installs/verifies `requirements-recipient.txt`, initializes `.var/upi_app_factory`
+with `runs`, `portfolio`, `runtime`, `logs`, `downloads`, and `evidence`, waits
+for `/health`, and prints the verified `/operator-ui/` URL.
+
+Use `./run_factory.sh --port 0 --url-file .var/upi_app_factory/operator_url.txt --no-browser`
+to avoid a port conflict deterministically.
 
 ## 3. Validate baseline
 
@@ -30,10 +32,12 @@ python scripts/validate_phase13b_progress_portal_observability.py
 python -m pytest -q
 ```
 
-## 4. Open portals
+## 4. Open portal
 
 ```text
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_generation_progress_portal.html
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_agent_runtime_portal.html
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_self_correction_portal.html
+http://127.0.0.1:8036/operator-ui/
 ```
+
+The portal includes a Use Sample Requirements control backed by
+`examples/requirements/01_upi_failed_debit_no_credit.md`; pasted/uploaded
+requirements remain supported by the intake contract.

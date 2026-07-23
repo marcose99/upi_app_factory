@@ -16,15 +16,14 @@ from factory.operator_portal.state_roots import (
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_browser_state_defaults_to_external_xdg_state(monkeypatch, tmp_path: Path) -> None:
-    xdg_state = tmp_path / "xdg state with spaces"
-    monkeypatch.setenv("XDG_STATE_HOME", str(xdg_state))
+def test_browser_state_defaults_to_repository_relative_var_root(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setenv("XDG_STATE_HOME", str(tmp_path / "xdg state with spaces"))
     monkeypatch.delenv("UPI_APP_FACTORY_PORTAL_RUN_ROOT", raising=False)
+    monkeypatch.delenv("UPI_APP_FACTORY_ROOT", raising=False)
 
     resolved = default_browser_state_root()
 
-    assert resolved == xdg_state / "upi_app_factory" / "operator_portal_runs"
-    assert ROOT not in resolved.parents
+    assert resolved == ROOT / ".var" / "upi_app_factory" / "runs"
 
 
 def test_explicit_state_roots_support_repository_relocation_with_spaces(tmp_path: Path) -> None:
@@ -44,19 +43,16 @@ def test_explicit_state_roots_support_repository_relocation_with_spaces(tmp_path
     assert roots.portfolio_state_root == portfolio.resolve()
 
 
-def test_portfolio_state_rejects_host_absolute_paths_outside_worktree_and_tmp(
+def test_portfolio_state_allows_explicit_external_override(
     tmp_path: Path,
 ) -> None:
     project = tmp_path / "project"
     project.mkdir()
     outside = Path("/var/tmp/upi-app-factory-outside-state")
 
-    try:
-        resolve_portfolio_state_root(project_root=project, portfolio_state_root=outside)
-    except ValueError as exc:
-        assert "worktree or /tmp" in str(exc)
-    else:
-        raise AssertionError("expected external non-tmp state root to be rejected")
+    resolved = resolve_portfolio_state_root(project_root=project, portfolio_state_root=outside)
+
+    assert resolved == outside
 
 
 def test_portfolio_state_allows_literal_tmp_even_when_tempdir_cache_changes(

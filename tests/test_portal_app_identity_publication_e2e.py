@@ -22,12 +22,17 @@ from factory.operator_portal.portfolio_api import PortfolioAPI
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 APP_ID = "upi_failed_debit_no_credit"
-REQUIREMENTS_PATH = Path("/home/marcose/Downloads/01_upi_failed_debit_no_credit.md")
-REQUIREMENTS_SHA256 = "43fcc3caf45727eb77336b4dfef7f69f039defa87cec8a281e4a7786e4487cfa"
+REQUIREMENTS_TEXT = (
+    "# Synthetic UPI failed debit requirement\n\n"
+    "Build a mock-only failed debit no credit dispute workflow with no live "
+    "payment calls, no real customer data, and certification-ready-not-certified "
+    "evidence boundaries.\n"
+)
+REQUIREMENTS_SHA256 = hashlib.sha256(REQUIREMENTS_TEXT.encode("utf-8")).hexdigest()
 
 
 def _requirements() -> str:
-    payload = REQUIREMENTS_PATH.read_bytes()
+    payload = REQUIREMENTS_TEXT.encode("utf-8")
     assert hashlib.sha256(payload).hexdigest() == REQUIREMENTS_SHA256
     return payload.decode("utf-8")
 

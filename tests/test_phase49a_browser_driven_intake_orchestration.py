@@ -13,6 +13,7 @@ from typing import Any, cast
 import httpx
 from fastapi import FastAPI
 
+import factory.operator_portal.browser_intake_orchestration as orchestration
 from factory.operator_portal.browser_intake_orchestration import (
     APPROVAL_TOKEN,
     BrowserIntakeOrchestrator,
@@ -68,6 +69,23 @@ def json_from_zip(archive: zipfile.ZipFile, name: str) -> dict[str, Any]:
     value = json.loads(archive.read(name).decode("utf-8"))
     assert isinstance(value, dict)
     return cast(dict[str, Any], value)
+
+
+def test_source_commit_falls_back_when_git_executable_is_unavailable(
+    monkeypatch: Any,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.delenv("UPI_APP_FACTORY_SOURCE_COMMIT", raising=False)
+
+    def missing_git(*args: Any, **kwargs: Any) -> None:
+        raise FileNotFoundError("git")
+
+    monkeypatch.setattr(orchestration.subprocess, "run", missing_git)
+
+    assert (
+        orchestration._source_commit(tmp_path)
+        == "unavailable:deterministic_non_git_non_manifest_source_root"
+    )
 
 
 def create_run(app: FastAPI) -> dict[str, Any]:
@@ -376,6 +394,9 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
             "approval_ledger.json",
             "event_ledger.jsonl",
             "execution_report.json",
+            "generated_test_execution.json",
+            "openapi.json",
+            "openapi_inventory.json",
             "validation_report.json",
             "decision.json",
             "application_archive.sha256",
@@ -444,6 +465,9 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
         )
 
         execution_report = json_from_zip(archive, prefix + "execution_report.json")
+        generated_test_execution = json_from_zip(archive, prefix + "generated_test_execution.json")
+        openapi_document = json_from_zip(archive, prefix + "openapi.json")
+        openapi_inventory = json_from_zip(archive, prefix + "openapi_inventory.json")
         assert execution_report == {
             "schema_version": "1.0",
             "run_id": run_id,
@@ -451,6 +475,10 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
             "generator_entrypoint": "scripts/run_portal_requirements_driven_application_engineering.py",
             "application_archive_sha256": expected_app_sha,
             "application_archive_size_bytes": len(app_download.content),
+            "generated_test_execution_sha256": hashlib.sha256(
+                json.dumps(generated_test_execution, sort_keys=True).encode("utf-8")
+            ).hexdigest(),
+            "openapi_sha256": openapi_inventory["openapi_sha256"],
             "mock_boundary": "enforced",
             "real_payment_calls": "disabled",
             "default_runtime_llm_calls": 0,
@@ -460,6 +488,13 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
             r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z",
             execution_report["completed_at_utc"],
         )
+        assert generated_test_execution["exit_code"] == 0
+        assert generated_test_execution["go_gate"] == "GO"
+        assert generated_test_execution["counts"]["collected"] > 0
+        assert openapi_document["openapi"].startswith("3.")
+        assert "/health" in openapi_document["paths"]
+        assert openapi_inventory["catalogue_only_fallback_used"] is False
+        assert {"method": "GET", "path": "/health"} in openapi_inventory["endpoint_inventory"]
 
         validation_report = json_from_zip(archive, prefix + "validation_report.json")
         assert validation_report["schema_version"] == "1.0"
@@ -474,6 +509,8 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
         assert {
             "generated application structure",
             "tests",
+            "tests executed",
+            "OpenAPI publication",
             "archive safety",
             "generation manifest",
             "mock boundary",
@@ -529,6 +566,40 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
         assert b"official_certification_granted" not in archive_bytes
         assert b"production_readiness_claimed" not in archive_bytes
         assert b"real_payment_calls\": \"enabled" not in archive_bytes
+
+
+def test_configured_publication_root_supports_read_only_project_root(tmp_path: Path) -> None:
+    publication_root = tmp_path / "writable_publications"
+    orchestrator = BrowserIntakeOrchestrator(
+        project_root=PROJECT_ROOT,
+        state_root=tmp_path / "portal_runs",
+        portfolio_state_root=tmp_path / "portfolio",
+        publication_root=publication_root,
+    )
+    run_id = orchestrator.create_run(requirements_text())["run_id"]
+    assert orchestrator.plan(run_id)["status"] == "plan_ready"
+    assert (
+        orchestrator.approve(
+            run_id,
+            actor="operator-a",
+            approval_token=APPROVAL_TOKEN,
+        )["status"]
+        == "approved"
+    )
+    assert orchestrator.execute(run_id)["status"] in {"queued", "already_queued"}
+
+    deadline = time.monotonic() + 10
+    terminal = orchestrator.get_run(run_id)
+    while terminal["state"] not in {"SUCCEEDED", "FAILED", "CANCELLED"} and time.monotonic() < deadline:
+        time.sleep(0.1)
+        terminal = orchestrator.get_run(run_id)
+
+    assert terminal["state"] == "SUCCEEDED"
+    registration = terminal["engineering_result"]["portfolio_registration"]
+    application_root = Path(registration["application_root"])
+    assert application_root.is_relative_to(publication_root)
+    assert not application_root.is_relative_to(PROJECT_ROOT)
+    assert orchestrator.application_archive(run_id).is_file()
 
 
 def test_downloads_are_unavailable_before_terminal_success(tmp_path: Path) -> None:

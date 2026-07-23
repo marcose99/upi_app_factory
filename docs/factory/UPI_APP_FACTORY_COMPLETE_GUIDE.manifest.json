@@ -1,6 +1,6 @@
 {
-  "controls_traced": 34,
-  "debug_plan_sha256": "d9c194573f264cbffa099a75a1288c713e24523fec869019e5956f9429e7847c",
+  "controls_traced": 37,
+  "debug_plan_sha256": "431655a8ceff1e970b97262dd1e0da18f4b318f3100d1982331d7252a400afb9",
   "diagrams": [
     "system context",
     "component architecture",
@@ -10,14 +10,14 @@
     "diagnostic decision flow"
   ],
   "generated_at_utc": "1970-01-01T00:00:00Z",
-  "html_sha256": "a883637841437e4343e471807ae34817fadad54bc3a21d926bea6cf17e23a10e",
-  "routes_traced": 34,
+  "html_sha256": "764ea187dd5eae88f1e9aafca35321aeb208317df4a414b297266a5b37a0fbb0",
+  "routes_traced": 36,
   "schema_version": "upi-app-factory.factory-documentation.v1",
   "source_traceability": [
     {
       "path": "factory/operator_portal/local_web_api.py",
-      "sha256": "b4802944366d2dcf05c80bec0f77bb17f9c4aee9dbc0b759c84702ac5cf9abb7",
-      "size_bytes": 29629
+      "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
+      "size_bytes": 30748
     },
     {
       "path": "factory/operator_portal/debug_plan_api.py",
@@ -31,23 +31,23 @@
     },
     {
       "path": "factory/operator_portal/web_ui/app.py",
-      "sha256": "793519356ff498f671473cc77f9c18474962a2500382d49ef644164a8b134c21",
-      "size_bytes": 5183
+      "sha256": "7c22bdb68ca1e20c779a8f9649b1dbf6e13324cd2953871ba27aa847f72bd777",
+      "size_bytes": 5359
     },
     {
       "path": "factory/operator_portal/web_ui/static/index.html",
-      "sha256": "3db0a85b0a21b00c3e6f3e168d48db6816b88e0c62cc02f2f56343f3a60d8ae6",
-      "size_bytes": 14297
+      "sha256": "ae18c148de02dce1fed213583b51da87c7d66ba4da91922bd13d547d5542d61e",
+      "size_bytes": 14663
     },
     {
       "path": "factory/operator_portal/web_ui/static/app.js",
-      "sha256": "a1963a7b552b6f2856da904569eb0753242f36a5e545f9854cd26e09a9eb56ee",
-      "size_bytes": 27185
+      "sha256": "2b66aae15fed742cb0f9ee4cdc90157067948bc8110f6e0e49d2a4373fcdbae8",
+      "size_bytes": 28470
     },
     {
       "path": "factory/operator_portal/browser_intake_orchestration.py",
-      "sha256": "2d2295a3998564cc9e8697fd12c6e1b1c08622429b7c9cfa64fdbb80c022ee85",
-      "size_bytes": 60193
+      "sha256": "5393822cd674822727a7793f9808ca0c968a02a5b13b4dd731f08c5739a6d006",
+      "size_bytes": 64742
     },
     {
       "path": "factory/debugging/debug_plan.py",
@@ -56,8 +56,8 @@
     },
     {
       "path": "factory/operator_portal/portfolio_api.py",
-      "sha256": "fe37ee598772ec96fe61c4df4cdb4ca1cc4662255a99edcaa61b34e46bd62b00",
-      "size_bytes": 16198
+      "sha256": "8873a41dc2f3b5ca61967ea319b2bfca081e9dbc3b702352845d1602c9405f0f",
+      "size_bytes": 19672
     },
     {
       "path": "factory/operator_portal/runtime_api.py",
@@ -66,8 +66,8 @@
     },
     {
       "path": "scripts/run_portal_requirements_driven_application_engineering.py",
-      "sha256": "93a9cd4d184431a3c824351666355d3363ec1a9199a73bde1ea29c1d1c62d1ac",
-      "size_bytes": 44885
+      "sha256": "fa0195030855a552b86e2f6f9068e96fba2e7729734ff5db16e4e1f3d75ec0ab",
+      "size_bytes": 54576
     },
     {
       "path": "scripts/build_factory_debug_plan.py",
@@ -81,8 +81,8 @@
     },
     {
       "path": "scripts/build_operator_portal_exhaustive_ui_manifest.py",
-      "sha256": "9281b440f43c3688b6d13c6060fa9634fa45da26d035b875fa73943b17f87496",
-      "size_bytes": 16925
+      "sha256": "ac98f852fa44308b9fabed68bbffdff2558f45f6ff603952393da8f42fefa928",
+      "size_bytes": 17492
     },
     {
       "path": "scripts/build_factory_complete_documentation.py",
@@ -91,13 +91,13 @@
     },
     {
       "path": "start_factory.sh",
-      "sha256": "b58e894a301cb6de450d1e6472c1ba7372c4b639af6169aee49c4d657effa74f",
-      "size_bytes": 2415
+      "sha256": "f196f0294a757ba1378ad76b17c86c3f688e55127d3f82c94ed4eddb73d887a5",
+      "size_bytes": 6442
     },
     {
       "path": "stop_factory.sh",
-      "sha256": "0e44189a8a40157135c6937f14601884ba2662a51837cc26d155ca8f059e4053",
-      "size_bytes": 1154
+      "sha256": "f5ffb4903f8fd1d2bb4ba37b5e0b52e1c1d775d69d891bda1c58a255d7447e8b",
+      "size_bytes": 1740
     },
     {
       "path": "config/factory_runtime.env.example",
@@ -105,5 +105,5 @@
       "size_bytes": 166
     }
   ],
-  "ui_manifest_sha256": "40cfee7f5b7ae5ea96a67de71325130f1574706d791ada936326f5586729c86d"
+  "ui_manifest_sha256": "19e7c143e5c5e6fc14821fc0f4ce9ffcdd0d6e9ff8c58589afc54f6534eb4b8a"
 }

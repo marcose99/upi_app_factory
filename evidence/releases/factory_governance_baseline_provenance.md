@@ -11,7 +11,7 @@ The baseline governance zip was found, hashed, and preserved.
 Source zip observed:
 
 ```text
-/home/marcose/Downloads/governed_agentic_factory_final_pack.zip
+${DOWNLOADS_DIR}/governed_agentic_factory_final_pack.zip
 ```
 
 SHA-256:

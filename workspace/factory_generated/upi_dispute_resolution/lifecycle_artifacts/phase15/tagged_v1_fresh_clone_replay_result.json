@@ -33,7 +33,7 @@
   "scoped_replay_results": [
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase13g_readonly_validation_guardrails.py"
       ],
       "required": true,
@@ -43,7 +43,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase14yz_operator_autonomy_v1_readiness.py"
       ],
       "required": true,
@@ -53,7 +53,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "tests/test_phase14yz_operator_autonomy_v1_readiness.py"

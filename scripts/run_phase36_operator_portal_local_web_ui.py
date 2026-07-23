@@ -18,6 +18,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--host", default="127.0.0.1", help="Local bind host.")
     parser.add_argument("--port", default=8036, type=int, help="Local bind port.")
+    parser.add_argument("--browser-state-root", type=Path, default=None)
+    parser.add_argument("--runtime-state-root", type=Path, default=None)
     parser.add_argument("--portfolio-state-root", type=Path, default=None)
     return parser.parse_args()
 
@@ -33,6 +35,8 @@ def main() -> int:
     uvicorn.run(
         create_web_ui_app(
             project_root=PROJECT_ROOT,
+            browser_state_root=args.browser_state_root,
+            runtime_state_root=args.runtime_state_root,
             portfolio_state_root=args.portfolio_state_root,
         ),
         host=args.host,

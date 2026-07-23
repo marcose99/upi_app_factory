@@ -37,12 +37,11 @@ git clone <repo-url>
 cd upi_app_factory
 git checkout <validated-release-tag>
 
-./factory doctor
-./factory bootstrap
-./factory generate
-./factory validate
-./factory portal
+./run_factory.sh --no-browser
 ```
 
-Until the unified `./factory` CLI is implemented, use the phase scripts listed in
-`COMMAND_REFERENCE.md`.
+Open the verified `/operator-ui/` URL printed by the command. The default path
+is deterministic, mock-safe, stores runtime state under `.var/upi_app_factory`,
+and requires no OpenAI API key. The former `./factory ...` quick path is only a
+future CLI concept; this repository must not create a root file named `factory`
+because `factory/` is already the Python package directory.

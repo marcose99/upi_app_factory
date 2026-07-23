@@ -18,7 +18,7 @@
   "command_results": [
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
@@ -28,11 +28,11 @@
       "command_id": "generated_app_local_tests",
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 10 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py . [ 10%]\n....                                                                     [ 50%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py . [ 60%]\n.                                                                        [ 70%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py . [ 80%]\n..                                                                       [100%]\n\n============================== 10 passed in 0.19s ==============================\n"
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: ${UPI_APP_FACTORY_REPO}\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 10 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py . [ 10%]\n....                                                                     [ 50%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py . [ 60%]\n.                                                                        [ 70%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py . [ 80%]\n..                                                                       [100%]\n\n============================== 10 passed in 0.19s ==============================\n"
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "workspace/factory_generated/upi_dispute_resolution/generated_application/phase13u_self_repairing_sla_escalation/generated_tests/test_generated_sla_escalation.py",
@@ -42,7 +42,7 @@
       "command_id": "capability_slice_tests",
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 5 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13u_self_repairing_sla_escalation/generated_tests/test_generated_sla_escalation.py . [ 20%]\n                                                                         [ 20%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13v_policy_governed_dispute_triage/generated_tests/test_generated_policy_governed_triage.py . [ 40%]\n                                                                         [ 40%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py . [ 60%]\n..                                                                       [100%]\n\n============================== 5 passed in 0.03s ===============================\n"
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: ${UPI_APP_FACTORY_REPO}\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 5 items\n\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13u_self_repairing_sla_escalation/generated_tests/test_generated_sla_escalation.py . [ 20%]\n                                                                         [ 20%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13v_policy_governed_dispute_triage/generated_tests/test_generated_policy_governed_triage.py . [ 40%]\n                                                                         [ 40%]\nworkspace/factory_generated/upi_dispute_resolution/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py . [ 60%]\n..                                                                       [100%]\n\n============================== 5 passed in 0.03s ===============================\n"
     }
   ],
   "created_at_utc": "2026-07-07T18:10:44+00:00",

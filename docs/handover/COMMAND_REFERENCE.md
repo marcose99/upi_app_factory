@@ -1,31 +1,32 @@
 # Command Reference
 
-Future unified CLI target:
+Canonical clean-clone startup:
 
 ```bash
-./factory doctor
-./factory bootstrap
-./factory reset-generated-app
-./factory generate
-./factory validate
-./factory audit
-./factory portal
-./factory package-handover
+./run_factory.sh --no-browser
+./run_factory.sh --host 127.0.0.1 --port 0 --state-root .var/upi_app_factory --url-file .var/upi_app_factory/operator_url.txt --no-browser
+./stop_factory.sh --state-root .var/upi_app_factory
 ```
 
-Current script equivalents:
+Lower-level launcher:
 
 ```bash
-python scripts/reset_generated_application_workspace.py --run-id first_governed_generation_run_001
-python scripts/run_phase13c_agent_runtime_dry_run.py
-python scripts/generate_phase13c_agent_runtime_portal.py
-python scripts/run_phase13c_self_correction_dry_run.py
-python scripts/generate_phase13c_self_correction_portal.py
-python scripts/validate_phase13c_agent_runtime_foundation.py
-python scripts/validate_phase13c_self_correction_governance.py
-python scripts/validate_phase13b_generated_application.py
-python scripts/validate_phase13b_progress_portal_observability.py
-python -m pytest -q
+./start_factory.sh --host 127.0.0.1 --port 8036 --state-root .var/upi_app_factory
+```
+
+The previously documented future `./factory ...` quick path is not currently
+possible in this repository because `factory/` is a Python package directory and
+no root executable named `factory` is created.
+
+Current script equivalents for the historical operator shortcuts:
+
+```bash
+# ./factory doctor
+scripts/validate_public_clone_readiness.py --repo . --license Apache-2.0
+
+# ./factory generate
+scripts/run_portal_requirements_driven_application_engineering.py \
+  --requirements examples/requirements/01_upi_failed_debit_no_credit.md
 ```
 
 Current generated application test command:

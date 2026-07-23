@@ -31,8 +31,8 @@ def tracked_files(root: Path) -> list[Path]:
 def allowed_deferred(line: str, legacy_checkout_root: Path) -> bool:
     fragments = (
         str(legacy_checkout_root),
-        f"github.com/marcose99/{LEGACY_REPOSITORY}",
-        f"github.com/marcose99/{LEGACY_REPOSITORY}.git",
+        f"github.com/legacy-owner/{LEGACY_REPOSITORY}",
+        f"github.com/legacy-owner/{LEGACY_REPOSITORY}.git",
     )
     return any(fragment in line for fragment in fragments)
 

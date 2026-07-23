@@ -428,6 +428,16 @@
     showReport(payload);
   }
 
+  async function useSampleRequirements() {
+    const payload = await request("/operator-portal/api/requirements/sample");
+    const input = document.getElementById("requirements-input");
+    if (input) {
+      input.value = payload.requirements || "";
+    }
+    setField("browser-run-sha", payload.sha256);
+    showReport(payload);
+  }
+
   async function submitRun() {
     const payload = await request("/operator-portal/api/runs", {
       method: "POST",
@@ -619,6 +629,34 @@
     showRuntime(payload);
   }
 
+  async function runtimeLogs() {
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/runtime/logs", {
+      method: "POST",
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+        run_id: portfolioRuntimeRunId(),
+        port: runtimePort(),
+      }),
+    });
+    showRuntime(payload);
+  }
+
+  async function runtimeMetrics() {
+    const identity = selectedRuntimeIdentity();
+    const payload = await request("/operator-portal/api/portfolio/runtime/metrics", {
+      method: "POST",
+      body: JSON.stringify({
+        app_id: identity.app_id,
+        version_id: identity.version_id,
+        run_id: portfolioRuntimeRunId(),
+        port: runtimePort(),
+      }),
+    });
+    showRuntime(payload);
+  }
+
   async function runtimeEvidence() {
     const payload = await request("/operator-portal/api/portfolio/evidence");
     showRuntime(payload);
@@ -657,6 +695,7 @@
     "refresh-guides": refreshGuides,
     "refresh-run": refreshCurrentRun,
     "validate-requirements": validateRequirements,
+    "use-sample-requirements": useSampleRequirements,
     "submit-run": submitRun,
     "generate-plan": generatePlan,
     "approve-engineering": approveEngineering,
@@ -668,6 +707,8 @@
     "runtime-start": runtimeStart,
     "runtime-openapi": runtimeOpenAPI,
     "runtime-scenarios": runtimeScenarios,
+    "runtime-logs": runtimeLogs,
+    "runtime-metrics": runtimeMetrics,
     "runtime-approve-restart": () => runtimeApprove("restart"),
     "runtime-restart": runtimeRestart,
     "runtime-approve-stop": () => runtimeApprove("stop"),

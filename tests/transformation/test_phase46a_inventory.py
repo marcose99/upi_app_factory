@@ -8,6 +8,11 @@ from tools.transformation_controller.phase46a import (
     scan_patterns,
 )
 
+# PUBLIC_HYGIENE_SYNTHETIC_PATH_FIXTURE:
+# These tests intentionally contain synthetic legacy operator paths so the
+# phase46a detector can prove it still finds and classifies them. The public
+# clone readiness validator excludes only this isolated fixture file.
+
 
 def write(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -45,7 +50,7 @@ def test_current_document_path_is_a_current_defect(tmp_path: Path) -> None:
 
 def test_numbered_phase_document_is_historical(tmp_path: Path) -> None:
     document = tmp_path / "docs" / "phase13c" / "old.md"
-    write(document, "Factory\x46romNothing /home/marcose/project\n")
+    write(document, "Factory\x46romNothing ${UPI_APP_FACTORY_REPO}\n")
     classifications = {item.classification for item in scan_patterns(tmp_path)}
     assert classifications == {"HISTORICAL_EVIDENCE"}
 
@@ -77,7 +82,7 @@ def test_generated_application_current_content_requires_migration(
     )
     write(
         generated,
-        "/home/marcose/projects/upi_dispute_resolution\x5ffactory\n",
+        "${UPI_APP_FACTORY_REPO}s/upi_dispute_resolution\x5ffactory\n",
     )
     classifications = {item.classification for item in scan_patterns(tmp_path)}
     assert classifications == {"CURRENT_GENERATED_CONTENT"}

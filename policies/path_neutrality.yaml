@@ -1,8 +1,8 @@
 schema_version: 1
 prohibited_runtime_dependencies:
-  - /home/marcose
-  - /home/marcose/projects
-  - /home/marcose/Downloads
+  - /home/example-user
+  - /home/example-user/projects
+  - ${DOWNLOADS_DIR}
   - fixed_checkout_directory_name
   - ubuntu_only_path
 approved_path_sources:

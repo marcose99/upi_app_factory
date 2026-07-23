@@ -143,6 +143,14 @@ def _sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _is_relative_to(path: Path, root: Path) -> bool:
+    try:
+        path.relative_to(root)
+    except ValueError:
+        return False
+    return True
+
+
 def _approval_token() -> str:
     return os.getenv("UPI_APP_FACTORY_PORTAL_APPROVAL_TOKEN", APPROVAL_TOKEN)
 
@@ -232,15 +240,19 @@ def _source_commit(project_root: Path) -> str:
     injected = os.getenv("UPI_APP_FACTORY_SOURCE_COMMIT")
     if injected:
         return injected
-    completed = subprocess.run(
-        ["git", "-C", str(project_root), "rev-parse", "HEAD"],
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-    commit = completed.stdout.strip()
-    if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
-        return commit
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(project_root), "rev-parse", "HEAD"],
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+    except FileNotFoundError:
+        completed = None
+    if completed is not None:
+        commit = completed.stdout.strip()
+        if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
+            return commit
     manifest_path = project_root / "FACTORY_EXPORT_MANIFEST.json"
     if manifest_path.is_file():
         manifest = _read_json(manifest_path)
@@ -284,6 +296,8 @@ def _write_generation_manifest(
     app_id: str = APP_ID,
     version_id: str | None = None,
     portfolio_registration: dict[str, Any] | None = None,
+    openapi: dict[str, Any] | None = None,
+    openapi_inventory: dict[str, Any] | None = None,
 ) -> None:
     entrypoint = project_root / GENERATOR_ENTRYPOINT
     if not entrypoint.is_file():
@@ -311,6 +325,10 @@ def _write_generation_manifest(
         manifest["version_id"] = version_id
     if portfolio_registration is not None:
         manifest["portfolio_registration"] = portfolio_registration
+    if openapi is not None:
+        manifest["openapi"] = openapi
+    if openapi_inventory is not None:
+        manifest["openapi_inventory"] = openapi_inventory
     _atomic_write_json(manifest_path, manifest)
 
 
@@ -400,6 +418,7 @@ class BrowserIntakeOrchestrator:
         project_root: Path,
         state_root: Path | None = None,
         portfolio_state_root: Path | None = None,
+        publication_root: Path | None = None,
     ) -> None:
         roots = resolve_state_roots(
             project_root=project_root,
@@ -408,6 +427,14 @@ class BrowserIntakeOrchestrator:
         )
         self.project_root = roots.project_root
         self.state_root = roots.browser_state_root
+        configured_publication_root = os.getenv("UPI_APP_FACTORY_PORTAL_PUBLICATION_ROOT")
+        self.publication_root = (
+            publication_root
+            if publication_root is not None
+            else Path(configured_publication_root).expanduser()
+            if configured_publication_root
+            else self.project_root / "workspace"
+        ).expanduser().resolve()
         self.portfolio_store = PortfolioStore(
             project_root=self.project_root,
             state_root=roots.portfolio_state_root,
@@ -649,18 +676,21 @@ class BrowserIntakeOrchestrator:
     def _publication_root(self, *, run_id: str, app_id: str) -> Path:
         app_id = validate_app_id(app_id)
         root = (
-            self.project_root
-            / "workspace"
+            self.publication_root
             / "factory_generated"
             / app_id
             / "portal_publications"
             / run_id
         ).resolve()
-        try:
-            root.relative_to(self.project_root.resolve())
-        except ValueError as exc:
-            raise OrchestrationConflict("Publication root must stay inside the project workspace.") from exc
+        self._assert_trusted_publication_path(root)
         return root
+
+    def _assert_trusted_publication_path(self, root: Path) -> None:
+        project_root = self.project_root.resolve()
+        publication_root = self.publication_root.resolve()
+        if _is_relative_to(root, project_root) or _is_relative_to(root, publication_root):
+            return
+        raise OrchestrationConflict("Publication root must stay inside a trusted local workspace.")
 
     def _state_app_id(self, state: dict[str, Any]) -> str:
         app_id = validate_app_id(str(state.get("app_id", APP_ID)))
@@ -682,21 +712,15 @@ class BrowserIntakeOrchestrator:
                 application_root = registration.get("application_root")
                 if isinstance(application_root, str) and application_root:
                     root = Path(application_root).expanduser().resolve()
-                    try:
-                        root.relative_to(self.project_root.resolve())
-                    except ValueError as exc:
-                        raise OrchestrationConflict(
-                            "Trusted publication metadata left the project workspace."
-                        ) from exc
+                    self._assert_trusted_publication_path(root)
                     return root
             output_root = result.get("output_root")
             if isinstance(output_root, str) and output_root:
                 root = Path(output_root).expanduser().resolve()
-                try:
-                    root.relative_to(self.project_root.resolve())
-                except ValueError:
-                    pass
-                else:
+                if _is_relative_to(root, self.project_root.resolve()) or _is_relative_to(
+                    root,
+                    self.publication_root.resolve(),
+                ):
                     return root
         state = _read_json(paths.state)
         app_id = self._state_app_id(state)
@@ -726,6 +750,8 @@ class BrowserIntakeOrchestrator:
                 if portfolio_registration and portfolio_registration.get("version_id")
                 else None,
                 portfolio_registration=portfolio_registration,
+                openapi=result.get("openapi") if isinstance(result.get("openapi"), dict) else None,
+                openapi_inventory=result.get("openapi_inventory") if isinstance(result.get("openapi_inventory"), dict) else None,
             )
             digest = _zip_generated_application(
                 archive_path=archive,
@@ -790,6 +816,19 @@ class BrowserIntakeOrchestrator:
             requirements_sha256=requirements_sha256,
         )
         _atomic_write_json(evidence_root / "validation_report.json", validation_report)
+        result = _read_json(paths.result)
+        if isinstance(result.get("generated_test_execution"), dict):
+            _atomic_write_json(
+                evidence_root / "generated_test_execution.json",
+                cast(dict[str, Any], result["generated_test_execution"]),
+            )
+        if isinstance(result.get("openapi"), dict):
+            _atomic_write_json(evidence_root / "openapi.json", cast(dict[str, Any], result["openapi"]))
+        if isinstance(result.get("openapi_inventory"), dict):
+            _atomic_write_json(
+                evidence_root / "openapi_inventory.json",
+                cast(dict[str, Any], result["openapi_inventory"]),
+            )
         _atomic_write_json(
             evidence_root / "decision.json",
             self._evidence_decision(
@@ -913,6 +952,8 @@ class BrowserIntakeOrchestrator:
             "generator_entrypoint": GENERATOR_ENTRYPOINT,
             "application_archive_sha256": application_archive_sha256,
             "application_archive_size_bytes": application_archive_size_bytes,
+            "generated_test_execution_sha256": _json_sha256(cast(dict[str, Any], result.get("generated_test_execution", {}))),
+            "openapi_sha256": cast(dict[str, Any], result.get("openapi_inventory", {})).get("openapi_sha256"),
             "mock_boundary": "enforced",
             "real_payment_calls": "disabled",
             "default_runtime_llm_calls": 0,
@@ -952,6 +993,22 @@ class BrowserIntakeOrchestrator:
                 "tests",
                 bool(result.get("generated_tests")),
                 "Generated application result lists deterministic tests.",
+            ),
+            (
+                "tests executed",
+                isinstance(result.get("generated_test_execution"), dict)
+                and result["generated_test_execution"].get("exit_code") == 0
+                and result["generated_test_execution"].get("go_gate") == "GO"
+                and result["generated_test_execution"].get("counts", {}).get("collected", 0) > 0,
+                "Generated application pytest suite executed inside the governed portal run before GO.",
+            ),
+            (
+                "OpenAPI publication",
+                isinstance(result.get("openapi"), dict)
+                and isinstance(result.get("openapi_inventory"), dict)
+                and result["openapi_inventory"].get("catalogue_only_fallback_used") is False
+                and bool(result["openapi_inventory"].get("endpoint_inventory")),
+                "Generated application OpenAPI document was captured from the generated FastAPI app.",
             ),
             (
                 "archive safety",
@@ -1175,9 +1232,10 @@ class BrowserIntakeOrchestrator:
         app_id = self._state_app_id(state)
         application_root = self._trusted_application_root(paths)
         evidence_root = Path(str(result.get("evidence_root", paths.engineering_evidence))).expanduser().resolve()
-        try:
-            evidence_root.relative_to(self.project_root.resolve())
-        except ValueError:
+        if not (
+            _is_relative_to(evidence_root, self.project_root.resolve())
+            or _is_relative_to(evidence_root, self.publication_root.resolve())
+        ):
             evidence_root = self._publication_root(run_id=run_id, app_id=app_id) / "engineering_evidence"
         version_id = _deterministic_version_id(
             app_id=app_id,
@@ -1205,8 +1263,12 @@ class BrowserIntakeOrchestrator:
             version_id=version_id,
             requirements_sha256=requirements_sha256,
             generated_application=application_root,
+            openapi=result.get("openapi") if isinstance(result.get("openapi"), dict) else None,
+            openapi_inventory=result.get("openapi_inventory") if isinstance(result.get("openapi_inventory"), dict) else None,
         )
         manifest = _read_json(application_root / "generation_manifest.json")
+        if not isinstance(manifest.get("openapi"), dict) or not isinstance(manifest.get("openapi_inventory"), dict):
+            raise PortfolioError("generated OpenAPI evidence is required for portfolio registration")
         evidence = {
             "schema_version": "1.0",
             "artifact_type": "portfolio_registration_evidence",
@@ -1254,6 +1316,8 @@ class BrowserIntakeOrchestrator:
             requirements_sha256=requirements_sha256,
             generated_application=application_root,
             portfolio_registration=registration,
+            openapi=manifest.get("openapi") if isinstance(manifest.get("openapi"), dict) else None,
+            openapi_inventory=manifest.get("openapi_inventory") if isinstance(manifest.get("openapi_inventory"), dict) else None,
         )
         metadata["portfolio_registration"] = registration
         _atomic_write_json(metadata_path, metadata)
@@ -1380,6 +1444,17 @@ class BrowserIntakeOrchestrator:
             "health_contract": result.get("health_contract") is True,
             "ready_contract": result.get("ready_contract") is True,
             "tests_present": bool(result.get("generated_tests")),
+            "tests_executed": (
+                isinstance(result.get("generated_test_execution"), dict)
+                and result["generated_test_execution"].get("exit_code") == 0
+                and result["generated_test_execution"].get("go_gate") == "GO"
+                and result["generated_test_execution"].get("counts", {}).get("collected", 0) > 0
+            ),
+            "openapi_published": (
+                isinstance(result.get("openapi"), dict)
+                and isinstance(result.get("openapi_inventory"), dict)
+                and result["openapi_inventory"].get("catalogue_only_fallback_used") is False
+            ),
             "source_present": application_root.is_dir() and any(application_root.rglob("*.py")),
             "archive_safe": True,
             "default_llm_calls": result.get("llm_calls", 0),
@@ -1395,6 +1470,8 @@ class BrowserIntakeOrchestrator:
             gates["health_contract"] is True
             and gates["ready_contract"] is True
             and gates["tests_present"] is True
+            and gates["tests_executed"] is True
+            and gates["openapi_published"] is True
             and gates["source_present"] is True
             and gates["default_llm_calls"] == 0
             and gates["real_payment_calls"] == "disabled"

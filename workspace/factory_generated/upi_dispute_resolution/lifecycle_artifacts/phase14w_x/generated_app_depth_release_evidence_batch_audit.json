@@ -69,7 +69,7 @@
   "read_only_gate_results": [
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "mypy",
         "."
@@ -86,7 +86,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase13g_readonly_validation_guardrails.py"
       ],
       "gate_id": "phase13g_legacy_drift_guardrail",
@@ -101,7 +101,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase14v_autonomous_quality_gate_pipeline.py"
       ],
       "gate_id": "phase14v_artifact_validator",
@@ -116,7 +116,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "tests/test_phase14v_autonomous_quality_gate_pipeline.py"
@@ -128,12 +128,12 @@
       "returncode": 0,
       "status": "PASS",
       "stderr_tail": "",
-      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: /home/marcose/projects/upi_dispute_resolution_factory\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 7 items\n\ntests/test_phase14v_autonomous_quality_gate_pipeline.py .......          [100%]\n\n============================== 7 passed in 0.05s ===============================\n",
+      "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0\nrootdir: ${UPI_APP_FACTORY_REPO}\nconfigfile: pyproject.toml\nplugins: anyio-4.14.1, langsmith-0.9.7\ncollected 7 items\n\ntests/test_phase14v_autonomous_quality_gate_pipeline.py .......          [100%]\n\n============================== 7 passed in 0.05s ===============================\n",
       "tier": "targeted_tests"
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "ruff",
         "check",
@@ -153,7 +153,7 @@
   "read_only_gate_specs": [
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase14v_autonomous_quality_gate_pipeline.py"
       ],
       "gate_id": "phase14v_artifact_validator",
@@ -164,7 +164,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "tests/test_phase14v_autonomous_quality_gate_pipeline.py"
@@ -177,7 +177,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase13g_readonly_validation_guardrails.py"
       ],
       "gate_id": "phase13g_legacy_drift_guardrail",
@@ -188,7 +188,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "ruff",
         "check",
@@ -202,7 +202,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "mypy",
         "."

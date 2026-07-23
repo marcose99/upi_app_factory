@@ -1,0 +1,14 @@
+.git
+.github
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.venv
+__pycache__
+*.py[cod]
+.var
+evidence
+workspace
+factory_governance/baseline_original
+*.log
+*.tmp

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 from html import escape
 from pathlib import Path
 from typing import Any
@@ -237,6 +238,71 @@ class PortfolioAPI:
             "openapi": openapi,
         }
 
+    def logs(self, request: PortfolioReadRequest) -> dict[str, Any]:
+        try:
+            status = self.supervisor.status(
+                app_id=request.app_id,
+                version_id=request.version_id,
+                run_id=request.run_id,
+                port=request.port,
+            )
+            version = self.catalogue.get(app_id=request.app_id, version_id=request.version_id)
+        except PortfolioError as exc:
+            raise HTTPException(status_code=400, detail={"status": "rejected", "error": str(exc)}) from exc
+        log_path = self.store.runtime_dir(request.run_id) / "runtime_stdout.log"
+        logs = ""
+        if log_path.is_file():
+            logs = log_path.read_bytes()[-64 * 1024 :].decode("utf-8", errors="replace").replace("\r", "\\r")
+        return {
+            "status": "available" if log_path.is_file() else "missing",
+            "local_only": True,
+            "loopback_only": True,
+            "mock_only": True,
+            "app_id": request.app_id,
+            "version_id": request.version_id,
+            "run_id": request.run_id,
+            "generated_run_id": version.generated_run_id,
+            "requirements_sha256": version.requirements_digest,
+            "version_identity_sha256": version.identity_sha256,
+            "runtime_state": status.state.value,
+            "log_sha256": hashlib.sha256(logs.encode("utf-8")).hexdigest(),
+            "logs": logs,
+        }
+
+    def metrics(self, request: PortfolioReadRequest) -> dict[str, Any]:
+        try:
+            status = self.supervisor.status(
+                app_id=request.app_id,
+                version_id=request.version_id,
+                run_id=request.run_id,
+                port=request.port,
+            )
+            version = self.catalogue.get(app_id=request.app_id, version_id=request.version_id)
+        except PortfolioError as exc:
+            raise HTTPException(status_code=400, detail={"status": "rejected", "error": str(exc)}) from exc
+        scenarios_path = self.store.scenarios_path(request.run_id)
+        scenarios = self.store.read_json(scenarios_path) if scenarios_path.is_file() else {}
+        scenario_results = scenarios.get("results", [])
+        return {
+            "status": "available",
+            "local_only": True,
+            "loopback_only": True,
+            "mock_only": True,
+            "app_id": request.app_id,
+            "version_id": request.version_id,
+            "run_id": request.run_id,
+            "generated_run_id": version.generated_run_id,
+            "requirements_sha256": version.requirements_digest,
+            "version_identity_sha256": version.identity_sha256,
+            "runtime_state": status.state.value,
+            "runtime_health": status.health,
+            "event_count": len(self.store.read_events(request.run_id)),
+            "scenario_count": len(scenario_results) if isinstance(scenario_results, list) else 0,
+            "scenario_decision": scenarios.get("decision", "UNKNOWN"),
+            "real_payment_calls": version.policy.real_payment_calls,
+            "default_runtime_llm_calls": version.policy.default_runtime_llm_calls,
+        }
+
     def restart(self, request: PortfolioRuntimeActionRequest) -> dict[str, Any]:
         self._consume(action="restart", scope=request.run_id, nonce=request.approval_nonce)
         try:
@@ -411,6 +477,14 @@ def build_portfolio_router(*, project_root: Path, state_root: Path | None = None
         request: PortfolioVersionRequest,
     ) -> dict[str, Any]:
         return api.openapi_document(request)
+
+    @router.post("/runtime/logs")
+    async def portfolio_logs(request: PortfolioReadRequest) -> dict[str, Any]:
+        return api.logs(request)
+
+    @router.post("/runtime/metrics")
+    async def portfolio_metrics(request: PortfolioReadRequest) -> dict[str, Any]:
+        return api.metrics(request)
 
     @router.post("/runtime/restart", status_code=202)
     async def portfolio_restart(request: PortfolioRuntimeActionRequest) -> dict[str, Any]:

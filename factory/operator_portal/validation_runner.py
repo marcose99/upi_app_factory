@@ -32,12 +32,13 @@ class AllowedValidationCommand:
     working_directory: Path = PROJECT_ROOT
 
     def as_report_entry(self) -> dict[str, Any]:
+        command = [_portable_command_part(part) for part in self.argv]
         return {
             "command_id": self.command_id,
             "description": self.description,
-            "command": list(self.argv),
-            "command_display": " ".join(self.argv),
-            "working_directory": str(self.working_directory),
+            "command": command,
+            "command_display": " ".join(command),
+            "working_directory": _portable_working_directory(self.working_directory),
         }
 
 
@@ -89,6 +90,26 @@ DEFAULT_COMMAND_IDS = tuple(command.command_id for command in ALLOWLIST if comma
 
 class CommandNotAllowedError(ValueError):
     """Raised when a caller requests a command outside the governed allowlist."""
+
+
+def _portable_command_part(part: str) -> str:
+    if part == sys.executable:
+        return "python"
+    try:
+        path = Path(part)
+        if path.is_absolute():
+            return path.relative_to(PROJECT_ROOT).as_posix()
+    except ValueError:
+        pass
+    return part
+
+
+def _portable_working_directory(path: Path) -> str:
+    try:
+        relative = path.relative_to(PROJECT_ROOT)
+    except ValueError:
+        return str(path)
+    return "." if relative == Path(".") else relative.as_posix()
 
 
 class ValidationRunnerService:

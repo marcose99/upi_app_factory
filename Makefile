@@ -1,4 +1,4 @@
-.PHONY: setup validate validate-governance test lint type run release-pack phase43-demo-reviewer-pack phase59-60-deep-engineering-closure
+.PHONY: setup validate validate-governance validate-public-clone validate-docker-platform test lint type run stop release-pack phase43-demo-reviewer-pack phase59-60-deep-engineering-closure
 
 setup:
 	python3 -m venv .venv
@@ -20,11 +20,20 @@ validate-governance:
 	python -m factory.validators.validate_mock_boundaries
 	python -m factory.validators.validate_evidence_ledger
 
+validate-docker-platform:
+	python scripts/validate_docker_platform_contract.py
+
 validate: lint type test validate-governance
 	python -m factory.validators.validate_release_readiness
 
+validate-public-clone:
+	python scripts/validate_public_clone_readiness.py --repo . --license Apache-2.0
+
 run:
-	uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+	./run_factory.sh --no-browser
+
+stop:
+	./stop_factory.sh
 
 release-pack:
 	python -m factory.release_pack.generate

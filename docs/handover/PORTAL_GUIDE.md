@@ -1,11 +1,9 @@
 # Portal Guide
 
-Main portals:
+Main portal:
 
 ```text
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_generation_progress_portal.html
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_agent_runtime_portal.html
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_self_correction_portal.html
+http://127.0.0.1:8036/operator-ui/
 ```
 
 The portal set should show:
@@ -21,17 +19,14 @@ The portal set should show:
 - warnings/errors triage
 - tool execution summary
 - handoff graph
+- Charts and visuals
 - observability readiness
 - reset/regeneration history
 - generated app capability map
 - mock ecosystem boundary
 - known gaps
 - next recommended action
+- Use Sample Requirements loading from `examples/requirements/01_upi_failed_debit_no_credit.md`
 
-Charts and visuals may include:
-- progress bars
-- validation bar charts
-- observability readiness charts
-- donut gauges
-- agent flow diagrams
-- maturity trend SVGs
+The sample route is additive. Operators may still paste or upload their own
+requirements through governed intake.

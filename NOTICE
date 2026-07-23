@@ -1,0 +1,12 @@
+UPI App Factory
+Copyright 2026 UPI App Factory contributors
+
+This repository contains a local-first, mock-only governed software factory for
+UPI dispute-resolution application engineering exercises.
+
+The project is not NPCI certified, not RBI certified, not live-bank integrated,
+and does not claim payment-network, bank, PSP, regulator, or certifying-authority
+approval. External payment ecosystems remain mocked or simulated.
+
+Apache-2.0 licensing of this repository does not grant rights in third-party
+names, marks, regulatory programs, payment rails, or external service providers.

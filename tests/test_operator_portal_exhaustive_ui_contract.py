@@ -55,9 +55,9 @@ def test_exhaustive_ui_manifest_cli_matches_required_schema(tmp_path: Path) -> N
     assert manifest["summary"] == {
         "pages": 1,
         "inputs": 7,
-        "controls": 34,
+        "controls": 37,
         "forms": 0,
-        "routes": 34,
+        "routes": 36,
     }
     assert {item["id"] for item in manifest["inputs"]} == {
         "requirements-input",
@@ -147,6 +147,8 @@ for (const route of [
   "POST /operator-portal/api/portfolio/runtime/stop",
   "POST /operator-portal/api/portfolio/runtime/openapi",
   "POST /operator-portal/api/portfolio/scenarios",
+  "POST /operator-portal/api/portfolio/runtime/logs",
+  "POST /operator-portal/api/portfolio/runtime/metrics",
 ]) {
   test.setRoute(route, { state: "READY", binding: { port: 19042 }, health: { status: "ok" }, mock_safe_local: true });
 }
@@ -157,9 +159,10 @@ const actions = [
   "refresh-health", "refresh-evidence", "refresh-download", "refresh-guides",
   "validation-dry-run", "validation-run", "latest-report", "view-factory-debug-plan",
   "view-factory-documentation", "export-download",
-  "validate-requirements", "submit-run", "generate-plan", "approve-engineering",
+  "use-sample-requirements", "validate-requirements", "submit-run", "generate-plan", "approve-engineering",
   "start-engineering", "refresh-run", "view-validation-report", "view-evidence",
   "runtime-approve-start", "runtime-start", "runtime-openapi", "runtime-scenarios",
+  "runtime-logs", "runtime-metrics",
   "runtime-approve-restart", "runtime-restart", "runtime-approve-stop", "runtime-stop",
   "runtime-approve-stop-all", "runtime-stop-all", "runtime-evidence",
 ];

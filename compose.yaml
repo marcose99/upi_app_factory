@@ -1,0 +1,41 @@
+services:
+  factory-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: upi-app-factory-portal:local
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    user: "${UPI_APP_FACTORY_CONTAINER_UID:-1000}:${UPI_APP_FACTORY_CONTAINER_GID:-1000}"
+    environment:
+      UPI_APP_FACTORY_HOST: "0.0.0.0"
+      UPI_APP_FACTORY_PORT: "8036"
+      UPI_APP_FACTORY_STATE_ROOT: "/app/.var/operator_portal"
+      UPI_APP_FACTORY_PORTAL_PUBLICATION_ROOT: "/app/.var/operator_portal/publications"
+      UPI_APP_FACTORY_LOG_LEVEL: "${UPI_APP_FACTORY_LOG_LEVEL:-INFO}"
+      FACTORY_LLM_ENABLED: "0"
+      UPI_APP_FACTORY_LLM_ENABLED: "0"
+      REAL_PAYMENT_CALLS: "disabled"
+      UPI_APP_FACTORY_REAL_PAYMENT_CALLS: "disabled"
+      MOCK_BOUNDARY: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+    ports:
+      - "127.0.0.1:${UPI_APP_FACTORY_HOST_PORT:-${UPI_APP_FACTORY_PORT:-8036}}:8036"
+    volumes:
+      - factory-portal-var:/app/.var
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import os, urllib.request; port=os.environ.get('UPI_APP_FACTORY_PORT','8036'); urllib.request.urlopen(f'http://127.0.0.1:{port}/health', timeout=2).read()"
+      interval: 5s
+      timeout: 3s
+      start_period: 5s
+      retries: 12
+    restart: "no"
+
+volumes:
+  factory-portal-var:
+    name: upi-app-factory-portal-var

@@ -76,6 +76,8 @@ def create_web_ui_app(
     download_center: DownloadCenterService | None = None,
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
+    browser_state_root: Path | None = None,
+    publication_root: Path | None = None,
     runtime_state_root: Path | None = None,
     portfolio_state_root: Path | None = None,
 ) -> FastAPI:
@@ -84,6 +86,8 @@ def create_web_ui_app(
         download_center=download_center,
         validation_runner=validation_runner,
         browser_orchestrator=browser_orchestrator,
+        browser_state_root=browser_state_root,
+        publication_root=publication_root,
         runtime_state_root=runtime_state_root,
         portfolio_state_root=portfolio_state_root,
     )

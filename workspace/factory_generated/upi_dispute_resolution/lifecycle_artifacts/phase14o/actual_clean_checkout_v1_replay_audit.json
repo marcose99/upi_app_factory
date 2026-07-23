@@ -24,7 +24,7 @@
         "git",
         "clone",
         "--no-hardlinks",
-        "/home/marcose/projects/upi_dispute_resolution_factory",
+        "${UPI_APP_FACTORY_REPO}",
         "/tmp/upi_factory_v1_phase14o_hygiene_replay_20260707_221421_IST/upi_app_factory"
       ],
       "command_id": "git_clone_local_repository",
@@ -59,7 +59,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "--version"
       ],
       "command_id": "verify_python_310_runtime",
@@ -70,7 +70,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/validate_phase14n_v1_release_candidate_replay_gate.py"
       ],
       "command_id": "validate_phase14n_replay_gate",
@@ -81,7 +81,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "tests/test_phase14n_v1_release_candidate_replay_gate.py"
@@ -94,7 +94,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "-m",
         "pytest",
         "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
@@ -109,7 +109,7 @@
     },
     {
       "command": [
-        "/home/marcose/projects/upi_dispute_resolution_factory/.venv/bin/python",
+        "python",
         "scripts/build_v1_release_candidate_replay_gate.py"
       ],
       "command_id": "build_replay_gate_evidence_from_checkout",
@@ -150,7 +150,7 @@
   ],
   "requirement_id": "upi_dispute_resolution.default_requirement",
   "schema_version": "actual-clean-checkout-v1-replay-proof.v1",
-  "source_root": "/home/marcose/projects/upi_dispute_resolution_factory",
+  "source_root": "${UPI_APP_FACTORY_REPO}",
   "status": "ACTUAL_CLEAN_CHECKOUT_V1_REPLAY_PROOF_READY",
   "supporting_replay_gate_expected_status": "V1_RELEASE_CANDIDATE_REPLAY_GATE_READY",
   "supporting_replay_gate_status": "V1_RELEASE_CANDIDATE_REPLAY_GATE_READY",

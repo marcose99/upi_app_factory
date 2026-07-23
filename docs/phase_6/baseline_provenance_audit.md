@@ -18,7 +18,7 @@
     ## Source ZIP
 
     ```text
-    /home/marcose/Downloads/governed_agentic_factory_final_pack.zip
+    ${DOWNLOADS_DIR}/governed_agentic_factory_final_pack.zip
     ```
 
     SHA-256:

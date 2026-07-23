@@ -3,7 +3,7 @@
   "created_at_utc": "2026-07-04T13:49:25.608298+00:00",
   "provenance_status": "PROVEN_AND_PRESERVED",
   "source_zip": {
-    "original_path_observed": "/home/marcose/Downloads/governed_agentic_factory_final_pack.zip",
+    "original_path_observed": "${DOWNLOADS_DIR}/governed_agentic_factory_final_pack.zip",
     "filename": "governed_agentic_factory_final_pack.zip",
     "sha256": "24d68830bfd9ac162ac7cfad60bc686df8c170db91bd10360e9e7c66966cfe1f",
     "size_bytes": 37942

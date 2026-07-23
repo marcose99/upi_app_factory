@@ -137,7 +137,7 @@ class DeepPortalIntegration:
         self.project_root = project_root.resolve()
         self.campaign_root = self.project_root / "workspace" / "deep_engineering_campaign"
         self.runtime_root = self.campaign_root / "phase58_portal_runtime"
-        self.default_requirements = self.project_root / "tests" / "fixtures" / "phase53" / "failed_debit_requirements.md"
+        self.default_requirements = self.project_root / "examples" / "requirements" / "01_upi_failed_debit_no_credit.md"
         self.source_root = self.campaign_root / "generated_app" / APP_ID
         self.evidence_root = self.source_root / "evidence"
         self.verification_root = self.evidence_root / "phase57_verification"

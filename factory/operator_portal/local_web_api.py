@@ -42,6 +42,7 @@ from factory.operator_portal.validation_runner import CommandNotAllowedError, Va
 APP_ID = "upi_dispute_resolution"
 PHASE = "phase35_operator_portal_local_web_api"
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+SAMPLE_REQUIREMENTS_PATH = Path("examples/requirements/01_upi_failed_debit_no_credit.md")
 LOGGER = get_logger(__name__)
 
 LOCAL_API_SAFETY_BOUNDARIES: dict[str, Any] = {
@@ -104,6 +105,7 @@ class OperatorPortalLocalWebAPI:
         validation_runner: ValidationRunnerService | None = None,
         browser_orchestrator: BrowserIntakeOrchestrator | None = None,
         browser_state_root: Path | None = None,
+        publication_root: Path | None = None,
         portfolio_state_root: Path | None = None,
         runtime_state_root: Path | None = None,
         phase69_state_root: Path | None = None,
@@ -125,6 +127,7 @@ class OperatorPortalLocalWebAPI:
         self.browser_orchestrator = browser_orchestrator or BrowserIntakeOrchestrator(
             project_root=self.project_root,
             state_root=self.browser_state_root,
+            publication_root=publication_root,
             portfolio_state_root=self.portfolio_state_root,
         )
         self.deep_portal = DeepPortalIntegration(project_root=self.project_root)
@@ -277,6 +280,23 @@ class OperatorPortalLocalWebAPI:
             "status": "available",
             "payload": build_operator_guide_index(project_root=self.project_root),
             "operator_message": "Operator guides and status taxonomy are available locally.",
+            "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+        }
+
+    def sample_requirements(self) -> dict[str, Any]:
+        sample_path = self.project_root / SAMPLE_REQUIREMENTS_PATH
+        text = sample_path.read_text(encoding="utf-8")
+        import hashlib
+
+        return {
+            "status": "available",
+            "path": SAMPLE_REQUIREMENTS_PATH.as_posix(),
+            "requirements": text,
+            "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "operator_message": (
+                "Sample requirements loaded locally. Operators may still paste or upload "
+                "their own requirements through the intake workflow."
+            ),
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -436,6 +456,7 @@ def create_app(
     validation_runner: ValidationRunnerService | None = None,
     browser_orchestrator: BrowserIntakeOrchestrator | None = None,
     browser_state_root: Path | None = None,
+    publication_root: Path | None = None,
     runtime_state_root: Path | None = None,
     portfolio_state_root: Path | None = None,
     phase69_state_root: Path | None = None,
@@ -447,6 +468,7 @@ def create_app(
         validation_runner=validation_runner,
         browser_orchestrator=browser_orchestrator,
         browser_state_root=browser_state_root,
+        publication_root=publication_root,
         portfolio_state_root=portfolio_state_root,
         runtime_state_root=runtime_state_root,
         phase69_state_root=phase69_state_root,
@@ -546,6 +568,10 @@ def create_app(
     @app.get("/portal/operator-guides")
     async def operator_guides() -> dict[str, Any]:
         return api.operator_guides()
+
+    @app.get("/operator-portal/api/requirements/sample")
+    async def sample_requirements() -> dict[str, Any]:
+        return api.sample_requirements()
 
     @app.post("/operator-portal/api/requirements/validate")
     async def validate_requirements(request: RequirementsRequest) -> dict[str, Any]:

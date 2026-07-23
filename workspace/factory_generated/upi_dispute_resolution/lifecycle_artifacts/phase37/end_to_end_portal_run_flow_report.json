@@ -169,7 +169,7 @@
         "python -m pytest tests/test_phase31_deep_generated_application_export_download_center.py"
       ],
       "zip_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
-      "zip_size_bytes": 30104,
+      "zip_size_bytes": 30127,
       "zip_status": "available"
     },
     "phase32_download_center_service_status": {
@@ -247,10 +247,10 @@
       "phase31_export_phase": "phase31_deep_generated_application_export_download_center",
       "phase32_service_phase": "phase32_operator_portal_download_center_integration",
       "real_secrets_allowed": false,
-      "zip_size_bytes": 30104
+      "zip_size_bytes": 30127
     },
     "bundle_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
-    "download_ready_path": "/home/marcose/projects/.upi_app_factory_worktrees/phase50a-runtime-operations-foundation/workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+    "download_ready_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
     "phase31_export_invoked": true,
     "status": "export_ready"
   },
@@ -278,7 +278,7 @@
   },
   "stages": {
     "download_available": {
-      "download_ready_path": "/home/marcose/projects/.upi_app_factory_worktrees/phase50a-runtime-operations-foundation/workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
+      "download_ready_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
       "state": "available",
       "status": "passed"
     },
@@ -290,7 +290,7 @@
     },
     "export_bundle_ready": {
       "bundle_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
-      "export_manifest_path": "/home/marcose/projects/.upi_app_factory_worktrees/phase50a-runtime-operations-foundation/workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/staging/phase31_deep_generated_application_bundle/export_manifest.json",
+      "export_manifest_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/staging/phase31_deep_generated_application_bundle/export_manifest.json",
       "state": "ready",
       "status": "passed"
     },
@@ -333,19 +333,19 @@
       "command_results": [
         {
           "command": [
-            "/home/marcose/projects/upi_app_factory/.venv/bin/python",
+            "python",
             "-c",
             "print('phase34 validation runner self-check')"
           ],
-          "command_display": "/home/marcose/projects/upi_app_factory/.venv/bin/python -c print('phase34 validation runner self-check')",
+          "command_display": "python -c print('phase34 validation runner self-check')",
           "command_id": "phase34_runner_self_check",
           "description": "Small safe self-check used by the Phase 34 validator.",
-          "duration_seconds": 0.0163,
+          "duration_seconds": 0.024292,
           "return_code": 0,
           "status": "passed",
           "stderr_preview": "",
           "stdout_preview": "phase34 validation runner self-check\n",
-          "working_directory": "/home/marcose/projects/.upi_app_factory_worktrees/phase50a-runtime-operations-foundation"
+          "working_directory": "."
         }
       ],
       "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
@@ -370,14 +370,14 @@
     "command_results": [
       {
         "command": [
-          "/home/marcose/projects/upi_app_factory/.venv/bin/python",
+          "python",
           "-c",
           "print('phase34 validation runner self-check')"
         ],
-        "command_display": "/home/marcose/projects/upi_app_factory/.venv/bin/python -c print('phase34 validation runner self-check')",
+        "command_display": "python -c print('phase34 validation runner self-check')",
         "command_id": "phase34_runner_self_check",
         "description": "Small safe self-check used by the Phase 34 validator.",
-        "working_directory": "/home/marcose/projects/.upi_app_factory_worktrees/phase50a-runtime-operations-foundation"
+        "working_directory": "."
       }
     ],
     "dry_run": true,
@@ -416,23 +416,23 @@
     "command_results": [
       {
         "command": [
-          "/home/marcose/projects/upi_app_factory/.venv/bin/python",
+          "python",
           "-c",
           "print('phase34 validation runner self-check')"
         ],
-        "command_display": "/home/marcose/projects/upi_app_factory/.venv/bin/python -c print('phase34 validation runner self-check')",
+        "command_display": "python -c print('phase34 validation runner self-check')",
         "command_id": "phase34_runner_self_check",
         "description": "Small safe self-check used by the Phase 34 validator.",
-        "duration_seconds": 0.0163,
+        "duration_seconds": 0.024292,
         "return_code": 0,
         "status": "passed",
         "stderr_preview": "",
         "stdout_preview": "phase34 validation runner self-check\n",
-        "working_directory": "/home/marcose/projects/.upi_app_factory_worktrees/phase50a-runtime-operations-foundation"
+        "working_directory": "."
       }
     ],
     "dry_run": false,
-    "duration_seconds": 0.01632,
+    "duration_seconds": 0.024363,
     "phase": "phase34_operator_portal_governed_validation_runner",
     "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
     "safety_boundaries": {

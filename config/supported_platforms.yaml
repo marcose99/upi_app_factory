@@ -1,0 +1,29 @@
+product: UPI App Factory
+contract_id: supported-platform-contract-v32
+certification_posture: certification_ready_not_certified
+runtime_claims:
+  native:
+    supported:
+      - platform: Ubuntu/Linux
+        route: bash and Python local operator portal
+    not_claimed:
+      - native Windows
+      - native macOS
+  docker_compose:
+    supported:
+      - platform: Linux Docker Engine with Compose
+      - platform: macOS Docker Desktop
+      - platform: Windows Docker Desktop
+    host_publication: loopback_only
+    runtime_scope: local_factory_operator_portal
+mock_boundary:
+  real_payment_calls: disabled
+  external_payment_ecosystems: mocked_or_simulated_only
+  llm_default_enabled: false
+  live_provider_calls_claimed: false
+non_claims:
+  npci_certified: false
+  rbi_certified: false
+  production_ready: false
+  native_windows_runtime_tested: false
+  native_macos_runtime_tested: false

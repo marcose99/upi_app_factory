@@ -22,7 +22,6 @@ build/
 
 # Local runtime/output artifacts
 *.log
-workspace/
 tmp/
 
 # OS/editor files
@@ -32,8 +31,14 @@ Thumbs.db
 .idea/
 workspace/runs/
 workspace/regeneration_runs/
+workspace/factory_generated/upi_failed_debit_no_credit/
+workspace/tmp/
+workspace/cache/
+workspace/export_bundles/
+workspace/**/.pytest_cache/
+workspace/**/*.log
 *.pyc
 
 # BEGIN UPI APP FACTORY LOCAL RUNTIME STATE
-/var/
+.var/
 # END UPI APP FACTORY LOCAL RUNTIME STATE

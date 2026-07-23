@@ -33,21 +33,11 @@ def default_browser_state_root() -> Path:
     configured = os.getenv("UPI_APP_FACTORY_PORTAL_RUN_ROOT")
     if configured:
         return Path(configured).expanduser().resolve()
-    xdg_state = Path(
-        os.getenv("XDG_STATE_HOME", str(Path.home() / ".local" / "state"))
-    ).expanduser()
-    return (xdg_state / "upi_app_factory" / "operator_portal_runs").resolve()
+    return (canonical_project_root() / ".var" / "upi_app_factory" / "runs").resolve()
 
 
 def default_portfolio_state_root(project_root: Path) -> Path:
-    return (
-        project_root
-        / "workspace"
-        / "factory_generated"
-        / "upi_dispute_resolution"
-        / "lifecycle_artifacts"
-        / "phase51"
-    ).resolve()
+    return (project_root / ".var" / "upi_app_factory" / "portfolio").resolve()
 
 
 def resolve_portfolio_state_root(
@@ -64,11 +54,7 @@ def resolve_portfolio_state_root(
         if env_value
         else default_portfolio_state_root(resolved_project)
     )
-    resolved = selected.expanduser().resolve()
-    tmp_root = Path("/tmp").resolve()
-    if not (_is_relative_to(resolved, resolved_project) or _is_relative_to(resolved, tmp_root)):
-        raise ValueError("portfolio state root must stay in the worktree or /tmp")
-    return resolved
+    return selected.expanduser().resolve()
 
 
 def resolve_state_roots(

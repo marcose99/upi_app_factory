@@ -72,7 +72,7 @@ SAFE_REPAIR_CLASSES: list[str] = [
 
 
 def _gate_specs() -> list[JsonDict]:
-    python = sys.executable
+    python = "python"
     return [
         {
             "gate_id": "phase14t_artifact_validator",

@@ -22,8 +22,12 @@ from scripts.run_portal_requirements_driven_application_engineering import (
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-REQUIREMENTS_PATH = Path(
-    "/home/marcose/Downloads/01_upi_failed_debit_no_credit.md"
+REQUIREMENTS_PATH = PROJECT_ROOT / "examples" / "requirements" / "01_upi_failed_debit_no_credit.md"
+REQUIREMENTS_TEXT = (
+    "# Synthetic UPI failed debit requirement\n\n"
+    "Build a mock-only failed debit no credit dispute workflow with no live "
+    "payment calls, no real customer data, and certification-ready-not-certified "
+    "evidence boundaries.\n"
 )
 
 
@@ -32,7 +36,7 @@ def _contained_test_root(tmp_path: Path, name: str) -> Path:
 
 
 def _requirements() -> str:
-    return REQUIREMENTS_PATH.read_text(encoding="utf-8")
+    return REQUIREMENTS_TEXT
 
 
 def test_app_id_validation_rejects_unsafe_values() -> None:
@@ -125,6 +129,22 @@ def test_source_identity_uses_git_manifest_and_deterministic_fallback(
     no_identity = tmp_path / "no_identity"
     no_identity.mkdir()
     assert _source_commit(no_identity) == "unavailable:deterministic_non_git_non_manifest_source_root"
+
+
+def test_source_identity_falls_back_when_git_executable_is_absent(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def missing_git(*args: object, **kwargs: object) -> object:
+        raise FileNotFoundError("git")
+
+    monkeypatch.delenv("UPI_APP_FACTORY_SOURCE_COMMIT", raising=False)
+    monkeypatch.setattr(
+        "scripts.run_portal_requirements_driven_application_engineering.subprocess.run",
+        missing_git,
+    )
+
+    assert _source_commit(tmp_path) == "unavailable:deterministic_non_git_non_manifest_source_root"
 
 
 def test_adapter_config_preserves_default_portfolio_registration_flag(tmp_path: Path) -> None:

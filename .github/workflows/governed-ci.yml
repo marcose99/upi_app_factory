@@ -44,6 +44,26 @@ jobs:
         run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
       - name: Run Governance policy
         run: python scripts/validate_phase63_repository_governance.py
+  public_clone_hygiene:
+    name: Public clone hygiene
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: requirements/ci-lock.txt
+      - name: Install locked dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
+      - name: Run Public clone hygiene
+        run: python scripts/validate_public_clone_readiness.py --repo . --license Apache-2.0
   ruff:
     name: Ruff
     runs-on: ubuntu-latest
@@ -105,7 +125,31 @@ jobs:
       - name: Materialize deterministic validation fixtures
         run: python scripts/run_phase59_60_deep_engineering_closure.py
       - name: Run Focused tests
-        run: python -m pytest -q tests/architecture/test_phase54_kernel_architecture.py tests/test_phase52_deep_engineering_foundation.py tests/test_phase53_requirements_compiler.py tests/test_phase54_local_platform_kernel.py tests/test_phase55_failed_debit_capability.py tests/test_phase56_deep_composer.py tests/test_phase57_verification_evidence.py tests/test_phase58_deep_portal_integration.py tests/test_phase59_60_deep_engineering_closure.py tests/test_phase63_repository_governance.py && python -m pytest -q workspace/deep_engineering_campaign/phase59_60_fresh_root/upi_failed_debit_dispute/tests/generated_dispute_suite.py
+        run: python -m pytest -q tests/architecture/test_phase54_kernel_architecture.py tests/test_phase52_deep_engineering_foundation.py tests/test_phase53_requirements_compiler.py tests/test_phase54_local_platform_kernel.py tests/test_phase55_failed_debit_capability.py tests/test_phase56_deep_composer.py tests/test_phase57_verification_evidence.py tests/test_phase58_deep_portal_integration.py tests/test_phase59_60_deep_engineering_closure.py tests/test_phase63_repository_governance.py tests/test_public_clone_readiness_validator.py && python -m pytest -q workspace/deep_engineering_campaign/phase59_60_fresh_root/upi_failed_debit_dispute/tests/generated_dispute_suite.py
+  docker_platform_contract:
+    name: Docker platform contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: requirements/ci-lock.txt
+      - name: Install locked dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
+      - name: Validate Docker/Compose static contract
+        run: python scripts/validate_docker_platform_contract.py
+      - name: Validate Compose configuration when Docker Compose is available
+        run: docker compose config --quiet
+      - name: Validate Dockerfile build contract without executing a cross-platform runtime claim
+        run: python -m pytest -q tests/test_docker_platform_contract.py
   full_regression:
     name: Full regression
     runs-on: ubuntu-latest

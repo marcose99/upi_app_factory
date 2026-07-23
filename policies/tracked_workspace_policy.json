@@ -1,0 +1,37 @@
+{
+  "schema_version": "tracked-workspace-policy.v1",
+  "product": "UPI App Factory",
+  "public_fixtures": {
+    "allowed_roots": [
+      "workspace/factory_generated/upi_dispute_resolution/generated_application",
+      "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts"
+    ],
+    "requirements": [
+      "portable relative paths only",
+      "deterministic mock data only",
+      "no real secrets or production credentials",
+      "certification-ready-not-certified wording only"
+    ]
+  },
+  "runtime_outputs": {
+    "ignored_roots": [
+      "workspace/runs/",
+      "workspace/regeneration_runs/",
+      "workspace/factory_generated/upi_failed_debit_no_credit/",
+      "workspace/tmp/",
+      "workspace/cache/",
+      "workspace/export_bundles/",
+      "tmp/"
+    ],
+    "requirements": [
+      "regenerated locally",
+      "not required for public clone validation",
+      "not committed as readiness evidence"
+    ]
+  },
+  "determinism": {
+    "path_policy": "policies/path_neutrality.yaml",
+    "validator": "scripts/validate_public_clone_readiness.py",
+    "llm_default": "disabled"
+  }
+}

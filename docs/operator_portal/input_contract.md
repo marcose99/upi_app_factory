@@ -17,3 +17,12 @@ protected.
 
 Error behavior preserves safe user-entered values for correction while generic
 browser-facing errors avoid tracebacks and internal absolute paths.
+
+Sample requirements:
+
+- The Use Sample Requirements control loads
+  `examples/requirements/01_upi_failed_debit_no_credit.md` through
+  `GET /operator-portal/api/requirements/sample`.
+- The sample is local, deterministic, fictional, and mock-safe.
+- This route does not replace paste/upload support; it only pre-fills the same
+  governed intake field operators can edit before validation or submission.

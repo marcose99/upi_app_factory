@@ -21,13 +21,16 @@ Then inspect the failure and run the governed self-correction flow.
 
 ## Portal missing
 
-Regenerate portals:
+Start the canonical local portal:
 
 ```bash
-python scripts/generate_phase13b_progress_portal.py
-python scripts/generate_phase13c_agent_runtime_portal.py
-python scripts/generate_phase13c_self_correction_portal.py
+./run_factory.sh --port 0 --no-browser
 ```
+
+If startup fails, inspect `.var/upi_app_factory/logs/operator_portal.jsonl`.
+Use `./stop_factory.sh --state-root .var/upi_app_factory` to clear a validated
+stale PID. The launcher refuses non-loopback hosts and reports port conflicts
+with a retry path.
 
 ## Validators fail
 

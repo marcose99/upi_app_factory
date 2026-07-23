@@ -68,9 +68,9 @@ def main() -> int:
     codeowners = (
         ROOT / ".github/CODEOWNERS"
     ).read_text(encoding="utf-8")
-    if "* @marcose99" not in codeowners:
+    if "* @upi-app-factory-maintainers" not in codeowners:
         fail("default CODEOWNER is missing")
-    if ".github/ @marcose99" not in codeowners:
+    if ".github/ @upi-app-factory-maintainers" not in codeowners:
         fail(".github ownership is missing")
 
     template = (
@@ -105,7 +105,7 @@ def main() -> int:
         "required_files": REQUIRED,
         "pinned_actions": uses,
         "expected_check_names": EXPECTED_NAMES,
-        "default_code_owner": "@marcose99",
+        "default_code_owner": "@upi-app-factory-maintainers",
         "independent_review_limitation": (
             "A second authorized reviewer is required for genuinely "
             "independent approval; CODEOWNERS alone cannot create one."
