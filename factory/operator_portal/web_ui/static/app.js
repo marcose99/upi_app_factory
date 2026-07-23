@@ -26,6 +26,8 @@
     "runtime-stop-all": ["runtime-global", "runtime-version"],
     "validation-run": ["validation"],
     "export-download": ["download-export"],
+    "view-factory-debug-plan": ["documentation"],
+    "view-factory-documentation": ["documentation"],
   };
 
   function field(name) {
@@ -203,6 +205,11 @@
     return node ? node.value : "";
   }
 
+  function appIdValue() {
+    const node = document.getElementById("app-id-input");
+    return node && node.value.trim() ? node.value.trim() : "upi_failed_debit_no_credit";
+  }
+
   function updateDownloadLinks(run) {
     const artifacts = run && run.artifacts ? run.artifacts : {};
     const appLink = document.querySelector('[data-link="download-application"]');
@@ -302,6 +309,7 @@
       window.localStorage.setItem("upi_app_factory_current_run_id", currentRunId);
     }
     setField("browser-run-id", currentRunId || "Not created");
+    setField("browser-app-id", run.app_id || "upi_dispute_resolution");
     setField("browser-run-state", run.state);
     setField("browser-run-sha", run.requirements_sha256);
     setField("browser-approval-state", run.approval ? "approved" : "required");
@@ -396,10 +404,25 @@
     showReport(payload);
   }
 
+  async function viewFactoryDebugPlan() {
+    const payload = await request("/operator-portal/api/debug-plan/factory");
+    setField("debug-plan-schema", payload.schema_version);
+    setField("debug-plan-routes", Array.isArray(payload.routes) ? payload.routes.length : 0);
+    setField("debug-plan-sha", payload.plan_sha256);
+    showReport(payload);
+  }
+
+  async function viewFactoryDocumentation() {
+    const payload = await request("/operator-portal/api/documentation/factory");
+    setField("factory-docs-status", payload.status);
+    setField("factory-docs-size", `${payload.size_bytes} bytes`);
+    showReport(payload);
+  }
+
   async function validateRequirements() {
     const payload = await request("/operator-portal/api/requirements/validate", {
       method: "POST",
-      body: JSON.stringify({ requirements: requirementsText() }),
+      body: JSON.stringify({ requirements: requirementsText(), app_id: appIdValue() }),
     });
     setField("browser-run-sha", payload.validation.sha256);
     showReport(payload);
@@ -408,7 +431,7 @@
   async function submitRun() {
     const payload = await request("/operator-portal/api/runs", {
       method: "POST",
-      body: JSON.stringify({ requirements: requirementsText() }),
+      body: JSON.stringify({ requirements: requirementsText(), app_id: appIdValue() }),
     });
     currentRunId = payload.run_id;
     renderRun(payload.run);
@@ -629,6 +652,8 @@
     "validation-dry-run": validationDryRun,
     "validation-run": validationRun,
     "latest-report": latestReport,
+    "view-factory-debug-plan": viewFactoryDebugPlan,
+    "view-factory-documentation": viewFactoryDocumentation,
     "refresh-guides": refreshGuides,
     "refresh-run": refreshCurrentRun,
     "validate-requirements": validateRequirements,

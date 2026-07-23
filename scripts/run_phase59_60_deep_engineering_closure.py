@@ -92,6 +92,21 @@ def run_command(
     }
 
 
+def failed_command_summaries(command_results: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    for item in command_results:
+        if item.get("passed") is True:
+            continue
+        failures.append(
+            {
+                "command": item.get("command", ""),
+                "returncode": item.get("returncode"),
+                "output_tail": item.get("output_tail", ""),
+            }
+        )
+    return failures
+
+
 def read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -170,6 +185,13 @@ def write_phase53_reports(root: Path, requirements_ir: dict[str, Any]) -> None:
             "- Real payment calls: disabled",
         ],
     )
+
+
+def materialize_phase53_artifacts(root: Path) -> dict[str, Any]:
+    requirements_ir = compile_requirements([root / FIXTURE_REQUIREMENTS], root)
+    write_json(root / CAMPAIGN_ROOT / "phase53_requirements_ir.json", requirements_ir)
+    write_phase53_reports(root, requirements_ir)
+    return requirements_ir
 
 
 def write_phase54_reports(root: Path) -> None:
@@ -619,8 +641,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--skip-heavy", action="store_true")
+    parser.add_argument("--phase53-only", action="store_true")
     args = parser.parse_args()
     root = args.project_root.resolve()
+    if args.phase53_only:
+        materialize_phase53_artifacts(root)
+        print("Phase 53 requirements compiler artifacts materialized.")
+        return 0
     python = canonical_python(root)
     campaign = root / CAMPAIGN_ROOT
     campaign.mkdir(parents=True, exist_ok=True)
@@ -628,8 +655,7 @@ def main() -> int:
 
     if (root / FRESH_ROOT).exists():
         shutil.rmtree(root / FRESH_ROOT)
-    requirements_ir = compile_requirements([root / FIXTURE_REQUIREMENTS], root)
-    write_phase53_reports(root, requirements_ir)
+    requirements_ir = materialize_phase53_artifacts(root)
     write_phase54_reports(root)
     write_phase55_reports(root)
     compose_manifest = compose_golden_application(root, requirements_ir)
@@ -645,10 +671,6 @@ def main() -> int:
         timeout=240,
         extra_env={"PYTHONPATH": str(fresh_app_root)},
     )
-    verification = run_phase57_verification(root)
-    write_phase57_reports(root, verification)
-    manifest_path = evidence_root(source_app_root) / "manifest_sha256.json"
-    validate_manifest_records(source_app_root, manifest_path)
     sqlite_proof = sqlite_persistence_proof(root, fresh_app_root)
     try:
         app_exercise = exercise_generated_app(root, fresh_app_root, python)
@@ -675,6 +697,12 @@ def main() -> int:
         commands = commands[3:]
     command_results = [run_command(command, root, timeout=240) for command in commands]
     command_results.insert(0, generated_suite)
+    failed_commands = failed_command_summaries(command_results)
+
+    verification = run_phase57_verification(root)
+    write_phase57_reports(root, verification)
+    manifest_path = evidence_root(source_app_root) / "manifest_sha256.json"
+    validate_manifest_records(source_app_root, manifest_path)
 
     depth_score = verification.depth_score
     mandatory_gates = {
@@ -739,6 +767,7 @@ def main() -> int:
         },
         "mandatory_gates": mandatory_gates,
         "command_results": command_results,
+        "failed_commands": failed_commands,
         "standards": {
             "ssdf": "NIST SP 800-218 SSDF 1.1 mapped; SSDF 1.2 tracked as draft only",
             "ai_rmf": "NIST AI RMF workflow evidence recorded without runtime LLM calls",
@@ -797,7 +826,11 @@ package install, and live payment/provider calls were not performed.
     write_json(root / REPORT_JSON, report)
     if status != "completed":
         failed = [name for name, passed in mandatory_gates.items() if not passed]
-        print(f"Phases 59-60 closure blocked: {failed}")
+        details = ""
+        if failed_commands:
+            failed_labels = [item["command"] for item in failed_commands]
+            details = f"; failed commands: {failed_labels}"
+        print(f"Phases 59-60 closure blocked: {failed}{details}")
         return 1
     print("Phases 59-60 closure completed: GO_FOR_HUMAN_REVIEW")
     return 0

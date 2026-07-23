@@ -40,7 +40,7 @@ async def operator_portal_styles() -> FileResponse:
     return FileResponse(_STATIC_ROOT / "styles.css", media_type="text/css")
 
 
-@app.get("/operator-portal/health")
+@app.get("/operator-portal/health", include_in_schema=False)
 async def operator_portal_health() -> dict[str, object]:
     return {
         "status": "ok",

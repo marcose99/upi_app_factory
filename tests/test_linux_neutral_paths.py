@@ -82,12 +82,13 @@ def test_portfolio_state_allows_literal_tmp_even_when_tempdir_cache_changes(
 def test_portal_script_runs_from_unrelated_current_directory(tmp_path: Path) -> None:
     unrelated_cwd = tmp_path / "unrelated current directory"
     unrelated_cwd.mkdir()
+    portfolio_root = ROOT / "workspace" / "factory_generated" / "linux_neutral_path_tests" / tmp_path.name
     env = {
         **os.environ,
         "PYTHONPATH": str(ROOT),
         "UPI_APP_FACTORY_ROOT": str(ROOT),
         "UPI_APP_FACTORY_PORTAL_RUN_ROOT": str(tmp_path / "runs"),
-        "UPI_APP_FACTORY_PORTFOLIO_STATE_ROOT": str(tmp_path / "portfolio"),
+        "UPI_APP_FACTORY_PORTFOLIO_STATE_ROOT": str(portfolio_root),
     }
 
     result = subprocess.run(

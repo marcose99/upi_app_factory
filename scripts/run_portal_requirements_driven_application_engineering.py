@@ -43,6 +43,7 @@ from factory.application_engineering.portfolio import (  # noqa: E402
     RegistrationRequest,
 )
 from factory.operator_portal.state_roots import resolve_portfolio_state_root  # noqa: E402
+from factory.debugging import write_generated_application_debug_plan  # noqa: E402
 
 APP_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
 APPROVAL_TOKEN: Final[str] = "APPROVE_PORTAL_APPLICATION_ENGINEERING"
@@ -78,6 +79,7 @@ class AdapterConfig:
     workspace_root: Path
     portfolio_state_root: Path | None = None
     engineering_profile: str = "compatibility"
+    register_with_portfolio: bool = True
 
 
 def _utc_now() -> str:
@@ -96,6 +98,17 @@ def _sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def validate_app_id(value: str) -> str:
+    app_id = value.strip()
+    if not APP_ID_PATTERN.fullmatch(app_id):
+        raise AdapterError("invalid app id")
+    if app_id in {".", ".."} or any(separator in app_id for separator in ("/", "\\")):
+        raise AdapterError("invalid app id")
+    if app_id != value or not app_id.isascii():
+        raise AdapterError("invalid app id")
+    return app_id
+
+
 def _source_commit(factory_root: Path) -> str:
     injected = os.getenv("UPI_APP_FACTORY_SOURCE_COMMIT")
     if injected:
@@ -109,7 +122,19 @@ def _source_commit(factory_root: Path) -> str:
     commit = completed.stdout.strip()
     if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
         return commit
-    return "unavailable:non_git_source_root"
+    manifest_path = factory_root / "FACTORY_EXPORT_MANIFEST.json"
+    if manifest_path.is_file():
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise AdapterError("FACTORY_EXPORT_MANIFEST.json is not valid JSON") from exc
+        if not isinstance(manifest, dict):
+            raise AdapterError("FACTORY_EXPORT_MANIFEST.json must contain an object")
+        repository_commit = manifest.get("repository_commit")
+        if isinstance(repository_commit, str) and re.fullmatch(r"[0-9a-f]{40}", repository_commit):
+            return repository_commit
+        raise AdapterError("FACTORY_EXPORT_MANIFEST.json repository_commit is invalid")
+    return "unavailable:deterministic_non_git_non_manifest_source_root"
 
 
 def _deterministic_version_id(*, app_id: str, run_id: str, requirements_sha256: str) -> str:
@@ -242,8 +267,7 @@ def _configuration(args: argparse.Namespace) -> AdapterConfig:
         portfolio_state_root=args.portfolio_state_root,
     )
 
-    if not APP_ID_PATTERN.fullmatch(args.app_id):
-        raise AdapterError(f"invalid app id: {args.app_id!r}")
+    app_id = validate_app_id(args.app_id)
 
     output_root = _resolve_under(
         output_root,
@@ -258,7 +282,7 @@ def _configuration(args: argparse.Namespace) -> AdapterConfig:
 
     return AdapterConfig(
         requirements=Path(requirements).expanduser().resolve(),
-        app_id=args.app_id,
+        app_id=app_id,
         output_root=output_root,
         evidence_root=evidence_root,
         approval_mode=args.approval_mode,
@@ -311,6 +335,17 @@ def _project_files(
 
     files: dict[str, str] = {
         "requirements.md": requirements_text,
+        "conftest.py": """from __future__ import annotations
+
+from pathlib import Path
+
+
+collect_ignore_glob = (
+    ["tests/test_*.py"]
+    if Path.cwd().resolve() != Path(__file__).resolve().parent
+    else []
+)
+""",
         "app/__init__.py": "",
         "tests/__init__.py": "",
         "generation_metadata.json": (json.dumps(metadata, indent=2, sort_keys=True) + "\n"),
@@ -685,8 +720,10 @@ async def request_logging_middleware(request: Any, call_next: Any, *, logger: lo
 ''',
         f"app/{package}/interfaces/api/main.py": """from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from dataclasses import asdict
 import os
+from typing import AsyncIterator
 
 from fastapi import FastAPI, Header, HTTPException, Request, status
 from fastapi.responses import JSONResponse
@@ -707,31 +744,32 @@ SERVICE_VERSION = "0.1.0"
 configure_logging(service_name=\"""" + config.app_id + """\", service_version=SERVICE_VERSION)
 logger = get_logger(__name__)
 
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    logger.info(
+        "Generated application startup.",
+        extra={"event_name": "generated_application.startup", "attributes": {"outcome": "success"}},
+    )
+    try:
+        yield
+    finally:
+        logger.info(
+            "Generated application shutdown.",
+            extra={"event_name": "generated_application.shutdown", "attributes": {"outcome": "success"}},
+        )
+
+
 app = FastAPI(
     title="UPI Dispute Resolution",
     version=SERVICE_VERSION,
+    lifespan=lifespan,
 )
 
 service = DisputeService(
     repository=InMemoryDisputeRepository(),
     idempotency=InMemoryIdempotencyStore(),
 )
-
-
-@app.on_event("startup")
-async def log_startup() -> None:
-    logger.info(
-        "Generated application startup.",
-        extra={"event_name": "generated_application.startup", "attributes": {"outcome": "success"}},
-    )
-
-
-@app.on_event("shutdown")
-async def log_shutdown() -> None:
-    logger.info(
-        "Generated application shutdown.",
-        extra={"event_name": "generated_application.shutdown", "attributes": {"outcome": "success"}},
-    )
 
 
 @app.middleware("http")
@@ -970,6 +1008,7 @@ def _register_generated_application(
         "schema_version": SCHEMA_VERSION,
         "app_id": config.app_id,
         "version_id": version_id,
+        "generated_run_id": run_id,
         "source_run_id": run_id,
         "requirements_sha256": requirements_sha,
         "source_commit": source_commit,
@@ -985,6 +1024,7 @@ def _register_generated_application(
         "artifact_type": "portfolio_registration_evidence",
         "app_id": config.app_id,
         "version_id": version_id,
+        "generated_run_id": run_id,
         "source_run_id": run_id,
         "requirements_sha256": requirements_sha,
         "source_commit": source_commit,
@@ -1080,6 +1120,7 @@ def _plan_payload(
         "mock_safe": config.mock_safe,
         "replace_existing": config.replace_existing,
         "engineering_profile": config.engineering_profile,
+        "register_with_portfolio": config.register_with_portfolio,
         "llm_calls": 0,
         "real_payment_calls": "disabled",
     }
@@ -1123,7 +1164,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
         ]
         evidence_dir = config.evidence_root / (
             "portal_deep_"
-            + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
             + "_"
             + requirements_sha[:12]
         )
@@ -1149,7 +1190,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
 
     run_id = (
         "portal_"
-        + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
         + "_"
         + requirements_sha[:12]
         + "_"
@@ -1174,6 +1215,19 @@ def run(config: AdapterConfig) -> dict[str, object]:
             requirements_sha,
         )
         _write_tree(staging, files)
+        version_id = _deterministic_version_id(
+            app_id=config.app_id,
+            run_id=run_id,
+            requirements_sha256=requirements_sha,
+        )
+        write_generated_application_debug_plan(
+            staging,
+            app_id=config.app_id,
+            version_id=version_id,
+            run_id=run_id,
+            requirements_sha256=requirements_sha,
+            source_commit=_source_commit(config.factory_root),
+        )
         manifest_records = _manifest(staging)
 
         required_paths = {
@@ -1182,6 +1236,8 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "README.md",
             "requirements.md",
             "generation_metadata.json",
+            "docs/DEBUG_PLAN.md",
+            "evidence/debug_plan.json",
             "tests/test_service.py",
             "tests/test_api_contract.py",
             (f"app/{config.app_id}/interfaces/api/main.py"),
@@ -1202,13 +1258,17 @@ def run(config: AdapterConfig) -> dict[str, object]:
         staging.replace(config.output_root)
 
         final_manifest = _manifest(config.output_root)
-        registration = _register_generated_application(
-            config=config,
-            run_id=run_id,
-            requirements_text=requirements_text,
-            requirements_sha=requirements_sha,
-            final_manifest=final_manifest,
-            evidence_dir=evidence_dir,
+        registration = (
+            _register_generated_application(
+                config=config,
+                run_id=run_id,
+                requirements_text=requirements_text,
+                requirements_sha=requirements_sha,
+                final_manifest=final_manifest,
+                evidence_dir=evidence_dir,
+            )
+            if config.register_with_portfolio
+            else None
         )
         manifest_text = "".join(
             f"{item['sha256']}  {item['relative_path']}\n" for item in final_manifest
@@ -1237,8 +1297,8 @@ def run(config: AdapterConfig) -> dict[str, object]:
                 "tests/test_api_contract.py",
             ],
             "evidence_directory": str(evidence_dir),
-            "version_id": registration["version_id"],
-            "source_commit": registration["source_commit"],
+            "version_id": registration["version_id"] if registration else None,
+            "source_commit": registration["source_commit"] if registration else _source_commit(config.factory_root),
             "application_root": str(config.output_root),
             "portfolio_registration": registration,
             "completed_at_utc": _utc_now(),

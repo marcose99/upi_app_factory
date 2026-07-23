@@ -164,6 +164,12 @@ def main() -> int:
     root = parsed.project_root.resolve()
     python = canonical_python(root)
 
+    root_text = str(root)
+    if root_text not in sys.path:
+        sys.path.insert(0, root_text)
+    from factory.application_engineering.verification_evidence import run_phase57_verification
+
+    run_phase57_verification(root)
     validate_artifacts(root)
     validate_manifest(root)
     validate_tests(root, python)

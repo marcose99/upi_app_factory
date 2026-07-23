@@ -55,6 +55,36 @@
         </dl>
       </section>
 
+      <section class="panel" aria-labelledby="debug-plan-title">
+        <div class="panel-header">
+          <h2 id="debug-plan-title">Factory Debug Plan</h2>
+          <div class="button-row">
+            <button id="view-factory-debug-plan-button" type="button" data-action="view-factory-debug-plan">View</button>
+            <a id="download-factory-debug-plan-button" class="button-link" data-link="download-factory-debug-plan" href="/operator-portal/api/debug-plan/factory/download">Download</a>
+          </div>
+        </div>
+        <dl class="metric-grid">
+          <div><dt>Schema</dt><dd data-field="debug-plan-schema">Waiting</dd></div>
+          <div><dt>Routes</dt><dd data-field="debug-plan-routes">Waiting</dd></div>
+          <div><dt>Plan SHA-256</dt><dd data-field="debug-plan-sha">Waiting</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="factory-docs-title">
+        <div class="panel-header">
+          <h2 id="factory-docs-title">Factory Documentation</h2>
+          <div class="button-row">
+            <button id="view-factory-documentation-button" type="button" data-action="view-factory-documentation">View</button>
+            <a id="download-factory-documentation-button" class="button-link" data-link="download-factory-documentation" href="/operator-portal/api/documentation/factory/download">Download</a>
+          </div>
+        </div>
+        <dl class="metric-grid">
+          <div><dt>Status</dt><dd data-field="factory-docs-status">Waiting</dd></div>
+          <div><dt>Size</dt><dd data-field="factory-docs-size">Waiting</dd></div>
+          <div><dt>Route</dt><dd data-field="factory-docs-route">/operator-portal/api/documentation/factory</dd></div>
+        </dl>
+      </section>
+
       <section class="panel" aria-labelledby="validation-title">
         <div class="panel-header">
           <h2 id="validation-title">Validation</h2>
@@ -91,8 +121,11 @@
         <textarea id="requirements-input" rows="10"># UPI dispute resolution requirements
 
 Build a local mock-safe UPI dispute resolution API with health and readiness endpoints, idempotent dispute creation, deterministic tests, evidence lineage, and no live payment provider calls.</textarea>
+        <label class="inline-label" for="app-id-input">Application ID</label>
+        <input id="app-id-input" value="upi_failed_debit_no_credit" autocomplete="off" inputmode="latin">
         <dl class="metric-grid">
           <div><dt>Run ID</dt><dd id="run-id-value" data-field="browser-run-id">Not created</dd></div>
+          <div><dt>Application ID</dt><dd data-field="browser-app-id">Waiting</dd></div>
           <div><dt>State</dt><dd id="run-state-value" data-field="browser-run-state">Waiting</dd></div>
           <div><dt>SHA-256</dt><dd id="requirements-sha256-value" data-field="browser-run-sha">Waiting</dd></div>
         </dl>

@@ -27,6 +27,7 @@ from scripts.run_portal_requirements_driven_application_engineering import (
     APPROVAL_TOKEN as APPROVAL_TOKEN,
     AdapterConfig,
     run as run_requirements_engineering,
+    validate_app_id,
 )
 
 
@@ -240,7 +241,14 @@ def _source_commit(project_root: Path) -> str:
     commit = completed.stdout.strip()
     if completed.returncode == 0 and re.fullmatch(r"[0-9a-f]{40}", commit):
         return commit
-    return "unavailable:non_git_source_root"
+    manifest_path = project_root / "FACTORY_EXPORT_MANIFEST.json"
+    if manifest_path.is_file():
+        manifest = _read_json(manifest_path)
+        repository_commit = manifest.get("repository_commit")
+        if isinstance(repository_commit, str) and re.fullmatch(r"[0-9a-f]{40}", repository_commit):
+            return repository_commit
+        raise ValueError("FACTORY_EXPORT_MANIFEST.json repository_commit is invalid")
+    return "unavailable:deterministic_non_git_non_manifest_source_root"
 
 
 def _generated_application_files(root: Path) -> list[dict[str, Any]]:
@@ -419,7 +427,13 @@ class BrowserIntakeOrchestrator:
             **self._governance_payload(),
         }
 
-    def create_run(self, requirements: str) -> dict[str, Any]:
+    def create_run(self, requirements: str, *, app_id: str = APP_ID) -> dict[str, Any]:
+        try:
+            app_id = validate_app_id(app_id)
+        except RuntimeError as exc:
+            raise OrchestrationValidationError(
+                [{"code": "invalid_app_id", "message": "Application ID must be lowercase snake_case."}]
+            ) from exc
         validation = validate_requirements_text(requirements)
         if not validation["valid"]:
             raise OrchestrationValidationError(validation["errors"])
@@ -431,7 +445,8 @@ class BrowserIntakeOrchestrator:
         state = {
             "schema_version": "browser-driven-intake-run.v1",
             "run_id": run_id,
-            "app_id": APP_ID,
+            "app_id": app_id,
+            "app_id_sha256": _sha256_bytes(app_id.encode("utf-8")),
             "state": "DRAFT",
             "created_at_utc": created_at,
             "updated_at_utc": created_at,
@@ -444,7 +459,11 @@ class BrowserIntakeOrchestrator:
             **self._governance_payload(),
         }
         _atomic_write_json(paths.state, state)
-        self._record_event(run_id, "run_created", {"requirements_sha256": validation["sha256"]})
+        self._record_event(
+            run_id,
+            "run_created",
+            {"app_id": app_id, "requirements_sha256": validation["sha256"]},
+        )
         self._transition(run_id, "VALIDATED", reason="requirements_validated")
         self._transition(run_id, "REQUIREMENTS_ACCEPTED", reason="requirements_persisted")
         return self.get_run(run_id)
@@ -466,11 +485,13 @@ class BrowserIntakeOrchestrator:
         if state["state"] not in {"REQUIREMENTS_ACCEPTED", "PLAN_READY", "AWAITING_APPROVAL"}:
             raise OrchestrationConflict(f"Cannot plan from state {state['state']}")
         if not paths.plan.is_file():
+            app_id = self._state_app_id(state)
             config = self._adapter_config(paths, plan_only=True)
             plan = run_requirements_engineering(config)
             plan_payload = {
                 "schema_version": "1.0",
                 "run_id": run_id,
+                "app_id": app_id,
                 "created_at_utc": _utc_now(),
                 "requirements_sha256": state["requirements_sha256"],
                 "generator_entrypoint": GENERATOR_ENTRYPOINT,
@@ -479,7 +500,7 @@ class BrowserIntakeOrchestrator:
                 "default_runtime_llm_calls": 0,
                 "plan": plan,
                 "transition_history": self._ledger(paths.ledger),
-                "generated_application_created": paths.generated_application.exists(),
+                "generated_application_created": self._trusted_application_root(paths).exists(),
             }
             plan_payload["plan_sha256"] = _canonical_payload_sha256(
                 plan_payload,
@@ -501,12 +522,14 @@ class BrowserIntakeOrchestrator:
                 [{"code": "invalid_approval_token", "message": "Approval token is not valid."}]
             )
         plan = _read_json(paths.plan)
+        app_id = self._state_app_id(state)
         plan_sha = str(
             plan.get("plan_sha256")
             or _canonical_payload_sha256(plan, exclude="plan_sha256")
         )
         subject = {
             "run_id": run_id,
+            "app_id": app_id,
             "action": RUN_ACTION_APPLICATION_ENGINEERING,
             "requirements_sha256": state["requirements_sha256"],
             "plan_sha256": plan_sha,
@@ -529,6 +552,8 @@ class BrowserIntakeOrchestrator:
         state = _read_json(paths.state)
         if state["state"] in {"EXECUTION_QUEUED", "EXECUTING", "VALIDATING"}:
             return {"status": "already_queued", "run": self.get_run(run_id), **self._governance_payload()}
+        if state["state"] == "SUCCEEDED":
+            return {"status": "already_succeeded", "run": self.get_run(run_id), **self._governance_payload()}
         if state["state"] in TERMINAL_STATES:
             raise OrchestrationConflict(f"Cannot execute terminal run {run_id}")
         if state["state"] != "APPROVED" or not state.get("approval"):
@@ -621,26 +646,91 @@ class BrowserIntakeOrchestrator:
             **self._governance_payload(),
         }
 
+    def _publication_root(self, *, run_id: str, app_id: str) -> Path:
+        app_id = validate_app_id(app_id)
+        root = (
+            self.project_root
+            / "workspace"
+            / "factory_generated"
+            / app_id
+            / "portal_publications"
+            / run_id
+        ).resolve()
+        try:
+            root.relative_to(self.project_root.resolve())
+        except ValueError as exc:
+            raise OrchestrationConflict("Publication root must stay inside the project workspace.") from exc
+        return root
+
+    def _state_app_id(self, state: dict[str, Any]) -> str:
+        app_id = validate_app_id(str(state.get("app_id", APP_ID)))
+        expected = _sha256_bytes(app_id.encode("utf-8"))
+        stored = state.get("app_id_sha256")
+        if stored is not None and stored != expected:
+            raise OrchestrationConflict("Application ID is immutable after run creation.")
+        if stored is None and app_id == APP_ID:
+            return app_id
+        if stored is None:
+            raise OrchestrationConflict("Application ID identity evidence is missing.")
+        return app_id
+
+    def _trusted_application_root(self, paths: PortalRunPaths) -> Path:
+        if paths.result.is_file():
+            result = _read_json(paths.result)
+            registration = result.get("portfolio_registration")
+            if isinstance(registration, dict):
+                application_root = registration.get("application_root")
+                if isinstance(application_root, str) and application_root:
+                    root = Path(application_root).expanduser().resolve()
+                    try:
+                        root.relative_to(self.project_root.resolve())
+                    except ValueError as exc:
+                        raise OrchestrationConflict(
+                            "Trusted publication metadata left the project workspace."
+                        ) from exc
+                    return root
+            output_root = result.get("output_root")
+            if isinstance(output_root, str) and output_root:
+                root = Path(output_root).expanduser().resolve()
+                try:
+                    root.relative_to(self.project_root.resolve())
+                except ValueError:
+                    pass
+                else:
+                    return root
+        state = _read_json(paths.state)
+        app_id = self._state_app_id(state)
+        return self._publication_root(run_id=str(state["run_id"]), app_id=app_id) / "generated_application"
+
     def application_archive(self, run_id: str) -> Path:
         paths = self._paths(run_id)
         state = _read_json(paths.state)
         if state["state"] != "SUCCEEDED":
             raise OrchestrationConflict("Generated application download is not ready.")
-        if not paths.generated_application.is_dir():
+        application_root = self._trusted_application_root(paths)
+        if not application_root.is_dir():
             raise OrchestrationNotFound("Generated application archive is not available.")
         archive = paths.archives / "generated_application.zip"
         if not archive.is_file():
+            result = _read_json(paths.result) if paths.result.is_file() else {}
+            registration = result.get("portfolio_registration")
+            portfolio_registration = registration if isinstance(registration, dict) else None
             _write_generation_manifest(
-                manifest_path=paths.generated_application / "generation_manifest.json",
+                manifest_path=application_root / "generation_manifest.json",
                 project_root=self.project_root,
                 run_id=run_id,
                 requirements_sha256=str(state["requirements_sha256"]),
-                generated_application=paths.generated_application,
+                generated_application=application_root,
+                app_id=self._state_app_id(state),
+                version_id=str(portfolio_registration["version_id"])
+                if portfolio_registration and portfolio_registration.get("version_id")
+                else None,
+                portfolio_registration=portfolio_registration,
             )
             digest = _zip_generated_application(
                 archive_path=archive,
-                root=paths.generated_application,
-                top_level_directory=paths.generated_application.name,
+                root=application_root,
+                top_level_directory=application_root.name,
             )
             _atomic_write_text(paths.archives / "generated_application.zip.sha256", digest + "\n")
         return archive
@@ -850,11 +940,12 @@ class BrowserIntakeOrchestrator:
 
     def _evidence_validation_gates(self, paths: PortalRunPaths) -> list[dict[str, Any]]:
         result = _read_json(paths.result)
-        generation_manifest = paths.generated_application / "generation_manifest.json"
+        application_root = self._trusted_application_root(paths)
+        generation_manifest = application_root / "generation_manifest.json"
         gates = [
             (
                 "generated application structure",
-                paths.generated_application.is_dir() and any(paths.generated_application.rglob("*.py")),
+                application_root.is_dir() and any(application_root.rglob("*.py")),
                 "Generated application directory contains Python source files.",
             ),
             (
@@ -964,7 +1055,8 @@ class BrowserIntakeOrchestrator:
 
     def _execute_worker(self, run_id: str) -> None:
         paths = self._paths(run_id)
-        with logging_context(run_id=run_id, app_id=APP_ID):
+        app_id = self._state_app_id(_read_json(paths.state))
+        with logging_context(run_id=run_id, app_id=app_id):
             try:
                 self._execute_worker_transaction(run_id, paths)
             finally:
@@ -1000,7 +1092,7 @@ class BrowserIntakeOrchestrator:
                         "event_name": "portfolio.registration.succeeded",
                         "attributes": {
                             "run_id": run_id,
-                            "app_id": APP_ID,
+                            "app_id": registration.get("app_id"),
                             "version_id": registration.get("version_id"),
                             "outcome": "success",
                         },
@@ -1019,7 +1111,7 @@ class BrowserIntakeOrchestrator:
                     "event_name": "engineering.run.succeeded",
                     "attributes": {
                         "run_id": run_id,
-                        "app_id": APP_ID,
+                        "app_id": self._state_app_id(_read_json(paths.state)),
                         "outcome": "success" if decision == "GO" else "failure",
                     },
                 },
@@ -1062,7 +1154,7 @@ class BrowserIntakeOrchestrator:
                 "event_name": "engineering.run.failed",
                 "attributes": {
                     "run_id": run_id,
-                    "app_id": APP_ID,
+                    "app_id": self._state_app_id(_read_json(paths.state)),
                     "operation": "application_engineering",
                     "outcome": "failure",
                     "error.type": "engineering_transaction_failed",
@@ -1079,45 +1171,54 @@ class BrowserIntakeOrchestrator:
     ) -> dict[str, Any]:
         requirements_text = paths.requirements.read_text(encoding="utf-8")
         requirements_sha256 = _sha256_bytes(requirements_text.encode("utf-8"))
+        state = _read_json(paths.state)
+        app_id = self._state_app_id(state)
+        application_root = self._trusted_application_root(paths)
+        evidence_root = Path(str(result.get("evidence_root", paths.engineering_evidence))).expanduser().resolve()
+        try:
+            evidence_root.relative_to(self.project_root.resolve())
+        except ValueError:
+            evidence_root = self._publication_root(run_id=run_id, app_id=app_id) / "engineering_evidence"
         version_id = _deterministic_version_id(
-            app_id=APP_ID,
+            app_id=app_id,
             run_id=run_id,
             requirements_sha256=requirements_sha256,
         )
-        metadata_path = paths.generated_application / "generation_metadata.json"
+        metadata_path = application_root / "generation_metadata.json"
         metadata = _read_json(metadata_path) if metadata_path.is_file() else {}
         metadata.update(
             {
-                "app_id": APP_ID,
+                "app_id": app_id,
                 "version_id": version_id,
                 "source_run_id": run_id,
                 "requirements_sha256": requirements_sha256,
                 "portfolio_state_root": str(self.portfolio_store.state_root),
-                "application_root": str(paths.generated_application),
+                "application_root": str(application_root),
             }
         )
         _atomic_write_json(metadata_path, metadata)
         _write_generation_manifest(
-            manifest_path=paths.generated_application / "generation_manifest.json",
+            manifest_path=application_root / "generation_manifest.json",
             project_root=self.project_root,
             run_id=run_id,
-            app_id=APP_ID,
+            app_id=app_id,
             version_id=version_id,
             requirements_sha256=requirements_sha256,
-            generated_application=paths.generated_application,
+            generated_application=application_root,
         )
-        manifest = _read_json(paths.generated_application / "generation_manifest.json")
+        manifest = _read_json(application_root / "generation_manifest.json")
         evidence = {
             "schema_version": "1.0",
             "artifact_type": "portfolio_registration_evidence",
-            "app_id": APP_ID,
+            "app_id": app_id,
             "version_id": version_id,
+            "generated_run_id": run_id,
             "source_run_id": run_id,
             "adapter_run_id": result.get("run_id"),
             "requirements_sha256": requirements_sha256,
-            "application_root": str(paths.generated_application),
+            "application_root": str(application_root),
             "engineering_result_sha256": _json_sha256(result),
-            "generation_manifest_sha256": _sha256_file(paths.generated_application / "generation_manifest.json"),
+            "generation_manifest_sha256": _sha256_file(application_root / "generation_manifest.json"),
             "registered_at_utc": _utc_now(),
             "mock_boundary": "enforced",
             "real_payment_calls": "disabled",
@@ -1125,15 +1226,15 @@ class BrowserIntakeOrchestrator:
         }
         version = self.portfolio_catalogue.register(
             RegistrationRequest(
-                app_id=APP_ID,
+                app_id=app_id,
                 version_id=version_id,
                 generated_run_id=run_id,
                 requirements=requirements_text,
                 source_commit=_source_commit(self.project_root),
                 evidence=evidence,
                 manifest=manifest,
-                entrypoint=f"app.{APP_ID}.interfaces.api.main:app",
-                application_root=paths.generated_application,
+                entrypoint=f"app.{app_id}.interfaces.api.main:app",
+                application_root=application_root,
                 capabilities=("echo", "health"),
             )
         )
@@ -1143,15 +1244,15 @@ class BrowserIntakeOrchestrator:
             "catalogue_sha256": self.portfolio_catalogue.catalogue()["catalogue_sha256"],
             "version_identity_sha256": version.identity_sha256,
         }
-        _atomic_write_json(paths.engineering_evidence / "portfolio_registration.json", registration)
+        _atomic_write_json(evidence_root / "portfolio_registration.json", registration)
         _write_generation_manifest(
-            manifest_path=paths.generated_application / "generation_manifest.json",
+            manifest_path=application_root / "generation_manifest.json",
             project_root=self.project_root,
             run_id=run_id,
-            app_id=APP_ID,
+            app_id=app_id,
             version_id=version_id,
             requirements_sha256=requirements_sha256,
-            generated_application=paths.generated_application,
+            generated_application=application_root,
             portfolio_registration=registration,
         )
         metadata["portfolio_registration"] = registration
@@ -1159,20 +1260,24 @@ class BrowserIntakeOrchestrator:
         return registration
 
     def _adapter_config(self, paths: PortalRunPaths, *, plan_only: bool) -> AdapterConfig:
+        state = _read_json(paths.state)
+        app_id = self._state_app_id(state)
+        publication_root = self._publication_root(run_id=str(state["run_id"]), app_id=app_id)
         return AdapterConfig(
             requirements=paths.requirements,
-            app_id=APP_ID,
-            output_root=paths.generated_application,
-            evidence_root=paths.engineering_evidence,
+            app_id=app_id,
+            output_root=publication_root / "generated_application",
+            evidence_root=publication_root / "engineering_evidence",
             approval_mode="proposal-only" if plan_only else "human-gated",
             approval_token=None if plan_only else _approval_token(),
             mock_safe=True,
             plan_only=plan_only,
             replace_existing=False,
             factory_root=self.project_root,
-            workspace_root=paths.root,
+            workspace_root=publication_root,
             portfolio_state_root=self.portfolio_store.state_root,
             engineering_profile="compatibility",
+            register_with_portfolio=False,
         )
 
     def _validate_portfolio_contract(self) -> None:
@@ -1259,8 +1364,9 @@ class BrowserIntakeOrchestrator:
         ]
 
     def _artifact_status(self, paths: PortalRunPaths) -> dict[str, bool]:
+        application_root = self._trusted_application_root(paths) if paths.state.is_file() else paths.generated_application
         return {
-            "generated_application_available": paths.generated_application.is_dir(),
+            "generated_application_available": application_root.is_dir(),
             "evidence_bundle_available": paths.state.is_file(),
             "plan_available": paths.plan.is_file(),
             "engineering_result_available": paths.result.is_file(),
@@ -1269,11 +1375,12 @@ class BrowserIntakeOrchestrator:
     def _quality_gates(self, paths: PortalRunPaths) -> dict[str, Any]:
         result = _read_json(paths.result) if paths.result.is_file() else {}
         manifest = result.get("generated_file_count", 0)
+        application_root = self._trusted_application_root(paths) if paths.state.is_file() else paths.generated_application
         return {
             "health_contract": result.get("health_contract") is True,
             "ready_contract": result.get("ready_contract") is True,
             "tests_present": bool(result.get("generated_tests")),
-            "source_present": paths.generated_application.is_dir() and any(paths.generated_application.rglob("*.py")),
+            "source_present": application_root.is_dir() and any(application_root.rglob("*.py")),
             "archive_safe": True,
             "default_llm_calls": result.get("llm_calls", 0),
             "real_payment_calls": result.get("real_payment_calls", "disabled"),
@@ -1302,6 +1409,7 @@ class BrowserIntakeOrchestrator:
         plan = _read_json(self._paths(run_id).plan)
         expected = {
             "run_id": run_id,
+            "app_id": self._state_app_id(state),
             "action": RUN_ACTION_APPLICATION_ENGINEERING,
             "requirements_sha256": state["requirements_sha256"],
             "plan_sha256": str(

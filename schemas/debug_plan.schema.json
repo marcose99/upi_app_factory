@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UPI App Factory Debug Plan",
+  "type": "object",
+  "required": ["schema_version", "plan_kind", "app_id", "version_id", "run_id", "requirements_sha256", "entrypoint", "source_files", "routes", "state_machines", "observability", "safety_boundaries", "commands", "plan_sha256"],
+  "properties": {
+    "schema_version": {"const": "upi-app-factory.debug-plan.v1"},
+    "plan_kind": {"enum": ["factory", "generated_application"]},
+    "app_id": {"type": "string"},
+    "version_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "requirements_sha256": {"type": "string"},
+    "entrypoint": {"type": "string"},
+    "source_files": {"type": "array"},
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["method", "path"],
+        "additionalProperties": false,
+        "properties": {
+          "method": {"type": "string"},
+          "path": {"type": "string"}
+        }
+      }
+    },
+    "state_machines": {"type": "array"},
+    "observability": {"type": "object"},
+    "safety_boundaries": {"type": "object"},
+    "commands": {"type": "array"},
+    "plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

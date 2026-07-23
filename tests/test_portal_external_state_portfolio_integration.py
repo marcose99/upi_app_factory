@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import shutil
 import time
 from typing import Any
 
@@ -15,6 +16,14 @@ from factory.operator_portal.browser_intake_orchestration import (
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _contained_test_root(tmp_path: Path, name: str) -> Path:
+    root = PROJECT_ROOT / "workspace" / "factory_generated" / "portal_external_state_tests" / tmp_path.name / name
+    if root.exists():
+        shutil.rmtree(root)
+    root.mkdir(parents=True)
+    return root
 
 
 def _requirements() -> str:
@@ -46,7 +55,7 @@ def _wait(orchestrator: BrowserIntakeOrchestrator, run_id: str) -> dict[str, Any
 
 def test_external_xdg_browser_state_uses_worktree_portfolio_root(tmp_path: Path) -> None:
     browser_root = tmp_path / "xdg state" / "operator_portal_runs"
-    portfolio_root = tmp_path / "portfolio"
+    portfolio_root = _contained_test_root(tmp_path, "portfolio")
     orchestrator = BrowserIntakeOrchestrator(
         project_root=PROJECT_ROOT,
         state_root=browser_root,
@@ -73,7 +82,7 @@ def test_registration_failure_persists_failed_no_go(monkeypatch: pytest.MonkeyPa
     orchestrator = BrowserIntakeOrchestrator(
         project_root=PROJECT_ROOT,
         state_root=tmp_path / "portal_runs",
-        portfolio_state_root=tmp_path / "portfolio",
+        portfolio_state_root=_contained_test_root(tmp_path, "portfolio"),
     )
     run_id = _approved_run(orchestrator)
 
@@ -92,10 +101,11 @@ def test_registration_failure_persists_failed_no_go(monkeypatch: pytest.MonkeyPa
 
 
 def test_orphaned_non_terminal_recovery(tmp_path: Path) -> None:
+    portfolio_root = _contained_test_root(tmp_path, "portfolio")
     orchestrator = BrowserIntakeOrchestrator(
         project_root=PROJECT_ROOT,
         state_root=tmp_path / "portal_runs",
-        portfolio_state_root=tmp_path / "portfolio",
+        portfolio_state_root=portfolio_root,
     )
     run_id = _approved_run(orchestrator)
     paths = orchestrator._paths(run_id)
@@ -106,7 +116,7 @@ def test_orphaned_non_terminal_recovery(tmp_path: Path) -> None:
     recovered = BrowserIntakeOrchestrator(
         project_root=PROJECT_ROOT,
         state_root=tmp_path / "portal_runs",
-        portfolio_state_root=tmp_path / "portfolio",
+        portfolio_state_root=portfolio_root,
     )
     terminal = recovered.get_run(run_id)
     assert terminal["state"] == "FAILED"

@@ -8,11 +8,15 @@ from pathlib import Path
 import tarfile
 from typing import Any, Iterable
 
+from factory.application_engineering.deep_composer import compose_golden_application
+from factory.application_engineering.requirements_compiler import compile_requirements
+
 
 PHASE57_ENGINE_VERSION = "verification-evidence/v1"
 APP_ID = "upi_failed_debit_dispute"
 PRODUCT_NAME = "UPI App Factory"
 REPOSITORY_ID = "upi_app_factory"
+FIXTURE_REQUIREMENTS = Path("tests/fixtures/phase53/failed_debit_requirements.md")
 LAYER_COUNTS = {
     "domain": 16,
     "application": 14,
@@ -85,6 +89,29 @@ def read_json(path: Path) -> dict[str, Any]:
 
 def generated_app_root(project_root: Path) -> Path:
     return project_root / "workspace" / "deep_engineering_campaign" / "generated_app" / APP_ID
+
+
+def materialize_generated_app_if_missing(project_root: Path) -> dict[str, Any]:
+    root = project_root.resolve()
+    app_root = generated_app_root(root)
+    generation_manifest = app_root / "evidence" / "generation_manifest.json"
+    if app_root.is_dir() and generation_manifest.is_file():
+        return {"status": "already_present", "app_root": app_root.relative_to(root).as_posix()}
+
+    requirements_path = root / FIXTURE_REQUIREMENTS
+    if not requirements_path.is_file():
+        raise VerificationEvidenceError(f"Phase 53 fixture requirements missing: {requirements_path}")
+    requirements_ir = compile_requirements([requirements_path], root)
+    manifest = compose_golden_application(root, requirements_ir)
+    if not generation_manifest.is_file():
+        raise VerificationEvidenceError(f"generated app materialization failed: {app_root}")
+    return {
+        "status": "materialized",
+        "app_root": app_root.relative_to(root).as_posix(),
+        "composer_profile": manifest.get("composer_profile"),
+        "llm_runtime_calls": manifest.get("llm_runtime_calls"),
+        "real_payment_calls": manifest.get("real_payment_calls"),
+    }
 
 
 def evidence_root(app_root: Path) -> Path:
@@ -376,6 +403,7 @@ def _create_archive(app_root: Path, verification_root: Path) -> Path:
 
 def run_phase57_verification(project_root: Path) -> VerificationResult:
     root = project_root.resolve()
+    materialize_generated_app_if_missing(root)
     app_root = generated_app_root(root)
     if not app_root.is_dir():
         raise VerificationEvidenceError(f"generated app root missing: {app_root}")

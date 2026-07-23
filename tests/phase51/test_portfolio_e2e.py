@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import shutil
 
 import pytest
 from fastapi.testclient import TestClient
@@ -30,12 +31,33 @@ from tests.phase51.conftest import (
 )
 
 
+PortfolioFixture = tuple[PortfolioStore, PortfolioCatalogue, PortfolioSupervisor, list[int]]
+
+
+def _fresh_contained_test_root(tmp_path: Path, name: str) -> Path:
+    root = PROJECT_ROOT / "workspace" / "factory_generated" / "phase51_portfolio_e2e_tests" / tmp_path.name / name
+    if root.exists():
+        shutil.rmtree(root)
+    root.mkdir(parents=True)
+    return root
+
+
+def _portfolio_fixture(tmp_path: Path) -> PortfolioFixture:
+    store = PortfolioStore(
+        project_root=PROJECT_ROOT,
+        state_root=_fresh_contained_test_root(tmp_path, "phase51_state"),
+    )
+    catalogue = PortfolioCatalogue(store=store)
+    supervisor = PortfolioSupervisor(store=store, catalogue=catalogue)
+    return store, catalogue, supervisor, []
+
+
 def test_phase51_contracts_catalogue_lineage_and_fail_closed_security(
-    portfolio: tuple[PortfolioStore, PortfolioCatalogue, PortfolioSupervisor, list[int]],
     tmp_path: Path,
 ) -> None:
-    store, catalogue, _, _ = portfolio
-    app_root = mock_app(tmp_path, "contracts_app", "v1")
+    store, catalogue, _, _ = _portfolio_fixture(tmp_path)
+    apps_root = _fresh_contained_test_root(tmp_path, "apps")
+    app_root = mock_app(apps_root, "contracts_app", "v1")
 
     version = catalogue.register(
         registration(
@@ -62,7 +84,7 @@ def test_phase51_contracts_catalogue_lineage_and_fail_closed_security(
             app_id="contracts_app",
             version_id="v2",
             generated_run_id="contracts_run_002",
-            app_root=mock_app(tmp_path, "contracts_app_v2", "v2"),
+            app_root=mock_app(apps_root, "contracts_app_v2", "v2"),
             requirements="stable mock contracts v2",
             source_commit="def456",
             manifest={
@@ -108,16 +130,16 @@ def test_phase51_contracts_catalogue_lineage_and_fail_closed_security(
 
 
 def test_phase51_runtime_quotas_scenarios_comparison_and_evidence(
-    portfolio: tuple[PortfolioStore, PortfolioCatalogue, PortfolioSupervisor, list[int]],
     tmp_path: Path,
 ) -> None:
-    store, catalogue, supervisor, ports = portfolio
+    store, catalogue, supervisor, ports = _portfolio_fixture(tmp_path)
+    apps_root = _fresh_contained_test_root(tmp_path, "apps")
     app_one = catalogue.register(
         registration(
             app_id="portfolio_alpha",
             version_id="v1",
             generated_run_id="alpha_run_001",
-            app_root=mock_app(tmp_path, "portfolio_alpha_v1", "alpha-v1"),
+            app_root=mock_app(apps_root, "portfolio_alpha_v1", "alpha-v1"),
             requirements="alpha requirements",
             source_commit="1111111",
             manifest={"openapi": {"paths": {"/health": {}, "/scenario/echo": {}}}},
@@ -130,7 +152,7 @@ def test_phase51_runtime_quotas_scenarios_comparison_and_evidence(
             app_id="portfolio_beta",
             version_id="v1",
             generated_run_id="beta_run_001",
-            app_root=mock_app(tmp_path, "portfolio_beta_v1", "beta-v1"),
+            app_root=mock_app(apps_root, "portfolio_beta_v1", "beta-v1"),
             requirements="beta requirements",
             source_commit="2222222",
             manifest={
@@ -204,7 +226,8 @@ def test_phase51_runtime_quotas_scenarios_comparison_and_evidence(
 
 
 def test_phase51_portal_apis_ui_approvals_and_replay(tmp_path: Path) -> None:
-    state_root = tmp_path / "portal_state"
+    state_root = _fresh_contained_test_root(tmp_path, "portal_state")
+    apps_root = _fresh_contained_test_root(tmp_path, "apps")
     store = PortfolioStore(project_root=PROJECT_ROOT, state_root=state_root)
     catalogue = PortfolioCatalogue(store=store)
     version = catalogue.register(
@@ -212,7 +235,7 @@ def test_phase51_portal_apis_ui_approvals_and_replay(tmp_path: Path) -> None:
             app_id="portal_alpha",
             version_id="v1",
             generated_run_id="portal_run_001",
-            app_root=mock_app(tmp_path, "portal_alpha_v1", "portal-v1"),
+            app_root=mock_app(apps_root, "portal_alpha_v1", "portal-v1"),
             requirements="portal requirements",
             source_commit="3333333",
             manifest={"openapi": {"paths": {"/health": {}, "/scenario/echo": {}}}},
@@ -222,7 +245,7 @@ def test_phase51_portal_apis_ui_approvals_and_replay(tmp_path: Path) -> None:
     port = free_port()
     app = create_app(
         project_root=PROJECT_ROOT,
-        runtime_state_root=tmp_path / "phase50",
+        runtime_state_root=_fresh_contained_test_root(tmp_path, "phase50"),
         portfolio_state_root=state_root,
     )
     client = TestClient(app)
@@ -355,16 +378,16 @@ def test_phase51_portal_apis_ui_approvals_and_replay(tmp_path: Path) -> None:
 
 
 def test_phase51_resilience_and_ssrf_guards(
-    portfolio: tuple[PortfolioStore, PortfolioCatalogue, PortfolioSupervisor, list[int]],
     tmp_path: Path,
 ) -> None:
-    store, catalogue, supervisor, ports = portfolio
+    store, catalogue, supervisor, ports = _portfolio_fixture(tmp_path)
+    apps_root = _fresh_contained_test_root(tmp_path, "apps")
     version = catalogue.register(
         registration(
             app_id="resilience_app",
             version_id="v1",
             generated_run_id="resilience_run_001",
-            app_root=mock_app(tmp_path, "resilience_v1", "resilience-v1"),
+            app_root=mock_app(apps_root, "resilience_v1", "resilience-v1"),
             requirements="resilience requirements",
             source_commit="4444444",
             manifest={"openapi": {"paths": {"/health": {}}}},
@@ -382,45 +405,55 @@ def test_phase51_resilience_and_ssrf_guards(
     )
     assert status.state.value == "READY"
 
-    with pytest.raises(PortfolioError, match="concurrency"):
-        supervisor.start(
-            app_id=version.app_id,
-            version_id=version.version_id,
-            run_id="resilience_runtime_002",
-            port=free_port(),
-        )
-    with pytest.raises(PortfolioError, match="restart quota"):
-        supervisor.restart(
-            app_id=version.app_id,
-            version_id=version.version_id,
-            run_id="resilience_runtime_001",
-            port=port,
-        )
-    with pytest.raises(PortfolioError, match="loopback"):
-        normalize_runtime_url(
-            base_url="http://169.254.169.254:80",
-            method="GET",
-            endpoint="/health",
-            owned_port=80,
-        )
-    with pytest.raises(PortfolioError, match="escaped"):
-        normalize_runtime_url(
-            base_url=f"http://127.0.0.1:{port}",
-            method="GET",
-            endpoint="http://127.0.0.1/health",
-            owned_port=port,
-        )
-
-    original = store.status_path("resilience_runtime_001").read_text(encoding="utf-8")
-    tampered = original.replace(version.identity_sha256, "0" * 64)
-    store.status_path("resilience_runtime_001").write_text(tampered, encoding="utf-8")
     try:
-        with pytest.raises(PortfolioError, match="stale ownership"):
-            supervisor.status(
+        with pytest.raises(PortfolioError, match="concurrency"):
+            supervisor.start(
+                app_id=version.app_id,
+                version_id=version.version_id,
+                run_id="resilience_runtime_002",
+                port=free_port(),
+            )
+        with pytest.raises(PortfolioError, match="restart quota"):
+            supervisor.restart(
                 app_id=version.app_id,
                 version_id=version.version_id,
                 run_id="resilience_runtime_001",
                 port=port,
             )
+        with pytest.raises(PortfolioError, match="loopback"):
+            normalize_runtime_url(
+                base_url="http://169.254.169.254:80",
+                method="GET",
+                endpoint="/health",
+                owned_port=80,
+            )
+        with pytest.raises(PortfolioError, match="escaped"):
+            normalize_runtime_url(
+                base_url=f"http://127.0.0.1:{port}",
+                method="GET",
+                endpoint="http://127.0.0.1/health",
+                owned_port=port,
+            )
+
+        original = store.status_path("resilience_runtime_001").read_text(encoding="utf-8")
+        tampered = original.replace(version.identity_sha256, "0" * 64)
+        store.status_path("resilience_runtime_001").write_text(tampered, encoding="utf-8")
+        try:
+            with pytest.raises(PortfolioError, match="stale ownership"):
+                supervisor.status(
+                    app_id=version.app_id,
+                    version_id=version.version_id,
+                    run_id="resilience_runtime_001",
+                    port=port,
+                )
+        finally:
+            store.status_path("resilience_runtime_001").write_text(original, encoding="utf-8")
     finally:
-        store.status_path("resilience_runtime_001").write_text(original, encoding="utf-8")
+        supervisor.stop(
+            app_id=version.app_id,
+            version_id=version.version_id,
+            run_id="resilience_runtime_001",
+            port=port,
+        )
+        wait_for_ports_closed(ports)
+        assert not port_open(port)

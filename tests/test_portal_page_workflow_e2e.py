@@ -148,6 +148,7 @@ class Document {{
 function registerFixture(document) {{
   const ids = [
     "requirements-input",
+    "app-id-input",
     "approval-actor",
     "approval-token",
     "run-progress-panel",
@@ -168,6 +169,7 @@ function registerFixture(document) {{
     document.register(new Element(tag, id));
   }}
   document.getElementById("requirements-input").value = "# UPI dispute resolution requirements";
+  document.getElementById("app-id-input").value = "upi_failed_debit_no_credit";
   document.getElementById("approval-actor").value = "operator";
   document.getElementById("approval-token").value = "";
   document.getElementById("runtime-run-id").value = "portfolio_runtime_001";
@@ -180,7 +182,9 @@ function registerFixture(document) {{
     "browser-approval-state", "browser-updated-at", "browser-final-decision",
     "runtime-selected-app", "runtime-selected-version", "runtime-state",
     "runtime-health", "runtime-port", "runtime-mock-safe", "guides-status",
-    "guides-count", "taxonomy-count",
+    "guides-count", "taxonomy-count", "debug-plan-schema", "debug-plan-routes",
+    "debug-plan-sha", "factory-docs-status", "factory-docs-size",
+    "factory-docs-route",
   ]) {{
     const element = document.register(new Element("dd"));
     element.setAttribute("data-field", field);
@@ -188,6 +192,7 @@ function registerFixture(document) {{
   const actions = [
     "refresh-health", "refresh-evidence", "refresh-download", "export-download",
     "validation-dry-run", "validation-run", "latest-report", "refresh-guides",
+    "view-factory-debug-plan", "view-factory-documentation",
     "refresh-run", "validate-requirements", "submit-run", "generate-plan",
     "approve-engineering", "start-engineering", "cancel-run",
     "view-validation-report", "view-evidence", "runtime-approve-start",
@@ -201,7 +206,7 @@ function registerFixture(document) {{
     element.textContent = action;
     element.setAttribute("data-action", action);
   }}
-  for (const link of ["download-application", "download-evidence"]) {{
+  for (const link of ["download-application", "download-evidence", "download-factory-debug-plan", "download-factory-documentation"]) {{
     const element = document.register(new Element("a", `${{link}}-button`));
     element.setAttribute("data-link", link);
     element.setAttribute("aria-disabled", "true");

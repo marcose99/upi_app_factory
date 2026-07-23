@@ -34,7 +34,7 @@ const approval = test.requests.find(
 test.assert.deepStrictEqual(validation, {
   path: "/operator-portal/api/requirements/validate",
   method: "POST",
-  body: { requirements: "A".repeat(100) },
+  body: { requirements: "A".repeat(100), app_id: "upi_failed_debit_no_credit" },
 });
 test.assert.deepStrictEqual(approval, {
   path: "/operator-portal/api/runs/run_payload/approvals",

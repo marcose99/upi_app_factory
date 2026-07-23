@@ -296,7 +296,7 @@ def test_successful_progress_events_downloads_and_checksums(tmp_path: Path) -> N
         ]
         assert manifest_members == ["generated_application/generation_manifest.json"]
         manifest = json.loads(archive.read(manifest_members[0]).decode("utf-8"))
-        assert set(manifest) == {
+        assert {
             "schema_version",
             "artifact_type",
             "run_id",

@@ -24,7 +24,9 @@ from factory.operator_portal.browser_intake_orchestration import (
     OrchestrationValidationError,
 )
 from factory.operator_portal.capstone_phase69_api import build_phase69_router
+from factory.operator_portal.debug_plan_api import build_debug_plan_router
 from factory.operator_portal.download_center import DownloadCenterService
+from factory.operator_portal.documentation_api import build_documentation_router
 from factory.operator_portal.deep_portal_integration import (
     DeepPortalError,
     DeepPortalIntegration,
@@ -73,6 +75,7 @@ class RequirementsRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     requirements: str
+    app_id: str | None = None
 
 
 class ApprovalRequest(BaseModel):
@@ -293,7 +296,10 @@ class OperatorPortalLocalWebAPI:
 
     def create_browser_run(self, request: RequirementsRequest) -> dict[str, Any]:
         try:
-            run = self.browser_orchestrator.create_run(request.requirements)
+            run = self.browser_orchestrator.create_run(
+                request.requirements,
+                app_id=request.app_id or APP_ID,
+            )
         except OrchestrationValidationError as exc:
             raise HTTPException(
                 status_code=400,
@@ -308,6 +314,7 @@ class OperatorPortalLocalWebAPI:
             "status": "run_created",
             "run_id": run["run_id"],
             "state": run["state"],
+            "app_id": run["app_id"],
             "requirements_sha256": run["requirements_sha256"],
             "approval_required": run["approval_required"],
             "mock_boundary": run["mock_boundary"],
@@ -657,13 +664,24 @@ def create_app(
     runtime_router = build_runtime_router(project_root=api.project_root, state_root=runtime_state_root)
     portfolio_router = build_portfolio_router(project_root=api.project_root, state_root=api.portfolio_state_root)
     phase69_router = build_phase69_router(project_root=api.project_root, state_root=phase69_state_root)
-    app.include_router(runtime_router)
-    app.include_router(portfolio_router)
-    app.include_router(phase69_router)
-    for router in (runtime_router, portfolio_router, phase69_router):
+    debug_plan_router = build_debug_plan_router(project_root=api.project_root)
+    documentation_router = build_documentation_router(project_root=api.project_root)
+    route_keys = {
+        (
+            getattr(route, "path", ""),
+            tuple(sorted(getattr(route, "methods", set()) or set())),
+        )
+        for route in app.routes
+    }
+    for router in (runtime_router, portfolio_router, phase69_router, debug_plan_router, documentation_router):
         for route in router.routes:
-            if route not in app.routes:
+            key = (
+                getattr(route, "path", ""),
+                tuple(sorted(getattr(route, "methods", set()) or set())),
+            )
+            if key not in route_keys:
                 app.routes.append(route)
+                route_keys.add(key)
     return app
 
 

@@ -13,6 +13,7 @@ import pytest
 
 
 MODULE = "scripts.run_portal_requirements_driven_application_engineering"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 class AdapterModule(Protocol):
@@ -166,7 +167,7 @@ def test_approved_execution_creates_demo_contract(
     assert metadata["requirements_sha256"] == hashlib.sha256(requirements.read_bytes()).hexdigest()
     assert metadata["version_id"].startswith("v1_")
     assert metadata["source_run_id"].startswith("portal_")
-    assert metadata["source_commit"] == "unavailable:non_git_source_root"
+    assert metadata["source_commit"] == "unavailable:deterministic_non_git_non_manifest_source_root"
     assert metadata["application_root"] == str(output)
     assert metadata["portfolio_registration"]["version_id"] == metadata["version_id"]
     assert metadata["real_payment_calls"] == "disabled"
@@ -177,7 +178,7 @@ def test_approved_execution_creates_demo_contract(
     registration = json.loads(registration_files[0].read_text(encoding="utf-8"))
     assert registration["app_id"] == "upi_dispute_resolution"
     assert registration["requirements_sha256"] == metadata["requirements_sha256"]
-    assert registration["source_commit"] == "unavailable:non_git_source_root"
+    assert registration["source_commit"] == "unavailable:deterministic_non_git_non_manifest_source_root"
     assert Path(registration["catalogue_path"]).is_file()
 
     result_files = list(evidence.glob("portal_*/result.json"))
@@ -212,7 +213,7 @@ def test_approved_execution_creates_demo_contract(
 
 
 def test_portal_config_points_to_adapter() -> None:
-    config_path = Path("config/operator_portal/generate_command.json")
+    config_path = PROJECT_ROOT / "config/operator_portal/generate_command.json"
     payload = json.loads(config_path.read_text(encoding="utf-8"))
 
     assert payload["schema_version"] == "1.0"

@@ -1,0 +1,109 @@
+{
+  "controls_traced": 34,
+  "debug_plan_sha256": "d9c194573f264cbffa099a75a1288c713e24523fec869019e5956f9429e7847c",
+  "diagrams": [
+    "system context",
+    "component architecture",
+    "agent/task ownership",
+    "engineering sequence",
+    "portal state/control flow",
+    "diagnostic decision flow"
+  ],
+  "generated_at_utc": "1970-01-01T00:00:00Z",
+  "html_sha256": "a883637841437e4343e471807ae34817fadad54bc3a21d926bea6cf17e23a10e",
+  "routes_traced": 34,
+  "schema_version": "upi-app-factory.factory-documentation.v1",
+  "source_traceability": [
+    {
+      "path": "factory/operator_portal/local_web_api.py",
+      "sha256": "b4802944366d2dcf05c80bec0f77bb17f9c4aee9dbc0b759c84702ac5cf9abb7",
+      "size_bytes": 29629
+    },
+    {
+      "path": "factory/operator_portal/debug_plan_api.py",
+      "sha256": "4546533f931017d373940e50ced1a794ea7d4771455c160666a9d64ab62ec629",
+      "size_bytes": 920
+    },
+    {
+      "path": "factory/operator_portal/documentation_api.py",
+      "sha256": "3cdf3235b021e7975ac050fcf58fb5c0e9ba01efb0d2dd7ba446153ba8858ff9",
+      "size_bytes": 2364
+    },
+    {
+      "path": "factory/operator_portal/web_ui/app.py",
+      "sha256": "793519356ff498f671473cc77f9c18474962a2500382d49ef644164a8b134c21",
+      "size_bytes": 5183
+    },
+    {
+      "path": "factory/operator_portal/web_ui/static/index.html",
+      "sha256": "3db0a85b0a21b00c3e6f3e168d48db6816b88e0c62cc02f2f56343f3a60d8ae6",
+      "size_bytes": 14297
+    },
+    {
+      "path": "factory/operator_portal/web_ui/static/app.js",
+      "sha256": "a1963a7b552b6f2856da904569eb0753242f36a5e545f9854cd26e09a9eb56ee",
+      "size_bytes": 27185
+    },
+    {
+      "path": "factory/operator_portal/browser_intake_orchestration.py",
+      "sha256": "2d2295a3998564cc9e8697fd12c6e1b1c08622429b7c9cfa64fdbb80c022ee85",
+      "size_bytes": 60193
+    },
+    {
+      "path": "factory/debugging/debug_plan.py",
+      "sha256": "f0f9d57d0a28afd724b95b7376e10afdcad3f9a12496d17137458e63bc39c6bc",
+      "size_bytes": 20693
+    },
+    {
+      "path": "factory/operator_portal/portfolio_api.py",
+      "sha256": "fe37ee598772ec96fe61c4df4cdb4ca1cc4662255a99edcaa61b34e46bd62b00",
+      "size_bytes": 16198
+    },
+    {
+      "path": "factory/operator_portal/runtime_api.py",
+      "sha256": "25bdd58c40a2417062c2a03ea8d1340e5b1795e89e2f123a0c45d2f5b5332b92",
+      "size_bytes": 10630
+    },
+    {
+      "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+      "sha256": "93a9cd4d184431a3c824351666355d3363ec1a9199a73bde1ea29c1d1c62d1ac",
+      "size_bytes": 44885
+    },
+    {
+      "path": "scripts/build_factory_debug_plan.py",
+      "sha256": "66f6246a382df1d5c7ca00f6757ab8960652b9cad0b457f347bc917c57355bca",
+      "size_bytes": 1135
+    },
+    {
+      "path": "scripts/validate_debug_plan.py",
+      "sha256": "aa1e8bfa4042b6e875894740473b6ce7d699366f9bec9705a973752b9117957e",
+      "size_bytes": 1191
+    },
+    {
+      "path": "scripts/build_operator_portal_exhaustive_ui_manifest.py",
+      "sha256": "9281b440f43c3688b6d13c6060fa9634fa45da26d035b875fa73943b17f87496",
+      "size_bytes": 16925
+    },
+    {
+      "path": "scripts/build_factory_complete_documentation.py",
+      "sha256": "0863ae250f4dc3b5252921db65bf0360e2d30bb21b88ccd25324904d76237168",
+      "size_bytes": 11290
+    },
+    {
+      "path": "start_factory.sh",
+      "sha256": "b58e894a301cb6de450d1e6472c1ba7372c4b639af6169aee49c4d657effa74f",
+      "size_bytes": 2415
+    },
+    {
+      "path": "stop_factory.sh",
+      "sha256": "0e44189a8a40157135c6937f14601884ba2662a51837cc26d155ca8f059e4053",
+      "size_bytes": 1154
+    },
+    {
+      "path": "config/factory_runtime.env.example",
+      "sha256": "ad3bed0b5437e6eb27a940b59218970f9b2e62042ea0d6f6881e4a31242891c6",
+      "size_bytes": 166
+    }
+  ],
+  "ui_manifest_sha256": "40cfee7f5b7ae5ea96a67de71325130f1574706d791ada936326f5586729c86d"
+}

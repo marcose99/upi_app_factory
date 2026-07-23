@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import shutil
 import time
 
 from fastapi.testclient import TestClient
@@ -31,8 +32,16 @@ from tests.phase51.conftest import (
 )
 
 
+def _contained_test_root(tmp_path: Path, name: str) -> Path:
+    root = PROJECT_ROOT / "workspace" / "factory_generated" / "phase51_test_roots" / tmp_path.name / name
+    if root.exists():
+        shutil.rmtree(root)
+    root.mkdir(parents=True)
+    return root
+
+
 def test_portfolio_catalogue_bootstraps_valid_empty_state(tmp_path: Path) -> None:
-    state_root = tmp_path / "fresh_portfolio_state"
+    state_root = _contained_test_root(tmp_path, "fresh_portfolio_state")
     app = create_app(project_root=PROJECT_ROOT, portfolio_state_root=state_root)
     client = TestClient(app)
 
@@ -50,13 +59,13 @@ def test_portfolio_catalogue_bootstraps_valid_empty_state(tmp_path: Path) -> Non
 def test_portfolio_registration_replays_identical_immutable_version(
     tmp_path: Path,
 ) -> None:
-    store = PortfolioStore(project_root=PROJECT_ROOT, state_root=tmp_path / "portfolio")
+    store = PortfolioStore(project_root=PROJECT_ROOT, state_root=_contained_test_root(tmp_path, "portfolio"))
     catalogue = PortfolioCatalogue(store=store)
     request = registration(
         app_id="replay_app",
         version_id="v1_replay",
         generated_run_id="replay_run_001",
-        app_root=mock_app(tmp_path, "replay_app", "replay"),
+        app_root=mock_app(_contained_test_root(tmp_path, "apps"), "replay_app", "replay"),
     )
 
     first = catalogue.register(request)
@@ -70,9 +79,9 @@ def test_portfolio_registration_replays_identical_immutable_version(
 def test_portfolio_registration_rejects_same_id_different_content(
     tmp_path: Path,
 ) -> None:
-    store = PortfolioStore(project_root=PROJECT_ROOT, state_root=tmp_path / "portfolio")
+    store = PortfolioStore(project_root=PROJECT_ROOT, state_root=_contained_test_root(tmp_path, "portfolio"))
     catalogue = PortfolioCatalogue(store=store)
-    app_root = mock_app(tmp_path, "collision_app", "collision")
+    app_root = mock_app(_contained_test_root(tmp_path, "apps"), "collision_app", "collision")
     catalogue.register(
         registration(
             app_id="collision_app",
@@ -100,7 +109,7 @@ def test_portfolio_registration_rejects_same_id_different_content(
 
 def test_browser_generation_registers_portfolio_version_and_metadata(tmp_path: Path) -> None:
     browser_root = tmp_path / "browser_runs"
-    portfolio_root = tmp_path / "portfolio_state"
+    portfolio_root = _contained_test_root(tmp_path, "portfolio_state")
     orchestrator = BrowserIntakeOrchestrator(
         project_root=PROJECT_ROOT,
         state_root=browser_root,
@@ -129,13 +138,13 @@ def test_browser_generation_registers_portfolio_version_and_metadata(tmp_path: P
     assert registration["version_id"].startswith("v1_")
     assert registration["source_run_id"] == run_id
     assert registration["requirements_sha256"] == completed["requirements_sha256"]
-    assert Path(registration["application_root"]) == browser_root / run_id / "generated_application"
+    application_root = Path(registration["application_root"])
+    assert application_root.is_relative_to(PROJECT_ROOT)
+    assert not application_root.is_relative_to(browser_root)
     assert Path(registration["catalogue_path"]) == portfolio_root / "portfolio_catalogue.json"
 
     metadata = json.loads(
-        (browser_root / run_id / "generated_application" / "generation_metadata.json").read_text(
-            encoding="utf-8"
-        )
+        (application_root / "generation_metadata.json").read_text(encoding="utf-8")
     )
     assert metadata["version_id"] == registration["version_id"]
     assert metadata["portfolio_registration"]["catalogue_sha256"] == registration["catalogue_sha256"]
@@ -148,7 +157,7 @@ def test_browser_generation_registers_portfolio_version_and_metadata(tmp_path: P
         version_id=registration["version_id"],
     )
     assert version.generated_run_id == run_id
-    assert version.application_root == str(browser_root / run_id / "generated_application")
+    assert version.application_root == str(application_root)
     assert set(version.capabilities) >= {"echo", "health"}
 
     port = free_port()
@@ -176,19 +185,19 @@ def test_browser_generation_registers_portfolio_version_and_metadata(tmp_path: P
 
 
 def test_portal_api_exposes_catalogue_runtime_scenarios_and_html_view(tmp_path: Path) -> None:
-    state_root = tmp_path / "portal_state"
+    state_root = _contained_test_root(tmp_path, "portal_state")
     store = PortfolioStore(project_root=PROJECT_ROOT, state_root=state_root)
     catalogue = PortfolioCatalogue(store=store)
     version = catalogue.register(
         registration(
             app_id="portal_api_app",
-            app_root=mock_app(tmp_path, "portal_api_app", "portal"),
+            app_root=mock_app(_contained_test_root(tmp_path, "apps"), "portal_api_app", "portal"),
         )
     )
     port = free_port()
     app = create_app(
         project_root=PROJECT_ROOT,
-        runtime_state_root=tmp_path / "phase50",
+        runtime_state_root=_contained_test_root(tmp_path, "phase50"),
         portfolio_state_root=state_root,
     )
     client = TestClient(app)
@@ -297,7 +306,10 @@ def test_runtime_operations_ui_uses_catalogue_backed_identity_selector() -> None
 
 
 def test_portal_mounted_routes_cover_docs_and_deep_engineering_reads(tmp_path: Path) -> None:
-    app = create_app(project_root=PROJECT_ROOT, portfolio_state_root=tmp_path / "portfolio")
+    app = create_app(
+        project_root=PROJECT_ROOT,
+        portfolio_state_root=_contained_test_root(tmp_path, "portfolio"),
+    )
     client = TestClient(app)
 
     docs = client.get("/docs")
@@ -325,8 +337,8 @@ def test_portal_mounted_routes_cover_docs_and_deep_engineering_reads(tmp_path: P
 def test_portal_mounted_runtime_routes_are_mock_safe_and_guarded(tmp_path: Path) -> None:
     app = create_app(
         project_root=PROJECT_ROOT,
-        runtime_state_root=tmp_path / "runtime_state",
-        portfolio_state_root=tmp_path / "portfolio_state",
+        runtime_state_root=_contained_test_root(tmp_path, "runtime_state"),
+        portfolio_state_root=_contained_test_root(tmp_path, "portfolio_state"),
     )
     client = TestClient(app)
     run_id = "phase51_runtime_routes_001"
@@ -387,7 +399,7 @@ def test_portal_mounted_runtime_routes_are_mock_safe_and_guarded(tmp_path: Path)
 def test_runtime_operations_browser_smoke_uses_catalogue_identity_and_runtime_controls(
     tmp_path: Path,
 ) -> None:
-    state_root = tmp_path / "portal_state"
+    state_root = _contained_test_root(tmp_path, "portal_state")
     store = PortfolioStore(project_root=PROJECT_ROOT, state_root=state_root)
     catalogue = PortfolioCatalogue(store=store)
     version = catalogue.register(
@@ -395,12 +407,12 @@ def test_runtime_operations_browser_smoke_uses_catalogue_identity_and_runtime_co
             app_id="browser_smoke_app",
             version_id="v1",
             generated_run_id="browser_smoke_run_001",
-            app_root=mock_app(tmp_path, "browser_smoke_app", "browser-smoke"),
+            app_root=mock_app(_contained_test_root(tmp_path, "apps"), "browser_smoke_app", "browser-smoke"),
         )
     )
     api_app = create_app(
         project_root=PROJECT_ROOT,
-        runtime_state_root=tmp_path / "runtime_state",
+        runtime_state_root=_contained_test_root(tmp_path, "runtime_state"),
         portfolio_state_root=state_root,
     )
     api_client = TestClient(api_app)
