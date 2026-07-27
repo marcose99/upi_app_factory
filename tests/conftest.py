@@ -6,6 +6,7 @@ import sys
 from typing import Any, cast
 
 import httpx
+import pytest
 
 import fastapi.testclient
 import fastapi.routing
@@ -54,3 +55,15 @@ class ASGISyncClient:
 
 
 cast(Any, fastapi.testclient).TestClient = ASGISyncClient
+
+
+@pytest.fixture(autouse=True)
+def _explicit_test_approval_tokens(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv(
+        "UPI_APP_FACTORY_RUNTIME_APPROVAL_TOKEN",
+        "phase50-test-runtime-approval-fixture",
+    )
+    monkeypatch.setenv(
+        "UPI_APP_FACTORY_PORTFOLIO_APPROVAL_TOKEN",
+        "phase51-test-portfolio-approval-fixture",
+    )

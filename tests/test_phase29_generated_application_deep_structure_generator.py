@@ -78,6 +78,24 @@ def test_generator_emits_deep_structure_and_records_boundaries(tmp_path: Path) -
     assert "phase28_architecture_depth_inputs" in manifest
 
 
+def test_generator_preserves_phase42_health_probe_contract(tmp_path: Path) -> None:
+    result = generate(run_id="phase42_health_contract_test", workspace_root=tmp_path, clean=True)
+    health_script = (
+        result.output_dir
+        / "generated/generated_application/scripts/health_check.py"
+    ).read_text(encoding="utf-8")
+    api_main = (
+        result.output_dir
+        / "generated/generated_application/app/interfaces/api/main.py"
+    ).read_text(encoding="utf-8")
+
+    for probe in ("/health", "/startup", "/live", "/ready", "/metrics"):
+        assert probe in health_script
+    for probe in ("/health", "/startup", "/live", "/ready"):
+        assert f'@app.get("{probe}")' in api_main
+    assert "application/openmetrics-text" in api_main
+
+
 def test_no_live_ecosystem_integrations_are_introduced() -> None:
     policy = load_json(POLICY_PATH)
     prompt = PROMPT_PATH.read_text(encoding="utf-8")

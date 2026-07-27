@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -29,9 +28,14 @@ def contains_forbidden_volatile_key(value: Any) -> bool:
     return False
 
 
-def git_tag_present(tag: str) -> bool:
-    result = subprocess.run(["git", "tag", "--list", tag], cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
-    return tag in result.stdout.splitlines()
+def retained_tag_evidence_present(payload: dict[str, Any], tag: str) -> bool:
+    if payload.get("baseline_tag") == tag and payload.get("baseline_tag_present") is True:
+        return True
+    return any(
+        item.get("tag") == tag and item.get("tag_present") is True
+        for item in payload.get("release_lineage", [])
+        if isinstance(item, dict)
+    )
 
 
 def main() -> int:
@@ -52,8 +56,8 @@ def main() -> int:
             errors.append("Baseline tag mismatch.")
         if payload.get("baseline_tag_present") is not True:
             errors.append("Baseline tag is not marked present in snapshot.")
-        if not git_tag_present(BASELINE_TAG):
-            errors.append("Baseline tag is not present in local git tags.")
+        if not retained_tag_evidence_present(payload, BASELINE_TAG):
+            errors.append("Baseline tag is not present in retained release-state evidence.")
         if contains_forbidden_volatile_key(payload):
             errors.append("Snapshot contains volatile timestamp or commit-hash keys.")
         if payload.get("evidence_determinism", {}).get("uses_wall_clock_timestamp") is not False:

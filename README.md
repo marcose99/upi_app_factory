@@ -197,7 +197,7 @@ Verified acceptance for that exact baseline:
 | Exact-commit replay | Passed |
 | Candidate quality / clean-clone proof / review readiness | 100 / 100 / 100 |
 
-The exact candidate was fast-forward merged and pushed to `main` with a main-only refspec. No force push, tag, release, deployment, certification claim, branch deletion or worktree deletion occurred.
+Historical baseline note: the prior exact candidate above was fast-forward merged and pushed to `main` with a main-only refspec. For the current Phase 71-82 V63 governed feature worktree, the controller owns Git state; this repair candidate remains uncommitted here, and no merge, push, tag, release, deployment, certification claim, branch deletion or worktree deletion is performed by this worktree repair.
 
 **Current manual-acceptance note:** Automated post-merge acceptance is ready; the supplied evidence does not yet contain the operator's final manual accept/close record.
 

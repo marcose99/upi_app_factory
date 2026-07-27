@@ -1,0 +1,749 @@
+{
+  "artifact": "STANDARDS_GAP_MATRIX",
+  "baseline": "5373b9bdd04ccd7760e65345d311362c5bc9a48f",
+  "campaign": "phase71-82-enterprise-engineering-v63-corrected",
+  "discovery_date": "2026-07-25",
+  "non_claims": {
+    "certification_claimed": false,
+    "deployment_claimed": false,
+    "production_readiness_claimed": false,
+    "regulatory_approval_claimed": false
+  },
+  "status_values": [
+    "CONFIRMED",
+    "PARTIAL",
+    "PARTIAL_AUTHORITY_BLOCKED",
+    "IMPLEMENTED_FINAL_GENERATED_OUTPUT",
+    "IMPLEMENTED_FINAL_PERSISTED_OUTPUT",
+    "NOT_FOUND",
+    "NOT_APPLICABLE"
+  ],
+  "gaps": [
+    {
+      "id": "GAP-BASELINE-RUFF-E402",
+      "severity": "HIGH",
+      "status": "WAVE_B_IMPLEMENTED_IN_TEMPLATE",
+      "authoritative_benchmark": "Repository quality gates must be green before final candidate acceptance.",
+      "engineering_opinion": "Fix the generator template rather than suppressing ruff or editing only generated output.",
+      "recommendation": "Render a ruff-compliant operator_runtime.py and regenerate the phase13o operator pack.",
+      "verified_evidence": [
+        "Controller ruff log reports E402 in workspace/factory_generated/upi_dispute_resolution/operator_handoff/phase13o_local_runnable_pack/operator_runtime.py.",
+        "scripts/run_phase13o_local_runnable_operator_packaging.py renders sys.path mutation before importing phase13m_dispute_lifecycle_app.api."
+      ],
+      "generator_paths": [
+        "scripts/run_phase13o_local_runnable_operator_packaging.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/operator_handoff/phase13o_local_runnable_pack/operator_runtime.py"
+      ],
+      "tests": [
+        "tests/__pycache__/test_phase13o_local_runnable_operator_packaging.cpython-310-pytest-9.1.1.pyc",
+        "scripts/validate_phase13o_local_runnable_operator_packaging.py"
+      ],
+      "evidence": [
+        "controller log baseline_changed_python_ruff_02.log",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13o/local_runnable_operator_pack_manifest.json"
+      ],
+      "acceptance_gates": [
+        "ruff on generator source",
+        "ruff on fresh generated operator pack",
+        "phase13o operator pack validation"
+      ],
+      "lightest_implementation": "Use importlib or a scoped helper so generated operator_runtime.py has no module-level import after sys.path mutation."
+    },
+    {
+      "id": "GAP-API-PROBLEM-DETAILS",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_FINAL_GENERATED_OUTPUT",
+      "authoritative_benchmark": "RFC 9457 problem details should be used for stable HTTP API error contracts.",
+      "engineering_opinion": "Compatibility custom error payloads are readable but not interoperable enough for the benchmark.",
+      "recommendation": "Generate problem+json-compatible handlers, schemas, examples and tests.",
+      "verified_evidence": [
+        "Template API installs RFC 9457-compatible application/problem+json handlers for domain, HTTP and request-validation errors.",
+        "Canonical recipient legacy entrypoint delegates to the regenerated API facade instead of defining nested custom error handlers.",
+        "Fresh final manifest persists generated API/error-handler hashes at workspace/regeneration_runs/phase71_82_v63_final_propagation/generation_manifest.json."
+      ],
+      "generator_paths": [
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/errors.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/interfaces/api/error_handlers.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/interfaces/api/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/portal_publications/*/generated_application/app/*/interfaces/api/main.py"
+      ],
+      "tests": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
+        "workspace/factory_generated/upi_dispute_resolution/portal_publications/*/generated_application/tests/test_api_contract.py"
+      ],
+      "evidence": [
+        "generated_application/docs/api_contract.md",
+        "portal publication engineering_evidence/openapi.json"
+      ],
+      "acceptance_gates": [
+        "problem details response tests",
+        "OpenAPI error example checks",
+        "safe validation detail tests"
+      ],
+      "lightest_implementation": "Add generated RFC 9457 fields and preserve boundary_notice as an extension member."
+    },
+    {
+      "id": "GAP-IAM-BOUNDARY",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_FINAL_GENERATED_OUTPUT",
+      "authoritative_benchmark": "Generated services need authentication/authorization boundaries and testable local identity behavior.",
+      "engineering_opinion": "A deterministic local principal adapter is sufficient; live IAM remains prohibited.",
+      "recommendation": "Generate identity ports, local verifier, role/scope policy, route dependencies and OpenAPI security scheme.",
+      "verified_evidence": [
+        "Generated template includes deterministic signed local bearer-token issuer/verifier with issuer, audience, expiry, roles and scopes.",
+        "Generated create/list/get dispute routes require route-level principal dependencies and scopes.",
+        "GET /disputes/{dispute_id} enforces object authorization against persisted owner_subject.",
+        "Canonical recipient legacy entrypoint delegates to the regenerated authenticated API facade.",
+        "No live identity-provider calls are enabled."
+      ],
+      "generator_paths": [
+        "factory/application_engineering/local_platform_kernel.py",
+        "factory/application_engineering/failed_debit_capability.py",
+        "scripts/run_portal_requirements_driven_application_engineering.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/security/identity.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/interfaces/api/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/portal_publications/*/generated_application/app/*/interfaces/api/main.py"
+      ],
+      "tests": [
+        "tests/phase50/test_runtime_security.py",
+        "generated_application/tests/test_authorization.py"
+      ],
+      "evidence": [
+        "generated_application/docs/security_design.md",
+        "generated_application/evidence/openapi_inventory.json"
+      ],
+      "acceptance_gates": [
+        "missing principal tests",
+        "invalid principal tests",
+        "object authorization denial tests",
+        "no live identity-provider calls"
+      ],
+      "lightest_implementation": "Generate local fixture-principal auth with route-level dependencies and security-scheme metadata."
+    },
+    {
+      "id": "GAP-HEALTH-LIFECYCLE",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_D_LOCAL_EVIDENCE",
+      "authoritative_benchmark": "Runtime lifecycle controls should distinguish startup, liveness, readiness and graceful drain/shutdown.",
+      "engineering_opinion": "Existing health endpoints are useful but do not express enough lifecycle state.",
+      "recommendation": "Generate lifecycle state, drain endpoint/flag, dependency checks and restart/shutdown tests.",
+      "verified_evidence": [
+        "Compatibility app has /health and /runtime/health.",
+        "Portal generated app has /health, /ready, /runtime/health and lifespan startup/shutdown logging.",
+        "No distinct generated drain state or startup/liveness/readiness contract suite was found.",
+        "Wave D generated template adds RuntimeLifecycle with startup, liveness, readiness, drain and shutdown semantics.",
+        "Wave D validator proves startup/liveness/readiness/drain/shutdown/restart behavior against fresh temporary generated output."
+      ],
+      "generator_paths": [
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py",
+        "factory/generators/mock_dispute_app_generator.py",
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/portal_publications/*/generated_application/app/*/interfaces/api/main.py",
+        "factory/templates/mock_dispute_app/generated_application/app/runtime.py",
+        "factory/templates/mock_dispute_app/generated_application/app/interfaces/api/main.py"
+      ],
+      "tests": [
+        "tests/api/test_health_ready.py",
+        "generated_application/tests/test_runtime_lifecycle.py",
+        "factory/templates/mock_dispute_app/generated_application/app/tests/resilience/test_runtime_lifecycle.py",
+        "tests/test_phase71_82_wave_d_runtime_observability.py"
+      ],
+      "evidence": [
+        "generated_application/evidence/generated_test_execution.json",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_D_REPORT.md",
+        "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_D.md",
+        "scripts/validate_phase71_82_wave_d_runtime_observability.py"
+      ],
+      "acceptance_gates": [
+        "startup failure test",
+        "liveness test",
+        "readiness dependency failure test",
+        "graceful drain/shutdown test"
+      ],
+      "lightest_implementation": "Add generated lifecycle state object and dependency-free local lifecycle tests."
+    },
+    {
+      "id": "GAP-METRICS",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_D_LOCAL_EVIDENCE",
+      "authoritative_benchmark": "Metrics should be interoperable with Prometheus/OpenMetrics naming, units and bounded labels.",
+      "engineering_opinion": "Standard-library text exposition is enough; no monitoring backend is required.",
+      "recommendation": "Generate counters/histograms and naming/cardinality tests.",
+      "verified_evidence": [
+        "Compatibility app /runtime/metrics returns JSON local counters.",
+        "No OpenMetrics or Prometheus text exposition was found in generated app outputs.",
+        "Wave D generated template adds OpenMetrics-compatible text exposition with _total counters, seconds histograms and bounded labels.",
+        "Wave D validator proves metric suffix/unit/cardinality checks against fresh temporary generated output."
+      ],
+      "generator_paths": [
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py",
+        "factory/generators/mock_dispute_app_generator.py",
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/runtime.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+        "factory/templates/mock_dispute_app/generated_application/app/observability/metrics.py",
+        "factory/templates/mock_dispute_app/generated_application/app/interfaces/api/main.py"
+      ],
+      "tests": [
+        "generated_application/tests/test_observability.py",
+        "factory/templates/mock_dispute_app/generated_application/app/tests/contract/test_observability_contract.py",
+        "factory/templates/mock_dispute_app/generated_application/app/tests/performance/test_local_performance_smoke.py",
+        "tests/test_phase71_82_wave_d_runtime_observability.py"
+      ],
+      "evidence": [
+        "generated_application/docs/observability_design.md",
+        "factory/templates/mock_dispute_app/generated_application/docs/reliability_slo_error_budget.md",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_D_REPORT.md",
+        "scripts/validate_phase71_82_wave_d_runtime_observability.py"
+      ],
+      "acceptance_gates": [
+        "metric name/unit/suffix tests",
+        "bounded label tests",
+        "PII-free metric tests"
+      ],
+      "lightest_implementation": "Expose a text metrics endpoint using generated formatting helpers and fixed label sets."
+    },
+    {
+      "id": "GAP-EVENT-DURABILITY",
+      "severity": "CRITICAL",
+      "status": "IMPLEMENTED_FINAL_GENERATED_OUTPUT",
+      "authoritative_benchmark": "Cross-boundary event intent should be durable and replayable where eventing is applicable.",
+      "engineering_opinion": "The dispute lifecycle already emits events, so an outbox is justified.",
+      "recommendation": "Generate transactional outbox/inbox, event envelope and deterministic replay tests.",
+      "verified_evidence": [
+        "Canonical recipient legacy entrypoint delegates to regenerated output and no longer creates a process-local DomainEventCollector in app/upi_dispute_app/main.py.",
+        "Wave B generated template now includes SQLite transactional outbox, inbox, portable event envelope and AsyncAPI contract.",
+        "Final persisted output manifest: workspace/regeneration_runs/phase71_82_v63_final_propagation/generation_manifest.json",
+        "Functional smoke validated duplicate-delivery rejection and retry after consumer handler failure against fresh generated output."
+      ],
+      "generator_paths": [
+        "factory/application_engineering/local_platform_kernel.py",
+        "factory/application_engineering/deep_composer.py",
+        "scripts/run_portal_requirements_driven_application_engineering.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/domain_events.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/persistence/outbox.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/persistence/inbox.py",
+        "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql"
+      ],
+      "tests": [
+        "generated_application/tests/test_outbox_replay.py",
+        "generated_application/tests/test_crash_recovery.py"
+      ],
+      "evidence": [
+        "generated_application/evidence/requirements_trace.json",
+        "generated_application/evidence/test_catalogue.json"
+      ],
+      "acceptance_gates": [
+        "atomic outbox persistence test",
+        "replay idempotency test",
+        "dead-letter/retry exhaustion evidence"
+      ],
+      "lightest_implementation": "Use SQLite outbox table with deterministic dispatcher and no external broker."
+    },
+    {
+      "id": "GAP-TRANSACTION-SEMANTICS",
+      "severity": "CRITICAL",
+      "status": "WAVE_B_IMPLEMENTED_IN_TEMPLATE",
+      "authoritative_benchmark": "A use-case transaction should atomically coordinate aggregate, audit reference and integration intent.",
+      "engineering_opinion": "Repository-internal commits make the unit of work nominal.",
+      "recommendation": "Move commits into context-managed unit of work and test rollback.",
+      "verified_evidence": [
+        "DisputeRepository.add commits internally.",
+        "DisputeRepository.update_status commits internally.",
+        "LocalSqliteUnitOfWork.commit then commits the same connection again.",
+        "Wave B generated template uses a context-managed SQLite unit of work and repositories do not commit.",
+        "Functional smoke validated rollback and atomic aggregate/audit/outbox persistence against fresh generated output."
+      ],
+      "generator_paths": [
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py",
+        "factory/application_engineering/local_platform_kernel.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/unit_of_work.py"
+      ],
+      "tests": [
+        "generated_application/tests/test_unit_of_work.py",
+        "generated_application/tests/test_transaction_rollback.py"
+      ],
+      "evidence": [
+        "generated_application/docs/data_model.md",
+        "generated_application/evidence/generated_test_execution.json"
+      ],
+      "acceptance_gates": [
+        "repository methods do not commit internally",
+        "rollback test",
+        "atomic audit/outbox test",
+        "failed consumer retry does not poison inbox idempotency"
+      ],
+      "lightest_implementation": "Generate a context manager around one SQLite connection transaction."
+    },
+    {
+      "id": "GAP-MIGRATIONS",
+      "severity": "HIGH",
+      "status": "WAVE_B_IMPLEMENTED_IN_TEMPLATE",
+      "authoritative_benchmark": "Schema evolution should be ordered, checksum-verified and replayable.",
+      "engineering_opinion": "The local platform kernel migration ledger should become the generated app default.",
+      "recommendation": "Generate migration ledger and migration tests for all generated apps.",
+      "verified_evidence": [
+        "Compatibility app creates schema inline and conditionally alters columns.",
+        "Deep composer emits 0001_initial.sql.",
+        "local_platform_kernel.py contains kernel_migrations with checksum drift detection.",
+        "Wave B generated template includes schema_migrations with ordered versions and checksum drift detection.",
+        "Functional smoke validated repeatable migration, restart and tamper detection against fresh generated output."
+      ],
+      "generator_paths": [
+        "factory/application_engineering/local_platform_kernel.py",
+        "factory/application_engineering/deep_composer.py",
+        "scripts/run_portal_requirements_driven_application_engineering.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py",
+        "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql"
+      ],
+      "tests": [
+        "generated_application/tests/test_migrations.py"
+      ],
+      "evidence": [
+        "generated_application/evidence/manifest_sha256.json"
+      ],
+      "acceptance_gates": [
+        "migration replay test",
+        "checksum drift test",
+        "restart with existing schema test"
+      ],
+      "lightest_implementation": "Reuse kernel migration ledger semantics in generated SQLite app."
+    },
+    {
+      "id": "GAP-CONCURRENCY",
+      "severity": "HIGH",
+      "status": "WAVE_B_IMPLEMENTED_IN_TEMPLATE",
+      "authoritative_benchmark": "Concurrent updates should be protected by optimistic concurrency or equivalent consistency controls.",
+      "engineering_opinion": "Aggregate version plus SQLite compare-and-swap is sufficient for local-first behavior.",
+      "recommendation": "Generate versions, ETag/If-Match support and stale-write tests.",
+      "verified_evidence": [
+        "Compatibility DisputeRecord persistence has no aggregate version or conditional update.",
+        "SQLite connection uses check_same_thread=False without explicit synchronization policy in repository code.",
+        "Wave B generated template adds aggregate version and SQLite compare-and-swap update.",
+        "Functional smoke validated stale-write rejection and version preservation against fresh generated output."
+      ],
+      "generator_paths": [
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/models.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py"
+      ],
+      "tests": [
+        "generated_application/tests/test_concurrency.py"
+      ],
+      "evidence": [
+        "generated_application/docs/data_model.md"
+      ],
+      "acceptance_gates": [
+        "stale If-Match rejected",
+        "simulated concurrent update test",
+        "version increments only on successful write"
+      ],
+      "lightest_implementation": "Add integer version column and WHERE version = ? updates."
+    },
+    {
+      "id": "GAP-API-OPERABILITY",
+      "severity": "MEDIUM",
+      "status": "IMPLEMENTED_FINAL_GENERATED_OUTPUT",
+      "authoritative_benchmark": "APIs should bound resource consumption and document pagination/resource policies.",
+      "engineering_opinion": "Cursor/limit is enough for local generated apps.",
+      "recommendation": "Generate page-size limits, cursor response shape and 429 problem details.",
+      "verified_evidence": [
+        "Generated GET /disputes enforces limit/cursor bounds and requires dispute:read:any.",
+        "Generated GET /disputes reads persisted SQLite disputes through DisputeService.list_disputes rather than returning an empty stub or current_repo.list_all().",
+        "Generated HTTP and validation exceptions return application/problem+json."
+      ],
+      "generator_paths": [
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/repository.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/interfaces/api/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/persistence/repositories.py"
+      ],
+      "tests": [
+        "generated_application/tests/test_api_contract.py",
+        "generated_application/tests/test_resource_limits.py"
+      ],
+      "evidence": [
+        "generated_application/docs/api_contract.md"
+      ],
+      "acceptance_gates": [
+        "max limit enforced",
+        "pagination contract test",
+        "429 error shape test"
+      ],
+      "lightest_implementation": "Add limit/cursor parameters and an in-process deterministic resource-budget policy."
+    },
+    {
+      "id": "GAP-RESILIENCE-ADAPTERS",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_FINAL_GENERATED_OUTPUT",
+      "authoritative_benchmark": "Dependency calls should have timeouts, retry budgets, circuit-breaker/backpressure policy and failure semantics.",
+      "engineering_opinion": "Mock adapters can still declare budgets and deterministic failure behavior.",
+      "recommendation": "Generate dependency-call policy and fake-clock/failure tests for every adapter.",
+      "verified_evidence": [
+        "Generated AdapterResilienceContract declares timeout, retry, jitter, circuit-breaker, rate-limit, payload and degraded-mode budgets.",
+        "Generated DeterministicResilientAdapter enforces retry exhaustion, timeout detection, circuit-open reset behavior and backpressure rejection with local degraded responses.",
+        "Generated contract tests exercise deterministic failure, circuit-open rejection, reset success and backpressure failure without live provider calls."
+      ],
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/adapters",
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/application_engineering/deep_composer.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/mock_ecosystem.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/external_adapters.py",
+        "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/*/generated/adapters/*.py"
+      ],
+      "tests": [
+        "generated_application/tests/test_resilience_adapters.py"
+      ],
+      "evidence": [
+        "generated_application/docs/operations_runbook.md"
+      ],
+      "acceptance_gates": [
+        "timeout budget declared",
+        "retry budget declared",
+        "deterministic adapter failure tests"
+      ],
+      "lightest_implementation": "Generate simple standard-library budget declarations and fake failure adapters."
+    },
+    {
+      "id": "GAP-GENERATED-TEST-DEPTH",
+      "severity": "HIGH",
+      "status": "PARTIAL_AUTHORITY_BLOCKED",
+      "authoritative_benchmark": "Generated deliverables need self-contained tests for critical behavior, not only factory-wide tests.",
+      "engineering_opinion": "Factory regression is strong but cannot replace deliverable-level proof.",
+      "recommendation": "Generate tests for migration, rollback, outbox replay, concurrency, authz, API compatibility, lifecycle and metrics.",
+      "verified_evidence": [
+        "Compatibility app generated tests cover API, PII and workflow.",
+        "Portal generated tests cover API contract and service idempotency.",
+        "Wave B-D generated tests cover migration, contract, authz, concurrency, event replay, restart, security and performance targets.",
+        "Wave E adds generated audit evidence tests for assurance and supply-chain deliverables."
+      ],
+      "generator_paths": [
+        "factory/application_engineering/verification_evidence.py",
+        "factory/application_engineering/deep_composer.py",
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/generators/mock_dispute_app_generator.py"
+      ],
+      "generated_output_paths": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests",
+        "workspace/factory_generated/upi_dispute_resolution/portal_publications/*/generated_application/tests",
+        "generated_application/app/tests/audit/test_assurance_supply_chain_evidence.py"
+      ],
+      "tests": [
+        "generated_application/tests/test_*.py",
+        "tests/test_phase71_82_wave_e_assurance_supply_chain.py"
+      ],
+      "evidence": [
+        "generated_application/evidence/generated_test_execution.json",
+        "generated_application/evidence/test_catalogue.json",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_E_REPORT.md"
+      ],
+      "acceptance_gates": [
+        "generated app pytest passes",
+        "test catalogue maps to requirements and gaps",
+        "fresh generated test execution evidence",
+        "Wave E fresh generated audit test emitted"
+      ],
+      "lightest_implementation": "Extend generated tests without weakening existing factory tests."
+    },
+    {
+      "id": "GAP-SUPPLY-CHAIN",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_E",
+      "authoritative_benchmark": "Supply-chain evidence should include dependency inventory, SBOM, provenance and reproducibility evidence where applicable.",
+      "engineering_opinion": "Evidence should be shaped and verified, but must avoid SLSA/SBOM conformance claims unless proven.",
+      "recommendation": "Generate CycloneDX-shaped, SPDX-shaped, provenance-shaped and reproducibility comparison artifacts with explicit limitations.",
+      "verified_evidence": [
+        "verification_evidence.py lists CycloneDX 1.7 and SLSA 1.2 shaped artifacts.",
+        "Portal generated pyproject.toml uses lower-bound dependencies.",
+        "Wave E generated CycloneDX 1.7, SPDX 3.0-oriented, SLSA 1.2-style, deterministic build and dependency/license evidence through the template manifest.",
+        "No conformance, certification, numeric Scorecard or attained SLSA-level claim is made.",
+        "Final evidence replaces SPDX NOASSERTION package licenses with deterministic SPDX identifiers and local component identities.",
+        "Fully resolved versions, wheel hashes and transitive dependency inventory remain authoritatively blocked because runtime distributions are not installed and network access/dependency installation is prohibited."
+      ],
+      "generator_paths": [
+        "factory/application_engineering/verification_evidence.py",
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/generators/mock_dispute_app_generator.py"
+      ],
+      "generated_output_paths": [
+        "generated_application/evidence/assurance/dependency_license_inventory.json",
+        "generated_application/evidence/assurance/cyclonedx_1_7_sbom.json",
+        "generated_application/evidence/assurance/spdx_3_0_sbom.json",
+        "generated_application/evidence/assurance/slsa_1_2_provenance_verification.json",
+        "generated_application/evidence/assurance/deterministic_build_manifest.json"
+      ],
+      "tests": [
+        "generated_application/app/tests/audit/test_assurance_supply_chain_evidence.py",
+        "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+        "tests/test_phase71_82_wave_e_assurance_supply_chain.py"
+      ],
+      "evidence": [
+        "generated_application/evidence/assurance/verification_summary.json",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_E_REPORT.md",
+        "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_E.md"
+      ],
+      "acceptance_gates": [
+        "dependency inventory generated",
+        "SBOM/provenance shape checks pass",
+        "reproducibility comparison recorded",
+        "non-claim fields present"
+      ],
+      "lightest_implementation": "Use existing manifests and file hashes to create local evidence without adding a supply-chain service."
+    },
+    {
+      "id": "GAP-FRESH-GENERATED-OUTPUT",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_FINAL_PERSISTED_OUTPUT",
+      "authoritative_benchmark": "Generator changes must be proven through fresh generated output and evidence.",
+      "engineering_opinion": "Current discovery found uneven generated-output availability across compatibility, portal publication, phase31 and deep campaign paths.",
+      "recommendation": "After source fixes, regenerate target outputs and record manifests, tests and hashes.",
+      "verified_evidence": [
+        "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute contained only __pycache__ entries at inspected depth.",
+        "phase31 export source paths from controller scope were not fully present in current shallow discovery.",
+        "Portal publications and compatibility generated app are present.",
+        "Wave E validator runs two fresh temporary generations and compares generated template-file hashes and sizes with explicit run-specific variance.",
+        "Wave F validator runs two fresh temporary generations and compares 66 generated template-file hashes and sizes.",
+        "Final generator run persisted 66 generated files at workspace/regeneration_runs/phase71_82_v63_final_propagation/generation_manifest.json.",
+        "Final generated application files were propagated into workspace/factory_generated/upi_dispute_resolution/generated_application and the final manifest was copied as generation_manifest.phase71_82_v63_final_propagation.json."
+      ],
+      "generator_paths": [
+        "factory/application_engineering/deep_composer.py",
+        "scripts/run_portal_requirements_driven_application_engineering.py",
+        "factory/generators/mock_dispute_app_generator.py"
+      ],
+      "generated_output_paths": [
+        "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application",
+        "workspace/factory_generated/upi_dispute_resolution/portal_publications"
+      ],
+      "tests": [
+        "tests/test_phase56_deep_composer.py",
+        "tests/test_phase58_deep_portal_integration.py",
+        "tests/test_phase71_82_wave_e_assurance_supply_chain.py",
+        "tests/test_phase71_82_wave_f_control_plane.py"
+      ],
+      "evidence": [
+        "generated_application/evidence/generation_manifest.json",
+        "workspace/regeneration_runs/phase71_82_v63_final_propagation/generation_manifest.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/generation_manifest.phase71_82_v63_final_propagation.json",
+        "generated_application/evidence/generated_test_execution.json",
+        "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_E_REPORT.md",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md"
+      ],
+      "acceptance_gates": [
+        "fresh manifest generated after source changes",
+        "fresh generated tests pass",
+        "checksums recorded",
+        "two-build generated-file comparison recorded"
+      ],
+      "lightest_implementation": "Run the existing governed generation path after fixing generators."
+    },
+    {
+      "id": "GAP-CONTROL-PLANE-POLICY",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_F",
+      "authoritative_benchmark": "Enterprise control-plane decisions should be typed, deterministic and fail closed.",
+      "engineering_opinion": "A generated standard-library policy engine is sufficient for local governed operation; no service mesh or Kubernetes control plane is justified.",
+      "recommendation": "Generate typed decision contracts and deny risky actions unless explicitly human gated outside generated application authority.",
+      "verified_evidence": [
+        "Wave F generated ControlPlanePolicyEngine returns typed ALLOW/DENY decisions with deterministic decision hashes.",
+        "Merge, push, release, deploy, certify and destructive actions are denied by generated policy.",
+        "Live payment, deployment and certification claims remain disabled in the generator manifest."
+      ],
+      "generator_paths": [
+        "factory/generators/mock_dispute_app_generator.py",
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_output_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py",
+        "factory/templates/mock_dispute_app/generated_application/evidence/assurance/control_plane_governance.json"
+      ],
+      "tests": [
+        "scripts/validate_phase71_82_wave_f_control_plane.py",
+        "tests/test_phase71_82_wave_f_control_plane.py",
+        "factory/templates/mock_dispute_app/generated_application/app/tests/security/test_control_plane_policy.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md",
+        "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_F.md"
+      ],
+      "acceptance_gates": [
+        "typed policy decision checks pass",
+        "human-gated actions denied",
+        "self-modification actions denied",
+        "fresh generated control-plane files emitted"
+      ],
+      "lightest_implementation": "Use a generated in-process policy module with standard-library dataclasses and enums."
+    },
+    {
+      "id": "GAP-APPROVAL-REPLAY-EXPIRY",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_F",
+      "authoritative_benchmark": "Approvals for privileged lifecycle operations should be scope-bound, time-bound and one-time-use.",
+      "engineering_opinion": "The existing nonce replay guard was close; adding expiry closes the lightweight control gap without adding infrastructure.",
+      "recommendation": "Persist expiry with scoped approval grants and reject missing, invalid, expired or consumed grants.",
+      "verified_evidence": [
+        "factory/application_engineering/portfolio.py approval grants now include expires_at_utc.",
+        "Portfolio approval consumption rejects consumed grants and expired grants.",
+        "Generated control-plane approval grants validate scope, action, nonce, expiry and consumed state."
+      ],
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/template_manifest.v1.json",
+        "factory/generators/mock_dispute_app_generator.py"
+      ],
+      "generated_output_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py"
+      ],
+      "tests": [
+        "scripts/validate_phase71_82_wave_f_control_plane.py",
+        "tests/test_phase71_82_wave_f_control_plane.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md"
+      ],
+      "acceptance_gates": [
+        "scoped unexpired approval accepted",
+        "expired approval rejected",
+        "replayed approval rejected",
+        "wrong-scope approval rejected"
+      ],
+      "lightest_implementation": "Add expires_at_utc to existing local approval grants and validate it before marking consumed."
+    },
+    {
+      "id": "GAP-AGENT-GOVERNANCE",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_F",
+      "authoritative_benchmark": "Agentic control surfaces should use governed schemas, bounded loops, least privilege and independent verification.",
+      "engineering_opinion": "Generated local contracts are enough for the current mock-only factory; autonomous deployment is out of scope.",
+      "recommendation": "Generate agent contracts that reject over-broad permissions and require independent verification.",
+      "verified_evidence": [
+        "Generated AgentContract bounds max_iterations to 1..8.",
+        "Generated policy rejects agent action sets outside local least-privilege actions.",
+        "Generated policy requires independent verification."
+      ],
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_output_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py"
+      ],
+      "tests": [
+        "factory/templates/mock_dispute_app/generated_application/app/tests/security/test_control_plane_policy.py",
+        "scripts/validate_phase71_82_wave_f_control_plane.py"
+      ],
+      "evidence": [
+        "factory/templates/mock_dispute_app/generated_application/evidence/assurance/control_plane_governance.json"
+      ],
+      "acceptance_gates": [
+        "bounded loop schema present",
+        "least-privilege local action set enforced",
+        "independent verification required"
+      ],
+      "lightest_implementation": "Represent agent governance as immutable generated dataclasses validated before policy decisions."
+    },
+    {
+      "id": "GAP-ISOLATION-CONTROLS",
+      "severity": "HIGH",
+      "status": "IMPLEMENTED_WAVE_F",
+      "authoritative_benchmark": "Application, version, process, port, state and evidence ownership should be isolated.",
+      "engineering_opinion": "The local portfolio runtime already has ownership checks; generated apps need a matching contract.",
+      "recommendation": "Generate isolation bindings and tests for multi-application state/evidence separation and owned local ports.",
+      "verified_evidence": [
+        "Generated IsolationBinding validates application id, process id, loopback port range and separate state/evidence roots.",
+        "Wave F validator rejects state/evidence root collisions.",
+        "Existing portfolio status path rejects stale ownership bindings."
+      ],
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_output_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py"
+      ],
+      "tests": [
+        "scripts/validate_phase71_82_wave_f_control_plane.py",
+        "factory/templates/mock_dispute_app/generated_application/app/tests/security/test_control_plane_policy.py",
+        "tests/phase51/test_security_guards.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_F.md"
+      ],
+      "acceptance_gates": [
+        "application/process id validation",
+        "port bound validation",
+        "state/evidence root separation",
+        "stale ownership binding rejection"
+      ],
+      "lightest_implementation": "Use generated binding validation and existing local portfolio ownership checks."
+    },
+    {
+      "id": "GAP-PORTFOLIO-RECOMMENDATION-ONLY",
+      "severity": "MEDIUM",
+      "status": "IMPLEMENTED_WAVE_F",
+      "authoritative_benchmark": "Portfolio assessment should recommend only unless a separate human-controlled promotion process exists.",
+      "engineering_opinion": "Local portfolio comparison can rank evidence but must not deploy or claim certification.",
+      "recommendation": "Keep comparison output recommendation-only and record non-deployment, non-certification posture.",
+      "verified_evidence": [
+        "Generated control_plane_governance.json marks portfolio assessment as recommendation_only.",
+        "Generated PolicyDecision sets recommendation_only for portfolio recommendations.",
+        "Existing PortfolioComparator returns production_deployment not_allowed and certification_claim not_claimed."
+      ],
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_output_paths": [
+        "factory/templates/mock_dispute_app/generated_application/evidence/assurance/control_plane_governance.json"
+      ],
+      "tests": [
+        "scripts/validate_phase71_82_wave_f_control_plane.py",
+        "tests/phase51/test_version_comparison_lifecycle.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md"
+      ],
+      "acceptance_gates": [
+        "recommendation-only flag present",
+        "deployment remains not allowed",
+        "certification claim remains none/not claimed"
+      ],
+      "lightest_implementation": "Use generated evidence and existing comparator fields instead of building tenant or deployment infrastructure."
+    }
+  ]
+}

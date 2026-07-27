@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -19,6 +20,10 @@ from factory.application_engineering.verification_evidence import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def test_phase57_generates_required_layered_evidence() -> None:
@@ -47,6 +52,16 @@ def test_phase57_generates_required_layered_evidence() -> None:
         "generated_app_archive.tar.gz",
     ]:
         assert (verification_root / artifact).is_file()
+
+
+def test_phase57_archive_is_stable_across_second_run() -> None:
+    run_phase57_verification(ROOT)
+    archive = evidence_root(generated_app_root(ROOT)) / "generated_app_archive.tar.gz"
+    before = sha256_file(archive)
+
+    run_phase57_verification(ROOT)
+
+    assert sha256_file(archive) == before
 
 
 def test_test_catalogue_has_meaningful_distribution() -> None:

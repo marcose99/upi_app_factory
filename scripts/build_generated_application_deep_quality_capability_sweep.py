@@ -286,6 +286,7 @@ def _build_generated_application_deep_quality_capability_sweep_uncleaned(
         requirement_id=requirement_id,
     )
     portal = build_operator_portal_runtime_dashboard_proof(requirement_id=requirement_id)
+    _clean_generated_application_runtime_cache_files(GENERATED_APP_ROOT)
 
     if execute_sweep:
         _remove_runtime_cache_files(GENERATED_APP_ROOT)

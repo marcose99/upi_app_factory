@@ -5,9 +5,10 @@ slice. It extends intake into lifecycle status transitions, evidence validation,
 mock investigation response handling, resolution decisioning, and audit trail
 creation.
 
-Agent orchestration is performed by a real LangGraph StateGraph. The graph is
-local-first and deterministic in this phase, but it is a true agentic graph with
-state, nodes, directed edges, and a conditional self-correction route.
+Agent orchestration is performed by a governed StateGraph. The runner uses
+LangGraph when installed and a standard-library StateGraph-compatible fallback
+otherwise. The graph is local-first and deterministic in this phase, with state,
+nodes, directed edges, and a conditional self-correction route.
 
 External ecosystem boundaries are deliberately mock/simulated only. Banks,
 NPCI-style, RBI-style, payment rail, upstream, and downstream interfaces are not

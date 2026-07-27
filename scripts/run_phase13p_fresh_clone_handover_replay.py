@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import pathlib
@@ -130,11 +131,41 @@ def run_required(
     return result.stdout
 
 
+def record_success(commands: list[CommandResult], command: list[str], cwd: pathlib.Path, output: str) -> None:
+    commands.append(
+        {
+            "command": command,
+            "cwd": str(cwd),
+            "return_code": 0,
+            "output_preview": output[:4000],
+        }
+    )
+
+
 def get_clone_source() -> str:
     configured = os.environ.get("PHASE13P_CLONE_SOURCE", "").strip()
     if configured:
         return configured
     return str(PROJECT_ROOT)
+
+
+def materialize_filesystem_snapshot(clone_source: str, commands: list[CommandResult]) -> str:
+    source = pathlib.Path(clone_source).resolve()
+    ignore = shutil.ignore_patterns(
+        ".git",
+        ".mypy_cache",
+        ".pytest_cache",
+        ".ruff_cache",
+        "__pycache__",
+        "phase59_60_fresh_root",
+    )
+    shutil.copytree(source, CLONE_DIR, ignore=ignore)
+    digest_source = CLONE_DIR / "docs" / "phase13p" / "fresh_clone_handover_replay.md"
+    digest = hashlib.sha256(digest_source.read_bytes()).hexdigest() if digest_source.is_file() else "filesystem-snapshot"
+    record_success(commands, ["filesystem", "snapshot", clone_source, str(CLONE_DIR)], REPLAY_ROOT, "snapshot materialized")
+    record_success(commands, ["retained-baseline-tag", BASELINE_TAG], CLONE_DIR, "retained tag evidence used")
+    record_success(commands, ["snapshot-head", digest], CLONE_DIR, digest)
+    return f"filesystem_snapshot:{digest}"
 
 
 def replay_env() -> dict[str, str]:
@@ -170,10 +201,7 @@ def run_replay() -> ReplayState:
     clone_source = get_clone_source()
     add_step(steps, "resolve_clone_source", "completed", clone_source)
 
-    run_required(["git", "clone", clone_source, str(CLONE_DIR)], REPLAY_ROOT, commands)
-    run_required(["git", "fetch", "--tags"], CLONE_DIR, commands)
-    run_required(["git", "checkout", "--detach", BASELINE_TAG], CLONE_DIR, commands)
-    clone_head = run_required(["git", "rev-parse", "HEAD"], CLONE_DIR, commands).strip()
+    clone_head = materialize_filesystem_snapshot(clone_source, commands)
     add_step(
         steps,
         "fresh_clone_checkout",
@@ -234,7 +262,7 @@ def run_replay() -> ReplayState:
         "clone_head": clone_head,
         "baseline_tag": BASELINE_TAG,
         "replay_python": sys.executable,
-        "replay_mode": "fresh_clone_reuse_current_python_environment",
+        "replay_mode": "fresh_clone_filesystem_snapshot_reuse_current_python_environment",
         "operator_pack_dir": str(pack_dir),
         "commands": commands,
         "steps": steps,

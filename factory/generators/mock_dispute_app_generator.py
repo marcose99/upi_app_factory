@@ -13,6 +13,9 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE_ROOT = PROJECT_ROOT / "factory/templates/mock_dispute_app"
 DEFAULT_WORKSPACE_ROOT = PROJECT_ROOT / "workspace/regeneration_runs"
+DEFAULT_RECIPIENT_ROOT = (
+    PROJECT_ROOT / "workspace/factory_generated/upi_dispute_resolution/generated_application"
+)
 
 REQUIRED_EVIDENCE_LABELS = {
     "MISSING_OFFICIAL_SOURCE",
@@ -36,6 +39,10 @@ PHASE28_BLUEPRINT_PATH = (
 PHASE28_POLICY_PATH = "policies/phase28_generated_application_architecture_depth_policy.json"
 
 PHASE29_POLICY_PATH = "policies/phase29_generated_application_deep_structure_policy.json"
+PHASE42_READINESS_GATE_PATH = (
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase42/"
+    "generated_application_local_run_readiness_gate.json"
+)
 
 CERTIFICATION_READINESS_TEST_OBLIGATIONS = [
     "unit",
@@ -48,6 +55,8 @@ CERTIFICATION_READINESS_TEST_OBLIGATIONS = [
     "replay",
     "audit",
 ]
+
+PHASE42_REQUIRED_HEALTH_CHECKS = ("/health", "/startup", "/live", "/ready", "/metrics")
 
 
 @dataclass(frozen=True)
@@ -156,6 +165,35 @@ def load_template_manifest() -> dict[str, Any]:
     return value
 
 
+def validate_phase42_health_probe_contract(template_files: list[str]) -> None:
+    health_script = "generated_application/scripts/health_check.py"
+    api_main = "generated_application/app/interfaces/api/main.py"
+    required_files = {health_script, api_main}
+    if not required_files.issubset(set(template_files)):
+        missing = sorted(required_files - set(template_files))
+        raise ValueError(f"Phase 42 health probe contract missing template files: {missing}")
+
+    health_text = (TEMPLATE_ROOT / health_script).read_text(encoding="utf-8")
+    api_text = (TEMPLATE_ROOT / api_main).read_text(encoding="utf-8")
+    if "@app.on_event" in api_text:
+        raise ValueError("Phase 42 API template must use FastAPI lifespan handlers")
+    if "lifespan=lifespan" not in api_text or "@asynccontextmanager" not in api_text:
+        raise ValueError("Phase 42 API template must declare a lifespan context")
+    for probe in PHASE42_REQUIRED_HEALTH_CHECKS:
+        if probe not in health_text:
+            raise ValueError(f"Phase 42 health_check.py does not exercise {probe}")
+        if probe != "/metrics" and f'@app.get("{probe}")' not in api_text:
+            raise ValueError(f"Phase 42 API template does not expose {probe}")
+    if 'media_type="application/openmetrics-text' not in api_text:
+        raise ValueError("Phase 42 API template does not expose OpenMetrics text metrics")
+
+
+def validate_phase42_readiness_gate_contract() -> None:
+    gate = read_json(PHASE42_READINESS_GATE_PATH)
+    if gate.get("health_checks") != list(PHASE42_REQUIRED_HEALTH_CHECKS):
+        raise ValueError("Phase 42 readiness gate health checks drifted from template")
+
+
 def copy_templates(output_dir: Path, template_files: list[str]) -> list[GeneratedFile]:
     generated_files: list[GeneratedFile] = []
 
@@ -167,7 +205,10 @@ def copy_templates(output_dir: Path, template_files: list[str]) -> list[Generate
             raise FileNotFoundError(f"Template missing: {source}")
 
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(source, target)
+        if not target.exists() or source.read_bytes() != target.read_bytes():
+            shutil.copy2(source, target)
+        else:
+            shutil.copymode(source, target)
 
         generated_files.append(
             GeneratedFile(
@@ -178,6 +219,42 @@ def copy_templates(output_dir: Path, template_files: list[str]) -> list[Generate
         )
 
     return generated_files
+
+
+def recipient_relative_path(generated_relative_path: str) -> Path:
+    relative_path = Path(generated_relative_path)
+    if relative_path.parts and relative_path.parts[0] == "generated_application":
+        return Path(*relative_path.parts[1:])
+    return relative_path
+
+
+def propagate_to_recipient(
+    *,
+    generation: GenerationResult,
+    recipient_root: Path = DEFAULT_RECIPIENT_ROOT,
+) -> list[GeneratedFile]:
+    recipient_root = recipient_root.resolve()
+    propagated: list[GeneratedFile] = []
+
+    for item in generation.generated_files:
+        source = generation.output_dir / "generated" / item.relative_path
+        target = recipient_root / recipient_relative_path(item.relative_path)
+        if not source.is_file():
+            raise FileNotFoundError(f"Generated file missing before propagation: {source}")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if not target.exists() or source.read_bytes() != target.read_bytes():
+            shutil.copy2(source, target)
+        else:
+            shutil.copymode(source, target)
+        propagated.append(
+            GeneratedFile(
+                relative_path=target.relative_to(recipient_root).as_posix(),
+                sha256=sha256_file(target),
+                size_bytes=target.stat().st_size,
+            )
+        )
+
+    return propagated
 
 
 def create_deep_structure_directories(output_dir: Path, directories: list[str]) -> None:
@@ -199,9 +276,14 @@ def generate(
     template_files = template_manifest.get("template_files", [])
     if not isinstance(template_files, list) or not template_files:
         raise ValueError("Template manifest must define template_files")
+    validate_phase42_health_probe_contract([str(item) for item in template_files])
+    validate_phase42_readiness_gate_contract()
     deep_structure_directories = template_manifest.get("deep_structure_directories", [])
     if not isinstance(deep_structure_directories, list):
         raise ValueError("Template manifest deep_structure_directories must be a list")
+    pytest_collection_policy = template_manifest.get("pytest_collection_policy")
+    if not isinstance(pytest_collection_policy, str) or "workspace/regeneration_runs" not in pytest_collection_policy:
+        raise ValueError("Template manifest must define generated pytest collection policy")
 
     resolved_run_id = (
         run_id
@@ -222,11 +304,19 @@ def generate(
     )
     generated_files = copy_templates(output_dir, [str(item) for item in template_files])
 
+    manifest_path = output_dir / "generation_manifest.json"
+    generated_at_utc = datetime.now(timezone.utc).isoformat()
+    if not clean and manifest_path.is_file():
+        existing_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        existing_generated_at_utc = existing_manifest.get("generated_at_utc")
+        if isinstance(existing_generated_at_utc, str) and existing_generated_at_utc:
+            generated_at_utc = existing_generated_at_utc
+
     generation_manifest = {
         "schema_version": "mock_dispute_app_generation_manifest.v1",
         "project": "upi_app_factory / UPI App Factory",
         "run_id": resolved_run_id,
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "generated_at_utc": generated_at_utc,
         "generation_mode": "deterministic_template_regeneration",
         "source_template_manifest": "factory/templates/mock_dispute_app/template_manifest.v1.json",
         "governance_inputs": REQUIRED_GOVERNANCE_FILES,
@@ -237,6 +327,7 @@ def generate(
         ],
         "phase29_deep_structure_policy": PHASE29_POLICY_PATH,
         "phase29_deep_structure_policy_recorded": True,
+        "pytest_collection_policy": pytest_collection_policy,
         "evidence_labels": sorted(REQUIRED_EVIDENCE_LABELS),
         "certification_readiness_test_obligations": (
             CERTIFICATION_READINESS_TEST_OBLIGATIONS
@@ -248,9 +339,27 @@ def generate(
             "tag",
             "release",
             "promotion",
+            "push",
+            "deployment",
             "live provider calls",
             "certification-related claims",
         ],
+        "control_plane_policy": {
+            "schema_version": "upi_app_factory.generated.control_plane_governance.v1",
+            "typed_decisions": True,
+            "deterministic_fail_closed": True,
+            "approval_scope_binding": True,
+            "approval_expiry_required": True,
+            "approval_nonce_required": True,
+            "approval_replay_rejected": True,
+            "agent_schema_bound": True,
+            "agent_loop_bound": 8,
+            "least_privilege_required": True,
+            "independent_verification_required": True,
+            "silent_prompt_model_policy_test_self_modification_allowed": False,
+            "portfolio_assessment_mode": "recommendation_only",
+            "state_evidence_process_port_application_isolation": True,
+        },
         "real_payment_calls_allowed": False,
         "live_provider_calls_allowed": False,
         "real_secrets_allowed": False,
@@ -270,11 +379,9 @@ def generate(
         ],
     }
 
-    manifest_path = output_dir / "generation_manifest.json"
-    manifest_path.write_text(
-        json.dumps(generation_manifest, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    manifest_text = json.dumps(generation_manifest, indent=2) + "\n"
+    if not manifest_path.exists() or manifest_path.read_text(encoding="utf-8") != manifest_text:
+        manifest_path.write_text(manifest_text, encoding="utf-8")
 
     return GenerationResult(
         run_id=resolved_run_id,
@@ -294,12 +401,23 @@ def main() -> int:
         default=str(DEFAULT_WORKSPACE_ROOT),
     )
     parser.add_argument("--clean", action="store_true")
+    parser.add_argument(
+        "--recipient-root",
+        type=Path,
+        default=None,
+        help="Optionally propagate the declared generated files into a recipient generated_application root.",
+    )
     args = parser.parse_args()
 
     result = generate(
         run_id=args.run_id,
         workspace_root=Path(args.workspace_root),
         clean=args.clean,
+    )
+    propagated_files = (
+        propagate_to_recipient(generation=result, recipient_root=args.recipient_root)
+        if args.recipient_root is not None
+        else []
     )
 
     print(
@@ -309,6 +427,8 @@ def main() -> int:
                 "output_dir": str(result.output_dir),
                 "manifest_path": str(result.manifest_path),
                 "generated_file_count": len(result.generated_files),
+                "recipient_root": str(args.recipient_root) if args.recipient_root is not None else None,
+                "propagated_file_count": len(propagated_files),
                 "generated_files": [
                     {
                         "relative_path": item.relative_path,

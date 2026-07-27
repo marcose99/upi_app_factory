@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import importlib
 import json
+import sys
 import threading
 import time
 from typing import Any, Final, cast
@@ -36,14 +38,65 @@ SCENARIO_CATALOG_VERSION: Final[str] = "1.0.0"
 
 def scenario_catalog() -> dict[str, Any]:
     scenarios = [
-        RuntimeScenario("positive_create_dispute", "positive", "POST", "/disputes", _dispute_payload("phase50-positive", 10100), 201, {"dispute.status": "validation_pending"}),
-        RuntimeScenario("negative_invalid_request", "negative", "POST", "/disputes", {"client_request_id": "bad id"}, 422, {"error.code": "validation_error"}),
-        RuntimeScenario("boundary_max_amount", "boundary", "POST", "/disputes", _dispute_payload("phase50-boundary", 20_000_000), 201, {"dispute.amount_paise": 20_000_000}),
-        RuntimeScenario("idempotency_replay", "idempotency", "POST", "/disputes", _dispute_payload("phase50-replay", 2200), 201, {"replay_status": 200}),
-        RuntimeScenario("resilience_missing_dispute", "resilience", "GET", "/disputes/disp_missing", None, 404, {"error.code": "dispute_not_found"}),
-        RuntimeScenario("security_sensitive_description", "security", "POST", "/disputes", _dispute_payload("phase50-security", 5000, description="contains 1234567890123456 sensitive number"), 422, {"error.code": "validation_boundary"}),
-        RuntimeScenario("timeout_budget_health", "timeout", "GET", "/runtime/health", None, 200, {"status": "passed"}),
-        RuntimeScenario("metrics_contract", "positive", "GET", "/runtime/metrics", None, 200, {"live_provider_calls_allowed": False}),
+        RuntimeScenario(
+            "positive_create_dispute",
+            "positive",
+            "POST",
+            "/disputes",
+            _dispute_payload("PHASE50POSITIVE001", reason="Local mock-safe Phase 50 dispute."),
+            201,
+            {"certification_boundary": "certification_ready_not_certified"},
+        ),
+        RuntimeScenario(
+            "negative_invalid_request",
+            "negative",
+            "POST",
+            "/disputes",
+            {"transaction_ref": "bad"},
+            422,
+            {"code": "RequestValidationError"},
+        ),
+        RuntimeScenario(
+            "boundary_long_reason",
+            "boundary",
+            "POST",
+            "/disputes",
+            _dispute_payload("PHASE50BOUNDARY001", reason="Local boundary scenario with a detailed but synthetic reviewer narrative."),
+            201,
+            {"certification_boundary": "certification_ready_not_certified"},
+        ),
+        RuntimeScenario(
+            "idempotency_replay",
+            "idempotency",
+            "POST",
+            "/disputes",
+            _dispute_payload("PHASE50REPLAY001", reason="Local replay scenario."),
+            201,
+            {"certification_boundary": "certification_ready_not_certified", "replay_status": 201},
+        ),
+        RuntimeScenario(
+            "resilience_missing_dispute",
+            "resilience",
+            "GET",
+            "/disputes/DSP_MISSING",
+            None,
+            404,
+            {"code": "HTTPException"},
+        ),
+        RuntimeScenario(
+            "security_strict_extra_rejection",
+            "security",
+            "POST",
+            "/disputes",
+            {
+                **_dispute_payload("PHASE50SECURITY001", reason="Strict input boundary scenario."),
+                "unexpected_secret": "synthetic-only",
+            },
+            422,
+            {"code": "RequestValidationError"},
+        ),
+        RuntimeScenario("timeout_budget_health", "timeout", "GET", "/health", None, 200, {"status": "ok"}),
+        RuntimeScenario("readiness_contract", "positive", "GET", "/ready", None, 200, {"dependencies.sqlite.real_payment_calls_allowed": False}),
     ]
     return {
         "schema_version": "1.0",
@@ -132,6 +185,9 @@ class ScenarioRunner:
         normalized = normalize_runtime_url(base_url=base_url, method=method, endpoint=endpoint, owned_port=owned_port)
         body = None
         headers = {"Accept": "application/json"}
+        if endpoint.startswith("/disputes"):
+            headers["Authorization"] = f"Bearer {self._local_runtime_token()}"
+            headers["Idempotency-Key"] = _idempotency_key(payload)
         if payload is not None:
             body = json.dumps(payload, sort_keys=True).encode("utf-8")
             if len(body) > MAX_PAYLOAD_BYTES:
@@ -159,6 +215,27 @@ class ScenarioRunner:
             json_payload = {"raw": data.decode("utf-8", errors="replace")}
         return {"status": status, "json": json_payload}
 
+    def _local_runtime_token(self) -> str:
+        generated_parent = (
+            self.store.project_root
+            / "workspace/factory_generated/upi_dispute_resolution"
+        )
+        generated_parent_text = generated_parent.as_posix()
+        if generated_parent_text not in sys.path:
+            sys.path.insert(0, generated_parent_text)
+        try:
+            identity = importlib.import_module(
+                "generated_application.app.security.identity"
+            )
+            token = identity.issue_local_test_token(
+                subject="phase50-scenario-runner",
+                scopes=("dispute:create", "dispute:read", "dispute:read:any"),
+                roles=(),
+            )
+        except (AttributeError, ImportError) as exc:
+            raise RuntimeContractError("local generated identity helper unavailable") from exc
+        return str(token)
+
     def _assertions(self, *, response: dict[str, Any], expected_status: int, expected_json: dict[str, Any], replay_response: dict[str, Any] | None) -> list[dict[str, Any]]:
         assertions = [{"name": "status", "passed": response["status"] == expected_status, "expected": expected_status, "actual": response["status"]}]
         for dotted, expected_value in expected_json.items():
@@ -184,13 +261,17 @@ def _select(payload: Any, dotted: str) -> Any:
     return current
 
 
-def _dispute_payload(client_request_id: str, amount: int, *, description: str = "Local mock-safe Phase 50 dispute") -> dict[str, Any]:
+def _idempotency_key(payload: dict[str, Any] | None) -> str:
+    if isinstance(payload, dict):
+        transaction_ref = str(payload.get("transaction_ref", "")).strip()
+        if transaction_ref:
+            return f"phase50-{transaction_ref.lower()}"
+    return "phase50-read-only"
+
+
+def _dispute_payload(transaction_ref: str, *, reason: str) -> dict[str, Any]:
     return {
-        "client_request_id": client_request_id,
-        "dispute_type": "duplicate_debit",
-        "transaction_reference": client_request_id.replace("-", "_"),
-        "customer_upi_id": "phase50@upi",
-        "amount_paise": amount,
-        "description": description,
-        "evidence": {"source": "phase50"},
+        "transaction_ref": transaction_ref,
+        "customer_upi": "phase50@upi",
+        "reason": reason,
     }

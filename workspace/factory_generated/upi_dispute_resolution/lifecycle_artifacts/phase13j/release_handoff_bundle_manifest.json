@@ -32,7 +32,7 @@
     {
       "exists": true,
       "path": "README.md",
-      "sha256": "aed78ab5a41e20159d49a3c02b348d93e8cd1cc8fac0c6d9ad90158720822fed"
+      "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608"
     },
     {
       "exists": true,
@@ -97,7 +97,7 @@
     {
       "exists": true,
       "path": "scripts/validate_phase13h_release_state_lineage.py",
-      "sha256": "9595aef7b87adc5073e0cc89546064f917980e6bac601541ebdef694b390d7b8"
+      "sha256": "224633967c572cf5e1654fca510617018841269c11fe37381b9f916786e8a619"
     },
     {
       "exists": true,

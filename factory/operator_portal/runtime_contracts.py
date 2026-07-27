@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 import hashlib
 import hmac
@@ -15,7 +15,9 @@ from typing import Any, Final
 APP_ID: Final[str] = "upi_dispute_resolution"
 GENERATED_RUN_ID: Final[str] = "first_governed_generation_run_001"
 CERTIFICATION_POSTURE: Final[str] = "certification-ready-not-certified"
-RUNTIME_APPROVAL_TOKEN: Final[str] = "phase50-local-runtime-approval"
+RUNTIME_APPROVAL_TOKEN: Final[str] = "phase50-test-runtime-approval-fixture"
+RUNTIME_APPROVAL_TOKEN_ENV: Final[str] = "UPI_APP_FACTORY_RUNTIME_APPROVAL_TOKEN"
+RUNTIME_APPROVAL_TTL_SECONDS: Final[int] = 300
 RUN_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{2,80}$")
 
 
@@ -55,6 +57,22 @@ VALID_TRANSITIONS: Final[dict[RuntimeState, set[RuntimeState]]] = {
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def utc_after(seconds: int) -> str:
+    return (
+        datetime.now(timezone.utc).replace(microsecond=0) + timedelta(seconds=seconds)
+    ).isoformat().replace("+00:00", "Z")
+
+
+def parse_utc(value: str) -> datetime:
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise RuntimeContractError("approval timestamp is malformed") from exc
+    if parsed.tzinfo is None:
+        raise RuntimeContractError("approval timestamp must include UTC offset")
+    return parsed.astimezone(timezone.utc)
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -126,6 +144,7 @@ class ApprovalGrant:
     action: str
     nonce: str
     approved_at_utc: str
+    expires_at_utc: str
     token_sha256: str
     consumed: bool = False
 
@@ -134,7 +153,12 @@ class ApprovalGrant:
 
 
 def approval_secret() -> str:
-    return os.getenv("UPI_APP_FACTORY_RUNTIME_APPROVAL_TOKEN", RUNTIME_APPROVAL_TOKEN)
+    token = os.getenv(RUNTIME_APPROVAL_TOKEN_ENV)
+    if token is None or not token.strip():
+        raise RuntimeContractError(
+            f"{RUNTIME_APPROVAL_TOKEN_ENV} is required for runtime approvals"
+        )
+    return token
 
 
 def scoped_approval_digest(*, run_id: str, action: str, nonce: str, token: str) -> str:

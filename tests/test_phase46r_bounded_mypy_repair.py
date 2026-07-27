@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
@@ -8,14 +7,7 @@ from tools.governed_repairs.bounded_mypy import FastAPIRouteNarrowingRepair
 from tools.governed_repairs.contracts import RepairContext
 
 
-def initialize_repo(path: Path) -> None:
-    subprocess.run(["git", "init", "-b", "main"], cwd=path, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=path, check=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=path, check=True)
-
-
 def test_exact_route_narrowing_is_assessed_and_applied(tmp_path: Path) -> None:
-    initialize_repo(tmp_path)
     test_path = tmp_path / "tests/test_routes.py"
     test_path.parent.mkdir()
     test_path.write_text(
@@ -26,8 +18,6 @@ def test_exact_route_narrowing_is_assessed_and_applied(tmp_path: Path) -> None:
         "    assert isinstance(paths, set)\n",
         encoding="utf-8",
     )
-    subprocess.run(["git", "add", "."], cwd=tmp_path, check=True)
-    subprocess.run(["git", "commit", "-m", "base"], cwd=tmp_path, check=True, capture_output=True)
     context = RepairContext(
         phase="46R",
         repair_id="MYPY_FASTAPI_APIROUTE_NARROWING",

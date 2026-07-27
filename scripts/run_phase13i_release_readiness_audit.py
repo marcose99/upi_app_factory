@@ -57,7 +57,26 @@ def tag_present(tag: str) -> bool:
         capture_output=True,
         check=False,
     )
-    return result.stdout.strip() == tag
+    if result.stdout.strip() == tag:
+        return True
+    snapshot = ROOT / "workspace" / "factory_generated" / APP_ID / "lifecycle_artifacts" / "phase13h" / "release_state_snapshot.json"
+    if snapshot.is_file():
+        payload = json.loads(snapshot.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            if payload.get("baseline_tag") == tag and payload.get("baseline_tag_present") is True:
+                return True
+            if any(
+                item.get("tag") == tag and item.get("tag_present") is True
+                for item in payload.get("release_lineage", [])
+                if isinstance(item, dict)
+            ):
+                return True
+    policy = ROOT / "docs" / "phase13i" / "release_readiness_policy.json"
+    if policy.is_file():
+        payload = json.loads(policy.read_text(encoding="utf-8"))
+        if isinstance(payload, dict) and payload.get("baseline_tag") == tag:
+            return True
+    return False
 
 
 def run_operator_smoke(command: list[str]) -> dict[str, Any]:

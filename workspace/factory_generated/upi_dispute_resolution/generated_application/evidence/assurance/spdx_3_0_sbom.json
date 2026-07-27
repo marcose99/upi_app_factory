@@ -1,0 +1,36 @@
+{
+  "spdxVersion": "SPDX-3.0",
+  "dataLicense": "CC0-1.0",
+  "name": "upi_dispute_resolution_generated_application_spdx_3_0",
+  "profile": [
+    "core",
+    "software",
+    "simpleLicensing"
+  ],
+  "creationInfo": {
+    "created": "2026-07-26T00:00:00Z",
+    "creators": [
+      "Tool: UPI App Factory deterministic template generator"
+    ]
+  },
+  "elements": [
+    {"spdxId": "SPDXRef-Application", "type": "Package", "name": "upi_dispute_resolution_generated_application", "primaryPurpose": "APPLICATION", "licenseConcluded": "Apache-2.0"},
+    {"spdxId": "SPDXRef-fastapi", "type": "Package", "name": "fastapi", "version": "0.139.0", "licenseConcluded": "MIT", "externalRefs": [{"referenceType": "purl", "referenceLocator": "pkg:pypi/fastapi@0.139.0"}]},
+    {"spdxId": "SPDXRef-uvicorn", "type": "Package", "name": "uvicorn", "version": "0.50.0", "licenseConcluded": "BSD-3-Clause", "externalRefs": [{"referenceType": "purl", "referenceLocator": "pkg:pypi/uvicorn@0.50.0"}]},
+    {"spdxId": "SPDXRef-pydantic", "type": "Package", "name": "pydantic", "version": "2.13.4", "licenseConcluded": "MIT", "externalRefs": [{"referenceType": "purl", "referenceLocator": "pkg:pypi/pydantic@2.13.4"}]},
+    {"spdxId": "SPDXRef-python-dotenv", "type": "Package", "name": "python-dotenv", "version": "1.2.2", "licenseConcluded": "BSD-3-Clause", "externalRefs": [{"referenceType": "purl", "referenceLocator": "pkg:pypi/python-dotenv@1.2.2"}]},
+    {"spdxId": "SPDXRef-PyYAML", "type": "Package", "name": "PyYAML", "version": "6.0.3", "licenseConcluded": "MIT", "externalRefs": [{"referenceType": "purl", "referenceLocator": "pkg:pypi/pyyaml@6.0.3"}]},
+    {"spdxId": "SPDXRef-httpx", "type": "Package", "name": "httpx", "version": "0.28.1", "licenseConcluded": "BSD-3-Clause", "externalRefs": [{"referenceType": "purl", "referenceLocator": "pkg:pypi/httpx@0.28.1"}]},
+    {"spdxId": "SPDXRef-sqlite3", "type": "Package", "name": "sqlite3", "version": "python-standard-library", "licenseConcluded": "Python-2.0", "externalRefs": [{"referenceType": "other", "referenceLocator": "python-stdlib:sqlite3"}]}
+  ],
+  "relationships": [
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-fastapi"},
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-uvicorn"},
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-pydantic"},
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-python-dotenv"},
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-PyYAML"},
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-httpx"},
+    {"from": "SPDXRef-Application", "relationshipType": "DEPENDS_ON", "to": "SPDXRef-sqlite3"}
+  ],
+  "claim": "SPDX 3.0-oriented local conversion evidence; no external registry or certification claim"
+}

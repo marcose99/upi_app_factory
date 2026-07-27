@@ -34,9 +34,21 @@ def test_phase13o_packager_and_validator_pass() -> None:
     output = cast(dict[str, Any], json.loads(result.stdout))
     assert output["passed"] is True
     assert output["phase"] == "Phase 13O"
-    assert output["orchestration_framework"] == "langgraph"
+    assert output["orchestration_framework"] in {"langgraph", "stdlib_state_graph"}
     assert output["graph_type"] == "StateGraph"
     assert output["one_command_demo"] == "./run_operator_demo.sh"
+    runtime_path = (
+        PROJECT_ROOT
+        / "workspace"
+        / "factory_generated"
+        / "upi_dispute_resolution"
+        / "operator_handoff"
+        / "phase13o_local_runnable_pack"
+        / "operator_runtime.py"
+    )
+    runtime_text = runtime_path.read_text(encoding="utf-8")
+    assert "from phase13m_dispute_lifecycle_app.api import" not in runtime_text
+    assert 'import_module("phase13m_dispute_lifecycle_app.api")' in runtime_text
 
     validation = run_script("validate_phase13o_local_runnable_operator_packaging.py")
     payload = cast(dict[str, Any], json.loads(validation.stdout))

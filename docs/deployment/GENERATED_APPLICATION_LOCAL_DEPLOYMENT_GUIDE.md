@@ -4,13 +4,13 @@ The generated application can be run locally:
 
 ```bash
 cd workspace/factory_generated/upi_dispute_resolution/generated_application
-PYTHONPATH=app python -m uvicorn upi_dispute_app.main:app --reload
+PYTHONPATH=.. python -m uvicorn generated_application.app.interfaces.api.main:app --reload
 ```
 
 Test locally:
 
 ```bash
-PYTHONPATH=app python -m pytest -q tests
+PYTHONPATH=.. python -m pytest -q app/tests
 ```
 
 OpenAPI:

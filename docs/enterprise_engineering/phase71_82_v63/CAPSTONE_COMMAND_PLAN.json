@@ -1,0 +1,109 @@
+{
+  "schema_version": "v63.capstone.commands",
+  "steps": [
+    {
+      "id": "fresh-requirements-to-application-generation",
+      "argv": ["PYTHON", "-m", "factory.generators.mock_dispute_app_generator", "--run-id", "phase71_82_v63_capstone_fresh", "--workspace-root", "/tmp/upi_app_factory_capstone", "--clean"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "generated"
+    },
+    {
+      "id": "phase30-deep-generated-application-regeneration",
+      "argv": ["PYTHON", "scripts/validate_phase30_deep_generated_application_regeneration.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "generated"
+    },
+    {
+      "id": "generated-application-pytest-suite",
+      "argv": ["PYTHON", "-m", "pytest", "-q", "/tmp/upi_app_factory_capstone/phase71_82_v63_capstone_fresh/generated/generated_application/app/tests"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "generated"
+    },
+    {
+      "id": "native-phase13m-recipient-runtime-generation",
+      "argv": ["PYTHON", "scripts/run_phase13m_langgraph_agentic_lifecycle_generation.py", "--quiet"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "native"
+    },
+    {
+      "id": "native-phase13m-recipient-runtime-validation",
+      "argv": ["PYTHON", "scripts/validate_phase13m_langgraph_agentic_lifecycle_generation.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "native"
+    },
+    {
+      "id": "native-phase13o-recipient-operator-pack",
+      "argv": ["PYTHON", "scripts/run_phase13o_local_runnable_operator_packaging.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "native"
+    },
+    {
+      "id": "native-phase13o-recipient-operator-validation",
+      "argv": ["PYTHON", "scripts/validate_phase13o_local_runnable_operator_packaging.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "native"
+    },
+    {
+      "id": "wave-b-data-integrity-eventing-evidence",
+      "argv": ["PYTHON", "scripts/validate_phase71_82_wave_b_generated_output.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "evidence"
+    },
+    {
+      "id": "wave-d-openapi-runtime-observability-evidence",
+      "argv": ["PYTHON", "scripts/validate_phase71_82_wave_d_runtime_observability.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "evidence"
+    },
+    {
+      "id": "wave-e-assurance-supply-chain-reproducibility-evidence",
+      "argv": ["PYTHON", "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "evidence"
+    },
+    {
+      "id": "wave-f-control-plane-evidence",
+      "argv": ["PYTHON", "scripts/validate_phase71_82_wave_f_control_plane.py"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": true,
+      "lane": "evidence"
+    },
+    {
+      "id": "optional-compose-config-validation",
+      "argv": ["docker", "compose", "-f", "compose.yaml", "config", "--quiet"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": false,
+      "lane": "docker_optional"
+    },
+    {
+      "id": "optional-compose-build-validation",
+      "argv": ["docker", "compose", "-f", "compose.yaml", "build"],
+      "cwd": ".",
+      "timeout_seconds": 7200,
+      "required": false,
+      "lane": "docker_optional"
+    }
+  ]
+}

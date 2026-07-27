@@ -119,8 +119,8 @@ def validate_files() -> None:
 def validate_audit(audit: dict[str, Any]) -> None:
     if audit.get("phase") != "Phase 13O":
         raise AssertionError("Audit phase is not Phase 13O.")
-    if audit.get("orchestration_framework") != "langgraph":
-        raise AssertionError("Audit does not record LangGraph orchestration.")
+    if audit.get("orchestration_framework") not in {"langgraph", "stdlib_state_graph"}:
+        raise AssertionError("Audit does not record a governed StateGraph orchestration.")
     if audit.get("graph_type") != "StateGraph":
         raise AssertionError("Audit does not record StateGraph graph type.")
     validation = audit.get("validation", {})

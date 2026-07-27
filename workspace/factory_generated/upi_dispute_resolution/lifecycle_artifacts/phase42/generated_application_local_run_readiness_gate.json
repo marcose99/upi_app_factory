@@ -7,8 +7,10 @@
   "gate_status": "passed",
   "health_checks": [
     "/health",
-    "/runtime/health",
-    "/runtime/metrics"
+    "/startup",
+    "/live",
+    "/ready",
+    "/metrics"
   ],
   "live_provider_calls_allowed": false,
   "local_readiness_scope": "local_generated_application_run_pack_review_only",

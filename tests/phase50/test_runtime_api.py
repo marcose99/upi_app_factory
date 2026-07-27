@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import asyncio
+import json
 from pathlib import Path
 import secrets
+from datetime import datetime, timedelta, timezone
 from typing import Any, cast
 
 import httpx
@@ -45,6 +47,7 @@ def test_runtime_api_blocks_wrong_approval_and_replay(tmp_path: Path) -> None:
     )
     assert approved.status_code == 200
     assert "approval_token" not in approved.text
+    assert "expires_at_utc" in approved.json()
 
     stopped = request(
         app,
@@ -60,6 +63,69 @@ def test_runtime_api_blocks_wrong_approval_and_replay(tmp_path: Path) -> None:
         {"approval_nonce": "nonce-123456", "port": 18042},
     )
     assert replay.status_code == 403
+
+
+def test_runtime_api_rejects_expired_tampered_and_wrong_scope_approvals(tmp_path: Path) -> None:
+    state_root = tmp_path / "runtime"
+    app = create_app(project_root=PROJECT_ROOT, runtime_state_root=state_root)
+    run_id = f"phase50_expiry_{secrets.token_hex(4)}"
+
+    expired = request(
+        app,
+        "POST",
+        f"/operator-portal/api/runtime/runs/{run_id}/approvals",
+        {"action": "start", "approval_token": RUNTIME_APPROVAL_TOKEN, "nonce": "nonce-expired"},
+    )
+    assert expired.status_code == 200
+    approvals_path = state_root / run_id / "runtime_approvals.json"
+    approvals = json.loads(approvals_path.read_text(encoding="utf-8"))
+    approvals["approvals"][0]["expires_at_utc"] = (
+        datetime.now(timezone.utc) - timedelta(seconds=1)
+    ).isoformat().replace("+00:00", "Z")
+    approvals_path.write_text(json.dumps(approvals, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    expired_start = request(
+        app,
+        "POST",
+        f"/operator-portal/api/runtime/runs/{run_id}/start",
+        {"approval_nonce": "nonce-expired", "port": 18042},
+    )
+    assert expired_start.status_code == 403
+    assert "expired" in expired_start.text
+
+    tampered = request(
+        app,
+        "POST",
+        f"/operator-portal/api/runtime/runs/{run_id}/approvals",
+        {"action": "restart", "approval_token": RUNTIME_APPROVAL_TOKEN, "nonce": "nonce-tamper"},
+    )
+    assert tampered.status_code == 200
+    approvals = json.loads(approvals_path.read_text(encoding="utf-8"))
+    approvals["approvals"][-1]["token_sha256"] = "0" * 64
+    approvals_path.write_text(json.dumps(approvals, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    tampered_restart = request(
+        app,
+        "POST",
+        f"/operator-portal/api/runtime/runs/{run_id}/restart",
+        {"approval_nonce": "nonce-tamper", "port": 18042},
+    )
+    assert tampered_restart.status_code == 403
+    assert "digest" in tampered_restart.text
+
+    scoped = request(
+        app,
+        "POST",
+        f"/operator-portal/api/runtime/runs/{run_id}/approvals",
+        {"action": "stop", "approval_token": RUNTIME_APPROVAL_TOKEN, "nonce": "nonce-scope"},
+    )
+    assert scoped.status_code == 200
+    wrong_scope = request(
+        app,
+        "POST",
+        f"/operator-portal/api/runtime/runs/{run_id}/start",
+        {"approval_nonce": "nonce-scope", "port": 18042},
+    )
+    assert wrong_scope.status_code == 403
+    assert "scope" in wrong_scope.text
 
 
 def test_catalog_and_view_are_rendered() -> None:

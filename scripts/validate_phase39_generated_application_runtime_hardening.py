@@ -19,10 +19,9 @@ APP_SOURCE = GENERATED_APP_ROOT / "app"
 if str(APP_SOURCE) not in sys.path:
     sys.path.insert(0, str(APP_SOURCE))
 
-from upi_dispute_app.audit import AuditLogger  # noqa: E402
 from upi_dispute_app.main import create_app  # noqa: E402
-from upi_dispute_app.repository import DisputeRepository  # noqa: E402
 from upi_dispute_app.settings import RuntimeConfigurationError, RuntimeSettings  # noqa: E402
+from generated_application.app.security.identity import issue_local_test_token  # noqa: E402
 
 
 APP_ID = "upi_dispute_resolution"
@@ -42,6 +41,9 @@ RUNTIME_SOURCE_PATHS = [
     GENERATED_ROOT / "app/upi_dispute_app/repository.py",
     GENERATED_ROOT / "app/upi_dispute_app/models.py",
     GENERATED_ROOT / "app/upi_dispute_app/audit.py",
+    GENERATED_ROOT / "app/interfaces/api/main.py",
+    GENERATED_ROOT / "app/interfaces/api/error_handlers.py",
+    GENERATED_ROOT / "app/security/identity.py",
 ]
 
 REQUIRED_FILES = [
@@ -172,10 +174,13 @@ def validate_static_artifacts(errors: list[str]) -> None:
         "payload_fingerprint",
         "get_request_fingerprint",
         "get_by_client_request_id",
-        "/runtime/health",
-        "/runtime/metrics",
-        "validation_error",
-        "structured_errors",
+        "Legacy import facade that always returns the hardened generated API",
+        "generated_application.app.interfaces.api.main",
+        "application/problem+json",
+        "signed local bearer token",
+        "issue_local_test_token",
+        "/health",
+        "/metrics",
         "UPI_DISPUTE_ENABLE_LIVE_PROVIDER_CALLS=false",
         "UPI_DISPUTE_ALLOW_REAL_SECRETS=false",
         "UPI_DISPUTE_EXTERNAL_ECOSYSTEM_MODE=mock",
@@ -186,20 +191,20 @@ def validate_static_artifacts(errors: list[str]) -> None:
     for term in FORBIDDEN_SOURCE_TERMS:
         if term in source_text:
             errors.append(f"Phase 39 runtime source includes forbidden term: {term}")
-    external_urls = re.findall(r"https?://[^\"]+", source_text)
+    external_urls = [
+        url
+        for url in re.findall(r"https?://[^\"]+", source_text)
+        if ".example.invalid" not in url and "upi-app-factory.local" not in url
+    ]
     if external_urls:
         errors.append(f"Phase 39 runtime source includes external URL dependencies: {external_urls}")
 
 
 def valid_payload() -> dict[str, object]:
     return {
-        "client_request_id": "phase39-req-001",
-        "dispute_type": "duplicate_debit",
-        "transaction_reference": "PHASE39-TXN-001",
-        "customer_upi_id": "customername@upi",
-        "amount_paise": 50000,
-        "description": "Customer reports duplicate debit for a local simulated transaction.",
-        "evidence": {"customer_statement": "Duplicate debit visible in app screenshot."},
+        "transaction_ref": "PHASE39-TXN-001",
+        "customer_upi": "customername@upi",
+        "reason": "Customer reports duplicate debit for a local simulated transaction.",
     }
 
 
@@ -209,13 +214,14 @@ async def _request(
     path: str,
     *,
     json_payload: dict[str, object] | None = None,
+    headers: dict[str, str] | None = None,
 ) -> httpx.Response:
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(
         transport=transport,
         base_url="http://local-generated-upi-dispute-app",
     ) as client:
-        return await client.request(method, path, json=json_payload)
+        return await client.request(method, path, json=json_payload, headers=headers)
 
 
 def request(
@@ -224,8 +230,21 @@ def request(
     path: str,
     *,
     json_payload: dict[str, object] | None = None,
+    headers: dict[str, str] | None = None,
 ) -> httpx.Response:
-    return asyncio.run(_request(app, method, path, json_payload=json_payload))
+    return asyncio.run(_request(app, method, path, json_payload=json_payload, headers=headers))
+
+
+def bearer_headers(idempotency_key: str = "phase39-idempotency-001") -> dict[str, str]:
+    token = issue_local_test_token(
+        subject="phase39-client",
+        scopes=("dispute:create", "dispute:read", "dispute:read:any"),
+    )
+    return {
+        "Authorization": f"Bearer {token}",
+        "Idempotency-Key": idempotency_key,
+        "X-Correlation-Id": "phase39-correlation",
+    }
 
 
 def make_app(tmpdir: Path) -> Any:
@@ -236,8 +255,9 @@ def make_app(tmpdir: Path) -> Any:
         audit_log_path=tmpdir / "audit_events.jsonl",
     )
     return create_app(
-        repository=DisputeRepository(settings.sqlite_path),
-        audit_logger=AuditLogger(settings.audit_log_path),
+        database_path=settings.sqlite_path,
+        repository=object(),
+        audit_logger=object(),
         settings=settings,
     )
 
@@ -247,51 +267,53 @@ def validate_runtime_behavior(errors: list[str]) -> None:
         tmpdir = Path(tmp)
         app = make_app(tmpdir)
 
-        health = request(app, "GET", "/runtime/health")
+        health = request(app, "GET", "/health")
         if health.status_code != 200:
             errors.append(f"Runtime health endpoint failed: {health.status_code}")
         else:
             payload = cast(dict[str, Any], health.json())
-            report = cast(dict[str, Any], payload.get("runtime_hardening", {}))
-            if report.get("certification_boundary") != "certification_ready_not_certified":
-                errors.append("Runtime health changed certification boundary")
-            if report.get("live_provider_calls_allowed") is not False:
-                errors.append("Runtime health allows live provider calls")
+            if payload.get("status") != "ok":
+                errors.append("Runtime health changed hardened API status contract")
+            if health.headers.get("x-content-type-options") != "nosniff":
+                errors.append("Runtime health did not include hardened security headers")
+
+        unauthenticated = request(app, "POST", "/disputes", json_payload=valid_payload())
+        if unauthenticated.status_code != 401:
+            errors.append(
+                "Legacy dependency-injection facade allowed unauthenticated dispute creation"
+            )
 
         invalid = request(
             app,
             "POST",
             "/disputes",
-            json_payload={**valid_payload(), "client_request_id": "bad request id"},
+            json_payload={**valid_payload(), "unexpected": "rejected"},
+            headers=bearer_headers("phase39-validation"),
         )
         if invalid.status_code != 422:
             errors.append(f"Invalid request was not rejected: {invalid.status_code}")
-        elif invalid.json().get("error", {}).get("code") != "validation_error":
-            errors.append("Invalid request did not return structured validation error")
+        elif invalid.json().get("code") != "RequestValidationError":
+            errors.append("Invalid request did not return RFC 9457 validation problem")
 
-        created = request(app, "POST", "/disputes", json_payload=valid_payload())
-        replayed = request(app, "POST", "/disputes", json_payload=valid_payload())
+        headers = bearer_headers()
+        created = request(app, "POST", "/disputes", json_payload=valid_payload(), headers=headers)
+        replayed = request(app, "POST", "/disputes", json_payload=valid_payload(), headers=headers)
         if created.status_code != 201:
             errors.append(f"Create dispute failed: {created.status_code} {created.text}")
-        if replayed.status_code != 200:
+        if replayed.status_code != 201:
             errors.append(f"Idempotent replay failed: {replayed.status_code} {replayed.text}")
-        elif created.json()["dispute"]["dispute_id"] != replayed.json()["dispute"]["dispute_id"]:
+        elif created.json()["dispute_id"] != replayed.json()["dispute_id"]:
             errors.append("Idempotent replay did not return the original dispute")
 
-        metrics = request(app, "GET", "/runtime/metrics")
+        metrics = request(app, "GET", "/metrics")
         if metrics.status_code != 200:
             errors.append(f"Runtime metrics endpoint failed: {metrics.status_code}")
-        else:
-            counters = cast(dict[str, Any], metrics.json().get("metrics", {}))
-            if counters.get("disputes_created") != 1:
-                errors.append("Runtime metrics did not count dispute creation")
-            if counters.get("idempotency_replays") != 1:
-                errors.append("Runtime metrics did not count idempotency replay")
-            if counters.get("validation_failures") != 1:
-                errors.append("Runtime metrics did not count validation failure")
+        elif not metrics.headers.get("content-type", "").startswith("application/openmetrics-text"):
+            errors.append("Runtime metrics did not use OpenMetrics text output")
 
-        if not (tmpdir / "audit_events.jsonl").exists():
-            errors.append("Audit log was not created in local runtime data dir")
+        legacy_runtime = request(app, "GET", "/runtime/health")
+        if legacy_runtime.status_code != 404:
+            errors.append("Legacy runtime health route is still exposed")
 
 
 def validate_fail_closed_settings(errors: list[str]) -> None:

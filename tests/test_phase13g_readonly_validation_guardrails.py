@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -63,31 +64,12 @@ def test_phase13g_validator_is_safe_with_legacy_drift_guardrail(
     tmp_path: Path,
 ) -> None:
     before_unexpected = unexpected_generated_drift()
-    snapshot = tmp_path / "phase13g_clean_clone"
-    head = run_command(["git", "rev-parse", "HEAD"], check=True).stdout.strip()
-
-    subprocess.run(
-        [
-            "git",
-            "clone",
-            "--no-hardlinks",
-            "--quiet",
-            str(ROOT),
-            str(snapshot),
-        ],
-        cwd=tmp_path,
-        text=True,
-        capture_output=True,
-        check=True,
+    snapshot = tmp_path / "phase13g_clean_snapshot"
+    shutil.copytree(
+        ROOT,
+        snapshot,
+        ignore=shutil.ignore_patterns(".git", ".mypy_cache", ".pytest_cache", ".ruff_cache", "__pycache__"),
     )
-    subprocess.run(
-        ["git", "checkout", "--detach", head],
-        cwd=snapshot,
-        text=True,
-        capture_output=True,
-        check=True,
-    )
-
     completed = subprocess.run(
         [
             sys.executable,

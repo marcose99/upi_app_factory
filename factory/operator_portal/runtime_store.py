@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 import secrets
 import threading
@@ -15,10 +16,13 @@ from factory.operator_portal.runtime_contracts import (
     RuntimeStatus,
     ProcessIdentity,
     RuntimeContractError,
+    approval_secret,
+    parse_utc,
     sha256_bytes,
     transition_state,
     utc_now,
     validate_run_id,
+    verify_scoped_approval,
 )
 
 
@@ -172,14 +176,28 @@ class RuntimeStore:
             if item.get("run_id") == run_id and item.get("action") == action and item.get("nonce") == nonce:
                 if item.get("consumed"):
                     raise RuntimeContractError("approval replay rejected")
+                approved_at_utc = str(item.get("approved_at_utc", ""))
+                expires_at_utc = str(item.get("expires_at_utc", ""))
+                if parse_utc(expires_at_utc) <= datetime.now(timezone.utc):
+                    raise RuntimeContractError("approval expired")
+                token_sha256 = str(item.get("token_sha256", ""))
+                if not verify_scoped_approval(
+                    run_id=run_id,
+                    action=action,
+                    nonce=nonce,
+                    presented_token=approval_secret(),
+                    expected_sha256=token_sha256,
+                ):
+                    raise RuntimeContractError("approval digest verification failed")
                 item["consumed"] = True
                 self.atomic_write_json(path, data)
                 grant = ApprovalGrant(
                     run_id=run_id,
                     action=action,
                     nonce=nonce,
-                    approved_at_utc=str(item["approved_at_utc"]),
-                    token_sha256=str(item["token_sha256"]),
+                    approved_at_utc=approved_at_utc,
+                    expires_at_utc=expires_at_utc,
+                    token_sha256=token_sha256,
                     consumed=True,
                 )
                 self.append_event(run_id, "runtime_approval_consumed", {"action": action, "nonce": nonce})
@@ -203,7 +221,7 @@ def default_binding(project_root: Path, *, run_id: str, port: int = 18042) -> Ru
         app_id=APP_ID,
         manifest_sha256=digest,
         application_root=app_root.as_posix(),
-        entrypoint="upi_dispute_app.main:app",
+        entrypoint="generated_application.app.interfaces.api.main:app",
         host="127.0.0.1",
         port=port,
     )

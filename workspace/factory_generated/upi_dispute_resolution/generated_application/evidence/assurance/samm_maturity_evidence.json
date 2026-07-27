@@ -1,0 +1,50 @@
+{
+  "artifact": "samm_maturity_evidence",
+  "benchmark": "OWASP SAMM 2 oriented maturity evidence",
+  "certification_claim": "none",
+  "maturity_model": {
+    "governance": {
+      "target": "maturity_1_to_2_oriented",
+      "evidence": [
+        "generated_application/evidence/assurance/verification_summary.json",
+        "generated_application/docs/runtime_runbook.md"
+      ]
+    },
+    "design": {
+      "target": "maturity_1_to_2_oriented",
+      "evidence": [
+        "generated_application/evidence/assurance/threat_model_abuse_cases.json",
+        "generated_application/evidence/assurance/asvs_5_0_l2_mapping.json"
+      ]
+    },
+    "implementation": {
+      "target": "maturity_1_to_2_oriented",
+      "evidence": [
+        "generated_application/app/security/input_validation.py",
+        "generated_application/app/tests/audit/test_assurance_supply_chain_evidence.py"
+      ]
+    },
+    "verification": {
+      "target": "maturity_1_to_2_oriented",
+      "evidence": [
+        "generated_application/app/tests",
+        "generated_application/evidence/assurance/deterministic_build_manifest.json"
+      ]
+    },
+    "operations": {
+      "target": "maturity_1_to_2_oriented",
+      "evidence": [
+        "generated_application/docs/reliability_slo_error_budget.md",
+        "generated_application/docs/failure_mode_evidence.md"
+      ]
+    }
+  },
+  "unresolved_risk_ownership": [
+    {
+      "risk_id": "SAMM-001",
+      "owner": "factory_governance_owner",
+      "risk": "SAMM scoring is evidence-oriented and has not been independently reviewed.",
+      "next_action": "require human review before any external assurance statement"
+    }
+  ]
+}

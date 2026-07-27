@@ -9,9 +9,54 @@ import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
+from collections.abc import Callable
 from typing import Any, TypedDict, cast
 
-from langgraph.graph import END, START, StateGraph
+try:
+    from langgraph.graph import END, START, StateGraph
+
+    ORCHESTRATION_FRAMEWORK = "langgraph"
+    ADAPTER_MODE = "local_langgraph_deterministic"
+except ModuleNotFoundError:
+    START = "__start__"
+    END = "__end__"
+    ORCHESTRATION_FRAMEWORK = "stdlib_state_graph"
+    ADAPTER_MODE = "local_stdlib_state_graph_deterministic"
+
+    class _CompiledStateGraph:
+        def __init__(
+            self,
+            nodes: dict[str, Callable[[dict[str, Any]], dict[str, Any]]],
+            edges: dict[str, str],
+        ) -> None:
+            self.nodes = nodes
+            self.edges = edges
+
+        def invoke(self, state: dict[str, Any]) -> dict[str, Any]:
+            current = self.edges[START]
+            while current != END:
+                state = self.nodes[current](state)
+                current = self.edges[current]
+            return state
+
+    class StateGraph:  # type: ignore[no-redef]
+        def __init__(self, state_type: object) -> None:
+            self.state_type = state_type
+            self._nodes: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {}
+            self._edges: dict[str, str] = {}
+
+        def add_node(
+            self,
+            name: str,
+            handler: Callable[[dict[str, Any]], dict[str, Any]],
+        ) -> None:
+            self._nodes[name] = handler
+
+        def add_edge(self, source: str, target: str) -> None:
+            self._edges[source] = target
+
+        def compile(self) -> _CompiledStateGraph:
+            return _CompiledStateGraph(self._nodes, self._edges)
 
 APP_ID = "upi_dispute_resolution"
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -194,6 +239,7 @@ succeed.
 import pathlib
 import sys
 from datetime import datetime, timezone
+from importlib import import_module
 from typing import Any
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[5]
@@ -208,7 +254,9 @@ PHASE13M_APP_DIR = (
 if str(PHASE13M_APP_DIR) not in sys.path:
     sys.path.insert(0, str(PHASE13M_APP_DIR))
 
-from phase13m_dispute_lifecycle_app.api import create_case, progress_case_to_resolution
+
+def lifecycle_api() -> Any:
+    return import_module("phase13m_dispute_lifecycle_app.api")
 
 
 def health() -> dict[str, Any]:
@@ -235,8 +283,9 @@ def demo_payload() -> dict[str, Any]:
 
 
 def run_demo_lifecycle() -> dict[str, Any]:
-    created = create_case(demo_payload())
-    return progress_case_to_resolution(str(created["case_id"]))
+    api = lifecycle_api()
+    created = api.create_case(demo_payload())
+    return api.progress_case_to_resolution(str(created["case_id"]))
 """,
             False,
         ),
@@ -464,9 +513,9 @@ def governance_evidence_agent(state: PackagingState) -> PackagingState:
         "phase": "Phase 13O",
         "run_id": state["run_id"],
         "generated_at_utc": utc_now(),
-        "orchestration_framework": "langgraph",
+        "orchestration_framework": ORCHESTRATION_FRAMEWORK,
         "graph_type": "StateGraph",
-        "adapter_mode": "local_langgraph_deterministic",
+        "adapter_mode": ADAPTER_MODE,
         "purpose": "local_runnable_operator_packaging",
         "graph_nodes": [
             "generated_app_proof_agent",

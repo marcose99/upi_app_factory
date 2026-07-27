@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any, cast
 
 import pytest
 
@@ -47,7 +48,7 @@ def _config(tmp_path: Path, *, app_id: str = "upi_portal_evidence_test") -> adap
 
 
 def test_generated_tests_execute_before_go_and_openapi_is_registered(tmp_path: Path) -> None:
-    result = adapter.run(_config(tmp_path))
+    result = cast(dict[str, Any], adapter.run(_config(tmp_path)))
 
     assert result["status"] == adapter.SUCCESS_STATUS
     assert result["generated_test_execution"]["exit_code"] == 0
@@ -68,7 +69,8 @@ def test_generated_tests_execute_before_go_and_openapi_is_registered(tmp_path: P
     catalogue = PortfolioCatalogue(
         store=PortfolioStore(project_root=PROJECT_ROOT, state_root=tmp_path / "portfolio")
     ).catalogue()
-    version = catalogue["versions"][f"upi_portal_evidence_test:{version_id}"]
+    versions = cast(dict[str, Any], catalogue["versions"])
+    version = cast(dict[str, Any], versions[f"upi_portal_evidence_test:{version_id}"])
     assert version["manifest"]["openapi"]["paths"]
     assert version["manifest"]["openapi_inventory"]["openapi_sha256"] == result["openapi_inventory"]["openapi_sha256"]
 

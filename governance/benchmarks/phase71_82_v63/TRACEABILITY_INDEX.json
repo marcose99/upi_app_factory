@@ -1,0 +1,385 @@
+{
+  "artifact": "TRACEABILITY_INDEX",
+  "baseline": "5373b9bdd04ccd7760e65345d311362c5bc9a48f",
+  "campaign": "phase71-82-enterprise-engineering-v63-corrected",
+  "created": "2026-07-25",
+  "allowed_write_roots_used": [
+    "docs/enterprise_engineering/phase71_82_v63/",
+    "governance/benchmarks/phase71_82_v63/",
+    "factory/templates/mock_dispute_app/",
+    "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing/",
+    "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing_retry/",
+    "temporary Wave D generated output from scripts/validate_phase71_82_wave_d_runtime_observability.py",
+    "temporary Wave E generated output from scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+    "temporary Wave F generated output from scripts/validate_phase71_82_wave_f_control_plane.py"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/WAVE_B_REPORT.md",
+      "purpose": "Wave B implementation and validation report for data-integrity and eventing gaps"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/WAVE_D_REPORT.md",
+      "purpose": "Wave D implementation and validation report for runtime lifecycle, observability and operator readiness gaps"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_D.md",
+      "purpose": "Wave D gap-to-implementation traceability"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/WAVE_E_REPORT.md",
+      "purpose": "Wave E implementation and validation report for assurance, supply-chain and generated-deliverable verification gaps"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_E.md",
+      "purpose": "Wave E gap-to-implementation traceability"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md",
+      "purpose": "Wave F implementation and validation report for lightweight enterprise control-plane gaps"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/TRACEABILITY_WAVE_F.md",
+      "purpose": "Wave F gap-to-implementation traceability"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/FACTORY_DEEP_DISCOVERY.md",
+      "purpose": "Factory generator, governance, evidence and baseline debt discovery"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "purpose": "Generated application output discovery and verified gap summary"
+    },
+    {
+      "path": "governance/benchmarks/phase71_82_v63/STANDARDS_GAP_MATRIX.json",
+      "purpose": "Machine-readable standards gap matrix with status, paths, tests, evidence and gates"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/ROADMAP_PHASE71_82_DECISIONS.md",
+      "purpose": "Roadmap decisions separating authoritative benchmark, engineering opinion and recommendation"
+    },
+    {
+      "path": "docs/enterprise_engineering/phase71_82_v63/IMPLEMENTATION_PLAN.md",
+      "purpose": "Scoped implementation plan for future source and generated-output remediation"
+    },
+    {
+      "path": "governance/benchmarks/phase71_82_v63/TRACEABILITY_INDEX.json",
+      "purpose": "Index linking requested artifacts to gap ids and discovery evidence"
+    }
+  ],
+  "gap_to_artifacts": {
+    "GAP-BASELINE-RUFF-E402": [
+      "FACTORY_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "ROADMAP_PHASE71_82_DECISIONS.md",
+      "IMPLEMENTATION_PLAN.md"
+    ],
+    "GAP-API-PROBLEM-DETAILS": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md"
+    ],
+    "GAP-IAM-BOUNDARY": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "ROADMAP_PHASE71_82_DECISIONS.md",
+      "IMPLEMENTATION_PLAN.md"
+    ],
+    "GAP-HEALTH-LIFECYCLE": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_D_REPORT.md",
+      "TRACEABILITY_WAVE_D.md",
+      "factory/templates/mock_dispute_app/generated_application/app/runtime.py",
+      "factory/templates/mock_dispute_app/generated_application/app/tests/resilience/test_runtime_lifecycle.py"
+    ],
+    "GAP-METRICS": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "ROADMAP_PHASE71_82_DECISIONS.md",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_D_REPORT.md",
+      "TRACEABILITY_WAVE_D.md",
+      "factory/templates/mock_dispute_app/generated_application/app/observability/metrics.py",
+      "factory/templates/mock_dispute_app/generated_application/app/tests/contract/test_observability_contract.py"
+    ],
+    "GAP-EVENT-DURABILITY": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "ROADMAP_PHASE71_82_DECISIONS.md",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_B_REPORT.md",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing/generation_manifest.json",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing_retry/generation_manifest.json"
+    ],
+    "GAP-TRANSACTION-SEMANTICS": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_B_REPORT.md",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing/generation_manifest.json",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing_retry/generation_manifest.json"
+    ],
+    "GAP-MIGRATIONS": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_B_REPORT.md",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing/generation_manifest.json",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing_retry/generation_manifest.json"
+    ],
+    "GAP-CONCURRENCY": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_B_REPORT.md",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing/generation_manifest.json",
+      "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing_retry/generation_manifest.json"
+    ],
+    "GAP-API-OPERABILITY": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md"
+    ],
+    "GAP-RESILIENCE-ADAPTERS": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "ROADMAP_PHASE71_82_DECISIONS.md",
+      "IMPLEMENTATION_PLAN.md"
+    ],
+    "GAP-GENERATED-TEST-DEPTH": [
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_E_REPORT.md",
+      "TRACEABILITY_WAVE_E.md",
+      "factory/templates/mock_dispute_app/generated_application/app/tests/audit/test_assurance_supply_chain_evidence.py"
+    ],
+    "GAP-SUPPLY-CHAIN": [
+      "FACTORY_DEEP_DISCOVERY.md",
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "ROADMAP_PHASE71_82_DECISIONS.md",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_E_REPORT.md",
+      "TRACEABILITY_WAVE_E.md",
+      "factory/templates/mock_dispute_app/generated_application/evidence/assurance/dependency_license_inventory.json",
+      "factory/templates/mock_dispute_app/generated_application/evidence/assurance/cyclonedx_1_7_sbom.json",
+      "factory/templates/mock_dispute_app/generated_application/evidence/assurance/spdx_3_0_sbom.json",
+      "factory/templates/mock_dispute_app/generated_application/evidence/assurance/slsa_1_2_provenance_verification.json",
+      "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py"
+    ],
+    "GAP-CONTROL-PLANE-POLICY": [
+      "WAVE_F_REPORT.md",
+      "TRACEABILITY_WAVE_F.md",
+      "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py",
+      "factory/templates/mock_dispute_app/generated_application/evidence/assurance/control_plane_governance.json",
+      "scripts/validate_phase71_82_wave_f_control_plane.py"
+    ],
+    "GAP-APPROVAL-REPLAY-EXPIRY": [
+      "WAVE_F_REPORT.md",
+      "TRACEABILITY_WAVE_F.md",
+      "factory/application_engineering/portfolio.py",
+      "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py",
+      "tests/test_phase71_82_wave_f_control_plane.py"
+    ],
+    "GAP-AGENT-GOVERNANCE": [
+      "WAVE_F_REPORT.md",
+      "TRACEABILITY_WAVE_F.md",
+      "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py",
+      "factory/templates/mock_dispute_app/generated_application/app/tests/security/test_control_plane_policy.py"
+    ],
+    "GAP-ISOLATION-CONTROLS": [
+      "WAVE_F_REPORT.md",
+      "TRACEABILITY_WAVE_F.md",
+      "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py",
+      "scripts/validate_phase71_82_wave_f_control_plane.py"
+    ],
+    "GAP-PORTFOLIO-RECOMMENDATION-ONLY": [
+      "WAVE_F_REPORT.md",
+      "TRACEABILITY_WAVE_F.md",
+      "factory/templates/mock_dispute_app/generated_application/evidence/assurance/control_plane_governance.json",
+      "factory/application_engineering/portfolio.py"
+    ],
+    "GAP-FRESH-GENERATED-OUTPUT": [
+      "FACTORY_DEEP_DISCOVERY.md",
+      "GENERATED_APPLICATION_DEEP_DISCOVERY.md",
+      "STANDARDS_GAP_MATRIX.json",
+      "IMPLEMENTATION_PLAN.md",
+      "WAVE_D_REPORT.md",
+      "TRACEABILITY_WAVE_D.md",
+      "scripts/validate_phase71_82_wave_d_runtime_observability.py",
+      "WAVE_E_REPORT.md",
+      "TRACEABILITY_WAVE_E.md",
+      "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+      "WAVE_F_REPORT.md",
+      "TRACEABILITY_WAVE_F.md",
+      "scripts/validate_phase71_82_wave_f_control_plane.py"
+    ]
+  },
+  "source_path_index": {
+    "factory/generators/mock_dispute_app_generator.py": [
+      "legacy deterministic generator",
+      "governance input validation",
+      "template copy manifest"
+    ],
+    "factory/templates/mock_dispute_app/template_manifest.v1.json": [
+      "legacy template file inventory",
+      "Wave B data-integrity and eventing generated file inventory",
+      "Wave D runtime lifecycle and observability generated file inventory",
+      "Wave E assurance and supply-chain generated file inventory",
+      "Wave F control-plane generated file inventory"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/evidence/assurance/": [
+      "Wave E ASVS/API/SAMM/threat-model/SBOM/provenance/OpenSSF generated evidence",
+      "Wave F generated control-plane governance evidence"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py": [
+      "Wave F typed fail-closed policy decisions",
+      "Wave F approval nonce, expiry and replay controls",
+      "Wave F agent and isolation controls"
+    ],
+    "factory/application_engineering/portfolio.py": [
+      "Wave F portal portfolio approval expiry propagation",
+      "recommendation-only portfolio comparison posture"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/runtime.py": [
+      "Wave D startup/liveness/readiness/drain/shutdown lifecycle"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/observability/metrics.py": [
+      "Wave D OpenMetrics-compatible counters and histograms"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/observability/tracing.py": [
+      "Wave D W3C trace-context propagation helpers"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/observability/logging.py": [
+      "Wave D safe structured correlated logging"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/sqlite_unit_of_work.py": [
+      "Wave B generated unit-of-work transaction boundary"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/migrations.py": [
+      "Wave B generated SQLite migration ledger"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/outbox.py": [
+      "Wave B generated transactional outbox"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/inbox.py": [
+      "Wave B generated idempotent consumer inbox",
+      "failed consumer retry support"
+    ],
+    "factory/templates/mock_dispute_app/generated_application/asyncapi.yaml": [
+      "Wave B generated AsyncAPI event contract"
+    ],
+    "factory/application_engineering/deep_composer.py": [
+      "deep generated application blueprint",
+      "local/mock profile",
+      "domain/API/migration/evidence output"
+    ],
+    "factory/application_engineering/local_platform_kernel.py": [
+      "migration ledger partial source",
+      "outbox partial source",
+      "authorization port partial source"
+    ],
+    "factory/application_engineering/failed_debit_capability.py": [
+      "rich domain capability and policy model"
+    ],
+    "factory/application_engineering/verification_evidence.py": [
+      "generated evidence/test catalogue source",
+      "ASVS/SSDF/SBOM/provenance-shaped artifact source"
+    ],
+    "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py": [
+      "Wave E fresh two-build generated-output comparison",
+      "local structural SBOM/provenance/assurance evidence validation"
+    ],
+    "scripts/validate_phase71_82_wave_f_control_plane.py": [
+      "Wave F fresh two-build generated-output comparison",
+      "local structural control-plane policy validation"
+    ],
+    "scripts/run_portal_requirements_driven_application_engineering.py": [
+      "portal generated application adapter",
+      "compatibility generated app templates",
+      "generated tests and evidence execution"
+    ],
+    "factory/operator_portal/deep_portal_integration.py": [
+      "portal source/evidence inventory",
+      "approved run/proposal/download integration"
+    ],
+    "scripts/run_phase13o_local_runnable_operator_packaging.py": [
+      "operator pack generator",
+      "baseline ruff E402 source"
+    ]
+  },
+  "generated_path_index": {
+    "workspace/factory_generated/upi_dispute_resolution/generated_application/": [
+      "compatibility generated app",
+      "confirmed API/error/transaction/event/migration/concurrency/metrics gaps"
+    ],
+    "workspace/factory_generated/upi_dispute_resolution/portal_publications/": [
+      "portal-generated application publications",
+      "partial health/readiness/logging/test evidence"
+    ],
+    "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/": [
+      "deep generated app target",
+      "fresh output proof required"
+    ],
+    "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing/": [
+      "Wave B fresh deterministic generated output",
+      "generation manifest with sha256 file inventory",
+      "functional smoke validation target"
+    ],
+    "workspace/regeneration_runs/phase71_82_wave_b_data_integrity_eventing_retry/": [
+      "Wave B fresh deterministic generated output with inbox retry fix",
+      "generation manifest with sha256 file inventory",
+      "functional smoke validation target for duplicate-delivery and failed-consumer retry"
+    ],
+    "temporary Wave E generated output": [
+      "two fresh temporary generated outputs",
+      "generated template-file hash comparison",
+      "run_id and generated_at_utc variance explanation"
+    ],
+    "temporary Wave F generated output": [
+      "two fresh temporary generated outputs",
+      "generated template-file hash comparison",
+      "approval replay, expiry, human-gate and isolation proof"
+    ],
+    "workspace/factory_generated/upi_dispute_resolution/operator_handoff/phase13o_local_runnable_pack/": [
+      "operator pack generated output",
+      "baseline ruff debt target"
+    ],
+    "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/": [
+      "historical deep export bundle scope",
+      "current source availability partial"
+    ]
+  },
+  "acceptance_gate_index": {
+    "quality": [
+      "ruff on changed generator Python",
+      "ruff on fresh generated Python",
+      "generated app pytest",
+      "targeted factory tests for touched generator paths"
+    ],
+    "generation": [
+      "fresh generated manifest",
+      "file inventory with sha256",
+      "OpenAPI/evidence checksums",
+      "no generated app source accepted without generator trace",
+      "Wave B fresh generated manifest produced",
+      "Wave E two-build comparison passes",
+      "Wave F two-build comparison passes"
+    ],
+    "boundary": [
+      "real_payment_calls disabled",
+      "live_provider_calls_allowed false",
+      "real_secrets_allowed false",
+      "deployment_allowed false",
+      "certification/regulatory/production claims false"
+    ]
+  },
+  "discovery_limitations": [
+    "Wave A discovery limitations remain historical.",
+    "Wave B pytest execution was blocked because pytest is not installed in the active interpreter.",
+    "Wave B did not address unrelated baseline ruff debt, API operability, IAM, lifecycle, metrics, resilience-adapter or supply-chain roadmap gaps."
+  ]
+}

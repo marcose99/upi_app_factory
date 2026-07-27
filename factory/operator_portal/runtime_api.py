@@ -9,10 +9,12 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from factory.operator_portal.runtime_contracts import (
     ApprovalGrant,
+    RUNTIME_APPROVAL_TTL_SECONDS,
     RuntimeContractError,
     RuntimeState,
     approval_secret,
     scoped_approval_digest,
+    utc_after,
     utc_now,
 )
 from factory.operator_portal.runtime_evidence import RuntimeEvidenceService
@@ -65,6 +67,7 @@ class RuntimeAPI:
                 action=request.action,
                 nonce=nonce,
                 approved_at_utc=utc_now(),
+                expires_at_utc=utc_after(RUNTIME_APPROVAL_TTL_SECONDS),
                 token_sha256=scoped_approval_digest(
                     run_id=run_id,
                     action=request.action,
@@ -79,6 +82,7 @@ class RuntimeAPI:
                 "action": request.action,
                 "nonce": nonce,
                 "approved_at_utc": grant.approved_at_utc,
+                "expires_at_utc": grant.expires_at_utc,
                 "token_persisted": False,
             }
         except RuntimeContractError as exc:

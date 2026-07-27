@@ -246,7 +246,7 @@ def build_manifest(project_root: Path) -> dict[str, Any]:
         if "{" in str(route["route"]) and _route_key(str(route["method"]), str(route["route"])) not in openapi_routes
     )
     duplicate_operation_ids = sorted(key for key, count in Counter(operation_ids).items() if count > 1)
-    gaps = {key: [] for key in GAP_KEYS}
+    gaps: dict[str, list[str]] = {key: [] for key in GAP_KEYS}
     gaps["missing_handlers"] = sorted(set(action_names) - set(ACTION_CONTRACTS))
     gaps["missing_routes"] = sorted(set(route_gaps))
     gaps["duplicate_ids"] = sorted(key for key, count in Counter(ids).items() if count > 1)

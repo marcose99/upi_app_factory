@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -17,6 +17,7 @@ APP_ID = "upi_failed_debit_dispute"
 PRODUCT_NAME = "UPI App Factory"
 REPOSITORY_ID = "upi_app_factory"
 FIXTURE_REQUIREMENTS = Path("tests/fixtures/phase53/failed_debit_requirements.md")
+CAMPAIGN_ROOT = Path("workspace/deep_engineering_campaign")
 LAYER_COUNTS = {
     "domain": 16,
     "application": 14,
@@ -78,6 +79,11 @@ def sha256_file(path: Path) -> str:
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def write_text_report(path: Path, title: str, lines: list[str]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("# " + title + "\n\n" + "\n".join(lines) + "\n", encoding="utf-8")
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -391,14 +397,59 @@ def _create_archive(app_root: Path, verification_root: Path) -> Path:
     archive = verification_root / "generated_app_archive.tar.gz"
     if archive.exists():
         archive.unlink()
-    with tarfile.open(archive, "w:gz") as tar:
-        for path in _iter_app_files(app_root):
-            tar.add(path, arcname=f"{APP_ID}/{_relative(path, app_root)}")
-        for path in sorted(verification_root.glob("*.json")):
-            if path.name == "manifest_sha256.json":
-                continue
-            tar.add(path, arcname=f"{APP_ID}/evidence/phase57_verification/{path.name}")
+
+    def stable_member(tarinfo: tarfile.TarInfo) -> tarfile.TarInfo:
+        tarinfo.mtime = 0
+        tarinfo.uid = 0
+        tarinfo.gid = 0
+        tarinfo.uname = ""
+        tarinfo.gname = ""
+        if tarinfo.isfile():
+            tarinfo.mode = 0o644
+        return tarinfo
+
+    with archive.open("wb") as raw_archive:
+        with gzip.GzipFile(fileobj=raw_archive, mode="wb", filename="", mtime=0) as gzip_archive:
+            with tarfile.open(fileobj=gzip_archive, mode="w") as tar:
+                for path in _iter_app_files(app_root):
+                    tar.add(path, arcname=f"{APP_ID}/{_relative(path, app_root)}", filter=stable_member)
+                for path in sorted(verification_root.glob("*.json")):
+                    if path.name == "manifest_sha256.json":
+                        continue
+                    tar.add(
+                        path,
+                        arcname=f"{APP_ID}/evidence/phase57_verification/{path.name}",
+                        filter=stable_member,
+                    )
     return archive
+
+
+def write_phase57_campaign_reports(project_root: Path, verification: VerificationResult) -> None:
+    report = {
+        "stage": "Phase 57",
+        "status": "completed",
+        "product_name": PRODUCT_NAME,
+        "repository_id": REPOSITORY_ID,
+        "verification_archive": verification.archive,
+        "test_count": verification.test_count,
+        "depth_score": verification.depth_score,
+        "llm_runtime_calls": 0,
+        "real_payment_calls": "disabled",
+    }
+    write_json(project_root / CAMPAIGN_ROOT / "phase57_report.json", report)
+    write_text_report(
+        project_root / CAMPAIGN_ROOT / "phase57_report.md",
+        "Phase 57 Report",
+        [
+            "Status: completed",
+            "",
+            f"- Verification tests: {verification.test_count}",
+            f"- Depth score: {verification.depth_score['overall']}",
+            f"- Evidence archive: `{verification.archive}`",
+            "- Default runtime LLM calls: 0",
+            "- Real payment calls: disabled",
+        ],
+    )
 
 
 def run_phase57_verification(project_root: Path) -> VerificationResult:
@@ -551,7 +602,7 @@ def run_phase57_verification(project_root: Path) -> VerificationResult:
 
     summary = {
         "engine_version": PHASE57_ENGINE_VERSION,
-        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "generated_at": f"deterministic:{sha256_file(generation_manifest)[:16]}",
         "app_id": APP_ID,
         "product_name": PRODUCT_NAME,
         "repository_id": REPOSITORY_ID,
@@ -568,7 +619,7 @@ def run_phase57_verification(project_root: Path) -> VerificationResult:
     validate_manifest_records(app_root, verification_root / "manifest_sha256.json")
     archive = _create_archive(app_root, verification_root)
 
-    return VerificationResult(
+    result = VerificationResult(
         app_id=APP_ID,
         status="completed",
         test_count=test_catalogue["total"],
@@ -577,3 +628,5 @@ def run_phase57_verification(project_root: Path) -> VerificationResult:
         artifacts=sorted([*artifacts.keys(), "manifest_sha256.json", "verification_summary.json"]),
         archive=archive.relative_to(root).as_posix(),
     )
+    write_phase57_campaign_reports(root, result)
+    return result

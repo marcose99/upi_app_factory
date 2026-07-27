@@ -1,0 +1,502 @@
+{
+  "schema_version": "mock_dispute_app_generation_manifest.v1",
+  "project": "upi_app_factory / UPI App Factory",
+  "run_id": "phase71_82_v63_current_candidate_repair",
+  "generated_at_utc": "2026-07-27T02:03:02.339840+00:00",
+  "generation_mode": "deterministic_template_regeneration",
+  "source_template_manifest": "factory/templates/mock_dispute_app/template_manifest.v1.json",
+  "governance_inputs": [
+    "factory_governance/phase2/upi_dispute_requirements.v1.json",
+    "factory_governance/phase2/mock_external_system_contracts.v1.json",
+    "factory_governance/phase3/architecture_design_contract.v1.json",
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json"
+  ],
+  "phase28_architecture_depth_inputs": [
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json",
+    "prompts/phase28/generated_application_architecture_depth_prompt.md"
+  ],
+  "phase29_deep_structure_policy": "policies/phase29_generated_application_deep_structure_policy.json",
+  "phase29_deep_structure_policy_recorded": true,
+  "pytest_collection_policy": "repository-wide pytest excludes workspace/regeneration_runs; generated tests are preserved and run by explicit target",
+  "evidence_labels": [
+    "MISSING_OFFICIAL_SOURCE",
+    "MOCK_BOUNDARY",
+    "SYNTHETIC_DATA",
+    "SYNTHETIC_ENTERPRISE_WORKFLOW_MODEL"
+  ],
+  "certification_readiness_test_obligations": [
+    "unit",
+    "integration",
+    "contract",
+    "negative",
+    "resilience",
+    "security",
+    "performance_smoke",
+    "replay",
+    "audit"
+  ],
+  "risky_actions_require_human_approval": [
+    "risky self-evolution",
+    "destructive actions",
+    "merge",
+    "tag",
+    "release",
+    "promotion",
+    "push",
+    "deployment",
+    "live provider calls",
+    "certification-related claims"
+  ],
+  "control_plane_policy": {
+    "schema_version": "upi_app_factory.generated.control_plane_governance.v1",
+    "typed_decisions": true,
+    "deterministic_fail_closed": true,
+    "approval_scope_binding": true,
+    "approval_expiry_required": true,
+    "approval_nonce_required": true,
+    "approval_replay_rejected": true,
+    "agent_schema_bound": true,
+    "agent_loop_bound": 8,
+    "least_privilege_required": true,
+    "independent_verification_required": true,
+    "silent_prompt_model_policy_test_self_modification_allowed": false,
+    "portfolio_assessment_mode": "recommendation_only",
+    "state_evidence_process_port_application_isolation": true
+  },
+  "real_payment_calls_allowed": false,
+  "live_provider_calls_allowed": false,
+  "real_secrets_allowed": false,
+  "deployment_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "certification_boundary": "certification_ready_not_certified",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "deep_structure_directories": [
+    "generated_application/",
+    "generated_application/app/",
+    "generated_application/app/domain/",
+    "generated_application/app/application/",
+    "generated_application/app/infrastructure/",
+    "generated_application/app/infrastructure/persistence/",
+    "generated_application/app/infrastructure/persistence/migrations/",
+    "generated_application/app/interfaces/",
+    "generated_application/app/interfaces/api/",
+    "generated_application/app/interfaces/api/routers/",
+    "generated_application/app/interfaces/cli/",
+    "generated_application/app/interfaces/workers/",
+    "generated_application/app/observability/",
+    "generated_application/app/security/",
+    "generated_application/app/control_plane/",
+    "generated_application/app/tests/",
+    "generated_application/app/tests/unit/",
+    "generated_application/app/tests/integration/",
+    "generated_application/app/tests/contract/",
+    "generated_application/app/tests/negative/",
+    "generated_application/app/tests/resilience/",
+    "generated_application/app/tests/security/",
+    "generated_application/app/tests/performance/",
+    "generated_application/app/tests/replay/",
+    "generated_application/app/tests/audit/",
+    "generated_application/evidence/",
+    "generated_application/evidence/assurance/"
+  ],
+  "generated_files": [
+    {
+      "relative_path": "generated_application/.env.example",
+      "sha256": "d2667c797d971451eac1713d9d2f244c52464d02ab0dd9791cda74d5dde4473c",
+      "size_bytes": 372
+    },
+    {
+      "relative_path": "generated_application/README.md",
+      "sha256": "acab80d328f05d8fb43b7810c94ee5b1df514ca22738982a361cefbca4096c3d",
+      "size_bytes": 1899
+    },
+    {
+      "relative_path": "app/disputes/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "relative_path": "app/disputes/models.py",
+      "sha256": "b57e9870883f3af3c7c80945b09741883ed60af9494a2ea933c48b46ff91a99b",
+      "size_bytes": 2162
+    },
+    {
+      "relative_path": "app/disputes/service.py",
+      "sha256": "336bdf7825ad0b61a0c09c9a8cc3779a4ca206a4a59f8902e606adeab9e55e97",
+      "size_bytes": 4896
+    },
+    {
+      "relative_path": "app/disputes/router.py",
+      "sha256": "72b3c4fb32323619bae24f679ded40b7180a8640e914549579b14bdafa494bfa",
+      "size_bytes": 2008
+    },
+    {
+      "relative_path": "adapters/mock_upi_switch.py",
+      "sha256": "9456de1209d39a74ec367c6c02898f77ef9a82cf16f7440f3155ac292a8116e0",
+      "size_bytes": 999
+    },
+    {
+      "relative_path": "adapters/mock_core_banking.py",
+      "sha256": "933370e680c0c7439ca5852a55c5d79f04e58f301d53ea1dc36d6f063c5a4a86",
+      "size_bytes": 463
+    },
+    {
+      "relative_path": "adapters/mock_customer_notification.py",
+      "sha256": "924ac4b1bb49dbffbb71a9ab23dd29f188638db893ca1f2a9e07309c3d7cafd0",
+      "size_bytes": 623
+    },
+    {
+      "relative_path": "adapters/mock_dispute_evidence_store.py",
+      "sha256": "b4ca59958d3709689e9a17c24c2c01d8b5deeeb542e63e0fa97a656719cec642",
+      "size_bytes": 340
+    },
+    {
+      "relative_path": "generated_application/app/domain/entities.py",
+      "sha256": "b626e581cb5bf6a614b80b82fdd92ba0705d5e539ab0572ba7b5be85c1598685",
+      "size_bytes": 1975
+    },
+    {
+      "relative_path": "generated_application/app/domain/value_objects.py",
+      "sha256": "88362cfaff9ec0f8a87a313e217ae7153aabe522798f1b6c731dcbc07b41693d",
+      "size_bytes": 594
+    },
+    {
+      "relative_path": "generated_application/app/domain/policies.py",
+      "sha256": "9c006a986a5e77937dd799a0dae77093166e84bd5fca106fd75ef7f0d8c442ea",
+      "size_bytes": 255
+    },
+    {
+      "relative_path": "generated_application/app/domain/domain_events.py",
+      "sha256": "1c0d770e57c056689c0ff18bc95219c8766549b050614b4e873251daed847e5e",
+      "size_bytes": 2769
+    },
+    {
+      "relative_path": "generated_application/app/domain/exceptions.py",
+      "sha256": "dbd185f2afd24fe7249fe56b9efcc0f05742c59b30f3abeca330882bc4cd066f",
+      "size_bytes": 417
+    },
+    {
+      "relative_path": "generated_application/app/application/commands.py",
+      "sha256": "fee784c453a2f40c245f1d5ffdd7039b593e43f735f7a75aadb0b2781a6e9b32",
+      "size_bytes": 276
+    },
+    {
+      "relative_path": "generated_application/app/application/queries.py",
+      "sha256": "2176e51822d6bb6b77c8c9c3bdd2d43a7a78d66082260348edc22a3a2268e964",
+      "size_bytes": 269
+    },
+    {
+      "relative_path": "generated_application/app/application/services.py",
+      "sha256": "260680382fac92e0bf57f71936112c94f79410e753477a67d43869befe96edd4",
+      "size_bytes": 3398
+    },
+    {
+      "relative_path": "generated_application/app/application/unit_of_work.py",
+      "sha256": "90eb05562527eb56d3382cdf59d71942eda731bec997a894fc03bb6644fb9776",
+      "size_bytes": 582
+    },
+    {
+      "relative_path": "generated_application/app/application/ports.py",
+      "sha256": "dd5e3cd3c6ec64e11365343e7c286e49ce247793c0ea416f2184bc1c180205b4",
+      "size_bytes": 1535
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/repositories.py",
+      "sha256": "7afd7d7de12443d0fd1a25f433c9ab28954e7aaa5acc7a09b71c121066d2efe7",
+      "size_bytes": 3868
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/sqlite_unit_of_work.py",
+      "sha256": "3f42df75ef127fc4c00be32b4563c2db092b8c1921d3d51a15f55a3eafc112b7",
+      "size_bytes": 2628
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/postgres_unit_of_work.py",
+      "sha256": "8296f84123e354b013b7b73235faad64885ae8e7e440708a641de422d01bbdf4",
+      "size_bytes": 204
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/migrations.py",
+      "sha256": "3352221e64d17ff9589d879dcf617a3d4acfc1ff6870e57773ab3a4cccffdb6a",
+      "size_bytes": 4608
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/audit_log.py",
+      "sha256": "736eb4e63bf78555b145f2b82a6a2624c205a23b9b82c67623bc0e3ac9a2ec9a",
+      "size_bytes": 1967
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/outbox.py",
+      "sha256": "37eb08b2cadf5081c643b56336a57045795e4429964df8d3c65221311a6e1df7",
+      "size_bytes": 2304
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/idempotency_store.py",
+      "sha256": "5eac329b53a56d9657058eb76698361bc87261cbf537c993da852c8938b7f316",
+      "size_bytes": 744
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/persistence/inbox.py",
+      "sha256": "b0e865f2561bb00c1c5891bee1553b129699b591021612ef9234c666a3db479d",
+      "size_bytes": 803
+    },
+    {
+      "relative_path": "generated_application/app/interfaces/api/main.py",
+      "sha256": "97d6f3ac689658403dfc8fb8ad33938022209489ab891c7c5f1e26f26969a7e7",
+      "size_bytes": 12522
+    },
+    {
+      "relative_path": "generated_application/app/interfaces/api/schemas.py",
+      "sha256": "282b859060def249b3dca23ecd805a467bf3256028f1d561930510b9fda2f7c6",
+      "size_bytes": 1510
+    },
+    {
+      "relative_path": "generated_application/app/interfaces/api/error_handlers.py",
+      "sha256": "4947bf004f8a050a5585d684a35b8a4f38b0a7842b563349b96e99601a122345",
+      "size_bytes": 2863
+    },
+    {
+      "relative_path": "generated_application/app/observability/logging.py",
+      "sha256": "a917622856708777ab8128d091bb07ab4590731ea9280ff304bf0f5d10e71114",
+      "size_bytes": 1644
+    },
+    {
+      "relative_path": "generated_application/app/observability/metrics.py",
+      "sha256": "2ea82b7e57d7c2a98069dc4dc5954c61c645fd4543341eb3c1618e4422dc9d88",
+      "size_bytes": 5691
+    },
+    {
+      "relative_path": "generated_application/app/observability/tracing.py",
+      "sha256": "c773b31d74cd749ee67e53edf83803eafa04b8ecbd5a839bdb9228efaeb76ff3",
+      "size_bytes": 3789
+    },
+    {
+      "relative_path": "generated_application/app/runtime.py",
+      "sha256": "b896377724f646205820c761390006ea660948664e485b80f9e93c2c8a9ae969",
+      "size_bytes": 5201
+    },
+    {
+      "relative_path": "generated_application/app/security/identity.py",
+      "sha256": "c5f4c1637ed21c54389a8b35a07d7bf8fff7b2167801df0e50d5ec28e33c5f84",
+      "size_bytes": 6495
+    },
+    {
+      "relative_path": "generated_application/app/security/pii_redaction.py",
+      "sha256": "29c594d207cbbd4b62036ad00114002d53f2199e776d71f7dad3f16bb2e27a1a",
+      "size_bytes": 659
+    },
+    {
+      "relative_path": "generated_application/app/security/input_validation.py",
+      "sha256": "624b608ace3cafd53a782680c9ef486c6b43b809f36fbc596ceacdf5ac0370c1",
+      "size_bytes": 406
+    },
+    {
+      "relative_path": "generated_application/app/upi_dispute_app/__init__.py",
+      "sha256": "39602db5a29f91f8d52308d32f87b268e0618ef6e582933ed00a7f2db6c1113d",
+      "size_bytes": 60
+    },
+    {
+      "relative_path": "generated_application/app/upi_dispute_app/main.py",
+      "sha256": "50ac3b6751b53f2ceff8f9717d2e7486d947bea36781573a3ae2941dc1241e7f",
+      "size_bytes": 10636
+    },
+    {
+      "relative_path": "generated_application/app/control_plane/policy.py",
+      "sha256": "1a6df5521c1a0e4587d40e69f01d69a96d24f648a8c21f4ca05e6aba884297dd",
+      "size_bytes": 9413
+    },
+    {
+      "relative_path": "generated_application/app/infrastructure/external_adapters.py",
+      "sha256": "37f2ae0169f99bace9dcf6a91ecb9bc666d4aa0417e191058cc293ac28924794",
+      "size_bytes": 4093
+    },
+    {
+      "relative_path": "generated_application/asyncapi.yaml",
+      "sha256": "4ca09af236607a9c1da74f379ee210e66f36ed596f89af54fe623ef14b050070",
+      "size_bytes": 1596
+    },
+    {
+      "relative_path": "generated_application/docs/local_run_pack/README.md",
+      "sha256": "d0439f7c6e5545238f5f3f8dca6351d09f9c8bba82ebe5fb9474419742abae40",
+      "size_bytes": 2031
+    },
+    {
+      "relative_path": "generated_application/docs/security_design.md",
+      "sha256": "0724a2b57237bbb78d7f978c2af493b5fb7a210aa47c8025a07757e2bbb7cac4",
+      "size_bytes": 3228
+    },
+    {
+      "relative_path": "generated_application/docs/reliability_slo_error_budget.md",
+      "sha256": "55fbc42ea023bb72cbd8dc890bf86a55c4000cc9dd1c9cac1f57c770e4999f11",
+      "size_bytes": 1709
+    },
+    {
+      "relative_path": "generated_application/docs/runtime_runbook.md",
+      "sha256": "5a08723757e86dadce1b7aaf179cda9f29c93eff6c121d8828552daa94ee3b88",
+      "size_bytes": 2002
+    },
+    {
+      "relative_path": "generated_application/docs/failure_mode_evidence.md",
+      "sha256": "85a73f6f0676536ce25ad5c59150b6bc743068d5d2050aa4e150d9c68fe5e148",
+      "size_bytes": 834
+    },
+    {
+      "relative_path": "generated_application/app/tests/integration/test_transactional_integrity.py",
+      "sha256": "9fb869acf29511fdd8a7c2c85448cfa4ee474110f27b5d021958be922d921dd7",
+      "size_bytes": 4273
+    },
+    {
+      "relative_path": "generated_application/app/tests/unit/test_optimistic_concurrency.py",
+      "sha256": "f049930ebd388a418443af48ba6e0e0ad5b26e1994a1ccc9df7200d5e32f1b9c",
+      "size_bytes": 1807
+    },
+    {
+      "relative_path": "generated_application/app/tests/replay/test_outbox_replay_and_inbox.py",
+      "sha256": "84981a7650e4029769ea612653dbdd4bf55e754567a0b1a356e5e583b4fca8a9",
+      "size_bytes": 2326
+    },
+    {
+      "relative_path": "generated_application/app/tests/resilience/test_migrations_restart.py",
+      "sha256": "5867b48b29887044d69e3736c6574b93d7e3c50d190b44328675450714bf6b32",
+      "size_bytes": 1385
+    },
+    {
+      "relative_path": "generated_application/app/tests/resilience/test_runtime_lifecycle.py",
+      "sha256": "b8ca31cf39709e14e8dab0b1c8bed25c472c3f563e743f9ed77b6c6c6687d329",
+      "size_bytes": 1272
+    },
+    {
+      "relative_path": "generated_application/app/tests/contract/test_event_contract.py",
+      "sha256": "25526338f3e9afef62fa491c9539eceaebea26e871beb0c564ff86f981b3b32e",
+      "size_bytes": 1102
+    },
+    {
+      "relative_path": "generated_application/app/tests/contract/test_api_identity_adapter_contract.py",
+      "sha256": "0cf6c2ff08ec2c50b5aacf3b4c7444e1403b19d42dfb1bae2c1c851e21f65674",
+      "size_bytes": 4976
+    },
+    {
+      "relative_path": "generated_application/app/tests/contract/test_observability_contract.py",
+      "sha256": "8348f4366581cecb9fd8c0823d8e42adca21662e468448c460ccfc71f058ee67",
+      "size_bytes": 3701
+    },
+    {
+      "relative_path": "generated_application/app/tests/performance/test_local_performance_smoke.py",
+      "sha256": "89d15974088e795997b4cc5ab8286841eaba5f1aa278a7722753eb55da608231",
+      "size_bytes": 1750
+    },
+    {
+      "relative_path": "generated_application/app/tests/security/test_authorization_contract.py",
+      "sha256": "2b6e23ddcfadb0a5cb884de372f0ddf2b3b573c3bfcee68a2c9b81a1f32b68ee",
+      "size_bytes": 2628
+    },
+    {
+      "relative_path": "generated_application/app/tests/security/test_control_plane_policy.py",
+      "sha256": "80df44ad27cdc6f512d1127442e572f75d5a02d5e99ffb85315b577a89276562",
+      "size_bytes": 3840
+    },
+    {
+      "relative_path": "generated_application/app/tests/negative/test_negative_security_and_persistence.py",
+      "sha256": "9e85e17ea6477e0e45cc38049a8d8bafb31534320d61000ee00aaa0a392e5b4f",
+      "size_bytes": 2152
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/asvs_5_0_l2_mapping.json",
+      "sha256": "7d3c6169b8db217a276a3d7692ad2aae2b93332c219f90338a563d9e7a8b2c83",
+      "size_bytes": 2922
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/owasp_api_security_checks.json",
+      "sha256": "99ad58f0ffffa07dd36acd873453ce63d1bb9010ecd7d633c5c188dee4d618be",
+      "size_bytes": 1492
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/samm_maturity_evidence.json",
+      "sha256": "d7bcfabb6cb8d90ab05261c3fc49d78e7360c75bcde7caf3b30ed3ab7a694470",
+      "size_bytes": 1661
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/threat_model_abuse_cases.json",
+      "sha256": "ce87a5af0f79681dcd5211b7e432e3e53e4d006687698f32a6eb3b5e629fd857",
+      "size_bytes": 2061
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/dependency_license_inventory.json",
+      "sha256": "e647911b68891f306860d12c458df8b3ec85ca6423beb9ee13f9b27274c5097f",
+      "size_bytes": 5266
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/cyclonedx_1_7_sbom.json",
+      "sha256": "51a2657ed9043de28b476589f123059725b860607062ee6b71cc66e3ef18d577",
+      "size_bytes": 2774
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/spdx_3_0_sbom.json",
+      "sha256": "849b2ae35ade27a648b24eee421d4fc0195c760b918759722b3b805fa1f8aeb7",
+      "size_bytes": 2904
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/deterministic_build_manifest.json",
+      "sha256": "6a3f366249520615f838e4347946509dfa82069261751ae80e1ab5b3076c0cbc",
+      "size_bytes": 1523
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/slsa_1_2_provenance_verification.json",
+      "sha256": "981f98320eeb0b3802c82e652e8ee7acec6333ee3415fe4edf307dccf9043aa5",
+      "size_bytes": 1348
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/openssf_scorecard_assessment.json",
+      "sha256": "69777eeddd5510d48bd216fbbba144ca81be941958bffea58fdbaf56c69a52ef",
+      "size_bytes": 1243
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/verification_summary.json",
+      "sha256": "76a264b454180e0ca756e4879b00bb2a8941a13c54e347db84c446b05e99fed5",
+      "size_bytes": 2488
+    },
+    {
+      "relative_path": "generated_application/evidence/assurance/control_plane_governance.json",
+      "sha256": "d817295e329f8c67e7472475932cb1e19afb3862669142380a10862fed1ba34f",
+      "size_bytes": 1542
+    },
+    {
+      "relative_path": "generated_application/app/tests/audit/test_assurance_supply_chain_evidence.py",
+      "sha256": "b9502ff8b71266d568b35814f5778e0c7f2cfd0c69212c3dd6a2bdc48bc1a750",
+      "size_bytes": 4077
+    },
+    {
+      "relative_path": "generated_application/scripts/start_local.sh",
+      "sha256": "b0029618e46525e5a369e9a614db6d719ed1f431725155e08eef6048d2b98794",
+      "size_bytes": 1251
+    },
+    {
+      "relative_path": "generated_application/scripts/health_check.py",
+      "sha256": "b04421b3488fdf4bd321ec4c392465b1f92a10cda45d4bfdce3adc2d81ddfac2",
+      "size_bytes": 2171
+    },
+    {
+      "relative_path": "generated_application/scripts/smoke_test.py",
+      "sha256": "e3d21826723cdcd51c8ca304f7bf38e3c34226848922abf8a02dc01002835ffd",
+      "size_bytes": 2894
+    },
+    {
+      "relative_path": "generated_application/scripts/validate_local_run_pack.py",
+      "sha256": "48d171660d17ecd99496ba1ab5fee329f1290e1c4418d0baff826bed7a012961",
+      "size_bytes": 1593
+    },
+    {
+      "relative_path": "generated_application/scripts/clean_local_artifacts.sh",
+      "sha256": "bd1b9d19f99fd0f1d74709eddbebf19445c3b31954650687a1f09b63bab0c8ff",
+      "size_bytes": 288
+    }
+  ],
+  "manifest_status": {
+    "status": "historical_superseded_evidence",
+    "current_authoritative_manifest": "generation_manifest.phase71_82_v63_atomic_runtime_api_repair.json",
+    "note": "Historical copies are retained as evidence only; use the current authoritative manifest for this worktree candidate."
+  }
+}

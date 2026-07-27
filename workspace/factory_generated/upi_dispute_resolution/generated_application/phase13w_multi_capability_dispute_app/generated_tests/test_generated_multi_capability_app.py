@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import sys
 from pathlib import Path
 
@@ -7,7 +8,10 @@ GENERATED_APP_ROOT = Path(__file__).resolve().parents[1]
 if str(GENERATED_APP_ROOT) not in sys.path:
     sys.path.insert(0, str(GENERATED_APP_ROOT))
 
-from phase13w_multi_capability_dispute_app import DisputeCase, EvidenceUpload, process_dispute_case
+generated_app = importlib.import_module("phase13w_multi_capability_dispute_app")
+DisputeCase = generated_app.DisputeCase
+EvidenceUpload = generated_app.EvidenceUpload
+process_dispute_case = generated_app.process_dispute_case
 
 
 def test_valid_case_stays_standard_and_mock_bounded() -> None:

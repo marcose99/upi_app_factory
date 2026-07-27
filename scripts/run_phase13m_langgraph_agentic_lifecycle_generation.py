@@ -9,10 +9,90 @@ import pathlib
 import shutil
 import subprocess
 import sys
+from collections.abc import Callable
 from datetime import datetime, timezone
 from typing import Any, TypedDict
 
-from langgraph.graph import END, START, StateGraph
+try:
+    from langgraph.graph import END, START, StateGraph
+
+    ORCHESTRATION_FRAMEWORK = "langgraph"
+    ADAPTER_MODE = "local_langgraph_deterministic"
+except ModuleNotFoundError:
+    START = "__start__"
+    END = "__end__"
+    ORCHESTRATION_FRAMEWORK = "stdlib_state_graph"
+    ADAPTER_MODE = "local_stdlib_state_graph_deterministic"
+
+    class _CompiledStateGraph:
+        def __init__(
+            self,
+            nodes: dict[str, Callable[[dict[str, Any]], dict[str, Any]]],
+            edges: dict[str, str],
+            conditional_edges: dict[
+                str,
+                tuple[
+                    Callable[[dict[str, Any]], str],
+                    dict[str, str],
+                ],
+            ],
+        ) -> None:
+            self.nodes = nodes
+            self.edges = edges
+            self.conditional_edges = conditional_edges
+
+        def invoke(self, state: dict[str, Any]) -> dict[str, Any]:
+            current = self.edges[START]
+            iterations = 0
+            while current != END:
+                iterations += 1
+                if iterations > 32:
+                    raise RuntimeError("StateGraph fallback exceeded loop bound")
+                state = self.nodes[current](state)
+                if current in self.conditional_edges:
+                    router, targets = self.conditional_edges[current]
+                    current = targets[router(state)]
+                else:
+                    current = self.edges[current]
+            return state
+
+    class StateGraph:  # type: ignore[no-redef]
+        def __init__(self, state_type: object) -> None:
+            self.state_type = state_type
+            self._nodes: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {}
+            self._edges: dict[str, str] = {}
+            self._conditional_edges: dict[
+                str,
+                tuple[
+                    Callable[[dict[str, Any]], str],
+                    dict[str, str],
+                ],
+            ] = {}
+
+        def add_node(
+            self,
+            name: str,
+            handler: Callable[[dict[str, Any]], dict[str, Any]],
+        ) -> None:
+            self._nodes[name] = handler
+
+        def add_edge(self, source: str, target: str) -> None:
+            self._edges[source] = target
+
+        def add_conditional_edges(
+            self,
+            source: str,
+            router: Callable[[dict[str, Any]], str],
+            targets: dict[str, str],
+        ) -> None:
+            self._conditional_edges[source] = (router, targets)
+
+        def compile(self) -> _CompiledStateGraph:
+            return _CompiledStateGraph(
+                self._nodes,
+                self._edges,
+                self._conditional_edges,
+            )
 
 APP_ID = "upi_dispute_resolution"
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -92,9 +172,10 @@ slice. It extends intake into lifecycle status transitions, evidence validation,
 mock investigation response handling, resolution decisioning, and audit trail
 creation.
 
-Agent orchestration is performed by a real LangGraph StateGraph. The graph is
-local-first and deterministic in this phase, but it is a true agentic graph with
-state, nodes, directed edges, and a conditional self-correction route.
+Agent orchestration is performed by a governed StateGraph. The runner uses
+LangGraph when installed and a standard-library StateGraph-compatible fallback
+otherwise. The graph is local-first and deterministic in this phase, with state,
+nodes, directed edges, and a conditional self-correction route.
 
 External ecosystem boundaries are deliberately mock/simulated only. Banks,
 NPCI-style, RBI-style, payment rail, upstream, and downstream interfaces are not
@@ -495,6 +576,34 @@ def write_app_files(state: GenerationState) -> GenerationState:
 def run_generated_checks() -> tuple[bool, str]:
     env = os.environ.copy()
     env["PYTHONPATH"] = f"{GEN_APP_DIR}:{env.get('PYTHONPATH', '')}"
+    if subprocess.run(
+        [sys.executable, "-c", "import pytest"],
+        cwd=GEN_APP_DIR,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    ).returncode != 0:
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "import checks.dispute_lifecycle_checks as c; "
+                    "c.test_lifecycle_reaches_resolved_status_with_audit_trail(); "
+                    "c.test_service_rejects_missing_evidence(); "
+                    "c.test_service_rejects_invalid_transition_order(); "
+                    "print('direct generated lifecycle checks passed')"
+                ),
+            ],
+            cwd=GEN_APP_DIR,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        output = result.stdout + result.stderr
+        return result.returncode == 0, output
     result = subprocess.run(
         [sys.executable, "-m", "pytest", "-q", "checks/dispute_lifecycle_checks.py"],
         cwd=GEN_APP_DIR,
@@ -620,7 +729,7 @@ def governance_evidence_agent(state: GenerationState) -> GenerationState:
         "phase": "Phase 13M",
         "run_id": state["run_id"],
         "generated_at_utc": utc_now(),
-        "orchestration_framework": "langgraph",
+        "orchestration_framework": ORCHESTRATION_FRAMEWORK,
         "graph_type": "StateGraph",
         "graph_nodes": [
             "requirement_intake_agent",
@@ -636,7 +745,7 @@ def governance_evidence_agent(state: GenerationState) -> GenerationState:
             "verification_agent -> self_correction_agent when checks fail",
             "self_correction_agent -> verification_agent",
         ],
-        "adapter_mode": "local_langgraph_deterministic",
+        "adapter_mode": ADAPTER_MODE,
         "truth_boundary": state.get("truth_boundary"),
         "completed_agents": len(agents),
         "agents": agents,
@@ -669,7 +778,7 @@ def governance_evidence_agent(state: GenerationState) -> GenerationState:
         "# Phase 13M LangGraph Agentic Lifecycle Generation\n\n"
         "Status: `generated`\n\n"
         f"Run ID: `{state['run_id']}`\n\n"
-        "Orchestration framework: `LangGraph StateGraph`\n\n"
+        f"Orchestration framework: `{ORCHESTRATION_FRAMEWORK} StateGraph`\n\n"
         f"Generated application directory: `{relative(GEN_APP_DIR)}`\n\n"
         f"Generated package: `{PACKAGE_NAME}`\n\n"
         f"Generated checks passed: `{audit['validation']['generated_checks_passed']}`\n\n"

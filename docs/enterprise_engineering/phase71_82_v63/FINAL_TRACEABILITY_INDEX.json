@@ -1,0 +1,384 @@
+{
+  "schema_version": "v63.capstone.traceability",
+  "baseline": "5373b9bdd04ccd7760e65345d311362c5bc9a48f",
+  "campaign": "phase71-82-enterprise-engineering-v63-corrected",
+  "refreshed_utc": "2026-07-27T00:00:00Z",
+  "scope": "final enterprise-engineering report refresh only; reflects current worktree without changing source, tests, configuration, generated output, dependencies, Git metadata, releases, deployments, or integrations",
+  "report_files_updated": [
+    "docs/enterprise_engineering/phase71_82_v63/IMPLEMENTATION_SUMMARY.md",
+    "docs/enterprise_engineering/phase71_82_v63/REMAINING_RECOMMENDATIONS.md",
+    "docs/enterprise_engineering/phase71_82_v63/CAPSTONE_ACCEPTANCE.md",
+    "docs/enterprise_engineering/phase71_82_v63/FINAL_TRACEABILITY_INDEX.json",
+    "docs/enterprise_engineering/phase71_82_v63/ROADMAP_PHASE71_82_DECISIONS.md"
+  ],
+  "current_authoritative_generated_manifest": "workspace/factory_generated/upi_dispute_resolution/generated_application/generation_manifest.phase71_82_v73_review_rerun_3_dependency_chain_repair.json",
+  "current_authoritative_run_id": "phase71_82_v73_review_rerun_3_dependency_chain_repair",
+  "current_generated_file_count": 78,
+  "manifest_index": "workspace/factory_generated/upi_dispute_resolution/generated_application/generation_manifest_index.json",
+  "historical_manifest_retention": {
+    "historical_manifests_retained_not_deleted": true,
+    "prior_manifests_are_superseded_evidence": true
+  },
+  "non_claims": {
+    "certification_claimed": false,
+    "regulatory_approval_claimed": false,
+    "production_readiness_claimed": false,
+    "production_capacity_claimed": false,
+    "deployment_claimed": false,
+    "release_claimed": false,
+    "live_payment_calls_claimed": false,
+    "live_bank_psp_npci_rbi_calls_claimed": false,
+    "live_identity_provider_claimed": false,
+    "openai_application_calls_claimed": false,
+    "formal_sbom_certification_claimed": false,
+    "attained_slsa_level_claimed": false,
+    "upstream_artifact_reproducibility_claimed": false,
+    "real_customer_data_handling_claimed": false,
+    "git_mutation_performed_by_final_report_refresh": false
+  },
+  "implemented_capabilities": [
+    {
+      "id": "fresh-generated-output",
+      "status": "passed_current_v73_manifest",
+      "implemented": true,
+      "generator_paths": [
+        "factory/generators/mock_dispute_app_generator.py",
+        "factory/templates/mock_dispute_app/template_manifest.v1.json"
+      ],
+      "generated_paths": [
+        "factory/templates/mock_dispute_app/generated_application/",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/"
+      ],
+      "evidence": [
+        "workspace/regeneration_runs/phase71_82_v73_review_rerun_3_dependency_chain_repair/generation_manifest.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/generation_manifest.phase71_82_v73_review_rerun_3_dependency_chain_repair.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/generation_manifest_index.json",
+        "scripts/validate_phase71_82_wave_b_generated_output.py",
+        "scripts/validate_phase71_82_wave_d_runtime_observability.py",
+        "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+        "scripts/validate_phase71_82_wave_f_control_plane.py"
+      ],
+      "notes": [
+        "current manifest declares 78 generated files",
+        "template and recipient byte equality was recorded for all 78 manifest entries",
+        "prior 66-file, 77-file and earlier 78-file manifests are retained as superseded evidence"
+      ]
+    },
+    {
+      "id": "data-integrity-eventing",
+      "status": "passed",
+      "implemented": true,
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/migrations.py",
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/audit_log.py",
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/outbox.py",
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/inbox.py",
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/sqlite_unit_of_work.py",
+        "factory/templates/mock_dispute_app/generated_application/app/domain/domain_events.py",
+        "factory/templates/mock_dispute_app/generated_application/asyncapi.yaml"
+      ],
+      "generated_tests": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/integration/test_transactional_integrity.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/unit/test_optimistic_concurrency.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/replay/test_outbox_replay_and_inbox.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/resilience/test_migrations_restart.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_B_REPORT.md",
+        "scripts/validate_phase71_82_wave_b_generated_output.py"
+      ]
+    },
+    {
+      "id": "api-identity-runtime-observability",
+      "status": "passed",
+      "implemented": true,
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/interfaces/api/main.py",
+        "factory/templates/mock_dispute_app/generated_application/app/interfaces/api/schemas.py",
+        "factory/templates/mock_dispute_app/generated_application/app/interfaces/api/error_handlers.py",
+        "factory/templates/mock_dispute_app/generated_application/app/security/identity.py",
+        "factory/templates/mock_dispute_app/generated_application/app/runtime.py",
+        "factory/templates/mock_dispute_app/generated_application/app/observability/metrics.py",
+        "factory/templates/mock_dispute_app/generated_application/app/observability/tracing.py",
+        "factory/templates/mock_dispute_app/generated_application/app/observability/logging.py"
+      ],
+      "generated_tests": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/contract/test_api_identity_adapter_contract.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/contract/test_observability_contract.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/resilience/test_runtime_lifecycle.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/performance/test_local_performance_smoke.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/security/test_authorization_contract.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/negative/test_negative_security_and_persistence.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_C_REPORT.md",
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_D_REPORT.md",
+        "scripts/validate_phase71_82_wave_d_runtime_observability.py",
+        "tests/test_phase71_82_wave_c_api_identity_adapter_contracts.py",
+        "tests/test_phase71_82_wave_d_runtime_observability.py"
+      ],
+      "notes": [
+        "signed local bearer-token auth is default",
+        "header principal fallback is test-profile gated",
+        "generated API uses FastAPI lifespan rather than @app.on_event"
+      ]
+    },
+    {
+      "id": "compatibility-facade-quarantine",
+      "status": "passed_after_v73_dependency_chain_repair",
+      "implemented": true,
+      "paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/upi_dispute_app/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py"
+      ],
+      "generated_tests": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_api.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_pii.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests/test_workflow.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/FINAL_REPAIR_REPORT.md",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/tests"
+      ],
+      "notes": [
+        "default compatibility path delegates to hardened generated API",
+        "legacy injected repository/audit_logger harness remains quarantined for compatibility tests",
+        "mypy app factory passed after narrowing the legacy-only fingerprint return value"
+      ]
+    },
+    {
+      "id": "assurance-supply-chain-reproducibility",
+      "status": "passed_with_upstream_artifact_reproducibility_blocker",
+      "implemented": true,
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/generated_application/evidence/assurance/"
+      ],
+      "generated_tests": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/audit/test_assurance_supply_chain_evidence.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_E_REPORT.md",
+        "scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/asvs_5_0_l2_mapping.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/control_plane_governance.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/cyclonedx_1_7_sbom.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/dependency_license_inventory.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/deterministic_build_manifest.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/openssf_scorecard_assessment.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/owasp_api_security_checks.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/samm_maturity_evidence.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/slsa_1_2_provenance_verification.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/spdx_3_0_sbom.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/threat_model_abuse_cases.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/verification_summary.json"
+      ],
+      "notes": [
+        "standards are benchmarks only",
+        "exact local pins, transitive license evidence, installed metadata, and RECORD hash evidence are recorded",
+        "upstream wheel/archive reproducibility is unattained"
+      ]
+    },
+    {
+      "id": "control-plane-governance",
+      "status": "passed",
+      "implemented": true,
+      "generator_paths": [
+        "factory/templates/mock_dispute_app/generated_application/app/control_plane/policy.py",
+        "factory/application_engineering/portfolio.py",
+        "factory/operator_portal/runtime_api.py",
+        "factory/operator_portal/runtime_contracts.py",
+        "factory/operator_portal/runtime_store.py"
+      ],
+      "generated_tests": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/security/test_control_plane_policy.py"
+      ],
+      "evidence": [
+        "docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md",
+        "scripts/validate_phase71_82_wave_f_control_plane.py",
+        "tests/test_phase71_82_wave_f_control_plane.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/assurance/control_plane_governance.json"
+      ],
+      "notes": [
+        "approval tokens fail closed when required environment variables are absent",
+        "approval nonces are scope-bound, expiring, consumed, and replay-rejected",
+        "portfolio assessment is recommendation-only"
+      ]
+    },
+    {
+      "id": "native-recipient-runtime-packaging",
+      "status": "passed",
+      "implemented": true,
+      "paths": [
+        "scripts/run_phase13m_langgraph_agentic_lifecycle_generation.py",
+        "scripts/run_phase13o_local_runnable_operator_packaging.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/phase13m_dispute_lifecycle/",
+        "workspace/factory_generated/upi_dispute_resolution/operator_handoff/phase13o_local_runnable_pack/"
+      ],
+      "evidence": [
+        "scripts/validate_phase13m_langgraph_agentic_lifecycle_generation.py",
+        "scripts/validate_phase13o_local_runnable_operator_packaging.py",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13m/langgraph_agentic_lifecycle_audit.json",
+        "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase13o/local_runnable_operator_pack_audit.json"
+      ],
+      "notes": [
+        "uses real langgraph when present",
+        "uses bounded standard-library StateGraph-compatible fallback when langgraph is absent",
+        "mock/simulated boundaries only"
+      ]
+    }
+  ],
+    "recorded_validation": [
+        {
+            "id": "fresh-report-refresh-validation-2026-07-27",
+            "status": "passed",
+            "commands": [
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_b_generated_output.py",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_d_runtime_observability.py",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_e_assurance_supply_chain.py",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_f_control_plane.py",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase42_generated_application_local_run_pack.py",
+                "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=workspace/factory_generated/upi_dispute_resolution <canonical-venv>/bin/python -m pytest -q workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests",
+                "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=workspace/factory_generated/upi_dispute_resolution/generated_application/app:workspace/factory_generated/upi_dispute_resolution <canonical-venv>/bin/python -m pytest -q workspace/factory_generated/upi_dispute_resolution/generated_application/tests",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python -m mypy app factory",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python -m ruff check app factory tests",
+                "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/smoke_test.py",
+                "docker compose -f compose.yaml config --quiet"
+            ],
+            "results": {
+                "wave_b": "passed; fresh temporary deterministic generation; 78 generated files",
+                "wave_d": "passed; fresh temporary deterministic generation; 78 generated files",
+                "wave_e": "passed; two fresh deterministic builds; 78 generated files; copied generated template hashes and sizes identical",
+                "wave_f": "passed; two fresh deterministic builds; 78 generated files; copied generated template hashes and sizes identical",
+                "phase42_local_run_pack": "passed",
+                "generated_app_tests": "39 passed",
+                "generated_compatibility_tests": "9 passed",
+                "mypy_app_factory": "passed; 150 source files checked",
+                "ruff_app_factory_tests": "passed",
+                "generated_smoke_script": "passed",
+                "compose_config": "passed configuration syntax only"
+            },
+            "non_claims": [
+                "Compose syntax validation is not a Docker build or runtime claim.",
+                "Fresh validators generated only temporary output and did not replace the authoritative recipient generated output.",
+                "No source code, tests, configuration, generated output, dependencies, Git metadata, release, deployment, or live integration was changed by this final report refresh."
+            ]
+        },
+        {
+            "id": "v73-current-generator-propagation",
+            "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python factory/generators/mock_dispute_app_generator.py --run-id phase71_82_v73_review_rerun_3_dependency_chain_repair --clean --recipient-root workspace/factory_generated/upi_dispute_resolution/generated_application",
+      "evidence": "workspace/regeneration_runs/phase71_82_v73_review_rerun_3_dependency_chain_repair/generation_manifest.json"
+    },
+    {
+      "id": "wave-b-validator",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_b_generated_output.py"
+    },
+    {
+      "id": "wave-d-validator",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_d_runtime_observability.py"
+    },
+    {
+      "id": "wave-e-validator",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_e_assurance_supply_chain.py"
+    },
+    {
+      "id": "wave-f-validator",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_f_control_plane.py"
+    },
+    {
+      "id": "phase42-local-run-pack-validator",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase42_generated_application_local_run_pack.py"
+    },
+    {
+      "id": "generated-app-tests",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=workspace/factory_generated/upi_dispute_resolution <canonical-venv>/bin/python -m pytest -q workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests",
+      "test_count": 39
+    },
+    {
+      "id": "generated-compatibility-tests",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=workspace/factory_generated/upi_dispute_resolution/generated_application/app:workspace/factory_generated/upi_dispute_resolution <canonical-venv>/bin/python -m pytest -q workspace/factory_generated/upi_dispute_resolution/generated_application/tests",
+      "test_count": 9
+    },
+    {
+      "id": "repository-mypy",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python -m mypy app factory"
+    },
+    {
+      "id": "repository-ruff",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python -m ruff check app factory tests"
+    },
+    {
+      "id": "generated-smoke-script",
+      "status": "passed",
+      "command": "PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python workspace/factory_generated/upi_dispute_resolution/generated_application/scripts/smoke_test.py"
+    },
+    {
+      "id": "compose-config",
+      "status": "passed_config_only",
+      "command": "docker compose -f compose.yaml config --quiet"
+    }
+  ],
+  "not_implemented": [
+    {
+      "id": "live-ecosystem-integrations",
+      "status": "not_implemented",
+      "details": "No live bank, PSP, NPCI, RBI, payment rail, identity-provider, OpenAI application, signing service, package registry, cloud, or deployment integration was introduced."
+    },
+    {
+      "id": "upstream-artifact-reproducibility",
+      "status": "blocked",
+      "details": "No governed offline wheelhouse or source archive cache is present; network/package-registry access is prohibited and dependencies were not added."
+    },
+    {
+      "id": "production-infrastructure",
+      "status": "not_implemented",
+      "details": "No Kubernetes, service mesh, telemetry collector, SaaS tenancy, tenant billing, real payment rail, production database architecture, or production deployment infrastructure was added."
+    },
+    {
+      "id": "certification-or-release",
+      "status": "not_claimed_or_performed",
+      "details": "No certification, regulatory approval, production readiness, release, deploy, merge, push, tag, or Git mutation is claimed by these final reports."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "canonical-venv-required",
+      "status": "environment_specific",
+      "details": "Recorded pytest/FastAPI/Pydantic/Uvicorn/HTTPX validation uses the canonical repository virtual environment; system /usr/bin/python lacks those modules."
+    },
+    {
+      "id": "health-check-loopback-sandbox",
+      "status": "sandbox_blocked",
+      "details": "Live loopback health_check.py execution was blocked by socket PermissionError in this sandbox; generated contract coverage verifies accepted statuses started, live, and ready."
+    },
+    {
+      "id": "starlette-testclient",
+      "status": "environment_limitation",
+      "details": "Starlette TestClient is unreliable for the generated app in this governed environment; generated API contract tests use local httpx.ASGITransport."
+    },
+    {
+      "id": "docker-runtime",
+      "status": "optional_unproven",
+      "details": "Compose configuration validation passed, but full Docker build/run is not claimed because it can require package-index access or a pre-warmed governed image cache."
+    },
+    {
+      "id": "historical-report-language",
+      "status": "lineage_not_current_acceptance",
+      "details": "Older discovery/wave rows may preserve historical pre-repair blockers; final reports and manifest index are the current status surface."
+    },
+    {
+      "id": "standards-benchmark-boundary",
+      "status": "non_claim",
+      "details": "ASVS, OWASP API Security, SAMM, CycloneDX, SPDX, SLSA-style and OpenSSF materials are used as benchmarks only, not as certification or conformance claims."
+    }
+  ]
+}

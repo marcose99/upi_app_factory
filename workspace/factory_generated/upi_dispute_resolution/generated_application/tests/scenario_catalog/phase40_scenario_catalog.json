@@ -36,9 +36,9 @@
       "id": "positive_duplicate_debit_submission",
       "traceability": [
         "POST /disputes",
-        "upi_dispute_app.main.create_dispute",
-        "upi_dispute_app.workflow.initial_status",
-        "upi_dispute_app.pii.mask_upi_id"
+        "generated_application.app.interfaces.api.main.create_dispute",
+        "generated_application.app.security.identity.local_principal",
+        "generated_application.app.security.pii_redaction.redact_upi"
       ]
     },
     {
@@ -51,28 +51,23 @@
       "id": "negative_invalid_request_id",
       "traceability": [
         "POST /disputes",
-        "upi_dispute_app.models.DisputeCreate.validate_client_request_id",
-        "upi_dispute_app.main.validation_error_handler"
+        "generated_application.app.interfaces.api.schemas.CreateDisputeRequest",
+        "generated_application.app.interfaces.api.error_handlers.validation_error_handler"
       ]
     },
     {
       "category": "edge",
-      "description": "Route a high-value merchant-service dispute through the mock more-evidence path.",
+      "description": "Route an authenticated read through object-level authorization.",
       "expected_outputs": {
-        "decision": "more_evidence_required",
-        "mock_sources_checked": [
-          "mock_bank_adapter",
-          "mock_psp_adapter"
-        ],
-        "new_status": "customer_action_required",
+        "authorization": "owner_or_ops_admin_required",
+        "masked_customer_upi": true,
         "status_code": 200
       },
       "id": "edge_high_value_more_evidence_path",
       "traceability": [
         "POST /disputes",
-        "POST /disputes/{dispute_id}/actions/mock-ecosystem-check",
-        "upi_dispute_app.mock_ecosystem.MockEcosystemGateway.decide",
-        "upi_dispute_app.workflow.status_from_ecosystem_decision"
+        "GET /disputes/{dispute_id}",
+        "generated_application.app.security.identity.LocalAuthorizationPolicy.require_object_access"
       ]
     },
     {
@@ -86,10 +81,12 @@
       },
       "id": "contract_runtime_health_metrics",
       "traceability": [
-        "GET /runtime/health",
-        "GET /runtime/metrics",
-        "upi_dispute_app.runtime.RuntimeHardeningReport.as_dict",
-        "upi_dispute_app.runtime.RuntimeCounters.as_dict"
+        "GET /startup",
+        "GET /live",
+        "GET /ready",
+        "GET /metrics",
+        "generated_application.app.runtime.RuntimeLifecycle",
+        "generated_application.app.observability.metrics.MetricsRegistry.openmetrics"
       ]
     },
     {
@@ -104,9 +101,8 @@
       "id": "replay_idempotent_duplicate_submission",
       "traceability": [
         "POST /disputes",
-        "upi_dispute_app.repository.get_request_fingerprint",
-        "upi_dispute_app.repository.get_by_client_request_id",
-        "upi_dispute_app.runtime.payload_fingerprint"
+        "generated_application.app.infrastructure.persistence.idempotency_store.SqliteIdempotencyStore",
+        "generated_application.app.application.services.DisputeService.create_dispute"
       ]
     },
     {
@@ -120,8 +116,8 @@
       "id": "audit_local_boundary_metadata",
       "traceability": [
         "POST /disputes",
-        "upi_dispute_app.audit.AuditLogger.record",
-        "var/local runtime audit JSONL"
+        "generated_application.app.infrastructure.persistence.audit_log.SqliteAuditLog.append",
+        "generated_application.app.infrastructure.persistence.outbox.SqliteOutbox.enqueue"
       ]
     },
     {
@@ -135,8 +131,8 @@
       "id": "resilience_missing_dispute_structured_error",
       "traceability": [
         "GET /disputes/{dispute_id}",
-        "upi_dispute_app.repository.DisputeNotFoundError",
-        "upi_dispute_app.main.http_error_handler"
+        "generated_application.app.interfaces.api.main.get_dispute",
+        "generated_application.app.interfaces.api.error_handlers.http_exception_handler"
       ]
     },
     {
@@ -150,8 +146,8 @@
       "id": "security_sensitive_numeric_description_rejected",
       "traceability": [
         "POST /disputes",
-        "upi_dispute_app.pii.assert_no_obvious_real_sensitive_values",
-        "upi_dispute_app.main.http_error_handler"
+        "generated_application.app.interfaces.api.schemas.CreateDisputeRequest",
+        "generated_application.app.interfaces.api.error_handlers.validation_error_handler"
       ]
     },
     {
@@ -165,9 +161,9 @@
       "id": "performance_smoke_bulk_local_submissions",
       "traceability": [
         "POST /disputes",
-        "GET /runtime/metrics",
-        "upi_dispute_app.repository.DisputeRepository.add",
-        "upi_dispute_app.runtime.RuntimeCounters"
+        "GET /metrics",
+        "generated_application.app.infrastructure.persistence.repositories.SqliteDisputeRepository.add",
+        "generated_application.app.observability.metrics.METRICS"
       ]
     }
   ],

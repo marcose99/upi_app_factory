@@ -83,6 +83,7 @@ def test_phase13i_audit_and_validator_pass() -> None:
         path: file_sha256(path) if path.exists() else None
         for path in tracked_paths
     }
+    baseline_git_clean = {path: git_path_is_clean(path) for path in tracked_paths}
     result: subprocess.CompletedProcess[str] | None = None
     command_failure: Exception | None = None
     try:
@@ -100,7 +101,7 @@ def test_phase13i_audit_and_validator_pass() -> None:
         else:
             assert path.exists()
             assert file_sha256(path) == baseline_hash
-        assert git_path_is_clean(path)
+        assert git_path_is_clean(path) == baseline_git_clean[path]
     if command_failure is not None:
         raise command_failure
     assert result is not None

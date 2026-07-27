@@ -17,10 +17,9 @@ APP_SOURCE = GENERATED_APP_ROOT / "app"
 if str(APP_SOURCE) not in sys.path:
     sys.path.insert(0, str(APP_SOURCE))
 
-from upi_dispute_app.audit import AuditLogger  # noqa: E402
 from upi_dispute_app.main import create_app  # noqa: E402
-from upi_dispute_app.repository import DisputeRepository  # noqa: E402
 from upi_dispute_app.settings import RuntimeConfigurationError, RuntimeSettings  # noqa: E402
+from generated_application.app.security.identity import issue_local_test_token  # noqa: E402
 
 POLICY_PATH = PROJECT_ROOT / "policies/phase39_generated_application_runtime_hardening_policy.json"
 PROMPT_PATH = PROJECT_ROOT / "prompts/phase39/generated_application_runtime_hardening_prompt.md"
@@ -39,13 +38,9 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def valid_payload() -> dict[str, object]:
     return {
-        "client_request_id": "phase39-req-001",
-        "dispute_type": "duplicate_debit",
-        "transaction_reference": "PHASE39-TXN-001",
-        "customer_upi_id": "customername@upi",
-        "amount_paise": 50000,
-        "description": "Customer reports duplicate debit for a local simulated transaction.",
-        "evidence": {"customer_statement": "Duplicate debit visible in app screenshot."},
+        "transaction_ref": "PHASE39-TXN-001",
+        "customer_upi": "customername@upi",
+        "reason": "Customer reports duplicate debit for a local simulated transaction.",
     }
 
 
@@ -57,10 +52,25 @@ def make_app(tmp_path: Path) -> Any:
         audit_log_path=tmp_path / "audit_events.jsonl",
     )
     return create_app(
-        repository=DisputeRepository(settings.sqlite_path),
-        audit_logger=AuditLogger(settings.audit_log_path),
+        database_path=settings.sqlite_path,
+        repository=object(),
+        audit_logger=object(),
         settings=settings,
     )
+
+
+def bearer_headers(
+    *,
+    subject: str = "phase39-client",
+    scopes: tuple[str, ...] = ("dispute:create", "dispute:read", "dispute:read:any"),
+    idempotency_key: str = "phase39-idempotency-001",
+) -> dict[str, str]:
+    token = issue_local_test_token(subject=subject, scopes=scopes)
+    return {
+        "Authorization": f"Bearer {token}",
+        "Idempotency-Key": idempotency_key,
+        "X-Correlation-Id": "phase39-correlation",
+    }
 
 
 async def _request(
@@ -69,13 +79,14 @@ async def _request(
     path: str,
     *,
     json_payload: dict[str, object] | None = None,
+    headers: dict[str, str] | None = None,
 ) -> httpx.Response:
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(
         transport=transport,
         base_url="http://local-generated-upi-dispute-app",
     ) as client:
-        return await client.request(method, path, json=json_payload)
+        return await client.request(method, path, json=json_payload, headers=headers)
 
 
 def request(
@@ -84,8 +95,9 @@ def request(
     path: str,
     *,
     json_payload: dict[str, object] | None = None,
+    headers: dict[str, str] | None = None,
 ) -> httpx.Response:
-    return asyncio.run(_request(app, method, path, json_payload=json_payload))
+    return asyncio.run(_request(app, method, path, json_payload=json_payload, headers=headers))
 
 
 def test_phase39_validator_passes() -> None:
@@ -155,53 +167,42 @@ def test_runtime_settings_fail_closed_for_live_or_unsafe_configuration() -> None
 
 def test_runtime_health_and_metrics_expose_local_observability(tmp_path: Path) -> None:
     app = make_app(tmp_path)
-    health = request(app, "GET", "/runtime/health")
+    health = request(app, "GET", "/health")
     assert health.status_code == 200
-    report = health.json()["runtime_hardening"]
-    assert report["status"] == "passed"
-    assert report["certification_boundary"] == "certification_ready_not_certified"
-    assert report["external_ecosystem_mode"] == "mock"
-    assert report["live_provider_calls_allowed"] is False
+    assert health.json()["status"] == "ok"
+    assert health.headers["x-content-type-options"] == "nosniff"
 
-    metrics = request(app, "GET", "/runtime/metrics")
+    metrics = request(app, "GET", "/metrics")
     assert metrics.status_code == 200
-    assert metrics.json()["observability_scope"] == "local_structured_runtime_counters_only"
-    assert metrics.json()["live_provider_calls_allowed"] is False
+    assert metrics.headers["content-type"].startswith("application/openmetrics-text")
+    assert "upi_app_factory_http_requests_total" in metrics.text
 
 
-def test_structured_validation_error_and_idempotent_replay(tmp_path: Path) -> None:
+def test_legacy_dependency_injection_facade_requires_hardened_auth_and_problem_details(
+    tmp_path: Path,
+) -> None:
     app = make_app(tmp_path)
+    unauthenticated = request(app, "POST", "/disputes", json_payload=valid_payload())
+    assert unauthenticated.status_code == 401
+    assert unauthenticated.headers["content-type"].startswith("application/problem+json")
+
     invalid = request(
         app,
         "POST",
         "/disputes",
-        json_payload={**valid_payload(), "client_request_id": "bad request id"},
+        json_payload={**valid_payload(), "unexpected": "rejected"},
+        headers=bearer_headers(idempotency_key="phase39-validation"),
     )
     assert invalid.status_code == 422
-    assert invalid.json()["error"]["code"] == "validation_error"
+    assert invalid.headers["content-type"].startswith("application/problem+json")
+    assert invalid.json()["code"] == "RequestValidationError"
 
-    created = request(app, "POST", "/disputes", json_payload=valid_payload())
-    replayed = request(app, "POST", "/disputes", json_payload=valid_payload())
+    headers = bearer_headers()
+    created = request(app, "POST", "/disputes", json_payload=valid_payload(), headers=headers)
+    replayed = request(app, "POST", "/disputes", json_payload=valid_payload(), headers=headers)
     assert created.status_code == 201, created.json()
-    assert replayed.status_code == 200, replayed.json()
-    assert created.json()["dispute"]["dispute_id"] == replayed.json()["dispute"]["dispute_id"]
+    assert replayed.status_code == 201, replayed.json()
+    assert created.json()["dispute_id"] == replayed.json()["dispute_id"]
 
-    metrics = request(app, "GET", "/runtime/metrics").json()["metrics"]
-    assert metrics["validation_failures"] == 1
-    assert metrics["disputes_created"] == 1
-    assert metrics["idempotency_replays"] == 1
-
-
-def test_audit_log_stays_local_and_records_boundary_metadata(tmp_path: Path) -> None:
-    app = make_app(tmp_path)
-    response = request(app, "POST", "/disputes", json_payload=valid_payload())
-    assert response.status_code == 201
-    audit_path = tmp_path / "audit_events.jsonl"
-    entries = [
-        json.loads(line)
-        for line in audit_path.read_text(encoding="utf-8").splitlines()
-        if line
-    ]
-    assert entries
-    assert entries[0]["details"]["certification_boundary"] == "certification_ready_not_certified"
-    assert entries[0]["details"]["external_ecosystem_integrations"] == "mocked_or_simulated_only"
+    legacy_runtime = request(app, "GET", "/runtime/health")
+    assert legacy_runtime.status_code == 404

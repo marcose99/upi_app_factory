@@ -1,0 +1,59 @@
+{
+  "artifact": "threat_model_abuse_cases",
+  "method": "local deterministic STRIDE and abuse-case catalogue",
+  "certification_claim": "none",
+  "system_boundary": "fictional generated UPI dispute application with mock-only external adapters",
+  "assets": [
+    "dispute_case",
+    "audit_log",
+    "outbox_event",
+    "idempotency_record",
+    "local_principal",
+    "sbom_and_provenance_evidence"
+  ],
+  "abuse_cases": [
+    {
+      "id": "ABUSE-AUTHZ-001",
+      "scenario": "caller attempts to read or mutate another customer's dispute",
+      "control": "object authorization policy and generated security test",
+      "owner": "generated_application_security_owner",
+      "status": "covered"
+    },
+    {
+      "id": "ABUSE-REPLAY-001",
+      "scenario": "duplicate command or event replay attempts to create inconsistent state",
+      "control": "idempotency store, inbox, outbox replay tests",
+      "owner": "generated_application_reliability_owner",
+      "status": "covered"
+    },
+    {
+      "id": "ABUSE-SUPPLY-001",
+      "scenario": "generated evidence file is removed or tampered after generation",
+      "control": "generation manifest SHA-256 inventory and Wave E validator",
+      "owner": "factory_governance_owner",
+      "status": "covered"
+    },
+    {
+      "id": "ABUSE-RESOURCE-001",
+      "scenario": "client submits unbounded pagination or oversized input",
+      "control": "input validation and API abuse checks",
+      "owner": "generated_application_security_owner",
+      "status": "covered"
+    },
+    {
+      "id": "ABUSE-ADAPTER-001",
+      "scenario": "external adapter drifts toward a live payment or identity call",
+      "control": "mock boundary readiness flags and adapter contract tests",
+      "owner": "factory_governance_owner",
+      "status": "covered"
+    }
+  ],
+  "unresolved_risks": [
+    {
+      "risk_id": "TM-001",
+      "owner": "factory_governance_owner",
+      "risk": "Threat model uses generated local evidence and is not an independent security assessment.",
+      "severity": "medium"
+    }
+  ]
+}

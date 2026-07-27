@@ -152,7 +152,7 @@ def validate_policy_prompt_and_lifecycle_artifacts(errors: list[str]) -> None:
         errors.append("Phase 42 policy does not identify tests")
     if gate.get("gate_status") != "passed":
         errors.append("Phase 42 local run readiness gate is not passed")
-    if gate.get("health_checks") != ["/health", "/runtime/health", "/runtime/metrics"]:
+    if gate.get("health_checks") != ["/health", "/startup", "/live", "/ready", "/metrics"]:
         errors.append("Phase 42 gate does not list required health checks")
 
     for artifact, name in [
@@ -209,6 +209,14 @@ def validate_run_pack_content(errors: list[str]) -> None:
         if marker not in doc_text:
             errors.append(f"Phase 42 local run documentation missing marker: {marker}")
 
+    deployment_guide = (
+        PROJECT_ROOT / "docs/deployment/GENERATED_APPLICATION_LOCAL_DEPLOYMENT_GUIDE.md"
+    ).read_text(encoding="utf-8")
+    if "python -m pytest -q generated_application/app/tests" in deployment_guide:
+        errors.append("Deployment guide uses a stale nested generated_application test path")
+    if "PYTHONPATH=.. python -m pytest -q app/tests" not in deployment_guide:
+        errors.append("Deployment guide does not match recipient-root generated app test command")
+
     startup_text = (PROJECT_ROOT / GENERATED_APP_ROOT / "scripts/start_local.sh").read_text(
         encoding="utf-8"
     )
@@ -217,10 +225,12 @@ def validate_run_pack_content(errors: list[str]) -> None:
         "UPI_DISPUTE_EXTERNAL_ECOSYSTEM_MODE",
         "UPI_DISPUTE_ENABLE_LIVE_PROVIDER_CALLS",
         "UPI_DISPUTE_ALLOW_REAL_SECRETS",
-        "uvicorn upi_dispute_app.main:app",
+        "uvicorn generated_application.app.interfaces.api.main:app",
     ]:
         if marker not in startup_text:
             errors.append(f"Phase 42 startup script missing marker: {marker}")
+    if "upi_dispute_app.main:app" in startup_text:
+        errors.append("Phase 42 startup script still launches legacy app")
     if ":-mock}" not in startup_text or ":-false}" not in startup_text:
         errors.append("Phase 42 startup script does not default to mock-only false live settings")
 
@@ -228,11 +238,11 @@ def validate_run_pack_content(errors: list[str]) -> None:
         encoding="utf-8"
     )
     for marker in [
-        "ASGITransport",
-        "/health",
+        "local_principal",
+        "app.openapi",
         "/disputes",
-        "mock-ecosystem-check",
-        "live_provider_calls_allowed",
+        "METRICS.openmetrics",
+        "401",
     ]:
         if marker not in smoke_text:
             errors.append(f"Phase 42 smoke test missing marker: {marker}")

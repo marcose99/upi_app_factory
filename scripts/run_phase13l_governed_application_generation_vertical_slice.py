@@ -323,6 +323,7 @@ def get_dispute_case(case_id: str) -> dict[str, Any] | None:
 """,
         "checks/dispute_case_intake_checks.py": f"""from __future__ import annotations
 
+import importlib
 import pathlib
 import sys
 
@@ -332,8 +333,12 @@ GENERATED_ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(GENERATED_ROOT) not in sys.path:
     sys.path.insert(0, str(GENERATED_ROOT))
 
-from {PACKAGE_NAME}.api import create_dispute_case, get_dispute_case
-from {PACKAGE_NAME}.service import DisputeCaseIntakeService, DisputeValidationError
+api = importlib.import_module("{PACKAGE_NAME}.api")
+service = importlib.import_module("{PACKAGE_NAME}.service")
+create_dispute_case = api.create_dispute_case
+get_dispute_case = api.get_dispute_case
+DisputeCaseIntakeService = service.DisputeCaseIntakeService
+DisputeValidationError = service.DisputeValidationError
 
 
 def valid_payload() -> dict[str, object]:

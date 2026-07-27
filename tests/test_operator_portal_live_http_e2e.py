@@ -65,7 +65,8 @@ def _wait_for_server(base_url: str, process: subprocess.Popen[str]) -> None:
     last_error = ""
     while time.monotonic() < deadline:
         if process.poll() is not None:
-            raise AssertionError(f"portal process exited early: {process.stderr.read()}")
+            stderr = process.stderr.read() if process.stderr is not None else ""
+            raise AssertionError(f"portal process exited early: {stderr}")
         try:
             health = _request(base_url, "GET", "/health")
             if health["status"] == "ok":

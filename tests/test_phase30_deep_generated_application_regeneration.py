@@ -76,6 +76,38 @@ def test_regeneration_uses_phase29_generator_output_not_only_docs(tmp_path: Path
     assert result.manifest_path.is_file()
 
 
+def test_non_clean_regeneration_is_idempotent_for_existing_output(tmp_path: Path) -> None:
+    result = generate(
+        run_id="phase30_generator_idempotent_output",
+        workspace_root=tmp_path,
+        clean=True,
+    )
+    before = result.manifest_path.read_bytes()
+
+    rerun = generate(
+        run_id="phase30_generator_idempotent_output",
+        workspace_root=tmp_path,
+        clean=False,
+    )
+
+    assert rerun.manifest_path == result.manifest_path
+    assert rerun.manifest_path.read_bytes() == before
+
+
+def test_regeneration_workspace_is_not_root_pytest_collection_surface(tmp_path: Path) -> None:
+    pyproject_text = (PROJECT_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    result = generate(
+        run_id="phase30_pytest_collection_boundary",
+        workspace_root=tmp_path,
+        clean=True,
+    )
+    manifest = load_json(result.manifest_path)
+
+    assert "workspace/regeneration_runs" in pyproject_text
+    assert "workspace/regeneration_runs" in manifest["pytest_collection_policy"]
+    assert "generated tests are preserved" in manifest["pytest_collection_policy"]
+
+
 def test_deep_generated_application_files_and_directories_are_emitted(tmp_path: Path) -> None:
     result = generate(run_id="phase30_deep_structure_test", workspace_root=tmp_path, clean=True)
     output_root = result.output_dir / "generated"

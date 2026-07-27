@@ -97,13 +97,15 @@ def test_env_example_and_startup_script_are_mock_only() -> None:
     assert "127.0.0.1" in startup_text
     assert ":-mock}" in startup_text
     assert ":-false}" in startup_text
-    assert "uvicorn upi_dispute_app.main:app" in startup_text
+    assert "uvicorn generated_application.app.interfaces.api.main:app" in startup_text
+    assert "upi_dispute_app.main:app" not in startup_text
 
 
 def test_generated_app_smoke_script_exercises_local_behavior() -> None:
     smoke_text = (GENERATED_APP_ROOT / "scripts/smoke_test.py").read_text(encoding="utf-8")
-    assert "ASGITransport" in smoke_text
-    assert "mock-ecosystem-check" in smoke_text
+    assert "local_principal" in smoke_text
+    assert "app.openapi" in smoke_text
+    assert "METRICS.openmetrics" in smoke_text
 
     result = subprocess.run(
         [sys.executable, str(GENERATED_APP_ROOT / "scripts/smoke_test.py")],

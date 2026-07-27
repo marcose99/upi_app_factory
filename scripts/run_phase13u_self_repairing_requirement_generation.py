@@ -374,16 +374,17 @@ def test_generation_agent(state: GenerationState) -> GenerationState:
     files = list(next_state["generated_files"])
     test_code = '''from __future__ import annotations
 
+import importlib
 import pathlib
 import sys
 
 GENERATED_ROOT = pathlib.Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(GENERATED_ROOT))
+if str(GENERATED_ROOT) not in sys.path:
+    sys.path.insert(0, str(GENERATED_ROOT))
 
-from phase13u_self_repairing_sla_escalation_app import (
-    SlaEscalationRequest,
-    validate_sla_escalation,
-)
+generated_app = importlib.import_module("phase13u_self_repairing_sla_escalation_app")
+SlaEscalationRequest = generated_app.SlaEscalationRequest
+validate_sla_escalation = generated_app.validate_sla_escalation
 
 
 def test_generated_sla_escalation_behavior() -> None:

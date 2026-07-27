@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 import hashlib
 import hmac
@@ -26,12 +26,14 @@ CERTIFICATION_POSTURE: Final[str] = "certification-ready-not-certified"
 APP_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
 VERSION_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^v[0-9][A-Za-z0-9_.-]{0,63}$")
 RUN_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{2,96}$")
-LOCAL_APPROVAL_TOKEN: Final[str] = "phase51-local-portfolio-approval"
+LOCAL_APPROVAL_TOKEN: Final[str] = "phase51-test-portfolio-approval-fixture"
+PORTFOLIO_APPROVAL_TOKEN_ENV: Final[str] = "UPI_APP_FACTORY_PORTFOLIO_APPROVAL_TOKEN"
 HOST: Final[str] = "127.0.0.1"
 MAX_PAYLOAD_BYTES: Final[int] = 64 * 1024
 MAX_RESPONSE_BYTES: Final[int] = 512 * 1024
 REQUEST_TIMEOUT_SECONDS: Final[float] = 2.5
 SIMULATED_RUNTIME_EXECUTABLE: Final[str] = "in-process-socketless-runtime"
+APPROVAL_TTL_SECONDS: Final[int] = 300
 
 
 class PortfolioError(RuntimeError):
@@ -89,7 +91,12 @@ def sha256_json(value: Any) -> str:
 
 
 def approval_secret() -> str:
-    return os.getenv("UPI_APP_FACTORY_PORTFOLIO_APPROVAL_TOKEN", LOCAL_APPROVAL_TOKEN)
+    token = os.getenv(PORTFOLIO_APPROVAL_TOKEN_ENV)
+    if token is None or not token.strip():
+        raise PortfolioError(
+            f"{PORTFOLIO_APPROVAL_TOKEN_ENV} is required for portfolio approvals"
+        )
+    return token
 
 
 def sockets_available() -> bool:
@@ -289,6 +296,7 @@ class ApprovalGrant:
     nonce: str
     actor: str
     approved_at_utc: str
+    expires_at_utc: str
     token_sha256: str
     consumed: bool = False
 
@@ -501,6 +509,22 @@ class PortfolioStore:
             if item.get("action") == action and item.get("scope") == scope and item.get("nonce") == nonce:
                 if item.get("consumed"):
                     raise PortfolioError("approval replay rejected")
+                expires_at_utc = str(item.get("expires_at_utc", ""))
+                if not expires_at_utc:
+                    raise PortfolioError("approval expiry is required")
+                try:
+                    expires_at = datetime.fromisoformat(expires_at_utc.replace("Z", "+00:00"))
+                except ValueError as exc:
+                    raise PortfolioError("approval expiry is invalid") from exc
+                if expires_at <= datetime.now(timezone.utc):
+                    raise PortfolioError("approval expired")
+                expected_digest = hmac.new(
+                    approval_secret().encode("utf-8"),
+                    f"{action}:{scope}:{nonce}".encode("utf-8"),
+                    hashlib.sha256,
+                ).hexdigest()
+                if not hmac.compare_digest(str(item.get("token_sha256", "")), expected_digest):
+                    raise PortfolioError("approval scope digest rejected")
                 item["consumed"] = True
                 self.atomic_write_json(self.approvals_path, data)
                 return
@@ -1163,9 +1187,26 @@ def approve_action(*, store: PortfolioStore, action: str, scope: str, actor: str
         raise PortfolioError("approval token rejected")
     approval_nonce = nonce or f"nonce_{secrets.token_urlsafe(18)}"
     digest = hmac.new(token.encode("utf-8"), f"{action}:{scope}:{approval_nonce}".encode("utf-8"), hashlib.sha256).hexdigest()
-    grant = ApprovalGrant(action=action, scope=scope, nonce=approval_nonce, actor=actor, approved_at_utc=utc_now(), token_sha256=digest)
+    approved_at = datetime.now(timezone.utc).replace(microsecond=0)
+    expires_at = approved_at + timedelta(seconds=APPROVAL_TTL_SECONDS)
+    grant = ApprovalGrant(
+        action=action,
+        scope=scope,
+        nonce=approval_nonce,
+        actor=actor,
+        approved_at_utc=approved_at.isoformat().replace("+00:00", "Z"),
+        expires_at_utc=expires_at.isoformat().replace("+00:00", "Z"),
+        token_sha256=digest,
+    )
     store.create_approval(grant)
-    return {"status": "approved", "action": action, "scope": scope, "nonce": approval_nonce, "token_persisted": False}
+    return {
+        "status": "approved",
+        "action": action,
+        "scope": scope,
+        "nonce": approval_nonce,
+        "expires_at_utc": grant.expires_at_utc,
+        "token_persisted": False,
+    }
 
 
 def redact(value: Any) -> Any:

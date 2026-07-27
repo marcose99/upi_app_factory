@@ -6,6 +6,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+import pytest
+
 from factory.operator_portal.state_roots import (
     default_browser_state_root,
     resolve_portfolio_state_root,
@@ -16,7 +18,10 @@ from factory.operator_portal.state_roots import (
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_browser_state_defaults_to_repository_relative_var_root(monkeypatch, tmp_path: Path) -> None:
+def test_browser_state_defaults_to_repository_relative_var_root(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
     monkeypatch.setenv("XDG_STATE_HOME", str(tmp_path / "xdg state with spaces"))
     monkeypatch.delenv("UPI_APP_FACTORY_PORTAL_RUN_ROOT", raising=False)
     monkeypatch.delenv("UPI_APP_FACTORY_ROOT", raising=False)

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from factory.operator_portal.browser_intake_orchestration import (
     MAX_REQUIREMENTS_BYTES,
     MIN_REQUIREMENTS_CHARS,
@@ -12,7 +14,7 @@ from factory.operator_portal.local_web_api import (
 from tests.test_phase36_operator_portal_local_web_ui import request
 
 
-def test_deterministic_boundary_inputs_match_backend_validation(tmp_path) -> None:
+def test_deterministic_boundary_inputs_match_backend_validation(tmp_path: Path) -> None:
     app = create_app(
         project_root=tmp_path,
         browser_state_root=tmp_path / "runs",
@@ -71,7 +73,7 @@ def test_synthetic_secret_and_prompt_inputs_are_deterministically_classified() -
     }
 
 
-def test_portal_create_run_proves_mock_only_no_payment_no_default_llm(tmp_path) -> None:
+def test_portal_create_run_proves_mock_only_no_payment_no_default_llm(tmp_path: Path) -> None:
     api = create_app(
         project_root=tmp_path,
         browser_state_root=tmp_path / "runs",

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+from collections.abc import Mapping, Sequence
 import hashlib
 import http.client
 import importlib
@@ -16,7 +17,7 @@ import subprocess
 import sys
 import tarfile
 import time
-from typing import Any
+from typing import Any, Literal, Protocol, cast
 
 import httpx
 
@@ -48,10 +49,28 @@ PROMOTION_ENV = CAMPAIGN_ROOT / "promotion_decision.env"
 FIXTURE_REQUIREMENTS = Path("tests/fixtures/phase53/failed_debit_requirements.md")
 CLEAN_CLONE_EVIDENCE_MANIFEST = Path("factory_governance/clean_clone_test_evidence/manifest.json")
 LEGACY_LIFECYCLE_ARTIFACT_ROOT = Path("workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts")
+DEFAULT_COMMAND_TIMEOUT_SECONDS = 240
+FULL_REPOSITORY_TEST_TIMEOUT_SECONDS = 900
 
 
 class ClosureError(RuntimeError):
     pass
+
+
+class CommandRunImpl(Protocol):
+    def __call__(
+        self,
+        args: Sequence[str],
+        *,
+        cwd: Path,
+        env: Mapping[str, str],
+        text: Literal[True],
+        stdout: int,
+        stderr: int,
+        timeout: int,
+        check: bool,
+    ) -> subprocess.CompletedProcess[str]:
+        ...
 
 
 def canonical_python(root: Path) -> Path:
@@ -61,28 +80,57 @@ def canonical_python(root: Path) -> Path:
     raise ClosureError("canonical Python interpreter not found")
 
 
+def command_timeout_seconds(command: list[str]) -> int:
+    if len(command) == 4 and command[1:] == ["-m", "pytest", "-q"]:
+        return FULL_REPOSITORY_TEST_TIMEOUT_SECONDS
+    return DEFAULT_COMMAND_TIMEOUT_SECONDS
+
+
+def output_text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode(errors="replace")
+    return value
+
+
 def run_command(
     command: list[str],
     root: Path,
     *,
-    timeout: int = 120,
+    timeout: int = DEFAULT_COMMAND_TIMEOUT_SECONDS,
     extra_env: dict[str, str] | None = None,
+    run_impl: CommandRunImpl | None = None,
 ) -> dict[str, Any]:
     started = time.time()
     env = os.environ.copy()
     env.setdefault("FACTORY_LLM_ENABLED", "0")
     env.setdefault("REAL_PAYMENT_CALLS", "disabled")
     env.update(extra_env or {})
-    result = subprocess.run(
-        command,
-        cwd=root,
-        env=env,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        timeout=timeout,
-        check=False,
-    )
+    runner = run_impl if run_impl is not None else cast(CommandRunImpl, subprocess.run)
+    try:
+        result = runner(
+            command,
+            cwd=root,
+            env=env,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=timeout,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as exc:
+        output = output_text(exc.output) or output_text(exc.stdout)
+        timeout_message = f"Command timed out after {timeout} seconds."
+        if output:
+            timeout_message = f"{timeout_message}\n{output}"
+        return {
+            "command": " ".join(command),
+            "returncode": 124,
+            "duration_seconds": round(time.time() - started, 3),
+            "passed": False,
+            "output_tail": "\n".join(timeout_message.splitlines()[-40:]),
+        }
     return {
         "command": " ".join(command),
         "returncode": result.returncode,
@@ -101,10 +149,29 @@ def failed_command_summaries(command_results: list[dict[str, Any]]) -> list[dict
             {
                 "command": item.get("command", ""),
                 "returncode": item.get("returncode"),
+                "duration_seconds": item.get("duration_seconds"),
                 "output_tail": item.get("output_tail", ""),
             }
         )
     return failures
+
+
+def format_failed_command_details(failed_commands: list[dict[str, Any]]) -> str:
+    details: list[str] = []
+    for item in failed_commands:
+        output_tail = str(item.get("output_tail", "")).strip()
+        if len(output_tail) > 1200:
+            output_tail = output_tail[-1200:]
+        details.append(
+            "command={command!r}, returncode={returncode}, duration_seconds={duration_seconds}, "
+            "output_tail={output_tail!r}".format(
+                command=item.get("command", ""),
+                returncode=item.get("returncode"),
+                duration_seconds=item.get("duration_seconds"),
+                output_tail=output_tail,
+            )
+        )
+    return "; failed command evidence: [" + "; ".join(details) + "]"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -389,6 +456,7 @@ def write_generated_tests(fresh_root: Path) -> Path:
     test_file.write_text(
         '''from __future__ import annotations
 
+from importlib import import_module
 from pathlib import Path
 import sys
 
@@ -396,7 +464,7 @@ APP_ROOT = Path(__file__).resolve().parents[1]
 if str(APP_ROOT) not in sys.path:
     sys.path.insert(0, str(APP_ROOT))
 
-from app.upi_failed_debit_dispute.interfaces.api import main
+main = import_module("app.upi_failed_debit_dispute.interfaces.api.main")
 
 
 def test_generated_lifecycle_and_replay_contract() -> None:
@@ -668,7 +736,7 @@ def main() -> int:
     generated_suite = run_command(
         [str(python), "-m", "pytest", str(generated_test.relative_to(fresh_app_root)), "-q"],
         fresh_app_root,
-        timeout=240,
+        timeout=DEFAULT_COMMAND_TIMEOUT_SECONDS,
         extra_env={"PYTHONPATH": str(fresh_app_root)},
     )
     sqlite_proof = sqlite_persistence_proof(root, fresh_app_root)
@@ -695,7 +763,7 @@ def main() -> int:
     ]
     if args.skip_heavy:
         commands = commands[3:]
-    command_results = [run_command(command, root, timeout=240) for command in commands]
+    command_results = [run_command(command, root, timeout=command_timeout_seconds(command)) for command in commands]
     command_results.insert(0, generated_suite)
     failed_commands = failed_command_summaries(command_results)
 
@@ -828,8 +896,7 @@ package install, and live payment/provider calls were not performed.
         failed = [name for name, passed in mandatory_gates.items() if not passed]
         details = ""
         if failed_commands:
-            failed_labels = [item["command"] for item in failed_commands]
-            details = f"; failed commands: {failed_labels}"
+            details = format_failed_command_details(failed_commands)
         print(f"Phases 59-60 closure blocked: {failed}{details}")
         return 1
     print("Phases 59-60 closure completed: GO_FOR_HUMAN_REVIEW")

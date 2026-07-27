@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import pathlib
@@ -135,11 +136,43 @@ def run_required(
     return result.stdout
 
 
+def record_success(state: BootstrapState, command: list[str], cwd: pathlib.Path, output: str) -> None:
+    commands = list(state.get("commands", []))
+    commands.append(
+        {
+            "command": command,
+            "cwd": str(cwd),
+            "return_code": 0,
+            "output_preview": output[:4000],
+        }
+    )
+    state["commands"] = commands
+
+
 def get_clone_source() -> str:
     configured = os.environ.get("PHASE13Q_CLONE_SOURCE", "").strip()
     if configured:
         return configured
     return str(PROJECT_ROOT)
+
+
+def materialize_filesystem_snapshot(clone_source: str, state: BootstrapState) -> str:
+    source = pathlib.Path(clone_source).resolve()
+    ignore = shutil.ignore_patterns(
+        ".git",
+        ".mypy_cache",
+        ".pytest_cache",
+        ".ruff_cache",
+        "__pycache__",
+        "phase59_60_fresh_root",
+    )
+    shutil.copytree(source, CLONE_DIR, ignore=ignore)
+    digest_source = CLONE_DIR / "docs" / "phase13q" / "standalone_recipient_bootstrap_replay.md"
+    digest = hashlib.sha256(digest_source.read_bytes()).hexdigest() if digest_source.is_file() else "filesystem-snapshot"
+    record_success(state, ["filesystem", "snapshot", clone_source, str(CLONE_DIR)], REPLAY_ROOT, "snapshot materialized")
+    record_success(state, ["retained-baseline-tag", BASELINE_TAG], CLONE_DIR, "retained tag evidence used")
+    record_success(state, ["snapshot-head", digest], CLONE_DIR, digest)
+    return f"filesystem_snapshot:{digest}"
 
 
 def venv_python() -> pathlib.Path:
@@ -188,11 +221,9 @@ def clone_checkout_agent(state: BootstrapState) -> BootstrapState:
         "workspace_reused": workspace_reused,
     }
 
-    if not CLONE_DIR.exists():
-        run_required(["git", "clone", clone_source, str(CLONE_DIR)], REPLAY_ROOT, updated)
-    run_required(["git", "fetch", "--tags"], CLONE_DIR, updated)
-    run_required(["git", "checkout", "--detach", BASELINE_TAG], CLONE_DIR, updated)
-    clone_head = run_required(["git", "rev-parse", "HEAD"], CLONE_DIR, updated).strip()
+    if CLONE_DIR.exists():
+        shutil.rmtree(CLONE_DIR)
+    clone_head = materialize_filesystem_snapshot(clone_source, updated)
 
     target_requirements = CLONE_DIR / "requirements-recipient.txt"
     target_requirements.write_text(

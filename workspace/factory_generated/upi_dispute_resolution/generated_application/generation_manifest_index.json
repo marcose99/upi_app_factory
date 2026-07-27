@@ -1,0 +1,87 @@
+{
+  "schema_version": "upi_app_factory.generated_application_manifest_index.v1",
+  "current_authoritative_manifest": "generation_manifest.phase71_82_v73_review_rerun_3_dependency_chain_repair.json",
+  "current_generated_file_count": 78,
+  "preserves_v73_generated_surface_entries": true,
+  "historical_manifests_retained_not_deleted": true,
+  "entries": [
+    {
+      "file": "generation_manifest.phase71_82_v73_review_rerun_3_dependency_chain_repair.json",
+      "run_id": "phase71_82_v73_review_rerun_3_dependency_chain_repair",
+      "generated_file_count": 78,
+      "status": "current_authoritative_candidate"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v73_review_rerun_2_repair.json",
+      "run_id": "phase71_82_v73_review_rerun_2_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v73_dependency_chain_repair.json",
+      "run_id": "phase71_82_v73_dependency_chain_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v73_independent_review_repair.json",
+      "run_id": "phase71_82_v73_independent_review_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_atomic_runtime_api_repair.json",
+      "run_id": "phase71_82_v63_atomic_runtime_api_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_coherence_recovery_repair.json",
+      "run_id": "phase71_82_v63_coherence_recovery_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_current_candidate_repair.json",
+      "run_id": "phase71_82_v63_current_candidate_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_dependency_aware_repair.json",
+      "run_id": "phase71_82_v63_dependency_aware_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_final_propagation.json",
+      "run_id": "phase71_82_v63_final_propagation",
+      "generated_file_count": 66,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_independent_review_repair.json",
+      "run_id": "phase71_82_v63_independent_review_repair",
+      "generated_file_count": 77,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_payload_bound_health_security_repair.json",
+      "run_id": "phase71_82_v63_payload_bound_health_security_repair",
+      "generated_file_count": 78,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_review_repair_propagation.json",
+      "run_id": "phase71_82_v63_review_repair_propagation",
+      "generated_file_count": 66,
+      "status": "historical_superseded_evidence"
+    },
+    {
+      "file": "generation_manifest.phase71_82_v63_review_type_boundary_repair.json",
+      "run_id": "phase71_82_v63_review_type_boundary_repair",
+      "generated_file_count": 66,
+      "status": "historical_superseded_evidence"
+    }
+  ]
+}

@@ -24,6 +24,24 @@ dev = [
   "mypy>=1.8",
 ]
 
+[tool.pytest.ini_options]
+addopts = [
+  "-p",
+  "no:cacheprovider",
+  "--import-mode=importlib",
+]
+norecursedirs = [
+  ".*",
+  "build",
+  "dist",
+  "CVS",
+  "_darcs",
+  "{arch}",
+  "*.egg",
+  "venv",
+  "workspace/regeneration_runs",
+]
+
 [tool.setuptools.packages.find]
 include = ["app*", "factory*", "adapters*", "upi_factory*"]
 exclude = [

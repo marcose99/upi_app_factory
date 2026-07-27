@@ -56,7 +56,7 @@ class RuntimeSupervisor:
             raise RuntimeContractError("owned runtime port is already in use")
 
         app_root = Path(binding.application_root)
-        if not (app_root / "app/upi_dispute_app/main.py").is_file():
+        if not (app_root / "app/interfaces/api/main.py").is_file():
             raise RuntimeContractError("generated application entrypoint is missing")
 
         starting = self.store.transition_status(current, RuntimeState.STARTING, health={"status": "starting"})
@@ -66,7 +66,15 @@ class RuntimeSupervisor:
         env = os.environ.copy()
         env.update(
             {
-                "PYTHONPATH": f"{app_root / 'app'}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(os.pathsep),
+                "PYTHONPATH": os.pathsep.join(
+                    part
+                    for part in [
+                        app_root.parent.as_posix(),
+                        (app_root / "app").as_posix(),
+                        env.get("PYTHONPATH", ""),
+                    ]
+                    if part
+                ),
                 "UPI_DISPUTE_APP_ENV": "local",
                 "UPI_DISPUTE_DATA_DIR": data_dir.as_posix(),
                 "UPI_DISPUTE_SQLITE_PATH": (data_dir / "disputes.sqlite3").as_posix(),

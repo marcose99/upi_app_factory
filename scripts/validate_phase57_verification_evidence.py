@@ -153,7 +153,7 @@ def validate_tests(root: Path, python: Path) -> None:
     result = run([str(python), "-m", "pytest", "tests/test_phase57_verification_evidence.py", "-q"], root)
     if result.returncode != 0:
         raise AssertionError(result.stdout)
-    if "4 passed" not in result.stdout:
+    if "5 passed" not in result.stdout:
         raise AssertionError(f"Unexpected Phase 57 test count/output:\n{result.stdout}")
 
 
