@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FACTORY_IMPROVEMENT_REQUIREMENTS",
+  "type": "object",
+  "required": ["schema_version", "artifact", "application_id", "requirements_sha256", "items"],
+  "properties": {
+    "schema_version": {"const": "native-capability-prerun.v1"},
+    "artifact": {"const": "FACTORY_IMPROVEMENT_REQUIREMENTS"},
+    "application_id": {"type": "string"},
+    "requirements_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "items": {"type": "array"}
+  },
+  "additionalProperties": true
+}

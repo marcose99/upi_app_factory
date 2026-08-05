@@ -1,0 +1,29 @@
+{
+  "application_id": "upi_failed_debit_dispute",
+  "artifact": "PRE_RUN_MANIFEST",
+  "artifacts": [
+    "CAPABILITY_PRE_RUN_REPORT.json",
+    "CAPABILITY_PRE_RUN_REPORT.md",
+    "REQUIREMENT_CAPABILITY_MATRIX.json",
+    "REQUIREMENT_CAPABILITY_MATRIX.md",
+    "FACTORY_IMPROVEMENT_REQUIREMENTS.json",
+    "FACTORY_IMPROVEMENT_REQUIREMENTS.md",
+    "FACTORY_IMPROVEMENT_PLAN.json",
+    "FACTORY_IMPROVEMENT_PLAN.md",
+    "PRE_RUN_MANIFEST.json",
+    "PRE_RUN_SHA256SUMS"
+  ],
+  "created_at_utc": "2026-07-30T16:19:25Z",
+  "decision": "PROVEN_100_PERCENT_CAPABILITY",
+  "factory_identity": {
+    "branch": "unknown",
+    "diff_name_only_sha256": "387f5f8d510a866865f64b404d986fb1ffca36aaa5d99a5c514fd74b24908019",
+    "dirty": true,
+    "head": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+    "status_sha256": "b2493fb083e5524cb835464543713b58c18d6d23e006e9ad947035e207c718d7"
+  },
+  "mandatory_gate_passed": true,
+  "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+  "run_id": "pre_run_9e6f56233c46622e_3bd8d6de80",
+  "schema_version": "native-capability-prerun.v1"
+}

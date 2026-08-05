@@ -1,0 +1,28 @@
+{
+  "endpoints": [
+    "GET /health",
+    "GET /ready",
+    "GET /metrics",
+    "POST /v1/disputes",
+    "GET /v1/disputes/{dispute_id}",
+    "GET /v1/disputes",
+    "POST /v1/disputes/{dispute_id}/evidence",
+    "POST /v1/disputes/{dispute_id}/validation",
+    "POST /v1/disputes/{dispute_id}/investigation",
+    "POST /v1/disputes/{dispute_id}/resolution",
+    "POST /v1/disputes/{dispute_id}/closure",
+    "GET /v1/disputes/{dispute_id}/timeline",
+    "GET /v1/disputes/{dispute_id}/audit"
+  ],
+  "requirements_ir_sha256": "3fb4c246c70df1d591c5d02c38ef505e728e27d00f67f786c576907abe77a6c7",
+  "states": [
+    "received",
+    "validated",
+    "evidence_pending",
+    "investigation",
+    "resolution_proposed",
+    "resolved",
+    "rejected",
+    "closed"
+  ]
+}

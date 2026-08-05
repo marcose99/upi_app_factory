@@ -130,7 +130,7 @@ class DeepApplicationComposer:
             shutil.rmtree(app_root)
 
         requirements_hash = sha256_text(canonical_json(requirements_ir))
-        files = self._render_files(app_id, requirements_hash)
+        files = self._render_files(app_id, requirements_hash, requirements_ir)
         for relative, content in files.items():
             _write_text(app_root / relative, content)
 
@@ -157,7 +157,155 @@ class DeepApplicationComposer:
         _write_text(app_root / "evidence" / "generation_manifest.json", json.dumps(payload, indent=2, sort_keys=True) + "\n")
         return payload
 
-    def _render_files(self, app_id: str, requirements_hash: str) -> dict[str, str]:
+    def _code_paths_for_collection(self, app_id: str, collection: str) -> list[str]:
+        mapping = {
+            "actors": [f"app/{app_id}/interfaces/api/main.py"],
+            "use_cases": [f"app/{app_id}/application/services/dispute_service.py"],
+            "bounded_contexts": [f"app/{app_id}/application/services/dispute_service.py"],
+            "commands": [f"app/{app_id}/application/services/dispute_service.py"],
+            "queries": [f"app/{app_id}/application/services/dispute_service.py"],
+            "events": [f"app/{app_id}/domain/aggregates/dispute_case.py"],
+            "aggregates": [f"app/{app_id}/domain/aggregates/dispute_case.py"],
+            "invariants": [
+                f"app/{app_id}/domain/aggregates/dispute_case.py",
+                f"app/{app_id}/domain/state_machines/dispute_lifecycle.py",
+            ],
+            "workflows": [f"app/{app_id}/domain/state_machines/dispute_lifecycle.py"],
+            "apis": [f"app/{app_id}/interfaces/api/main.py"],
+            "data": [f"app/{app_id}/infrastructure/persistence/migrations/0001_initial.sql"],
+            "security": [f"app/{app_id}/interfaces/api/main.py"],
+            "operations": [
+                f"app/{app_id}/infrastructure/persistence/migrations/0001_initial.sql",
+                "scripts/run_local.sh",
+            ],
+            "evidence": ["evidence/requirements_trace.json", "docs/test_plan.md", "docs/operations_runbook.md"],
+            "dependencies": ["configuration/example.env", "scripts/run_local.sh"],
+        }
+        return mapping.get(collection, [f"app/{app_id}/application/services/dispute_service.py"])
+
+    def _test_paths_for_collection(self, collection: str) -> list[str]:
+        if collection in {"apis", "security", "operations"}:
+            return ["tests/test_api_contract.py", "tests/test_service.py"]
+        return ["tests/test_service.py"]
+
+    def _artifact_paths_for_collection(self, collection: str) -> list[str]:
+        mapping = {
+            "apis": ["openapi/openapi.json", "docs/domain_state_machine.md"],
+            "workflows": ["docs/domain_state_machine.md"],
+            "operations": ["docs/operations_runbook.md"],
+            "evidence": ["evidence/requirements_trace.json", "docs/test_plan.md"],
+            "security": ["docs/threat_model.md"],
+            "data": ["docs/adrs/ADR-0001-local-sqlite-modular-monolith.md"],
+        }
+        return mapping.get(collection, ["evidence/requirements_trace.json"])
+
+    def _build_requirement_trace(self, app_id: str, requirements_hash: str, requirements_ir: Mapping[str, Any]) -> str:
+        traceability = requirements_ir.get("traceability", [])
+        source_documents = requirements_ir.get("source_documents", [])
+        mappings: list[dict[str, Any]] = []
+        if isinstance(traceability, list):
+            for row in traceability:
+                if not isinstance(row, Mapping):
+                    continue
+                collection = str(row.get("collection", "unknown"))
+                mappings.append(
+                    {
+                        "requirement_id": row.get("requirement_id"),
+                        "collection": collection,
+                        "source": row.get("source"),
+                        "canonical_hash": row.get("canonical_hash"),
+                        "code_paths": self._code_paths_for_collection(app_id, collection),
+                        "test_paths": self._test_paths_for_collection(collection),
+                        "generated_artifacts": self._artifact_paths_for_collection(collection),
+                    }
+                )
+        payload = {
+            "requirements_ir_sha256": requirements_hash,
+            "source_documents": list(source_documents) if isinstance(source_documents, list) else [],
+            "generated_application": {
+                "app_id": app_id,
+                "profile": self.profile.profile_id,
+                "local_only": True,
+                "mock_only": True,
+                "runtime_llm_calls": 0,
+                "real_payment_calls": "disabled",
+            },
+            "summary": {
+                "requirement_count": len(mappings),
+                "endpoint_count": len(REQUIRED_ENDPOINTS),
+                "state_count": len(DOMAIN_STATES),
+            },
+            "mappings": mappings,
+        }
+        return json.dumps(payload, indent=2, sort_keys=True) + "\n"
+
+    def _build_operations_runbook(self, app_id: str) -> str:
+        return f"""# Operations Runbook
+
+## Operating posture
+
+- Application ID: `{app_id}`
+- Runtime binding: loopback only (`127.0.0.1`)
+- Persistence: local standard-library SQLite
+- Runtime LLM calls: `0`
+- Real payment/provider calls: `disabled`
+- Data posture: fictional-only
+
+## Start and verify
+
+1. Export `REAL_PAYMENT_CALLS=disabled` and keep the default local SQLite path.
+2. Run `scripts/run_local.sh`.
+3. Verify `GET /health`, `GET /ready`, and `GET /metrics` before operator actions.
+4. Confirm `openapi/openapi.json` still advertises the required `/v1/disputes` routes.
+
+## Operator workflow
+
+1. Create a dispute through `POST /v1/disputes` with an idempotency key and correlation header.
+2. Attach evidence through `POST /v1/disputes/{{dispute_id}}/evidence` until the case is investigation-ready.
+3. Record investigation and proposed resolution through the governed `/investigation`, `/resolution`, `/timeline`, and `/audit` routes.
+4. Preserve generated evidence from `evidence/generation_manifest.json`, `evidence/requirements_trace.json`, and the API/OpenAPI outputs for local review.
+
+## Failure handling
+
+- Stop immediately if live-provider settings, real customer data, or non-loopback bindings appear.
+- Treat missing readiness, SQLite migration drift, or traceability/evidence mismatches as fail-closed conditions.
+- Re-run deterministic local tests before any governed review decision; do not deploy or claim certification.
+"""
+
+    def _build_test_plan(self, app_id: str) -> str:
+        return f"""# Test Plan
+
+## Scope
+
+This generated application proves deterministic failed-debit lifecycle behavior for `{app_id}` without live providers, external databases, or runtime LLM calls.
+
+## Required commands
+
+1. `python -m pytest -q tests/test_service.py`
+2. `python -m pytest -q tests/test_api_contract.py`
+3. `python -m pytest -q`
+
+## Coverage expectations
+
+- Lifecycle states: `received`, `validated`, `evidence_pending`, `investigation`, `resolution_proposed`, `resolved`, `rejected`, `closed`
+- API contract: health, readiness, metrics, create/list/get dispute, evidence, investigation, resolution, closure, timeline, audit
+- Persistence: SQLite migration inventory and deterministic local startup
+- Safety boundaries: idempotency, fictional-only data posture, no live-provider dependency, no certification/deployment claim
+
+## Evidence outputs
+
+- `evidence/requirements_trace.json`
+- `evidence/generation_manifest.json`
+- `openapi/openapi.json`
+- `docs/operations_runbook.md`
+"""
+
+    def _render_files(
+        self,
+        app_id: str,
+        requirements_hash: str,
+        requirements_ir: Mapping[str, Any],
+    ) -> dict[str, str]:
         endpoint_lines = "\n".join(f"- {endpoint}" for endpoint in REQUIRED_ENDPOINTS)
         states = ", ".join(DOMAIN_STATES)
         return {
@@ -357,10 +505,10 @@ def get_audit(dispute_id: str) -> dict[str, object]:
             "docs/domain_state_machine.md": f"# Domain State Machine\n\nStates: {states}\n\n{endpoint_lines}\n",
             "docs/adrs/ADR-0001-local-sqlite-modular-monolith.md": "# ADR-0001\n\nUse a local modular monolith with standard-library SQLite and no ORM.\n",
             "docs/threat_model.md": "# Threat Model\n\nLocal fictional principal headers only; real payment/provider calls are disabled.\n",
-            "docs/operations_runbook.md": "# Operations Runbook\n\nRun locally with loopback binding. Do not deploy or connect to live payment systems.\n",
-            "docs/test_plan.md": "# Test Plan\n\nValidate deterministic regeneration, lifecycle transitions, API contract, SQLite migration inventory, audit, idempotency, and safety boundaries.\n",
+            "docs/operations_runbook.md": self._build_operations_runbook(app_id),
+            "docs/test_plan.md": self._build_test_plan(app_id),
             "evidence/depth_score.json": json.dumps({"overall": 84, "domain_fidelity": 17, "security_privacy": 12, "testing_depth": 12, "critical_findings": 0, "high_findings": 0}, indent=2, sort_keys=True) + "\n",
-            "evidence/requirements_trace.json": json.dumps({"requirements_ir_sha256": requirements_hash, "endpoints": list(REQUIRED_ENDPOINTS), "states": list(DOMAIN_STATES)}, indent=2, sort_keys=True) + "\n",
+            "evidence/requirements_trace.json": self._build_requirement_trace(app_id, requirements_hash, requirements_ir),
         }
 
 

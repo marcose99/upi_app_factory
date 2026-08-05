@@ -1,0 +1,25 @@
+{
+  "schema_version": "token-economics-context-compaction-contract.v1",
+  "contract_id": "local_loss_aware_context_compaction",
+  "preserved_fields": [
+    "decisions",
+    "constraints",
+    "unresolved_risks",
+    "provenance",
+    "identities",
+    "required_evidence"
+  ],
+  "prohibited_recursive_inputs": [
+    "raw_jsonl",
+    "large_logs",
+    "caches",
+    "generated_runtime_trees",
+    "unrelated_repository_areas"
+  ],
+  "retrieval_limits": {
+    "top_k": 8,
+    "byte_limit": 65536,
+    "token_limit": 12000
+  },
+  "status": "active"
+}

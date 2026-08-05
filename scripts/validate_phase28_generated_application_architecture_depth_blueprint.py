@@ -3,9 +3,14 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
 from typing import Any, cast
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
+from factory.prerequisite_artifacts import materialize_clean_clone_test_evidence  # noqa: E402
 APP_ID = "upi_dispute_resolution"
 ARTIFACT_DIR = Path("workspace/factory_generated") / APP_ID / "lifecycle_artifacts" / "phase28"
 BLUEPRINT_PATH = (
@@ -113,6 +118,12 @@ def contains_case_insensitive(text: str, expected: str) -> bool:
 
 
 def validate() -> list[str]:
+    materialization = materialize_clean_clone_test_evidence(PROJECT_ROOT, include_phases={"phase28"})
+    if materialization["status"] != "PASSED":
+        return [
+            "Unable to materialize Phase 28 prerequisite lifecycle artifacts: "
+            f"{materialization['errors']}"
+        ]
     errors: list[str] = []
     missing = [str(path) for path in REQUIRED_FILES if not path.exists()]
     if missing:

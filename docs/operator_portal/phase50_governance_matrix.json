@@ -1,0 +1,97 @@
+{
+  "schema_version": "phase50-governance-matrix.v1",
+  "phase": "phase50",
+  "status": "repository_mapped",
+  "controls": [
+    {
+      "control_id": "P50-GOV-001",
+      "control": "Scoped approval tokens are required for runtime start, stop, and restart actions.",
+      "tests": [
+        "tests/phase50/test_runtime_api.py::test_runtime_api_blocks_wrong_approval_and_replay",
+        "tests/phase50/test_runtime_api.py::test_runtime_api_rejects_expired_tampered_and_wrong_scope_approvals",
+        "tests/phase50/test_runtime_contracts.py::test_approval_scope_and_replay_digest"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-002",
+      "control": "Runtime state transitions fail closed and stale process identity is detected.",
+      "tests": [
+        "tests/phase50/test_runtime_contracts.py::test_runtime_state_transitions_fail_closed",
+        "tests/phase50/test_runtime_security.py::test_stale_process_identity_is_detected",
+        "tests/phase50/test_runtime_supervisor.py::test_start_status_duplicate_stop_and_no_orphan"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-003",
+      "control": "Loopback-only runtime networking rejects SSRF, path escape, and redirect escape.",
+      "tests": [
+        "tests/phase50/test_runtime_contracts.py::test_loopback_policy_rejects_ssrf_and_redirect_escape",
+        "tests/phase50/test_runtime_network_policy.py::test_network_policy_is_owned_port_bound",
+        "tests/phase50/test_runtime_security.py::test_ssrf_matrix_rejected"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-004",
+      "control": "The hardened generated runtime binding remains the authoritative default runtime entrypoint.",
+      "tests": [
+        "tests/phase50/test_runtime_contracts.py::test_default_runtime_binding_uses_hardened_generated_api",
+        "tests/phase50/test_runtime_openapi.py::test_openapi_service_is_importable"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-005",
+      "control": "Scenario catalog coverage remains categorized, deterministic, and contract-checked.",
+      "tests": [
+        "tests/phase50/test_runtime_scenarios.py::test_scenario_catalog_has_required_categories_and_exact_expectations",
+        "tests/phase50/test_runtime_scenarios.py::test_scenario_catalog_uses_current_strict_generated_api_contract"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-006",
+      "control": "OpenAPI discovery, scenario execution, and runtime evidence packaging remain governable and safe.",
+      "tests": [
+        "tests/phase50/test_runtime_openapi_scenarios_evidence.py::test_openapi_scenarios_and_evidence_bundle",
+        "tests/phase50/test_runtime_evidence.py::test_runtime_evidence_manifest_derives_no_go_when_gates_missing"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-007",
+      "control": "The browser runtime surface exposes only the governed runtime controls and not direct raw run endpoints.",
+      "tests": [
+        "tests/phase50/test_runtime_e2e.py::test_phase50_browser_runtime_controls_are_present",
+        "tests/phase50/test_runtime_api.py::test_catalog_and_view_are_rendered"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-008",
+      "control": "Port collisions and runtime restart conditions fail closed rather than creating orphaned processes.",
+      "tests": [
+        "tests/phase50/test_runtime_supervisor.py::test_port_collision_fails_closed",
+        "tests/phase50/test_runtime_supervisor.py::test_start_status_duplicate_stop_and_no_orphan"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-009",
+      "control": "The primary portal engineering path publishes the authoritative failed-debit runtime and proves evidence, investigation, human review, disposition, audit verification, and closure through the portfolio runtime control plane.",
+      "tests": [
+        "tests/phase50/test_generated_runtime_failed_debit_workflow.py::test_authoritative_generated_runtime_supports_full_r9_dispute_lifecycle",
+        "tests/post_r9_5/test_primary_portal_failed_debit_e2e.py::test_primary_portal_registers_and_proves_the_authoritative_failed_debit_runtime"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-010",
+      "control": "Evidence manifests derive GO or NO_GO from deterministic validation gates rather than operator claims.",
+      "tests": [
+        "tests/phase50/test_runtime_evidence.py::test_runtime_evidence_manifest_derives_no_go_when_gates_missing",
+        "tests/phase50/test_runtime_openapi_scenarios_evidence.py::test_openapi_scenarios_and_evidence_bundle"
+      ]
+    },
+    {
+      "control_id": "P50-GOV-011",
+      "control": "The hash-chained audit contract records actor role and durable redacted rejection evidence for prohibited actions, segregation-of-duties failures, and idempotency conflicts.",
+      "tests": [
+        "tests/post_r9_5/test_rejection_audit_actor_role.py::test_rejection_audit_chain_records_actor_role_and_redacted_failures"
+      ]
+    }
+  ]
+}

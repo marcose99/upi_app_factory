@@ -221,11 +221,25 @@ class EndToEndPortalRunFlowService:
         return "passed"
 
     def _write_report(self, report: dict[str, Any]) -> None:
+        portable_report = self._portable_report_value(report)
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
         self.report_path.write_text(
-            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            json.dumps(portable_report, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
+
+    @classmethod
+    def _portable_report_value(cls, value: Any) -> Any:
+        if isinstance(value, dict):
+            return {
+                key: cls._portable_report_value(item)
+                for key, item in value.items()
+            }
+        if isinstance(value, list):
+            return [cls._portable_report_value(item) for item in value]
+        if isinstance(value, str):
+            return value.replace(str(Path.home().resolve()), "${HOME}")
+        return value
 
 
 def run_end_to_end_portal_flow(

@@ -9,7 +9,7 @@ from .idempotency_store import SqliteIdempotencyStore
 from .inbox import SqliteInbox
 from .migrations import apply_migrations
 from .outbox import SqliteOutbox
-from .repositories import SqliteDisputeRepository
+from .repositories import SqliteDisputeRepository, SqliteFailedDebitRepository
 
 
 class SqliteUnitOfWork:
@@ -40,6 +40,7 @@ class SqliteUnitOfWork:
         self.connection.commit()
         self.connection.execute("begin immediate")
         self.disputes = SqliteDisputeRepository(self.connection)
+        self.failed_debit = SqliteFailedDebitRepository(self.connection)
         self.idempotency = SqliteIdempotencyStore(self.connection)
         self.outbox = SqliteOutbox(self.connection)
         self.audit = SqliteAuditLog(self.connection)

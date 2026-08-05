@@ -1,0 +1,8 @@
+{
+  "items": [],
+  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
+  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
+  "schema_version": "upi-failed-debit-unsupported-obligation-report.v3",
+  "status": "NONE",
+  "unsupported_obligation_count": 0
+}

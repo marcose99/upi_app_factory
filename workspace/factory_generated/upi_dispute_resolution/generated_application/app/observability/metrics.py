@@ -15,6 +15,7 @@ ALLOWED_ROUTES = {
     "/metrics",
     "/runtime/diagnostics",
     "/disputes",
+    "/v1/disputes",
 }
 ALLOWED_OUTCOMES = {"success", "error", "draining"}
 LATENCY_BUCKETS_SECONDS = (0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5)
@@ -27,6 +28,8 @@ def _bounded(value: str, allowed: set[str], fallback: str) -> str:
 def route_label(path: str) -> str:
     if path.startswith("/disputes"):
         return "/disputes"
+    if path.startswith("/v1/disputes"):
+        return "/v1/disputes"
     return _bounded(path, ALLOWED_ROUTES, "other")
 
 
@@ -74,9 +77,8 @@ class Metrics:
         self.http_latency.observe(max(duration_seconds, 0.0))
 
     def record_business_event(self, *, event_type: str, outcome: str) -> None:
-        allowed_events = {"dispute.created", "dispute.replayed"}
         labels = (
-            _bounded(event_type, allowed_events, "other"),
+            event_type[:80],
             _bounded(outcome, ALLOWED_OUTCOMES, "error"),
         )
         self.business_events[labels] = self.business_events.get(labels, 0) + 1

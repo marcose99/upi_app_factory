@@ -1,0 +1,47 @@
+{
+  "authoritative_requirements": {
+    "pages": 29,
+    "pdf_path": "external_authoritative_input/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.pdf",
+    "pdf_sha256": "37c94a02891e84b59e4071d68f1aafb968730a0c458cdf3092562a5a1ea9ea1c",
+    "schema": "upi_failed_debit_no_credit.requirements.v2",
+    "text_path": "external_authoritative_input/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt",
+    "text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82"
+  },
+  "canonical_application_id": "upi_failed_debit_no_credit",
+  "certification_posture": "certification-ready-not-certified",
+  "compatibility_application_id": "upi_dispute_resolution",
+  "current_validation_summary": {
+    "all_gates_executed": true,
+    "candidate_projection_unchanged": true,
+    "collected_tests": 1410,
+    "passed_tests": 1410,
+    "path": "external_validation/validation_summary.json",
+    "phase": null,
+    "recorded_at_utc": null,
+    "sha256": "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab",
+    "status": "PASSED"
+  },
+  "exact_input_traceability": {
+    "decision": "GO",
+    "not_applicable_count": 0,
+    "partial_count": 0,
+    "supported_count": 781,
+    "unsupported_count": 0
+  },
+  "mock_boundary": "enforced",
+  "no_live_integrations": true,
+  "no_real_customer_data": true,
+  "phase": "governed_self_improvement",
+  "real_payment_calls": "disabled",
+  "run_id": "r10_1_exact_input_evidence_runtime_convergence",
+  "schema_version": "upi-failed-debit-generation-summary.v4",
+  "source_hashes": {
+    "factory/exact_v2_traceability.py": "5777fd6f4027484f94c9237d217e09caf21ff608c8ba379f3b3b72b6f0e35684",
+    "factory/generated_application_artifacts.py": "f1a46efc71c92e369fce15b430535e5a9bc24d8b6e0c38eab39090cb272e11be",
+    "factory/native_capability_prerun/improvement_workflow.py": "803630b2301ff503cf55dc64fc0818ca9a9cee059f58f1e22cf0420cf35cc29d",
+    "factory/operator_portal/local_web_api.py": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
+    "factory/token_economics/service.py": "0fed08b94a7f7dd1ce0219264eecf3b5b29f02d1c5344649602bb93080cf2518",
+    "scripts/run_portal_requirements_driven_application_engineering.py": "2321b2908798ca6505311a35f2d1a2894d156ff392f4d0b7f96a1fc06b9f5a18"
+  },
+  "status": "definition_of_done_ready"
+}

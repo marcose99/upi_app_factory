@@ -32,10 +32,10 @@ def run_live_openai_evaluation(output_root: Path, *, approved: bool, llm_model: 
     output_root.mkdir(parents=True, exist_ok=True)
     prompt_metrics = run_prompt_benchmark(
         output_root,
-        OpenAIResponsesProvider(model=llm_model),
+        OpenAIResponsesProvider(model=llm_model, live_approved=True),
         max_llm_calls=max_llm_calls,
     )
-    embedding_provider = OpenAIEmbeddingProvider()
+    embedding_provider = OpenAIEmbeddingProvider(live_approved=True)
     retrieval_manifest = build_index(
         output_root,
         embedding_provider,

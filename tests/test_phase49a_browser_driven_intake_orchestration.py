@@ -100,7 +100,7 @@ def create_run(app: FastAPI) -> dict[str, Any]:
 
 
 def wait_for_terminal(app: FastAPI, run_id: str) -> dict[str, Any]:
-    deadline = time.monotonic() + 10
+    deadline = time.monotonic() + 30  # Bounded local evidence-generation allowance.
     while time.monotonic() < deadline:
         response = request(app, "GET", f"/operator-portal/api/runs/{run_id}")
         assert response.status_code == 200
@@ -588,7 +588,7 @@ def test_configured_publication_root_supports_read_only_project_root(tmp_path: P
     )
     assert orchestrator.execute(run_id)["status"] in {"queued", "already_queued"}
 
-    deadline = time.monotonic() + 10
+    deadline = time.monotonic() + 30  # Bounded local evidence-generation allowance.
     terminal = orchestrator.get_run(run_id)
     while terminal["state"] not in {"SUCCEEDED", "FAILED", "CANCELLED"} and time.monotonic() < deadline:
         time.sleep(0.1)

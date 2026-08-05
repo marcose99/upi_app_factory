@@ -1,0 +1,9 @@
+{
+  "application_id": "upi_failed_debit_dispute",
+  "artifact": "FACTORY_IMPROVEMENT_REQUIREMENTS",
+  "factory_baseline": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+  "items": [],
+  "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+  "schema_version": "native-capability-prerun.v1",
+  "source_status": "PROVEN_100_PERCENT_CAPABILITY"
+}

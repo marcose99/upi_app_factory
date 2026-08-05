@@ -23,6 +23,7 @@ from factory.application_engineering.portfolio import (
 )
 from factory.observability import get_logger, logging_context
 from factory.operator_portal.state_roots import resolve_state_roots
+from factory.token_economics import classify_generated_application_token_economics
 from scripts.run_portal_requirements_driven_application_engineering import (
     APPROVAL_TOKEN as APPROVAL_TOKEN,
     AdapterConfig,
@@ -56,6 +57,8 @@ RunState = Literal[
     "DRAFT",
     "VALIDATED",
     "REQUIREMENTS_ACCEPTED",
+    "CAPABILITY_PRE_RUN_READY",
+    "CAPABILITY_PRE_RUN_BLOCKED",
     "PLAN_READY",
     "AWAITING_APPROVAL",
     "APPROVED",
@@ -71,7 +74,9 @@ TERMINAL_STATES: Final[set[RunState]] = {"SUCCEEDED", "FAILED", "CANCELLED"}
 VALID_TRANSITIONS: Final[dict[RunState, set[RunState]]] = {
     "DRAFT": {"VALIDATED", "CANCELLED"},
     "VALIDATED": {"REQUIREMENTS_ACCEPTED", "CANCELLED"},
-    "REQUIREMENTS_ACCEPTED": {"PLAN_READY", "CANCELLED"},
+    "REQUIREMENTS_ACCEPTED": {"CAPABILITY_PRE_RUN_READY", "CAPABILITY_PRE_RUN_BLOCKED", "PLAN_READY", "CANCELLED"},
+    "CAPABILITY_PRE_RUN_READY": {"PLAN_READY", "CANCELLED"},
+    "CAPABILITY_PRE_RUN_BLOCKED": {"FAILED", "CANCELLED"},
     "PLAN_READY": {"AWAITING_APPROVAL", "CANCELLED"},
     "AWAITING_APPROVAL": {"APPROVED", "CANCELLED"},
     "APPROVED": {"EXECUTION_QUEUED", "CANCELLED"},
@@ -239,6 +244,15 @@ def _safe_relative_file_path(path: Path, root: Path) -> str:
     return relative
 
 
+def _endpoint_inventory_contains_path(openapi_inventory: object, *, path: str) -> bool:
+    if not isinstance(openapi_inventory, dict):
+        return False
+    endpoint_inventory = openapi_inventory.get("endpoint_inventory")
+    if not isinstance(endpoint_inventory, list):
+        return False
+    return any(isinstance(item, dict) and item.get("path") == path for item in endpoint_inventory)
+
+
 def _deterministic_version_id(*, app_id: str, run_id: str, requirements_sha256: str) -> str:
     material = f"{app_id}\n{run_id}\n{requirements_sha256}".encode("utf-8")
     return "v1_" + _sha256_bytes(material)[:16]
@@ -315,6 +329,25 @@ def _write_generation_manifest(
     except ValueError:
         generator_entrypoint = str(entrypoint)
 
+    metadata_path = generated_application / "generation_metadata.json"
+    token_economics: dict[str, Any] = {
+        "policy_version": "2026-07-29.v1",
+        "applicability": {
+            "status": "NOT_APPLICABLE",
+            "reason": "generated application metadata is not available",
+            "runtime_llm_calls_default": 0,
+        },
+    }
+    if metadata_path.is_file():
+        metadata = _read_json(metadata_path)
+        token_economics = {
+            "policy_version": "2026-07-29.v1",
+            "applicability": classify_generated_application_token_economics(
+                metadata=metadata,
+                runtime_llm_calls_default=int(metadata.get("llm_calls", 0)),
+            ),
+        }
+
     manifest = {
         "schema_version": "1.0",
         "artifact_type": "generated_application",
@@ -327,6 +360,7 @@ def _write_generation_manifest(
         "real_payment_calls": "disabled",
         "default_runtime_llm_calls": 0,
         "certification_posture": CERTIFICATION_POSTURE,
+        "token_economics": token_economics,
         "files": _generated_application_files(generated_application),
     }
     if version_id is not None:
@@ -534,6 +568,7 @@ class BrowserIntakeOrchestrator:
                 "real_payment_calls": "disabled",
                 "default_runtime_llm_calls": 0,
                 "plan": plan,
+                "native_capability_pre_run": plan.get("native_capability_pre_run", {}),
                 "transition_history": self._ledger(paths.ledger),
                 "generated_application_created": self._trusted_application_root(paths).exists(),
             }
@@ -542,6 +577,16 @@ class BrowserIntakeOrchestrator:
                 exclude="plan_sha256",
             )
             _atomic_write_json(paths.plan, plan_payload)
+            pre_run = plan.get("native_capability_pre_run", {})
+            if isinstance(pre_run, dict) and pre_run.get("mandatory_gate_passed") is not True:
+                self._transition(run_id, "CAPABILITY_PRE_RUN_BLOCKED", reason="native_capability_pre_run_no_go")
+                self._fail_run(
+                    run_id,
+                    reason="native_capability_pre_run_no_go",
+                    message="Application engineering stopped before source generation because the native capability pre-run was NO_GO.",
+                )
+                return {"status": "capability_pre_run_blocked", "run": self.get_run(run_id), **self._governance_payload()}
+            self._transition(run_id, "CAPABILITY_PRE_RUN_READY", reason="native_capability_pre_run_passed")
             self._transition(run_id, "PLAN_READY", reason="plan_ready")
             self._transition(run_id, "AWAITING_APPROVAL", reason="application_engineering_requires_approval")
         return {"status": "plan_ready", "run": self.get_run(run_id), **self._governance_payload()}
@@ -1015,8 +1060,9 @@ class BrowserIntakeOrchestrator:
                 isinstance(result.get("openapi"), dict)
                 and isinstance(result.get("openapi_inventory"), dict)
                 and result["openapi_inventory"].get("catalogue_only_fallback_used") is False
-                and bool(result["openapi_inventory"].get("endpoint_inventory")),
-                "Generated application OpenAPI document was captured from the generated FastAPI app.",
+                and bool(result["openapi_inventory"].get("endpoint_inventory"))
+                and _endpoint_inventory_contains_path(result.get("openapi_inventory"), path="/v1/disputes"),
+                "Generated application OpenAPI document was captured from the generated FastAPI app and includes the primary portal gate marker `/v1/disputes`.",
             ),
             (
                 "archive safety",
@@ -1141,7 +1187,7 @@ class BrowserIntakeOrchestrator:
                     "attributes": {"run_id": run_id, "operation": "application_engineering"},
                 },
             )
-            result = run_requirements_engineering(self._adapter_config(paths, plan_only=False))
+            result = dict(run_requirements_engineering(self._adapter_config(paths, plan_only=False)))
             _atomic_write_json(paths.result, result)
             if _read_json(paths.state)["state"] == "CANCELLED":
                 return
@@ -1303,9 +1349,25 @@ class BrowserIntakeOrchestrator:
                 source_commit=_source_commit(self.project_root),
                 evidence=evidence,
                 manifest=manifest,
-                entrypoint=f"app.{app_id}.interfaces.api.main:app",
+                entrypoint=str(result.get("entrypoint") or f"app.{app_id}.interfaces.api.main:app"),
                 application_root=application_root,
-                capabilities=("echo", "health"),
+                capabilities=tuple(
+                    str(item)
+                    for item in result.get(
+                        "capabilities",
+                        (
+                            "failed_debit_disputes",
+                            "evidence_collection",
+                            "investigation",
+                            "human_review",
+                            "disposition",
+                            "audit_integrity",
+                            "closure",
+                            "health",
+                            "ready",
+                        ),
+                    )
+                ),
             )
         )
         registration = {
@@ -1348,7 +1410,7 @@ class BrowserIntakeOrchestrator:
             factory_root=self.project_root,
             workspace_root=publication_root,
             portfolio_state_root=self.portfolio_store.state_root,
-            engineering_profile="compatibility",
+            engineering_profile="authoritative-failed-debit-v1",
             register_with_portfolio=False,
         )
 
@@ -1451,6 +1513,8 @@ class BrowserIntakeOrchestrator:
         return {
             "health_contract": result.get("health_contract") is True,
             "ready_contract": result.get("ready_contract") is True,
+            "failed_debit_runtime_contract": result.get("failed_debit_runtime_contract") is True,
+            "failed_debit_primary_flow_test": result.get("failed_debit_primary_flow_test") is True,
             "tests_present": bool(result.get("generated_tests")),
             "tests_executed": (
                 isinstance(result.get("generated_test_execution"), dict)
@@ -1462,6 +1526,7 @@ class BrowserIntakeOrchestrator:
                 isinstance(result.get("openapi"), dict)
                 and isinstance(result.get("openapi_inventory"), dict)
                 and result["openapi_inventory"].get("catalogue_only_fallback_used") is False
+                and _endpoint_inventory_contains_path(result.get("openapi_inventory"), path="/v1/disputes")
             ),
             "source_present": application_root.is_dir() and any(application_root.rglob("*.py")),
             "archive_safe": True,
@@ -1477,6 +1542,8 @@ class BrowserIntakeOrchestrator:
         return (
             gates["health_contract"] is True
             and gates["ready_contract"] is True
+            and gates["failed_debit_runtime_contract"] is True
+            and gates["failed_debit_primary_flow_test"] is True
             and gates["tests_present"] is True
             and gates["tests_executed"] is True
             and gates["openapi_published"] is True

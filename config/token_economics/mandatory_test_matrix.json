@@ -1,0 +1,405 @@
+{
+  "schema_version": "token-economics-mandatory-test-matrix.v1",
+  "status": "repository_mapped",
+  "cases": [
+    {
+      "case_id": "TE-001",
+      "coverage_kind": "automated_test",
+      "description": "cached-heavy completed turn above a raw anomaly threshold but below the economic hard limit",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_cached_heavy_turn_above_raw_anomaly_below_economic_limit"
+      ]
+    },
+    {
+      "case_id": "TE-002",
+      "coverage_kind": "automated_test",
+      "description": "expensive uncached turn below the raw threshold but above the economic limit",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_expensive_uncached_turn_below_raw_threshold_above_economic_limit"
+      ]
+    },
+    {
+      "case_id": "TE-003",
+      "coverage_kind": "automated_test",
+      "description": "reasoning-output subset is not double-counted",
+      "references": [
+        "tests/test_native_capability_prerun_and_token_economics.py::test_token_economics_normalization_and_settlement_preserve_reasoning_subset"
+      ]
+    },
+    {
+      "case_id": "TE-004",
+      "coverage_kind": "automated_test",
+      "description": "cache-write pricing and cache-aware rate-card selection",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_cache_write_pricing_and_rate_card_selection_are_distinct"
+      ]
+    },
+    {
+      "case_id": "TE-005",
+      "coverage_kind": "automated_test",
+      "description": "missing and unknown rate-card key",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_unknown_rate_card_key_fails_closed"
+      ]
+    },
+    {
+      "case_id": "TE-006",
+      "coverage_kind": "automated_test",
+      "description": "overlapping effective rate-card intervals",
+      "references": [
+        "tests/test_token_economics_core_governance.py::test_rate_card_resolution_flags_staleness_and_rejects_overlapping_intervals"
+      ]
+    },
+    {
+      "case_id": "TE-007",
+      "coverage_kind": "automated_test",
+      "description": "long-context price-band change",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_long_context_rate_card_selection_changes_price_band"
+      ]
+    },
+    {
+      "case_id": "TE-008",
+      "coverage_kind": "automated_test",
+      "description": "product credits versus API dollars",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_credit_and_usd_rate_cards_do_not_share_units"
+      ]
+    },
+    {
+      "case_id": "TE-009",
+      "coverage_kind": "automated_test",
+      "description": "fast or priority service-tier multiplier",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_priority_service_tier_rate_card_changes_price"
+      ]
+    },
+    {
+      "case_id": "TE-010",
+      "coverage_kind": "automated_test",
+      "description": "completed turn crossing budget",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_completed_over_budget_turn_is_sealed_then_blocked"
+      ]
+    },
+    {
+      "case_id": "TE-011",
+      "coverage_kind": "automated_test",
+      "description": "incomplete turn with partial or unknown usage",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_incomplete_turn_and_partial_usage_fail_closed"
+      ]
+    },
+    {
+      "case_id": "TE-012",
+      "coverage_kind": "automated_test",
+      "description": "provider success followed by client timeout",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_provider_success_after_client_timeout_requires_explicit_recovery"
+      ]
+    },
+    {
+      "case_id": "TE-013",
+      "coverage_kind": "automated_test",
+      "description": "duplicate request, response, or turn identity",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_duplicate_provider_response_and_idempotency_identities_are_rejected"
+      ]
+    },
+    {
+      "case_id": "TE-014",
+      "coverage_kind": "automated_test",
+      "description": "one-byte evidence drift",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_one_byte_rate_card_evidence_drift_fails_integrity_validation"
+      ]
+    },
+    {
+      "case_id": "TE-015",
+      "coverage_kind": "automated_test",
+      "description": "restart after completion with no replay",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_restart_after_completion_reuses_sealed_identity_without_replay"
+      ]
+    },
+    {
+      "case_id": "TE-016",
+      "coverage_kind": "automated_test",
+      "description": "tokenizer or model migration",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_model_version_migration_requires_explicit_rate_card_match"
+      ]
+    },
+    {
+      "case_id": "TE-017",
+      "coverage_kind": "automated_test",
+      "description": "tool, storage, or compute fee overflow",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_tool_storage_and_compute_fees_preserve_exact_decimal_overflow"
+      ]
+    },
+    {
+      "case_id": "TE-018",
+      "coverage_kind": "automated_test",
+      "description": "multilingual token regression",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_multilingual_usage_records_are_language_agnostic_and_preserve_provider_fields"
+      ]
+    },
+    {
+      "case_id": "TE-019",
+      "coverage_kind": "automated_test",
+      "description": "context-compaction preservation contract",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_context_compaction_contract_preserves_required_fields"
+      ]
+    },
+    {
+      "case_id": "TE-020",
+      "coverage_kind": "automated_test",
+      "description": "prompt-prefix cache stability",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_prompt_prefix_cache_policy_requires_stable_prefix_before_variable_content"
+      ]
+    },
+    {
+      "case_id": "TE-021",
+      "coverage_kind": "automated_test",
+      "description": "budget controls independent from context, runtime, tools, mutations, and cycles",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_budget_controls_are_independent_across_runtime_tools_mutations_and_cycles"
+      ]
+    },
+    {
+      "case_id": "TE-022",
+      "coverage_kind": "automated_test",
+      "description": "atomic concurrent ledger writes and deterministic aggregation",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_concurrent_ledger_writes_aggregate_deterministically"
+      ]
+    },
+    {
+      "case_id": "TE-023",
+      "coverage_kind": "automated_test",
+      "description": "unknown usage is never represented as zero",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_unknown_usage_is_never_zero"
+      ]
+    },
+    {
+      "case_id": "TE-024",
+      "coverage_kind": "automated_test",
+      "description": "rate-card staleness and reconciliation variance",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_reconciliation_variance_and_staleness_are_reported"
+      ]
+    },
+    {
+      "case_id": "TE-025",
+      "coverage_kind": "automated_test",
+      "description": "compact-log redaction and no raw prompt or event leakage",
+      "references": [
+        "tests/test_token_economics_core_governance.py::test_ledger_duplicate_guard_and_compact_redaction_fail_closed"
+      ]
+    },
+    {
+      "case_id": "TE-026",
+      "coverage_kind": "automated_test",
+      "description": "portal, API, and CLI contract behavior",
+      "references": [
+        "tests/test_token_economics_governed_surfaces.py::test_token_economics_dashboard_and_local_api_expose_budget_and_boundaries",
+        "tests/test_token_economics_core_governance.py::test_factoryctl_normalize_contract_is_available_offline"
+      ]
+    },
+    {
+      "case_id": "TE-027",
+      "coverage_kind": "automated_test",
+      "description": "generated-application applicable and not-applicable behavior",
+      "references": [
+        "tests/test_token_economics_governed_surfaces.py::test_generated_application_token_economics_applicability_requires_declared_model_activity"
+      ]
+    },
+    {
+      "case_id": "TE-028",
+      "coverage_kind": "automated_test",
+      "description": "no live-provider dependency",
+      "references": [
+        "tests/test_token_economics_governed_surfaces.py::test_token_economics_summary_stays_local_mock_only_and_deterministic"
+      ]
+    },
+    {
+      "case_id": "TE-029",
+      "coverage_kind": "operational_gate",
+      "description": "existing full repository regression",
+      "references": [
+        "python -m compileall -q .",
+        "python -m ruff check .",
+        "python -m mypy .",
+        "python -m pytest -q"
+      ]
+    },
+    {
+      "case_id": "TE-030",
+      "coverage_kind": "operational_gate",
+      "description": "exact-candidate post-commit replay",
+      "references": [
+        "tests/test_phase15_autonomous_post_v1_industrialization.py::test_phase15_fresh_clone_replay_result_is_recorded",
+        "scripts/build_actual_clean_checkout_v1_replay_proof.py --execute-replay"
+      ]
+    }
+  ],
+  "extended_cases": [
+    {
+      "case_id": "TE-031",
+      "coverage_kind": "automated_test",
+      "description": "artifact owner exactness resolves to one declared family only",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_exact_artifact_owner_resolution_and_runtime_commit_exclusion"
+      ]
+    },
+    {
+      "case_id": "TE-032",
+      "coverage_kind": "automated_test",
+      "description": "path-pattern prefix collisions fail closed",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_prefix_collisions_fail_closed"
+      ]
+    },
+    {
+      "case_id": "TE-033",
+      "coverage_kind": "automated_test",
+      "description": "symlinked artifacts are rejected",
+      "references": [
+        "tests/test_token_economics_core_governance.py::test_validate_artifact_path_uses_governed_registry_and_rejects_escape"
+      ]
+    },
+    {
+      "case_id": "TE-034",
+      "coverage_kind": "automated_test",
+      "description": "tracked evidence restoration removes runtime drift",
+      "references": [
+        "tests/test_prerequisite_artifact_materializer.py::test_mutable_runtime_snapshot_restores_changed_files_and_removes_new_paths"
+      ]
+    },
+    {
+      "case_id": "TE-035",
+      "coverage_kind": "automated_test",
+      "description": "staged runtime outputs are excluded from candidate-commit artifacts",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_exact_artifact_owner_resolution_and_runtime_commit_exclusion"
+      ]
+    },
+    {
+      "case_id": "TE-036",
+      "coverage_kind": "automated_test",
+      "description": "historical settlements remain append-only and immutable",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_ledger_history_is_append_only"
+      ]
+    },
+    {
+      "case_id": "TE-037",
+      "coverage_kind": "automated_test",
+      "description": "budget exceptions require scoped human authority",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_governance_policy_preserves_scoped_budget_exceptions_and_legal_hold"
+      ]
+    },
+    {
+      "case_id": "TE-038",
+      "coverage_kind": "automated_test",
+      "description": "retention and legal-hold policy remain machine-readable",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_governance_policy_preserves_scoped_budget_exceptions_and_legal_hold"
+      ]
+    },
+    {
+      "case_id": "TE-039",
+      "coverage_kind": "automated_test",
+      "description": "migration compatibility mappings are preserved",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_governance_policy_preserves_migration_compatibility"
+      ]
+    },
+    {
+      "case_id": "TE-040",
+      "coverage_kind": "automated_test",
+      "description": "rate-card publication remains a human-authority decision right",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_rate_publication_and_certification_claims_stay_human_gated"
+      ]
+    },
+    {
+      "case_id": "TE-041",
+      "coverage_kind": "automated_test",
+      "description": "certification claims remain human-authority gated",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_rate_publication_and_certification_claims_stay_human_gated"
+      ]
+    },
+    {
+      "case_id": "TE-042",
+      "coverage_kind": "automated_test",
+      "description": "compact logs default to restricted-content exclusion",
+      "references": [
+        "tests/test_token_economics_core_governance.py::test_ledger_duplicate_guard_and_compact_redaction_fail_closed"
+      ]
+    },
+    {
+      "case_id": "TE-043",
+      "coverage_kind": "automated_test",
+      "description": "generated application applicability remains truthful and explicit",
+      "references": [
+        "tests/test_token_economics_governed_surfaces.py::test_generated_application_token_economics_applicability_requires_declared_model_activity"
+      ]
+    },
+    {
+      "case_id": "TE-044",
+      "coverage_kind": "automated_test",
+      "description": "operator visibility separates budget controls from runtime usage views",
+      "references": [
+        "tests/test_token_economics_core_governance.py::test_summary_and_dashboard_expose_operator_visibility_contracts"
+      ]
+    },
+    {
+      "case_id": "TE-045",
+      "coverage_kind": "automated_test",
+      "description": "operator summary stays local, deterministic, and mock-only",
+      "references": [
+        "tests/test_token_economics_governed_surfaces.py::test_token_economics_summary_stays_local_mock_only_and_deterministic"
+      ]
+    },
+    {
+      "case_id": "TE-046",
+      "coverage_kind": "automated_test",
+      "description": "model-version migration still requires explicit rate-card matching",
+      "references": [
+        "tests/test_token_economics_mandatory_matrix.py::test_model_version_migration_requires_explicit_rate_card_match"
+      ]
+    },
+    {
+      "case_id": "TE-047",
+      "coverage_kind": "automated_test",
+      "description": "governed artifact registry remains declared and non-empty",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_registry_declares_multiple_governed_families"
+      ]
+    },
+    {
+      "case_id": "TE-048",
+      "coverage_kind": "automated_test",
+      "description": "runtime-root artifact families remain non-committable",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_exact_artifact_owner_resolution_and_runtime_commit_exclusion"
+      ]
+    },
+    {
+      "case_id": "TE-049",
+      "coverage_kind": "automated_test",
+      "description": "the extended matrix preserves the existing 30-case semantics",
+      "references": [
+        "tests/post_r9_5/test_token_economics_extended_matrix.py::TokenEconomicsExtendedMatrixTest::test_extended_matrix_preserves_legacy_base_cases_and_adds_te_031_through_te_049"
+      ]
+    }
+  ]
+}

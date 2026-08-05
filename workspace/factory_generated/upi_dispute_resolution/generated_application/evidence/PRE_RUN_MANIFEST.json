@@ -1,0 +1,15 @@
+{
+  "application_id": "upi_failed_debit_no_credit",
+  "artifact": "PRE_RUN_MANIFEST",
+  "artifacts": [
+    "CAPABILITY_PRE_RUN_REPORT.json",
+    "REQUIREMENT_CAPABILITY_MATRIX.json",
+    "PRE_RUN_MANIFEST.json"
+  ],
+  "compatibility_application_id": "upi_dispute_resolution",
+  "decision": "NO_GO_WITH_IMPROVEMENT_REQUIREMENTS",
+  "mandatory_gate_passed": false,
+  "requirements_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
+  "schema_version": "native-capability-prerun.v1",
+  "tracked_application_root": "workspace/factory_generated/upi_dispute_resolution/generated_application"
+}

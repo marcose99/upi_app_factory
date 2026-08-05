@@ -3,6 +3,10 @@
 The operator portal exposes local-only controls for health, evidence,
 download/export, validation, requirements intake, engineering execution,
 portfolio runtime, scenario, lifecycle, and read-only evidence workflows.
+The authoritative generated-runtime scenario surface now exercises the primary
+`upi_dispute_resolution` `/v1/disputes` lifecycle for classify, explicit
+human-review request and decision recording, governed disposition, audit
+integrity verification, quarantine, close, and history retrieval.
 
 Critical mutation controls are wrapped by a shared in-flight action guard:
 requirements submission, plan generation, approval, engineering start/cancel,

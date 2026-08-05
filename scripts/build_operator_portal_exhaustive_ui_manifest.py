@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import sys
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
@@ -117,6 +116,13 @@ LINK_CONTRACTS = {
     "download-factory-debug-plan": {"method": "GET", "route": "/operator-portal/api/debug-plan/factory/download", "precondition": "factory plan available", "mutation": False},
     "download-factory-documentation": {"method": "GET", "route": "/operator-portal/api/documentation/factory/download", "precondition": "factory documentation generated", "mutation": False},
 }
+ROUTE_SOURCE_PATHS = (
+    "factory/operator_portal/local_web_api.py",
+    "factory/operator_portal/runtime_api.py",
+    "factory/operator_portal/portfolio_api.py",
+    "factory/operator_portal/debug_plan_api.py",
+    "factory/operator_portal/documentation_api.py",
+)
 
 
 class PortalHTMLParser(HTMLParser):
@@ -134,27 +140,23 @@ def _route_key(method: str, route: str) -> str:
     return f"{method.upper()} {route}"
 
 
-def _normalise_fastapi_path(path: str) -> str:
-    return re.sub(r"\{[^}]+\}", "{run_id}", path)
-
-
 def _openapi_routes(project_root: Path) -> tuple[set[str], list[str]]:
-    sys.path.insert(0, str(project_root))
-    from factory.operator_portal.web_ui.app import create_web_ui_app
-
-    app = create_web_ui_app(project_root=project_root)
-    schema = app.openapi()
     routes: set[str] = set()
     operation_ids: list[str] = []
-    for path, methods in schema.get("paths", {}).items():
-        if not isinstance(methods, dict):
-            continue
-        for method, payload in methods.items():
-            if method.lower() not in {"get", "post", "put", "patch", "delete"}:
-                continue
-            routes.add(_route_key(method, _normalise_fastapi_path(path)))
-            if isinstance(payload, dict) and payload.get("operationId"):
-                operation_ids.append(str(payload["operationId"]))
+    route_pattern = re.compile(r"@(app|router)\.(get|post|put|patch|delete)\(\s*[\"']([^\"']+)[\"']")
+    prefix_pattern = re.compile(r"router\s*=\s*APIRouter\([^)]*prefix\s*=\s*[\"']([^\"']+)[\"']", re.DOTALL)
+    for relative in ROUTE_SOURCE_PATHS:
+        source = (project_root / relative).read_text(encoding="utf-8")
+        prefix_match = prefix_pattern.search(source)
+        router_prefix = prefix_match.group(1) if prefix_match else ""
+        for match in route_pattern.finditer(source):
+            raw_route = match.group(3)
+            route = raw_route if match.group(1) == "app" else f"{router_prefix}{raw_route}"
+            method = match.group(2).upper()
+            routes.add(_route_key(method, route))
+            operation_ids.append(
+                f"{method.lower()}_{route.strip('/').replace('/', '_').replace('{', '').replace('}', '').replace('-', '_')}"
+            )
     return routes, operation_ids
 
 

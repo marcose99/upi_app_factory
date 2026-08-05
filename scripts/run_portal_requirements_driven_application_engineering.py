@@ -44,12 +44,34 @@ from factory.application_engineering.portfolio import (  # noqa: E402
 )
 from factory.operator_portal.state_roots import resolve_portfolio_state_root  # noqa: E402
 from factory.debugging import write_generated_application_debug_plan  # noqa: E402
+from factory.native_capability_prerun import (  # noqa: E402
+    NativeCapabilityError,
+    PreRunConfig,
+    run_capability_prerun,
+)
+from factory.generated_application_artifacts import (  # noqa: E402
+    REQUIRED_ARTIFACT_RELATIVE_PATHS,
+    materialize_converged_generated_application_artifacts,
+)
+from factory.token_economics import classify_generated_application_token_economics  # noqa: E402
 
 APP_ID_PATTERN: Final[re.Pattern[str]] = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
 APPROVAL_TOKEN: Final[str] = "APPROVE_PORTAL_APPLICATION_ENGINEERING"
 SUCCESS_STATUS: Final[str] = "PORTAL_REQUIREMENTS_DRIVEN_APPLICATION_ENGINEERING_COMPLETED"
 PLAN_STATUS: Final[str] = "PORTAL_APPLICATION_ENGINEERING_PLAN_VALIDATED"
 SCHEMA_VERSION: Final[str] = "1.0"
+AUTHORITATIVE_FAILED_DEBIT_CAPABILITIES: Final[tuple[str, ...]] = (
+    "failed_debit_disputes",
+    "evidence_collection",
+    "investigation",
+    "human_review",
+    "disposition",
+    "audit_integrity",
+    "closure",
+    "health",
+    "echo",
+    "ready",
+)
 
 
 class AdapterError(RuntimeError):
@@ -146,6 +168,22 @@ def _deterministic_version_id(*, app_id: str, run_id: str, requirements_sha256: 
     return "v1_" + _sha256_bytes(material)[:16]
 
 
+def _token_economics_contract(requirements_text: str) -> dict[str, object]:
+    applicability = classify_generated_application_token_economics(
+        requirements_text=requirements_text,
+        runtime_llm_calls_default=0,
+    )
+    return {
+        "policy_version": "2026-07-29.v1",
+        "applicability": applicability,
+        "rate_card_registry_path": "config/token_economics/rate_cards",
+        "budget_envelope_path": "config/token_economics/budgets/default_stage_budget.json",
+        "artifact_ownership_registry_path": "config/token_economics/artifact_ownership_registry.json",
+        "provider_native_usage_retained": applicability["status"] == "APPLICABLE",
+        "mock_only": True,
+    }
+
+
 def _resolve_under(path: Path, root: Path, *, label: str) -> Path:
     resolved = path.expanduser().resolve()
     resolved_root = root.expanduser().resolve()
@@ -214,9 +252,9 @@ def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--replace-existing", action="store_true")
     parser.add_argument(
         "--engineering-profile",
-        choices=("compatibility", "local-deep-v1"),
+        choices=("compatibility", "local-deep-v1", "authoritative-failed-debit-v1"),
         default=os.getenv("FACTORY_ENGINEERING_PROFILE", "compatibility"),
-        help="Use compatibility output or the Phase 56 versioned deep composer profile.",
+        help="Use compatibility output, the Phase 56 deep profile, or the authoritative failed-debit runtime wrapper.",
     )
     parser.add_argument(
         "--portfolio-state-root",
@@ -335,6 +373,7 @@ def _project_files(
         "real_payment_calls": "disabled",
         "llm_calls": 0,
         "certification_posture": "certification-ready-not-certified",
+        "token_economics": _token_economics_contract(requirements_text),
     }
 
     files: dict[str, str] = {
@@ -1020,7 +1059,16 @@ def _execute_generated_tests(
     run_id: str,
     requirements_sha256: str,
 ) -> dict[str, Any]:
-    argv = [sys.executable, "-m", "pytest", "-q", "--disable-warnings", "tests"]
+    argv = [
+        sys.executable,
+        "-m",
+        "pytest",
+        "-q",
+        "--disable-warnings",
+        f"--rootdir={app_root}",
+        f"--confcutdir={app_root}",
+        "tests",
+    ]
     env = os.environ.copy()
     env.update(
         {
@@ -1077,16 +1125,20 @@ def _capture_openapi(
     version_id: str,
     run_id: str,
     requirements_sha256: str,
+    module: str | None = None,
+    pythonpath_root: Path | None = None,
 ) -> dict[str, Any]:
-    module = f"app.{app_id}.interfaces.api.main"
+    module_name = module or f"app.{app_id}.interfaces.api.main"
     code = (
         "import json;"
-        f"from {module} import app;"
+        f"from {module_name} import app;"
         "print(json.dumps(app.openapi(), sort_keys=True, separators=(',', ':')))"
     )
     argv = [sys.executable, "-c", code]
     env = os.environ.copy()
-    env["PYTHONPATH"] = f"{app_root}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(os.pathsep)
+    env["PYTHONPATH"] = f"{pythonpath_root or app_root}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(
+        os.pathsep
+    )
     completed = subprocess.run(argv, cwd=app_root, env=env, capture_output=True, check=False, text=True, timeout=15)
     if completed.returncode != 0:
         raise AdapterError("generated application OpenAPI capture failed")
@@ -1131,6 +1183,421 @@ def _remove_generated_python_caches(root: Path) -> None:
     pytest_cache = root / ".pytest_cache"
     if pytest_cache.is_dir():
         shutil.rmtree(pytest_cache)
+
+
+PRIMARY_PORTAL_RUNTIME_TEST = "tests/test_failed_debit_primary_runtime.py"
+PRIMARY_PORTAL_WRAPPER_TEST_SIGNATURES: Final[dict[str, str]] = {
+    "tests/test_api_contract.py": "test_wrapper_openapi_exposes_authoritative_failed_debit_surface",
+    "tests/test_service.py": "test_wrapper_entrypoint_and_nested_runtime_assets_exist",
+}
+PRIMARY_PORTAL_WRAPPER_FILE_SIGNATURES: Final[dict[str, str]] = {
+    "interfaces/api/main.py": "from generated_application.app.interfaces.api.main import app",
+}
+
+
+def _copy_tree_contents(source_root: Path, destination_root: Path) -> None:
+    for path in sorted(source_root.rglob("*")):
+        relative = path.relative_to(source_root)
+        destination = destination_root / relative
+        if path.is_dir():
+            destination.mkdir(parents=True, exist_ok=True)
+            continue
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, destination)
+
+
+def _prune_empty_directories(start: Path, *, stop_at: Path) -> None:
+    current = start
+    while current != stop_at and current.exists():
+        if any(current.iterdir()):
+            return
+        current.rmdir()
+        current = current.parent
+
+
+def _remove_signed_wrapper_file(root: Path, relative_path: str, signature: str) -> bool:
+    target = root / relative_path
+    if not target.is_file():
+        return False
+    if signature not in target.read_text(encoding="utf-8"):
+        return False
+    target.unlink()
+    _prune_empty_directories(target.parent, stop_at=root)
+    return True
+
+
+def _sanitize_nested_authoritative_runtime_copy(root: Path, app_id: str) -> None:
+    for relative_path, signature in PRIMARY_PORTAL_WRAPPER_TEST_SIGNATURES.items():
+        _remove_signed_wrapper_file(root, relative_path, signature)
+    wrapper_root = root / "app" / app_id
+    for relative_path, signature in PRIMARY_PORTAL_WRAPPER_FILE_SIGNATURES.items():
+        _remove_signed_wrapper_file(wrapper_root, relative_path, signature)
+    if wrapper_root.exists():
+        _prune_empty_directories(wrapper_root, stop_at=root / "app")
+
+
+def _copy_authoritative_runtime_into_publication(
+    *,
+    source_root: Path,
+    destination_root: Path,
+    app_id: str,
+) -> None:
+    _copy_tree_contents(source_root, destination_root)
+    _sanitize_nested_authoritative_runtime_copy(destination_root, app_id)
+
+
+def _authoritative_runtime_template_root(config: AdapterConfig) -> Path:
+    root = (
+        config.factory_root
+        / "workspace"
+        / "factory_generated"
+        / "upi_dispute_resolution"
+        / "generated_application"
+    )
+    if not root.is_dir():
+        raise AdapterError("authoritative failed-debit runtime template is missing")
+    return root
+
+
+def _primary_runtime_wrapper_files(app_id: str, requirements_text: str) -> dict[str, str]:
+    return {
+        "conftest.py": """from __future__ import annotations
+
+from pathlib import Path
+
+
+collect_ignore_glob = (
+    ["tests/test_*.py"]
+    if Path.cwd().resolve() != Path(__file__).resolve().parent
+    else []
+)
+""",
+        "app/__init__.py": "",
+        f"app/{app_id}/__init__.py": "",
+        f"app/{app_id}/interfaces/__init__.py": "",
+        f"app/{app_id}/interfaces/api/__init__.py": "",
+        f"app/{app_id}/interfaces/api/main.py": (
+            "from generated_application.app.interfaces.api.main import app\n\n"
+            "__all__ = [\"app\"]\n"
+        ),
+        "pyproject.toml": f"""[project]
+name = "{app_id}"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Portal-published authoritative failed-debit runtime wrapper"
+""",
+        "Dockerfile": (
+            "FROM python:3.12-slim\n"
+            "WORKDIR /app\n"
+            "COPY . .\n"
+            f'CMD ["python", "-m", "uvicorn", "app.{app_id}.interfaces.api.main:app", "--host", "127.0.0.1", "--port", "18042"]\n'
+        ),
+        "README.md": (
+            f"# {app_id}\n\n"
+            "Primary portal publication for the authoritative failed-debit runtime.\n\n"
+            "This package wraps the nested `generated_application` runtime, preserves local-only\n"
+            "mock boundaries, and exposes the portal-registered entrypoint\n"
+            f"`app.{app_id}.interfaces.api.main:app`.\n\n"
+            "## Requirements Snapshot\n\n"
+            f"{requirements_text.strip()}\n"
+        ),
+        "requirements.md": requirements_text,
+        "tests/test_api_contract.py": f"""from __future__ import annotations
+
+from app.{app_id}.interfaces.api.main import app
+
+
+def test_wrapper_openapi_exposes_authoritative_failed_debit_surface() -> None:
+    schema = app.openapi()
+    paths = schema["paths"]
+    required = {{
+        "/health",
+        "/ready",
+        "/v1/disputes",
+        "/v1/disputes/{{dispute_id}}/evidence",
+        "/v1/disputes/{{dispute_id}}/investigate",
+        "/v1/disputes/{{dispute_id}}/classify",
+        "/v1/disputes/{{dispute_id}}/human-review",
+        "/v1/disputes/{{dispute_id}}/review-decisions",
+        "/v1/disputes/{{dispute_id}}/disposition",
+        "/v1/disputes/{{dispute_id}}/audit-integrity",
+        "/v1/disputes/{{dispute_id}}/close",
+        "/v1/disputes/{{dispute_id}}/history",
+    }}
+    assert required.issubset(paths)
+""",
+        "tests/test_service.py": f"""from __future__ import annotations
+
+from pathlib import Path
+
+from app.{app_id}.interfaces.api.main import app
+
+
+def test_wrapper_entrypoint_and_nested_runtime_assets_exist() -> None:
+    root = Path(__file__).resolve().parents[1]
+    assert (root / "app" / "{app_id}" / "interfaces" / "api" / "main.py").is_file()
+    assert (root / "generated_application" / "app" / "interfaces" / "api" / "main.py").is_file()
+    assert app.openapi()["info"]["title"]
+""",
+        PRIMARY_PORTAL_RUNTIME_TEST: """from __future__ import annotations
+
+import asyncio
+from pathlib import Path
+from typing import Any, cast
+
+import httpx
+import pytest
+
+from generated_application.app.interfaces.api import main
+from generated_application.app.runtime import RuntimeLifecycle
+from generated_application.app.security.identity import issue_local_test_token
+
+
+async def _request(
+    app: Any,
+    method: str,
+    path: str,
+    *,
+    payload: dict[str, Any] | None = None,
+    headers: dict[str, str] | None = None,
+) -> httpx.Response:
+    transport = httpx.ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://primary-portal-runtime") as client:
+        return await client.request(method, path, json=payload, headers=headers)
+
+
+def request(
+    app: Any,
+    method: str,
+    path: str,
+    *,
+    payload: dict[str, Any] | None = None,
+    headers: dict[str, str] | None = None,
+) -> httpx.Response:
+    return asyncio.run(_request(app, method, path, payload=payload, headers=headers))
+
+
+def token(subject: str, scopes: tuple[str, ...], roles: tuple[str, ...]) -> str:
+    return cast(str, issue_local_test_token(subject=subject, scopes=scopes, roles=roles))
+
+
+def auth(subject: str, scopes: tuple[str, ...], roles: tuple[str, ...]) -> dict[str, str]:
+    return {"Authorization": "Bearer " + token(subject, scopes, roles)}
+
+
+def make_client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Any:
+    database = tmp_path / "primary_portal_runtime.sqlite3"
+    monkeypatch.setattr(main, "DATABASE_PATH", database)
+    monkeypatch.setattr(main, "RUNTIME", RuntimeLifecycle(database))
+    main.app.state.database_path = database
+    return main.app
+
+
+def test_primary_portal_runtime_proves_failed_debit_lifecycle(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    app = make_client(tmp_path, monkeypatch)
+    support_headers = auth(
+        "support-portal",
+        ("dispute:create", "dispute:evidence:write", "dispute:read", "dispute:read:any"),
+        ("customer_support_agent",),
+    )
+    analyst_headers = auth(
+        "analyst-portal",
+        (
+            "dispute:investigation:write",
+            "dispute:classify:write",
+            "dispute:review:write",
+            "dispute:read",
+            "dispute:read:any",
+        ),
+        ("dispute_operations_analyst",),
+    )
+    supervisor_headers = auth(
+        "supervisor-portal",
+        ("dispute:review:write", "dispute:disposition:write", "dispute:close:write", "dispute:read"),
+        ("supervisor_approver",),
+    )
+    audit_headers = auth(
+        "audit-portal",
+        ("dispute:history:read", "dispute:audit:read"),
+        ("audit_reviewer",),
+    )
+
+    created = request(
+        app,
+        "POST",
+        "/v1/disputes",
+        payload={
+            "transaction_ref": "TXN-PORTAL-PRIMARY-001",
+            "customer_upi": "portal.primary@upi",
+            "amount": "1250.00",
+            "reason_code": "beneficiary_not_credited",
+        },
+        headers={**support_headers, "Idempotency-Key": "portal-primary-create", "X-Correlation-Id": "portal-primary-create"},
+    )
+    assert created.status_code == 201, created.text
+    dispute_id = created.json()["dispute_id"]
+    version = int(created.json()["version"])
+
+    evidence_items = [
+        ("switch_failure", "EVD-PORTAL-SWITCH", "2026-07-31T04:15:00Z"),
+        ("core_ledger", "EVD-PORTAL-LEDGER", "2026-07-31T04:16:00Z"),
+        ("customer_statement", "EVD-PORTAL-STATEMENT", "2026-07-31T04:17:00Z"),
+    ]
+    for index, (evidence_type, evidence_id, observed_at_utc) in enumerate(evidence_items, start=1):
+        attached = request(
+            app,
+            "POST",
+            f"/v1/disputes/{dispute_id}/evidence",
+            payload={
+                "evidence_id": evidence_id,
+                "evidence_type": evidence_type,
+                "source": f"synthetic_{evidence_type}",
+                "summary": f"Synthetic {evidence_type} evidence for the primary portal flow.",
+                "observed_at_utc": observed_at_utc,
+                "expected_version": version,
+            },
+            headers={
+                **support_headers,
+                "Idempotency-Key": f"portal-primary-evidence-{index}",
+                "X-Correlation-Id": f"portal-primary-evidence-{index}",
+            },
+        )
+        assert attached.status_code == 200, attached.text
+        version = int(attached.json()["version"])
+
+    investigation = request(
+        app,
+        "POST",
+        f"/v1/disputes/{dispute_id}/investigate",
+        payload={
+            "analyst_notes": "Deterministic investigation confirms the beneficiary remained uncredited.",
+            "simulated_bank_status": "beneficiary_not_credited",
+            "expected_version": version,
+        },
+        headers={**analyst_headers, "Idempotency-Key": "portal-primary-investigate", "X-Correlation-Id": "portal-primary-investigate"},
+    )
+    assert investigation.status_code == 200, investigation.text
+    version = int(investigation.json()["version"])
+
+    classification = request(
+        app,
+        "POST",
+        f"/v1/disputes/{dispute_id}/classify",
+        payload={"expected_version": version},
+        headers={**analyst_headers, "Idempotency-Key": "portal-primary-classify", "X-Correlation-Id": "portal-primary-classify"},
+    )
+    assert classification.status_code == 200, classification.text
+    version = int(classification.json()["version"])
+
+    review = request(
+        app,
+        "POST",
+        f"/v1/disputes/{dispute_id}/human-review",
+        payload={
+            "reason_code": "HIGH_IMPACT_CASE",
+            "rationale": "Primary portal GO gate requires explicit human review evidence.",
+            "expected_version": version,
+        },
+        headers={**analyst_headers, "Idempotency-Key": "portal-primary-review-request", "X-Correlation-Id": "portal-primary-review-request"},
+    )
+    assert review.status_code == 200, review.text
+    version = int(review.json()["version"])
+    review_id = review.json()["pending_review_id"]
+
+    review_decision = request(
+        app,
+        "POST",
+        f"/v1/disputes/{dispute_id}/review-decisions",
+        payload={
+            "decision": "APPROVED",
+            "reason_code": "SUPERVISOR_APPROVED",
+            "rationale": "Supervisor approves the governed disposition.",
+            "review_id": review_id,
+            "approved_disposition": "CONFIRM_FAILURE_FOR_MANUAL_FOLLOW_UP",
+            "expected_version": version,
+        },
+        headers={**supervisor_headers, "Idempotency-Key": "portal-primary-review-decision", "X-Correlation-Id": "portal-primary-review-decision"},
+    )
+    assert review_decision.status_code == 200, review_decision.text
+    version = int(review_decision.json()["version"])
+
+    disposition = request(
+        app,
+        "POST",
+        f"/v1/disputes/{dispute_id}/disposition",
+        payload={
+            "disposition": "CONFIRM_FAILURE_FOR_MANUAL_FOLLOW_UP",
+            "reason_code": "FAILED_DEBIT_CONFIRMED",
+            "rationale": "Governed local-only operational conclusion.",
+            "expected_version": version,
+        },
+        headers={**supervisor_headers, "Idempotency-Key": "portal-primary-disposition", "X-Correlation-Id": "portal-primary-disposition"},
+    )
+    assert disposition.status_code == 200, disposition.text
+
+    audit = request(
+        app,
+        "GET",
+        f"/v1/disputes/{dispute_id}/audit-integrity",
+        headers={**audit_headers, "X-Correlation-Id": "portal-primary-audit"},
+    )
+    assert audit.status_code == 200, audit.text
+    assert audit.json()["passed"] is True
+    version = int(audit.json()["version"])
+
+    closed = request(
+        app,
+        "POST",
+        f"/v1/disputes/{dispute_id}/close",
+        payload={
+            "reason_code": "CASE_COMPLETE",
+            "rationale": "Primary portal closure after audit verification.",
+            "expected_version": version,
+        },
+        headers={**supervisor_headers, "Idempotency-Key": "portal-primary-close", "X-Correlation-Id": "portal-primary-close"},
+    )
+    assert closed.status_code == 200, closed.text
+    assert closed.json()["state"] == "closed"
+
+    history = request(app, "GET", f"/v1/disputes/{dispute_id}/history", headers=audit_headers)
+    assert history.status_code == 200, history.text
+    event_types = [item["event_type"] for item in history.json()["timeline"]]
+    assert "FailedDebitEvidenceAttached" in event_types
+    assert "FailedDebitInvestigationRecorded" in event_types
+    assert "FailedDebitHumanReviewRequested" in event_types
+    assert "FailedDebitReviewDecisionRecorded" in event_types
+    assert "FailedDebitDispositionRecorded" in event_types
+    assert "FailedDebitAuditIntegrityVerified" in event_types
+    assert "FailedDebitCaseClosed" in event_types
+""",
+    }
+
+
+def _has_required_failed_debit_endpoints(openapi_inventory: Mapping[str, object]) -> bool:
+    inventory = openapi_inventory.get("endpoint_inventory")
+    if not isinstance(inventory, list):
+        return False
+    observed = {
+        (str(item.get("method", "")), str(item.get("path", "")))
+        for item in inventory
+        if isinstance(item, Mapping)
+    }
+    required = {
+        ("POST", "/v1/disputes"),
+        ("POST", "/v1/disputes/{dispute_id}/evidence"),
+        ("POST", "/v1/disputes/{dispute_id}/investigate"),
+        ("POST", "/v1/disputes/{dispute_id}/classify"),
+        ("POST", "/v1/disputes/{dispute_id}/human-review"),
+        ("POST", "/v1/disputes/{dispute_id}/review-decisions"),
+        ("POST", "/v1/disputes/{dispute_id}/disposition"),
+        ("GET", "/v1/disputes/{dispute_id}/audit-integrity"),
+        ("POST", "/v1/disputes/{dispute_id}/close"),
+        ("GET", "/v1/disputes/{dispute_id}/history"),
+    }
+    return required.issubset(observed)
 
 
 def _canonical_deep_generated_root(config: AdapterConfig) -> Path:
@@ -1193,6 +1660,7 @@ def _register_generated_application(
         "files": final_manifest,
         "openapi": openapi_document,
         "openapi_inventory": openapi_inventory,
+        "token_economics": _token_economics_contract(requirements_text),
     }
     generation_manifest_path = config.output_root / "generation_manifest.json"
     generation_manifest_path.write_text(
@@ -1214,6 +1682,7 @@ def _register_generated_application(
         "mock_boundary": "enforced",
         "real_payment_calls": "disabled",
         "certification_posture": "certification-ready-not-certified",
+        "token_economics": _token_economics_contract(requirements_text),
     }
     store = PortfolioStore(
         project_root=config.factory_root,
@@ -1234,7 +1703,7 @@ def _register_generated_application(
             manifest=manifest,
             entrypoint=f"app.{config.app_id}.interfaces.api.main:app",
             application_root=config.output_root,
-            capabilities=("disputes", "health", "idempotency"),
+            capabilities=AUTHORITATIVE_FAILED_DEBIT_CAPABILITIES,
         )
     )
     registration = {
@@ -1281,7 +1750,9 @@ def _validate_safety(config: AdapterConfig) -> None:
 
 def _plan_payload(
     config: AdapterConfig,
+    requirements_text: str,
     requirements_sha: str,
+    native_capability_pre_run: Mapping[str, object],
 ) -> dict[str, object]:
     return {
         "schema_version": SCHEMA_VERSION,
@@ -1302,25 +1773,283 @@ def _plan_payload(
         "replace_existing": config.replace_existing,
         "engineering_profile": config.engineering_profile,
         "register_with_portfolio": config.register_with_portfolio,
+        "native_capability_pre_run": native_capability_pre_run,
+        "token_economics": _token_economics_contract(requirements_text),
         "llm_calls": 0,
         "real_payment_calls": "disabled",
     }
 
 
-def run(config: AdapterConfig) -> dict[str, object]:
+def _native_capability_output_root(config: AdapterConfig, requirements_sha: str) -> Path:
+    return (
+        config.evidence_root
+        / "native_capability_pre_run"
+        / config.app_id
+        / requirements_sha
+    )
+
+
+def _run_native_capability_gate(config: AdapterConfig, requirements_sha: str) -> dict[str, object]:
+    evidence_factory_root = (
+        config.factory_root
+        if (config.factory_root / "scripts" / "run_portal_requirements_driven_application_engineering.py").is_file()
+        else PROJECT_ROOT
+    )
+    try:
+        report = run_capability_prerun(
+            PreRunConfig(
+                requirements_document=config.requirements,
+                application_id=config.app_id,
+                output_root=_native_capability_output_root(config, requirements_sha),
+                factory_root=evidence_factory_root,
+                expected_requirements_sha256=requirements_sha,
+            )
+        )
+    except NativeCapabilityError as exc:
+        raise AdapterError(f"native capability pre-run failed closed: {exc}") from exc
+    return {
+        "decision": report["decision"],
+        "mandatory_gate_passed": report["mandatory_gate_passed"],
+        "requirements_sha256": report["requirements_sha256"],
+        "obligation_count": report["obligation_count"],
+        "summary": report["summary"],
+        "artifact_root": str(_native_capability_output_root(config, requirements_sha)),
+        "artifact_checksums": report.get("artifact_checksums", {}),
+    }
+
+
+def run(config: AdapterConfig) -> Mapping[str, Any]:
     requirements_text, requirements_sha = _read_requirements(config.requirements)
     _validate_safety(config)
     _validate_approval(config)
 
-    plan = _plan_payload(config, requirements_sha)
+    native_capability_pre_run = _run_native_capability_gate(config, requirements_sha)
+    plan = _plan_payload(config, requirements_text, requirements_sha, native_capability_pre_run)
     if config.plan_only or config.approval_mode == "proposal-only":
         return plan
+    if native_capability_pre_run["mandatory_gate_passed"] is not True:
+        raise AdapterError(
+            "native capability pre-run did not prove 100 percent capability; "
+            f"see {native_capability_pre_run['artifact_root']}"
+        )
 
     if config.output_root.exists() and not config.replace_existing:
         raise AdapterError(
             f"output root already exists: {config.output_root}; "
             "use --replace-existing only after protected approval"
         )
+
+    if config.engineering_profile == "authoritative-failed-debit-v1":
+        if config.output_root.exists():
+            shutil.rmtree(config.output_root)
+        run_id = (
+            "portal_"
+            + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+            + "_"
+            + requirements_sha[:12]
+            + "_"
+            + _sha256_bytes(str(config.workspace_root).encode("utf-8"))[:8]
+        )
+        evidence_dir = config.evidence_root / run_id
+        evidence_dir.mkdir(parents=True, exist_ok=False)
+        staging_parent = config.output_root.parent
+        staging_parent.mkdir(parents=True, exist_ok=True)
+        staging = Path(
+            tempfile.mkdtemp(
+                prefix=f".{config.output_root.name}.staging.",
+                dir=staging_parent,
+            )
+        )
+        try:
+            authoritative_root = _authoritative_runtime_template_root(config)
+            (staging / "generated_application").mkdir(parents=True, exist_ok=True)
+            _copy_authoritative_runtime_into_publication(
+                source_root=authoritative_root,
+                destination_root=staging / "generated_application",
+                app_id=config.app_id,
+            )
+            materialize_converged_generated_application_artifacts(
+                config.factory_root,
+                application_root=staging / "generated_application",
+            )
+            _write_tree(staging, _primary_runtime_wrapper_files(config.app_id, requirements_text))
+            version_id = _deterministic_version_id(
+                app_id=config.app_id,
+                run_id=run_id,
+                requirements_sha256=requirements_sha,
+            )
+            metadata = {
+                "app_id": config.app_id,
+                "version_id": version_id,
+                "run_id": run_id,
+                "requirements_sha256": requirements_sha,
+                "entrypoint": f"app.{config.app_id}.interfaces.api.main:app",
+                "source_template_root": str(authoritative_root),
+                "primary_runtime_control_plane": "portfolio_authoritative",
+            }
+            (staging / "generation_metadata.json").write_text(
+                json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            write_generated_application_debug_plan(
+                staging,
+                app_id=config.app_id,
+                version_id=version_id,
+                run_id=run_id,
+                requirements_sha256=requirements_sha,
+                source_commit=_source_commit(config.factory_root),
+            )
+            openapi_capture = _capture_openapi(
+                app_root=staging,
+                app_id=config.app_id,
+                version_id=version_id,
+                run_id=run_id,
+                requirements_sha256=requirements_sha,
+            )
+            (staging / "docs").mkdir(parents=True, exist_ok=True)
+            (staging / "evidence").mkdir(parents=True, exist_ok=True)
+            (staging / "docs" / "openapi.json").write_text(
+                json.dumps(openapi_capture["document"], indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            (staging / "evidence" / "openapi_inventory.json").write_text(
+                json.dumps(openapi_capture["inventory"], indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            (evidence_dir / "openapi.json").write_text(
+                json.dumps(openapi_capture["document"], indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            (evidence_dir / "openapi_inventory.json").write_text(
+                json.dumps(openapi_capture["inventory"], indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            test_execution = _execute_generated_tests(
+                app_root=staging,
+                app_id=config.app_id,
+                version_id=version_id,
+                run_id=run_id,
+                requirements_sha256=requirements_sha,
+            )
+            (staging / "evidence" / "generated_test_execution.json").write_text(
+                json.dumps(test_execution, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            (evidence_dir / "generated_test_execution.json").write_text(
+                json.dumps(test_execution, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            if test_execution["go_gate"] != "GO":
+                raise AdapterError("generated application tests failed or collected zero tests")
+            _remove_generated_python_caches(staging)
+            manifest_records = _manifest(staging)
+            required_paths = {
+                "Dockerfile",
+                "README.md",
+                "conftest.py",
+                "generation_metadata.json",
+                "pyproject.toml",
+                "requirements.md",
+                "docs/DEBUG_PLAN.md",
+                "docs/openapi.json",
+                "evidence/debug_plan.json",
+                "evidence/generated_test_execution.json",
+                "evidence/openapi_inventory.json",
+                PRIMARY_PORTAL_RUNTIME_TEST,
+                "tests/test_api_contract.py",
+                "tests/test_service.py",
+                f"app/{config.app_id}/interfaces/api/main.py",
+                "generated_application/app/interfaces/api/main.py",
+                "generated_application/evidence/generation_summary.json",
+            }
+            required_paths.update(
+                f"generated_application/{relative_path}"
+                for relative_path in REQUIRED_ARTIFACT_RELATIVE_PATHS
+            )
+            forbidden_paths = {
+                "generated_application/tests/test_api_contract.py",
+                "generated_application/tests/test_service.py",
+                f"generated_application/app/{config.app_id}/interfaces/api/main.py",
+            }
+            actual_paths = {item["relative_path"] for item in manifest_records}
+            missing = sorted(required_paths - actual_paths)
+            if missing:
+                raise AdapterError("generated output contract is incomplete: " + ", ".join(missing))
+            unexpected = sorted(forbidden_paths & actual_paths)
+            if unexpected:
+                raise AdapterError(
+                    "generated output retained portal wrapper artifacts inside nested runtime: "
+                    + ", ".join(unexpected)
+                )
+            if config.output_root.exists():
+                shutil.rmtree(config.output_root)
+            staging.replace(config.output_root)
+            final_manifest = _manifest(config.output_root)
+            registration = (
+                _register_generated_application(
+                    config=config,
+                    run_id=run_id,
+                    requirements_text=requirements_text,
+                    requirements_sha=requirements_sha,
+                    final_manifest=final_manifest,
+                    evidence_dir=evidence_dir,
+                )
+                if config.register_with_portfolio
+                else None
+            )
+            manifest_text = "".join(
+                f"{item['sha256']}  {item['relative_path']}\n" for item in final_manifest
+            )
+            (evidence_dir / "manifest.sha256").write_text(manifest_text, encoding="utf-8")
+            (evidence_dir / "requirements.sha256").write_text(
+                f"{requirements_sha}  {config.requirements.name}\n",
+                encoding="utf-8",
+            )
+            (evidence_dir / "requirements.md").write_text(requirements_text, encoding="utf-8")
+            runtime_contract = _has_required_failed_debit_endpoints(openapi_capture["inventory"])
+            primary_flow_test = PRIMARY_PORTAL_RUNTIME_TEST in test_execution["tests_executed"]["all"]
+            result = {
+                **plan,
+                "status": SUCCESS_STATUS,
+                "run_id": run_id,
+                "application_root": str(config.output_root),
+                "output_root": str(config.output_root),
+                "entrypoint": f"app.{config.app_id}.interfaces.api.main:app",
+                "capabilities": list(AUTHORITATIVE_FAILED_DEBIT_CAPABILITIES),
+                "generated_file_count": len(final_manifest),
+                "health_contract": True,
+                "ready_contract": True,
+                "generated_tests": test_execution["tests_present"]["all"],
+                "generated_test_execution": test_execution,
+                "tests_executed": test_execution["tests_executed"],
+                "tests_present": test_execution["tests_present"],
+                "openapi": openapi_capture["document"],
+                "openapi_inventory": openapi_capture["inventory"],
+                "evidence_directory": str(evidence_dir),
+                "failed_debit_runtime_contract": runtime_contract,
+                "failed_debit_primary_flow_test": primary_flow_test,
+                "primary_runtime_control_plane": "portfolio_authoritative",
+                "version_id": registration["version_id"] if registration else version_id,
+                "source_commit": (
+                    registration["source_commit"]
+                    if registration
+                    else _source_commit(config.factory_root)
+                ),
+                "portfolio_registration": registration,
+                "completed_at_utc": _utc_now(),
+                "llm_calls": 0,
+                "real_payment_calls": "disabled",
+                "mock_boundary": True,
+                "token_economics": _token_economics_contract(requirements_text),
+            }
+            (evidence_dir / "result.json").write_text(
+                json.dumps(result, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            return result
+        finally:
+            if staging.exists():
+                shutil.rmtree(staging, ignore_errors=True)
 
     if config.engineering_profile == "local-deep-v1":
         from factory.application_engineering.deep_composer import DeepApplicationComposer
@@ -1362,6 +2091,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "canonical_application_root": str(canonical_application_root),
             "evidence_directory": str(evidence_dir),
             "completed_at_utc": _utc_now(),
+            "token_economics": _token_economics_contract(requirements_text),
         }
         (evidence_dir / "result.json").write_text(
             json.dumps(result, indent=2, sort_keys=True) + "\n",
@@ -1469,7 +2199,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "tests/test_api_contract.py",
             (f"app/{config.app_id}/interfaces/api/main.py"),
         }
-        actual_paths: set[str] = {item["relative_path"] for item in manifest_records}
+        actual_paths = {item["relative_path"] for item in manifest_records}
         missing = sorted(required_paths - actual_paths)
         if missing:
             raise AdapterError("generated output contract is incomplete: " + ", ".join(missing))
@@ -1534,6 +2264,7 @@ def run(config: AdapterConfig) -> dict[str, object]:
             "application_root": str(config.output_root),
             "portfolio_registration": registration,
             "completed_at_utc": _utc_now(),
+            "token_economics": _token_economics_contract(requirements_text),
         }
         (evidence_dir / "result.json").write_text(
             json.dumps(result, indent=2, sort_keys=True) + "\n",

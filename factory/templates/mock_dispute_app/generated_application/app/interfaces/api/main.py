@@ -10,6 +10,7 @@ from typing import AsyncIterator, cast
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse, JSONResponse
+from pydantic import BaseModel, Field, ValidationError
 from starlette.datastructures import MutableHeaders
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
@@ -274,6 +275,11 @@ def _secure_operation(
 _install_openapi_contract()
 
 
+class EchoScenarioRequest(BaseModel):
+    client_request_id: str = Field(min_length=1, max_length=128)
+    amount: int = Field(ge=0)
+
+
 async def local_principal_dependency(
     authorization: str | None = Header(default=None, alias="Authorization"),
     subject: str | None = Header(default=None, alias="X-Local-Subject"),
@@ -315,6 +321,44 @@ async def drain(principal: Principal = Depends(local_principal_dependency)) -> d
 @app.get("/health")
 async def health() -> dict[str, object]:
     return {"status": "ok", "startup": RUNTIME.started, "live": RUNTIME.live}
+
+
+@app.get("/runtime/health")
+async def runtime_health() -> dict[str, str]:
+    return {"status": "passed", "mode": "mock-safe-local"}
+
+
+@app.get("/capabilities")
+async def capabilities() -> dict[str, object]:
+    return {
+        "mock_only": True,
+        "capabilities": ["disputes", "health", "echo", "ready"],
+        "live_provider_calls_allowed": False,
+        "default_runtime_llm_calls": 0,
+    }
+
+
+@app.post("/scenario/echo", response_model=None)
+async def scenario_echo(request: Request) -> JSONResponse:
+    payload = await request.json()
+    try:
+        scenario = EchoScenarioRequest.model_validate(payload)
+    except ValidationError:
+        return JSONResponse(status_code=422, content={"error": {"code": "validation_error"}})
+    return JSONResponse(
+        status_code=200,
+        content={
+            "accepted": True,
+            "client_request_id": scenario.client_request_id,
+            "amount": scenario.amount,
+            "replay_status": 200,
+        },
+    )
+
+
+@app.get("/missing")
+async def missing() -> JSONResponse:
+    return JSONResponse(status_code=404, content={"error": {"code": "not_found"}})
 
 
 @app.get("/runtime/diagnostics")

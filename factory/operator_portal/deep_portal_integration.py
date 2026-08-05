@@ -13,6 +13,7 @@ from typing import Any, Mapping
 from factory.application_engineering.deep_composer import DOMAIN_STATES, REQUIRED_ENDPOINTS
 from factory.application_engineering.requirements_compiler import compile_requirements
 from factory.application_engineering.verification_evidence import build_test_catalogue, materialize_generated_app_if_missing
+from factory.token_economics import build_token_economics_summary
 from scripts.run_portal_requirements_driven_application_engineering import (
     APPROVAL_TOKEN,
     AdapterConfig,
@@ -180,6 +181,7 @@ class DeepPortalIntegration:
                 "live_provider_calls_allowed": False,
                 "external_ecosystem_integrations": "mocked_or_simulated_only",
             },
+            "token_economics": build_token_economics_summary(self.project_root),
             "views": self._views(ir, depth, test_results, phase_reports),
             "source_files": file_inventory(self.source_root),
             "evidence_files": file_inventory(self.evidence_root),
@@ -214,6 +216,7 @@ class DeepPortalIntegration:
             "mock_boundary": True,
             "real_payment_calls": "disabled",
             "llm_calls": 0,
+            "token_economics": build_token_economics_summary(self.project_root),
         }
 
     def proposal(self, request: Mapping[str, Any]) -> dict[str, Any]:
@@ -228,6 +231,7 @@ class DeepPortalIntegration:
             "profile_distinction": "local-deep-v1 proposal, no generated source written",
             "real_payment_calls": "disabled",
             "llm_calls": 0,
+            "token_economics": build_token_economics_summary(self.project_root),
         }
 
     def approved_run(self, request: Mapping[str, Any]) -> dict[str, Any]:
@@ -247,6 +251,7 @@ class DeepPortalIntegration:
             "evidence_root": str(config.evidence_root),
             "real_payment_calls": "disabled",
             "llm_calls": 0,
+            "token_economics": build_token_economics_summary(self.project_root),
         }
 
     def read_source(self, relative: str) -> dict[str, Any]:

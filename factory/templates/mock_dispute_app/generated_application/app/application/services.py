@@ -48,6 +48,7 @@ class DisputeService:
             dispute.transition_to(initial_policy_state(dispute), actor="application_service")
             audit_hash = uow.audit.append(
                 "application_service",
+                "system",
                 "dispute.create",
                 dispute.dispute_id.value,
                 {

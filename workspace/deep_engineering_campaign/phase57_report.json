@@ -1,0 +1,30 @@
+{
+  "depth_score": {
+    "api_event_contracts": 9,
+    "architecture_boundaries": 13,
+    "cited_evidence": [
+      "requirements_traceability.json",
+      "test_catalogue.json",
+      "owasp_asvs_5_0_0_matrix.json",
+      "manifest_sha256.json",
+      "slsa_1_2_provenance_shaped.json"
+    ],
+    "critical_findings": 0,
+    "data_integrity_transactions": 8,
+    "domain_fidelity": 17,
+    "evidence_provenance": 5,
+    "high_findings": 0,
+    "observability_operations": 8,
+    "overall": 86,
+    "security_privacy": 13,
+    "testing_depth": 13
+  },
+  "llm_runtime_calls": 0,
+  "product_name": "UPI App Factory",
+  "real_payment_calls": "disabled",
+  "repository_id": "upi_app_factory",
+  "stage": "Phase 57",
+  "status": "completed",
+  "test_count": 120,
+  "verification_archive": "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/evidence/phase57_verification/generated_app_archive.tar.gz"
+}

@@ -32,7 +32,7 @@
     {
       "exists": true,
       "path": "README.md",
-      "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608"
+      "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a"
     },
     {
       "exists": true,
@@ -42,7 +42,7 @@
     {
       "exists": true,
       "path": "scripts/factory_cli.py",
-      "sha256": "1caad8f7a77e37c8a38d94d4c3c7694761a872792c751bb45d615c6cbe5d20fb"
+      "sha256": "96b2be4c040fdf0ee10b9a51384cf06aadf2554111b87c935cf7d9bbd9a69f1b"
     },
     {
       "exists": true,

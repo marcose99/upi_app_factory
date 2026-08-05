@@ -1,0 +1,75 @@
+{
+  "actual_application_root": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/generated_app/upi_failed_debit_dispute",
+  "app_id": "upi_failed_debit_dispute",
+  "approval_mode": "human-gated",
+  "canonical_application_root": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute",
+  "completed_at_utc": "2026-07-30T16:19:25Z",
+  "composer_profile": "local-deep-v1",
+  "engineering_profile": "local-deep-v1",
+  "evidence_directory": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/engineering_evidence/portal_deep_20260730T161925995606Z_9e6f56233c46",
+  "evidence_root": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/engineering_evidence",
+  "generated_file_count": 19,
+  "generated_tests": [
+    "docs/test_plan.md"
+  ],
+  "health_contract": true,
+  "llm_calls": 0,
+  "mock_safe": true,
+  "native_capability_pre_run": {
+    "artifact_checksums": {
+      "CAPABILITY_PRE_RUN_REPORT.json": "e28f1246fae6a95dbff7348a4b6f865e0cab8e4e6d12e3ae3b5d06505a441568",
+      "CAPABILITY_PRE_RUN_REPORT.md": "554de4f66709bff00dd3b0864ba18d755e89156a1fd21c3a9afe3bd38247f42f",
+      "FACTORY_IMPROVEMENT_PLAN.json": "ae3d584170c692a165ea30a8c00936950073d3d2ac51a9994c48ad37020b4faa",
+      "FACTORY_IMPROVEMENT_PLAN.md": "d08ca5ded7f40a77181e325b49fa8479e4d90cfcb275bbb9dff144084858eb57",
+      "FACTORY_IMPROVEMENT_REQUIREMENTS.json": "8a747abaf549959f4d2edfee118a3025cf2f8b833b2444643e21a09be0b45cde",
+      "FACTORY_IMPROVEMENT_REQUIREMENTS.md": "2fb8d553248b7145cb8e8aaf6bcd373f34e52a97a421da905599f154c1f0e27c",
+      "PRE_RUN_MANIFEST.json": "ac4f5d43a3234934a1f16e5333135552008f0b3405a51b7a12a0058998be5798",
+      "PRE_RUN_SHA256SUMS": "66b4b2caeb59ba560aad9bf900095c5d639b85e83a3d1c9c6bb93346ae3e413f",
+      "REQUIREMENT_CAPABILITY_MATRIX.json": "e33e8cf2962cea3c2332f0639211b58bafb53b73235ba282c71c4644449471c1",
+      "REQUIREMENT_CAPABILITY_MATRIX.md": "027c31c561b3d681ada08255996d9244398996ad32085e98061f8a2eb44a4a28"
+    },
+    "artifact_root": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/engineering_evidence/native_capability_pre_run/upi_failed_debit_dispute/9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+    "decision": "PROVEN_100_PERCENT_CAPABILITY",
+    "mandatory_gate_passed": true,
+    "obligation_count": 246,
+    "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+    "summary": {
+      "by_classification": {
+        "FULFILLABLE": 246,
+        "NOT_APPLICABLE": 0,
+        "NOT_FULFILLABLE_ENVIRONMENT_GAP": 0,
+        "NOT_FULFILLABLE_EXTERNAL_DEPENDENCY": 0,
+        "NOT_FULFILLABLE_FACTORY_GAP": 0,
+        "NOT_FULFILLABLE_GOVERNANCE_BOUNDARY": 0,
+        "NOT_FULFILLABLE_REQUIREMENTS_AMBIGUITY": 0,
+        "PARTIALLY_FULFILLABLE": 0
+      },
+      "fulfillable": 246,
+      "non_fulfillable": 0,
+      "total": 246
+    }
+  },
+  "output_root": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/generated_app",
+  "portfolio_state_root": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/.var/upi_app_factory/portfolio",
+  "ready_contract": true,
+  "real_payment_calls": "disabled",
+  "register_with_portfolio": true,
+  "replace_existing": true,
+  "requirements": "__USER_HOME__/.local/state/upi_app_factory/bounded-model-implementation-r5-continuation/20260730T155317Z-3595990-235372092/implementation/candidate_attempt_3/examples/requirements/01_upi_failed_debit_no_credit.md",
+  "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+  "schema_version": "1.0",
+  "status": "PORTAL_REQUIREMENTS_DRIVEN_APPLICATION_ENGINEERING_COMPLETED",
+  "token_economics": {
+    "applicability": {
+      "reason": "requirements or metadata mention LLM or model activity",
+      "runtime_llm_calls_default": 0,
+      "status": "APPLICABLE"
+    },
+    "artifact_ownership_registry_path": "config/token_economics/artifact_ownership_registry.json",
+    "budget_envelope_path": "config/token_economics/budgets/default_stage_budget.json",
+    "mock_only": true,
+    "policy_version": "2026-07-29.v1",
+    "provider_native_usage_retained": true,
+    "rate_card_registry_path": "config/token_economics/rate_cards"
+  }
+}

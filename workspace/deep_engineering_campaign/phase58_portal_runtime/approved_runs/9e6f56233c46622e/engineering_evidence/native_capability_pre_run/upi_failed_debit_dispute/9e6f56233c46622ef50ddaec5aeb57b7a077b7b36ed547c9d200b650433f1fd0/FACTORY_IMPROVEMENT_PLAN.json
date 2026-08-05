@@ -1,0 +1,21 @@
+{
+  "application_id": "upi_failed_debit_dispute",
+  "artifact": "FACTORY_IMPROVEMENT_PLAN",
+  "implementation_steps": [],
+  "plan_only_default": true,
+  "prohibited_actions": [
+    "merge",
+    "push",
+    "force push",
+    "tag",
+    "release",
+    "deployment",
+    "certification claim",
+    "branch deletion",
+    "worktree deletion",
+    "live provider calls"
+  ],
+  "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+  "schema_version": "native-capability-prerun.v1",
+  "stop_condition": "governed review after deterministic validation"
+}

@@ -19,6 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from factory.generators.mock_dispute_app_generator import generate  # noqa: E402
+from factory.prerequisite_artifacts import materialize_clean_clone_test_evidence  # noqa: E402
 
 
 EXPORT_ROOT = (
@@ -234,6 +235,16 @@ def zip_directory(source_root: Path, zip_path: Path) -> None:
 
 
 def export_bundle(*, clean: bool = True) -> dict[str, Any]:
+    materialization = materialize_clean_clone_test_evidence(
+        PROJECT_ROOT,
+        include_phases={"phase28"},
+    )
+    if materialization["status"] != "PASSED":
+        raise RuntimeError(
+            "Phase 31 export requires deterministic Phase 28 lifecycle artifacts: "
+            f"{materialization['errors']}"
+        )
+
     before_fingerprint = workspace_fingerprint(GENERATED_WORKSPACE_ROOT)
 
     EXPORT_ROOT.mkdir(parents=True, exist_ok=True)

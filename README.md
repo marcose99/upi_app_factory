@@ -93,6 +93,44 @@ See [Environment Specification](docs/handover/ENVIRONMENT_SPEC.md) and [Supporte
 
 Detailed guidance: [Portal Guide](docs/handover/PORTAL_GUIDE.md), [Input Contract](docs/operator_portal/input_contract.md) and [Control Contract](docs/operator_portal/control_contract.md).
 
+## Native capability and token economics
+
+Before source generation, the factory now runs a mandatory native capability pre-run that inventories atomic obligations, classifies each one against current executable evidence, and emits improvement artifacts when the factory cannot honestly prove full coverage. The governed CLI entry points are:
+
+```bash
+python scripts/run_requirements_capability_prerun.py \
+  --requirements-document examples/requirements/01_upi_failed_debit_no_credit.md \
+  --application-id upi_dispute_resolution \
+  --output-root /tmp/upi-native-prerun
+
+python scripts/run_factory_capability_improvement.py \
+  --improvement-requirements /tmp/upi-native-prerun/FACTORY_IMPROVEMENT_REQUIREMENTS.json \
+  --improvement-sha256 <sha256> \
+  --output-root /tmp/upi-factory-improvement \
+  --requirements-document examples/requirements/01_upi_failed_debit_no_credit.md \
+  --application-id upi_dispute_resolution
+```
+
+Token economics are governed as local configuration and offline decimal calculations rather than hard-coded floating-point estimates. The portal exposes the same local-only distinctions the requirements demand: estimate versus observed versus settled usage, token-category breakdowns including reasoning as a subset of total output, independent raw-token versus economic-budget controls, per-stage/run/application/outcome rollups, rate-card provenance/staleness, and reconciliation posture.
+
+Use the shared CLI surface for summary, validation, normalization, estimation, authorization, settlement, aggregation, reconciliation, and compact evidence export:
+
+```bash
+./factoryctl token-economics summary
+python scripts/token_economics_cli.py validate-rate-card
+python scripts/token_economics_cli.py validate-budget config/token_economics/budgets/default_stage_budget.json
+python scripts/token_economics_cli.py normalize /tmp/provider_usage.json
+python scripts/token_economics_cli.py estimate /tmp/provider_usage.json --rate-card-id openai-codex-chatgpt-credit-2026-07-28-gpt-5.4
+python scripts/token_economics_cli.py authorize /tmp/budget_request.json --budget config/token_economics/budgets/default_stage_budget.json
+python scripts/token_economics_cli.py settle /tmp/normalized_usage.json --rate-card-id openai-codex-chatgpt-credit-2026-07-28-gpt-5.4
+python scripts/token_economics_cli.py aggregate /tmp/token_economics_ledger.jsonl
+python scripts/token_economics_cli.py reconcile /tmp/reconciliation_payload.json
+python scripts/token_economics_cli.py compact-report /tmp/token_economics_ledger.jsonl
+python -m factory.validators.validate_evidence_ledger
+```
+
+The primary generated runtime now exposes the bounded failed-debit workflow that portal operators review against the campaign requirement: `POST /v1/disputes`, `POST /v1/disputes/{id}/evidence`, `POST /v1/disputes/{id}/investigation`, `POST /v1/disputes/{id}/resolution`, and `GET /v1/disputes/{id}/timeline`. The local workflow is deterministic-first and mock-only: create the case, attach the required `switch_failure`, `core_ledger`, and `customer_statement` evidence set, record the simulated-bank investigation snapshot, and then propose or finalize the resolution with an expected-version guard.
+
 ## What the factory produces
 
 A governed run can produce:

@@ -141,6 +141,13 @@ MIGRATIONS: tuple[Migration, ...] = (
           where business_fingerprint is not null;
         """,
     ),
+    Migration(
+        11,
+        "audit_log_actor_role",
+        """
+        alter table audit_records add column actor_role text not null default 'unknown';
+        """,
+    ),
 )
 
 

@@ -1,0 +1,95 @@
+{
+  "schema_version": "token-economics-artifact-ownership.v1",
+  "version": "2026-07-29.v1",
+  "families": [
+    {
+      "family_id": "token_economics_configuration",
+      "logical_owner": "factory_platform_owner",
+      "producer": "governed_source_change",
+      "artifact_kind": "configuration",
+      "candidate_commit_allowed": true,
+      "persistence_policy": "durable_repository_owned",
+      "stable_fields": [
+        "rate_card_keys",
+        "units",
+        "decision_rights",
+        "retention_classes"
+      ],
+      "volatile_fields": [],
+      "runtime_root": null,
+      "deterministic_contract": "exact_bytes",
+      "path_patterns": [
+        "config/token_economics/**"
+      ]
+    },
+    {
+      "family_id": "token_economics_runtime_ledger",
+      "logical_owner": "finops_cost_policy_owner",
+      "producer": "token_economics_cli_or_runtime",
+      "artifact_kind": "runtime_state",
+      "candidate_commit_allowed": false,
+      "persistence_policy": "runtime_retained_until_policy_expiry",
+      "stable_fields": [
+        "schema_version",
+        "identity_fields",
+        "cost_components"
+      ],
+      "volatile_fields": [
+        "recorded_at_utc",
+        "paths",
+        "durations"
+      ],
+      "runtime_root": "workspace/token_economics_runtime",
+      "deterministic_contract": "semantic_reproducibility",
+      "path_patterns": [
+        "workspace/token_economics_runtime/**"
+      ]
+    },
+    {
+      "family_id": "generated_application_metadata",
+      "logical_owner": "application_product_owner",
+      "producer": "scripts/run_portal_requirements_driven_application_engineering.py",
+      "artifact_kind": "derived_evidence",
+      "candidate_commit_allowed": true,
+      "persistence_policy": "durable_repository_or_publication_snapshot",
+      "stable_fields": [
+        "requirements_sha256",
+        "token_economics"
+      ],
+      "volatile_fields": [
+        "generated_at_utc",
+        "application_root",
+        "portfolio_registration"
+      ],
+      "runtime_root": null,
+      "deterministic_contract": "semantic_reproducibility",
+      "path_patterns": [
+        "workspace/factory_generated/*/generated_application/generation_metadata.json",
+        "workspace/factory_generated/*/portal_publications/*/generated_application/generation_manifest.json",
+        "workspace/factory_generated/*/generated_application/generation_manifest.json"
+      ]
+    },
+    {
+      "family_id": "token_economics_reports",
+      "logical_owner": "independent_assurance_reviewer",
+      "producer": "scripts/token_economics_cli.py",
+      "artifact_kind": "derived_evidence",
+      "candidate_commit_allowed": false,
+      "persistence_policy": "runtime_retained_until_governed_publication",
+      "stable_fields": [
+        "schema_version",
+        "hashes",
+        "aggregates"
+      ],
+      "volatile_fields": [
+        "generated_at_utc",
+        "local_paths"
+      ],
+      "runtime_root": "workspace/token_economics_runtime/reports",
+      "deterministic_contract": "semantic_reproducibility",
+      "path_patterns": [
+        "workspace/token_economics_runtime/reports/**"
+      ]
+    }
+  ]
+}

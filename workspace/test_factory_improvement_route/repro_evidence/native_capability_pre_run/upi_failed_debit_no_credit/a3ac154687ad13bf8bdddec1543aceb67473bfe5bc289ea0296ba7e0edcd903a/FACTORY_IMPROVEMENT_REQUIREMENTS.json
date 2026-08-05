@@ -1,0 +1,9 @@
+{
+  "application_id": "upi_failed_debit_no_credit",
+  "artifact": "FACTORY_IMPROVEMENT_REQUIREMENTS",
+  "factory_baseline": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+  "items": [],
+  "requirements_sha256": "a3ac154687ad13bf8bdddec1543aceb67473bfe5bc289ea0296ba7e0edcd903a",
+  "schema_version": "native-capability-prerun.v1",
+  "source_status": "PROVEN_100_PERCENT_CAPABILITY"
+}

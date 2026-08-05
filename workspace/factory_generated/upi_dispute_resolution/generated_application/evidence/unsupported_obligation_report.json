@@ -1,0 +1,4569 @@
+{
+  "items": [
+    {
+      "normalized_text": "Real payment calls: prohibited",
+      "obligation_id": "OBL-P01-document_control-001",
+      "source": {
+        "ordinal": 1,
+        "page": 1,
+        "page_line": 13,
+        "section": "document_control"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Live provider calls: prohibited",
+      "obligation_id": "OBL-P01-document_control-002",
+      "source": {
+        "ordinal": 2,
+        "page": 1,
+        "page_line": 14,
+        "section": "document_control"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Requirement conformance policy: fail closed",
+      "obligation_id": "OBL-P01-document_control-003",
+      "source": {
+        "ordinal": 3,
+        "page": 1,
+        "page_line": 16,
+        "section": "document_control"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Unsupported mandatory capability policy: fail closed with explicit evidence",
+      "obligation_id": "OBL-P01-document_control-004",
+      "source": {
+        "ordinal": 4,
+        "page": 1,
+        "page_line": 17,
+        "section": "document_control"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Traceability policy: every mandatory requirement must map to implementation, tests and evidence",
+      "obligation_id": "OBL-P01-document_control-005",
+      "source": {
+        "ordinal": 5,
+        "page": 1,
+        "page_line": 18,
+        "section": "document_control"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Governing generation contract The factory shall treat every statement containing shall, must, required, mandatory, prohibited, or fail closed as an enforceable engineering obligation",
+      "obligation_id": "OBL-P01-1-001",
+      "source": {
+        "ordinal": 1,
+        "page": 1,
+        "page_line": 21,
+        "section": "1. Governing generation contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The generated application shall not be considered complete merely because source files were produced",
+      "obligation_id": "OBL-P01-1-002",
+      "source": {
+        "ordinal": 2,
+        "page": 1,
+        "page_line": 26,
+        "section": "1. Governing generation contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Every mandatory requirement is represented in a requirements-traceability matrix",
+      "obligation_id": "OBL-P01-1-001",
+      "source": {
+        "ordinal": 1,
+        "page": 1,
+        "page_line": 32,
+        "section": "1. Every mandatory requirement is represented in a requirements-traceability matrix."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Every mandatory domain rule maps to at least one implementation location and one executable test",
+      "obligation_id": "OBL-P01-2-001",
+      "source": {
+        "ordinal": 1,
+        "page": 1,
+        "page_line": 33,
+        "section": "2. Every mandatory domain rule maps to at least one implementation location and one executable test."
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Every mandatory safety boundary maps to an enforcement mechanism and test evidence",
+      "obligation_id": "OBL-P01-5-001",
+      "source": {
+        "ordinal": 1,
+        "page": 1,
+        "page_line": 36,
+        "section": "5. Every mandatory safety boundary maps to an enforcement mechanism and test evidence."
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Any unsupported mandatory obligation causes a governed NO_GO result",
+      "obligation_id": "OBL-P01-10-001",
+      "source": {
+        "ordinal": 1,
+        "page": 1,
+        "page_line": 41,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The factory shall not silently omit, weaken, reinterpret or mark unsupported mandatory requirements as satisfied",
+      "obligation_id": "OBL-P01-10-002",
+      "source": {
+        "ordinal": 2,
+        "page": 1,
+        "page_line": 43,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "implemented but partially verified obligations",
+      "obligation_id": "OBL-P02-10-004",
+      "source": {
+        "ordinal": 4,
+        "page": 2,
+        "page_line": 5,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsupported obligations",
+      "obligation_id": "OBL-P02-10-005",
+      "source": {
+        "ordinal": 5,
+        "page": 2,
+        "page_line": 6,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "deferred obligations",
+      "obligation_id": "OBL-P02-10-006",
+      "source": {
+        "ordinal": 6,
+        "page": 2,
+        "page_line": 7,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "residual risks",
+      "obligation_id": "OBL-P02-10-007",
+      "source": {
+        "ordinal": 7,
+        "page": 2,
+        "page_line": 8,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "non-goals",
+      "obligation_id": "OBL-P02-10-008",
+      "source": {
+        "ordinal": 8,
+        "page": 2,
+        "page_line": 9,
+        "section": "10. Any unsupported mandatory obligation causes a governed NO_GO result."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "prevents duplicate case creation and duplicate compensation",
+      "obligation_id": "OBL-P02-2-003",
+      "source": {
+        "ordinal": 3,
+        "page": 2,
+        "page_line": 23,
+        "section": "2. Problem statement"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "escalates uncertainty and high-impact cases",
+      "obligation_id": "OBL-P02-2-006",
+      "source": {
+        "ordinal": 6,
+        "page": 2,
+        "page_line": 26,
+        "section": "2. Problem statement"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "produces independently verifiable engineering and operational evidence",
+      "obligation_id": "OBL-P02-2-009",
+      "source": {
+        "ordinal": 9,
+        "page": 2,
+        "page_line": 29,
+        "section": "2. Problem statement"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The application shall demonstrate a production-shaped architecture without performing real payment processing, account actions, regulatory filings or live provider interactions",
+      "obligation_id": "OBL-P02-2-010",
+      "source": {
+        "ordinal": 10,
+        "page": 2,
+        "page_line": 31,
+        "section": "2. Problem statement"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "idempotent case creation",
+      "obligation_id": "OBL-P02-3-003",
+      "source": {
+        "ordinal": 3,
+        "page": 2,
+        "page_line": 41,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "structured logs and metrics",
+      "obligation_id": "OBL-P03-3-015",
+      "source": {
+        "ordinal": 15,
+        "page": 3,
+        "page_line": 2,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "requirements-to-code-to-test traceability",
+      "obligation_id": "OBL-P03-3-018",
+      "source": {
+        "ordinal": 18,
+        "page": 3,
+        "page_line": 5,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "checksummed evidence and downloadable artifacts",
+      "obligation_id": "OBL-P03-3-019",
+      "source": {
+        "ordinal": 19,
+        "page": 3,
+        "page_line": 6,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "local-only",
+      "obligation_id": "OBL-P03-3-020",
+      "source": {
+        "ordinal": 20,
+        "page": 3,
+        "page_line": 11,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "deterministic-first",
+      "obligation_id": "OBL-P03-3-021",
+      "source": {
+        "ordinal": 21,
+        "page": 3,
+        "page_line": 12,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock-only",
+      "obligation_id": "OBL-P03-3-022",
+      "source": {
+        "ordinal": 22,
+        "page": 3,
+        "page_line": 13,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "replaceable",
+      "obligation_id": "OBL-P03-3-023",
+      "source": {
+        "ordinal": 23,
+        "page": 3,
+        "page_line": 14,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "independently testable",
+      "obligation_id": "OBL-P03-3-024",
+      "source": {
+        "ordinal": 24,
+        "page": 3,
+        "page_line": 15,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "free from hidden network dependencies",
+      "obligation_id": "OBL-P03-3-025",
+      "source": {
+        "ordinal": 25,
+        "page": 3,
+        "page_line": 16,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "certification-ready-not-certified",
+      "obligation_id": "OBL-P03-3-026",
+      "source": {
+        "ordinal": 26,
+        "page": 3,
+        "page_line": 17,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "explicitly not production-ready",
+      "obligation_id": "OBL-P03-3-027",
+      "source": {
+        "ordinal": 27,
+        "page": 3,
+        "page_line": 18,
+        "section": "3. Business objective"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "SYSTEM_MOCK_ADAPTER",
+      "obligation_id": "OBL-P03-4-007",
+      "source": {
+        "ordinal": 7,
+        "page": 3,
+        "page_line": 30,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "submit a fictional complaint",
+      "obligation_id": "OBL-P03-4-009",
+      "source": {
+        "ordinal": 9,
+        "page": 3,
+        "page_line": 40,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "never make an external call",
+      "obligation_id": "OBL-P04-4-027",
+      "source": {
+        "ordinal": 27,
+        "page": 4,
+        "page_line": 24,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "All final consequential classifications, disposition decisions and closure decisions shall remain attributable to an authorised human actor",
+      "obligation_id": "OBL-P04-4-029",
+      "source": {
+        "ordinal": 29,
+        "page": 4,
+        "page_line": 29,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "submit a network instruction",
+      "obligation_id": "OBL-P04-4-033",
+      "source": {
+        "ordinal": 33,
+        "page": 4,
+        "page_line": 39,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "restrict an account",
+      "obligation_id": "OBL-P04-4-034",
+      "source": {
+        "ordinal": 34,
+        "page": 4,
+        "page_line": 40,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "file a regulatory report",
+      "obligation_id": "OBL-P04-4-035",
+      "source": {
+        "ordinal": 35,
+        "page": 4,
+        "page_line": 41,
+        "section": "4. Users, actors and accountability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Raw secret material or real personal data shall not be stored",
+      "obligation_id": "OBL-P05-5-003",
+      "source": {
+        "ordinal": 3,
+        "page": 5,
+        "page_line": 8,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "REVERSED",
+      "obligation_id": "OBL-P05-5-006",
+      "source": {
+        "ordinal": 6,
+        "page": 5,
+        "page_line": 22,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CREDIT_CONFIRMED",
+      "obligation_id": "OBL-P05-5-007",
+      "source": {
+        "ordinal": 7,
+        "page": 5,
+        "page_line": 23,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "UNCERTAIN",
+      "obligation_id": "OBL-P05-5-008",
+      "source": {
+        "ordinal": 8,
+        "page": 5,
+        "page_line": 24,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "WAIT_FOR_NETWORK_UPDATE",
+      "obligation_id": "OBL-P05-5-009",
+      "source": {
+        "ordinal": 9,
+        "page": 5,
+        "page_line": 39,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CONFIRM_REVERSAL_OBSERVED",
+      "obligation_id": "OBL-P05-5-011",
+      "source": {
+        "ordinal": 11,
+        "page": 5,
+        "page_line": 41,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CONFIRM_BENEFICIARY_CREDIT_OBSERVED",
+      "obligation_id": "OBL-P05-5-012",
+      "source": {
+        "ordinal": 12,
+        "page": 5,
+        "page_line": 42,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "REQUIRE_ADDITIONAL_EVIDENCE",
+      "obligation_id": "OBL-P05-5-013",
+      "source": {
+        "ordinal": 13,
+        "page": 5,
+        "page_line": 43,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "ESCALATE_FOR_SPECIALIST_REVIEW",
+      "obligation_id": "OBL-P05-5-014",
+      "source": {
+        "ordinal": 14,
+        "page": 5,
+        "page_line": 44,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "UNRESOLVED",
+      "obligation_id": "OBL-P05-5-015",
+      "source": {
+        "ordinal": 15,
+        "page": 5,
+        "page_line": 45,
+        "section": "5. Domain glossary"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "case_id",
+      "obligation_id": "OBL-P06-6-002",
+      "source": {
+        "ordinal": 2,
+        "page": 6,
+        "page_line": 6,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "idempotency_key",
+      "obligation_id": "OBL-P06-6-004",
+      "source": {
+        "ordinal": 4,
+        "page": 6,
+        "page_line": 8,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "request_payload_digest",
+      "obligation_id": "OBL-P06-6-005",
+      "source": {
+        "ordinal": 5,
+        "page": 6,
+        "page_line": 9,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "amount_minor",
+      "obligation_id": "OBL-P06-6-006",
+      "source": {
+        "ordinal": 6,
+        "page": 6,
+        "page_line": 10,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "currency",
+      "obligation_id": "OBL-P06-6-007",
+      "source": {
+        "ordinal": 7,
+        "page": 6,
+        "page_line": 11,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "complaint_summary",
+      "obligation_id": "OBL-P06-6-008",
+      "source": {
+        "ordinal": 8,
+        "page": 6,
+        "page_line": 12,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "case_state",
+      "obligation_id": "OBL-P06-6-009",
+      "source": {
+        "ordinal": 9,
+        "page": 6,
+        "page_line": 13,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification_reason_code",
+      "obligation_id": "OBL-P06-6-011",
+      "source": {
+        "ordinal": 11,
+        "page": 6,
+        "page_line": 15,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification_confidence",
+      "obligation_id": "OBL-P06-6-012",
+      "source": {
+        "ordinal": 12,
+        "page": 6,
+        "page_line": 16,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "impact_level",
+      "obligation_id": "OBL-P06-6-013",
+      "source": {
+        "ordinal": 13,
+        "page": 6,
+        "page_line": 17,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "evidence_completeness",
+      "obligation_id": "OBL-P06-6-014",
+      "source": {
+        "ordinal": 14,
+        "page": 6,
+        "page_line": 18,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "created_by",
+      "obligation_id": "OBL-P06-6-019",
+      "source": {
+        "ordinal": 19,
+        "page": 6,
+        "page_line": 23,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "created_at",
+      "obligation_id": "OBL-P06-6-020",
+      "source": {
+        "ordinal": 20,
+        "page": 6,
+        "page_line": 24,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "updated_at",
+      "obligation_id": "OBL-P06-6-021",
+      "source": {
+        "ordinal": 21,
+        "page": 6,
+        "page_line": 25,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "correlation_id",
+      "obligation_id": "OBL-P06-6-023",
+      "source": {
+        "ordinal": 23,
+        "page": 6,
+        "page_line": 27,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The aggregate shall own and enforce its state transitions and invariants",
+      "obligation_id": "OBL-P06-6-024",
+      "source": {
+        "ordinal": 24,
+        "page": 6,
+        "page_line": 29,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CaseId",
+      "obligation_id": "OBL-P06-6-026",
+      "source": {
+        "ordinal": 26,
+        "page": 6,
+        "page_line": 37,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "TransactionReference",
+      "obligation_id": "OBL-P06-6-027",
+      "source": {
+        "ordinal": 27,
+        "page": 6,
+        "page_line": 38,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "IdempotencyKey",
+      "obligation_id": "OBL-P06-6-028",
+      "source": {
+        "ordinal": 28,
+        "page": 6,
+        "page_line": 39,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Money",
+      "obligation_id": "OBL-P06-6-029",
+      "source": {
+        "ordinal": 29,
+        "page": 6,
+        "page_line": 40,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CorrelationId",
+      "obligation_id": "OBL-P06-6-030",
+      "source": {
+        "ordinal": 30,
+        "page": 6,
+        "page_line": 41,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "ActorId",
+      "obligation_id": "OBL-P06-6-031",
+      "source": {
+        "ordinal": 31,
+        "page": 6,
+        "page_line": 42,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "EvidenceDigest",
+      "obligation_id": "OBL-P06-6-032",
+      "source": {
+        "ordinal": 32,
+        "page": 6,
+        "page_line": 43,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "ReasonCode",
+      "obligation_id": "OBL-P06-6-033",
+      "source": {
+        "ordinal": 33,
+        "page": 6,
+        "page_line": 44,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "ConfidenceScore",
+      "obligation_id": "OBL-P06-6-034",
+      "source": {
+        "ordinal": 34,
+        "page": 6,
+        "page_line": 45,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CaseVersion",
+      "obligation_id": "OBL-P06-6-035",
+      "source": {
+        "ordinal": 35,
+        "page": 6,
+        "page_line": 46,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Value objects shall validate their own invariants and shall be immutable where practical",
+      "obligation_id": "OBL-P06-6-036",
+      "source": {
+        "ordinal": 36,
+        "page": 6,
+        "page_line": 48,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "TransactionObservation",
+      "obligation_id": "OBL-P07-6-038",
+      "source": {
+        "ordinal": 38,
+        "page": 7,
+        "page_line": 6,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "EvidenceItem",
+      "obligation_id": "OBL-P07-6-039",
+      "source": {
+        "ordinal": 39,
+        "page": 7,
+        "page_line": 7,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "ClassificationDecision",
+      "obligation_id": "OBL-P07-6-040",
+      "source": {
+        "ordinal": 40,
+        "page": 7,
+        "page_line": 8,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "HumanReviewDecision",
+      "obligation_id": "OBL-P07-6-041",
+      "source": {
+        "ordinal": 41,
+        "page": 7,
+        "page_line": 9,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "AuditEvent",
+      "obligation_id": "OBL-P07-6-042",
+      "source": {
+        "ordinal": 42,
+        "page": 7,
+        "page_line": 10,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "IdempotencyRecord",
+      "obligation_id": "OBL-P07-6-043",
+      "source": {
+        "ordinal": 43,
+        "page": 7,
+        "page_line": 11,
+        "section": "6. Required domain model"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Amount must be greater than zero",
+      "obligation_id": "OBL-P07-1-001",
+      "source": {
+        "ordinal": 1,
+        "page": 7,
+        "page_line": 18,
+        "section": "1. Amount must be greater than zero."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Currency must be an explicitly supported fictional demonstration currency",
+      "obligation_id": "OBL-P07-2-001",
+      "source": {
+        "ordinal": 1,
+        "page": 7,
+        "page_line": 19,
+        "section": "2. Currency must be an explicitly supported fictional demonstration currency."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "A closed case cannot be modified except by an explicitly modelled administrative correction workflow",
+      "obligation_id": "OBL-P07-12-001",
+      "source": {
+        "ordinal": 1,
+        "page": 7,
+        "page_line": 29,
+        "section": "12. A closed case cannot be modified except by an explicitly modelled administrative correction"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "RECEIVED",
+      "obligation_id": "OBL-P07-7-002",
+      "source": {
+        "ordinal": 2,
+        "page": 7,
+        "page_line": 43,
+        "section": "7. Case state machine"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "AWAITING_EVIDENCE",
+      "obligation_id": "OBL-P07-7-005",
+      "source": {
+        "ordinal": 5,
+        "page": 7,
+        "page_line": 46,
+        "section": "7. Case state machine"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock fault profile",
+      "obligation_id": "OBL-P09-8-015",
+      "source": {
+        "ordinal": 15,
+        "page": 9,
+        "page_line": 7,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "malformed identifiers",
+      "obligation_id": "OBL-P09-8-018",
+      "source": {
+        "ordinal": 18,
+        "page": 9,
+        "page_line": 16,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "zero or negative amounts",
+      "obligation_id": "OBL-P09-8-019",
+      "source": {
+        "ordinal": 19,
+        "page": 9,
+        "page_line": 17,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsupported currencies",
+      "obligation_id": "OBL-P09-8-020",
+      "source": {
+        "ordinal": 20,
+        "page": 9,
+        "page_line": 18,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "oversized text",
+      "obligation_id": "OBL-P09-8-021",
+      "source": {
+        "ordinal": 21,
+        "page": 9,
+        "page_line": 19,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsupported role",
+      "obligation_id": "OBL-P09-8-022",
+      "source": {
+        "ordinal": 22,
+        "page": 9,
+        "page_line": 20,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "path traversal content",
+      "obligation_id": "OBL-P09-8-029",
+      "source": {
+        "ordinal": 29,
+        "page": 9,
+        "page_line": 27,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "real-person or real-account patterns where detectable",
+      "obligation_id": "OBL-P09-8-032",
+      "source": {
+        "ordinal": 32,
+        "page": 9,
+        "page_line": 30,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsupported production, certification or regulatory claims",
+      "obligation_id": "OBL-P09-8-033",
+      "source": {
+        "ordinal": 33,
+        "page": 9,
+        "page_line": 31,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Validation failures shall not create a partially persisted dispute case unless the failure itself is intentionally recorded in an isolated, redacted rejection audit store",
+      "obligation_id": "OBL-P09-8-034",
+      "source": {
+        "ordinal": 34,
+        "page": 9,
+        "page_line": 33,
+        "section": "8. Input contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "return the original creation result",
+      "obligation_id": "OBL-P09-9-003",
+      "source": {
+        "ordinal": 3,
+        "page": 9,
+        "page_line": 45,
+        "section": "9. Idempotency and concurrency"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "return an IDEMPOTENCY_CONFLICT error",
+      "obligation_id": "OBL-P10-9-008",
+      "source": {
+        "ordinal": 8,
+        "page": 10,
+        "page_line": 7,
+        "section": "9. Idempotency and concurrency"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "not alter the original case",
+      "obligation_id": "OBL-P10-9-009",
+      "source": {
+        "ordinal": 9,
+        "page": 10,
+        "page_line": 8,
+        "section": "9. Idempotency and concurrency"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The generated tests shall exercise concurrent or near-concurrent duplicate submission using deterministic local execution",
+      "obligation_id": "OBL-P10-9-013",
+      "source": {
+        "ordinal": 13,
+        "page": 10,
+        "page_line": 17,
+        "section": "9. Idempotency and concurrency"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "A stale update shall return a structured CONCURRENCY_CONFLICT response and shall not overwrite a newer case state",
+      "obligation_id": "OBL-P10-9-015",
+      "source": {
+        "ordinal": 15,
+        "page": 10,
+        "page_line": 26,
+        "section": "9. Idempotency and concurrency"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "observation timestamp",
+      "obligation_id": "OBL-P10-10-004",
+      "source": {
+        "ordinal": 4,
+        "page": 10,
+        "page_line": 47,
+        "section": "10. Mock transaction-status integration"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "observation digest",
+      "obligation_id": "OBL-P10-10-007",
+      "source": {
+        "ordinal": 7,
+        "page": 10,
+        "page_line": 50,
+        "section": "10. Mock transaction-status integration"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "use no real credentials",
+      "obligation_id": "OBL-P11-10-017",
+      "source": {
+        "ordinal": 17,
+        "page": 11,
+        "page_line": 12,
+        "section": "10. Mock transaction-status integration"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "return deterministic results for a given test fixture",
+      "obligation_id": "OBL-P11-10-018",
+      "source": {
+        "ordinal": 18,
+        "page": 11,
+        "page_line": 13,
+        "section": "10. Mock transaction-status integration"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "reason code: CREDIT_PENDING",
+      "obligation_id": "OBL-P11-3-001",
+      "source": {
+        "ordinal": 1,
+        "page": 11,
+        "page_line": 31,
+        "section": "3. reason code: CREDIT_PENDING"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "disposition proposal: WAIT_FOR_NETWORK_UPDATE",
+      "obligation_id": "OBL-P11-4-001",
+      "source": {
+        "ordinal": 1,
+        "page": 11,
+        "page_line": 33,
+        "section": "4. disposition proposal: WAIT_FOR_NETWORK_UPDATE"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification: REVERSED",
+      "obligation_id": "OBL-P11-10-001",
+      "source": {
+        "ordinal": 1,
+        "page": 11,
+        "page_line": 50,
+        "section": "10. classification: REVERSED"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "reason code: REVERSAL_CONFIRMED",
+      "obligation_id": "OBL-P11-11-001",
+      "source": {
+        "ordinal": 1,
+        "page": 11,
+        "page_line": 53,
+        "section": "11. reason code: REVERSAL_CONFIRMED"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification: CREDIT_CONFIRMED",
+      "obligation_id": "OBL-P11-13-001",
+      "source": {
+        "ordinal": 1,
+        "page": 11,
+        "page_line": 59,
+        "section": "13. classification: CREDIT_CONFIRMED"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "reason code: BENEFICIARY_CREDIT_CONFIRMED",
+      "obligation_id": "OBL-P12-14-001",
+      "source": {
+        "ordinal": 1,
+        "page": 12,
+        "page_line": 1,
+        "section": "14. reason code: BENEFICIARY_CREDIT_CONFIRMED"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification: UNCERTAIN",
+      "obligation_id": "OBL-P12-16-001",
+      "source": {
+        "ordinal": 1,
+        "page": 12,
+        "page_line": 7,
+        "section": "16. classification: UNCERTAIN"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "reason code: INSUFFICIENT_OR_CONTRADICTORY_EVIDENCE",
+      "obligation_id": "OBL-P12-17-001",
+      "source": {
+        "ordinal": 1,
+        "page": 12,
+        "page_line": 10,
+        "section": "17. reason code: INSUFFICIENT_OR_CONTRADICTORY_EVIDENCE"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The score shall be derived from documented rule inputs, not an opaque model",
+      "obligation_id": "OBL-P12-12-002",
+      "source": {
+        "ordinal": 2,
+        "page": 12,
+        "page_line": 23,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "completeness of beneficiary-credit observation",
+      "obligation_id": "OBL-P12-12-004",
+      "source": {
+        "ordinal": 4,
+        "page": 12,
+        "page_line": 30,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "completeness of reversal observation",
+      "obligation_id": "OBL-P12-12-005",
+      "source": {
+        "ordinal": 5,
+        "page": 12,
+        "page_line": 31,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "observation freshness",
+      "obligation_id": "OBL-P12-12-007",
+      "source": {
+        "ordinal": 7,
+        "page": 12,
+        "page_line": 33,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "MEDIUM",
+      "obligation_id": "OBL-P12-12-010",
+      "source": {
+        "ordinal": 10,
+        "page": 12,
+        "page_line": 42,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The default fictional high-value threshold shall be configurable and shall default to 100000 minor currency units",
+      "obligation_id": "OBL-P12-12-013",
+      "source": {
+        "ordinal": 13,
+        "page": 12,
+        "page_line": 46,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "12.3 Mandatory escalation",
+      "obligation_id": "OBL-P12-12-014",
+      "source": {
+        "ordinal": 14,
+        "page": 12,
+        "page_line": 50,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification is UNCERTAIN",
+      "obligation_id": "OBL-P12-12-015",
+      "source": {
+        "ordinal": 15,
+        "page": 12,
+        "page_line": 55,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "a policy-refusal condition occurs",
+      "obligation_id": "OBL-P13-12-023",
+      "source": {
+        "ordinal": 23,
+        "page": 13,
+        "page_line": 6,
+        "section": "12. Confidence, impact and escalation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "case ID",
+      "obligation_id": "OBL-P13-13-003",
+      "source": {
+        "ordinal": 3,
+        "page": 13,
+        "page_line": 17,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "redacted description",
+      "obligation_id": "OBL-P13-13-006",
+      "source": {
+        "ordinal": 6,
+        "page": 13,
+        "page_line": 20,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "SHA-256 digest",
+      "obligation_id": "OBL-P13-13-007",
+      "source": {
+        "ordinal": 7,
+        "page": 13,
+        "page_line": 21,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "creation timestamp",
+      "obligation_id": "OBL-P13-13-010",
+      "source": {
+        "ordinal": 10,
+        "page": 13,
+        "page_line": 24,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "real account numbers",
+      "obligation_id": "OBL-P13-13-013",
+      "source": {
+        "ordinal": 13,
+        "page": 13,
+        "page_line": 31,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "full card numbers",
+      "obligation_id": "OBL-P13-13-014",
+      "source": {
+        "ordinal": 14,
+        "page": 13,
+        "page_line": 32,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "passwords",
+      "obligation_id": "OBL-P13-13-016",
+      "source": {
+        "ordinal": 16,
+        "page": 13,
+        "page_line": 34,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "access tokens",
+      "obligation_id": "OBL-P13-13-017",
+      "source": {
+        "ordinal": 17,
+        "page": 13,
+        "page_line": 35,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "authentication secrets",
+      "obligation_id": "OBL-P13-13-019",
+      "source": {
+        "ordinal": 19,
+        "page": 13,
+        "page_line": 37,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "PARTIAL",
+      "obligation_id": "OBL-P13-13-023",
+      "source": {
+        "ordinal": 23,
+        "page": 13,
+        "page_line": 45,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CONTRADICTORY",
+      "obligation_id": "OBL-P13-13-024",
+      "source": {
+        "ordinal": 24,
+        "page": 13,
+        "page_line": 46,
+        "section": "13. Evidence management"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "request human review",
+      "obligation_id": "OBL-P14-1-001",
+      "source": {
+        "ordinal": 1,
+        "page": 14,
+        "page_line": 5,
+        "section": "1. request human review;"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "MORE_EVIDENCE_REQUIRED",
+      "obligation_id": "OBL-P14-7-006",
+      "source": {
+        "ordinal": 6,
+        "page": 14,
+        "page_line": 21,
+        "section": "7. preserve review history."
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "dispute-case repository",
+      "obligation_id": "OBL-P15-16-002",
+      "source": {
+        "ordinal": 2,
+        "page": 15,
+        "page_line": 10,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "transaction-status adapter",
+      "obligation_id": "OBL-P15-16-004",
+      "source": {
+        "ordinal": 4,
+        "page": 15,
+        "page_line": 12,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "audit-event repository",
+      "obligation_id": "OBL-P15-16-006",
+      "source": {
+        "ordinal": 6,
+        "page": 15,
+        "page_line": 14,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "human-review repository",
+      "obligation_id": "OBL-P15-16-007",
+      "source": {
+        "ordinal": 7,
+        "page": 15,
+        "page_line": 15,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "clock",
+      "obligation_id": "OBL-P15-16-008",
+      "source": {
+        "ordinal": 8,
+        "page": 15,
+        "page_line": 16,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "identifier generator",
+      "obligation_id": "OBL-P15-16-009",
+      "source": {
+        "ordinal": 9,
+        "page": 15,
+        "page_line": 17,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "metrics recorder",
+      "obligation_id": "OBL-P15-16-011",
+      "source": {
+        "ordinal": 11,
+        "page": 15,
+        "page_line": 19,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "notification mock",
+      "obligation_id": "OBL-P15-16-012",
+      "source": {
+        "ordinal": 12,
+        "page": 15,
+        "page_line": 20,
+        "section": "16. Required ports and interfaces"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "case ID",
+      "obligation_id": "OBL-P16-18-004",
+      "source": {
+        "ordinal": 4,
+        "page": 16,
+        "page_line": 6,
+        "section": "18. Audit architecture"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "redacted details",
+      "obligation_id": "OBL-P16-18-010",
+      "source": {
+        "ordinal": 10,
+        "page": 16,
+        "page_line": 12,
+        "section": "18. Audit architecture"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "timestamp",
+      "obligation_id": "OBL-P16-18-012",
+      "source": {
+        "ordinal": 12,
+        "page": 16,
+        "page_line": 14,
+        "section": "18. Audit architecture"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "previous-event digest",
+      "obligation_id": "OBL-P16-18-013",
+      "source": {
+        "ordinal": 13,
+        "page": 16,
+        "page_line": 15,
+        "section": "18. Audit architecture"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "current-event digest",
+      "obligation_id": "OBL-P16-18-014",
+      "source": {
+        "ordinal": 14,
+        "page": 16,
+        "page_line": 16,
+        "section": "18. Audit architecture"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "GET /v1/disputes/{case_id}",
+      "obligation_id": "OBL-P16-19-008",
+      "source": {
+        "ordinal": 8,
+        "page": 16,
+        "page_line": 53,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "GET /v1/disputes/{case_id}/history",
+      "obligation_id": "OBL-P17-19-009",
+      "source": {
+        "ordinal": 9,
+        "page": 17,
+        "page_line": 1,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "GET /v1/disputes?transaction_reference={reference}",
+      "obligation_id": "OBL-P17-19-010",
+      "source": {
+        "ordinal": 10,
+        "page": 17,
+        "page_line": 2,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/evidence",
+      "obligation_id": "OBL-P17-19-011",
+      "source": {
+        "ordinal": 11,
+        "page": 17,
+        "page_line": 3,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/investigate",
+      "obligation_id": "OBL-P17-19-012",
+      "source": {
+        "ordinal": 12,
+        "page": 17,
+        "page_line": 4,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/classify",
+      "obligation_id": "OBL-P17-19-013",
+      "source": {
+        "ordinal": 13,
+        "page": 17,
+        "page_line": 5,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/human-review",
+      "obligation_id": "OBL-P17-19-014",
+      "source": {
+        "ordinal": 14,
+        "page": 17,
+        "page_line": 6,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/review-decisions",
+      "obligation_id": "OBL-P17-19-015",
+      "source": {
+        "ordinal": 15,
+        "page": 17,
+        "page_line": 7,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/disposition",
+      "obligation_id": "OBL-P17-19-016",
+      "source": {
+        "ordinal": 16,
+        "page": 17,
+        "page_line": 8,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/close",
+      "obligation_id": "OBL-P17-19-017",
+      "source": {
+        "ordinal": 17,
+        "page": 17,
+        "page_line": 9,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POST /v1/disputes/{case_id}/quarantine",
+      "obligation_id": "OBL-P17-19-018",
+      "source": {
+        "ordinal": 18,
+        "page": 17,
+        "page_line": 10,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "GET /v1/disputes/{case_id}/audit-integrity",
+      "obligation_id": "OBL-P17-19-019",
+      "source": {
+        "ordinal": 19,
+        "page": 17,
+        "page_line": 11,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified OpenAPI operation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "message",
+      "obligation_id": "OBL-P17-19-026",
+      "source": {
+        "ordinal": 26,
+        "page": 17,
+        "page_line": 30,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "retryable flag",
+      "obligation_id": "OBL-P17-19-028",
+      "source": {
+        "ordinal": 28,
+        "page": 17,
+        "page_line": 32,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "details safe for disclosure",
+      "obligation_id": "OBL-P17-19-029",
+      "source": {
+        "ordinal": 29,
+        "page": 17,
+        "page_line": 33,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "VALIDATION_FAILED",
+      "obligation_id": "OBL-P17-19-030",
+      "source": {
+        "ordinal": 30,
+        "page": 17,
+        "page_line": 38,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "NOT_FOUND",
+      "obligation_id": "OBL-P17-19-031",
+      "source": {
+        "ordinal": 31,
+        "page": 17,
+        "page_line": 39,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "IDEMPOTENCY_CONFLICT",
+      "obligation_id": "OBL-P17-19-032",
+      "source": {
+        "ordinal": 32,
+        "page": 17,
+        "page_line": 40,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "CONCURRENCY_CONFLICT",
+      "obligation_id": "OBL-P17-19-033",
+      "source": {
+        "ordinal": 33,
+        "page": 17,
+        "page_line": 41,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "UNAUTHORISED_ROLE",
+      "obligation_id": "OBL-P17-19-034",
+      "source": {
+        "ordinal": 34,
+        "page": 17,
+        "page_line": 42,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "INVALID_STATE_TRANSITION",
+      "obligation_id": "OBL-P17-19-035",
+      "source": {
+        "ordinal": 35,
+        "page": 17,
+        "page_line": 43,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "POLICY_REFUSAL",
+      "obligation_id": "OBL-P17-19-036",
+      "source": {
+        "ordinal": 36,
+        "page": 17,
+        "page_line": 44,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "EVIDENCE_INCOMPLETE",
+      "obligation_id": "OBL-P17-19-037",
+      "source": {
+        "ordinal": 37,
+        "page": 17,
+        "page_line": 45,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "HUMAN_REVIEW_REQUIRED",
+      "obligation_id": "OBL-P17-19-038",
+      "source": {
+        "ordinal": 38,
+        "page": 17,
+        "page_line": 46,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "AUDIT_INTEGRITY_FAILED",
+      "obligation_id": "OBL-P17-19-039",
+      "source": {
+        "ordinal": 39,
+        "page": 17,
+        "page_line": 47,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "MOCK_ADAPTER_FAILURE",
+      "obligation_id": "OBL-P17-19-040",
+      "source": {
+        "ordinal": 40,
+        "page": 17,
+        "page_line": 48,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "INTERNAL_INCONSISTENCY",
+      "obligation_id": "OBL-P17-19-041",
+      "source": {
+        "ordinal": 41,
+        "page": 17,
+        "page_line": 49,
+        "section": "19. API contract"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "strict typed validation",
+      "obligation_id": "OBL-P18-20-002",
+      "source": {
+        "ordinal": 2,
+        "page": 18,
+        "page_line": 5,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "identifier allowlists",
+      "obligation_id": "OBL-P18-20-004",
+      "source": {
+        "ordinal": 4,
+        "page": 18,
+        "page_line": 7,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "enum validation",
+      "obligation_id": "OBL-P18-20-005",
+      "source": {
+        "ordinal": 5,
+        "page": 18,
+        "page_line": 8,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "path traversal rejection",
+      "obligation_id": "OBL-P18-20-006",
+      "source": {
+        "ordinal": 6,
+        "page": 18,
+        "page_line": 9,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "secret-pattern detection",
+      "obligation_id": "OBL-P18-20-008",
+      "source": {
+        "ordinal": 8,
+        "page": 18,
+        "page_line": 11,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "role enforcement",
+      "obligation_id": "OBL-P18-20-009",
+      "source": {
+        "ordinal": 9,
+        "page": 18,
+        "page_line": 12,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "prohibited-network enforcement",
+      "obligation_id": "OBL-P18-20-012",
+      "source": {
+        "ordinal": 12,
+        "page": 18,
+        "page_line": 15,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "dependency inventory",
+      "obligation_id": "OBL-P18-20-013",
+      "source": {
+        "ordinal": 13,
+        "page": 18,
+        "page_line": 16,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "no hard-coded secrets",
+      "obligation_id": "OBL-P18-20-015",
+      "source": {
+        "ordinal": 15,
+        "page": 18,
+        "page_line": 18,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "no real credentials",
+      "obligation_id": "OBL-P18-20-016",
+      "source": {
+        "ordinal": 16,
+        "page": 18,
+        "page_line": 19,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "no dynamic arbitrary shell execution",
+      "obligation_id": "OBL-P18-20-017",
+      "source": {
+        "ordinal": 17,
+        "page": 18,
+        "page_line": 20,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "no untrusted code evaluation",
+      "obligation_id": "OBL-P18-20-018",
+      "source": {
+        "ordinal": 18,
+        "page": 18,
+        "page_line": 21,
+        "section": "20. Security and privacy controls"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Reliability requirements",
+      "obligation_id": "OBL-P18-21-001",
+      "source": {
+        "ordinal": 1,
+        "page": 18,
+        "page_line": 26,
+        "section": "21. Reliability requirements"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Idempotent shutdown",
+      "obligation_id": "OBL-P18-21-003",
+      "source": {
+        "ordinal": 3,
+        "page": 18,
+        "page_line": 28,
+        "section": "21. Reliability requirements"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Mock timeout handling",
+      "obligation_id": "OBL-P18-21-011",
+      "source": {
+        "ordinal": 11,
+        "page": 18,
+        "page_line": 36,
+        "section": "21. Reliability requirements"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Stale-version rejection",
+      "obligation_id": "OBL-P18-21-013",
+      "source": {
+        "ordinal": 13,
+        "page": 18,
+        "page_line": 38,
+        "section": "21. Reliability requirements"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Stable machine-readable terminal status",
+      "obligation_id": "OBL-P18-21-014",
+      "source": {
+        "ordinal": 14,
+        "page": 18,
+        "page_line": 39,
+        "section": "21. Reliability requirements"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Temporary files shall remain under the configured state root or /tmp",
+      "obligation_id": "OBL-P18-21-015",
+      "source": {
+        "ordinal": 15,
+        "page": 18,
+        "page_line": 40,
+        "section": "21. Reliability requirements"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "timestamp",
+      "obligation_id": "OBL-P19-22-002",
+      "source": {
+        "ordinal": 2,
+        "page": 19,
+        "page_line": 8,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "severity",
+      "obligation_id": "OBL-P19-22-003",
+      "source": {
+        "ordinal": 3,
+        "page": 19,
+        "page_line": 9,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "case ID where applicable",
+      "obligation_id": "OBL-P19-22-005",
+      "source": {
+        "ordinal": 5,
+        "page": 19,
+        "page_line": 11,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "app ID",
+      "obligation_id": "OBL-P19-22-006",
+      "source": {
+        "ordinal": 6,
+        "page": 19,
+        "page_line": 12,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "idempotent replays",
+      "obligation_id": "OBL-P19-22-015",
+      "source": {
+        "ordinal": 15,
+        "page": 19,
+        "page_line": 29,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "validation failures",
+      "obligation_id": "OBL-P19-22-017",
+      "source": {
+        "ordinal": 17,
+        "page": 19,
+        "page_line": 31,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classifications by type",
+      "obligation_id": "OBL-P19-22-018",
+      "source": {
+        "ordinal": 18,
+        "page": 19,
+        "page_line": 32,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "invalid transitions",
+      "obligation_id": "OBL-P19-22-021",
+      "source": {
+        "ordinal": 21,
+        "page": 19,
+        "page_line": 35,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock-adapter failures",
+      "obligation_id": "OBL-P19-22-023",
+      "source": {
+        "ordinal": 23,
+        "page": 19,
+        "page_line": 37,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Metrics shall not contain real or fictional personal identifiers",
+      "obligation_id": "OBL-P19-22-026",
+      "source": {
+        "ordinal": 26,
+        "page": 19,
+        "page_line": 41,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock adapter",
+      "obligation_id": "OBL-P19-22-029",
+      "source": {
+        "ordinal": 29,
+        "page": 19,
+        "page_line": 51,
+        "section": "22. Observability"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "fictional high-value threshold",
+      "obligation_id": "OBL-P20-23-005",
+      "source": {
+        "ordinal": 5,
+        "page": 20,
+        "page_line": 14,
+        "section": "23. Configuration"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "confidence escalation threshold",
+      "obligation_id": "OBL-P20-23-006",
+      "source": {
+        "ordinal": 6,
+        "page": 20,
+        "page_line": 15,
+        "section": "23. Configuration"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "safe mock retry count",
+      "obligation_id": "OBL-P20-23-007",
+      "source": {
+        "ordinal": 7,
+        "page": 20,
+        "page_line": 16,
+        "section": "23. Configuration"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "safe mock retry delay",
+      "obligation_id": "OBL-P20-23-008",
+      "source": {
+        "ordinal": 8,
+        "page": 20,
+        "page_line": 17,
+        "section": "23. Configuration"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "data-retention period",
+      "obligation_id": "OBL-P20-23-010",
+      "source": {
+        "ordinal": 10,
+        "page": 20,
+        "page_line": 19,
+        "section": "23. Configuration"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "reset enablement",
+      "obligation_id": "OBL-P20-23-011",
+      "source": {
+        "ordinal": 11,
+        "page": 20,
+        "page_line": 20,
+        "section": "23. Configuration"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Required generated documentation Generate",
+      "obligation_id": "OBL-P20-24-001",
+      "source": {
+        "ordinal": 1,
+        "page": 20,
+        "page_line": 29,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "README.md",
+      "obligation_id": "OBL-P20-24-002",
+      "source": {
+        "ordinal": 2,
+        "page": 20,
+        "page_line": 33,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "architecture overview",
+      "obligation_id": "OBL-P20-24-003",
+      "source": {
+        "ordinal": 3,
+        "page": 20,
+        "page_line": 34,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "domain model description",
+      "obligation_id": "OBL-P20-24-004",
+      "source": {
+        "ordinal": 4,
+        "page": 20,
+        "page_line": 35,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "state-transition table",
+      "obligation_id": "OBL-P20-24-005",
+      "source": {
+        "ordinal": 5,
+        "page": 20,
+        "page_line": 36,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "classification decision table",
+      "obligation_id": "OBL-P20-24-006",
+      "source": {
+        "ordinal": 6,
+        "page": 20,
+        "page_line": 37,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "API usage guide",
+      "obligation_id": "OBL-P20-24-007",
+      "source": {
+        "ordinal": 7,
+        "page": 20,
+        "page_line": 38,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "local startup and shutdown guide",
+      "obligation_id": "OBL-P20-24-008",
+      "source": {
+        "ordinal": 8,
+        "page": 20,
+        "page_line": 39,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "operations runbook",
+      "obligation_id": "OBL-P20-24-009",
+      "source": {
+        "ordinal": 9,
+        "page": 20,
+        "page_line": 40,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "troubleshooting guide",
+      "obligation_id": "OBL-P20-24-010",
+      "source": {
+        "ordinal": 10,
+        "page": 20,
+        "page_line": 41,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "threat model",
+      "obligation_id": "OBL-P20-24-011",
+      "source": {
+        "ordinal": 11,
+        "page": 20,
+        "page_line": 42,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "test plan",
+      "obligation_id": "OBL-P20-24-012",
+      "source": {
+        "ordinal": 12,
+        "page": 20,
+        "page_line": 43,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "requirements-traceability matrix",
+      "obligation_id": "OBL-P20-24-013",
+      "source": {
+        "ordinal": 13,
+        "page": 20,
+        "page_line": 44,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "residual-risk register",
+      "obligation_id": "OBL-P20-24-014",
+      "source": {
+        "ordinal": 14,
+        "page": 20,
+        "page_line": 45,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock-ecosystem boundary statement",
+      "obligation_id": "OBL-P20-24-015",
+      "source": {
+        "ordinal": 15,
+        "page": 20,
+        "page_line": 46,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "certification-ready-not-certified boundary statement",
+      "obligation_id": "OBL-P20-24-016",
+      "source": {
+        "ordinal": 16,
+        "page": 20,
+        "page_line": 47,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "architecture decision records for significant design choices",
+      "obligation_id": "OBL-P20-24-017",
+      "source": {
+        "ordinal": 17,
+        "page": 20,
+        "page_line": 48,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "persistence and reset policy",
+      "obligation_id": "OBL-P20-24-018",
+      "source": {
+        "ordinal": 18,
+        "page": 20,
+        "page_line": 49,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "evidence-manifest description",
+      "obligation_id": "OBL-P20-24-019",
+      "source": {
+        "ordinal": 19,
+        "page": 20,
+        "page_line": 50,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Documentation shall match executable commands and generated implementation",
+      "obligation_id": "OBL-P21-24-020",
+      "source": {
+        "ordinal": 20,
+        "page": 21,
+        "page_line": 1,
+        "section": "24. Required generated documentation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "non-root container execution where practical",
+      "obligation_id": "OBL-P21-25-009",
+      "source": {
+        "ordinal": 9,
+        "page": 21,
+        "page_line": 15,
+        "section": "25. Packaging and local operation"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "loopback-only host publication",
+      "obligation_id": "OBL-P21-25-010",
+      "source": {
+        "ordinal": 10,
+        "page": 21,
+        "page_line": 16,
+        "section": "25. Packaging and local operation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock-only environment defaults",
+      "obligation_id": "OBL-P21-25-011",
+      "source": {
+        "ordinal": 11,
+        "page": 21,
+        "page_line": 17,
+        "section": "25. Packaging and local operation"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "LLM-disabled default configuration",
+      "obligation_id": "OBL-P21-25-012",
+      "source": {
+        "ordinal": 12,
+        "page": 21,
+        "page_line": 18,
+        "section": "25. Packaging and local operation"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Python compilation",
+      "obligation_id": "OBL-P21-26-002",
+      "source": {
+        "ordinal": 2,
+        "page": 21,
+        "page_line": 29,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Ruff with no unresolved violations",
+      "obligation_id": "OBL-P21-26-003",
+      "source": {
+        "ordinal": 3,
+        "page": 21,
+        "page_line": 30,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "MyPy with no unresolved generated-package errors",
+      "obligation_id": "OBL-P21-26-004",
+      "source": {
+        "ordinal": 4,
+        "page": 21,
+        "page_line": 31,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "value-object validation",
+      "obligation_id": "OBL-P21-26-007",
+      "source": {
+        "ordinal": 7,
+        "page": 21,
+        "page_line": 37,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "aggregate invariants",
+      "obligation_id": "OBL-P21-26-008",
+      "source": {
+        "ordinal": 8,
+        "page": 21,
+        "page_line": 38,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "every prohibited state transition",
+      "obligation_id": "OBL-P21-26-010",
+      "source": {
+        "ordinal": 10,
+        "page": 21,
+        "page_line": 40,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "confidence calculation",
+      "obligation_id": "OBL-P21-26-012",
+      "source": {
+        "ordinal": 12,
+        "page": 21,
+        "page_line": 42,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "impact calculation",
+      "obligation_id": "OBL-P21-26-013",
+      "source": {
+        "ordinal": 13,
+        "page": 21,
+        "page_line": 43,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mandatory escalation",
+      "obligation_id": "OBL-P21-26-014",
+      "source": {
+        "ordinal": 14,
+        "page": 21,
+        "page_line": 44,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "audit-digest-chain validation",
+      "obligation_id": "OBL-P21-26-017",
+      "source": {
+        "ordinal": 17,
+        "page": 21,
+        "page_line": 47,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "retrieve case",
+      "obligation_id": "OBL-P22-26-019",
+      "source": {
+        "ordinal": 19,
+        "page": 22,
+        "page_line": 4,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "reset",
+      "obligation_id": "OBL-P22-26-028",
+      "source": {
+        "ordinal": 28,
+        "page": 22,
+        "page_line": 13,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "equivalent replay returns the original case",
+      "obligation_id": "OBL-P22-26-031",
+      "source": {
+        "ordinal": 31,
+        "page": 22,
+        "page_line": 19,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "concurrent equivalent replay creates one case",
+      "obligation_id": "OBL-P22-26-033",
+      "source": {
+        "ordinal": 33,
+        "page": 22,
+        "page_line": 21,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "missing-header tests",
+      "obligation_id": "OBL-P22-26-038",
+      "source": {
+        "ordinal": 38,
+        "page": 22,
+        "page_line": 29,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "wrong-role tests",
+      "obligation_id": "OBL-P22-26-039",
+      "source": {
+        "ordinal": 39,
+        "page": 22,
+        "page_line": 30,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "not-found tests",
+      "obligation_id": "OBL-P22-26-040",
+      "source": {
+        "ordinal": 40,
+        "page": 22,
+        "page_line": 31,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "idempotency-conflict tests",
+      "obligation_id": "OBL-P22-26-041",
+      "source": {
+        "ordinal": 41,
+        "page": 22,
+        "page_line": 32,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "concurrency-conflict tests",
+      "obligation_id": "OBL-P22-26-042",
+      "source": {
+        "ordinal": 42,
+        "page": 22,
+        "page_line": 33,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "invalid-transition tests",
+      "obligation_id": "OBL-P22-26-043",
+      "source": {
+        "ordinal": 43,
+        "page": 22,
+        "page_line": 34,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "human-review-required tests",
+      "obligation_id": "OBL-P22-26-044",
+      "source": {
+        "ordinal": 44,
+        "page": 22,
+        "page_line": 35,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "audit-integrity-failure tests",
+      "obligation_id": "OBL-P22-26-045",
+      "source": {
+        "ordinal": 45,
+        "page": 22,
+        "page_line": 36,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "stable error-envelope tests",
+      "obligation_id": "OBL-P22-26-046",
+      "source": {
+        "ordinal": 46,
+        "page": 22,
+        "page_line": 37,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "PII-pattern rejection or redaction",
+      "obligation_id": "OBL-P22-26-048",
+      "source": {
+        "ordinal": 48,
+        "page": 22,
+        "page_line": 42,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "secret-pattern rejection",
+      "obligation_id": "OBL-P22-26-049",
+      "source": {
+        "ordinal": 49,
+        "page": 22,
+        "page_line": 43,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "no arbitrary shell execution",
+      "obligation_id": "OBL-P22-26-054",
+      "source": {
+        "ordinal": 54,
+        "page": 22,
+        "page_line": 48,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "path traversal rejection",
+      "obligation_id": "OBL-P23-26-055",
+      "source": {
+        "ordinal": 55,
+        "page": 23,
+        "page_line": 1,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsafe configuration rejection",
+      "obligation_id": "OBL-P23-26-056",
+      "source": {
+        "ordinal": 56,
+        "page": 23,
+        "page_line": 2,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "rollback behaviour",
+      "obligation_id": "OBL-P23-26-063",
+      "source": {
+        "ordinal": 63,
+        "page": 23,
+        "page_line": 12,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "state-root containment",
+      "obligation_id": "OBL-P23-26-065",
+      "source": {
+        "ordinal": 65,
+        "page": 23,
+        "page_line": 14,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "redaction",
+      "obligation_id": "OBL-P23-26-070",
+      "source": {
+        "ordinal": 70,
+        "page": 23,
+        "page_line": 22,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "repeated shutdown",
+      "obligation_id": "OBL-P23-26-076",
+      "source": {
+        "ordinal": 76,
+        "page": 23,
+        "page_line": 31,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Docker build where applicable",
+      "obligation_id": "OBL-P23-26-077",
+      "source": {
+        "ordinal": 77,
+        "page": 23,
+        "page_line": 32,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "archive path safety",
+      "obligation_id": "OBL-P23-26-082",
+      "source": {
+        "ordinal": 82,
+        "page": 23,
+        "page_line": 37,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "tracked-source cleanliness after runtime execution",
+      "obligation_id": "OBL-P23-26-083",
+      "source": {
+        "ordinal": 83,
+        "page": 23,
+        "page_line": 38,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "statement coverage: at least 90%",
+      "obligation_id": "OBL-P23-26-085",
+      "source": {
+        "ordinal": 85,
+        "page": 23,
+        "page_line": 49,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "branch coverage: at least 85%",
+      "obligation_id": "OBL-P23-26-086",
+      "source": {
+        "ordinal": 86,
+        "page": 23,
+        "page_line": 50,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "If coverage tooling is unsupported, the factory shall report the obligation as unsupported and shall not silently claim it passed",
+      "obligation_id": "OBL-P24-26-088",
+      "source": {
+        "ordinal": 88,
+        "page": 24,
+        "page_line": 3,
+        "section": "26. Testing obligations"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Mandatory acceptance scenarios",
+      "obligation_id": "OBL-P24-27-001",
+      "source": {
+        "ordinal": 1,
+        "page": 24,
+        "page_line": 7,
+        "section": "27. Mandatory acceptance scenarios"
+      },
+      "support_reason": "Missing verified implementation.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Given contradictory transaction observations, when classification is attempted, then classification is UNCERTAIN and human review is required",
+      "obligation_id": "OBL-P25-27-002",
+      "source": {
+        "ordinal": 2,
+        "page": 25,
+        "page_line": 10,
+        "section": "27. Mandatory acceptance scenarios"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Evidence obligations The run shall produce",
+      "obligation_id": "OBL-P26-28-001",
+      "source": {
+        "ordinal": 1,
+        "page": 26,
+        "page_line": 15,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "exact requirements copy",
+      "obligation_id": "OBL-P26-28-002",
+      "source": {
+        "ordinal": 2,
+        "page": 26,
+        "page_line": 19,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "requirements SHA-256",
+      "obligation_id": "OBL-P26-28-003",
+      "source": {
+        "ordinal": 3,
+        "page": 26,
+        "page_line": 20,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "implementation inventory",
+      "obligation_id": "OBL-P26-28-005",
+      "source": {
+        "ordinal": 5,
+        "page": 26,
+        "page_line": 22,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "generated-file manifest",
+      "obligation_id": "OBL-P26-28-006",
+      "source": {
+        "ordinal": 6,
+        "page": 26,
+        "page_line": 23,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "requirements-traceability matrix",
+      "obligation_id": "OBL-P26-28-007",
+      "source": {
+        "ordinal": 7,
+        "page": 26,
+        "page_line": 24,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "domain-rule-to-test matrix",
+      "obligation_id": "OBL-P26-28-008",
+      "source": {
+        "ordinal": 8,
+        "page": 26,
+        "page_line": 25,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "API-to-test matrix",
+      "obligation_id": "OBL-P26-28-009",
+      "source": {
+        "ordinal": 9,
+        "page": 26,
+        "page_line": 26,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "state-transition test matrix",
+      "obligation_id": "OBL-P26-28-010",
+      "source": {
+        "ordinal": 10,
+        "page": 26,
+        "page_line": 27,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "test command records",
+      "obligation_id": "OBL-P26-28-011",
+      "source": {
+        "ordinal": 11,
+        "page": 26,
+        "page_line": 28,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "test exit codes",
+      "obligation_id": "OBL-P26-28-012",
+      "source": {
+        "ordinal": 12,
+        "page": 26,
+        "page_line": 29,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "test counts",
+      "obligation_id": "OBL-P26-28-013",
+      "source": {
+        "ordinal": 13,
+        "page": 26,
+        "page_line": 30,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Ruff result",
+      "obligation_id": "OBL-P26-28-014",
+      "source": {
+        "ordinal": 14,
+        "page": 26,
+        "page_line": 31,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "MyPy result",
+      "obligation_id": "OBL-P26-28-015",
+      "source": {
+        "ordinal": 15,
+        "page": 26,
+        "page_line": 32,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Python compilation result",
+      "obligation_id": "OBL-P26-28-016",
+      "source": {
+        "ordinal": 16,
+        "page": 26,
+        "page_line": 33,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "coverage result or explicit unsupported status",
+      "obligation_id": "OBL-P26-28-017",
+      "source": {
+        "ordinal": 17,
+        "page": 26,
+        "page_line": 34,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "runtime health result",
+      "obligation_id": "OBL-P26-28-018",
+      "source": {
+        "ordinal": 18,
+        "page": 26,
+        "page_line": 35,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "readiness result",
+      "obligation_id": "OBL-P26-28-019",
+      "source": {
+        "ordinal": 19,
+        "page": 26,
+        "page_line": 36,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "OpenAPI document",
+      "obligation_id": "OBL-P26-28-020",
+      "source": {
+        "ordinal": 20,
+        "page": 26,
+        "page_line": 37,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "OpenAPI inventory",
+      "obligation_id": "OBL-P26-28-021",
+      "source": {
+        "ordinal": 21,
+        "page": 26,
+        "page_line": 38,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "OpenAPI SHA-256",
+      "obligation_id": "OBL-P26-28-022",
+      "source": {
+        "ordinal": 22,
+        "page": 26,
+        "page_line": 39,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "application identity",
+      "obligation_id": "OBL-P26-28-023",
+      "source": {
+        "ordinal": 23,
+        "page": 26,
+        "page_line": 40,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "version identity",
+      "obligation_id": "OBL-P26-28-024",
+      "source": {
+        "ordinal": 24,
+        "page": 26,
+        "page_line": 41,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mock-boundary evidence",
+      "obligation_id": "OBL-P26-28-025",
+      "source": {
+        "ordinal": 25,
+        "page": 26,
+        "page_line": 42,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "prohibited-network evidence",
+      "obligation_id": "OBL-P26-28-026",
+      "source": {
+        "ordinal": 26,
+        "page": 26,
+        "page_line": 43,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "secret-leakage test evidence",
+      "obligation_id": "OBL-P26-28-027",
+      "source": {
+        "ordinal": 27,
+        "page": 26,
+        "page_line": 44,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "package manifest",
+      "obligation_id": "OBL-P26-28-028",
+      "source": {
+        "ordinal": 28,
+        "page": 26,
+        "page_line": 45,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "application archive checksum",
+      "obligation_id": "OBL-P26-28-029",
+      "source": {
+        "ordinal": 29,
+        "page": 26,
+        "page_line": 46,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "evidence archive checksum",
+      "obligation_id": "OBL-P26-28-030",
+      "source": {
+        "ordinal": 30,
+        "page": 26,
+        "page_line": 47,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "residual-risk register",
+      "obligation_id": "OBL-P26-28-031",
+      "source": {
+        "ordinal": 31,
+        "page": 26,
+        "page_line": 48,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsupported-obligation report",
+      "obligation_id": "OBL-P26-28-032",
+      "source": {
+        "ordinal": 32,
+        "page": 26,
+        "page_line": 49,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "final GO or NO_GO decision",
+      "obligation_id": "OBL-P27-28-033",
+      "source": {
+        "ordinal": 33,
+        "page": 27,
+        "page_line": 1,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "requirement ID",
+      "obligation_id": "OBL-P27-28-034",
+      "source": {
+        "ordinal": 34,
+        "page": 27,
+        "page_line": 6,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "requirements hash",
+      "obligation_id": "OBL-P27-28-035",
+      "source": {
+        "ordinal": 35,
+        "page": 27,
+        "page_line": 7,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "application ID",
+      "obligation_id": "OBL-P27-28-036",
+      "source": {
+        "ordinal": 36,
+        "page": 27,
+        "page_line": 8,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "version ID",
+      "obligation_id": "OBL-P27-28-037",
+      "source": {
+        "ordinal": 37,
+        "page": 27,
+        "page_line": 9,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "run ID",
+      "obligation_id": "OBL-P27-28-038",
+      "source": {
+        "ordinal": 38,
+        "page": 27,
+        "page_line": 10,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "source factory commit where available",
+      "obligation_id": "OBL-P27-28-039",
+      "source": {
+        "ordinal": 39,
+        "page": 27,
+        "page_line": 11,
+        "section": "28. Evidence obligations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The complete requirement is traceable",
+      "obligation_id": "OBL-P27-1-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 18,
+        "section": "1. The complete requirement is traceable."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "All mandatory obligations are implemented or the run is explicitly NO_GO",
+      "obligation_id": "OBL-P27-2-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 19,
+        "section": "2. All mandatory obligations are implemented or the run is explicitly NO_GO ."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Concurrent duplicate submission creates one case",
+      "obligation_id": "OBL-P27-5-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 22,
+        "section": "5. Concurrent duplicate submission creates one case."
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "All supported classifications are tested",
+      "obligation_id": "OBL-P27-8-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 25,
+        "section": "8. All supported classifications are tested."
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Health, readiness, metrics, OpenAPI and documentation are available",
+      "obligation_id": "OBL-P27-14-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 31,
+        "section": "14. Health, readiness, metrics, OpenAPI and documentation are available."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No hidden network or real-provider access occurred",
+      "obligation_id": "OBL-P27-18-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 35,
+        "section": "18. No hidden network or real-provider access occurred."
+      },
+      "support_reason": "Missing verified tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Checksums match",
+      "obligation_id": "OBL-P27-22-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 39,
+        "section": "22. Checksums match."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Limitations and residual risks are explicitly documented",
+      "obligation_id": "OBL-P27-24-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 41,
+        "section": "24. Limitations and residual risks are explicitly documented."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "The final posture remains certification-ready-not-certified and not production-ready",
+      "obligation_id": "OBL-P27-25-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 42,
+        "section": "25. The final posture remains certification-ready-not-certified and not production-ready."
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Fail-closed conditions The run shall fail closed when",
+      "obligation_id": "OBL-P27-30-001",
+      "source": {
+        "ordinal": 1,
+        "page": 27,
+        "page_line": 45,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "approval is absent or incorrect",
+      "obligation_id": "OBL-P27-30-002",
+      "source": {
+        "ordinal": 2,
+        "page": 27,
+        "page_line": 49,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "the requirements file is missing, unreadable or malformed",
+      "obligation_id": "OBL-P27-30-003",
+      "source": {
+        "ordinal": 3,
+        "page": 27,
+        "page_line": 50,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "the application ID is invalid",
+      "obligation_id": "OBL-P28-30-004",
+      "source": {
+        "ordinal": 4,
+        "page": 28,
+        "page_line": 1,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "mandatory requirement traceability is incomplete",
+      "obligation_id": "OBL-P28-30-005",
+      "source": {
+        "ordinal": 5,
+        "page": 28,
+        "page_line": 2,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "a mandatory requirement is silently omitted",
+      "obligation_id": "OBL-P28-30-006",
+      "source": {
+        "ordinal": 6,
+        "page": 28,
+        "page_line": 3,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "output or evidence escapes the isolated workspace or /tmp",
+      "obligation_id": "OBL-P28-30-007",
+      "source": {
+        "ordinal": 7,
+        "page": 28,
+        "page_line": 4,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "live-payment or provider access is requested",
+      "obligation_id": "OBL-P28-30-008",
+      "source": {
+        "ordinal": 8,
+        "page": 28,
+        "page_line": 5,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "real secrets or real-person data are detected",
+      "obligation_id": "OBL-P28-30-009",
+      "source": {
+        "ordinal": 9,
+        "page": 28,
+        "page_line": 6,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "idempotency invariants fail",
+      "obligation_id": "OBL-P28-30-010",
+      "source": {
+        "ordinal": 10,
+        "page": 28,
+        "page_line": 7,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "concurrent duplicate creation occurs",
+      "obligation_id": "OBL-P28-30-011",
+      "source": {
+        "ordinal": 11,
+        "page": 28,
+        "page_line": 8,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "state-machine invariants fail",
+      "obligation_id": "OBL-P28-30-012",
+      "source": {
+        "ordinal": 12,
+        "page": 28,
+        "page_line": 9,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "audit integrity fails without quarantine",
+      "obligation_id": "OBL-P28-30-013",
+      "source": {
+        "ordinal": 13,
+        "page": 28,
+        "page_line": 10,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "human-review controls are bypassed",
+      "obligation_id": "OBL-P28-30-014",
+      "source": {
+        "ordinal": 14,
+        "page": 28,
+        "page_line": 11,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "generated tests are not executed",
+      "obligation_id": "OBL-P28-30-015",
+      "source": {
+        "ordinal": 15,
+        "page": 28,
+        "page_line": 12,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Python compilation fails",
+      "obligation_id": "OBL-P28-30-016",
+      "source": {
+        "ordinal": 16,
+        "page": 28,
+        "page_line": 13,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Ruff fails",
+      "obligation_id": "OBL-P28-30-017",
+      "source": {
+        "ordinal": 17,
+        "page": 28,
+        "page_line": 14,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "MyPy fails",
+      "obligation_id": "OBL-P28-30-018",
+      "source": {
+        "ordinal": 18,
+        "page": 28,
+        "page_line": 15,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "required runtime probes fail",
+      "obligation_id": "OBL-P28-30-019",
+      "source": {
+        "ordinal": 19,
+        "page": 28,
+        "page_line": 16,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "OpenAPI cannot be generated",
+      "obligation_id": "OBL-P28-30-020",
+      "source": {
+        "ordinal": 20,
+        "page": 28,
+        "page_line": 17,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "application or evidence packaging fails",
+      "obligation_id": "OBL-P28-30-021",
+      "source": {
+        "ordinal": 21,
+        "page": 28,
+        "page_line": 18,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "evidence checksums do not match",
+      "obligation_id": "OBL-P28-30-022",
+      "source": {
+        "ordinal": 22,
+        "page": 28,
+        "page_line": 19,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "tracked source is mutated by runtime execution",
+      "obligation_id": "OBL-P28-30-023",
+      "source": {
+        "ordinal": 23,
+        "page": 28,
+        "page_line": 20,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "unsupported production-readiness or certification claims are attempted",
+      "obligation_id": "OBL-P28-30-024",
+      "source": {
+        "ordinal": 24,
+        "page": 28,
+        "page_line": 21,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "any mandatory unsupported obligation is incorrectly reported as passed",
+      "obligation_id": "OBL-P28-30-025",
+      "source": {
+        "ordinal": 25,
+        "page": 28,
+        "page_line": 22,
+        "section": "30. Fail-closed conditions"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "Non-goals and limitations",
+      "obligation_id": "OBL-P28-31-001",
+      "source": {
+        "ordinal": 1,
+        "page": 28,
+        "page_line": 25,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No real payment processing",
+      "obligation_id": "OBL-P28-31-002",
+      "source": {
+        "ordinal": 2,
+        "page": 28,
+        "page_line": 26,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No automated refund",
+      "obligation_id": "OBL-P28-31-003",
+      "source": {
+        "ordinal": 3,
+        "page": 28,
+        "page_line": 27,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No automated reversal",
+      "obligation_id": "OBL-P28-31-004",
+      "source": {
+        "ordinal": 4,
+        "page": 28,
+        "page_line": 28,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No real debit or credit",
+      "obligation_id": "OBL-P28-31-005",
+      "source": {
+        "ordinal": 5,
+        "page": 28,
+        "page_line": 29,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No account restriction",
+      "obligation_id": "OBL-P28-31-006",
+      "source": {
+        "ordinal": 6,
+        "page": 28,
+        "page_line": 30,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No real customer, merchant, bank, PSP, NPCI, issuer or acquirer data",
+      "obligation_id": "OBL-P28-31-007",
+      "source": {
+        "ordinal": 7,
+        "page": 28,
+        "page_line": 31,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No live UPI or banking integration",
+      "obligation_id": "OBL-P28-31-008",
+      "source": {
+        "ordinal": 8,
+        "page": 28,
+        "page_line": 32,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No regulatory filing",
+      "obligation_id": "OBL-P28-31-009",
+      "source": {
+        "ordinal": 9,
+        "page": 28,
+        "page_line": 33,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No legal or regulatory determination",
+      "obligation_id": "OBL-P28-31-010",
+      "source": {
+        "ordinal": 10,
+        "page": 28,
+        "page_line": 34,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No official certification",
+      "obligation_id": "OBL-P28-31-011",
+      "source": {
+        "ordinal": 11,
+        "page": 28,
+        "page_line": 35,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No production deployment",
+      "obligation_id": "OBL-P28-31-012",
+      "source": {
+        "ordinal": 12,
+        "page": 28,
+        "page_line": 36,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No claim of production readiness",
+      "obligation_id": "OBL-P28-31-013",
+      "source": {
+        "ordinal": 13,
+        "page": 28,
+        "page_line": 37,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No claim that deterministic classification replaces human accountability",
+      "obligation_id": "OBL-P28-31-014",
+      "source": {
+        "ordinal": 14,
+        "page": 28,
+        "page_line": 38,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "No guarantee that every obligation can be implemented by the current deterministic generator",
+      "obligation_id": "OBL-P28-31-015",
+      "source": {
+        "ordinal": 15,
+        "page": 28,
+        "page_line": 39,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "an explicit domain aggregate",
+      "obligation_id": "OBL-P28-31-016",
+      "source": {
+        "ordinal": 16,
+        "page": 28,
+        "page_line": 48,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "value objects",
+      "obligation_id": "OBL-P28-31-017",
+      "source": {
+        "ordinal": 17,
+        "page": 28,
+        "page_line": 49,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "state transitions",
+      "obligation_id": "OBL-P29-31-018",
+      "source": {
+        "ordinal": 18,
+        "page": 29,
+        "page_line": 1,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "deterministic classification",
+      "obligation_id": "OBL-P29-31-019",
+      "source": {
+        "ordinal": 19,
+        "page": 29,
+        "page_line": 2,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "confidence and impact rules",
+      "obligation_id": "OBL-P29-31-020",
+      "source": {
+        "ordinal": 20,
+        "page": 29,
+        "page_line": 3,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "human review",
+      "obligation_id": "OBL-P29-31-021",
+      "source": {
+        "ordinal": 21,
+        "page": 29,
+        "page_line": 4,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "persistence",
+      "obligation_id": "OBL-P29-31-022",
+      "source": {
+        "ordinal": 22,
+        "page": 29,
+        "page_line": 5,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "concurrency",
+      "obligation_id": "OBL-P29-31-023",
+      "source": {
+        "ordinal": 23,
+        "page": 29,
+        "page_line": 6,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "audit integrity",
+      "obligation_id": "OBL-P29-31-024",
+      "source": {
+        "ordinal": 24,
+        "page": 29,
+        "page_line": 7,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "richer APIs",
+      "obligation_id": "OBL-P29-31-025",
+      "source": {
+        "ordinal": 25,
+        "page": 29,
+        "page_line": 8,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "expanded tests",
+      "obligation_id": "OBL-P29-31-026",
+      "source": {
+        "ordinal": 26,
+        "page": 29,
+        "page_line": 9,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "stronger evidence",
+      "obligation_id": "OBL-P29-31-027",
+      "source": {
+        "ordinal": 27,
+        "page": 29,
+        "page_line": 10,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "If the current generator cannot implement one or more mandatory depth requirements, it shall return NO_GO with an unsupported-capability report rather than generating a shallow application and declaring success",
+      "obligation_id": "OBL-P29-31-028",
+      "source": {
+        "ordinal": 28,
+        "page": 29,
+        "page_line": 12,
+        "section": "31. Non-goals and limitations"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "current obligations must be independently verified",
+      "obligation_id": "OBL-P29-32-001",
+      "source": {
+        "ordinal": 1,
+        "page": 29,
+        "page_line": 30,
+        "section": "32. Official-reference boundary"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "applicable NPCI, RBI, bank, PSP and organisational requirements must be confirmed",
+      "obligation_id": "OBL-P29-32-002",
+      "source": {
+        "ordinal": 2,
+        "page": 29,
+        "page_line": 31,
+        "section": "32. Official-reference boundary"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "security, privacy, operational and legal reviews must be completed",
+      "obligation_id": "OBL-P29-32-003",
+      "source": {
+        "ordinal": 3,
+        "page": 29,
+        "page_line": 32,
+        "section": "32. Official-reference boundary"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    },
+    {
+      "normalized_text": "official certification or approval must be obtained where applicable",
+      "obligation_id": "OBL-P29-32-004",
+      "source": {
+        "ordinal": 4,
+        "page": 29,
+        "page_line": 33,
+        "section": "32. Official-reference boundary"
+      },
+      "support_reason": "Missing verified implementation, tests.",
+      "support_status": "PARTIAL"
+    }
+  ],
+  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
+  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
+  "schema_version": "upi-failed-debit-unsupported-obligation-report.v3",
+  "status": "UNSUPPORTED_OR_PARTIAL_MANDATORY_OBLIGATIONS_PRESENT",
+  "unsupported_obligation_count": 380
+}

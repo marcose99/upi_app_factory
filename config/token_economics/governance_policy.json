@@ -1,0 +1,74 @@
+{
+  "schema_version": "token-economics-governance-policy.v1",
+  "policy_version": "2026-07-29.v1",
+  "decision_rights": {
+    "factory_platform_owner": [
+      "implementation_change",
+      "artifact_ownership_registry_change"
+    ],
+    "ai_model_risk_owner": [
+      "model_route_enablement",
+      "reasoning_effort_policy"
+    ],
+    "finops_cost_policy_owner": [
+      "budget_envelope_publication",
+      "rate_card_validation_approval"
+    ],
+    "security_and_privacy_owner": [
+      "retention_class_change",
+      "compact_log_redaction_policy"
+    ],
+    "application_product_owner": [
+      "accepted_outcome_interpretation",
+      "generated_application_applicability_override"
+    ],
+    "independent_assurance_reviewer": [
+      "independent_review",
+      "requirements_verification"
+    ],
+    "human_authority": [
+      "merge",
+      "push",
+      "release",
+      "deployment",
+      "budget_exception",
+      "rate_card_publication",
+      "certification_claim"
+    ]
+  },
+  "exception_policy": {
+    "requires_human_authority": true,
+    "scoped": true,
+    "expiring": true,
+    "retroactive": false
+  },
+  "retention_policy": {
+    "compact_log_default": "metadata_only",
+    "restricted_content_excluded_by_default": [
+      "prompts",
+      "responses",
+      "reasoning",
+      "tool_payloads",
+      "credentials",
+      "personal_data",
+      "payment_data",
+      "raw_provider_events"
+    ],
+    "legal_hold_machine_readable": true
+  },
+  "incident_classes": [
+    "cost_anomaly",
+    "repeated_incomplete_turns",
+    "usage_field_drift",
+    "reconciliation_variance",
+    "ledger_duplication",
+    "stale_rate_card",
+    "unexpected_model_routing",
+    "unapproved_artifact_mutation",
+    "privacy_boundary_violation"
+  ],
+  "compatibility_mappings": {
+    "focus": "compatibility_mapping_only",
+    "opentelemetry_genai": "versioned_compatibility_adapter"
+  }
+}

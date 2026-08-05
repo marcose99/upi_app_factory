@@ -36,7 +36,13 @@ from factory.operator_portal.operator_guides import build_operator_guide_index
 from factory.operator_portal.portfolio_api import build_portfolio_router
 from factory.operator_portal.runtime_api import build_runtime_router
 from factory.operator_portal.state_roots import resolve_state_roots
+from factory.operator_portal.token_economics_dashboard import build_dashboard as build_token_economics_dashboard
 from factory.operator_portal.validation_runner import CommandNotAllowedError, ValidationRunnerService
+from factory.native_capability_prerun.improvement_workflow import (
+    FactoryImprovementError,
+    ImprovementWorkflowConfig,
+    run_factory_improvement_workflow,
+)
 
 
 APP_ID = "upi_dispute_resolution"
@@ -61,6 +67,8 @@ LOCAL_API_SAFETY_BOUNDARIES: dict[str, Any] = {
     "external_ecosystem_integrations": "mocked_or_simulated_only",
     "arbitrary_shell_text_allowed": False,
 }
+PRIMARY_RUNTIME_PLANE = "portfolio_authoritative"
+COMPATIBILITY_RUNTIME_PLANE = "runtime_compatibility_deprecated"
 
 
 class ValidationRunRequest(BaseModel):
@@ -92,6 +100,16 @@ class DeepPortalRequest(BaseModel):
     requirements: str | None = None
     requirements_path: str | None = None
     approval_token: str | None = None
+
+
+class FactoryImprovementProposalRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    improvement_requirements_path: str
+    improvement_sha256: str
+    output_root: str | None = None
+    requirements_document_path: str | None = None
+    application_id: str | None = None
 
 
 class OperatorPortalLocalWebAPI:
@@ -145,7 +163,23 @@ class OperatorPortalLocalWebAPI:
                 "phase69": str(self.phase69_state_root) if self.phase69_state_root else "default",
                 "strategy": "explicit_portal_state_roots",
             },
+            "runtime_plane_authority": self.runtime_plane_authority(),
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+        }
+
+    def runtime_plane_authority(self) -> dict[str, Any]:
+        return {
+            "primary_runtime_plane": PRIMARY_RUNTIME_PLANE,
+            "compatibility_runtime_plane": {
+                "id": COMPATIBILITY_RUNTIME_PLANE,
+                "mounted_prefix": "/operator-portal/api/runtime",
+                "status": "deprecated_compatibility_surface",
+                "replacement_prefix": "/operator-portal/api/portfolio/runtime",
+                "ui_primary_surface": "/operator-portal/api/portfolio/runtime",
+            },
+            "capability_publication_surface": "/operator-portal/api/portfolio/catalogue",
+            "authoritative_application_id": "upi_failed_debit_no_credit",
+            "compatibility_application_id": APP_ID,
         }
 
     def evidence_dashboard(self) -> dict[str, Any]:
@@ -167,6 +201,14 @@ class OperatorPortalLocalWebAPI:
                 {},
             ),
             "operator_message": "Download status is read from local export metadata.",
+            "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+        }
+
+    def token_economics_dashboard(self) -> dict[str, Any]:
+        return {
+            "status": "available",
+            "payload": build_token_economics_dashboard(project_root=self.project_root),
+            "operator_message": "Token-economics policy, rate-card, budget, and applicability summary loaded from local configuration.",
             "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
         }
 
@@ -406,6 +448,92 @@ class OperatorPortalLocalWebAPI:
         except OrchestrationNotFound:
             raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
 
+    def native_pre_run_artifact(self, run_id: str, artifact: str) -> dict[str, Any]:
+        if "/" in artifact or "\\" in artifact or artifact.startswith("."):
+            raise HTTPException(status_code=400, detail={"status": "rejected", "error": "invalid artifact"})
+        try:
+            run = self.browser_orchestrator.get_run(run_id)
+        except (OrchestrationNotFound, FileNotFoundError):
+            raise HTTPException(status_code=404, detail={"status": "missing", "run_id": run_id})
+        plan = run.get("plan")
+        pre_run = plan.get("native_capability_pre_run") if isinstance(plan, dict) else None
+        artifact_root = pre_run.get("artifact_root") if isinstance(pre_run, dict) else None
+        if not isinstance(artifact_root, str) or not artifact_root:
+            raise HTTPException(status_code=404, detail={"status": "missing", "artifact": artifact})
+        root = Path(artifact_root).expanduser().resolve()
+        publication_root = self.browser_orchestrator.publication_root.resolve()
+        if (
+            not root.is_relative_to(self.project_root.resolve())
+            and not root.is_relative_to(self.browser_state_root.resolve())
+            and not root.is_relative_to(publication_root)
+        ):
+            raise HTTPException(status_code=409, detail={"status": "conflict", "error": "untrusted artifact root"})
+        path = (root / artifact).resolve()
+        if not path.is_relative_to(root) or not path.is_file() or path.is_symlink():
+            raise HTTPException(status_code=404, detail={"status": "missing", "artifact": artifact})
+        data = path.read_bytes()
+        import hashlib
+
+        return {
+            "schema_version": "native-pre-run-artifact-read.v1",
+            "run_id": run_id,
+            "artifact": artifact,
+            "path": str(path),
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "size_bytes": len(data),
+            "text": data.decode("utf-8") if len(data) <= 256 * 1024 else "",
+            "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES,
+        }
+
+    def _resolve_trusted_local_path(self, value: str, *, label: str) -> Path:
+        candidate = Path(value).expanduser()
+        resolved = (candidate if candidate.is_absolute() else self.project_root / candidate).resolve()
+        trusted_roots = (
+            self.project_root.resolve(),
+            self.browser_state_root.resolve(),
+            self.browser_orchestrator.publication_root.resolve(),
+        )
+        if not any(resolved.is_relative_to(root) for root in trusted_roots):
+            raise FactoryImprovementError(f"{label} must stay inside a trusted local root")
+        return resolved
+
+    def factory_improvement_proposal(self, request: FactoryImprovementProposalRequest) -> dict[str, Any]:
+        try:
+            improvement_path = self._resolve_trusted_local_path(
+                request.improvement_requirements_path,
+                label="improvement requirements path",
+            )
+            output_root = (
+                self._resolve_trusted_local_path(request.output_root, label="factory improvement output root")
+                if request.output_root
+                else self.project_root / "workspace" / "factory_improvement_proposals"
+            )
+            trusted_output_root = (self.project_root / "workspace").resolve()
+            if not output_root.is_relative_to(trusted_output_root):
+                raise FactoryImprovementError("factory improvement output root must stay inside workspace")
+            requirements_document = (
+                self._resolve_trusted_local_path(
+                    request.requirements_document_path,
+                    label="requirements document path",
+                )
+                if request.requirements_document_path
+                else None
+            )
+            result = run_factory_improvement_workflow(
+                ImprovementWorkflowConfig(
+                    improvement_requirements=improvement_path,
+                    improvement_sha256=request.improvement_sha256,
+                    output_root=output_root,
+                    factory_root=self.project_root,
+                    requirements_document=requirements_document,
+                    application_id=request.application_id,
+                    plan_only=True,
+                )
+            )
+        except FactoryImprovementError as exc:
+            raise HTTPException(status_code=400, detail={"status": "rejected", "error": str(exc)}) from exc
+        return {"status": "proposal_ready", "result": result, "safety_boundaries": LOCAL_API_SAFETY_BOUNDARIES}
+
     def deep_overview(self) -> dict[str, Any]:
         try:
             return self.deep_portal.overview()
@@ -516,6 +644,15 @@ def create_app(
                 "traceparent": f"00-{context['trace_id']}-{context['span_id']}-{context['trace_flags']}",
                 "x-request-id": context["request_id"],
             }
+            if request.url.path.startswith("/operator-portal/api/runtime"):
+                headers.update(
+                    {
+                        "deprecation": "true",
+                        "x-upi-runtime-plane": COMPATIBILITY_RUNTIME_PLANE,
+                        "x-upi-runtime-plane-primary": PRIMARY_RUNTIME_PLANE,
+                        "link": '</operator-portal/api/runtime-plane-authority>; rel="successor-version"',
+                    }
+                )
             response.headers.update(headers)
             duration_ms = round((time.perf_counter() - started) * 1000, 3)
             LOGGER.info(
@@ -541,6 +678,10 @@ def create_app(
     async def operator_portal_health() -> dict[str, Any]:
         return api.health()
 
+    @app.get("/operator-portal/api/runtime-plane-authority")
+    async def runtime_plane_authority() -> dict[str, Any]:
+        return api.runtime_plane_authority()
+
     @app.get("/portal/evidence-dashboard")
     async def evidence_dashboard() -> dict[str, Any]:
         return api.evidence_dashboard()
@@ -548,6 +689,10 @@ def create_app(
     @app.get("/portal/download-center/status")
     async def download_center_status() -> dict[str, Any]:
         return api.download_center_status()
+
+    @app.get("/portal/token-economics")
+    async def token_economics_dashboard() -> dict[str, Any]:
+        return api.token_economics_dashboard()
 
     @app.post("/portal/download-center/export")
     async def export_download_bundle() -> dict[str, Any]:
@@ -612,6 +757,14 @@ def create_app(
     @app.get("/operator-portal/api/runs/{run_id}/validation")
     async def browser_run_validation(run_id: str) -> dict[str, Any]:
         return api.browser_run_validation(run_id)
+
+    @app.get("/operator-portal/api/runs/{run_id}/native-pre-run/artifacts/{artifact}")
+    async def native_pre_run_artifact(run_id: str, artifact: str) -> dict[str, Any]:
+        return api.native_pre_run_artifact(run_id, artifact)
+
+    @app.post("/operator-portal/api/factory-improvement/proposal")
+    async def factory_improvement_proposal(request: FactoryImprovementProposalRequest) -> dict[str, Any]:
+        return api.factory_improvement_proposal(request)
 
     @app.get("/operator-portal/api/deep-engineering/overview")
     async def deep_engineering_overview() -> dict[str, Any]:

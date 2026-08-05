@@ -3,7 +3,7 @@
   "content_manifest": "factory_governance/phase68_70/recipient_replay_output/content_manifest.json",
   "fictional_data_only": true,
   "handoff_bundle": "factory_governance/phase68_70/recipient_replay_output/handoff_bundle.zip",
-  "handoff_bundle_sha256": "ecd5ed0dd112ac6517804e4651eed1c5a206e8ae9c76946af8b2eb07c42afa33",
+  "handoff_bundle_sha256": "a6cf51e46a8e05ee5f48c05c7d1fb414afd791d8c0d6a3f1b7c8b0cbd3b81edc",
   "live_provider_calls_performed": false,
   "official_certification_claimed": false,
   "output_root": "factory_governance/phase68_70/recipient_replay_output",

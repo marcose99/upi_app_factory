@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FACTORY_IMPROVEMENT_PLAN",
+  "type": "object",
+  "required": ["schema_version", "artifact", "application_id", "requirements_sha256", "plan_only_default", "implementation_steps"],
+  "properties": {
+    "schema_version": {"const": "native-capability-prerun.v1"},
+    "artifact": {"const": "FACTORY_IMPROVEMENT_PLAN"},
+    "plan_only_default": {"const": true},
+    "implementation_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "wave", "priority", "owner_category", "candidate_paths", "acceptance_criteria"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^FAC-IMP-[0-9]{3}$"},
+          "wave": {"type": "integer", "minimum": 1},
+          "priority": {"type": "string"},
+          "owner_category": {"type": "string"},
+          "candidate_paths": {"type": "array"},
+          "acceptance_criteria": {"type": "array"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

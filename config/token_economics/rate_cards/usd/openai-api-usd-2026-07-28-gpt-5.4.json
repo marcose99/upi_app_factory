@@ -1,0 +1,60 @@
+{
+  "schema_version": "token-economics-rate-card.v1",
+  "rate_card_id": "openai-api-usd-2026-07-28-gpt-5.4",
+  "provider": "openai",
+  "billing_surface": "api_usd",
+  "model_resolved": "gpt-5.4",
+  "model_version": "2026-07-28",
+  "service_tier": "standard",
+  "context_band": "default",
+  "modality": "text",
+  "region_or_residency": "global",
+  "currency_or_credit_unit": "usd",
+  "effective_from": "2026-07-28T00:00:00Z",
+  "effective_to": null,
+  "contract_id": "local-governed-reference-api-usd",
+  "provenance": {
+    "source": "repository_managed_reference_rate_card",
+    "verified_at": "2026-07-29T00:00:00Z",
+    "non_contractual_reference": true
+  },
+  "unit_scale": "per_token",
+  "rounding_policy": {
+    "mode": "ROUND_CEILING",
+    "decimal_places": 7
+  },
+  "staleness_threshold_days": 365,
+  "categories": {
+    "uncached_input": {
+      "rate": "0.0000008",
+      "unit_scale": "token"
+    },
+    "cache_read": {
+      "rate": "0.0000002",
+      "unit_scale": "token"
+    },
+    "cache_write": {
+      "rate": "0.0000004",
+      "unit_scale": "token"
+    },
+    "output": {
+      "rate": "0.0000024",
+      "unit_scale": "token"
+    },
+    "provider_tools": {
+      "rate": "0.0000000",
+      "unit_scale": "tool_call"
+    },
+    "storage_retrieval": {
+      "rate": "0.0000000",
+      "unit_scale": "request"
+    },
+    "containers_compute": {
+      "rate": "0.0000000",
+      "unit_scale": "request"
+    }
+  },
+  "integrity": {
+    "sha256": "3361748653ca204309ca82eb0589088feb7e86d43f12dfe49430042d49b64ab3"
+  }
+}

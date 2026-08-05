@@ -106,20 +106,24 @@ def _factory_source_paths(root: Path) -> list[str]:
 
 
 def _openapi_routes(project_root: Path) -> list[dict[str, str]]:
-    import sys
-
-    if str(project_root) not in sys.path:
-        sys.path.insert(0, str(project_root))
-    from factory.operator_portal.web_ui.app import create_web_ui_app
-
-    schema = create_web_ui_app(project_root=project_root).openapi()
+    route_source_paths = (
+        "factory/operator_portal/local_web_api.py",
+        "factory/operator_portal/runtime_api.py",
+        "factory/operator_portal/portfolio_api.py",
+        "factory/operator_portal/debug_plan_api.py",
+        "factory/operator_portal/documentation_api.py",
+    )
     routes: list[dict[str, str]] = []
-    for path, path_item in schema.get("paths", {}).items():
-        if not isinstance(path_item, dict):
-            continue
-        for method in path_item:
-            if str(method).lower() in {"get", "post", "put", "patch", "delete"}:
-                routes.append({"method": str(method).upper(), "path": str(path)})
+    route_pattern = re.compile(r"@(app|router)\.(get|post|put|patch|delete)\(\s*[\"']([^\"']+)[\"']")
+    prefix_pattern = re.compile(r"router\s*=\s*APIRouter\([^)]*prefix\s*=\s*[\"']([^\"']+)[\"']", re.DOTALL)
+    for relative in route_source_paths:
+        source = (project_root / relative).read_text(encoding="utf-8")
+        prefix_match = prefix_pattern.search(source)
+        router_prefix = prefix_match.group(1) if prefix_match else ""
+        for match in route_pattern.finditer(source):
+            raw_path = match.group(3)
+            path = raw_path if match.group(1) == "app" else f"{router_prefix}{raw_path}"
+            routes.append({"method": match.group(2).upper(), "path": path})
     return sorted(routes, key=lambda item: (item["path"], item["method"]))
 
 

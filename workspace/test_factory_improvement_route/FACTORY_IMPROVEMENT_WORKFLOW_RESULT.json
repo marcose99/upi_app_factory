@@ -1,0 +1,48 @@
+{
+  "approved_improvement_ids": [
+    "FAC-IMP-001"
+  ],
+  "before_after_delta": {
+    "after_decision": "not_rerun_no_requirements_document",
+    "after_fulfillable": null,
+    "before_decision": "not_rerun_no_requirements_document",
+    "before_fulfillable": null,
+    "unresolved_improvement_ids": [
+      "FAC-IMP-001"
+    ]
+  },
+  "bounded_repair_validation": {
+    "repair_cycles_executed": 0,
+    "repeated_failure_fingerprint": null,
+    "validation_cycles_executed": 0
+  },
+  "created_at_utc": "2026-07-28T10:31:59Z",
+  "factory_branch": "feature/native-capability-prerun-v7-20260728t055227z-3045993",
+  "factory_head": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+  "improvement_requirements_path": "/tmp/pytest-of-marcose/pytest-2748/test_portal_reads_native_pre_r0/pub/factory_generated/upi_dispute_resolution/portal_publications/run_20260728T103159Z_me0o5x6i4TSQy6H-Zu85GA/engineering_evidence/native_capability_pre_run/upi_dispute_resolution/f659c83c7290322e3fa8d52f0b00c7a63e2631c5e204a5853780996ddda69d69/FACTORY_IMPROVEMENT_REQUIREMENTS.json",
+  "improvement_sha256": "a3f8d05b59b34edf94537094370a081a870621990a401578c8d1f30985e88486",
+  "isolated_branch_worktree_semantics": {
+    "candidate_commit_created": false,
+    "current_branch": "feature/native-capability-prerun-v7-20260728t055227z-3045993",
+    "merge_push_release_performed": false,
+    "worktree_list_sha256": "fdbc187b176542e14f5129d1f76c8dec49cbdadb7112042f531ceb27c4a8af34"
+  },
+  "max_repair_cycles": 3,
+  "plan_only": true,
+  "prohibited_actions": [
+    "merge",
+    "push",
+    "force push",
+    "tag",
+    "release",
+    "deployment",
+    "certification claim",
+    "branch deletion",
+    "worktree deletion",
+    "live provider calls"
+  ],
+  "schema_version": "factory-improvement-workflow.v1",
+  "source_change_authorized": false,
+  "status": "PLAN_ONLY_READY_FOR_GOVERNED_REVIEW",
+  "stopped_at": "governed_review"
+}

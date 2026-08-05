@@ -231,6 +231,14 @@ def command_logs(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_token_economics(args: argparse.Namespace) -> int:
+    script = PROJECT_ROOT / "scripts" / "token_economics_cli.py"
+    if not script.exists():
+        print(f"ERROR: missing {script.relative_to(PROJECT_ROOT)}")
+        return 1
+    return run_command([str(PYTHON), str(script), *args.cli_args], check=False)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog=f"./{ROOT_COMMAND}",
@@ -258,6 +266,10 @@ def build_parser() -> argparse.ArgumentParser:
     logs_parser = subparsers.add_parser("logs")
     logs_parser.add_argument("--limit", type=int, default=10)
     logs_parser.set_defaults(func=command_logs)
+
+    token_parser = subparsers.add_parser("token-economics")
+    token_parser.add_argument("cli_args", nargs=argparse.REMAINDER)
+    token_parser.set_defaults(func=command_token_economics)
     return parser
 
 

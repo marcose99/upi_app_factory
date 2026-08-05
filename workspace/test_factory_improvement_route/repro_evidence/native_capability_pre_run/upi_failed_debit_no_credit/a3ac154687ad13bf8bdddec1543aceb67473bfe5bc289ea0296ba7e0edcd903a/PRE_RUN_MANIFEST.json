@@ -1,0 +1,29 @@
+{
+  "application_id": "upi_failed_debit_no_credit",
+  "artifact": "PRE_RUN_MANIFEST",
+  "artifacts": [
+    "CAPABILITY_PRE_RUN_REPORT.json",
+    "CAPABILITY_PRE_RUN_REPORT.md",
+    "REQUIREMENT_CAPABILITY_MATRIX.json",
+    "REQUIREMENT_CAPABILITY_MATRIX.md",
+    "FACTORY_IMPROVEMENT_REQUIREMENTS.json",
+    "FACTORY_IMPROVEMENT_REQUIREMENTS.md",
+    "FACTORY_IMPROVEMENT_PLAN.json",
+    "FACTORY_IMPROVEMENT_PLAN.md",
+    "PRE_RUN_MANIFEST.json",
+    "PRE_RUN_SHA256SUMS"
+  ],
+  "created_at_utc": "2026-07-29T10:58:45Z",
+  "decision": "PROVEN_100_PERCENT_CAPABILITY",
+  "factory_identity": {
+    "branch": "feature/native-capability-token-economics-v32-20260729t103551z-1183381",
+    "diff_name_only_sha256": "c4dd9578f132bb34b7288ed125b24254aa391f2757446aa0bc8924fb9d9df600",
+    "dirty": true,
+    "head": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+    "status_sha256": "08c50eeb5e8864034c3bd94b08d3172418cf1ae7da32ad33ee0d3dde79363535"
+  },
+  "mandatory_gate_passed": true,
+  "requirements_sha256": "a3ac154687ad13bf8bdddec1543aceb67473bfe5bc289ea0296ba7e0edcd903a",
+  "run_id": "pre_run_a3ac154687ad13bf_1431be66a7",
+  "schema_version": "native-capability-prerun.v1"
+}

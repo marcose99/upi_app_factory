@@ -1,0 +1,14 @@
+{
+  "schema_version": "token-economics-prompt-cache-policy.v1",
+  "policy_id": "stable_prefix_exact_match",
+  "stable_prefix_sections": [
+    "policy",
+    "tool_schema",
+    "examples"
+  ],
+  "variable_content_must_follow_prefix": true,
+  "exact_prefix_matching_required": true,
+  "record_cache_hit_ratio": true,
+  "cached_content_still_counts_toward_context": true,
+  "status": "active"
+}

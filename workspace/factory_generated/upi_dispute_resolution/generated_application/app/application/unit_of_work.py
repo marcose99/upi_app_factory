@@ -3,11 +3,12 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Protocol
 
-from .ports import AuditLog, DisputeRepository, IdempotencyStore, Inbox, Outbox
+from .ports import AuditLog, DisputeRepository, FailedDebitRepository, IdempotencyStore, Inbox, Outbox
 
 
 class UnitOfWork(Protocol):
     disputes: DisputeRepository
+    failed_debit: FailedDebitRepository
     idempotency: IdempotencyStore
     outbox: Outbox
     audit: AuditLog

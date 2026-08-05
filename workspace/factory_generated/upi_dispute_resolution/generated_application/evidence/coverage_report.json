@@ -1,0 +1,14 @@
+{
+  "coverage_status": "NO_GO_UNSUPPORTED_MANDATORY_OBLIGATIONS",
+  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
+  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
+  "schema_version": "upi-failed-debit-coverage-report.v3",
+  "summary": {
+    "mandatory_no_go_count": 380,
+    "not_applicable_count": 3,
+    "obligation_count": 781,
+    "partial_count": 380,
+    "supported_count": 398,
+    "unsupported_count": 0
+  }
+}

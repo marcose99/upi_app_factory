@@ -1,0 +1,62 @@
+{
+  "actual_application_root": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/generated_app/upi_failed_debit_dispute",
+  "app_id": "upi_failed_debit_dispute",
+  "approval_mode": "human-gated",
+  "canonical_application_root": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute",
+  "completed_at_utc": "2026-07-29T13:39:14Z",
+  "composer_profile": "local-deep-v1",
+  "engineering_profile": "local-deep-v1",
+  "evidence_directory": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/engineering_evidence/portal_deep_20260729T133914069270Z_9e6f56233c46",
+  "evidence_root": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/engineering_evidence",
+  "generated_file_count": 19,
+  "generated_tests": [
+    "docs/test_plan.md"
+  ],
+  "health_contract": true,
+  "llm_calls": 0,
+  "mock_safe": true,
+  "native_capability_pre_run": {
+    "artifact_checksums": {
+      "CAPABILITY_PRE_RUN_REPORT.json": "4e2dbd5bee93c1a5348453a1cf6d9ff46c3625c75317c0ba5866ffdb046b9da5",
+      "CAPABILITY_PRE_RUN_REPORT.md": "ac7c37cf1623d3113e757f3627bdb63d051b63544ae2fb410ee76b6449a84b13",
+      "FACTORY_IMPROVEMENT_PLAN.json": "ae3d584170c692a165ea30a8c00936950073d3d2ac51a9994c48ad37020b4faa",
+      "FACTORY_IMPROVEMENT_PLAN.md": "d08ca5ded7f40a77181e325b49fa8479e4d90cfcb275bbb9dff144084858eb57",
+      "FACTORY_IMPROVEMENT_REQUIREMENTS.json": "8a747abaf549959f4d2edfee118a3025cf2f8b833b2444643e21a09be0b45cde",
+      "FACTORY_IMPROVEMENT_REQUIREMENTS.md": "2fb8d553248b7145cb8e8aaf6bcd373f34e52a97a421da905599f154c1f0e27c",
+      "PRE_RUN_MANIFEST.json": "51b19aaa3bcf1e45b42e7df75435ad923806cc23ab71043e834cc5b28ba8a942",
+      "PRE_RUN_SHA256SUMS": "51111990d0b498a20e1d36632e914bc847a59fc9a117fcc8e32bf9fb3a507d0b",
+      "REQUIREMENT_CAPABILITY_MATRIX.json": "9bd59427161949c83f8f5d195738e9c9b9ced6f476641a0b1ddc52c5b17e0d10",
+      "REQUIREMENT_CAPABILITY_MATRIX.md": "1d7530c10d071ac88c314ce0ebbc532a71434893385b3a2ae919f6c1576279a9"
+    },
+    "artifact_root": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/engineering_evidence/native_capability_pre_run/upi_failed_debit_dispute/9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+    "decision": "PROVEN_100_PERCENT_CAPABILITY",
+    "mandatory_gate_passed": true,
+    "obligation_count": 341,
+    "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+    "summary": {
+      "by_classification": {
+        "FULFILLABLE": 341,
+        "NOT_APPLICABLE": 0,
+        "NOT_FULFILLABLE_ENVIRONMENT_GAP": 0,
+        "NOT_FULFILLABLE_EXTERNAL_DEPENDENCY": 0,
+        "NOT_FULFILLABLE_FACTORY_GAP": 0,
+        "NOT_FULFILLABLE_GOVERNANCE_BOUNDARY": 0,
+        "NOT_FULFILLABLE_REQUIREMENTS_AMBIGUITY": 0,
+        "PARTIALLY_FULFILLABLE": 0
+      },
+      "fulfillable": 341,
+      "non_fulfillable": 0,
+      "total": 341
+    }
+  },
+  "output_root": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/workspace/deep_engineering_campaign/phase58_portal_runtime/approved_runs/9e6f56233c46622e/generated_app",
+  "portfolio_state_root": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/.var/upi_app_factory/portfolio",
+  "ready_contract": true,
+  "real_payment_calls": "disabled",
+  "register_with_portfolio": true,
+  "replace_existing": true,
+  "requirements": "__USER_HOME__/projects/.upi_app_factory_token_economics_v35_campaigns/20260729T133555Z-3148849/examples/requirements/01_upi_failed_debit_no_credit.md",
+  "requirements_sha256": "9e6f56233c46622ef50ddaec5aeb57b7a077b7b36ed547c9d200b650433f1fd0",
+  "schema_version": "1.0",
+  "status": "PORTAL_REQUIREMENTS_DRIVEN_APPLICATION_ENGINEERING_COMPLETED"
+}

@@ -1,0 +1,539 @@
+{
+  "schema_version": "native-capability-catalogue.v1",
+  "capabilities": [
+    {
+      "id": "CAP-REQ-HONESTY-GATE",
+      "description": "Native pre-run inventory, classification, fail-closed gate, and improvement requirement mapping.",
+      "exact_texts": [
+        "Test reports, requirements traceability, and checksummed evidence",
+        "All test commands, outcomes, generated artifacts, limitations, and residual risks must be recorded in the run evidence",
+        "Evidence manifests do not match their files",
+        "Use the official-reference index at `docs/OFFICIAL_REFERENCES.md` for domain orientation",
+        "Current obligations must be confirmed independently before any real-world implementation or deployment"
+      ],
+      "patterns": [
+        "mandatory requirement",
+        "unsupported mandatory",
+        "silently omit",
+        "weaken",
+        "reinterpret",
+        "fail closed",
+        "requirements-traceability",
+        "traceability",
+        "requirement id",
+        "source document",
+        "canonical hash",
+        "lineage",
+        "application id",
+        "execution posture",
+        "data posture",
+        "production posture",
+        "official-reference",
+        "official reference",
+        "orientation",
+        "confirm independently",
+        "confirmed independently",
+        "governance report",
+        "checksummed evidence",
+        "checksummed",
+        "evidence artifacts",
+        "test reports",
+        "test commands"
+      ],
+      "source_requirement_ids": [
+        "EVD-001",
+        "EVD-003"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "factory/native_capability_prerun/engine.py"
+        },
+        {
+          "type": "integration_test",
+          "path": "tests/test_phase49a_browser_driven_intake_orchestration.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-MOCK-SAFE-BOUNDARY",
+      "description": "Local deterministic mock-only application engineering boundary.",
+      "exact_texts": [
+        "runtime_llm_calls_default: 0",
+        "real_payment_calls: disabled",
+        "data_policy: fictional_only",
+        "Build a local mock-safe UPI failed debit dispute application with health, readiness, idempotent dispute intake, deterministic evidence, no live provider calls, no secrets, and certification-ready-not-certified posture",
+        "Build a mock-only failed debit no credit dispute workflow with no live payment calls, no real customer data, and certification-ready-not-certified evidence boundaries",
+        "Build a local mock-safe UPI dispute resolution API with health and readiness endpoints, idempotent dispute creation, deterministic tests, evidence lineage, run-scoped downloads, and no live payment provider calls",
+        "Build a deterministic local UPI dispute resolution API with health, readiness, idempotent dispute creation, mock-only scenario endpoints, generated tests, OpenAPI publication evidence, runtime observability metadata, and no live bank, NPCI, PSP, provider, or payment-switch calls",
+        "Build a local mock-safe generated application with health, readiness, idempotent dispute creation, deterministic evidence, generated tests and no live payment provider calls",
+        "Build a local deterministic mock-safe payment-operations case workflow for a failed debit where the beneficiary was not credited",
+        "Failed debit and no beneficiary credit workflow",
+        "Failed debit and beneficiary no-credit support with mock-safe deterministic operations",
+        "Never call live payment providers",
+        "The application must not perform a real payment, refund, reversal, account action, network instruction, or regulatory filing",
+        "The application must validate fictional transaction references, enforce idempotency, reject missing or unsafe inputs, preserve audit evidence, expose health, readiness, OpenAPI, case creation, and case inquiry endpoints, and must never perform a real payment, refund, reversal, network instruction, provider call, deployment, or certification claim",
+        "Human approval remains required for consequential engineering and all runtime LLM calls must stay at zero",
+        "A fictional transaction or alert reference",
+        "Optional fictional evidence observations",
+        "All external bank, PSP, NPCI, issuer, acquirer, merchant, notification, and payment-rail interactions must use local deterministic mocks",
+        "Unsupported regulatory, compliance, certification, or production-readiness claims must be rejected",
+        "Live-payment or external-provider access is requested",
+        "A production-readiness or certification claim is attempted"
+      ],
+      "patterns": [
+        "fictional",
+        "mock",
+        "local",
+        "external",
+        "provider",
+        "payment",
+        "refund",
+        "bank",
+        "psp",
+        "npci",
+        "rail",
+        "network",
+        "real payment",
+        "live provider",
+        "runtime_llm_calls_default",
+        "llm_calls",
+        "zero llm calls",
+        "production-shaped",
+        "deployment",
+        "production-readiness",
+        "certification"
+      ],
+      "source_requirement_ids": [
+        "ACT-003",
+        "INV-001",
+        "INV-002",
+        "OPS-002"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py"
+        },
+        {
+          "type": "integration_test",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-API-HEALTH-OPENAPI",
+      "description": "Generated FastAPI health, readiness, OpenAPI, stable errors, and API contract tests.",
+      "exact_texts": [
+        "Implement health and readiness endpoints",
+        "Generate unit and API contract tests",
+        "Build a local mock-safe UPI dispute resolution API with health and readiness endpoints, idempotent dispute creation, deterministic tests, evidence lineage, run-scoped downloads, and no live payment provider calls",
+        "Build a deterministic local UPI dispute resolution API with health, readiness, idempotent dispute creation, mock-only scenario endpoints, generated tests, OpenAPI publication evidence, runtime observability metadata, and no live bank, NPCI, PSP, provider, or payment-switch calls",
+        "Build a local mock-safe generated application with health, readiness, idempotent dispute creation, deterministic evidence, generated tests and no live payment provider calls",
+        "Failed debit and no beneficiary credit workflow",
+        "The application must validate fictional transaction references, enforce idempotency, reject missing or unsafe inputs, preserve audit evidence, expose health, readiness, OpenAPI, case creation, and case inquiry endpoints, and must never perform a real payment, refund, reversal, network instruction, provider call, deployment, or certification claim",
+        "A unique case identifier",
+        "Current case state and state-transition history",
+        "Validation and classification reason codes",
+        "Stable API responses and error contracts",
+        "Health, readiness, OpenAPI, and local API documentation",
+        "FastAPI interfaces with typed request/response models",
+        "API errors must be structured and must distinguish validation failure, not-found, idempotency conflict, policy refusal, and internal inconsistency",
+        "Runtime health/readiness/OpenAPI probes",
+        "Fictional create, inquiry, and replay demonstration"
+      ],
+      "patterns": [
+        "health",
+        "readiness",
+        "ready",
+        "openapi",
+        "api",
+        "swagger",
+        "endpoint",
+        "endpoints",
+        "case creation",
+        "create case",
+        "contract test",
+        "generated tests",
+        "http method",
+        "unit",
+        "integration tests",
+        "service/integration tests",
+        "machine-readable terminal status",
+        "stable api",
+        "problem json",
+        "problem+json",
+        "error contracts",
+        "validation failure",
+        "not-found",
+        "internal inconsistency"
+      ],
+      "source_requirement_ids": [
+        "API-001",
+        "API-002",
+        "API-003",
+        "API-004",
+        "API-005",
+        "OPS-003"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py"
+        },
+        {
+          "type": "implementation",
+          "path": "factory/application_engineering/deep_composer.py"
+        },
+        {
+          "type": "integration_test",
+          "path": "tests/test_phase56_deep_composer.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-FAILED-DEBIT-DOMAIN",
+      "description": "Failed debit dispute domain rules, state transitions, evidence completeness, audit, idempotency, and authorization.",
+      "exact_texts": [
+        "Enforce idempotent dispute creation",
+        "Build a local mock-safe UPI failed debit dispute application with health, readiness, idempotent dispute intake, deterministic evidence, no live provider calls, no secrets, and certification-ready-not-certified posture",
+        "Build a mock-only failed debit no credit dispute workflow with no live payment calls, no real customer data, and certification-ready-not-certified evidence boundaries",
+        "Build a local mock-safe generated application with health, readiness, idempotent dispute creation, deterministic evidence, generated tests and no live payment provider calls",
+        "Build a local deterministic mock-safe payment-operations case workflow for a failed debit where the beneficiary was not credited",
+        "Failed debit and no beneficiary credit workflow",
+        "Failed debit and beneficiary no-credit support with mock-safe deterministic operations",
+        "Engineer a locally runnable, production-shaped reference application that demonstrates governed intake, validation, case processing, idempotency, explainable decisions, human escalation, audit evidence, operational health, and independent testing",
+        "A client-supplied idempotency key",
+        "A positive amount expressed in minor currency units where relevant",
+        "A reason or complaint summary",
+        "Actor and correlation identifiers suitable for an audit trace",
+        "Evidence-completeness status",
+        "Human-escalation status and rationale",
+        "Validate mandatory fields and redact sensitive values from logs",
+        "A repeated idempotency key must return the original case",
+        "Missing or contradictory evidence must produce human escalation",
+        "The service must distinguish debit, beneficiary credit, reversal, and unknown states",
+        "Repeated requests with the same idempotency key and equivalent payload must return the original result",
+        "Reuse of an idempotency key with a conflicting payload must fail closed",
+        "Low-confidence, contradictory, incomplete, or high-impact decisions must be escalated to a human reviewer",
+        "Domain entities, value objects, invariants, and state transitions",
+        "Application services and use cases",
+        "Ports/interfaces for persistence, idempotency, audit, and external mocks",
+        "Idempotency replay and conflict tests",
+        "Domain invariant and state-transition tests"
+      ],
+      "patterns": [
+        "failed debit",
+        "beneficiary",
+        "debit",
+        "credit",
+        "reversal",
+        "unknown",
+        "classification",
+        "disposition",
+        "idempotent",
+        "idempotency",
+        "duplicate",
+        "eligibility",
+        "investigation",
+        "timeline",
+        "pending",
+        "uncertain",
+        "work queue",
+        "append-only",
+        "outcome event",
+        "received state",
+        "payer",
+        "customer-support",
+        "analyst",
+        "approver",
+        "supervisor",
+        "complaint summary",
+        "return the original result",
+        "state transition",
+        "state-transition",
+        "audit",
+        "evidence",
+        "human",
+        "reviewer",
+        "authorised",
+        "authorized",
+        "role",
+        "permission",
+        "resolution",
+        "case identifier",
+        "positive amount",
+        "transaction reference",
+        "reason code",
+        "correlation"
+        ,
+        "human escalation",
+        "contradictory",
+        "low-confidence",
+        "high-impact",
+        "actor act-",
+        "dispute intake",
+        "intake to validation",
+        "application services",
+        "use cases"
+      ],
+      "source_requirement_ids": [
+        "ACT-001",
+        "ACT-002",
+        "UC-001",
+        "UC-002",
+        "UC-003",
+        "BC-001",
+        "BC-002",
+        "BC-003",
+        "CMD-001",
+        "CMD-002",
+        "CMD-003",
+        "CMD-004",
+        "QRY-001",
+        "QRY-002",
+        "QRY-003",
+        "EVT-001",
+        "EVT-002",
+        "EVT-003",
+        "EVT-004",
+        "EVT-005",
+        "AGG-001",
+        "AGG-002",
+        "INV-003",
+        "INV-004",
+        "INV-005",
+        "WF-001",
+        "WF-002",
+        "WF-003",
+        "DATA-001",
+        "DATA-002",
+        "DATA-003",
+        "EVD-002"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "factory/application_engineering/failed_debit_capability.py"
+        },
+        {
+          "type": "implementation",
+          "path": "factory/application_engineering/deep_composer.py"
+        },
+        {
+          "type": "unit_test",
+          "path": "tests/test_phase55_failed_debit_capability.py"
+        },
+        {
+          "type": "integration_test",
+          "path": "tests/test_phase56_deep_composer.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-PORTAL-AUTHORITATIVE-FAILED-DEBIT-RUNTIME",
+      "description": "Portal-driven authoritative failed-debit runtime generation, portfolio registration, and deterministic runtime proof.",
+      "exact_texts": [
+        "Build and register the authoritative local failed-debit runtime with evidence collection, investigation, human review, disposition, audit verification, closure, mock-only payment boundaries, and deterministic local test proof"
+      ],
+      "patterns": [
+        "authoritative local failed-debit runtime",
+        "deterministic local test proof",
+        "portfolio authoritative",
+        "audit verification",
+        "human review"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py"
+        },
+        {
+          "type": "implementation",
+          "path": "factory/operator_portal/browser_intake_orchestration.py"
+        },
+        {
+          "type": "end_to_end_test",
+          "path": "tests/post_r9_5/test_primary_portal_failed_debit_e2e.py"
+        },
+        {
+          "type": "regression_test",
+          "path": "tests/post_r9_5/test_primary_portal_native_capability_binding.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-LOCAL-PERSISTENCE-OBSERVABILITY",
+      "description": "SQLite-shaped local persistence, structured logs, metrics, local probes, packaging, and generated evidence.",
+      "exact_texts": [
+        "Redacted audit events and correlation identifiers",
+        "Infrastructure adapters using local in-memory or SQLite-backed test stores",
+        "Configuration and safety-boundary enforcement",
+        "Tests and evidence generation",
+        "Python compilation",
+        "Unit tests",
+        "Service/integration tests",
+        "Ruff static analysis",
+        "MyPy type analysis",
+        "Package-hygiene and checksum verification",
+        "Generated tests, static analysis, or runtime probes fail"
+      ],
+      "patterns": [
+        "sqlite",
+        "persistence",
+        "restart",
+        "structured logs",
+        "logs",
+        "metrics",
+        "observability",
+        "telemetry",
+        "startup",
+        "shutdown",
+        "sqlite3",
+        "transaction",
+        "transactions",
+        "foreign keys",
+        "integrity",
+        "replaceable",
+        "testable",
+        "retention",
+        "reset",
+        "outbox",
+        "replay",
+        "perf-smoke",
+        "offline",
+        "runtime probe",
+        "latency",
+        "package",
+        "manifest",
+        "downloadable",
+        "artifact",
+        "ruff",
+        "mypy",
+        "python standard library",
+        "python compilation"
+        ,
+        "configuration",
+        "safety-boundary",
+        "safety boundary"
+      ],
+      "source_requirement_ids": [
+        "OPS-001",
+        "OPS-003",
+        "DEP-001",
+        "DEP-002"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "factory/application_engineering/deep_composer.py"
+        },
+        {
+          "type": "implementation",
+          "path": "factory/application_engineering/verification_evidence.py"
+        },
+        {
+          "type": "integration_test",
+          "path": "tests/test_phase56_deep_composer.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-PORTAL-RUN-EVIDENCE-DOWNLOADS",
+      "description": "Portal run-scoped downloads, evidence bundles, and deterministic generated-test publication flows.",
+      "exact_texts": [
+        "Build a local mock-safe UPI dispute resolution API with health and readiness endpoints, idempotent dispute creation, deterministic tests, evidence lineage, run-scoped downloads, and no live payment provider calls"
+      ],
+      "patterns": [
+        "run-scoped downloads",
+        "deterministic tests",
+        "evidence bundle",
+        "download generated application",
+        "download evidence bundle"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "factory/operator_portal/browser_intake_orchestration.py"
+        },
+        {
+          "type": "implementation",
+          "path": "factory/operator_portal/local_web_api.py"
+        },
+        {
+          "type": "integration_test",
+          "path": "tests/test_phase49a_browser_driven_intake_orchestration.py"
+        }
+      ]
+    },
+    {
+      "id": "CAP-SECURITY-NEGATIVE-TESTS",
+      "description": "Secret-pattern, path, malformed input, negative, and mock-boundary tests.",
+      "exact_texts": [
+        "The service shall reject missing mandatory values, malformed identifiers, negative or zero amounts, oversized input, unsupported state transitions, and obvious credential or secret material",
+        "Logs and evidence must not contain secrets, real customer data, full account identifiers, PINs, passwords, tokens, or API keys",
+        "PII/secret leakage tests",
+        "API contract and negative tests",
+        "Approval is absent or incorrect",
+        "The requirements file is missing, too small, or unreadable",
+        "The application ID is invalid",
+        "Output or evidence paths escape the isolated workspace",
+        "A secret or real-person data pattern is detected",
+        "Mock-boundary and prohibited-network scans"
+      ],
+      "patterns": [
+        "secret",
+        "real customer data",
+        "full account",
+        "credential",
+        "password",
+        "token",
+        "pii",
+        "redact",
+        "principal",
+        "authorization",
+        "analyst access",
+        "approval is absent or incorrect",
+        "application id is invalid",
+        "exception handling",
+        "silent retries",
+        "problem+json",
+        "sensitive",
+        "malformed",
+        "reject",
+        "rejected",
+        "mandatory values",
+        "negative",
+        "oversized",
+        "missing",
+        "zero",
+        "prohibited-network",
+        "subjected to",
+        "run must fail closed",
+        "conflicting payload",
+        "mandatory fields",
+        "path"
+      ],
+      "source_requirement_ids": [
+        "SEC-001",
+        "SEC-002",
+        "SEC-003",
+        "SEC-004"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "factory/operator_portal/browser_intake_orchestration.py"
+        },
+        {
+          "type": "implementation",
+          "path": "factory/native_capability_prerun/engine.py"
+        },
+        {
+          "type": "negative_test",
+          "path": "tests/test_portal_application_id_contract.py"
+        }
+      ]
+    }
+  ]
+}

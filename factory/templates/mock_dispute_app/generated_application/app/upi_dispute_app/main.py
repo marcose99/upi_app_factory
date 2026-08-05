@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import importlib
+import importlib.util
 import os
 import sys
 from pathlib import Path
+from types import ModuleType
 from typing import Any, cast
 
 from fastapi import Body, Depends, FastAPI, HTTPException, Request, Response, status
@@ -20,13 +22,105 @@ if str(GENERATED_APP_PARENT) not in sys.path:
     sys.path.insert(0, str(GENERATED_APP_PARENT))
 
 
+WORKSPACE_PACKAGE_PATHS: tuple[tuple[str, Path], ...] = (
+    ("generated_application", GENERATED_APP_ROOT),
+    ("generated_application.app", GENERATED_APP_ROOT / "app"),
+    ("generated_application.app.application", GENERATED_APP_ROOT / "app/application"),
+    ("generated_application.app.domain", GENERATED_APP_ROOT / "app/domain"),
+    ("generated_application.app.infrastructure", GENERATED_APP_ROOT / "app/infrastructure"),
+    (
+        "generated_application.app.infrastructure.persistence",
+        GENERATED_APP_ROOT / "app/infrastructure/persistence",
+    ),
+    ("generated_application.app.interfaces", GENERATED_APP_ROOT / "app/interfaces"),
+    ("generated_application.app.interfaces.api", GENERATED_APP_ROOT / "app/interfaces/api"),
+    ("generated_application.app.security", GENERATED_APP_ROOT / "app/security"),
+)
+
+WORKSPACE_RUNTIME_MODULES: tuple[tuple[str, Path], ...] = (
+    ("generated_application.app.domain.value_objects", GENERATED_APP_ROOT / "app/domain/value_objects.py"),
+    ("generated_application.app.domain.exceptions", GENERATED_APP_ROOT / "app/domain/exceptions.py"),
+    ("generated_application.app.domain.domain_events", GENERATED_APP_ROOT / "app/domain/domain_events.py"),
+    ("generated_application.app.domain.policies", GENERATED_APP_ROOT / "app/domain/policies.py"),
+    ("generated_application.app.domain.entities", GENERATED_APP_ROOT / "app/domain/entities.py"),
+    ("generated_application.app.security.pii_redaction", GENERATED_APP_ROOT / "app/security/pii_redaction.py"),
+    ("generated_application.app.security.identity", GENERATED_APP_ROOT / "app/security/identity.py"),
+    ("generated_application.app.application.commands", GENERATED_APP_ROOT / "app/application/commands.py"),
+    ("generated_application.app.application.ports", GENERATED_APP_ROOT / "app/application/ports.py"),
+    ("generated_application.app.application.unit_of_work", GENERATED_APP_ROOT / "app/application/unit_of_work.py"),
+    (
+        "generated_application.app.infrastructure.persistence.migrations",
+        GENERATED_APP_ROOT / "app/infrastructure/persistence/migrations.py",
+    ),
+    (
+        "generated_application.app.infrastructure.persistence.repositories",
+        GENERATED_APP_ROOT / "app/infrastructure/persistence/repositories.py",
+    ),
+    (
+        "generated_application.app.infrastructure.persistence.sqlite_unit_of_work",
+        GENERATED_APP_ROOT / "app/infrastructure/persistence/sqlite_unit_of_work.py",
+    ),
+    ("generated_application.app.application.services", GENERATED_APP_ROOT / "app/application/services.py"),
+    ("generated_application.app.interfaces.api.schemas", GENERATED_APP_ROOT / "app/interfaces/api/schemas.py"),
+    (
+        "generated_application.app.interfaces.api.error_handlers",
+        GENERATED_APP_ROOT / "app/interfaces/api/error_handlers.py",
+    ),
+)
+
+
+def _ensure_workspace_package(module_name: str, package_path: Path) -> None:
+    preferred = str(package_path)
+    existing = sys.modules.get(module_name)
+    if existing is None:
+        created = ModuleType(module_name)
+        created.__package__ = module_name
+        created.__path__ = [preferred]
+        sys.modules[module_name] = created
+        return
+    module_path = getattr(existing, "__path__", None)
+    if module_path is None:
+        return
+    ordered = [preferred]
+    ordered.extend(str(entry) for entry in module_path if str(entry) != preferred)
+    existing.__path__ = ordered
+
+
+def _load_workspace_module(module_name: str, module_path: Path) -> None:
+    spec = importlib.util.spec_from_file_location(module_name, module_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load workspace runtime module: {module_name}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+
+
+def _prime_workspace_generated_runtime() -> None:
+    importlib.invalidate_caches()
+    for module_name, package_path in WORKSPACE_PACKAGE_PATHS:
+        _ensure_workspace_package(module_name, package_path)
+    for module_name, module_path in WORKSPACE_RUNTIME_MODULES:
+        _load_workspace_module(module_name, module_path)
+
+
+def _strip_hardened_facade_legacy_routes(app: FastAPI) -> FastAPI:
+    app.router.routes = [
+        route
+        for route in app.router.routes
+        if getattr(route, "path", None) not in {"/runtime/health"}
+    ]
+    app.openapi_schema = None
+    return app
+
+
 def _hardened_api_app(*, database_path: Path | None = None) -> FastAPI:
     if database_path is not None:
         os.environ["UPI_DISPUTE_SQLITE_PATH"] = str(database_path)
+    _prime_workspace_generated_runtime()
     module_name = "generated_application.app.interfaces.api.main"
     module = importlib.import_module(module_name)
     module = importlib.reload(module)
-    return cast(FastAPI, module.app)
+    return _strip_hardened_facade_legacy_routes(cast(FastAPI, module.app))
 
 
 def _legacy_injection_app(
@@ -98,7 +192,7 @@ def _legacy_injection_app(
                     "amount_paise": command.amount_paise,
                     "description": command.description,
                     "evidence": command.evidence,
-                }
+                },
             ),
         )
 
@@ -116,6 +210,7 @@ def _legacy_injection_app(
         version="0.39.1",
         description=BOUNDARY_NOTICE,
     )
+    app.state.database_path = runtime_settings.sqlite_path
     app.state.runtime = runtime_state
     app.state.runtime_logger = runtime_logger
     app.state.compatibility_mode = "explicit_legacy_dependency_injection_harness"
@@ -383,6 +478,25 @@ def _legacy_injection_app(
     return app
 
 
+def _supports_legacy_dependency_injection(
+    repository: Any | None,
+    audit_logger: Any | None,
+) -> bool:
+    if repository is None or audit_logger is None:
+        return False
+    repository_methods = (
+        "add",
+        "get",
+        "get_by_client_request_id",
+        "get_request_fingerprint",
+        "list_all",
+        "update_status",
+    )
+    if any(not hasattr(repository, method) for method in repository_methods):
+        return False
+    return hasattr(audit_logger, "record")
+
+
 def create_app(
     *,
     database_path: Path | None = None,
@@ -390,14 +504,26 @@ def create_app(
     audit_logger: Any | None = None,
     ecosystem: Any | None = None,
     settings: Any | None = None,
+    use_legacy_dependency_injection: bool = False,
     **_: Any,
 ) -> FastAPI:
     """Legacy import facade that always returns the hardened generated API by default."""
     resolved_database_path = database_path
-    if resolved_database_path is None and settings is not None and repository is None and audit_logger is None:
+    if resolved_database_path is None and settings is not None:
         settings.validate()
         resolved_database_path = settings.sqlite_path
-    if resolved_database_path is not None or (repository is None and audit_logger is None and ecosystem is None):
+    if (
+        not use_legacy_dependency_injection
+        and database_path is None
+        and _supports_legacy_dependency_injection(repository, audit_logger)
+    ):
+        return _legacy_injection_app(
+            repository=repository,
+            audit_logger=audit_logger,
+            ecosystem=ecosystem,
+            settings=settings,
+        )
+    if not use_legacy_dependency_injection:
         return _hardened_api_app(database_path=resolved_database_path)
     if repository is None or audit_logger is None:
         raise ValueError("legacy injection harness requires repository and audit_logger together")

@@ -32,7 +32,14 @@ class Outbox(Protocol):
 
 
 class AuditLog(Protocol):
-    def append(self, actor_id: str, action: str, target: str, payload: dict[str, Any]) -> str: ...
+    def append(
+        self,
+        actor_id: str,
+        actor_role: str,
+        action: str | None = None,
+        target: str | None = None,
+        payload: dict[str, Any] | None = None,
+    ) -> str: ...
 
 
 class Inbox(Protocol):

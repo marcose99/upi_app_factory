@@ -5,6 +5,8 @@ import subprocess
 from pathlib import Path
 from typing import Any, cast
 
+from factory.operator_portal.token_economics_dashboard import build_dashboard as build_token_economics_dashboard
+
 
 APP_ID = "upi_dispute_resolution"
 PHASE = "phase33_operator_portal_run_validation_evidence_dashboard"
@@ -161,6 +163,7 @@ class EvidenceDashboardService:
             "phase31_export_bundle_metadata": export_metadata,
             "phase32_download_center_service_status": self._phase32_status(),
             "phase34_validation_runner_report_status": self._phase34_status(),
+            "token_economics": build_token_economics_dashboard(self.project_root),
             "validator_commands": VALIDATOR_COMMANDS,
             "test_commands": TEST_COMMANDS,
             "safety_boundaries": {

@@ -1,0 +1,17 @@
+{
+  "schema_version": "native-capability-evidence-index.v1",
+  "checksum_policy": "runtime_sha256_of_repository_owned_file",
+  "verification_status_policy": "PASS only when the referenced file exists in the current worktree",
+  "llm_claims_allowed": false,
+  "mock_only_boundary": true,
+  "entries": [
+    "factory/native_capability_prerun/engine.py",
+    "factory/native_capability_prerun/improvement_workflow.py",
+    "scripts/run_requirements_capability_prerun.py",
+    "scripts/run_factory_capability_improvement.py",
+    "scripts/run_portal_requirements_driven_application_engineering.py",
+    "factory/operator_portal/browser_intake_orchestration.py",
+    "factory/operator_portal/deep_portal_integration.py",
+    "factory/operator_portal/local_web_api.py"
+  ]
+}

@@ -113,7 +113,7 @@ Independent review findings repaired in this pass:
 
 ## Remaining Authoritative Blockers
 
-- Repository and generated `pytest` execution require the canonical virtual environment at `/home/marcose/projects/upi_app_factory/.venv`; `/usr/bin/python` remains blocked because it lacks pytest, FastAPI, Pydantic, Uvicorn and HTTPX.
+- Repository and generated `pytest` execution require the canonical virtual environment at `<canonical-venv>`; `/usr/bin/python` remains blocked because it lacks pytest, FastAPI, Pydantic, Uvicorn and HTTPX.
 - Upstream wheel/archive hash capture remains blocked because no offline wheelhouse or source archive cache is checked in, registry/network access is prohibited, and dependencies were not added. Exact pins, transitive license evidence, and installed distribution RECORD hashes are now recorded from local artifacts.
 - Upstream artifact reproducibility remains unattained; source/current-environment reproducibility is limited to deterministic template bytes, exact local pins, installed distribution metadata and RECORD hash evidence.
 - Starlette `TestClient` is unreliable for the generated app in this governed environment; generated API contract tests now use explicit local `httpx.ASGITransport`, matching the repository's deterministic ASGI test-client pattern without network calls.

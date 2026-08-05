@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from dataclasses import asdict
 from typing import Any, cast
@@ -86,14 +87,27 @@ class RetryingProvider:
 class OpenAIResponsesProvider:
     provider_name = "openai_responses"
 
-    def __init__(self, *, model: str, timeout_seconds: float = 30.0, max_retries: int = 1) -> None:
+    def __init__(
+        self,
+        *,
+        model: str,
+        timeout_seconds: float = 30.0,
+        max_retries: int = 1,
+        live_approved: bool = False,
+    ) -> None:
         self.model = model
         self.timeout_seconds = timeout_seconds
         self.max_retries = max_retries
+        self.live_approved = live_approved
 
     def complete(self, request: LLMRequest) -> LLMResponse:
         if len(request.case.input_text) > request.max_input_chars:
             raise Phase66Error("input bound exceeded")
+        require_live_provider_boundary(
+            live_approved=self.live_approved,
+            missing_flag_message="live OpenAI evaluation denied: missing exact approval flag",
+            missing_key_message="live OpenAI evaluation denied: OPENAI_API_KEY is not present",
+        )
         try:
             from openai import OpenAI
         except ImportError as error:
@@ -165,3 +179,15 @@ def response_to_dict(response: LLMResponse) -> dict[str, Any]:
     payload["raw_text_sha256"] = __import__("hashlib").sha256(response.raw_text.encode("utf-8")).hexdigest()
     payload.pop("raw_text", None)
     return payload
+
+
+def require_live_provider_boundary(
+    *,
+    live_approved: bool,
+    missing_flag_message: str,
+    missing_key_message: str,
+) -> None:
+    if not live_approved and os.environ.get("UPI_APP_FACTORY_ALLOW_LIVE_OPENAI") != "1":
+        raise Phase66Error(missing_flag_message)
+    if not os.environ.get("OPENAI_API_KEY"):
+        raise Phase66Error(missing_key_message)

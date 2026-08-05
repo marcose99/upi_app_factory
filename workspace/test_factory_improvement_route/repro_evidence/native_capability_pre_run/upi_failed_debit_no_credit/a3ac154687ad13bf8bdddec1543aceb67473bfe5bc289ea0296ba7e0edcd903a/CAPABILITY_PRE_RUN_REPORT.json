@@ -1,0 +1,1022 @@
+{
+  "application_id": "upi_failed_debit_no_credit",
+  "artifact": "CAPABILITY_PRE_RUN_REPORT",
+  "created_at_utc": "2026-07-29T10:58:45Z",
+  "decision": "PROVEN_100_PERCENT_CAPABILITY",
+  "document_normalization": {
+    "extraction_status": "extracted",
+    "extractor": "native_utf8_text_loader",
+    "extractor_version": "1",
+    "normalized_sha256": "a3ac154687ad13bf8bdddec1543aceb67473bfe5bc289ea0296ba7e0edcd903a",
+    "normalized_size_bytes": 694
+  },
+  "factory_identity": {
+    "branch": "feature/native-capability-token-economics-v32-20260729t103551z-1183381",
+    "diff_name_only_sha256": "c4dd9578f132bb34b7288ed125b24254aa391f2757446aa0bc8924fb9d9df600",
+    "dirty": true,
+    "head": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+    "status_sha256": "08c50eeb5e8864034c3bd94b08d3172418cf1ae7da32ad33ee0d3dde79363535"
+  },
+  "improvement_item_count": 0,
+  "live_provider_calls": "prohibited",
+  "llm_claims_used": false,
+  "mandatory_gate_passed": true,
+  "obligation_count": 21,
+  "obligations": [
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-REQ-HONESTY-GATE",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/native_capability_prerun/engine.py",
+          "sha256": "f26aac0cbcbf25d0e018fe4eb13d124bded20df3893f058025d6e08379811a8d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-REQ-HONESTY-GATE",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase49a_browser_driven_intake_orchestration.py",
+          "sha256": "5fa88c0e9b16f4952adbf4e7c75e566bc895f297e5aea836b2675f1c3fec85f5",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0001",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "10239603a42b",
+        "line": 3
+      },
+      "text": "Requirement ID: upi_failed_debit_no_credit.requirements.v1"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0002",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "07308c6a05ee",
+        "line": 4
+      },
+      "text": "Build a local deterministic mock-safe payment-operations case workflow for a failed debit where the beneficiary was not credited"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-LOCAL-PERSISTENCE-OBSERVABILITY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-LOCAL-PERSISTENCE-OBSERVABILITY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/verification_evidence.py",
+          "sha256": "4b571c27dfe43f3c67edc88e8ad4f687dc94c385d93691b9cca6f324ab87321b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-LOCAL-PERSISTENCE-OBSERVABILITY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0003",
+      "keywords": [
+        "must"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "b8be5b53fba0",
+        "line": 4
+      },
+      "text": "The application must validate fictional transaction references"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0004",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "3e4a3eb6d8e0",
+        "line": 4
+      },
+      "text": "enforce idempotency"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/operator_portal/browser_intake_orchestration.py",
+          "sha256": "9219756674e56c1ccc999ec22afe4be1b2935985dc19178cb875a676d50b544f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/native_capability_prerun/engine.py",
+          "sha256": "f26aac0cbcbf25d0e018fe4eb13d124bded20df3893f058025d6e08379811a8d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_portal_application_id_contract.py",
+          "sha256": "a90cf7ad4fdef40fe774067d091175da400aaf05201887ddad0add5aa07938f1",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0005",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "d309ae296436",
+        "line": 4
+      },
+      "text": "reject missing"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/operator_portal/browser_intake_orchestration.py",
+          "sha256": "9219756674e56c1ccc999ec22afe4be1b2935985dc19178cb875a676d50b544f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/native_capability_prerun/engine.py",
+          "sha256": "f26aac0cbcbf25d0e018fe4eb13d124bded20df3893f058025d6e08379811a8d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_portal_application_id_contract.py",
+          "sha256": "a90cf7ad4fdef40fe774067d091175da400aaf05201887ddad0add5aa07938f1",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0006",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "d7ed778ef665",
+        "line": 4
+      },
+      "text": "reject unsafe inputs"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0007",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "7dbfec838281",
+        "line": 4
+      },
+      "text": "preserve audit evidence"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0008",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "742fa685c143",
+        "line": 4
+      },
+      "text": "expose health"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0009",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "e620e9d0329b",
+        "line": 4
+      },
+      "text": "readiness"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0010",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "3b480ed07e95",
+        "line": 4
+      },
+      "text": "OpenAPI"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0011",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "cd87978cd4d6",
+        "line": 4
+      },
+      "text": "case creation"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-API-HEALTH-OPENAPI",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0012",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "9dea4b62466c",
+        "line": 4
+      },
+      "text": "case inquiry endpoints"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0013",
+      "keywords": [
+        "must"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "96a53a6d8b81",
+        "line": 4
+      },
+      "text": "must never perform a real payment"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0014",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "ac614d596d39",
+        "line": 4
+      },
+      "text": "refund"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0015",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "6868cf0d6d73",
+        "line": 4
+      },
+      "text": "reversal"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0016",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "4d61b610fc2f",
+        "line": 4
+      },
+      "text": "network instruction"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0017",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "03f04c1cc7e4",
+        "line": 4
+      },
+      "text": "provider call"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0018",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "850e259717a5",
+        "line": 4
+      },
+      "text": "deployment"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "scripts/run_portal_requirements_driven_application_engineering.py",
+          "sha256": "66397d50a2bec16775b82c2a203554ca1086597e1e75783ec25fb90a8cdb23d2",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-MOCK-SAFE-BOUNDARY",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase48x2g_portal_requirements_adapter.py",
+          "sha256": "b58a235b38b1773842927fd5e24f475f729317cdb834660f3f980ae95cdfd86b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0019",
+      "keywords": [
+        "atomic_requirement"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "5bcb66d5bd4e",
+        "line": 4
+      },
+      "text": "certification claim"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0020",
+      "keywords": [
+        "required"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "18a1a275da96",
+        "line": 4
+      },
+      "text": "Human approval remains required for consequential engineering"
+    },
+    {
+      "classification": "FULFILLABLE",
+      "evidence": [
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/failed_debit_capability.py",
+          "sha256": "cd64f72d2908cfff2202ab7f8661dd6d7aca00c11740e2dd4d3a9a6cb5a78e4c",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/application_engineering/deep_composer.py",
+          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase55_failed_debit_capability.py",
+          "sha256": "8f2495694a423abb64b539b67a3985884c7469cec48c3c39bccebe108120fe7d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-FAILED-DEBIT-DOMAIN",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_phase56_deep_composer.py",
+          "sha256": "893365f9efd99f1ab0f97133abdc8615c1e416f9c01cbe8f6a82ad51a70e465f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/operator_portal/browser_intake_orchestration.py",
+          "sha256": "9219756674e56c1ccc999ec22afe4be1b2935985dc19178cb875a676d50b544f",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "factory/native_capability_prerun/engine.py",
+          "sha256": "f26aac0cbcbf25d0e018fe4eb13d124bded20df3893f058025d6e08379811a8d",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        },
+        {
+          "capability_id": "CAP-SECURITY-NEGATIVE-TESTS",
+          "factory_commit": "6295c11db8af1edcdc4fa2cb2350cc0e28ad2cf0",
+          "path": "tests/test_portal_application_id_contract.py",
+          "sha256": "a90cf7ad4fdef40fe774067d091175da400aaf05201887ddad0add5aa07938f1",
+          "type": "implementation_or_test",
+          "verification_status": "PASS"
+        }
+      ],
+      "fulfillable": true,
+      "id": "REQ-0021",
+      "keywords": [
+        "must"
+      ],
+      "mandatory": true,
+      "reason": "Matched current repository-owned executable capability evidence.",
+      "source_location": {
+        "fingerprint": "29d456c0aab5",
+        "line": 4
+      },
+      "text": "Human all runtime LLM calls must stay at zero"
+    }
+  ],
+  "real_payment_calls": "disabled",
+  "requirements_path": "/tmp/upi-prerun-X0ZjcB/requirements.md",
+  "requirements_sha256": "a3ac154687ad13bf8bdddec1543aceb67473bfe5bc289ea0296ba7e0edcd903a",
+  "requirements_size_bytes": 694,
+  "run_id": "pre_run_a3ac154687ad13bf_1431be66a7",
+  "schema_version": "native-capability-prerun.v1",
+  "status": "PROVEN_100_PERCENT_CAPABILITY",
+  "summary": {
+    "by_classification": {
+      "FULFILLABLE": 21,
+      "NOT_APPLICABLE": 0,
+      "NOT_FULFILLABLE_ENVIRONMENT_GAP": 0,
+      "NOT_FULFILLABLE_EXTERNAL_DEPENDENCY": 0,
+      "NOT_FULFILLABLE_FACTORY_GAP": 0,
+      "NOT_FULFILLABLE_GOVERNANCE_BOUNDARY": 0,
+      "NOT_FULFILLABLE_REQUIREMENTS_AMBIGUITY": 0,
+      "PARTIALLY_FULFILLABLE": 0
+    },
+    "fulfillable": 21,
+    "non_fulfillable": 0,
+    "total": 21
+  }
+}

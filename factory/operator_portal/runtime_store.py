@@ -157,52 +157,54 @@ class RuntimeStore:
         return next_status
 
     def create_approval(self, grant: ApprovalGrant) -> None:
-        data = {"schema_version": "1.0", "approvals": []}
-        path = self.approvals_path(grant.run_id)
-        if path.exists():
-            data = self.read_json(path)
-        approvals = cast(list[dict[str, Any]], data.setdefault("approvals", []))
-        approvals.append(grant.as_dict())
-        self.atomic_write_json(path, data)
+        with self._lock:
+            data = {"schema_version": "1.0", "approvals": []}
+            path = self.approvals_path(grant.run_id)
+            if path.exists():
+                data = self.read_json(path)
+            approvals = cast(list[dict[str, Any]], data.setdefault("approvals", []))
+            approvals.append(grant.as_dict())
+            self.atomic_write_json(path, data)
         self.append_event(grant.run_id, "runtime_approval_recorded", {"action": grant.action, "nonce": grant.nonce})
 
     def consume_approval(self, *, run_id: str, action: str, nonce: str) -> ApprovalGrant:
-        path = self.approvals_path(run_id)
-        if not path.is_file():
-            raise RuntimeContractError("approval is required")
-        data = self.read_json(path)
-        approvals = cast(list[dict[str, Any]], data.get("approvals", []))
-        for item in approvals:
-            if item.get("run_id") == run_id and item.get("action") == action and item.get("nonce") == nonce:
-                if item.get("consumed"):
-                    raise RuntimeContractError("approval replay rejected")
-                approved_at_utc = str(item.get("approved_at_utc", ""))
-                expires_at_utc = str(item.get("expires_at_utc", ""))
-                if parse_utc(expires_at_utc) <= datetime.now(timezone.utc):
-                    raise RuntimeContractError("approval expired")
-                token_sha256 = str(item.get("token_sha256", ""))
-                if not verify_scoped_approval(
-                    run_id=run_id,
-                    action=action,
-                    nonce=nonce,
-                    presented_token=approval_secret(),
-                    expected_sha256=token_sha256,
-                ):
-                    raise RuntimeContractError("approval digest verification failed")
-                item["consumed"] = True
-                self.atomic_write_json(path, data)
-                grant = ApprovalGrant(
-                    run_id=run_id,
-                    action=action,
-                    nonce=nonce,
-                    approved_at_utc=approved_at_utc,
-                    expires_at_utc=expires_at_utc,
-                    token_sha256=token_sha256,
-                    consumed=True,
-                )
-                self.append_event(run_id, "runtime_approval_consumed", {"action": action, "nonce": nonce})
-                return grant
-        raise RuntimeContractError("approval scope rejected")
+        with self._lock:
+            path = self.approvals_path(run_id)
+            if not path.is_file():
+                raise RuntimeContractError("approval is required")
+            data = self.read_json(path)
+            approvals = cast(list[dict[str, Any]], data.get("approvals", []))
+            for item in approvals:
+                if item.get("run_id") == run_id and item.get("action") == action and item.get("nonce") == nonce:
+                    if item.get("consumed"):
+                        raise RuntimeContractError("approval replay rejected")
+                    approved_at_utc = str(item.get("approved_at_utc", ""))
+                    expires_at_utc = str(item.get("expires_at_utc", ""))
+                    if parse_utc(expires_at_utc) <= datetime.now(timezone.utc):
+                        raise RuntimeContractError("approval expired")
+                    token_sha256 = str(item.get("token_sha256", ""))
+                    if not verify_scoped_approval(
+                        run_id=run_id,
+                        action=action,
+                        nonce=nonce,
+                        presented_token=approval_secret(),
+                        expected_sha256=token_sha256,
+                    ):
+                        raise RuntimeContractError("approval digest verification failed")
+                    item["consumed"] = True
+                    self.atomic_write_json(path, data)
+                    grant = ApprovalGrant(
+                        run_id=run_id,
+                        action=action,
+                        nonce=nonce,
+                        approved_at_utc=approved_at_utc,
+                        expires_at_utc=expires_at_utc,
+                        token_sha256=token_sha256,
+                        consumed=True,
+                    )
+                    self.append_event(run_id, "runtime_approval_consumed", {"action": action, "nonce": nonce})
+                    return grant
+            raise RuntimeContractError("approval scope rejected")
 
 
 def default_binding(project_root: Path, *, run_id: str, port: int = 18042) -> RuntimeBinding:

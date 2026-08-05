@@ -1,0 +1,39 @@
+{
+  "decision": "NO_GO",
+  "items": [
+    {
+      "mitigation_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/unsupported_obligation_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/requirements_traceability_matrix.json"
+      ],
+      "residual_risk": "380 mandatory obligations remain partial or unsupported.",
+      "risk_id": "RR-001",
+      "sample_obligations": [
+        "OBL-P01-document_control-001",
+        "OBL-P01-document_control-002",
+        "OBL-P01-document_control-003",
+        "OBL-P01-document_control-004",
+        "OBL-P01-document_control-005",
+        "OBL-P01-1-001",
+        "OBL-P01-1-002",
+        "OBL-P01-1-001",
+        "OBL-P01-2-001",
+        "OBL-P01-5-001"
+      ],
+      "status": "OPEN",
+      "title": "Unsupported or partially verified mandatory obligations remain"
+    },
+    {
+      "mitigation_refs": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/security_design.md",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/persistence_reset_policy.md"
+      ],
+      "residual_risk": "The runtime remains local-only and mock-only and does not prove live payment ecosystem behaviour.",
+      "risk_id": "RR-002",
+      "status": "ACCEPTED_WITH_BOUNDARY",
+      "title": "Mock-only external ecosystem boundary"
+    }
+  ],
+  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
+  "schema_version": "upi-failed-debit-residual-risk-register.v3"
+}

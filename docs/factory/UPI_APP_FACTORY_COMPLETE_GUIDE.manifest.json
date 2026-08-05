@@ -334,7 +334,7 @@
           "locator": "Fake LLM Tests tracked evidence",
           "observation": "Tracked source file supports claim C13: Phase 66 deterministic fake LLM behavior, schema rejection, timeout/failure handling, and retry exhaustion are implemented and test-covered.",
           "path": "src/upi_factory/rubric_alignment/providers.py",
-          "sha256": "ee8b53811b7b36cb2ad3edfc7efe94f4060618eb5794f73df6a4706d4cf7a1a6",
+          "sha256": "baa1571824c839e3213204867b3a988ba5ab1bae57db279f360932d92cab048d",
           "source_kind": "tracked_file"
         },
         {
@@ -362,14 +362,14 @@
           "locator": "Live LLM Guard tracked evidence",
           "observation": "Tracked source file supports claim C14: Live OpenAI Phase 66 evaluation is implemented as an optional guarded route, not default execution.",
           "path": "src/upi_factory/rubric_alignment/live.py",
-          "sha256": "18a1e673222ad4a1e89623e6c7bf40a99fe369b66aac882c0bcd8550b92248a0",
+          "sha256": "6ca9a813f1633ebffe456e92b48b7ace313cdac83e9daed44521ddd96e900428",
           "source_kind": "tracked_file"
         },
         {
           "locator": "Live LLM Guard tracked evidence",
           "observation": "Tracked source file supports claim C14: Live OpenAI Phase 66 evaluation is implemented as an optional guarded route, not default execution.",
           "path": "src/upi_factory/rubric_alignment/providers.py",
-          "sha256": "ee8b53811b7b36cb2ad3edfc7efe94f4060618eb5794f73df6a4706d4cf7a1a6",
+          "sha256": "baa1571824c839e3213204867b3a988ba5ab1bae57db279f360932d92cab048d",
           "source_kind": "tracked_file"
         },
         {
@@ -390,7 +390,7 @@
           "locator": "Retrieval Boundary tracked evidence",
           "observation": "Tracked source file supports claim C15: Retrieval and embeddings are implemented for Phase 66 using deterministic fake embeddings by default, with optional OpenAI embeddings in the live path.",
           "path": "src/upi_factory/rubric_alignment/retrieval.py",
-          "sha256": "493898d16132193c6065a9bb45dec4a10af31567a716cf24f07c172b7c3c10a7",
+          "sha256": "7860b5492aa7bc591f75afe7e6833f6df109ca2b85dab352d515338c1b9b0cea",
           "source_kind": "tracked_file"
         },
         {
@@ -642,7 +642,7 @@
           "locator": "Certification Non-Claim tracked evidence",
           "observation": "Tracked source file supports claim C24: The repository preserves certification-ready-not-certified wording and does not provide actual regulatory certification, approval, or production readiness evidence.",
           "path": "README.md",
-          "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
+          "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
           "source_kind": "tracked_file"
         }
       ],
@@ -712,7 +712,7 @@
           "locator": "Deep Composer tracked evidence",
           "observation": "Tracked source file supports claim deep-composer: The deep composer is an implemented deterministic generator for a local mock-only golden failed-debit dispute app, with automated tests for profile, boundaries, endpoints, files, and namespace rejection.",
           "path": "factory/application_engineering/deep_composer.py",
-          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "sha256": "1bdb50274054f803031aa82029b9f539fd2be7ac99cdafe3cbc14977bb24cf53",
           "source_kind": "tracked_file"
         },
         {
@@ -733,7 +733,7 @@
           "locator": "Generated Route Composer tracked evidence",
           "observation": "Tracked source file supports claim generated-routes-composer: The composer-generated golden app route inventory is explicit in generated source and OpenAPI metadata, and is tested by source inspection.",
           "path": "factory/application_engineering/deep_composer.py",
-          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "sha256": "1bdb50274054f803031aa82029b9f539fd2be7ac99cdafe3cbc14977bb24cf53",
           "source_kind": "tracked_file"
         },
         {
@@ -782,7 +782,7 @@
           "locator": "State Roots tracked evidence",
           "observation": "Tracked source file supports claim state-roots: Portal and runtime state roots are configurable and local-first, with defaults under the worktree and path-boundary checks on runtime state.",
           "path": "factory/operator_portal/runtime_store.py",
-          "sha256": "3e461be921fc81a51c27991d433f8c007ff0314ca892ebe61b1454143737d7ac",
+          "sha256": "121f40825962da448b431ec4d536b888a9d1d4189bf203ea55d17591963432a3",
           "source_kind": "tracked_file"
         },
         {
@@ -803,7 +803,7 @@
           "locator": "Portal Boundaries tracked evidence",
           "observation": "Tracked source file supports claim portal-boundaries: The operator portal exposes executable safety-boundary metadata preserving local-only, certification-ready-not-certified, no-live-provider, no-secret, no-deployment, and no-release-action boundaries.",
           "path": "factory/operator_portal/local_web_api.py",
-          "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
+          "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
           "source_kind": "tracked_file"
         },
         {
@@ -824,7 +824,7 @@
           "locator": "Startup Routes tracked evidence",
           "observation": "Tracked source file supports claim startup-routes: The operator portal startup surface is FastAPI-based, with local API routes plus a local static web UI wrapper.",
           "path": "factory/operator_portal/local_web_api.py",
-          "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
+          "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
           "source_kind": "tracked_file"
         },
         {
@@ -859,14 +859,14 @@
           "locator": "Browser Intake tracked evidence",
           "observation": "Tracked source file supports claim browser-intake: Browser-driven requirements intake is run-scoped, size-bounded, secret-aware, hash-recorded, and guarded by deterministic validation.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         },
         {
           "locator": "Browser Intake tracked evidence",
           "observation": "Tracked source file supports claim browser-intake: Browser-driven requirements intake is run-scoped, size-bounded, secret-aware, hash-recorded, and guarded by deterministic validation.",
           "path": "tests/test_phase49a_browser_driven_intake_orchestration.py",
-          "sha256": "53f0c829bb9aa6b36fd70003148bdb35e23d0c42e6f7b52c42e9a66cb06abb7b",
+          "sha256": "5fa88c0e9b16f4952adbf4e7c75e566bc895f297e5aea836b2675f1c3fec85f5",
           "source_kind": "tracked_file"
         }
       ],
@@ -880,14 +880,14 @@
           "locator": "Planning Approval tracked evidence",
           "observation": "Tracked source file supports claim planning-approval: Application engineering through the portal is a governed state-machine flow requiring plan creation and run-scoped approval before execution.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         },
         {
           "locator": "Planning Approval tracked evidence",
           "observation": "Tracked source file supports claim planning-approval: Application engineering through the portal is a governed state-machine flow requiring plan creation and run-scoped approval before execution.",
           "path": "tests/test_phase49a_browser_driven_intake_orchestration.py",
-          "sha256": "53f0c829bb9aa6b36fd70003148bdb35e23d0c42e6f7b52c42e9a66cb06abb7b",
+          "sha256": "5fa88c0e9b16f4952adbf4e7c75e566bc895f297e5aea836b2675f1c3fec85f5",
           "source_kind": "tracked_file"
         }
       ],
@@ -922,7 +922,7 @@
           "locator": "Runtime Supervision tracked evidence",
           "observation": "Tracked source file supports claim runtime-supervision: The runtime substrate can supervise the generated app as a loopback uvicorn subprocess with local mock-only environment and persisted runtime state/events/logs.",
           "path": "factory/operator_portal/runtime_store.py",
-          "sha256": "3e461be921fc81a51c27991d433f8c007ff0314ca892ebe61b1454143737d7ac",
+          "sha256": "121f40825962da448b431ec4d536b888a9d1d4189bf203ea55d17591963432a3",
           "source_kind": "tracked_file"
         },
         {
@@ -964,7 +964,7 @@
           "locator": "Generated App tracked evidence",
           "observation": "Tracked source file supports claim generated-app: The tracked generated application is an implemented local FastAPI app with dispute routes, mock ecosystem action, audit/runtime plumbing, and automated API tests.",
           "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
-          "sha256": "4dfd2ccd0521c5d2fa7b9475834f78d79679c6b85809895b2a2960755fcd53f6",
+          "sha256": "3bc3ec16d86b45f37d6ee87c967420a33e13f2aef2b27d8b144710db76ac49a2",
           "source_kind": "tracked_file"
         },
         {
@@ -1034,7 +1034,7 @@
           "locator": "Portfolio Contracts tracked evidence",
           "observation": "Tracked source file supports claim portfolio-contracts: The portfolio subsystem defines local-loopback mock-only policy and bounded local runtime quotas.",
           "path": "factory/application_engineering/portfolio.py",
-          "sha256": "76724182916aeda3b9482f4bca2ebe3103297df55fb3eb9f3088897056c6f517",
+          "sha256": "d88ddf9c848516f3a88dc568dc7e6dbf92817f26204c63fdda59eceea4d9f4f9",
           "source_kind": "tracked_file"
         }
       ],
@@ -1055,7 +1055,7 @@
           "locator": "Portal UI tracked evidence",
           "observation": "Tracked source file supports claim portal-ui: The browser UI is locally served and tested for key workflow controls and endpoint wiring.",
           "path": "tests/test_phase49a_browser_driven_intake_orchestration.py",
-          "sha256": "53f0c829bb9aa6b36fd70003148bdb35e23d0c42e6f7b52c42e9a66cb06abb7b",
+          "sha256": "5fa88c0e9b16f4952adbf4e7c75e566bc895f297e5aea836b2675f1c3fec85f5",
           "source_kind": "tracked_file"
         }
       ],
@@ -1272,7 +1272,7 @@
           "locator": "Idempotent Intake tracked evidence",
           "observation": "Tracked source file supports claim GR-009: The generated app implements local idempotent dispute intake, duplicate detection, UPI masking, and basic sensitive-number rejection.",
           "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
-          "sha256": "4dfd2ccd0521c5d2fa7b9475834f78d79679c6b85809895b2a2960755fcd53f6",
+          "sha256": "3bc3ec16d86b45f37d6ee87c967420a33e13f2aef2b27d8b144710db76ac49a2",
           "source_kind": "tracked_file"
         },
         {
@@ -1314,7 +1314,7 @@
           "locator": "Local Audit Metrics tracked evidence",
           "observation": "Tracked source file supports claim GR-010: The generated app has local JSONL audit logging and local runtime counters with explicit mock/certification boundaries.",
           "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
-          "sha256": "4dfd2ccd0521c5d2fa7b9475834f78d79679c6b85809895b2a2960755fcd53f6",
+          "sha256": "3bc3ec16d86b45f37d6ee87c967420a33e13f2aef2b27d8b144710db76ac49a2",
           "source_kind": "tracked_file"
         }
       ],
@@ -1370,7 +1370,7 @@
           "locator": "Portfolio Approval tracked evidence",
           "observation": "Tracked source file supports claim GR-013: Portfolio runtime management binds runtime ownership to immutable version identity and uses scoped one-time local approvals without persisting the raw token.",
           "path": "factory/application_engineering/portfolio.py",
-          "sha256": "76724182916aeda3b9482f4bca2ebe3103297df55fb3eb9f3088897056c6f517",
+          "sha256": "d88ddf9c848516f3a88dc568dc7e6dbf92817f26204c63fdda59eceea4d9f4f9",
           "source_kind": "tracked_file"
         },
         {
@@ -1517,7 +1517,7 @@
           "locator": "Portal API Routes tracked evidence",
           "observation": "Tracked source file supports claim portal-api-routes: The operator portal API is a FastAPI application that exposes local health, evidence, download, validation, browser-run, deep-engineering, runtime, portfolio, debug-plan, and documentation routes.",
           "path": "factory/operator_portal/local_web_api.py",
-          "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
+          "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
           "source_kind": "tracked_file"
         }
       ],
@@ -1531,7 +1531,7 @@
           "locator": "Browser State Machine tracked evidence",
           "observation": "Tracked source file supports claim browser-state-machine: Browser-driven application engineering uses an explicit state machine and rejects invalid state transitions.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         }
       ],
@@ -1545,7 +1545,7 @@
           "locator": "Browser Run Flow tracked evidence",
           "observation": "Tracked source file supports claim browser-run-flow: The browser portal enforces requirement validation, plan generation, explicit approval, and queued execution before application engineering can run.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         }
       ],
@@ -1559,7 +1559,7 @@
           "locator": "Execution Fail Closed tracked evidence",
           "observation": "Tracked source file supports claim execution-fail-closed: Application engineering execution fails closed: portfolio registration happens only after GO gates, otherwise the run transitions to FAILED.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         }
       ],
@@ -1573,7 +1573,7 @@
           "locator": "Generated Gates tracked evidence",
           "observation": "Tracked source file supports claim generated-test-openapi-gates: Generated tests and OpenAPI publication are material GO gates, and failing generated tests block application publication and portfolio registration.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         },
         {
@@ -1622,7 +1622,7 @@
           "locator": "Runtime Approval Model tracked evidence",
           "observation": "Tracked source file supports claim runtime-approval-model: Direct runtime start/restart/stop are approval-gated with scoped one-time nonces and replay rejection.",
           "path": "factory/operator_portal/runtime_store.py",
-          "sha256": "3e461be921fc81a51c27991d433f8c007ff0314ca892ebe61b1454143737d7ac",
+          "sha256": "121f40825962da448b431ec4d536b888a9d1d4189bf203ea55d17591963432a3",
           "source_kind": "tracked_file"
         },
         {
@@ -1741,7 +1741,7 @@
           "locator": "Runtime Scenarios tracked evidence",
           "observation": "Tracked source file supports claim runtime-scenarios: Runtime scenarios cover positive, negative, boundary, idempotency, resilience, security, timeout, and metrics contracts and produce a GO/NO_GO result.",
           "path": "factory/operator_portal/runtime_scenarios.py",
-          "sha256": "41a84767ee6c6681354a1512048a547777afe485350f202f96be4856b079bd96",
+          "sha256": "0283e3f8f3cc7f4098554d029606c4469ea0cc32892c716c5e20181d943ea911",
           "source_kind": "tracked_file"
         },
         {
@@ -1825,14 +1825,14 @@
           "locator": "Browser Downloads tracked evidence",
           "observation": "Tracked source file supports claim browser-downloads: Generated application and evidence downloads are only available after a SUCCEEDED browser run and include checksums plus execution/OpenAPI evidence.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         },
         {
           "locator": "Browser Downloads tracked evidence",
           "observation": "Tracked source file supports claim browser-downloads: Generated application and evidence downloads are only available after a SUCCEEDED browser run and include checksums plus execution/OpenAPI evidence.",
           "path": "factory/operator_portal/local_web_api.py",
-          "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
+          "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
           "source_kind": "tracked_file"
         }
       ],
@@ -1846,7 +1846,7 @@
           "locator": "Generated App API tracked evidence",
           "observation": "Tracked source file supports claim generated-app-api: The tracked generated application is a real local FastAPI UPI dispute simulation API with tested health, dispute CRUD/read, idempotency, validation, masking, and mock ecosystem behavior.",
           "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
-          "sha256": "4dfd2ccd0521c5d2fa7b9475834f78d79679c6b85809895b2a2960755fcd53f6",
+          "sha256": "3bc3ec16d86b45f37d6ee87c967420a33e13f2aef2b27d8b144710db76ac49a2",
           "source_kind": "tracked_file"
         },
         {
@@ -1895,7 +1895,7 @@
           "locator": "Native Bootstrap tracked evidence",
           "observation": "Tracked source file supports claim native-bootstrap: The native bootstrap route is loopback-only and local-first, with dependency setup from requirements-recipient.txt and explicit mock/no-LLM environment defaults.",
           "path": "README.md",
-          "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
+          "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
           "source_kind": "tracked_file"
         },
         {
@@ -1951,7 +1951,7 @@
           "locator": "Platform Boundary tracked evidence",
           "observation": "Tracked source file supports claim platform-boundary: Supported platform claims are conservative: native Ubuntu/Linux and Docker/Compose on Linux/macOS/Windows Docker Desktop, with no native Windows/macOS validation claim.",
           "path": "README.md",
-          "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
+          "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
           "source_kind": "tracked_file"
         },
         {
@@ -2000,7 +2000,7 @@
           "locator": "Deployment Non-Claims tracked evidence",
           "observation": "Tracked source file supports claim deployment-nonclaims: Deployment documentation preserves explicit non-claims around production, live payments, certification/approval, real data, and legal sufficiency.",
           "path": "README.md",
-          "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
+          "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
           "source_kind": "tracked_file"
         },
         {
@@ -2042,7 +2042,7 @@
           "locator": "build-time tracked file inventory",
           "observation": "Tracked repository source `README.md` is included in the build-time documentation inventory with SHA-256 evidence.",
           "path": "README.md",
-          "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
+          "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
           "source_kind": "tracked_file"
         }
       ],
@@ -2322,7 +2322,7 @@
           "locator": "build-time tracked file inventory",
           "observation": "Tracked repository source `factory/application_engineering/deep_composer.py` is included in the build-time documentation inventory with SHA-256 evidence.",
           "path": "factory/application_engineering/deep_composer.py",
-          "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
+          "sha256": "1bdb50274054f803031aa82029b9f539fd2be7ac99cdafe3cbc14977bb24cf53",
           "source_kind": "tracked_file"
         }
       ],
@@ -2364,7 +2364,7 @@
           "locator": "build-time tracked file inventory",
           "observation": "Tracked repository source `factory/application_engineering/portfolio.py` is included in the build-time documentation inventory with SHA-256 evidence.",
           "path": "factory/application_engineering/portfolio.py",
-          "sha256": "76724182916aeda3b9482f4bca2ebe3103297df55fb3eb9f3088897056c6f517",
+          "sha256": "d88ddf9c848516f3a88dc568dc7e6dbf92817f26204c63fdda59eceea4d9f4f9",
           "source_kind": "tracked_file"
         }
       ],
@@ -2406,7 +2406,7 @@
           "locator": "build-time tracked file inventory",
           "observation": "Tracked repository source `factory/operator_portal/browser_intake_orchestration.py` is included in the build-time documentation inventory with SHA-256 evidence.",
           "path": "factory/operator_portal/browser_intake_orchestration.py",
-          "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
+          "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
           "source_kind": "tracked_file"
         }
       ],
@@ -2420,7 +2420,7 @@
           "locator": "build-time tracked file inventory",
           "observation": "Tracked repository source `factory/operator_portal/local_web_api.py` is included in the build-time documentation inventory with SHA-256 evidence.",
           "path": "factory/operator_portal/local_web_api.py",
-          "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
+          "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
           "source_kind": "tracked_file"
         }
       ],
@@ -2518,7 +2518,7 @@
           "locator": "build-time tracked file inventory",
           "observation": "Tracked repository source `factory/operator_portal/runtime_scenarios.py` is included in the build-time documentation inventory with SHA-256 evidence.",
           "path": "factory/operator_portal/runtime_scenarios.py",
-          "sha256": "41a84767ee6c6681354a1512048a547777afe485350f202f96be4856b079bd96",
+          "sha256": "0283e3f8f3cc7f4098554d029606c4469ea0cc32892c716c5e20181d943ea911",
           "source_kind": "tracked_file"
         }
       ],
@@ -2526,7 +2526,7 @@
     }
   ],
   "controls_traced": 37,
-  "debug_plan_sha256": "ed276a1385389cf3bd4b5cdcecc346147cc0e7644995bd140f99947cacfb7502",
+  "debug_plan_sha256": "decdae8a47142da81354fbba9497883ba5a6482a36eaf430aba0c5a7e2aed73e",
   "diagrams": [
     {
       "id": "system-context",
@@ -2611,7 +2611,7 @@
   ],
   "discovery_summary_sha256": "8dabd607520666b00e3493f62735da3148a40085ae43532960e13db268aabd2d",
   "generated_at_utc": "1970-01-01T00:00:00Z",
-  "html_sha256": "77b91e12690a036b85d8dbee83fc582dd28ebbb981542d9b5d1454e37e523cb0",
+  "html_sha256": "84f9a7a4d4439e5ad0abf1c56c0fd432b2b68d24ef23650e04b5d6eca83465cf",
   "limitations": [
     "Autonomous repair is catalog-authorized, attempt-limited, deterministic, and fail-closed; arbitrary self-healing is not claimed.",
     "Certification-ready-not-certified wording is a boundary statement, not evidence of regulatory approval, legal sufficiency, or production readiness.",
@@ -2714,6 +2714,11 @@
         "method": "GET",
         "route": "/operator-portal/api/documentation/factory/download",
         "source_path": "factory/operator_portal/documentation_api.py"
+      },
+      {
+        "method": "POST",
+        "route": "/operator-portal/api/factory-improvement/proposal",
+        "source_path": "factory/operator_portal/local_web_api.py"
       },
       {
         "method": "POST",
@@ -2851,6 +2856,11 @@
         "source_path": "factory/operator_portal/local_web_api.py"
       },
       {
+        "method": "GET",
+        "route": "/operator-portal/api/runs/{run_id}/native-pre-run/artifacts/{artifact}",
+        "source_path": "factory/operator_portal/local_web_api.py"
+      },
+      {
         "method": "POST",
         "route": "/operator-portal/api/runs/{run_id}/plan",
         "source_path": "factory/operator_portal/local_web_api.py"
@@ -2858,6 +2868,11 @@
       {
         "method": "GET",
         "route": "/operator-portal/api/runs/{run_id}/validation",
+        "source_path": "factory/operator_portal/local_web_api.py"
+      },
+      {
+        "method": "GET",
+        "route": "/operator-portal/api/runtime-plane-authority",
         "source_path": "factory/operator_portal/local_web_api.py"
       },
       {
@@ -2957,6 +2972,11 @@
       },
       {
         "method": "GET",
+        "route": "/portal/token-economics",
+        "source_path": "factory/operator_portal/local_web_api.py"
+      },
+      {
+        "method": "GET",
         "route": "/portal/validation-runner/dry-run",
         "source_path": "factory/operator_portal/local_web_api.py"
       },
@@ -3020,8 +3040,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
-      "size_bytes": 17921,
+      "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
+      "size_bytes": 21114,
       "source_kind": "tracked_file"
     },
     {
@@ -3146,8 +3166,8 @@
     },
     {
       "path": "factory/application_engineering/deep_composer.py",
-      "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
-      "size_bytes": 14297,
+      "sha256": "1bdb50274054f803031aa82029b9f539fd2be7ac99cdafe3cbc14977bb24cf53",
+      "size_bytes": 21063,
       "source_kind": "tracked_file"
     },
     {
@@ -3164,8 +3184,8 @@
     },
     {
       "path": "factory/application_engineering/portfolio.py",
-      "sha256": "76724182916aeda3b9482f4bca2ebe3103297df55fb3eb9f3088897056c6f517",
-      "size_bytes": 57740,
+      "sha256": "d88ddf9c848516f3a88dc568dc7e6dbf92817f26204c63fdda59eceea4d9f4f9",
+      "size_bytes": 57926,
       "source_kind": "tracked_file"
     },
     {
@@ -3176,8 +3196,8 @@
     },
     {
       "path": "factory/debugging/debug_plan.py",
-      "sha256": "f0f9d57d0a28afd724b95b7376e10afdcad3f9a12496d17137458e63bc39c6bc",
-      "size_bytes": 20693,
+      "sha256": "a159b63f7accbca7677970d1b30be0fc9dc4e55170e735cea3605b9d90f51184",
+      "size_bytes": 21127,
       "source_kind": "tracked_file"
     },
     {
@@ -3188,8 +3208,8 @@
     },
     {
       "path": "factory/operator_portal/browser_intake_orchestration.py",
-      "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
-      "size_bytes": 64923,
+      "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
+      "size_bytes": 68528,
       "source_kind": "tracked_file"
     },
     {
@@ -3206,8 +3226,8 @@
     },
     {
       "path": "factory/operator_portal/local_web_api.py",
-      "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
-      "size_bytes": 30748,
+      "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
+      "size_bytes": 38546,
       "source_kind": "tracked_file"
     },
     {
@@ -3248,14 +3268,14 @@
     },
     {
       "path": "factory/operator_portal/runtime_scenarios.py",
-      "sha256": "41a84767ee6c6681354a1512048a547777afe485350f202f96be4856b079bd96",
-      "size_bytes": 11926,
+      "sha256": "0283e3f8f3cc7f4098554d029606c4469ea0cc32892c716c5e20181d943ea911",
+      "size_bytes": 39121,
       "source_kind": "tracked_file"
     },
     {
       "path": "factory/operator_portal/runtime_store.py",
-      "sha256": "3e461be921fc81a51c27991d433f8c007ff0314ca892ebe61b1454143737d7ac",
-      "size_bytes": 9912,
+      "sha256": "121f40825962da448b431ec4d536b888a9d1d4189bf203ea55d17591963432a3",
+      "size_bytes": 10134,
       "source_kind": "tracked_file"
     },
     {
@@ -3374,8 +3394,8 @@
     },
     {
       "path": "scripts/build_operator_portal_exhaustive_ui_manifest.py",
-      "sha256": "526b8400df89d9087b9bcfd4ef2b57beb8641c2e678984648fc318680aed2cfd",
-      "size_bytes": 17514,
+      "sha256": "0d80b0b86008b0b380ca361dce1b5e06d07677e512fdc0e6f469d69c947acfef",
+      "size_bytes": 17887,
       "source_kind": "tracked_file"
     },
     {
@@ -3410,8 +3430,8 @@
     },
     {
       "path": "scripts/run_portal_requirements_driven_application_engineering.py",
-      "sha256": "fa0195030855a552b86e2f6f9068e96fba2e7729734ff5db16e4e1f3d75ec0ab",
-      "size_bytes": 54576,
+      "sha256": "2321b2908798ca6505311a35f2d1a2894d156ff392f4d0b7f96a1fc06b9f5a18",
+      "size_bytes": 84352,
       "source_kind": "tracked_file"
     },
     {
@@ -3476,8 +3496,8 @@
     },
     {
       "path": "src/upi_factory/rubric_alignment/live.py",
-      "sha256": "18a1e673222ad4a1e89623e6c7bf40a99fe369b66aac882c0bcd8550b92248a0",
-      "size_bytes": 4026,
+      "sha256": "6ca9a813f1633ebffe456e92b48b7ace313cdac83e9daed44521ddd96e900428",
+      "size_bytes": 4064,
       "source_kind": "tracked_file"
     },
     {
@@ -3494,14 +3514,14 @@
     },
     {
       "path": "src/upi_factory/rubric_alignment/providers.py",
-      "sha256": "ee8b53811b7b36cb2ad3edfc7efe94f4060618eb5794f73df6a4706d4cf7a1a6",
-      "size_bytes": 7169,
+      "sha256": "baa1571824c839e3213204867b3a988ba5ab1bae57db279f360932d92cab048d",
+      "size_bytes": 7966,
       "source_kind": "tracked_file"
     },
     {
       "path": "src/upi_factory/rubric_alignment/retrieval.py",
-      "sha256": "493898d16132193c6065a9bb45dec4a10af31567a716cf24f07c172b7c3c10a7",
-      "size_bytes": 4404,
+      "sha256": "7860b5492aa7bc591f75afe7e6833f6df109ca2b85dab352d515338c1b9b0cea",
+      "size_bytes": 4881,
       "source_kind": "tracked_file"
     },
     {
@@ -3668,8 +3688,8 @@
     },
     {
       "path": "tests/test_phase49a_browser_driven_intake_orchestration.py",
-      "sha256": "53f0c829bb9aa6b36fd70003148bdb35e23d0c42e6f7b52c42e9a66cb06abb7b",
-      "size_bytes": 26852,
+      "sha256": "5fa88c0e9b16f4952adbf4e7c75e566bc895f297e5aea836b2675f1c3fec85f5",
+      "size_bytes": 26948,
       "source_kind": "tracked_file"
     },
     {
@@ -3788,8 +3808,8 @@
     },
     {
       "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
-      "sha256": "4dfd2ccd0521c5d2fa7b9475834f78d79679c6b85809895b2a2960755fcd53f6",
-      "size_bytes": 14888,
+      "sha256": "3bc3ec16d86b45f37d6ee87c967420a33e13f2aef2b27d8b144710db76ac49a2",
+      "size_bytes": 20307,
       "source_kind": "tracked_file"
     },
     {
@@ -3832,8 +3852,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "f09e1d876ccedb863272bbf1aedf8371c36ed2b15ee11d574d6cf53cf4bde608",
-      "size_bytes": 17921,
+      "sha256": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a",
+      "size_bytes": 21114,
       "source_kind": "tracked_file"
     },
     {
@@ -3958,8 +3978,8 @@
     },
     {
       "path": "factory/application_engineering/deep_composer.py",
-      "sha256": "8dc57c958e0541cec6e0d7eb73e86cd05a9ea09f1dba5b754f71560efdd68d3b",
-      "size_bytes": 14297,
+      "sha256": "1bdb50274054f803031aa82029b9f539fd2be7ac99cdafe3cbc14977bb24cf53",
+      "size_bytes": 21063,
       "source_kind": "tracked_file"
     },
     {
@@ -3976,8 +3996,8 @@
     },
     {
       "path": "factory/application_engineering/portfolio.py",
-      "sha256": "76724182916aeda3b9482f4bca2ebe3103297df55fb3eb9f3088897056c6f517",
-      "size_bytes": 57740,
+      "sha256": "d88ddf9c848516f3a88dc568dc7e6dbf92817f26204c63fdda59eceea4d9f4f9",
+      "size_bytes": 57926,
       "source_kind": "tracked_file"
     },
     {
@@ -3988,8 +4008,8 @@
     },
     {
       "path": "factory/debugging/debug_plan.py",
-      "sha256": "f0f9d57d0a28afd724b95b7376e10afdcad3f9a12496d17137458e63bc39c6bc",
-      "size_bytes": 20693,
+      "sha256": "a159b63f7accbca7677970d1b30be0fc9dc4e55170e735cea3605b9d90f51184",
+      "size_bytes": 21127,
       "source_kind": "tracked_file"
     },
     {
@@ -4000,8 +4020,8 @@
     },
     {
       "path": "factory/operator_portal/browser_intake_orchestration.py",
-      "sha256": "8d9297aa9558a9773fcc13d4fa9ee046f420d565c0dc27b441567ed9b1dbab2f",
-      "size_bytes": 64923,
+      "sha256": "b60ec2f56952e434c7b1fc629eb4726b5b647a38ba154e1c3d05d11ec29d64d1",
+      "size_bytes": 68528,
       "source_kind": "tracked_file"
     },
     {
@@ -4018,8 +4038,8 @@
     },
     {
       "path": "factory/operator_portal/local_web_api.py",
-      "sha256": "0b3f97b6ec2e7cddf19c97782cd57e9060aaca9a1a3c12d697c1e200cfb44a74",
-      "size_bytes": 30748,
+      "sha256": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
+      "size_bytes": 38546,
       "source_kind": "tracked_file"
     },
     {
@@ -4060,14 +4080,14 @@
     },
     {
       "path": "factory/operator_portal/runtime_scenarios.py",
-      "sha256": "41a84767ee6c6681354a1512048a547777afe485350f202f96be4856b079bd96",
-      "size_bytes": 11926,
+      "sha256": "0283e3f8f3cc7f4098554d029606c4469ea0cc32892c716c5e20181d943ea911",
+      "size_bytes": 39121,
       "source_kind": "tracked_file"
     },
     {
       "path": "factory/operator_portal/runtime_store.py",
-      "sha256": "3e461be921fc81a51c27991d433f8c007ff0314ca892ebe61b1454143737d7ac",
-      "size_bytes": 9912,
+      "sha256": "121f40825962da448b431ec4d536b888a9d1d4189bf203ea55d17591963432a3",
+      "size_bytes": 10134,
       "source_kind": "tracked_file"
     },
     {
@@ -4186,8 +4206,8 @@
     },
     {
       "path": "scripts/build_operator_portal_exhaustive_ui_manifest.py",
-      "sha256": "526b8400df89d9087b9bcfd4ef2b57beb8641c2e678984648fc318680aed2cfd",
-      "size_bytes": 17514,
+      "sha256": "0d80b0b86008b0b380ca361dce1b5e06d07677e512fdc0e6f469d69c947acfef",
+      "size_bytes": 17887,
       "source_kind": "tracked_file"
     },
     {
@@ -4222,8 +4242,8 @@
     },
     {
       "path": "scripts/run_portal_requirements_driven_application_engineering.py",
-      "sha256": "fa0195030855a552b86e2f6f9068e96fba2e7729734ff5db16e4e1f3d75ec0ab",
-      "size_bytes": 54576,
+      "sha256": "2321b2908798ca6505311a35f2d1a2894d156ff392f4d0b7f96a1fc06b9f5a18",
+      "size_bytes": 84352,
       "source_kind": "tracked_file"
     },
     {
@@ -4288,8 +4308,8 @@
     },
     {
       "path": "src/upi_factory/rubric_alignment/live.py",
-      "sha256": "18a1e673222ad4a1e89623e6c7bf40a99fe369b66aac882c0bcd8550b92248a0",
-      "size_bytes": 4026,
+      "sha256": "6ca9a813f1633ebffe456e92b48b7ace313cdac83e9daed44521ddd96e900428",
+      "size_bytes": 4064,
       "source_kind": "tracked_file"
     },
     {
@@ -4306,14 +4326,14 @@
     },
     {
       "path": "src/upi_factory/rubric_alignment/providers.py",
-      "sha256": "ee8b53811b7b36cb2ad3edfc7efe94f4060618eb5794f73df6a4706d4cf7a1a6",
-      "size_bytes": 7169,
+      "sha256": "baa1571824c839e3213204867b3a988ba5ab1bae57db279f360932d92cab048d",
+      "size_bytes": 7966,
       "source_kind": "tracked_file"
     },
     {
       "path": "src/upi_factory/rubric_alignment/retrieval.py",
-      "sha256": "493898d16132193c6065a9bb45dec4a10af31567a716cf24f07c172b7c3c10a7",
-      "size_bytes": 4404,
+      "sha256": "7860b5492aa7bc591f75afe7e6833f6df109ca2b85dab352d515338c1b9b0cea",
+      "size_bytes": 4881,
       "source_kind": "tracked_file"
     },
     {
@@ -4480,8 +4500,8 @@
     },
     {
       "path": "tests/test_phase49a_browser_driven_intake_orchestration.py",
-      "sha256": "53f0c829bb9aa6b36fd70003148bdb35e23d0c42e6f7b52c42e9a66cb06abb7b",
-      "size_bytes": 26852,
+      "sha256": "5fa88c0e9b16f4952adbf4e7c75e566bc895f297e5aea836b2675f1c3fec85f5",
+      "size_bytes": 26948,
       "source_kind": "tracked_file"
     },
     {
@@ -4600,8 +4620,8 @@
     },
     {
       "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/app/upi_dispute_app/main.py",
-      "sha256": "4dfd2ccd0521c5d2fa7b9475834f78d79679c6b85809895b2a2960755fcd53f6",
-      "size_bytes": 14888,
+      "sha256": "3bc3ec16d86b45f37d6ee87c967420a33e13f2aef2b27d8b144710db76ac49a2",
+      "size_bytes": 20307,
       "source_kind": "tracked_file"
     },
     {
@@ -4639,12 +4659,12 @@
     "controls_traced": 37,
     "debug_plan_source_files": 18,
     "prompt_markdown_files": 85,
-    "repository_python_files": 839,
-    "repository_test_files": 235,
+    "repository_python_files": 1014,
+    "repository_test_files": 271,
     "required_topics": 22,
     "routes_traced": 36,
     "source_files_traced": 135,
-    "source_route_declarations": 64,
+    "source_route_declarations": 68,
     "source_ui_controls": 37,
     "verified_claims_ingested": 123
   },

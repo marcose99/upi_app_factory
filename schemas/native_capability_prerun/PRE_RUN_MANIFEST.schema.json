@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PRE_RUN_MANIFEST",
+  "type": "object",
+  "required": ["schema_version", "artifact", "run_id", "application_id", "requirements_sha256", "artifacts", "decision"],
+  "properties": {
+    "schema_version": {"const": "native-capability-prerun.v1"},
+    "artifact": {"const": "PRE_RUN_MANIFEST"},
+    "artifacts": {"type": "array", "contains": {"const": "PRE_RUN_SHA256SUMS"}}
+  },
+  "additionalProperties": true
+}

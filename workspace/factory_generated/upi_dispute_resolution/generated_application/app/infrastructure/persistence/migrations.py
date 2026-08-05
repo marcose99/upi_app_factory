@@ -141,6 +141,169 @@ MIGRATIONS: tuple[Migration, ...] = (
           where business_fingerprint is not null;
         """,
     ),
+    Migration(
+        11,
+        "failed_debit_cases",
+        """
+        create table if not exists failed_debit_cases(
+          dispute_id text primary key,
+          transaction_ref text not null,
+          customer_upi_digest text not null,
+          customer_upi_masked text not null,
+          amount_minor integer not null,
+          currency text not null,
+          reason_code text not null,
+          case_type text not null,
+          owner_subject text not null,
+          assigned_analyst text not null,
+          state text not null,
+          version integer not null,
+          resolution_kind text,
+          resolution_reason_code text,
+          resolution_amount_minor integer,
+          resolution_rationale text,
+          resolution_status text not null,
+          latest_investigation_payload_json text,
+          created_at_utc text not null,
+          updated_at_utc text not null,
+          last_correlation_id text not null,
+          audit_link_hash text not null,
+          business_fingerprint text not null unique
+        );
+        create index if not exists idx_failed_debit_cases_state on failed_debit_cases(state);
+        create index if not exists idx_failed_debit_cases_transaction_ref on failed_debit_cases(transaction_ref);
+        create index if not exists idx_failed_debit_cases_resolution_status on failed_debit_cases(resolution_status);
+        """,
+    ),
+    Migration(
+        12,
+        "failed_debit_evidence",
+        """
+        create table if not exists failed_debit_evidence(
+          sequence integer primary key autoincrement,
+          dispute_id text not null references failed_debit_cases(dispute_id) on delete cascade,
+          evidence_id text not null,
+          evidence_type text not null,
+          source text not null,
+          summary text not null,
+          observed_at_utc text not null,
+          attached_by text not null,
+          attached_at_utc text not null,
+          content_sha256 text not null,
+          audit_link_hash text not null,
+          unique(dispute_id, evidence_id)
+        );
+        create index if not exists idx_failed_debit_evidence_dispute on failed_debit_evidence(dispute_id, sequence);
+        """,
+    ),
+    Migration(
+        13,
+        "failed_debit_timeline",
+        """
+        create table if not exists failed_debit_timeline(
+          sequence integer primary key autoincrement,
+          event_id text not null unique,
+          dispute_id text not null references failed_debit_cases(dispute_id) on delete cascade,
+          event_type text not null,
+          state text not null,
+          aggregate_version integer not null,
+          actor_subject text not null,
+          occurred_at_utc text not null,
+          correlation_id text not null,
+          payload_json text not null,
+          audit_link_hash text not null
+        );
+        create index if not exists idx_failed_debit_timeline_dispute on failed_debit_timeline(dispute_id, sequence);
+        """,
+    ),
+    Migration(
+        14,
+        "failed_debit_case_governance_fields",
+        """
+        alter table failed_debit_cases add column latest_classification_payload_json text;
+        alter table failed_debit_cases add column human_review_required integer not null default 0;
+        alter table failed_debit_cases add column human_review_status text not null default 'NOT_REQUIRED';
+        alter table failed_debit_cases add column proposed_disposition text;
+        alter table failed_debit_cases add column approved_disposition text;
+        alter table failed_debit_cases add column latest_disposition_payload_json text;
+        alter table failed_debit_cases add column pending_review_id text;
+        alter table failed_debit_cases add column review_requested_by text;
+        alter table failed_debit_cases add column review_requested_at_utc text;
+        alter table failed_debit_cases add column last_audit_check_status text not null default 'not_run';
+        alter table failed_debit_cases add column last_audit_check_payload_json text;
+        alter table failed_debit_cases add column closed_at_utc text;
+        alter table failed_debit_cases add column closed_by text;
+        alter table failed_debit_cases add column quarantined_at_utc text;
+        alter table failed_debit_cases add column quarantined_by text;
+        alter table failed_debit_cases add column quarantine_reason_code text;
+        alter table failed_debit_cases add column quarantine_reason text;
+        create index if not exists idx_failed_debit_cases_review_status
+          on failed_debit_cases(human_review_status);
+        """,
+    ),
+    Migration(
+        15,
+        "failed_debit_review_decisions",
+        """
+        create table if not exists failed_debit_review_decisions(
+          sequence integer primary key autoincrement,
+          review_event_id text not null unique,
+          dispute_id text not null references failed_debit_cases(dispute_id) on delete cascade,
+          review_id text not null,
+          decision_status text not null,
+          actor_subject text not null,
+          reason_code text not null,
+          rationale text not null,
+          approved_disposition text,
+          occurred_at_utc text not null,
+          correlation_id text not null,
+          audit_link_hash text not null
+        );
+        create index if not exists idx_failed_debit_review_decisions_dispute
+          on failed_debit_review_decisions(dispute_id, sequence);
+        """,
+    ),
+    Migration(
+        16,
+        "failed_debit_audit_checks",
+        """
+        create table if not exists failed_debit_audit_checks(
+          sequence integer primary key autoincrement,
+          verification_id text not null unique,
+          dispute_id text not null references failed_debit_cases(dispute_id) on delete cascade,
+          actor_subject text not null,
+          verification_status text not null,
+          quarantine_applied integer not null default 0,
+          verified_at_utc text not null,
+          correlation_id text not null,
+          details_json text not null,
+          audit_link_hash text not null
+        );
+        create index if not exists idx_failed_debit_audit_checks_dispute
+          on failed_debit_audit_checks(dispute_id, sequence);
+        """,
+    ),
+    Migration(
+        17,
+        "audit_log_actor_role",
+        """
+        alter table audit_records add column actor_role text not null default 'unknown';
+        """,
+    ),
+    Migration(
+        18,
+        "failed_debit_review_decision_actor_role",
+        """
+        alter table failed_debit_review_decisions add column actor_role text not null default 'unknown';
+        """,
+    ),
+    Migration(
+        19,
+        "failed_debit_audit_check_actor_role",
+        """
+        alter table failed_debit_audit_checks add column actor_role text not null default 'unknown';
+        """,
+    ),
 )
 
 

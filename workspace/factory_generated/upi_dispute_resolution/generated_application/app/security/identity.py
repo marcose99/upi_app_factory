@@ -22,6 +22,12 @@ class Principal:
     roles: frozenset[str]
     scopes: frozenset[str]
 
+    @property
+    def primary_role(self) -> str:
+        if not self.roles:
+            return "unknown"
+        return sorted(self.roles)[0]
+
 
 @dataclass(frozen=True)
 class OidcProductionAdapterContract:
@@ -88,6 +94,12 @@ class LocalAuthorizationPolicy:
         if missing and "ops_admin" not in principal.roles:
             raise HTTPException(status_code=403, detail="authorization denied")
 
+    def require_role(self, principal: Principal, *, roles: Iterable[str]) -> None:
+        allowed = set(roles)
+        if "ops_admin" in principal.roles or principal.roles.intersection(allowed):
+            return
+        raise HTTPException(status_code=403, detail="role authorization denied")
+
     def require_object_access(
         self,
         principal: Principal,
@@ -96,6 +108,15 @@ class LocalAuthorizationPolicy:
         scope: str,
     ) -> None:
         if "ops_admin" in principal.roles or "dispute:read:any" in principal.scopes:
+            return
+        if principal.roles.intersection(
+            {
+                "customer_support_agent",
+                "dispute_operations_analyst",
+                "supervisor_approver",
+                "audit_reviewer",
+            }
+        ):
             return
         if principal.subject == owner_subject and scope in principal.scopes:
             return
@@ -146,6 +167,15 @@ def openapi_security_schemes() -> dict[str, object]:
                         "dispute:create": "Create local simulated disputes.",
                         "dispute:read:any": "List local simulated disputes.",
                         "dispute:read": "Read local simulated disputes owned by the principal.",
+                        "dispute:evidence:write": "Attach local failed-debit evidence to an owned dispute.",
+                        "dispute:investigation:write": "Record deterministic failed-debit investigation outcomes.",
+                        "dispute:classify:write": "Classify a deterministic failed-debit case.",
+                        "dispute:review:write": "Request or record deterministic failed-debit human review decisions.",
+                        "dispute:disposition:write": "Record deterministic failed-debit dispositions.",
+                        "dispute:close:write": "Authorize deterministic failed-debit closure.",
+                        "dispute:quarantine:write": "Quarantine deterministic failed-debit cases.",
+                        "dispute:history:read": "Read failed-debit event, review and evidence lineage.",
+                        "dispute:audit:read": "Verify failed-debit audit integrity results.",
                         "runtime:drain": "Begin local runtime drain as an operator.",
                         "runtime:diagnostics": "Read bounded local runtime diagnostics.",
                     },

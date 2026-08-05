@@ -1,0 +1,60 @@
+{
+  "schema_version": "token-economics-rate-card.v1",
+  "rate_card_id": "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+  "provider": "openai",
+  "billing_surface": "chatgpt_credit",
+  "model_resolved": "gpt-5.4",
+  "model_version": "2026-07-28",
+  "service_tier": "standard",
+  "context_band": "default",
+  "modality": "text",
+  "region_or_residency": "global",
+  "currency_or_credit_unit": "chatgpt_credit",
+  "effective_from": "2026-07-28T00:00:00Z",
+  "effective_to": null,
+  "contract_id": "local-governed-reference-chatgpt-credit",
+  "provenance": {
+    "source": "repository_managed_reference_rate_card",
+    "verified_at": "2026-07-29T00:00:00Z",
+    "non_contractual_reference": true
+  },
+  "unit_scale": "per_token",
+  "rounding_policy": {
+    "mode": "ROUND_CEILING",
+    "decimal_places": 7
+  },
+  "staleness_threshold_days": 365,
+  "categories": {
+    "uncached_input": {
+      "rate": "0.0000040",
+      "unit_scale": "token"
+    },
+    "cache_read": {
+      "rate": "0.0000010",
+      "unit_scale": "token"
+    },
+    "cache_write": {
+      "rate": "0.0000020",
+      "unit_scale": "token"
+    },
+    "output": {
+      "rate": "0.0000120",
+      "unit_scale": "token"
+    },
+    "provider_tools": {
+      "rate": "0.0000000",
+      "unit_scale": "tool_call"
+    },
+    "storage_retrieval": {
+      "rate": "0.0000000",
+      "unit_scale": "request"
+    },
+    "containers_compute": {
+      "rate": "0.0000000",
+      "unit_scale": "request"
+    }
+  },
+  "integrity": {
+    "sha256": "44a784d6cfae505c9aaf579e4a4cb538a46b5918fd7c6db508054df4557eacb0"
+  }
+}

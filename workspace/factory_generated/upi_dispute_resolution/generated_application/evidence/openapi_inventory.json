@@ -1,0 +1,139 @@
+{
+  "canonical_application_id": "upi_failed_debit_no_credit",
+  "catalogue_only_fallback_used": true,
+  "compatibility_application_id": "upi_dispute_resolution",
+  "endpoint_inventory": [
+    {
+      "method": "GET",
+      "path": "/capabilities"
+    },
+    {
+      "method": "GET",
+      "path": "/disputes"
+    },
+    {
+      "method": "POST",
+      "path": "/disputes"
+    },
+    {
+      "method": "GET",
+      "path": "/disputes/{dispute_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/docs"
+    },
+    {
+      "method": "POST",
+      "path": "/drain"
+    },
+    {
+      "method": "GET",
+      "path": "/health"
+    },
+    {
+      "method": "GET",
+      "path": "/live"
+    },
+    {
+      "method": "GET",
+      "path": "/metrics"
+    },
+    {
+      "method": "GET",
+      "path": "/missing"
+    },
+    {
+      "method": "GET",
+      "path": "/openapi.json"
+    },
+    {
+      "method": "GET",
+      "path": "/ready"
+    },
+    {
+      "method": "GET",
+      "path": "/runtime/diagnostics"
+    },
+    {
+      "method": "GET",
+      "path": "/runtime/health"
+    },
+    {
+      "method": "POST",
+      "path": "/scenario/echo"
+    },
+    {
+      "method": "GET",
+      "path": "/startup"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/disputes"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/disputes/{dispute_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/disputes/{dispute_id}/audit-integrity"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/classify"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/close"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/disposition"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/disputes/{dispute_id}/history"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/human-review"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/investigate"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/investigation"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/quarantine"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/resolution"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/disputes/{dispute_id}/review-decisions"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/disputes/{dispute_id}/timeline"
+    }
+  ],
+  "openapi_sha256": "9007401e4e2f68720809f1e18be9969036623616ef68b66931d1753fb7ed1843",
+  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
+  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
+  "schema_version": "upi-failed-debit-openapi-inventory.v1"
+}

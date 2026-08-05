@@ -68,7 +68,7 @@ Passed:
 
 Current canonical-venv validation:
 
-- `PYTHONDONTWRITEBYTECODE=1 /home/marcose/projects/upi_app_factory/.venv/bin/python scripts/validate_phase71_82_wave_e_assurance_supply_chain.py` passed with two-build 78-file comparison, local-only SBOM/provenance checks, and current security-design markers.
+- `PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_e_assurance_supply_chain.py` passed with two-build 78-file comparison, local-only SBOM/provenance checks, and current security-design markers.
 - V73 repair validation: `PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_e_assurance_supply_chain.py` passed with two-build 78-file comparison and an added assertion that generated deterministic build provenance uses `canonical_repository_virtualenv` instead of a user-home absolute path.
 
 The Wave E validator redirects Python bytecode cache to a temporary directory,

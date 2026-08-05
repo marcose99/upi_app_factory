@@ -6,6 +6,7 @@ from pathlib import Path
 
 from upi_factory.rubric_alignment.fixtures import corpus_documents
 from upi_factory.rubric_alignment.models import DocumentChunk, EmbeddingProvider, Phase66Error
+from upi_factory.rubric_alignment.providers import require_live_provider_boundary
 from upi_factory.rubric_alignment.utils import sha256_text, write_json, write_jsonl
 
 
@@ -19,7 +20,15 @@ class DeterministicFakeEmbeddingProvider:
 class OpenAIEmbeddingProvider:
     provider_name = "openai_embeddings"
 
+    def __init__(self, *, live_approved: bool = False) -> None:
+        self.live_approved = live_approved
+
     def embed(self, texts: list[str], *, model: str, trace_id: str) -> list[list[float]]:
+        require_live_provider_boundary(
+            live_approved=self.live_approved,
+            missing_flag_message="live OpenAI embeddings denied: missing exact approval flag",
+            missing_key_message="live OpenAI embeddings denied: OPENAI_API_KEY is not present",
+        )
         try:
             from openai import OpenAI
         except ImportError as error:

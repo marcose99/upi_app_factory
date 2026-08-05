@@ -1,11 +1,47 @@
 {
-  "app_id": "upi_dispute_resolution",
-  "external_ecosystem": "mock/simulated only",
-  "generated_application": "workspace/factory_generated/upi_dispute_resolution/generated_application",
+  "authoritative_requirements": {
+    "pages": 29,
+    "pdf_path": "external_authoritative_input/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.pdf",
+    "pdf_sha256": "37c94a02891e84b59e4071d68f1aafb968730a0c458cdf3092562a5a1ea9ea1c",
+    "schema": "upi_failed_debit_no_credit.requirements.v2",
+    "text_path": "external_authoritative_input/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt",
+    "text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82"
+  },
+  "canonical_application_id": "upi_failed_debit_no_credit",
+  "certification_posture": "certification-ready-not-certified",
+  "compatibility_application_id": "upi_dispute_resolution",
+  "current_validation_summary": {
+    "all_gates_executed": true,
+    "candidate_projection_unchanged": true,
+    "collected_tests": 1410,
+    "passed_tests": 1410,
+    "path": "external_validation/validation_summary.json",
+    "phase": null,
+    "recorded_at_utc": null,
+    "sha256": "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab",
+    "status": "PASSED"
+  },
+  "exact_input_traceability": {
+    "decision": "GO",
+    "not_applicable_count": 0,
+    "partial_count": 0,
+    "supported_count": 781,
+    "unsupported_count": 0
+  },
+  "mock_boundary": "enforced",
   "no_live_integrations": true,
   "no_real_customer_data": true,
-  "no_regulatory_compliance_claim": true,
-  "phase": "Phase 13B",
-  "primary_application": "real locally runnable FastAPI application",
-  "run_id": "first_governed_generation_run_001"
+  "phase": "governed_self_improvement",
+  "real_payment_calls": "disabled",
+  "run_id": "r10_1_exact_input_evidence_runtime_convergence",
+  "schema_version": "upi-failed-debit-generation-summary.v4",
+  "source_hashes": {
+    "factory/exact_v2_traceability.py": "e474bed68b52886a8cd196340171fa350593744b15abc2d2648f95cf95df8828",
+    "factory/generated_application_artifacts.py": "f1a46efc71c92e369fce15b430535e5a9bc24d8b6e0c38eab39090cb272e11be",
+    "factory/native_capability_prerun/improvement_workflow.py": "bbf161e39c8e1d8fb57882a1a082fec98c3787e367173abc1f7cd5a9b8f74899",
+    "factory/operator_portal/local_web_api.py": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
+    "factory/token_economics/service.py": "0fed08b94a7f7dd1ce0219264eecf3b5b29f02d1c5344649602bb93080cf2518",
+    "scripts/run_portal_requirements_driven_application_engineering.py": "7ff5d44bd1bb9951f820cdb79c710bbe7f52e3000db456526bb5c2adfaa9f83a"
+  },
+  "status": "definition_of_done_ready"
 }

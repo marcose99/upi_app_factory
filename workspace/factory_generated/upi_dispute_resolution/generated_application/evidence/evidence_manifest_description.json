@@ -1,0 +1,78 @@
+{
+  "artifacts": [
+    {
+      "description": "Canonical identity, compatibility mapping, and truthful exact-input lineage metadata.",
+      "path": "generation_metadata.json",
+      "sha256": "bd4d8c3d6a88e47462bb8a4e83810c051b612012ebe45c4dcadb96e66fd486e5"
+    },
+    {
+      "description": "Atomic obligation inventory derived from the exact authoritative requirements text.",
+      "path": "evidence/atomic_obligation_inventory.json",
+      "sha256": "e0cb4a568f21604ffad6aebe830e89b8f1c76586ffa75b74163ef89519f64dfd"
+    },
+    {
+      "description": "Per-obligation implementation, test, and evidence traceability.",
+      "path": "evidence/requirements_traceability_matrix.json",
+      "sha256": "b6add9cc9707c170267f373475a06cb61c20f510d2b43ec102c135095efb9473"
+    },
+    {
+      "description": "Runtime-derived OpenAPI endpoint inventory and checksum.",
+      "path": "evidence/openapi_inventory.json",
+      "sha256": "263ed98e181329a909f552db41eeb5f6426a80ca5573afb3de1b0bf4f5884723"
+    },
+    {
+      "description": "Current capability pre-run conclusion derived from actual obligation classifications.",
+      "path": "evidence/CAPABILITY_PRE_RUN_REPORT.json",
+      "sha256": "783cc08d438a543d78119962dc9fd1bfe1c27033deba1f47de58962c20dc1289"
+    },
+    {
+      "description": "Current capability matrix derived from actual obligation classifications.",
+      "path": "evidence/REQUIREMENT_CAPABILITY_MATRIX.json",
+      "sha256": "2b8e21599eab3bfc772fd325dbdf003c1e18a0ee8471b3aec15d506231474ad8"
+    },
+    {
+      "description": "Current capability pre-run manifest.",
+      "path": "evidence/PRE_RUN_MANIFEST.json",
+      "sha256": "c19ec0e11197e332af5865d0aede540a92ccc65fd49841a4edd1e74e4ff2ee21"
+    },
+    {
+      "description": "Per-obligation support-status classification decisions.",
+      "path": "evidence/classification_decision_table.json",
+      "sha256": "cfb30a852e6ae24cab940ff40ef7ad27765386464b817cba058c49db3e29833b"
+    },
+    {
+      "description": "Truthful residual risks preserved after exact-input classification.",
+      "path": "evidence/residual_risk_register.json",
+      "sha256": "7fb81be3d103fd8fc23b6b502a7199711e5802d97faa7792b0039ca4f82664b7"
+    },
+    {
+      "description": "Mandatory obligations still partial or unsupported.",
+      "path": "evidence/unsupported_obligation_report.json",
+      "sha256": "cb7f72f916c995991f2699c1c3f99771d270eab36d73ff6c2742e9b841547f5a"
+    },
+    {
+      "description": "Descriptions and checksums for the exact-v2 evidence pack.",
+      "path": "evidence/evidence_manifest_description.json",
+      "sha256": "3d3305779a44d0fe973e39f83b6859d0d1814f5543c5af09fc8546bc38344f27"
+    },
+    {
+      "description": "Truthful exact-v2 support-status coverage summary.",
+      "path": "evidence/coverage_report.json",
+      "sha256": "ee8b05e837867c06ec1b168ac8035b760a19263f2ee112d68aff1e9f7d8cb752"
+    },
+    {
+      "description": "Persistence and deterministic reset boundaries.",
+      "path": "docs/persistence_reset_policy.md",
+      "sha256": "e9caaf630819ad9c4f674f1866a05f8e45fea81f048cef3830bbeeb805c4d2f6"
+    },
+    {
+      "description": "Architecture decision grounding the authoritative failed-debit runtime.",
+      "path": "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md",
+      "sha256": "bb03a346bd95888b55df1fb132bae534461e65f9bbe7e13fda9886409187c2d6"
+    }
+  ],
+  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
+  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
+  "schema_version": "upi-failed-debit-evidence-manifest-description.v3",
+  "tracked_application_root": "workspace/factory_generated/upi_dispute_resolution/generated_application"
+}

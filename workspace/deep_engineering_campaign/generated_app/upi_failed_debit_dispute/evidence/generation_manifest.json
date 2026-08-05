@@ -1,0 +1,135 @@
+{
+  "app_id": "upi_failed_debit_dispute",
+  "architecture": "modular-monolith-ddd-hexagonal",
+  "composer_profile": "local-deep-v1",
+  "endpoints": [
+    "GET /health",
+    "GET /ready",
+    "GET /metrics",
+    "POST /v1/disputes",
+    "GET /v1/disputes/{dispute_id}",
+    "GET /v1/disputes",
+    "POST /v1/disputes/{dispute_id}/evidence",
+    "POST /v1/disputes/{dispute_id}/validation",
+    "POST /v1/disputes/{dispute_id}/investigation",
+    "POST /v1/disputes/{dispute_id}/resolution",
+    "POST /v1/disputes/{dispute_id}/closure",
+    "GET /v1/disputes/{dispute_id}/timeline",
+    "GET /v1/disputes/{dispute_id}/audit"
+  ],
+  "file_count": 19,
+  "file_manifest": [
+    {
+      "path": "app/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/__init__.py",
+      "sha256": "a1b03ab9d15a41b511d96accd6a70ae4ccc60d2ae9402891360bb19cacffe774",
+      "size_bytes": 57
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/application/services/dispute_service.py",
+      "sha256": "3b4ad415df8f4cf08a1824b3bb13db32d9e31ed1363337ed7a51a5d4a50c687e",
+      "size_bytes": 1288
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/domain/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py",
+      "sha256": "7362badf2b9c08aad62b9a2827dc0284c2d05f2f4fa252be6cf34d32b825515b",
+      "size_bytes": 796
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py",
+      "sha256": "de13e982aecbd706a612e7c183253ab7651925471d7cb7e3e8908c712b3d3043",
+      "size_bytes": 498
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql",
+      "sha256": "304ebc41b2c114a6cde65d109f535e7ca816e7dde12713ead568d72ddd4145ed",
+      "size_bytes": 720
+    },
+    {
+      "path": "app/upi_failed_debit_dispute/interfaces/api/main.py",
+      "sha256": "ebe1fa6e4c34acbd831f755bed3729dde3495762a903a764770038c03f35d182",
+      "size_bytes": 2663
+    },
+    {
+      "path": "configuration/example.env",
+      "sha256": "78f184d478d78f5a717cbfd1dbe1e08dff09b359222af9de8f11491442e8c489",
+      "size_bytes": 102
+    },
+    {
+      "path": "docs/adrs/ADR-0001-local-sqlite-modular-monolith.md",
+      "sha256": "f4cfada4b17ecac390aa69859f8f9855940fbc346ea71372b3c667f30e9b293f",
+      "size_bytes": 82
+    },
+    {
+      "path": "docs/domain_state_machine.md",
+      "sha256": "e7f493d7ceeded1f683076d2b93aedd2349825339bee77c6d343006b0fed5cfe",
+      "size_bytes": 545
+    },
+    {
+      "path": "docs/operations_runbook.md",
+      "sha256": "bf0a244b98af0da651cdff73076ccd19d21d32f4834a350eab746f360f36fe4c",
+      "size_bytes": 107
+    },
+    {
+      "path": "docs/test_plan.md",
+      "sha256": "2ccc4f74d7d6e67891e211208b6315439fe742311d8affe26cdc7a076f0c507a",
+      "size_bytes": 158
+    },
+    {
+      "path": "docs/threat_model.md",
+      "sha256": "5b436736c82f0a2f9b6ccf977d6fd5b4fcf42f5e11bfdbbcb1ce5e7f167a4b09",
+      "size_bytes": 98
+    },
+    {
+      "path": "evidence/depth_score.json",
+      "sha256": "07a741f52624edc9a514ec82225ebd2be829150ae34010847e570c7d8d6e6c6c",
+      "size_bytes": 142
+    },
+    {
+      "path": "evidence/generation_manifest.json",
+      "sha256": "963fcacb6bd89d42a8345a750cae4f9f79948cbddde02d64b8c8f3013f01cf41",
+      "size_bytes": 1156
+    },
+    {
+      "path": "evidence/requirements_trace.json",
+      "sha256": "120760c135e7f4949793524faaca9c3962c3672632a849b1b3d2bf43f9888dfb",
+      "size_bytes": 764
+    },
+    {
+      "path": "openapi/openapi.json",
+      "sha256": "b13e42904f548cfe7bd95a1cc7089028b78b4fc9091281405627d98af95c27ac",
+      "size_bytes": 613
+    },
+    {
+      "path": "scripts/run_local.sh",
+      "sha256": "ab509b2305eef3415bfff48b8ead3fd2c3cafe4e166ec6a0d0b1c610ef0f337c",
+      "size_bytes": 126
+    }
+  ],
+  "llm_runtime_calls": 0,
+  "persistence": "sqlite-stdlib",
+  "product_name": "UPI App Factory",
+  "profile_version": "deep-composer/v1",
+  "real_payment_calls": "disabled",
+  "repository_id": "upi_app_factory",
+  "requirements_ir_sha256": "4e41b908de45e23eb8ebeb602e2564100a2c137c924ab3c3f09271a272267ba5",
+  "state_machine": [
+    "received",
+    "validated",
+    "evidence_pending",
+    "investigation",
+    "resolution_proposed",
+    "resolved",
+    "rejected",
+    "closed"
+  ]
+}

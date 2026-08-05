@@ -56,7 +56,7 @@ Passed:
 
 Current canonical-venv validation:
 
-- `PYTHONDONTWRITEBYTECODE=1 /home/marcose/projects/upi_app_factory/.venv/bin/python scripts/validate_phase71_82_wave_f_control_plane.py` passed with two-build 78-file comparison and policy-engine same-nonce replay rejection.
+- `PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_f_control_plane.py` passed with two-build 78-file comparison and policy-engine same-nonce replay rejection.
 - V73 repair validation: `PYTHONDONTWRITEBYTECODE=1 <canonical-venv>/bin/python scripts/validate_phase71_82_wave_f_control_plane.py` passed after runtime and portfolio approval-token lookup was changed to fail closed when the approval-token environment variable is absent. Deterministic approval-token constants are now test fixtures only through explicit pytest environment setup.
 
 The Wave F validator redirects Python bytecode cache to a temporary directory,

@@ -1,0 +1,36 @@
+{
+  "schema_version": "token-economics-budget-envelope.v1",
+  "budget_id": "governed-local-stage-default",
+  "scope": {
+    "product": "upi_app_factory",
+    "stage": "application_engineering",
+    "owner": "finops_cost_policy_owner"
+  },
+  "unit": "chatgpt_credit",
+  "soft_limit": "120.0000000",
+  "hard_limit": "180.0000000",
+  "raw_input_anomaly_limit": 15000000,
+  "output_limit": 60000,
+  "wall_clock_limit_seconds": 3600,
+  "tool_action_limit": 250,
+  "tool_byte_limit": 5242880,
+  "max_model_turns": 12,
+  "max_repair_cycles": 4,
+  "max_review_cycles": 4,
+  "max_handoffs": 6,
+  "mutation_allowlist": [
+    "factory/**",
+    "app/**",
+    "scripts/**",
+    "config/**",
+    "docs/**"
+  ],
+  "mutation_diff_size_limit": 1048576,
+  "overrun_policy": "seal_completion_block_next_call",
+  "rate_card_id": "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+  "effective_from": "2026-07-28T00:00:00Z",
+  "effective_to": null,
+  "owner": "finops_cost_policy_owner",
+  "warning_policy": "warn_at_soft_limit",
+  "escalation_policy": "human_governed_exception_only"
+}

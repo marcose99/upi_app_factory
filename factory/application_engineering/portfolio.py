@@ -493,42 +493,44 @@ class PortfolioStore:
         return next_status
 
     def create_approval(self, grant: ApprovalGrant) -> None:
-        data = {"schema_version": "1.0", "approvals": []}
-        if self.approvals_path.is_file():
-            data = self.read_json(self.approvals_path)
-        approvals = cast(list[dict[str, Any]], data.setdefault("approvals", []))
-        approvals.append(grant.as_dict())
-        self.atomic_write_json(self.approvals_path, data)
+        with self._lock:
+            data = {"schema_version": "1.0", "approvals": []}
+            if self.approvals_path.is_file():
+                data = self.read_json(self.approvals_path)
+            approvals = cast(list[dict[str, Any]], data.setdefault("approvals", []))
+            approvals.append(grant.as_dict())
+            self.atomic_write_json(self.approvals_path, data)
 
     def consume_approval(self, *, action: str, scope: str, nonce: str) -> None:
-        if not self.approvals_path.is_file():
-            raise PortfolioError("approval is required")
-        data = self.read_json(self.approvals_path)
-        approvals = cast(list[dict[str, Any]], data.get("approvals", []))
-        for item in approvals:
-            if item.get("action") == action and item.get("scope") == scope and item.get("nonce") == nonce:
-                if item.get("consumed"):
-                    raise PortfolioError("approval replay rejected")
-                expires_at_utc = str(item.get("expires_at_utc", ""))
-                if not expires_at_utc:
-                    raise PortfolioError("approval expiry is required")
-                try:
-                    expires_at = datetime.fromisoformat(expires_at_utc.replace("Z", "+00:00"))
-                except ValueError as exc:
-                    raise PortfolioError("approval expiry is invalid") from exc
-                if expires_at <= datetime.now(timezone.utc):
-                    raise PortfolioError("approval expired")
-                expected_digest = hmac.new(
-                    approval_secret().encode("utf-8"),
-                    f"{action}:{scope}:{nonce}".encode("utf-8"),
-                    hashlib.sha256,
-                ).hexdigest()
-                if not hmac.compare_digest(str(item.get("token_sha256", "")), expected_digest):
-                    raise PortfolioError("approval scope digest rejected")
-                item["consumed"] = True
-                self.atomic_write_json(self.approvals_path, data)
-                return
-        raise PortfolioError("approval scope rejected")
+        with self._lock:
+            if not self.approvals_path.is_file():
+                raise PortfolioError("approval is required")
+            data = self.read_json(self.approvals_path)
+            approvals = cast(list[dict[str, Any]], data.get("approvals", []))
+            for item in approvals:
+                if item.get("action") == action and item.get("scope") == scope and item.get("nonce") == nonce:
+                    if item.get("consumed"):
+                        raise PortfolioError("approval replay rejected")
+                    expires_at_utc = str(item.get("expires_at_utc", ""))
+                    if not expires_at_utc:
+                        raise PortfolioError("approval expiry is required")
+                    try:
+                        expires_at = datetime.fromisoformat(expires_at_utc.replace("Z", "+00:00"))
+                    except ValueError as exc:
+                        raise PortfolioError("approval expiry is invalid") from exc
+                    if expires_at <= datetime.now(timezone.utc):
+                        raise PortfolioError("approval expired")
+                    expected_digest = hmac.new(
+                        approval_secret().encode("utf-8"),
+                        f"{action}:{scope}:{nonce}".encode("utf-8"),
+                        hashlib.sha256,
+                    ).hexdigest()
+                    if not hmac.compare_digest(str(item.get("token_sha256", "")), expected_digest):
+                        raise PortfolioError("approval scope digest rejected")
+                    item["consumed"] = True
+                    self.atomic_write_json(self.approvals_path, data)
+                    return
+            raise PortfolioError("approval scope rejected")
 
 
 class PortfolioCatalogue:

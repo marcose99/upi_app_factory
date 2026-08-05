@@ -1,0 +1,62 @@
+{
+  "schema_version": "token-economics-model-registry.v1",
+  "policy_version": "2026-07-29.v1",
+  "routes": [
+    {
+      "route_id": "codex_chatgpt_credit_gpt_5_4_default",
+      "provider": "openai",
+      "execution_surface": "codex",
+      "billing_surface": "chatgpt_credit",
+      "model": "gpt-5.4",
+      "resolved_model": "gpt-5.4",
+      "model_version": "2026-07-28",
+      "unit": "chatgpt_credit",
+      "region_or_account_scope": "authenticated_codex_account",
+      "supported_usage_fields": [
+        "input_tokens",
+        "cached_input_tokens",
+        "cache_write_input_tokens",
+        "output_tokens",
+        "reasoning_output_tokens"
+      ],
+      "context_limits": {
+        "raw_input_anomaly_limit": 15000000,
+        "output_limit": 60000
+      },
+      "rate_limit_semantics": "provider_limits_retained_as_last_resort",
+      "effective_from": "2026-07-28T00:00:00Z",
+      "authoritative_source": "repository_managed_rate_card_registry",
+      "verification_timestamp": "2026-07-29T00:00:00Z",
+      "staleness_threshold_days": 365,
+      "deprecation_state": "active"
+    },
+    {
+      "route_id": "openai_api_usd_gpt_5_4_default",
+      "provider": "openai",
+      "execution_surface": "api",
+      "billing_surface": "api_usd",
+      "model": "gpt-5.4",
+      "resolved_model": "gpt-5.4",
+      "model_version": "2026-07-28",
+      "unit": "usd",
+      "region_or_account_scope": "mock_api_account",
+      "supported_usage_fields": [
+        "input_tokens",
+        "cached_input_tokens",
+        "cache_write_input_tokens",
+        "output_tokens",
+        "reasoning_output_tokens"
+      ],
+      "context_limits": {
+        "raw_input_anomaly_limit": 15000000,
+        "output_limit": 60000
+      },
+      "rate_limit_semantics": "provider_limits_retained_as_last_resort",
+      "effective_from": "2026-07-28T00:00:00Z",
+      "authoritative_source": "repository_managed_rate_card_registry",
+      "verification_timestamp": "2026-07-29T00:00:00Z",
+      "staleness_threshold_days": 365,
+      "deprecation_state": "active"
+    }
+  ]
+}

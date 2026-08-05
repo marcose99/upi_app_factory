@@ -2,7 +2,7 @@
 
 Discovery date: 2026-07-25
 
-Scope: read-only inspection of the exact governed worktree at `/home/marcose/projects/.upi_app_factory_campaigns/20260725T143850Z-975913`.
+Scope: read-only inspection of the exact governed worktree at `<governed-worktree>/20260725T143850Z-975913`.
 
 Baseline: `5373b9bdd04ccd7760e65345d311362c5bc9a48f`
 
@@ -97,7 +97,7 @@ The existing benchmark seed already separates source catalog, controls, opinions
 
 Controller-supplied evidence path was readable:
 
-`/home/marcose/.local/state/upi_app_factory/phase71-82-enterprise-engineering-v63-recovery-multicycle/20260725T164240Z-1208028/campaign-state/20260725T164241Z-recovery-1208028/logs/baseline_changed_python_ruff_02.log`
+`<controller-state-root>/phase71-82-enterprise-engineering-v63-recovery-multicycle/20260725T164240Z-1208028/campaign-state/20260725T164241Z-recovery-1208028/logs/baseline_changed_python_ruff_02.log`
 
 The log shows ruff checking a long generated-output scope and reporting one violation:
 

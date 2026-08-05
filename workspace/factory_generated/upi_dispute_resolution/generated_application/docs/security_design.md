@@ -19,6 +19,18 @@ live identity-provider claim.
 - Problem responses use `application/problem+json` and carry correlation IDs.
 - Object authorization limits dispute reads to the owning principal unless the
   caller has administrative or read-any authority.
+- The versioned failed-debit mutation scopes are separated by intent and role:
+  `dispute:evidence:write`, `dispute:investigation:write`,
+  `dispute:classify:write`, `dispute:review:write`,
+  `dispute:disposition:write`, `dispute:close:write`,
+  `dispute:quarantine:write`, `dispute:history:read`, and
+  `dispute:audit:read`.
+- Case workflow roles are enforced explicitly:
+  `customer_support_agent`, `dispute_operations_analyst`,
+  `supervisor_approver`, and `audit_reviewer`.
+- Human-review approval rejects same-actor self-approval when segregation of
+  duties applies, and closure is fail-closed unless disposition and audit
+  integrity verification have already succeeded.
 
 ## Data Protection
 
@@ -41,9 +53,15 @@ live identity-provider claim.
   transaction reference, customer UPI, reason, and owner subject. Exact replays
   return the original result; mismatched payload or owner reuse returns a
   conflict.
+- Versioned failed-debit commands also require idempotency keys and correlation
+  IDs; evidence, investigation, classification, review, disposition,
+  quarantine, and closure requests fail closed on stale expected versions.
 - SQLite persistence uses migrations with checksum drift detection, explicit
   local-review pragmas, transactional audit/outbox writes, consumer inbox
   replay protection, and optimistic concurrency checks.
+- Failed-debit evidence, review decisions, audit-integrity checks, history,
+  audit-link hashes, and deterministic simulated-bank snapshots are persisted
+  locally in SQLite with no live provider boundary crossings.
 - Runtime `/startup`, `/live`, `/ready`, `/health`, and `/metrics` probes are
   documented for the local run pack.
 
