@@ -78,16 +78,23 @@ def validate() -> dict[str, Any]:
         "COPY --chown=appfactory:appfactory src ./src",
         "COPY --chown=appfactory:appfactory tools ./tools",
         "PIP_NO_CACHE_DIR=1",
+        "requirements/bootstrap-lock.txt requirements/recipient-lock.txt ./requirements/",
+        "python -m pip install --no-cache-dir -r requirements/bootstrap-lock.txt",
+        "python -m pip install --no-cache-dir -r requirements-recipient.txt",
     ]:
         _require(marker in dockerfile, f"Dockerfile missing {marker}", errors)
+    bootstrap_install = "python -m pip install --no-cache-dir -r requirements/bootstrap-lock.txt"
+    recipient_install = "python -m pip install --no-cache-dir -r requirements-recipient.txt"
     if (
         "COPY --chown=appfactory:appfactory src ./src" in dockerfile
-        and "RUN python -m pip install --no-cache-dir -r requirements-recipient.txt" in dockerfile
+        and bootstrap_install in dockerfile
+        and recipient_install in dockerfile
     ):
         _require(
             dockerfile.index("COPY --chown=appfactory:appfactory src ./src")
-            < dockerfile.index("RUN python -m pip install --no-cache-dir -r requirements-recipient.txt"),
-            "Dockerfile must copy package sources before installing editable recipient requirements",
+            < dockerfile.index(bootstrap_install)
+            < dockerfile.index(recipient_install),
+            "Dockerfile must copy package sources before bootstrap-lock and recipient-lock installation",
             errors,
         )
     _require("COPY --chown=appfactory:appfactory . ." not in dockerfile, "Dockerfile must not bulk-copy the full repository", errors)

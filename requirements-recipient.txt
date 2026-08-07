@@ -1,17 +1,4 @@
-# Minimal recipient runtime for local handover replay.
-# Intentionally lightweight: enough to regenerate and verify the local operator pack.
+# Deterministic handover dependency surface for fresh-clone validation.
+# Third-party versions are resolved exclusively from the governed exact lock.
+-r requirements/recipient-lock.txt
 -e .
-fastapi>=0.110,<1.0
-uvicorn>=0.29,<1.0
-pydantic>=2.6,<3.0
-python-dotenv>=1.0,<2.0
-PyYAML>=6.0,<7.0
-httpx>=0.27,<1.0
-fastapi>=0.110,<1.0
-uvicorn>=0.29,<1.0
-pydantic>=2.6,<3.0
-python-dotenv>=1.0,<2.0
-PyYAML>=6.0,<7.0
-httpx>=0.27,<1.0
-langgraph>=1.0,<2.0
-pytest>=8.0,<9.0

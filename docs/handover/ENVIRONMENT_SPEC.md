@@ -59,3 +59,23 @@ The Compose service publishes only to `127.0.0.1`, persists container state at
 `/app/.var` through a named volume, runs with mock-only defaults, and keeps
 runtime LLM calls disabled by default. No real NPCI, RBI, bank, PSP, ODR,
 settlement, payment-rail, or provider calls are part of this route.
+
+## Dependency reproducibility and supply-chain boundary
+
+The native recipient route uses two governed exact locks:
+
+- `requirements/bootstrap-lock.txt` pins the packaging toolchain used to create
+  and maintain the local virtual environment.
+- `requirements/recipient-lock.txt` pins the third-party dependency graph used
+  for factory handover replay and generated-application validation.
+
+`requirements-recipient.txt` is only the stable entry point that includes the
+recipient lock and installs the first-party repository as editable source.
+`run_factory.sh` binds its environment stamp to the bootstrap lock, recipient
+entry file, recipient lock, and `pyproject.toml`, so a lock-only or packaging
+metadata change cannot silently reuse a stale environment.
+
+Known-vulnerability auditing remains a release/assurance activity. The editable
+first-party `upi-app-factory` package is intentionally excluded from PyPI-backed
+third-party vulnerability lookup; all locked third-party distributions remain
+in scope for the audit.

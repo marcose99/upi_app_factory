@@ -87,25 +87,94 @@ fi
 
 VENV_PYTHON="${ROOT}/.venv/bin/python"
 REQ_FILE="${ROOT}/requirements-recipient.txt"
+BOOTSTRAP_REQ_FILE="${ROOT}/requirements/bootstrap-lock.txt"
+RECIPIENT_LOCK_FILE="${ROOT}/requirements/recipient-lock.txt"
+PYPROJECT_FILE="${ROOT}/pyproject.toml"
 REQ_STAMP="${ROOT}/.venv/.upi_app_factory_recipient_requirements.sha256"
 
 if [[ ! -x "${VENV_PYTHON}" ]]; then
   "${PYTHON}" -m venv "${ROOT}/.venv" || fail "Could not create .venv"
 fi
 
-REQ_HASH="$("${VENV_PYTHON}" - <<'PY' "${REQ_FILE}"
+REQ_HASH="$("${VENV_PYTHON}" - "${BOOTSTRAP_REQ_FILE}" "${REQ_FILE}" "${RECIPIENT_LOCK_FILE}" "${PYPROJECT_FILE}" <<'PY'
 from pathlib import Path
 import hashlib
 import sys
-path = Path(sys.argv[1])
-print(hashlib.sha256(path.read_bytes()).hexdigest())
+
+digest = hashlib.sha256()
+for raw_path in sys.argv[1:]:
+    path = Path(raw_path)
+    digest.update(path.name.encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(path.read_bytes())
+    digest.update(b"\0")
+print(digest.hexdigest())
 PY
 )"
 
-if [[ ! -f "${REQ_STAMP}" || "$(tr -d '[:space:]' < "${REQ_STAMP}")" != "${REQ_HASH}" ]]; then
+verify_locked_environment() {
+  "${VENV_PYTHON}" - "${BOOTSTRAP_REQ_FILE}" "${RECIPIENT_LOCK_FILE}" <<'PY'
+from importlib import metadata
+from pathlib import Path
+import re
+import sys
+
+def canonicalize(name: str) -> str:
+    return re.sub(r"[-_.]+", "-", name).lower()
+
+expected = {}
+errors = []
+for raw_path in sys.argv[1:]:
+    path = Path(raw_path)
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s;]+)", line)
+        if match is None:
+            errors.append(f"{path.name}: non-exact lock entry: {line}")
+            continue
+        name, version = match.groups()
+        canonical_name = canonicalize(name)
+        if canonical_name in expected:
+            errors.append(f"duplicate locked distribution: {canonical_name}")
+            continue
+        expected[canonical_name] = version
+installed = {}
+for distribution in metadata.distributions():
+    name = distribution.metadata.get("Name")
+    if name:
+        installed[canonicalize(name)] = distribution.version
+allowed_first_party = {"upi-app-factory"}
+missing = sorted(set(expected) - set(installed))
+mismatches = sorted((name, expected[name], installed[name]) for name in set(expected).intersection(installed) if expected[name] != installed[name])
+extras = sorted(set(installed) - set(expected) - allowed_first_party)
+for name in missing:
+    errors.append(f"{name}: locked distribution not installed")
+for name, expected_version, installed_version in mismatches:
+    errors.append(f"{name}: expected {expected_version}, found {installed_version}")
+if extras:
+    errors.append(f"unlocked installed distributions: {extras}")
+print("true" if not errors else "false")
+for error in errors:
+    print(error, file=sys.stderr)
+PY
+}
+
+LOCK_OK="false"
+if [[ -f "${REQ_STAMP}" ]]; then
+  LOCK_OK="$(verify_locked_environment)"
+fi
+
+if [[ ! -f "${REQ_STAMP}" || "$(tr -d '[:space:]' < "${REQ_STAMP}")" != "${REQ_HASH}" || "${LOCK_OK}" != "true" ]]; then
+  "${VENV_PYTHON}" -m pip install -r "${BOOTSTRAP_REQ_FILE}" || fail "Bootstrap dependency install failed"
   "${VENV_PYTHON}" -m pip install -r "${REQ_FILE}" || fail "Dependency install failed from requirements-recipient.txt"
+  LOCK_OK="$(verify_locked_environment)"
+  [[ "${LOCK_OK}" == "true" ]] || fail "Recipient dependency lock verification failed after install"
   printf '%s\n' "${REQ_HASH}" > "${REQ_STAMP}"
 fi
+
+"${VENV_PYTHON}" -m pip check || fail "Recipient dependency consistency check failed"
 
 "${VENV_PYTHON}" - <<'PY' || fail "Recipient runtime verification failed; install from requirements-recipient.txt"
 import fastapi

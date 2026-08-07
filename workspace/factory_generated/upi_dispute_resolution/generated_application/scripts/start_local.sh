@@ -4,7 +4,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 REPO_ROOT="$(cd "${APP_ROOT}/../../../.." && pwd)"
-PYTHON_BIN="${PYTHON_BIN:-${REPO_ROOT}/.venv/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-${APP_ROOT}/.venv/bin/python}"
+if [ ! -x "${PYTHON_BIN}" ] && [ -x "${REPO_ROOT}/.venv/bin/python" ]; then
+  PYTHON_BIN="${REPO_ROOT}/.venv/bin/python"
+fi
 if [ ! -x "${PYTHON_BIN}" ]; then
   PYTHON_BIN="${PYTHON_BIN_FALLBACK:-python}"
 fi

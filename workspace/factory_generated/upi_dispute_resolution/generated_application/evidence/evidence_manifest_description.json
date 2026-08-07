@@ -53,7 +53,7 @@
     {
       "description": "Descriptions and checksums for the exact-v2 evidence pack.",
       "path": "evidence/evidence_manifest_description.json",
-      "sha256": "3d3305779a44d0fe973e39f83b6859d0d1814f5543c5af09fc8546bc38344f27"
+      "sha256": "d12bd68451fc7ca7f98c827b8d8cc1abe6e5b3e1ac623223712139505297c252"
     },
     {
       "description": "Truthful exact-v2 support-status coverage summary.",
@@ -69,6 +69,31 @@
       "description": "Architecture decision grounding the authoritative failed-debit runtime.",
       "path": "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md",
       "sha256": "bb03a346bd95888b55df1fb132bae534461e65f9bbe7e13fda9886409187c2d6"
+    },
+    {
+      "description": "Exact packaging-tool bootstrap contract for independent clean-room replay.",
+      "path": "requirements-bootstrap.lock",
+      "sha256": "17ab1e8492376e363e619e3ae9473e8624f654c335fc4a696ccd1480ed797ef4"
+    },
+    {
+      "description": "Exact third-party dependency closure for the authoritative generated runtime and tests.",
+      "path": "requirements.lock",
+      "sha256": "b6524c3d782ebb446f0b3f7c19b6188b2bc00757a0307ace75c425f606954255"
+    },
+    {
+      "description": "Machine-checkable dependency and clean-room handover contract.",
+      "path": "dependency_contract.json",
+      "sha256": "7616185b3b42951eb35d37d341d58a0a03d6fc2406eea78c61d733c036179e82"
+    },
+    {
+      "description": "Independent local virtual-environment bootstrap using generated-app-owned locks.",
+      "path": "scripts/bootstrap_cleanroom.sh",
+      "sha256": "d9196829a6d5b55db5b50b4e03fd7517491556fb79914bbd8fdfcd727b419c86"
+    },
+    {
+      "description": "Fail-closed generated-app dependency validator.",
+      "path": "scripts/validate_dependency_contract.py",
+      "sha256": "bef7d8b96e713dabb3a40e332e1a5037eb2fb6dc89f482a10b8b6af9412033b3"
     }
   ],
   "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",

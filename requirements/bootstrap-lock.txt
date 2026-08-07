@@ -1,0 +1,6 @@
+# Governed recipient bootstrap lock.
+# Exact packaging-tool pins prevent a fresh recipient virtual environment from
+# inheriting an obsolete vulnerable setuptools from the host Python installation.
+pip==26.1.2
+setuptools==83.0.0
+wheel==0.47.0

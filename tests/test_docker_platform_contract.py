@@ -67,9 +67,12 @@ def test_compose_and_dockerfile_local_mock_only_contract() -> None:
     assert "--retries=12" in dockerfile
     assert "scripts/run_docker_factory_portal.py" in dockerfile
     assert "COPY --chown=appfactory:appfactory src ./src" in dockerfile
+    bootstrap_install = "python -m pip install --no-cache-dir -r requirements/bootstrap-lock.txt"
+    recipient_install = "python -m pip install --no-cache-dir -r requirements-recipient.txt"
+    assert "requirements/bootstrap-lock.txt requirements/recipient-lock.txt ./requirements/" in dockerfile
     assert dockerfile.index("COPY --chown=appfactory:appfactory src ./src") < dockerfile.index(
-        "RUN python -m pip install --no-cache-dir -r requirements-recipient.txt"
-    )
+        bootstrap_install
+    ) < dockerfile.index(recipient_install)
     assert "COPY --chown=appfactory:appfactory tools ./tools" in dockerfile
     assert "COPY --chown=appfactory:appfactory . ." not in dockerfile
     assert ".git" in dockerignore

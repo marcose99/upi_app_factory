@@ -22,12 +22,14 @@ RUN groupadd --system --gid 1000 appfactory \
     && chown -R appfactory:appfactory /app
 
 COPY --chown=appfactory:appfactory requirements-recipient.txt pyproject.toml ./
+COPY --chown=appfactory:appfactory requirements/bootstrap-lock.txt requirements/recipient-lock.txt ./requirements/
 
 COPY --chown=appfactory:appfactory app ./app
 COPY --chown=appfactory:appfactory adapters ./adapters
 COPY --chown=appfactory:appfactory factory ./factory
 COPY --chown=appfactory:appfactory src ./src
-RUN python -m pip install --no-cache-dir -r requirements-recipient.txt
+RUN python -m pip install --no-cache-dir -r requirements/bootstrap-lock.txt \
+    && python -m pip install --no-cache-dir -r requirements-recipient.txt
 
 COPY --chown=appfactory:appfactory tools ./tools
 COPY --chown=appfactory:appfactory scripts ./scripts

@@ -1,0 +1,65 @@
+{
+  "application_id": "upi_dispute_resolution",
+  "bootstrap_lock_sha256": "17ab1e8492376e363e619e3ae9473e8624f654c335fc4a696ccd1480ed797ef4",
+  "certification_claimed": false,
+  "derivation": {
+    "resolver": "importlib.metadata.packages_distributions",
+    "runtime_distributions": [
+      "fastapi",
+      "pydantic",
+      "starlette",
+      "uvicorn"
+    ],
+    "runtime_import_to_distribution": {
+      "fastapi": "fastapi",
+      "pydantic": "pydantic",
+      "starlette": "starlette",
+      "uvicorn": "uvicorn"
+    },
+    "runtime_imports": [
+      "fastapi",
+      "pydantic",
+      "starlette",
+      "uvicorn"
+    ],
+    "runtime_scan_excludes_app_tests": true,
+    "test_distributions": [
+      "fastapi",
+      "httpx",
+      "pydantic",
+      "pytest"
+    ],
+    "test_import_to_distribution": {
+      "_pytest": "pytest",
+      "fastapi": "fastapi",
+      "httpx": "httpx",
+      "pydantic": "pydantic",
+      "pytest": "pytest"
+    },
+    "test_imports": [
+      "_pytest",
+      "fastapi",
+      "httpx",
+      "pydantic",
+      "pytest"
+    ]
+  },
+  "direct_distributions": [
+    "fastapi",
+    "httpx",
+    "pydantic",
+    "pytest",
+    "starlette",
+    "uvicorn"
+  ],
+  "locked_distribution_count": 23,
+  "mock_only": true,
+  "production_deployment_claimed": false,
+  "python_requires": ">=3.10",
+  "real_payment_calls": "disabled",
+  "requirements_lock_sha256": "b6524c3d782ebb446f0b3f7c19b6188b2bc00757a0307ace75c425f606954255",
+  "runtime_entrypoint": "generated_application.app.interfaces.api.main:app",
+  "schema_version": "upi-generated-app-dependency-contract.v1",
+  "standalone_source_bundle": true,
+  "wheel_packaging_claimed": false
+}
