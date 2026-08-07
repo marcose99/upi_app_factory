@@ -1,0 +1,57 @@
+{
+  "schema_version": "upi_app_factory.generated.control_plane_governance.v1",
+  "scope": "lightweight generated application control-plane contract",
+  "policy_decisions": {
+    "typed": true,
+    "deterministic": true,
+    "fail_closed_default": true
+  },
+  "approval_controls": {
+    "scope_bound": true,
+    "expiry_required": true,
+    "nonce_required": true,
+    "replay_rejected": true,
+    "policy_engine_consumes_nonce": true,
+    "decision_returns_consumed_nonce_contract": true,
+    "store_persistence_required_for_cross_process_replay": true
+  },
+  "agent_controls": {
+    "schema_bound": true,
+    "max_iterations": 8,
+    "least_privilege_actions": [
+      "read_evidence",
+      "run_local_tests",
+      "start_local_runtime",
+      "recommend_portfolio"
+    ],
+    "independent_verification_required": true
+  },
+  "prohibited_without_explicit_human_gate": [
+    "merge",
+    "push",
+    "release",
+    "deploy",
+    "certify",
+    "destroy"
+  ],
+  "silent_self_modification_prohibited": [
+    "modify_prompts",
+    "modify_models",
+    "modify_policies",
+    "modify_tests"
+  ],
+  "isolation_controls": {
+    "application_id_bound": true,
+    "version_id_bound": true,
+    "process_id_bound": true,
+    "loopback_port_bound": true,
+    "state_and_evidence_roots_separate": true
+  },
+  "portfolio_assessment": {
+    "mode": "recommendation_only",
+    "deployment_allowed": false,
+    "production_readiness_claimed": false,
+    "certification_claim": "none"
+  },
+  "external_ecosystem_integrations": "mocked_or_simulated_only"
+}

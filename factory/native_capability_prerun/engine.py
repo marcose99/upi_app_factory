@@ -123,6 +123,20 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def portable_requirements_path(requirements: Path, factory_root: Path, requirements_sha: str) -> str:
+    try:
+        resolved_requirements = requirements.resolve()
+        resolved_root = factory_root.resolve()
+    except OSError:
+        resolved_requirements = requirements.absolute()
+        resolved_root = factory_root.absolute()
+    if resolved_requirements == resolved_root:
+        return "."
+    if resolved_requirements.is_relative_to(resolved_root):
+        return resolved_requirements.relative_to(resolved_root).as_posix()
+    return f"external_requirements/{requirements_sha}/{resolved_requirements.name}"
+
+
 def canonical_json_sha256(payload: Mapping[str, Any]) -> str:
     return sha256_bytes(portable_json_dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
@@ -1274,7 +1288,11 @@ def build_payloads(config: PreRunConfig) -> dict[str, Any]:
         "artifact": "CAPABILITY_PRE_RUN_REPORT",
         "run_id": run_id,
         "application_id": app_id,
-        "requirements_path": str(requirements),
+        "requirements_path": portable_requirements_path(
+            requirements,
+            config.factory_root,
+            requirements_sha,
+        ),
         "requirements_sha256": requirements_sha,
         "requirements_size_bytes": len(data),
         "factory_identity": repo,

@@ -1,0 +1,12 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "generated_file_count": 78,
+  "generation_mode": "deterministic_template_regeneration",
+  "phase28_architecture_depth_inputs": [
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json",
+    "prompts/phase28/generated_application_architecture_depth_prompt.md"
+  ],
+  "phase29_deep_structure_policy": "policies/phase29_generated_application_deep_structure_policy.json",
+  "run_id": "phase31_deep_generated_application_export"
+}

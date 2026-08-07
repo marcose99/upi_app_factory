@@ -1,0 +1,36 @@
+{
+  "artifact": "deterministic_build_manifest",
+  "build_mode": "deterministic_template_regeneration",
+  "source_template_manifest": "factory/templates/mock_dispute_app/template_manifest.v1.json",
+  "normalization": {
+    "ignored_fields_for_two_build_comparison": [
+      "generation_manifest.run_id",
+      "generation_manifest.generated_at_utc"
+    ],
+    "compared_fields": [
+      "generated_file.relative_path",
+      "generated_file.sha256",
+      "generated_file.size_bytes"
+    ]
+  },
+  "variance_explanation": [
+    "run_id and generated_at_utc are intentionally run-specific",
+    "template file bytes must match across two fresh temporary builds"
+  ],
+  "network_access_required": false,
+  "live_payment_calls_allowed": false,
+  "runtime_llm_calls_allowed": false,
+  "dependency_lock_status": {
+    "resolved_lockfile_present": true,
+    "resolved_lockfile_path": "requirements/ci-lock.txt",
+    "exact_runtime_versions_present": true,
+    "transitive_dependency_license_evidence_present": true,
+    "installed_distribution_record_hashes_present": true,
+    "installed_distribution_record_hash_source": "canonical_repository_virtualenv installed dist-info RECORD metadata",
+    "wheel_hashes_present": false,
+    "registry_resolution_attempted": false,
+    "source_current_environment_reproducibility": "supported by deterministic template bytes, exact local pins, installed distribution metadata and RECORD hash evidence",
+    "upstream_artifact_reproducibility": "unattained because no governed offline wheelhouse or source archive cache is present",
+    "reason": "Exact pins and installed-file integrity metadata are locally inspectable; governed environment prohibits network access and does not include an offline wheelhouse or source archive cache for upstream artifact hash capture."
+  }
+}

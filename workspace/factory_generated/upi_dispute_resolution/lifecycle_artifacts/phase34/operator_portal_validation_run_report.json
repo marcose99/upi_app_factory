@@ -20,7 +20,7 @@
       "command_display": "python -c print('phase34 validation runner self-check')",
       "command_id": "phase34_runner_self_check",
       "description": "Small safe self-check used by the Phase 34 validator.",
-      "duration_seconds": 0.021664,
+      "duration_seconds": 0.008279,
       "return_code": 0,
       "status": "passed",
       "stderr_preview": "",
@@ -29,7 +29,7 @@
     }
   ],
   "dry_run": false,
-  "duration_seconds": 0.021764,
+  "duration_seconds": 0.008399,
   "phase": "phase34_operator_portal_governed_validation_runner",
   "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
   "safety_boundaries": {

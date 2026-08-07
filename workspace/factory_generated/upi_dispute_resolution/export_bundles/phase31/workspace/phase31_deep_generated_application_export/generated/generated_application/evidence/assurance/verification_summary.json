@@ -1,0 +1,110 @@
+{
+  "artifact": "wave_e_assurance_supply_chain_verification_summary",
+  "campaign": "phase71-82-enterprise-engineering-v63-corrected",
+  "baseline": "5373b9bdd04ccd7760e65345d311362c5bc9a48f",
+  "status": "evidence_generated_for_local_validation",
+  "standards_used_as_benchmarks": [
+    "OWASP ASVS 5.0 Level 2 oriented",
+    "OWASP API Security Top 10 oriented",
+    "OWASP SAMM 2 oriented",
+    "CycloneDX 1.7",
+    "SPDX 3.0",
+    "SLSA 1.2 style provenance",
+    "OpenSSF Baseline and Scorecard oriented"
+  ],
+  "certification_claim": "none",
+  "production_readiness_claim": "none",
+  "live_integrations": {
+    "bank": false,
+    "psp": false,
+    "npci": false,
+    "rbi": false,
+    "payment_rail": false,
+    "identity_provider": false,
+    "openai_application": false
+  },
+  "generated_test_families": [
+    "migration",
+    "contract",
+    "authz",
+    "concurrency",
+    "event_replay",
+    "restart",
+    "security",
+    "performance",
+    "audit"
+  ],
+  "resolved_independent_review_repairs": [
+    {
+      "id": "IDEMPOTENCY-PAYLOAD-BOUND",
+      "status": "resolved",
+      "evidence": "idempotency keys store a request fingerprint and mismatched payload or owner reuse returns conflict"
+    },
+    {
+      "id": "LOCAL-RUN-HEALTH-CHECK",
+      "status": "resolved",
+      "evidence": "health_check.py accepts the runtime probe statuses returned by /startup, /live and /ready"
+    },
+    {
+      "id": "STRICT-API-FIELDS",
+      "status": "resolved",
+      "evidence": "Pydantic API boundary models forbid unknown JSON fields and generated API tests cover rejection"
+    },
+    {
+      "id": "CONTROL-PLANE-REPLAY",
+      "status": "resolved",
+      "evidence": "ControlPlanePolicyEngine consumes scoped approval nonces and exposes the consumed nonce in the decision contract"
+    },
+    {
+      "id": "SQLITE-LOCAL-CONCURRENCY",
+      "status": "resolved",
+      "evidence": "SQLite unit-of-work uses busy timeout, WAL where available, and avoids repeat migration checks after startup per database path"
+    },
+    {
+      "id": "ATOMIC-IDEMPOTENCY-RESERVATION",
+      "status": "resolved",
+      "evidence": "create_dispute reserves the idempotency key before dispute/audit/outbox creation and finalizes the stored result only for the winning transaction"
+    },
+    {
+      "id": "BUSINESS-DUPLICATE-SUBMISSION",
+      "status": "resolved",
+      "evidence": "the primary app stores a unique business fingerprint for transaction/customer/reason and rejects duplicate submissions using a different idempotency key"
+    },
+    {
+      "id": "PRIMARY-FASTAPI-BEHAVIOR",
+      "status": "resolved",
+      "evidence": "generated TestClient coverage exercises POST /disputes, idempotent replay, conflict errors, bearer auth, object authorization, pagination, validation problem details and middleware headers"
+    },
+    {
+      "id": "LOCAL-PERFORMANCE-SMOKE",
+      "status": "resolved",
+      "evidence": "performance smoke records actual local service create/list timings without production capacity claims"
+    }
+  ],
+  "remaining_authoritative_blockers": [
+    {
+      "id": "LOCK-001",
+      "scope": "wheel_hash_capture",
+      "status": "blocked_by_missing_offline_wheelhouse_or_source_archive_cache",
+      "evidence_boundary": "source/current-environment reproducibility is supported by deterministic template bytes, exact local pins, transitive license evidence, installed distribution metadata and RECORD hashes; upstream artifact reproducibility is unattained",
+      "owner": "factory_governance_owner"
+    }
+  ],
+  "resolved_repair_evidence": [
+    {
+      "id": "OFFLINE-LOCK-001",
+      "status": "resolved_versions_and_transitive_license_inventory_recorded",
+      "source": "requirements/ci-lock.txt"
+    },
+    {
+      "id": "INSTALLED-RECORD-001",
+      "status": "installed_distribution_record_hash_samples_recorded",
+      "source": "canonical_repository_virtualenv installed dist-info RECORD metadata"
+    },
+    {
+      "id": "UPSTREAM-ARTIFACT-HASHES-001",
+      "status": "unattained_without_offline_wheelhouse_or_source_archive_cache",
+      "source": "repository artifacts and canonical virtual environment only"
+    }
+  ]
+}

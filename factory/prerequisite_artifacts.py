@@ -24,6 +24,19 @@ DEFAULT_LIFECYCLE_ARTIFACT_ROOT = (
 )
 DEFAULT_MUTABLE_TEST_ROOTS = (
     "workspace/deep_engineering_campaign",
+    "workspace/factory_generated/phase51_portfolio_e2e_tests",
+    "workspace/factory_generated/phase51_test_roots",
+    "workspace/factory_generated/post_r9_5",
+    "workspace/factory_generated/portal_external_state_tests",
+    "workspace/factory_generated/upi_dispute_resolution/audit_portal",
+    "workspace/factory_generated/upi_dispute_resolution/export_bundles",
+    "workspace/factory_generated/upi_dispute_resolution/generation_runs",
+    "workspace/factory_generated/upi_dispute_resolution/identity_test_roots",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts",
+    "workspace/factory_generated/upi_dispute_resolution/operator_handoff",
+    "workspace/factory_generated/upi_dispute_resolution/phase51_identity_test_portfolio",
+    "workspace/factory_generated/upi_dispute_resolution/portal_publications",
+    "workspace/tmp",
     "factory_governance/phase68_70/recipient_replay_output",
 )
 

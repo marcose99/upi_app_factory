@@ -1059,20 +1059,24 @@ def _execute_generated_tests(
     run_id: str,
     requirements_sha256: str,
 ) -> dict[str, Any]:
+    project_root = Path(__file__).resolve().parents[1]
     argv = [
         sys.executable,
         "-m",
         "pytest",
         "-q",
         "--disable-warnings",
-        f"--rootdir={app_root}",
-        f"--confcutdir={app_root}",
-        "tests",
+        f"--rootdir={project_root}",
+        str(app_root / "tests"),
     ]
     env = os.environ.copy()
     env.update(
         {
-            "PYTHONPATH": f"{app_root}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(os.pathsep),
+            "PYTHONPATH": os.pathsep.join(
+                part
+                for part in (str(app_root), str(project_root), env.get("PYTHONPATH", ""))
+                if part
+            ),
             "REAL_PAYMENT_CALLS": "disabled",
             "MOCK_BOUNDARY": "1",
             "FACTORY_LLM_ENABLED": "0",

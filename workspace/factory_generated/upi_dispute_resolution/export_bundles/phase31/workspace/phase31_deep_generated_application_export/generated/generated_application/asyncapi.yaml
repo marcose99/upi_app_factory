@@ -1,0 +1,63 @@
+asyncapi: 3.0.0
+info:
+  title: UPI App Factory Generated Dispute Events
+  version: 1.0.0
+  description: Local mock-only event contract for generated dispute workflows.
+channels:
+  disputeStateChanged:
+    address: dispute.state_changed
+    messages:
+      disputeStateChanged:
+        $ref: '#/components/messages/DisputeStateChanged'
+operations:
+  publishDisputeStateChanged:
+    action: send
+    channel:
+      $ref: '#/channels/disputeStateChanged'
+    messages:
+      - $ref: '#/channels/disputeStateChanged/messages/disputeStateChanged'
+components:
+  messages:
+    DisputeStateChanged:
+      name: dispute.state_changed
+      title: Dispute state changed
+      payload:
+        $ref: '#/components/schemas/PortableEventEnvelope'
+  schemas:
+    PortableEventEnvelope:
+      type: object
+      required:
+        - schema_version
+        - envelope_version
+        - message_id
+        - event_type
+        - aggregate_id
+        - aggregate_version
+        - occurred_at_utc
+        - producer
+        - trace_id
+        - payload
+        - payload_sha256
+      properties:
+        schema_version:
+          const: upi_app_factory.event_envelope.v1
+        envelope_version:
+          const: 1
+        message_id:
+          type: string
+        event_type:
+          type: string
+        aggregate_id:
+          type: string
+        aggregate_version:
+          type: integer
+        occurred_at_utc:
+          type: string
+        producer:
+          type: string
+        trace_id:
+          type: string
+        payload:
+          type: object
+        payload_sha256:
+          type: string

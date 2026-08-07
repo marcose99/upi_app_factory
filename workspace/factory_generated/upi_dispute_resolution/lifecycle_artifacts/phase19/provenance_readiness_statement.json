@@ -1,0 +1,11 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "attestation_status": "readiness_only_not_formal_attestation",
+  "base_tag_required": "v0.18.0-independent-reviewer-workspace-trial",
+  "builder": "local-governed-factory",
+  "official_slsa_claim_made": false,
+  "phase": "19",
+  "registry_push_performed": false,
+  "schema_version": "phase19-provenance-readiness.v1",
+  "signing_key_used": false
+}

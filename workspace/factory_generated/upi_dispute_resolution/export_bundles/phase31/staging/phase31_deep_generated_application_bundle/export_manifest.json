@@ -1,0 +1,38 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "bundle_id": "phase31_deep_generated_application_bundle",
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "destructive_workspace_replacement": false,
+  "evidence_files": [
+    "evidence/certification_ready_not_certified_boundary.json",
+    "evidence/generated_application_generation_manifest_summary.json",
+    "evidence/mocked_simulated_ecosystem_boundary.json",
+    "evidence/no_live_provider_no_real_secret_no_deployment_no_official_certification_evidence.json",
+    "evidence/phase28_architecture_depth_inputs_summary.json",
+    "evidence/phase29_deep_structure_policy_summary.json",
+    "evidence/phase30_regeneration_certification_readiness_evidence_summary.json",
+    "evidence/source_evidence_file_index.json"
+  ],
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "generated_application_root": "generated_application_export/generated_application",
+  "generated_at_utc": "2026-08-06T12:57:54.227719+00:00",
+  "generator": "factory/generators/mock_dispute_app_generator.py",
+  "included_files_count": 88,
+  "live_provider_calls_allowed": false,
+  "mocked_or_simulated_ecosystem_only": true,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase31_deep_generated_application_export_download_center",
+  "real_secrets_allowed": false,
+  "source_branch": "HEAD",
+  "source_commit": "fec01dcf2eceb2f81ffd4d7e0ee7ab34e9a56026",
+  "source_generation_manifest": "generation_manifest.json",
+  "validation_commands": [
+    "python scripts/validate_phase31_deep_generated_application_export_download_center.py",
+    "python scripts/validate_phase30_deep_generated_application_regeneration.py",
+    "python scripts/validate_phase29_generated_application_deep_structure_generator.py",
+    "python scripts/validate_phase28_generated_application_architecture_depth_blueprint.py",
+    "python -m pytest tests/test_phase31_deep_generated_application_export_download_center.py"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "artifact": "owasp_api_security_checks",
+  "benchmark": "OWASP API Security Top 10 oriented checks",
+  "certification_claim": "none",
+  "checks": [
+    {
+      "id": "API1",
+      "name": "Broken Object Level Authorization",
+      "status": "covered",
+      "evidence": "generated_application/app/tests/security/test_authorization_contract.py"
+    },
+    {
+      "id": "API3",
+      "name": "Broken Object Property Level Authorization",
+      "status": "covered",
+      "evidence": "generated_application/app/interfaces/api/schemas.py"
+    },
+    {
+      "id": "API4",
+      "name": "Unrestricted Resource Consumption",
+      "status": "covered",
+      "evidence": "generated_application/app/security/input_validation.py"
+    },
+    {
+      "id": "API7",
+      "name": "Server Side Request Forgery",
+      "status": "mock_boundary_only",
+      "evidence": "generated_application/app/infrastructure/external_adapters.py"
+    },
+    {
+      "id": "API8",
+      "name": "Security Misconfiguration",
+      "status": "covered",
+      "evidence": "generated_application/app/interfaces/api/main.py"
+    },
+    {
+      "id": "API10",
+      "name": "Unsafe Consumption of APIs",
+      "status": "covered",
+      "evidence": "generated_application/app/infrastructure/external_adapters.py"
+    }
+  ],
+  "abuse_cases": [
+    "cross_customer_dispute_read_attempt",
+    "oversized_pagination_request",
+    "adapter_timeout_and_retry_exhaustion",
+    "problem_detail_information_disclosure_probe"
+  ]
+}

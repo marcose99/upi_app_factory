@@ -1,0 +1,18 @@
+{
+  "alternative_self_evolution_artifact": "self_evolution_backlog.md",
+  "artifact_status": "required_for_future_generated_application_success",
+  "phase": "phase28_generated_application_architecture_depth_blueprint",
+  "required_architecture_depth_artifacts": [
+    "architecture_blueprint.md",
+    "domain_model.md",
+    "bounded_contexts.md",
+    "dispute_state_machine.md",
+    "api_contracts.md",
+    "data_contracts.md",
+    "security_model.md",
+    "observability_model.md",
+    "test_obligation_matrix.md",
+    "self_evolution_backlog.json",
+    "certification_readiness_boundary.md"
+  ]
+}

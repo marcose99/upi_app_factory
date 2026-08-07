@@ -1,0 +1,18 @@
+{
+  "may_propose_improvements": true,
+  "proposal_artifact": "self_evolution_backlog.json",
+  "risky_change_classes": [
+    "generated application business logic mutation",
+    "security control weakening",
+    "test or validator weakening",
+    "live provider integration",
+    "external payment ecosystem mutation",
+    "secret creation",
+    "deployment",
+    "merge",
+    "tag",
+    "release",
+    "official certification claim"
+  ],
+  "risky_changes_require_human_approval": true
+}

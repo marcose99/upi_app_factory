@@ -10,6 +10,7 @@ from factory.exact_v2_traceability import (
     AUTHORITATIVE_VALIDATION_SUMMARY_PATH,
     REQUIREMENTS_PDF_SHA256,
     REQUIREMENTS_TEXT_SHA256,
+    VALIDATION_SUMMARY_SOURCE_SHA256,
     VALIDATION_SUMMARY_SHA256,
 )
 from factory.generated_application_artifacts import (
@@ -28,6 +29,12 @@ def _sha256_file(path: Path) -> str:
 def test_current_exact_input_definition_of_done_pack_is_go_and_hash_bound(
     tmp_path: Path,
 ) -> None:
+    for path in (
+        AUTHORITATIVE_REQUIREMENTS_PDF_PATH,
+        AUTHORITATIVE_REQUIREMENTS_TEXT_PATH,
+        AUTHORITATIVE_VALIDATION_SUMMARY_PATH,
+    ):
+        assert ROOT in path.resolve().parents
     assert _sha256_file(AUTHORITATIVE_REQUIREMENTS_PDF_PATH) == REQUIREMENTS_PDF_SHA256
     assert _sha256_file(AUTHORITATIVE_REQUIREMENTS_TEXT_PATH) == REQUIREMENTS_TEXT_SHA256
     assert _sha256_file(AUTHORITATIVE_VALIDATION_SUMMARY_PATH) == VALIDATION_SUMMARY_SHA256
@@ -56,6 +63,10 @@ def test_current_exact_input_definition_of_done_pack_is_go_and_hash_bound(
     assert summary["authoritative_requirements"]["pdf_sha256"] == REQUIREMENTS_PDF_SHA256
     assert summary["authoritative_requirements"]["text_sha256"] == REQUIREMENTS_TEXT_SHA256
     assert summary["current_validation_summary"]["sha256"] == VALIDATION_SUMMARY_SHA256
+    assert (
+        summary["current_validation_summary"]["source_sha256"]
+        == VALIDATION_SUMMARY_SOURCE_SHA256
+    )
     assert summary["source_hashes"]["factory/exact_v2_traceability.py"] == _sha256_file(
         ROOT / "factory" / "exact_v2_traceability.py"
     )

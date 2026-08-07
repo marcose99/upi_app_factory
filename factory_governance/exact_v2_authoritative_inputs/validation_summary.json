@@ -1,0 +1,139 @@
+{
+  "all_gates_executed": true,
+  "attempt": 21,
+  "baseline_test_floor": 1325,
+  "candidate_projection_after": "54f33362c73f9fff5f3455d5a7e6fbea1d7d7edef89a80bd8b7b7c2e7bf1d216",
+  "candidate_projection_before": "54f33362c73f9fff5f3455d5a7e6fbea1d7d7edef89a80bd8b7b7c2e7bf1d216",
+  "candidate_projection_unchanged": true,
+  "collected_tests": 1410,
+  "failure_signature": "ebaff5a64d90c64081820a170007b5c7228c3798ffc22c0dcc88c6a0b2abb32f",
+  "finding_closure": {
+    "error_count": 0,
+    "errors": [],
+    "evidence": {
+      "actor_role_files": [
+        "docs/operator_portal/phase50_governance_matrix.json",
+        "factory/exact_v2_traceability.py",
+        "factory/templates/mock_dispute_app/generated_application/app/application/ports.py",
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/audit_log.py",
+        "factory/templates/mock_dispute_app/generated_application/app/infrastructure/persistence/migrations.py",
+        "factory/templates/mock_dispute_app/generated_application/app/tests/integration/test_audit_actor_role_compatibility.py",
+        "tests/post_r9_5/test_rejection_audit_actor_role.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/application/commands.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/application/ports.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/application/services.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/persistence/audit_log.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/persistence/migrations.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/infrastructure/persistence/repositories.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/interfaces/api/error_handlers.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/interfaces/api/main.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/app/tests/integration/test_audit_actor_role_compatibility.py",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/observability_design.md",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/CAPABILITY_PRE_RUN_REPORT.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/REQUIREMENT_CAPABILITY_MATRIX.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/atomic_obligation_inventory.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/requirements_traceability_matrix.json"
+      ],
+      "errors": [],
+      "generated_adr_count": 1,
+      "required_additive_tests": [
+        "tests/post_r9_5/test_primary_portal_failed_debit_e2e.py",
+        "tests/post_r9_5/test_rejection_audit_actor_role.py",
+        "tests/post_r9_5/test_exact_v2_traceability.py",
+        "tests/post_r9_5/test_factory_improvement_workflow_execution.py",
+        "tests/post_r9_5/test_token_economics_extended_matrix.py"
+      ],
+      "required_generated_artifacts": [
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/generation_metadata.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/requirements_traceability_matrix.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/classification_decision_table.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/residual_risk_register.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/unsupported_obligation_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/evidence_manifest_description.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/coverage_report.json",
+        "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/persistence_reset_policy.md"
+      ],
+      "token_matrix_ids_present": 49
+    },
+    "schema": "upi-app-factory-post-r9-5-finding-closure-audit-v1",
+    "status": "PASSED"
+  },
+  "gates": [
+    {
+      "elapsed_seconds": 0.052,
+      "log": "portable-validation-evidence/quality/021/git_diff_check.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "git_diff_check",
+      "returncode": 0,
+      "tail": "",
+      "timed_out": false
+    },
+    {
+      "elapsed_seconds": 0.66,
+      "log": "portable-validation-evidence/quality/021/compileall.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "compileall",
+      "returncode": 0,
+      "tail": "",
+      "timed_out": false
+    },
+    {
+      "elapsed_seconds": 0.07,
+      "log": "portable-validation-evidence/quality/021/ruff.log",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "name": "ruff",
+      "returncode": 0,
+      "tail": "All checks passed!\n",
+      "timed_out": false
+    },
+    {
+      "elapsed_seconds": 17.181,
+      "log": "portable-validation-evidence/quality/021/mypy.log",
+      "log_sha256": "f44a6d1341eccceb1545ef7d9b582d750acd4fa58e0e02ffce0795f3cedfe75c",
+      "name": "mypy",
+      "returncode": 0,
+      "tail": "Success: no issues found in 859 source files\n",
+      "timed_out": false
+    },
+    {
+      "elapsed_seconds": 15.783,
+      "log": "portable-validation-evidence/quality/021/post_r9_5_focused.log",
+      "log_sha256": "7ae79d1700d86a48fb46f0ec752ebef399e336bb58386f4de5c1bbcee9b7e6a5",
+      "name": "post_r9_5_focused",
+      "returncode": 0,
+      "tail": "............................                                             [100%]\n28 passed in 14.40s\n",
+      "timed_out": false
+    },
+    {
+      "elapsed_seconds": 6.946,
+      "log": "portable-validation-evidence/quality/021/pytest_collection.log",
+      "log_sha256": "f0ed3108d2f4e4e5bc9efb7678e3dc7c14d90b0923f6a675f1dfdddcecb4ded5",
+      "name": "pytest_collection",
+      "returncode": 0,
+      "tail": "esolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/performance/test_local_performance_smoke.py::test_local_database_pagination_growth_smoke\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/replay/test_outbox_replay_and_inbox.py::test_outbox_survives_restart_until_replayed\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/replay/test_outbox_replay_and_inbox.py::test_inbox_rejects_duplicate_delivery\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/replay/test_outbox_replay_and_inbox.py::test_inbox_allows_retry_after_handler_failure\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/resilience/test_migrations_restart.py::test_migrations_are_repeatable_and_checksummed\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/resilience/test_migrations_restart.py::test_migration_checksum_drift_blocks_restart\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/resilience/test_runtime_lifecycle.py::test_startup_liveness_readiness_drain_and_shutdown\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/resilience/test_runtime_lifecycle.py::test_restart_recovers_readiness_with_existing_local_database\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_authorization_contract.py::test_function_authorization_requires_scope\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_authorization_contract.py::test_object_authorization_allows_owner_and_denies_other_subject\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_authorization_contract.py::test_signed_local_token_round_trip_and_tamper_rejection\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_authorization_contract.py::test_header_principal_fallback_is_not_default\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_authorization_contract.py::test_header_principal_fallback_requires_explicit_test_profile\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_control_plane_policy.py::test_policy_fails_closed_for_human_gates_and_self_modification\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_control_plane_policy.py::test_start_runtime_requires_scoped_unexpired_nonce_and_rejects_replay\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/security/test_control_plane_policy.py::test_multi_application_state_and_evidence_are_isolated\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/app/tests/unit/test_optimistic_concurrency.py::test_stale_write_is_rejected_and_version_only_increments_once\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/phase13u_self_repairing_sla_escalation/generated_tests/test_generated_sla_escalation.py::test_generated_sla_escalation_behavior\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/phase13v_policy_governed_dispute_triage/generated_tests/test_generated_policy_governed_triage.py::test_regulatory_complaint_requires_critical_escalation\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py::test_valid_case_stays_standard_and_mock_bounded\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py::test_invalid_evidence_routes_to_evidence_review\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/phase13w_multi_capability_dispute_app/generated_tests/test_generated_multi_capability_app.py::test_sla_breach_routes_to_sla_escalation\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_api.py::test_compatibility_facade_delegates_to_hardened_api\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_api.py::test_create_and_get_dispute_masks_upi_id\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_api.py::test_duplicate_client_request_replays_same_dispute_id\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_api.py::test_invalid_payload_and_missing_principal_are_rejected\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_pii.py::test_mask_upi_id_masks_handle_but_keeps_provider\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_pii.py::test_mask_upi_id_handles_short_handle\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_workflow.py::test_unauthorized_transaction_starts_with_evidence_pending\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_workflow.py::test_failed_transaction_starts_with_validation_pending\nworkspace/factory_generated/upi_dispute_resolution/portal_publications/run_20260804T144116Z_elpYBVTO9dwc88M1B35R6w/generated_application/generated_application/tests/test_workflow.py::test_ecosystem_decision_maps_to_refund_status\n\n1410 tests collected in 5.44s\n",
+      "timed_out": false
+    },
+    {
+      "elapsed_seconds": 231.575,
+      "log": "portable-validation-evidence/quality/021/full_pytest.log",
+      "log_sha256": "2068e9dd984e3d7ec961d26fc15be104940edc08a7a15eba0aa12cf165cb083e",
+      "name": "full_pytest",
+      "returncode": 0,
+      "tail": "........................................................................ [  5%]\n........................................................................ [ 10%]\n........................................................................ [ 15%]\n........................................................................ [ 20%]\n........................................................................ [ 25%]\n........................................................................ [ 30%]\n........................................................................ [ 35%]\n........................................................................ [ 40%]\n........................................................................ [ 45%]\n........................................................................ [ 51%]\n........................................................................ [ 56%]\n........................................................................ [ 61%]\n........................................................................ [ 66%]\n........................................................................ [ 71%]\n........................................................................ [ 76%]\n........................................................................ [ 81%]\n........................................................................ [ 86%]\n........................................................................ [ 91%]\n........................................................................ [ 97%]\n..........................................                               [100%]\n1410 passed in 229.87s (0:03:49)\n",
+      "timed_out": false
+    }
+  ],
+  "passed_tests": 1410,
+  "require_finding_closure": true,
+  "schema": "upi-app-factory-post-r9-5-lean-validation-v1",
+  "status": "PASSED",
+  "trusted_tests_unchanged": true,
+  "validation_governed_projection_unchanged": true,
+  "validation_refs_unchanged": true,
+  "validation_root": "portable-validation-evidence/validation/attempt_021",
+  "validation_runtime_output_ignored": {
+    "path_count": 1907,
+    "paths_sha256": "984c0682d978e7a8a2e90ea2bd4d5b0b719663941cd53c5e27a0599527805346"
+  },
+  "wave_id": "r10_governed_self_improvement"
+}

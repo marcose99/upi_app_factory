@@ -1,0 +1,90 @@
+{
+  "artifact": "asvs_5_0_l2_mapping",
+  "assurance_boundary": "benchmark_mapping_only_not_certification",
+  "certification_claim": "none",
+  "level_orientation": "Level 2 oriented",
+  "standard": "OWASP ASVS",
+  "version": "5.0",
+  "controls": [
+    {
+      "control_id": "V1.2",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/domain",
+        "generated_application/app/application",
+        "generated_application/app/infrastructure"
+      ],
+      "verification": "architecture boundary source inspection and generated contract tests"
+    },
+    {
+      "control_id": "V2.1",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/security/identity.py",
+        "generated_application/app/tests/security/test_authorization_contract.py"
+      ],
+      "verification": "local fictional principal and authz contract checks"
+    },
+    {
+      "control_id": "V4.1",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/application/ports.py",
+        "generated_application/app/security/identity.py"
+      ],
+      "verification": "object authorization is explicit and denied by default"
+    },
+    {
+      "control_id": "V5.1",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/security/input_validation.py",
+        "generated_application/app/interfaces/api/schemas.py"
+      ],
+      "verification": "strict request validation and bounded pagination inputs"
+    },
+    {
+      "control_id": "V7.1",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/observability/logging.py",
+        "generated_application/app/security/pii_redaction.py"
+      ],
+      "verification": "PII-safe structured logging checks"
+    },
+    {
+      "control_id": "V10.2",
+      "status": "mapped_with_limitations",
+      "evidence": [
+        "generated_application/evidence/assurance/dependency_license_inventory.json",
+        "generated_application/evidence/assurance/cyclonedx_1_7_sbom.json",
+        "generated_application/evidence/assurance/spdx_3_0_sbom.json"
+      ],
+      "verification": "existing dependency set only; offline structural validation"
+    },
+    {
+      "control_id": "V11.1",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/interfaces/api/error_handlers.py"
+      ],
+      "verification": "RFC 9457 compatible problem details contract"
+    },
+    {
+      "control_id": "V14.2",
+      "status": "mapped",
+      "evidence": [
+        "generated_application/app/interfaces/api/main.py"
+      ],
+      "verification": "security headers and no live-provider readiness flags"
+    }
+  ],
+  "unresolved_risks": [
+    {
+      "risk_id": "ASVS-L2-001",
+      "owner": "generated_application_security_owner",
+      "risk": "No independent ASVS assessment has been performed.",
+      "disposition": "track_before_any_external_release"
+    }
+  ]
+}

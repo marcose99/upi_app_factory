@@ -1,0 +1,17 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "base_tag_required": "v0.16.0-self-contained-handoff-replay-hardening",
+  "contains_official_certification_claim": false,
+  "evidence_sections": [
+    "self_contained_replay",
+    "governance_policy",
+    "supply_chain_readiness",
+    "reviewer_workspace_trial",
+    "generated_app_depth_backlog",
+    "promotion_governance",
+    "secrets_identity_governance"
+  ],
+  "factory_does_not_self_certify": true,
+  "phase": "17",
+  "schema_version": "phase17-release-dossier-index.v1"
+}

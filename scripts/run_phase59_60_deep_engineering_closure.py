@@ -41,6 +41,7 @@ from factory.application_engineering.verification_evidence import (  # noqa: E40
 PRODUCT_NAME = "UPI App Factory"
 REPOSITORY_ID = "upi_app_factory"
 STAGE = "Phases 59-60"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CAMPAIGN_ROOT = Path("workspace/deep_engineering_campaign")
 FRESH_ROOT = CAMPAIGN_ROOT / "phase59_60_fresh_root"
 REPORT_JSON = CAMPAIGN_ROOT / "final_report.json"
@@ -74,7 +75,7 @@ class CommandRunImpl(Protocol):
 
 
 def canonical_python(root: Path) -> Path:
-    for candidate in (root / ".venv" / "bin" / "python3", root / ".venv" / "bin" / "python", Path(sys.executable)):
+    for candidate in (Path(sys.executable), root / ".venv" / "bin" / "python3", root / ".venv" / "bin" / "python"):
         if candidate.is_file():
             return candidate
     raise ClosureError("canonical Python interpreter not found")
@@ -92,6 +93,35 @@ def output_text(value: str | bytes | None) -> str:
     if isinstance(value, bytes):
         return value.decode(errors="replace")
     return value
+
+
+def portable_text(value: str, *, root: Path) -> str:
+    redacted = value
+    for local_root, token in (
+        (root.resolve(), "${RUN_ROOT}"),
+        (PROJECT_ROOT.resolve(), "${PROJECT_ROOT}"),
+        (Path.home().resolve(), "${HOME}"),
+    ):
+        redacted = redacted.replace(str(local_root), token)
+    return redacted
+
+
+def portable_command(command: Sequence[str], *, root: Path) -> str:
+    parts: list[str] = []
+    for raw_part in command:
+        part = str(raw_part)
+        path = Path(part)
+        if path.is_absolute():
+            if path.name.startswith("python"):
+                parts.append("python")
+                continue
+            try:
+                parts.append(path.resolve().relative_to(root.resolve()).as_posix())
+                continue
+            except ValueError:
+                pass
+        parts.append(portable_text(part, root=root))
+    return " ".join(parts)
 
 
 def run_command(
@@ -125,19 +155,37 @@ def run_command(
         if output:
             timeout_message = f"{timeout_message}\n{output}"
         return {
-            "command": " ".join(command),
+            "command": portable_command(command, root=root),
             "returncode": 124,
             "duration_seconds": round(time.time() - started, 3),
             "passed": False,
-            "output_tail": "\n".join(timeout_message.splitlines()[-40:]),
+            "output_tail": portable_text(
+                "\n".join(timeout_message.splitlines()[-40:]),
+                root=root,
+            ),
         }
     return {
-        "command": " ".join(command),
+        "command": portable_command(command, root=root),
         "returncode": result.returncode,
         "duration_seconds": round(time.time() - started, 3),
         "passed": result.returncode == 0,
-        "output_tail": "\n".join(result.stdout.splitlines()[-40:]),
+        "output_tail": portable_text("\n".join(result.stdout.splitlines()[-40:]), root=root),
     }
+
+
+def pythonpath_with(*roots: Path, existing: str | None = None) -> str:
+    entries: list[str] = []
+    seen: set[str] = set()
+    for root in roots:
+        value = str(root)
+        if value and value not in seen:
+            entries.append(value)
+            seen.add(value)
+    for value in (existing or os.environ.get("PYTHONPATH", "")).split(os.pathsep):
+        if value and value not in seen:
+            entries.append(value)
+            seen.add(value)
+    return os.pathsep.join(entries)
 
 
 def failed_command_summaries(command_results: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -457,6 +505,7 @@ def write_generated_tests(fresh_root: Path) -> Path:
         '''from __future__ import annotations
 
 from importlib import import_module
+import os
 from pathlib import Path
 import sys
 
@@ -468,6 +517,7 @@ main = import_module("app.upi_failed_debit_dispute.interfaces.api.main")
 
 
 def test_generated_lifecycle_and_replay_contract() -> None:
+    assert os.environ["UPI_APP_FACTORY_ROOT_CONFTEST_ACTIVE"] == "1"
     payload = {
         "dispute_id": "DISP-CLOSURE001",
         "transaction_reference": "TXN-CLOSURE0001",
@@ -734,10 +784,17 @@ def main() -> int:
     generated_test = write_generated_tests(fresh_app_root)
 
     generated_suite = run_command(
-        [str(python), "-m", "pytest", str(generated_test.relative_to(fresh_app_root)), "-q"],
+        [
+            str(python),
+            "-m",
+            "pytest",
+            f"--rootdir={root}",
+            str(generated_test.relative_to(fresh_app_root)),
+            "-q",
+        ],
         fresh_app_root,
         timeout=DEFAULT_COMMAND_TIMEOUT_SECONDS,
-        extra_env={"PYTHONPATH": str(fresh_app_root)},
+        extra_env={"PYTHONPATH": pythonpath_with(fresh_app_root, root)},
     )
     sqlite_proof = sqlite_persistence_proof(root, fresh_app_root)
     try:

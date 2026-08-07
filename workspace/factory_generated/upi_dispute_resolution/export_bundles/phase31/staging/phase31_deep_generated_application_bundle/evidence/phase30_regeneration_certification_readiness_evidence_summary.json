@@ -1,0 +1,20 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "certification_readiness_test_obligations": [
+    "unit",
+    "integration",
+    "contract",
+    "negative",
+    "resilience",
+    "security",
+    "performance_smoke",
+    "replay",
+    "audit"
+  ],
+  "controlled_output_strategy": "temporary_directory_regeneration",
+  "destructive_workspace_replacement_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "phase": "phase30_deep_generated_application_regeneration_validation",
+  "phase29_generator_output_required": true
+}

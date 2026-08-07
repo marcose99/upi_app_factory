@@ -221,7 +221,7 @@ class EndToEndPortalRunFlowService:
         return "passed"
 
     def _write_report(self, report: dict[str, Any]) -> None:
-        portable_report = self._portable_report_value(report)
+        portable_report = self._portable_report_value(report, project_root=self.project_root)
         self.report_path.parent.mkdir(parents=True, exist_ok=True)
         self.report_path.write_text(
             json.dumps(portable_report, indent=2, sort_keys=True) + "\n",
@@ -229,16 +229,17 @@ class EndToEndPortalRunFlowService:
         )
 
     @classmethod
-    def _portable_report_value(cls, value: Any) -> Any:
+    def _portable_report_value(cls, value: Any, *, project_root: Path) -> Any:
         if isinstance(value, dict):
             return {
-                key: cls._portable_report_value(item)
+                key: cls._portable_report_value(item, project_root=project_root)
                 for key, item in value.items()
             }
         if isinstance(value, list):
-            return [cls._portable_report_value(item) for item in value]
+            return [cls._portable_report_value(item, project_root=project_root) for item in value]
         if isinstance(value, str):
-            return value.replace(str(Path.home().resolve()), "${HOME}")
+            portable = value.replace(str(project_root.resolve()), "${PROJECT_ROOT}")
+            return portable.replace(str(Path.home().resolve()), "${HOME}")
         return value
 
 

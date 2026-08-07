@@ -1,0 +1,27 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "items": [
+    {
+      "human_review_required": true,
+      "id": "upi-dispute-workflow-depth",
+      "risk": "medium"
+    },
+    {
+      "human_review_required": true,
+      "id": "negative-and-resilience-scenarios",
+      "risk": "medium"
+    },
+    {
+      "human_review_required": true,
+      "id": "persistent-storage-hardening",
+      "risk": "medium"
+    },
+    {
+      "human_review_required": false,
+      "id": "operator-portal-runtime-polish",
+      "risk": "low"
+    }
+  ],
+  "phase": "17",
+  "schema_version": "phase17-generated-app-depth-backlog.v1"
+}

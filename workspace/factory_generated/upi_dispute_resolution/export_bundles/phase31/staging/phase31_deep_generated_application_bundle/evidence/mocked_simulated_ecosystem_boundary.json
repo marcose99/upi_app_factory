@@ -1,0 +1,5 @@
+{
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "mock_boundary": true,
+  "real_npci_rbi_bank_psp_payment_rail_integration_allowed": false
+}

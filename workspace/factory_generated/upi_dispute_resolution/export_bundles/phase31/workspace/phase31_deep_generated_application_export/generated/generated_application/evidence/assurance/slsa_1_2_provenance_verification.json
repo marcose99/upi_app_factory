@@ -1,0 +1,39 @@
+{
+  "artifact": "slsa_1_2_provenance_verification",
+  "predicateType": "https://slsa.dev/provenance/v1.2",
+  "claim": "SLSA 1.2-style provenance evidence only; no SLSA level claimed",
+  "subject": [
+    {
+      "name": "upi_dispute_resolution_generated_application",
+      "digest_source": "generation_manifest.generated_files"
+    }
+  ],
+  "buildDefinition": {
+    "buildType": "local-deterministic-template-regeneration",
+    "externalParameters": {
+      "network": "disabled",
+      "package_registry_publish": "disabled",
+      "signing_service": "not_configured",
+      "live_payment_calls": "disabled",
+      "runtime_llm_calls": 0
+    }
+  },
+  "runDetails": {
+    "builder": {
+      "id": "UPI App Factory governed local generator"
+    },
+    "metadata": {
+      "verification": "two temporary builds compare generated file hashes and explain run-specific variance",
+      "dependency_reproducibility_scope": "source and current local installed environment only; upstream wheel/archive reproducibility is not claimed"
+    }
+  },
+  "verification_without_attained_level": {
+    "source_available": true,
+    "build_scripted": true,
+    "provenance_generated": true,
+    "installed_file_record_hashes_checked": true,
+    "upstream_artifact_hashes_checked": false,
+    "signed_provenance": false,
+    "non_falsifiable_level_claim": false
+  }
+}

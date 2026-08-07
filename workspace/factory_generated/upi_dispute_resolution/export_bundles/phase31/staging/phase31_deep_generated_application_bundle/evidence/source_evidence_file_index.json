@@ -1,0 +1,15 @@
+{
+  "raw_source_files_copied_into_bundle": false,
+  "referenced_phase28_inputs": [
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json",
+    "prompts/phase28/generated_application_architecture_depth_prompt.md"
+  ],
+  "referenced_phase29_policy": "policies/phase29_generated_application_deep_structure_policy.json",
+  "referenced_phase30_evidence_files": [
+    "policies/phase30_deep_generated_application_regeneration_policy.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase30/deep_generated_application_regeneration_audit.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase30/controlled_regeneration_output_manifest.json",
+    "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase30/certification_readiness_test_obligation_matrix.json"
+  ]
+}

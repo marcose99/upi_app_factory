@@ -1,0 +1,11 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "inputs": [
+    "factory_governance/generated_application_architecture_depth/phase28_architecture_depth_blueprint.v1.json",
+    "policies/phase28_generated_application_architecture_depth_policy.json",
+    "prompts/phase28/generated_application_architecture_depth_prompt.md"
+  ],
+  "live_provider_calls_allowed": false,
+  "phase": "phase28_generated_application_architecture_depth_blueprint"
+}

@@ -39,7 +39,11 @@ norecursedirs = [
   "{arch}",
   "*.egg",
   "venv",
+  "workspace/deep_engineering_campaign",
+  "workspace/factory_generated/upi_failed_debit_no_credit",
+  "workspace/factory_generated/post_r9_5",
   "workspace/regeneration_runs",
+  "workspace/tmp",
 ]
 
 [tool.setuptools.packages.find]

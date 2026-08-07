@@ -1,0 +1,19 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "clone_local_virtualenv_required": false,
+  "fresh_clone_replay_required": true,
+  "hidden_local_workspace_state_required": false,
+  "official_certification_granted_by_factory": false,
+  "phase": "17",
+  "reviewer_expected_actions": [
+    "clone_repository",
+    "checkout_tag",
+    "create_python_3_10_virtualenv",
+    "install_dependencies",
+    "run_validators",
+    "run_full_regression",
+    "inspect_evidence_dossier"
+  ],
+  "schema_version": "phase17-independent-reviewer-workspace-trial.v1",
+  "trial_mode": "local_read_only_replay"
+}

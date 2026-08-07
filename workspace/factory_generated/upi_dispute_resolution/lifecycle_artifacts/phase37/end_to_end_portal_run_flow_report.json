@@ -153,7 +153,7 @@
       ],
       "external_ecosystem_integrations": "mocked_or_simulated_only",
       "generation_manifest_status": "available",
-      "included_files_count": 41,
+      "included_files_count": 88,
       "live_provider_calls_allowed": false,
       "official_certification_claimed": false,
       "official_certification_granted": false,
@@ -169,7 +169,7 @@
         "python -m pytest tests/test_phase31_deep_generated_application_export_download_center.py"
       ],
       "zip_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
-      "zip_size_bytes": 30127,
+      "zip_size_bytes": 105069,
       "zip_status": "available"
     },
     "phase32_download_center_service_status": {
@@ -224,6 +224,294 @@
       "python -m pytest tests/test_phase29_generated_application_deep_structure_generator.py",
       "python -m pytest tests/test_phase11c_agentic_prompt_best_practices.py tests/test_phase11c_llm_call_metrics_prompt_policy.py tests/test_phase28_generated_application_architecture_depth_blueprint.py"
     ],
+    "token_economics": {
+      "aggregations": {
+        "overall": {
+          "accepted_outcome_cost_total": "0",
+          "attempt_cost_total": "0",
+          "cost_per_accepted_outcome": "0",
+          "cost_per_attempt": "0",
+          "p50_cache_hit_ratio": 0.0,
+          "p50_latency_ms": 0,
+          "p95_cache_hit_ratio": 0.0,
+          "p95_latency_ms": 0,
+          "record_count": 0,
+          "retry_count_total": 0,
+          "schema_version": "token-economics-ledger-aggregate.v1",
+          "turn_states": {},
+          "waste_taxonomy": {}
+        },
+        "per_application": {},
+        "per_outcome": {},
+        "per_run": {},
+        "per_stage": {}
+      },
+      "budget_controls": {
+        "blocked_next_call": false,
+        "blocking_reasons": [],
+        "decision": {
+          "authorize_next_model_call": true,
+          "blocks": [],
+          "budget_id": "governed-local-stage-default",
+          "controls": {
+            "economic_budget": {
+              "hard_limit": "180.0000000",
+              "soft_limit": "120.0000000",
+              "status": "OK"
+            },
+            "handoffs": {
+              "limit": 6,
+              "status": "UNKNOWN"
+            },
+            "model_turns": {
+              "limit": 12,
+              "status": "UNKNOWN"
+            },
+            "mutations": {
+              "allowlist": [
+                "factory/**",
+                "app/**",
+                "scripts/**",
+                "config/**",
+                "docs/**"
+              ],
+              "diff_size_limit_bytes": 1048576,
+              "disallowed_paths": [],
+              "observed_diff_size_bytes": null,
+              "status": "OK"
+            },
+            "output": {
+              "limit": 60000,
+              "status": "UNKNOWN"
+            },
+            "raw_token_anomaly": {
+              "limit": 15000000,
+              "status": "UNKNOWN"
+            },
+            "repair_cycles": {
+              "limit": 4,
+              "status": "UNKNOWN"
+            },
+            "review_cycles": {
+              "limit": 4,
+              "status": "UNKNOWN"
+            },
+            "runtime": {
+              "limit": 3600,
+              "status": "UNKNOWN"
+            },
+            "tool_bytes": {
+              "limit": 5242880,
+              "status": "UNKNOWN"
+            },
+            "tools_actions": {
+              "limit": 250,
+              "status": "UNKNOWN"
+            }
+          },
+          "prior_spend_amount": "0",
+          "projected_total_amount": "0",
+          "rate_card_id": "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+          "reserved_amount": "0",
+          "schema_version": "token-economics-budget-decision.v1",
+          "unit": "chatgpt_credit",
+          "warnings": []
+        },
+        "status": "available",
+        "warning_reasons": []
+      },
+      "default_stage_budget": {
+        "budget_id": "governed-local-stage-default",
+        "hard_limit": "180.0000000",
+        "output_limit": 60000,
+        "overrun_policy": "seal_completion_block_next_call",
+        "rate_card_id": "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+        "raw_input_anomaly_limit": 15000000,
+        "soft_limit": "120.0000000",
+        "unit": "chatgpt_credit",
+        "warning_policy": "warn_at_soft_limit"
+      },
+      "generated_at_utc": "2026-08-06T12:57:54Z",
+      "policy_incidents": [
+        "cost_anomaly",
+        "repeated_incomplete_turns",
+        "usage_field_drift",
+        "reconciliation_variance",
+        "ledger_duplication",
+        "stale_rate_card",
+        "unexpected_model_routing",
+        "unapproved_artifact_mutation",
+        "privacy_boundary_violation"
+      ],
+      "reconciliation": {
+        "latest": null,
+        "status": "NOT_RECORDED",
+        "unresolved_records": 0
+      },
+      "runtime_ledger": {
+        "latest_recorded_at_utc": null,
+        "path": "${PROJECT_ROOT}/workspace/token_economics_runtime/ledger.jsonl",
+        "record_count": 0
+      },
+      "schema_version": "token-economics-operator-surface.v1",
+      "status": "available",
+      "summary": {
+        "artifact_ownership": {
+          "family_count": 4,
+          "runtime_root": "${PROJECT_ROOT}/workspace/token_economics_runtime"
+        },
+        "default_stage_budget": {
+          "budget_id": "governed-local-stage-default",
+          "hard_limit": "180.0000000",
+          "overrun_policy": "seal_completion_block_next_call",
+          "rate_card_id": "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+          "soft_limit": "120.0000000",
+          "unit": "chatgpt_credit",
+          "warning_policy": "warn_at_soft_limit"
+        },
+        "generated_application_applicability": {
+          "reason": "no LLM, agent, or model activity is declared in the generated application contract",
+          "runtime_llm_calls_default": 0,
+          "status": "NOT_APPLICABLE"
+        },
+        "generated_at_utc": "2026-08-06T12:57:54Z",
+        "governance": {
+          "decision_roles": {
+            "ai_model_risk_owner": [
+              "model_route_enablement",
+              "reasoning_effort_policy"
+            ],
+            "application_product_owner": [
+              "accepted_outcome_interpretation",
+              "generated_application_applicability_override"
+            ],
+            "factory_platform_owner": [
+              "implementation_change",
+              "artifact_ownership_registry_change"
+            ],
+            "finops_cost_policy_owner": [
+              "budget_envelope_publication",
+              "rate_card_validation_approval"
+            ],
+            "human_authority": [
+              "merge",
+              "push",
+              "release",
+              "deployment",
+              "budget_exception",
+              "rate_card_publication",
+              "certification_claim"
+            ],
+            "independent_assurance_reviewer": [
+              "independent_review",
+              "requirements_verification"
+            ],
+            "security_and_privacy_owner": [
+              "retention_class_change",
+              "compact_log_redaction_policy"
+            ]
+          },
+          "incident_classes": [
+            "cost_anomaly",
+            "repeated_incomplete_turns",
+            "usage_field_drift",
+            "reconciliation_variance",
+            "ledger_duplication",
+            "stale_rate_card",
+            "unexpected_model_routing",
+            "unapproved_artifact_mutation",
+            "privacy_boundary_violation"
+          ],
+          "policy_version": "2026-07-29.v1"
+        },
+        "mock_boundaries": {
+          "live_provider_calls_allowed": false,
+          "real_payment_calls": "disabled",
+          "runtime_llm_calls_default": 0
+        },
+        "model_routes": {
+          "count": 2,
+          "policy_version": "2026-07-29.v1"
+        },
+        "operator_visibility": {
+          "aggregation_levels": [
+            "per_stage",
+            "per_run",
+            "per_application",
+            "per_outcome"
+          ],
+          "budget_vs_runtime_controls": true,
+          "cost_per_accepted_outcome": true,
+          "estimate_vs_observed_vs_settled": true,
+          "reconciliation_variance": true,
+          "token_breakdown": true
+        },
+        "rate_cards": {
+          "count": 2,
+          "entries": [
+            {
+              "contract_id": "local-governed-reference-chatgpt-credit",
+              "effective_from": "2026-07-28T00:00:00Z",
+              "effective_to": null,
+              "provenance": {
+                "non_contractual_reference": true,
+                "source": "repository_managed_reference_rate_card",
+                "verified_at": "2026-07-29T00:00:00Z"
+              },
+              "rate_card_id": "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+              "stale": false,
+              "unit": "chatgpt_credit"
+            },
+            {
+              "contract_id": "local-governed-reference-api-usd",
+              "effective_from": "2026-07-28T00:00:00Z",
+              "effective_to": null,
+              "provenance": {
+                "non_contractual_reference": true,
+                "source": "repository_managed_reference_rate_card",
+                "verified_at": "2026-07-29T00:00:00Z"
+              },
+              "rate_card_id": "openai-api-usd-2026-07-28-gpt-5.4",
+              "stale": false,
+              "unit": "usd"
+            }
+          ],
+          "ids": [
+            "openai-codex-chatgpt-credit-2026-07-28-gpt-5.4",
+            "openai-api-usd-2026-07-28-gpt-5.4"
+          ],
+          "units": [
+            "chatgpt_credit",
+            "usd"
+          ]
+        },
+        "schema_version": "token-economics-portal-summary.v1"
+      },
+      "usage_views": {
+        "estimate": {
+          "payload": null,
+          "status": "NOT_RECORDED"
+        },
+        "observed": {
+          "payload": null,
+          "status": "NOT_RECORDED"
+        },
+        "settled": {
+          "payload": null,
+          "status": "NOT_RECORDED"
+        },
+        "token_breakdown": {
+          "cache_read_input_tokens": "UNKNOWN",
+          "cache_write_input_tokens": "UNKNOWN",
+          "reasoning_output_tokens": "UNKNOWN",
+          "reasoning_subset_of_total_output": true,
+          "status": "UNKNOWN",
+          "total_input_tokens": "UNKNOWN",
+          "total_output_tokens": "UNKNOWN",
+          "uncached_input_tokens": "UNKNOWN"
+        }
+      }
+    },
     "validator_commands": [
       "python scripts/validate_phase34_operator_portal_validation_runner.py",
       "python scripts/validate_phase33_operator_portal_evidence_dashboard.py",
@@ -241,13 +529,13 @@
       "certification_boundary": "certification_ready_not_certified",
       "deployment_allowed": false,
       "external_ecosystem_integrations": "mocked_or_simulated_only",
-      "included_files_count": 41,
+      "included_files_count": 88,
       "live_provider_calls_allowed": false,
       "official_certification_claimed": false,
       "phase31_export_phase": "phase31_deep_generated_application_export_download_center",
       "phase32_service_phase": "phase32_operator_portal_download_center_integration",
       "real_secrets_allowed": false,
-      "zip_size_bytes": 30127
+      "zip_size_bytes": 105069
     },
     "bundle_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
     "download_ready_path": "workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/phase31_deep_generated_application_bundle.zip",
@@ -340,7 +628,7 @@
           "command_display": "python -c print('phase34 validation runner self-check')",
           "command_id": "phase34_runner_self_check",
           "description": "Small safe self-check used by the Phase 34 validator.",
-          "duration_seconds": 0.024292,
+          "duration_seconds": 0.008279,
           "return_code": 0,
           "status": "passed",
           "stderr_preview": "",
@@ -423,7 +711,7 @@
         "command_display": "python -c print('phase34 validation runner self-check')",
         "command_id": "phase34_runner_self_check",
         "description": "Small safe self-check used by the Phase 34 validator.",
-        "duration_seconds": 0.024292,
+        "duration_seconds": 0.008279,
         "return_code": 0,
         "status": "passed",
         "stderr_preview": "",
@@ -432,7 +720,7 @@
       }
     ],
     "dry_run": false,
-    "duration_seconds": 0.024363,
+    "duration_seconds": 0.008399,
     "phase": "phase34_operator_portal_governed_validation_runner",
     "report_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase34/operator_portal_validation_run_report.json",
     "safety_boundaries": {

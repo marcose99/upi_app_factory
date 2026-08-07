@@ -1,0 +1,21 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "external_publication_performed": false,
+  "phase": "19",
+  "pyproject_present": true,
+  "schema_version": "phase19-local-dependency-inventory.v1",
+  "source_files": [
+    {
+      "path": "pyproject.toml",
+      "sha256": "ae75404f4c17946e2173e842b2b5a1f24141a89010f476c8359ed6093364caf4"
+    },
+    {
+      "path": "docs/phase19/supply_chain_provenance_hardening.md",
+      "sha256": "cb1ceda30e53e09127c3bc5e35ef00e4ec128db7bbe6ff5599c910286ebec1ba"
+    },
+    {
+      "path": "policies/phase19_supply_chain_provenance_policy.json",
+      "sha256": "271ba6e5e07c975192544013495a9422a15184a9af697cd37a3c246e60a0f787"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deployment_allowed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted": false,
+  "production_readiness_claimed": false
+}

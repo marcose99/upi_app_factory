@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "bytes": 178701,
+      "path": "historical/r10/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.pdf",
+      "provenance": "diagnostic input r10_pdf",
+      "sha256": "37c94a02891e84b59e4071d68f1aafb968730a0c458cdf3092562a5a1ea9ea1c"
+    },
+    {
+      "bytes": 43046,
+      "path": "historical/r10/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt",
+      "provenance": "diagnostic input r10_text",
+      "sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82"
+    },
+    {
+      "bytes": 43046,
+      "path": "historical/r9/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt",
+      "provenance": "diagnostic input r9_text",
+      "sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82"
+    },
+    {
+      "bytes": 17006,
+      "path": "validation_summary.json",
+      "provenance": "portable redaction of diagnostic input validation_summary; absolute local evidence paths replaced with portable-validation-evidence labels",
+      "sha256": "d877a2174908f9fa887ad9651027319231a4449d2065c3a043d5115b7c49c30d",
+      "source_sha256": "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab"
+    }
+  ],
+  "schema_version": "upi-app-factory-exact-v2-authoritative-inputs.v1"
+}

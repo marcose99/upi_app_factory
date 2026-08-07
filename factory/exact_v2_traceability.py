@@ -18,29 +18,32 @@ TRACKED_APPLICATION_ROOT = (
     / "upi_dispute_resolution"
     / "generated_application"
 )
-AUTHORITATIVE_INPUT_ROOT = (
-    Path.home()
-    / "Downloads"
-    / "upi_app_factory_post_r10_4_r10_5.U7T7lu"
-    / "predecessor_r10_4"
-    / "predecessor_r10_3"
-    / "predecessor_r10_2"
-    / "predecessor_r10_1"
-    / "predecessor_r10"
-)
+AUTHORITATIVE_INPUT_ROOT = PROJECT_ROOT / "factory_governance" / "exact_v2_authoritative_inputs"
 AUTHORITATIVE_REQUIREMENTS_PDF_PATH = (
-    AUTHORITATIVE_INPUT_ROOT / "UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.pdf"
+    AUTHORITATIVE_INPUT_ROOT
+    / "historical"
+    / "r10"
+    / "UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.pdf"
 )
 AUTHORITATIVE_REQUIREMENTS_TEXT_PATH = (
-    AUTHORITATIVE_INPUT_ROOT / "UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt"
+    AUTHORITATIVE_INPUT_ROOT
+    / "historical"
+    / "r10"
+    / "UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt"
 )
-AUTHORITATIVE_VALIDATION_SUMMARY_PATH = (
-    PROJECT_ROOT.parent.parent / "quality" / "021" / "validation_summary.json"
+AUTHORITATIVE_R9_REQUIREMENTS_TEXT_PATH = (
+    AUTHORITATIVE_INPUT_ROOT
+    / "historical"
+    / "r9"
+    / "UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt"
 )
+AUTHORITATIVE_VALIDATION_SUMMARY_PATH = AUTHORITATIVE_INPUT_ROOT / "validation_summary.json"
+AUTHORITATIVE_INPUT_MANIFEST_PATH = AUTHORITATIVE_INPUT_ROOT / "manifest.json"
 REQUIREMENTS_SCHEMA = "upi_failed_debit_no_credit.requirements.v2"
 REQUIREMENTS_PDF_SHA256 = "37c94a02891e84b59e4071d68f1aafb968730a0c458cdf3092562a5a1ea9ea1c"
 REQUIREMENTS_TEXT_SHA256 = "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82"
-VALIDATION_SUMMARY_SHA256 = "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab"
+VALIDATION_SUMMARY_SOURCE_SHA256 = "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab"
+VALIDATION_SUMMARY_SHA256 = "d877a2174908f9fa887ad9651027319231a4449d2065c3a043d5115b7c49c30d"
 REJECTED_PROJECTION_SHA256 = "1c169ae23d3a95a1c37bd6b421da952c813f045b5b42215a94b2f329b6eea2ab"
 REQUIREMENTS_PAGE_COUNT = 29
 SCHEMA_VERSION = "upi-failed-debit-generated-application-evidence.v3"
@@ -288,22 +291,69 @@ def _validated_external_file(path: Path, *, expected_sha256: str, label: str) ->
     return resolved
 
 
+def _load_authoritative_input_manifest() -> dict[str, Mapping[str, Any]]:
+    payload = json.loads(AUTHORITATIVE_INPUT_MANIFEST_PATH.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("authoritative input manifest must be a JSON object")
+    raw_files = payload.get("files")
+    if not isinstance(raw_files, list):
+        raise ValueError("authoritative input manifest files must be a list")
+    indexed: dict[str, Mapping[str, Any]] = {}
+    for raw_entry in raw_files:
+        if not isinstance(raw_entry, dict):
+            raise ValueError("authoritative input manifest entry must be an object")
+        path = raw_entry.get("path")
+        sha256 = raw_entry.get("sha256")
+        provenance = raw_entry.get("provenance")
+        if not isinstance(path, str) or Path(path).is_absolute() or ".." in Path(path).parts:
+            raise ValueError("authoritative input manifest path must be safe and relative")
+        if not isinstance(sha256, str) or len(sha256) != 64:
+            raise ValueError(f"authoritative input manifest has invalid sha256 for {path}")
+        if not isinstance(provenance, str) or not provenance:
+            raise ValueError(f"authoritative input manifest has invalid provenance for {path}")
+        source_sha256 = raw_entry.get("source_sha256")
+        if source_sha256 is not None and (
+            not isinstance(source_sha256, str) or len(source_sha256) != 64
+        ):
+            raise ValueError(f"authoritative input manifest has invalid source_sha256 for {path}")
+        indexed[path] = raw_entry
+    return indexed
+
+
+def _validated_authoritative_input(
+    relative_path: str,
+    *,
+    expected_sha256: str,
+    label: str,
+) -> Path:
+    manifest = _load_authoritative_input_manifest()
+    entry = manifest.get(relative_path)
+    if entry is None:
+        raise FileNotFoundError(f"{label} is not declared in authoritative input manifest")
+    if entry["sha256"] != expected_sha256:
+        raise ValueError(
+            f"{label} manifest SHA-256 mismatch: {entry['sha256']} != {expected_sha256}"
+        )
+    path = AUTHORITATIVE_INPUT_ROOT / relative_path
+    return _validated_external_file(path, expected_sha256=expected_sha256, label=label)
+
+
 def _authoritative_requirements_text() -> Path:
-    _validated_external_file(
-        AUTHORITATIVE_REQUIREMENTS_PDF_PATH,
+    _validated_authoritative_input(
+        "historical/r10/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.pdf",
         expected_sha256=REQUIREMENTS_PDF_SHA256,
         label="authoritative requirements PDF",
     )
-    return _validated_external_file(
-        AUTHORITATIVE_REQUIREMENTS_TEXT_PATH,
+    return _validated_authoritative_input(
+        "historical/r10/UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt",
         expected_sha256=REQUIREMENTS_TEXT_SHA256,
         label="authoritative requirements text",
     )
 
 
 def _current_validation_summary() -> dict[str, Any]:
-    path = _validated_external_file(
-        AUTHORITATIVE_VALIDATION_SUMMARY_PATH,
+    path = _validated_authoritative_input(
+        "validation_summary.json",
         expected_sha256=VALIDATION_SUMMARY_SHA256,
         label="current validation summary",
     )
@@ -909,6 +959,7 @@ def _generation_summary(
         "current_validation_summary": {
             "path": f"external_validation/{AUTHORITATIVE_VALIDATION_SUMMARY_PATH.name}",
             "sha256": VALIDATION_SUMMARY_SHA256,
+            "source_sha256": VALIDATION_SUMMARY_SOURCE_SHA256,
             "phase": validation_summary.get("phase"),
             "status": validation_summary.get("status"),
             "all_gates_executed": validation_summary.get("all_gates_executed"),

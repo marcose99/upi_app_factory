@@ -1,0 +1,38 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "created_at_utc": "2026-07-07T20:53:26.022414+00:00",
+  "external_system_mutation_performed": false,
+  "factory_does_not_self_certify": true,
+  "live_provider_calls_performed": false,
+  "official_certification_claimed": false,
+  "official_certification_granted_by_factory": false,
+  "phase": "18",
+  "read_only_gate_results": [
+    {
+      "command": [
+        "python",
+        "scripts/validate_phase17_enterprise_autonomous_hardening.py"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 17 enterprise autonomous hardening artifacts validated.\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/validate_phase16_self_contained_handoff_replay.py"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "stderr_tail": "",
+      "stdout_tail": "Phase 16 self-contained handoff replay hardening artifacts validated.\n"
+    }
+  ],
+  "read_only_gates_executed": true,
+  "read_only_gates_passed": true,
+  "reviewer_checklist_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase18/independent_reviewer_checklist.json",
+  "reviewer_pack_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase18/independent_reviewer_workspace_pack.json",
+  "schema_version": "phase18-independent-reviewer-workspace-trial-audit.v1",
+  "status": "INDEPENDENT_REVIEWER_WORKSPACE_TRIAL_READY"
+}

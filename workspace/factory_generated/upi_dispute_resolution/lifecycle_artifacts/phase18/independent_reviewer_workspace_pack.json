@@ -1,0 +1,15 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "base_tag_required": "v0.17.0-enterprise-autonomous-hardening-batch",
+  "phase": "18",
+  "requires_external_provider": false,
+  "requires_hidden_local_workspace_state": false,
+  "requires_production_access": false,
+  "reviewer_replay_commands": [
+    "python -m pytest",
+    "python scripts/validate_phase16_self_contained_handoff_replay.py",
+    "python scripts/validate_phase17_enterprise_autonomous_hardening.py",
+    "python scripts/validate_phase18_independent_reviewer_workspace_trial.py"
+  ],
+  "schema_version": "phase18-reviewer-workspace-pack.v1"
+}

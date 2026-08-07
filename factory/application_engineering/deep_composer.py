@@ -116,7 +116,7 @@ class DeepApplicationComposer:
         if not APP_ID_PATTERN.fullmatch(app_id):
             raise DeepComposerError(f"invalid app id: {app_id!r}")
         if app_id == "upi_app_factory":
-            raise DeepComposerError("generated application app id must use a non-default namespace")
+            raise DeepComposerError("application engineering app id must use a non-default namespace")
 
         root = output_root.resolve()
         try:
@@ -263,7 +263,7 @@ class DeepApplicationComposer:
 1. Create a dispute through `POST /v1/disputes` with an idempotency key and correlation header.
 2. Attach evidence through `POST /v1/disputes/{{dispute_id}}/evidence` until the case is investigation-ready.
 3. Record investigation and proposed resolution through the governed `/investigation`, `/resolution`, `/timeline`, and `/audit` routes.
-4. Preserve generated evidence from `evidence/generation_manifest.json`, `evidence/requirements_trace.json`, and the API/OpenAPI outputs for local review.
+4. Preserve application engineering evidence from `evidence/generation_manifest.json`, `evidence/requirements_trace.json`, and the API/OpenAPI outputs for local review.
 
 ## Failure handling
 
@@ -277,7 +277,7 @@ class DeepApplicationComposer:
 
 ## Scope
 
-This generated application proves deterministic failed-debit lifecycle behavior for `{app_id}` without live providers, external databases, or runtime LLM calls.
+This application engineering output proves deterministic failed-debit lifecycle behavior for `{app_id}` without live providers, external databases, or runtime LLM calls.
 
 ## Required commands
 

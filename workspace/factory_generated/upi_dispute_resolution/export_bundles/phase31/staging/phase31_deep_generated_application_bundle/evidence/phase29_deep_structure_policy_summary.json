@@ -1,0 +1,9 @@
+{
+  "certification_boundary": "certification_ready_not_certified",
+  "deep_structure_generator_ready": true,
+  "external_ecosystem_integrations": "mocked_or_simulated_only",
+  "live_provider_calls_allowed": false,
+  "phase": "phase29_generated_application_deep_structure_generator",
+  "phase28_blueprint_required_as_generator_input": true,
+  "policy": "policies/phase29_generated_application_deep_structure_policy.json"
+}

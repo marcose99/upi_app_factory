@@ -50,6 +50,8 @@ def test_build_payloads_proves_current_fixture_and_carries_source_requirement_id
 
     assert report["decision"] == "PROVEN_100_PERCENT_CAPABILITY"
     assert report["mandatory_gate_passed"] is True
+    assert report["requirements_path"] == FAILED_DEBIT_FIXTURE.relative_to(ROOT).as_posix()
+    assert not Path(report["requirements_path"]).is_absolute()
     assert improvements["items"] == []
     structured_item = next(
         item for item in matrix["items"] if item.get("source_requirement_id") == "UC-001"
@@ -81,8 +83,14 @@ def test_unsupported_structured_requirement_maps_improvement_to_source_requireme
     )
 
     improvements = payloads["FACTORY_IMPROVEMENT_REQUIREMENTS.json"]["items"]
+    report = payloads["CAPABILITY_PRE_RUN_REPORT.json"]
     assert len(improvements) == 1
     assert improvements[0]["blocked_source_requirement_ids"] == ["UC-999"]
+    assert report["requirements_path"].startswith(
+        f"external_requirements/{report['requirements_sha256']}/"
+    )
+    assert not Path(report["requirements_path"]).is_absolute()
+    assert str(tmp_path) not in report["requirements_path"]
 
 
 def test_token_economics_normalization_and_settlement_preserve_reasoning_subset() -> None:

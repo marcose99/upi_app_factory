@@ -105,10 +105,15 @@ def _portable_command_part(part: str) -> str:
 
 
 def _portable_working_directory(path: Path) -> str:
+    resolved = path.resolve()
     try:
-        relative = path.relative_to(PROJECT_ROOT)
+        relative = resolved.relative_to(PROJECT_ROOT.resolve())
     except ValueError:
-        return str(path)
+        home = Path.home().resolve()
+        try:
+            return "${HOME}/" + resolved.relative_to(home).as_posix()
+        except ValueError:
+            return "${WORKSPACE_ROOT}"
     return "." if relative == Path(".") else relative.as_posix()
 
 

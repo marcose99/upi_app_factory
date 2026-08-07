@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from factory.exact_v2_traceability import (
+    AUTHORITATIVE_R9_REQUIREMENTS_TEXT_PATH,
     CANONICAL_APPLICATION_ID,
     COMPATIBILITY_APPLICATION_ID,
     REQUIREMENTS_TEXT_SHA256,
@@ -15,12 +16,7 @@ from factory.exact_v2_traceability import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
-AUTHORITATIVE_TEXT = Path(
-    Path.home()
-    / "Downloads"
-    / "upi_app_factory_post_r9_13_r10.kufLlk"
-    / "UPI_FAILED_DEBIT_BENEFICIARY_NOT_CREDITED_REQUIREMENTS.txt"
-)
+AUTHORITATIVE_TEXT = AUTHORITATIVE_R9_REQUIREMENTS_TEXT_PATH
 
 
 def _test_reference_exists(nodeid: str) -> bool:

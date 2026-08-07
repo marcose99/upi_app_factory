@@ -1,0 +1,18 @@
+{
+  "app_id": "upi_dispute_resolution",
+  "artifact_publication_performed": false,
+  "created_at_utc": "2026-07-07T20:55:09.288243+00:00",
+  "external_system_mutation_performed": false,
+  "formal_supply_chain_certification_claimed": false,
+  "gate_summary_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/supply_chain_gate_summary.json",
+  "inventory_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/local_dependency_inventory.json",
+  "live_provider_calls_performed": false,
+  "local_attestation_readiness_only": true,
+  "official_slsa_claim_made": false,
+  "phase": "19",
+  "provenance_path": "workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts/phase19/provenance_readiness_statement.json",
+  "registry_push_performed": false,
+  "schema_version": "phase19-supply-chain-provenance-hardening-audit.v1",
+  "signing_key_used": false,
+  "status": "SUPPLY_CHAIN_PROVENANCE_HARDENING_READY"
+}
