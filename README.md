@@ -1,5 +1,5 @@
-<!-- generated-by: governed-current-state-readme-refresh-v43 -->
-<!-- latest-fully-replayed-product-baseline: c8a5bc19c613013b3a0a24ee763fbd198435d0ea -->
+<!-- generated-by: governed-post-merge-documentation-modernization-v1 -->
+<!-- latest-fully-replayed-product-baseline: cdb9afab385cc0ada381d045a5509671bba617aa -->
 
 # UPI App Factory
 
@@ -131,6 +131,22 @@ python -m factory.validators.validate_evidence_ledger
 
 The primary generated runtime now exposes the bounded failed-debit workflow that portal operators review against the campaign requirement: `POST /v1/disputes`, `POST /v1/disputes/{id}/evidence`, `POST /v1/disputes/{id}/investigation`, `POST /v1/disputes/{id}/resolution`, and `GET /v1/disputes/{id}/timeline`. The local workflow is deterministic-first and mock-only: create the case, attach the required `switch_failure`, `core_ledger`, and `customer_statement` evidence set, record the simulated-bank investigation snapshot, and then propose or finalize the resolution with an expected-version guard.
 
+## Independent generated-application handover
+
+The authoritative generated application now carries its own exact clean-room dependency contract.
+
+```bash
+cd workspace/factory_generated/upi_dispute_resolution/generated_application
+./scripts/bootstrap_cleanroom.sh
+.venv/bin/python scripts/validate_dependency_contract.py
+.venv/bin/python -m pytest -q app/tests
+./scripts/start_local.sh
+```
+
+The source bundle owns `requirements-bootstrap.lock`, `requirements.lock`, `dependency_contract.json`, and `scripts/bootstrap_cleanroom.sh`. It remains mock-only and does not claim wheel packaging, production deployment, certification, or real-payment connectivity.
+
+See [Generated Application Handover](docs/handover/GENERATED_APPLICATION_HANDOVER.md) and [Supply Chain and Dependencies](docs/security/SUPPLY_CHAIN_AND_DEPENDENCIES.md).
+
 ## What the factory produces
 
 A governed run can produce:
@@ -207,37 +223,46 @@ Truthful scope: the retrieval corpus is intentionally small and approved; the ve
 
 ## Reliability and evidence
 
-Latest fully replayed product baseline:
+Current governed public baseline:
 
 ```text
-c8a5bc19c613013b3a0a24ee763fbd198435d0ea
+cdb9afab385cc0ada381d045a5509671bba617aa
+```
+
+Current tree:
+
+```text
+7b45ef655126783c5a78b628aaa34cc6794c8993
 ```
 
 Direct parent:
 
 ```text
-441f390dae1f9792652a156fdedc996e038dcda8
+915551649ce220087cf4cfceb23ecdbd137d9f1d
 ```
 
-Verified acceptance for that exact baseline:
+The current baseline passed local dependency/handover qualification, exact PR-head Governed CI, exact fast-forward-only delivery to `main`, fresh-public-clone verification, and a second push-triggered Governed CI on `main`.
 
-| Gate | Result |
+| Gate | Current result |
 |---|---:|
-| Focused public-productization tests | 74/74 passed |
-| Complete regression | 1166/1166 passed |
+| Pull-request Governed CI | 7/7 jobs passed |
+| Push-to-main Governed CI | 7/7 jobs passed |
+| Full regression | Passed |
 | Ruff | Passed |
-| MyPy | Passed across 125 source files |
-| Native clean-clone recipient E2E | Passed |
-| Docker Compose recipient E2E | Passed |
-| Generated tests executed | Passed |
-| Generated OpenAPI publication | Passed |
-| Runtime logs and metrics | Passed |
-| Exact-commit replay | Passed |
-| Candidate quality / clean-clone proof / review readiness | 100 / 100 / 100 |
+| MyPy | Passed |
+| Docker platform contract | Passed |
+| Public clone hygiene | Passed |
+| Governance policy | Passed |
+| Generated app clean-room bootstrap | Passed |
+| Dependency tamper rejection | Passed |
+| Vulnerability audit | Passed |
+| CycloneDX SBOM | Passed |
+| Independent ZIP/download replay | Passed |
+| Fresh public clone exact identity | Passed |
 
-Historical baseline note: the prior exact candidate above was fast-forward merged and pushed to `main` with a main-only refspec. For the current Phase 71-82 V63 governed feature worktree, the controller owns Git state; this repair candidate remains uncommitted here, and no merge, push, tag, release, deployment, certification claim, branch deletion or worktree deletion is performed by this worktree repair.
+No RC tag, GitHub release, production deployment or certification claim is implied by this engineering closure.
 
-**Current manual-acceptance note:** Automated post-merge acceptance is ready; the supplied evidence does not yet contain the operator's final manual accept/close record.
+See [Operations and Acceptance](docs/current_state/OPERATIONS_AND_ACCEPTANCE.md).
 
 ## Safety boundaries and non-claims
 

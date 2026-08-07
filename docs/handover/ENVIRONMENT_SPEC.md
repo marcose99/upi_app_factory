@@ -1,81 +1,65 @@
 # Environment Specification
 
-Recommended environment:
+Current public baseline: `cdb9afab385cc0ada381d045a5509671bba617aa`.
+
+## Factory native route
+
+Required:
 - Linux environment with Bash
-- Python 3.10 or newer
+- Python 3.10
 - Git
-- Local filesystem write access
-- No live payment credentials required
-- No OpenAI API key required for the default deterministic mock-safe route
+- local filesystem write access
 
-Supported platform routes:
-- Native Ubuntu/Linux for the Bash/Python local operator portal route.
-- Docker/Compose on Linux Docker Engine.
-- Docker/Compose on macOS Docker Desktop.
-- Docker/Compose on Windows Docker Desktop.
+```bash
+./run_factory.sh
+```
 
-Non-claims:
-- Native Windows runtime support is not claimed.
-- Native macOS runtime support is not claimed.
-- Docker/Compose support is a local container route, not cross-platform native
-  runtime proof.
-- The posture remains `certification_ready_not_certified`.
+The recipient environment is governed by `requirements/bootstrap-lock.txt`, `requirements/recipient-lock.txt`, `requirements-recipient.txt`, and `pyproject.toml`.
 
-Python capabilities:
-- FastAPI
-- Pydantic
-- pytest
-- ruff
-- mypy
+## Generated-application clean-room route
 
-Runtime state:
-- Default: `.var/upi_app_factory`
-- Subdirectories: `runs`, `portfolio`, `runtime`, `logs`, `downloads`, `evidence`
-- Override: `./run_factory.sh --state-root <path>` and `./stop_factory.sh --state-root <path>`
-- The default state is repository-relative and ignored by Git; an explicit
-  external override is permitted for recipient machines.
+```bash
+cd workspace/factory_generated/upi_dispute_resolution/generated_application
+./scripts/bootstrap_cleanroom.sh
+.venv/bin/python scripts/validate_dependency_contract.py
+.venv/bin/python -m pytest -q app/tests
+```
 
-Network boundary:
-- The generated application does not need live NPCI, RBI, bank, PSP, ODR,
-  settlement, or payment-rail network access.
-- Any such integration must remain blocked until a future explicitly approved
-  live-integration phase, which is outside the current project boundary.
+The generated application owns `requirements-bootstrap.lock`, `requirements.lock`, `dependency_contract.json`, and its clean-room bootstrap. The bootstrap verifies exact installed closure and runs `pip check`.
 
-Data boundary:
-- Do not use real customer data.
-- Use synthetic/local test data only.
+## Docker/Compose route
 
-Factory portal Docker/Compose smoke path:
-1. Run `docker compose up --build`.
-2. Open `http://127.0.0.1:8036/health` and confirm the JSON health status is
-   `ok`.
-3. Open `http://127.0.0.1:8036/operator-ui/`.
-4. Optionally set `UPI_APP_FACTORY_HOST_PORT=18036` before `docker compose up
-   --build` to publish the same container port on a different loopback host
-   port.
-5. Run `docker compose down` for clean shutdown.
+Supported Docker host routes:
+- Linux Docker Engine
+- macOS Docker Desktop
+- Windows Docker Desktop
 
-The Compose service publishes only to `127.0.0.1`, persists container state at
-`/app/.var` through a named volume, runs with mock-only defaults, and keeps
-runtime LLM calls disabled by default. No real NPCI, RBI, bank, PSP, ODR,
-settlement, payment-rail, or provider calls are part of this route.
+```bash
+docker compose up --build
+```
 
-## Dependency reproducibility and supply-chain boundary
+The service publishes only to loopback. To select another loopback host port, set `UPI_APP_FACTORY_HOST_PORT`.
 
-The native recipient route uses two governed exact locks:
+```bash
+UPI_APP_FACTORY_HOST_PORT=18036 docker compose up --build
+```
 
-- `requirements/bootstrap-lock.txt` pins the packaging toolchain used to create
-  and maintain the local virtual environment.
-- `requirements/recipient-lock.txt` pins the third-party dependency graph used
-  for factory handover replay and generated-application validation.
+Stop with:
 
-`requirements-recipient.txt` is only the stable entry point that includes the
-recipient lock and installs the first-party repository as editable source.
-`run_factory.sh` binds its environment stamp to the bootstrap lock, recipient
-entry file, recipient lock, and `pyproject.toml`, so a lock-only or packaging
-metadata change cannot silently reuse a stale environment.
+```bash
+docker compose down --volumes --remove-orphans
+```
 
-Known-vulnerability auditing remains a release/assurance activity. The editable
-first-party `upi-app-factory` package is intentionally excluded from PyPI-backed
-third-party vulnerability lookup; all locked third-party distributions remain
-in scope for the audit.
+## Supported claims and non-claims
+
+Native Ubuntu/Linux and Docker/Compose routes are supported as documented by `config/supported_platforms.yaml`.
+
+Do not use this route as evidence of native Windows or native macOS support.
+
+Native Windows/macOS parity, wheel packaging, production deployment, certification and real-payment integration are not claimed.
+
+## Safety
+
+No live NPCI/RBI/bank/PSP/payment-rail access or real customer data is required. Default live LLM/provider use remains separately gated.
+
+See [Supply Chain and Dependencies](../security/SUPPLY_CHAIN_AND_DEPENDENCIES.md) and [Generated Application Handover](GENERATED_APPLICATION_HANDOVER.md).
