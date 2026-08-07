@@ -34,6 +34,12 @@ MAX_RESPONSE_BYTES: Final[int] = 512 * 1024
 REQUEST_TIMEOUT_SECONDS: Final[float] = 2.5
 SIMULATED_RUNTIME_EXECUTABLE: Final[str] = "in-process-socketless-runtime"
 APPROVAL_TTL_SECONDS: Final[int] = 300
+SENSITIVE_ENV_KEY_SEGMENTS: Final[frozenset[str]] = frozenset(
+    {"TOKEN", "SECRET", "PASSWORD", "PASSWD", "CREDENTIAL", "CREDENTIALS"}
+)
+SENSITIVE_ENV_KEY_COMPOUND_SEGMENTS: Final[frozenset[tuple[str, str]]] = frozenset(
+    {("API", "KEY"), ("PRIVATE", "KEY"), ("ACCESS", "KEY")}
+)
 
 
 class PortfolioError(RuntimeError):
@@ -97,6 +103,37 @@ def approval_secret() -> str:
             f"{PORTFOLIO_APPROVAL_TOKEN_ENV} is required for portfolio approvals"
         )
     return token
+
+
+def _is_secret_like_environment_key(key: str) -> bool:
+    segments = [segment for segment in key.upper().split("_") if segment]
+    if any(segment in SENSITIVE_ENV_KEY_SEGMENTS for segment in segments):
+        return True
+    return any(
+        (left, right) in SENSITIVE_ENV_KEY_COMPOUND_SEGMENTS
+        for left, right in zip(segments, segments[1:], strict=False)
+    )
+
+
+def build_runtime_process_environment(*, app_root: Path) -> dict[str, str]:
+    env = {
+        key: value
+        for key, value in os.environ.items()
+        if not _is_secret_like_environment_key(key)
+    }
+    existing_pythonpath = env.get("PYTHONPATH", "")
+    env.update(
+        {
+            "PYTHONPATH": f"{app_root}{os.pathsep}{existing_pythonpath}".rstrip(os.pathsep),
+            "UPI_APP_FACTORY_PORTFOLIO_MODE": "local",
+            "UPI_APP_FACTORY_EXTERNAL_ECOSYSTEM_MODE": "mock",
+            "UPI_APP_FACTORY_ENABLE_LIVE_PROVIDER_CALLS": "false",
+            "UPI_APP_FACTORY_DEFAULT_RUNTIME_LLM_CALLS": "0",
+            "REAL_PAYMENT_CALLS": "disabled",
+            "FACTORY_LLM_ENABLED": "0",
+        }
+    )
+    return env
 
 
 def sockets_available() -> bool:
@@ -733,16 +770,7 @@ class PortfolioSupervisor:
                 ready = RuntimeStatus(RuntimeState.STARTING, binding, process, {"status": "starting"}, starting.updated_at_utc, version.quota, version.policy, current.restart_count)
                 self.store.write_status(ready)
                 return self.store.transition_status(ready, RuntimeState.READY, process=process, health=cast(dict[str, Any], health["json"]))
-            env = os.environ.copy()
-            env.update(
-                {
-                    "PYTHONPATH": f"{app_root}{os.pathsep}{env.get('PYTHONPATH', '')}".rstrip(os.pathsep),
-                    "UPI_APP_FACTORY_PORTFOLIO_MODE": "local",
-                    "UPI_APP_FACTORY_EXTERNAL_ECOSYSTEM_MODE": "mock",
-                    "UPI_APP_FACTORY_ENABLE_LIVE_PROVIDER_CALLS": "false",
-                    "UPI_APP_FACTORY_DEFAULT_RUNTIME_LLM_CALLS": "0",
-                }
-            )
+            env = build_runtime_process_environment(app_root=app_root)
             log_path = self.store.runtime_dir(run_id) / "runtime_stdout.log"
             with log_path.open("ab") as log_handle:
                 proc = subprocess.Popen(
