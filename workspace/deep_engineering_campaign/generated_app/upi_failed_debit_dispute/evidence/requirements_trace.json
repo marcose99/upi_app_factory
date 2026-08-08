@@ -1,28 +1,1090 @@
 {
-  "endpoints": [
-    "GET /health",
-    "GET /ready",
-    "GET /metrics",
-    "POST /v1/disputes",
-    "GET /v1/disputes/{dispute_id}",
-    "GET /v1/disputes",
-    "POST /v1/disputes/{dispute_id}/evidence",
-    "POST /v1/disputes/{dispute_id}/validation",
-    "POST /v1/disputes/{dispute_id}/investigation",
-    "POST /v1/disputes/{dispute_id}/resolution",
-    "POST /v1/disputes/{dispute_id}/closure",
-    "GET /v1/disputes/{dispute_id}/timeline",
-    "GET /v1/disputes/{dispute_id}/audit"
+  "generated_application": {
+    "app_id": "upi_failed_debit_dispute",
+    "local_only": true,
+    "mock_only": true,
+    "profile": "local-deep-v1",
+    "real_payment_calls": "disabled",
+    "runtime_llm_calls": 0
+  },
+  "mappings": [
+    {
+      "canonical_hash": "aa7c4d8115eee73eefa615daeee177f0544bad3c8b656f9cb83a8d6739f55e78",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "actors",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "ACT-001",
+      "source": {
+        "heading": "actors",
+        "line": 14,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "6078ac9cf371ec267edb8da5920b396008c754c0eda01e85c05fcb0a79c48235",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "actors",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "ACT-002",
+      "source": {
+        "heading": "actors",
+        "line": 15,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "4be92b15c0b09bd2642a60aa09e3ba1c3f795de85850e1e794d56bbff6735cff",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "actors",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "ACT-003",
+      "source": {
+        "heading": "actors",
+        "line": 16,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "9fe12b294ffd105c80bcbbe81e02b9cd77cf2c33828b9c3a3072982a78a00296",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "aggregates",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "AGG-001",
+      "source": {
+        "heading": "aggregates",
+        "line": 47,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "26290391c10e05f75eb1fbbe699bbe537b87e1639667e0ad552d992686797647",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "aggregates",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "AGG-002",
+      "source": {
+        "heading": "aggregates",
+        "line": 48,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "d66cba0401d978420390301fb3a08a091fbe6c62e4ec178236ec158a1e504ddf",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "apis",
+      "generated_artifacts": [
+        "openapi/openapi.json",
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "API-001",
+      "source": {
+        "heading": "apis",
+        "line": 63,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "e97b24ced3bf03003968a8322a6e765f94e7fd6bb3c47aad9861c41c0c1f7cd0",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "apis",
+      "generated_artifacts": [
+        "openapi/openapi.json",
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "API-002",
+      "source": {
+        "heading": "apis",
+        "line": 64,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "4d940c4de94d2343781584a463913a9517695a32e58cfc982e7e13084560ad30",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "apis",
+      "generated_artifacts": [
+        "openapi/openapi.json",
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "API-003",
+      "source": {
+        "heading": "apis",
+        "line": 65,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "0ba249f10aa689b90104ab2db56a062879286f79a867ff2a46a9705ca765192d",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "apis",
+      "generated_artifacts": [
+        "openapi/openapi.json",
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "API-004",
+      "source": {
+        "heading": "apis",
+        "line": 66,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "46a2b090b165be107edee711634072ff2340f6b6437a78ce6cd4378366655f97",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "apis",
+      "generated_artifacts": [
+        "openapi/openapi.json",
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "API-005",
+      "source": {
+        "heading": "apis",
+        "line": 67,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "eb8446feb77b532f9c777b0cf0142b098c3950d93135a76b471130a644444782",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "bounded_contexts",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "BC-001",
+      "source": {
+        "heading": "bounded contexts",
+        "line": 24,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "b7c49f074a23b091e5bc59afbd2f9e3cd49df51b567b7a822e6fb00f7fdbe159",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "bounded_contexts",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "BC-002",
+      "source": {
+        "heading": "bounded contexts",
+        "line": 25,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "b032729a9e049a15aa242ca7ae05f24c68f0f07edfe171376aed7b91df961ecc",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "bounded_contexts",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "BC-003",
+      "source": {
+        "heading": "bounded contexts",
+        "line": 26,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "72a2588d7484f7c33ae9caf1fe744b426976af21f249a59aa942406cee0ce67f",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "commands",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "CMD-001",
+      "source": {
+        "heading": "commands",
+        "line": 29,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "b466905ed48e1529687b209c91963877fba4830377a0d3ea0f17ee23fa580e1c",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "commands",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "CMD-002",
+      "source": {
+        "heading": "commands",
+        "line": 30,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "754fbaf414e7bddab550a349884ceb67ad12139d19dddf5c7e28387639dd3965",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "commands",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "CMD-003",
+      "source": {
+        "heading": "commands",
+        "line": 31,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "124c151a5348a99d43687c6b2c92637aab5d262a79ca60d9b054847b0ca26c85",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "commands",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "CMD-004",
+      "source": {
+        "heading": "commands",
+        "line": 32,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "421cc8d6a58bb737f9e98bc6f584a422cecb11d06620e61678247d614d725ef6",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql"
+      ],
+      "collection": "data",
+      "generated_artifacts": [
+        "docs/adrs/ADR-0001-local-sqlite-modular-monolith.md"
+      ],
+      "requirement_id": "DATA-001",
+      "source": {
+        "heading": "data",
+        "line": 70,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "d004ad7fc3d5c917b4d49a47338eede344542e73a155362f02479e415137c530",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql"
+      ],
+      "collection": "data",
+      "generated_artifacts": [
+        "docs/adrs/ADR-0001-local-sqlite-modular-monolith.md"
+      ],
+      "requirement_id": "DATA-002",
+      "source": {
+        "heading": "data",
+        "line": 71,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "705a2d243e2d98becc19a9ace4720ad85c3a14f09a7580789e1aa03e7fe37e01",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql"
+      ],
+      "collection": "data",
+      "generated_artifacts": [
+        "docs/adrs/ADR-0001-local-sqlite-modular-monolith.md"
+      ],
+      "requirement_id": "DATA-003",
+      "source": {
+        "heading": "data",
+        "line": 72,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "e63d28435360e346b4b0f085282abe3a1ead563e6c207215fa2df4b6b5e29e4e",
+      "code_paths": [
+        "configuration/example.env",
+        "scripts/run_local.sh"
+      ],
+      "collection": "dependencies",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "DEP-001",
+      "source": {
+        "heading": "dependencies",
+        "line": 91,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "8f362add2e41af2dc7367a4e80230c3cd29a4c3189b2e5857c9c62cedbe0d238",
+      "code_paths": [
+        "configuration/example.env",
+        "scripts/run_local.sh"
+      ],
+      "collection": "dependencies",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "DEP-002",
+      "source": {
+        "heading": "dependencies",
+        "line": 92,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "e0bdcce1fe805ba9972f20f9524a29cb7b5508c668c70efb3ac36fbd2019d065",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "events",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "EVT-001",
+      "source": {
+        "heading": "events",
+        "line": 40,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "8c1243bcc960dd311eb610ea8b9cf69777b53a1b1e922c0284346562145245d0",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "events",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "EVT-002",
+      "source": {
+        "heading": "events",
+        "line": 41,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "2681313858368de57c8f27e307210ad12faee96f09dc4e2adbfaf9c93eb13c18",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "events",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "EVT-003",
+      "source": {
+        "heading": "events",
+        "line": 42,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "1eae97560fa67b07a347d238703c6ef79c13b74eca1afdc535a049f3f403f9ff",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "events",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "EVT-004",
+      "source": {
+        "heading": "events",
+        "line": 43,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "cbceb522bd0c2a0153bcfea0bab9c74fc3e811f69533f0247f6e419ba1ff1a68",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py"
+      ],
+      "collection": "events",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "EVT-005",
+      "source": {
+        "heading": "events",
+        "line": 44,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "8a462a01ac6777a43119bcbf932b01d4adbcf8c60ac2f4220bf0109d380ab5e4",
+      "code_paths": [
+        "evidence/requirements_trace.json",
+        "docs/test_plan.md",
+        "docs/operations_runbook.md"
+      ],
+      "collection": "evidence",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json",
+        "docs/test_plan.md"
+      ],
+      "requirement_id": "EVD-001",
+      "source": {
+        "heading": "evidence",
+        "line": 86,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "fe41482ecdf4cb4e87176682fcd44cc71eb2d598bc42d69c9ba63c962c00c69a",
+      "code_paths": [
+        "evidence/requirements_trace.json",
+        "docs/test_plan.md",
+        "docs/operations_runbook.md"
+      ],
+      "collection": "evidence",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json",
+        "docs/test_plan.md"
+      ],
+      "requirement_id": "EVD-002",
+      "source": {
+        "heading": "evidence",
+        "line": 87,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "50215cd6e4f93c5ddc7aa20a644945b266a76b5544d33a9fe6d4328b7bef8a68",
+      "code_paths": [
+        "evidence/requirements_trace.json",
+        "docs/test_plan.md",
+        "docs/operations_runbook.md"
+      ],
+      "collection": "evidence",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json",
+        "docs/test_plan.md"
+      ],
+      "requirement_id": "EVD-003",
+      "source": {
+        "heading": "evidence",
+        "line": 88,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "292d435d28ac400184b0b2939903bc5fd9b85e7d7772a936c7427c2f9692586f",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py",
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "invariants",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "INV-001",
+      "source": {
+        "heading": "invariants",
+        "line": 51,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "6a40ae3ba5ffcfc9c4783fc3ff0cfaaed6478e6400bb5da825d1413a2760b179",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py",
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "invariants",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "INV-002",
+      "source": {
+        "heading": "invariants",
+        "line": 52,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "3f481952f84b781592076b185e1341e0551360a05464e33ef54cdca2208d2226",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py",
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "invariants",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "INV-003",
+      "source": {
+        "heading": "invariants",
+        "line": 53,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "c4cdc10675ca61c0c19d29d82015fed51da4a8746d746fc17abacbab280fa943",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py",
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "invariants",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "INV-004",
+      "source": {
+        "heading": "invariants",
+        "line": 54,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "b342328826718a8890651e81dc4872091b853fb0135de3dc26f39fb24276a53e",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/aggregates/dispute_case.py",
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "invariants",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "INV-005",
+      "source": {
+        "heading": "invariants",
+        "line": 55,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "7d08528b056882825827902627ae97510847bf43e667244bf383c462a41c483b",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql",
+        "scripts/run_local.sh"
+      ],
+      "collection": "operations",
+      "generated_artifacts": [
+        "docs/operations_runbook.md"
+      ],
+      "requirement_id": "OPS-001",
+      "source": {
+        "heading": "operations",
+        "line": 81,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "7ca55823810198148948f5c5e78d59115014c907d4706162e47693cdcc7dc0cf",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql",
+        "scripts/run_local.sh"
+      ],
+      "collection": "operations",
+      "generated_artifacts": [
+        "docs/operations_runbook.md"
+      ],
+      "requirement_id": "OPS-002",
+      "source": {
+        "heading": "operations",
+        "line": 82,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "c6e47e348455b6e48c3f7510d83055dd72b65753257cf5e2ed571a5c5f9fc643",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/infrastructure/persistence/migrations/0001_initial.sql",
+        "scripts/run_local.sh"
+      ],
+      "collection": "operations",
+      "generated_artifacts": [
+        "docs/operations_runbook.md"
+      ],
+      "requirement_id": "OPS-003",
+      "source": {
+        "heading": "operations",
+        "line": 83,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "9f6f815beb37c23621bb3e1405cac4a80a92ae8faa0d2588b65229c9a550754f",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "queries",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "QRY-001",
+      "source": {
+        "heading": "queries",
+        "line": 35,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "363cd4e73f34e1857d5ea9c7e7baecb33ab5ba06f02e9eaee3e40add8b9d8a9c",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "queries",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "QRY-002",
+      "source": {
+        "heading": "queries",
+        "line": 36,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "0c73352c6d368c7d4869516a2664fa5f198827811adfebaea79ad24ad8badd8c",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "queries",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "QRY-003",
+      "source": {
+        "heading": "queries",
+        "line": 37,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "56ee6141766ac3b01394c469134bec43a8e1947bda0d5c07d6c5e036f685ddd6",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "security",
+      "generated_artifacts": [
+        "docs/threat_model.md"
+      ],
+      "requirement_id": "SEC-001",
+      "source": {
+        "heading": "security",
+        "line": 75,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "aa7bd8ef21b23241a953082b750dfe957ed71f027d2509c0f858cba0b563afbd",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "security",
+      "generated_artifacts": [
+        "docs/threat_model.md"
+      ],
+      "requirement_id": "SEC-002",
+      "source": {
+        "heading": "security",
+        "line": 76,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "68db5392a43de03e1bd5026b16fda6fc0b2b5dc35802437e977293733be31cba",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "security",
+      "generated_artifacts": [
+        "docs/threat_model.md"
+      ],
+      "requirement_id": "SEC-003",
+      "source": {
+        "heading": "security",
+        "line": 77,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "72ee3c27fd8a27a663d5ec95d40da9ac9fd494b3af398b9c975e171576e9bda8",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/interfaces/api/main.py"
+      ],
+      "collection": "security",
+      "generated_artifacts": [
+        "docs/threat_model.md"
+      ],
+      "requirement_id": "SEC-004",
+      "source": {
+        "heading": "security",
+        "line": 78,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_api_contract.py",
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "35b16799885102b33405b2e6581ac7d6787bf4518e30c49f610f81386ec4e5ae",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "use_cases",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "UC-001",
+      "source": {
+        "heading": "use cases",
+        "line": 19,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "374a90cae8e34291088d20e5b30c9ea25b23802547efd1b96032ecd1dd2b7c26",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "use_cases",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "UC-002",
+      "source": {
+        "heading": "use cases",
+        "line": 20,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "0b80a0080e8adad1745413f583766ae009b84d88769a242e540e043ea307c22f",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/application/services/dispute_service.py"
+      ],
+      "collection": "use_cases",
+      "generated_artifacts": [
+        "evidence/requirements_trace.json"
+      ],
+      "requirement_id": "UC-003",
+      "source": {
+        "heading": "use cases",
+        "line": 21,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "15366ba661dd8601ce7e86fef539df1a7d40f73ca9480b5f8fb62587ead4c609",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "workflows",
+      "generated_artifacts": [
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "WF-001",
+      "source": {
+        "heading": "workflows",
+        "line": 58,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "4b420888b4fd7671d90f7272eb42441a71790d2cecafc8628770601a5400187d",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "workflows",
+      "generated_artifacts": [
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "WF-002",
+      "source": {
+        "heading": "workflows",
+        "line": 59,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    },
+    {
+      "canonical_hash": "fce08a0f2725fd388fb3fde138b79c9eb00cb4a82adf938b5f41409932dbdde9",
+      "code_paths": [
+        "app/upi_failed_debit_dispute/domain/state_machines/dispute_lifecycle.py"
+      ],
+      "collection": "workflows",
+      "generated_artifacts": [
+        "docs/domain_state_machine.md"
+      ],
+      "requirement_id": "WF-003",
+      "source": {
+        "heading": "workflows",
+        "line": 60,
+        "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+        "source_id": "e2bf3d5d4b3f"
+      },
+      "test_paths": [
+        "tests/test_service.py"
+      ]
+    }
   ],
-  "requirements_ir_sha256": "4e41b908de45e23eb8ebeb602e2564100a2c137c924ab3c3f09271a272267ba5",
-  "states": [
-    "received",
-    "validated",
-    "evidence_pending",
-    "investigation",
-    "resolution_proposed",
-    "resolved",
-    "rejected",
-    "closed"
-  ]
+  "requirements_ir_sha256": "20f059fec2a9bfafc19b2cdb1beafb1ae1416b0d858135f981181608bf7e8e65",
+  "source_documents": [
+    {
+      "front_matter": {
+        "app_id": "upi_app_factory",
+        "data_policy": "fictional_only",
+        "domain": "failed_debit_dispute_case_management",
+        "product_name": "UPI App Factory",
+        "real_payment_calls": "disabled",
+        "repository_id": "upi_app_factory",
+        "runtime_llm_calls_default": "0"
+      },
+      "path": "tests/fixtures/phase53/failed_debit_requirements.md",
+      "sha256": "86ec55446560e7f42936fca5ccdd59e43e19b37b740c8e9de74511c4b208580a",
+      "source_id": "e2bf3d5d4b3f"
+    }
+  ],
+  "summary": {
+    "endpoint_count": 13,
+    "requirement_count": 51,
+    "state_count": 8
+  }
 }

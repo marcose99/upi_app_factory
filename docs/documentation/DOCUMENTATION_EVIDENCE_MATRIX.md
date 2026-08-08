@@ -426,8 +426,8 @@ Total documentation information items represented by this campaign: **564**
 | `tests/fixtures/phase68_70/tampered/README.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/adrs/ADR-0001-local-sqlite-modular-monolith.md` | DUPLICATIVE_CONSOLIDATE | false |
 | `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/domain_state_machine.md` | DUPLICATIVE_CONSOLIDATE | false |
-| `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/operations_runbook.md` | DUPLICATIVE_CONSOLIDATE | false |
-| `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/test_plan.md` | DUPLICATIVE_CONSOLIDATE | false |
+| `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/operations_runbook.md` | DUPLICATIVE_CONSOLIDATE | true |
+| `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/test_plan.md` | DUPLICATIVE_CONSOLIDATE | true |
 | `workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/threat_model.md` | DUPLICATIVE_CONSOLIDATE | false |
 | `workspace/deep_engineering_campaign/phase56_test_runs/api_contract/upi_failed_debit_dispute/docs/adrs/ADR-0001-local-sqlite-modular-monolith.md` | DUPLICATIVE_CONSOLIDATE | false |
 | `workspace/deep_engineering_campaign/phase56_test_runs/api_contract/upi_failed_debit_dispute/docs/domain_state_machine.md` | DUPLICATIVE_CONSOLIDATE | false |

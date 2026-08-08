@@ -76,13 +76,13 @@
     },
     {
       "path": "docs/operations_runbook.md",
-      "sha256": "bf0a244b98af0da651cdff73076ccd19d21d32f4834a350eab746f360f36fe4c",
-      "size_bytes": 107
+      "sha256": "7361b4e14778727c38cdf7adbe4e04d5903d8acb96df1b3aa51b3f6a6c5e9370",
+      "size_bytes": 1459
     },
     {
       "path": "docs/test_plan.md",
-      "sha256": "2ccc4f74d7d6e67891e211208b6315439fe742311d8affe26cdc7a076f0c507a",
-      "size_bytes": 158
+      "sha256": "971eb99b6e47bbab4c9bc306360f11f38977ba6ad55d4967931cb7a70a0423ad",
+      "size_bytes": 1005
     },
     {
       "path": "docs/threat_model.md",
@@ -96,13 +96,13 @@
     },
     {
       "path": "evidence/generation_manifest.json",
-      "sha256": "963fcacb6bd89d42a8345a750cae4f9f79948cbddde02d64b8c8f3013f01cf41",
+      "sha256": "9b411aae3e87d6fbbb74df3c35d55c30d9a7f53ea42eddc6d469379f640c7d9c",
       "size_bytes": 1156
     },
     {
       "path": "evidence/requirements_trace.json",
-      "sha256": "120760c135e7f4949793524faaca9c3962c3672632a849b1b3d2bf43f9888dfb",
-      "size_bytes": 764
+      "sha256": "28c642a3586bc60b2baf3e27581b1ef7bdc815830258a9c5c75cec25ad920abf",
+      "size_bytes": 33289
     },
     {
       "path": "openapi/openapi.json",
@@ -121,7 +121,7 @@
   "profile_version": "deep-composer/v1",
   "real_payment_calls": "disabled",
   "repository_id": "upi_app_factory",
-  "requirements_ir_sha256": "4e41b908de45e23eb8ebeb602e2564100a2c137c924ab3c3f09271a272267ba5",
+  "requirements_ir_sha256": "20f059fec2a9bfafc19b2cdb1beafb1ae1416b0d858135f981181608bf7e8e65",
   "state_machine": [
     "received",
     "validated",

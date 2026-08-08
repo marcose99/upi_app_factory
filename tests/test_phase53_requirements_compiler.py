@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 
@@ -26,6 +28,30 @@ def test_failed_debit_fixture_compiles_to_canonical_ir() -> None:
     assert len(ir["traceability"]) >= 35
     assert not has_blocking_diagnostics(ir), ir["diagnostics"]
     assert len(ir["canonical_hash"]) == 64
+
+
+def test_source_identity_and_canonical_hash_are_portable_across_clone_roots(
+    tmp_path: Path,
+) -> None:
+    relative = Path("tests/fixtures/phase53/failed_debit_requirements.md")
+    compiled = []
+
+    for name in ("clone_a", "clone_b"):
+        project_root = tmp_path / name
+        target = project_root / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(FIXTURE, target)
+        compiled.append(compile_requirements([target], project_root))
+
+    first, second = compiled
+    expected_source_id = hashlib.sha256(relative.as_posix().encode("utf-8")).hexdigest()[:12]
+
+    assert expected_source_id == "e2bf3d5d4b3f"
+    assert first["source_documents"] == second["source_documents"]
+    assert first["traceability"] == second["traceability"]
+    assert first["canonical_hash"] == second["canonical_hash"]
+    assert first["source_documents"][0]["source_id"] == expected_source_id
+    assert first["source_documents"][0]["path"] == relative.as_posix()
 
 
 def test_compiler_reports_duplicates_and_unsupported_dependencies(tmp_path: Path) -> None:

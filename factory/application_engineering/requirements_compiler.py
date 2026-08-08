@@ -155,17 +155,18 @@ def diagnostic(
     }
 
 
-def _source_id(path: Path) -> str:
-    return hashlib.sha256(path.as_posix().encode("utf-8")).hexdigest()[:12]
+def _source_id(relative_path: str) -> str:
+    # Source identity must be independent of machine or clone location.
+    return hashlib.sha256(relative_path.encode("utf-8")).hexdigest()[:12]
 
 
 def parse_markdown(path: Path, root: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     text = path.read_text(encoding="utf-8")
-    source_id = _source_id(path)
     try:
         relative = path.resolve().relative_to(root.resolve()).as_posix()
     except ValueError:
         relative = path.as_posix()
+    source_id = _source_id(relative)
     front_matter, body_start_line = parse_front_matter(text)
     collections: dict[str, list[dict[str, Any]]] = {name: [] for name in REQUIRED_COLLECTIONS}
     collections["dependencies"] = []

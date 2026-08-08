@@ -457,9 +457,10 @@
       "path": "docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.md",
       "reasons": [
         "created to close current documentation gap",
-        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
+        "human-readable lifecycle matrix updated for portable deterministic fixture reconciliation"
       ],
-      "sha256_after": "c14b34de32e0438bf47b866bb55965b31e8f91cd602cce2074e6ee0f3c42857c",
+      "sha256_after": "4f7b43671d075e241b3b98e5dbab3f9273eafe10be8223b14c3c6d97fd33d795",
       "sha256_before": ""
     },
     {
@@ -4552,23 +4553,25 @@
     {
       "classification_after": "DUPLICATIVE_CONSOLIDATE",
       "classification_before": "DUPLICATIVE_CONSOLIDATE",
-      "modified": false,
+      "modified": true,
       "path": "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/operations_runbook.md",
       "reasons": [
-        "byte-identical duplicate"
+        "byte-identical duplicate",
+        "deterministic Phase59/60 fixture reconciled after portable source-identity repair"
       ],
-      "sha256_after": "bf0a244b98af0da651cdff73076ccd19d21d32f4834a350eab746f360f36fe4c",
+      "sha256_after": "7361b4e14778727c38cdf7adbe4e04d5903d8acb96df1b3aa51b3f6a6c5e9370",
       "sha256_before": "bf0a244b98af0da651cdff73076ccd19d21d32f4834a350eab746f360f36fe4c"
     },
     {
       "classification_after": "DUPLICATIVE_CONSOLIDATE",
       "classification_before": "DUPLICATIVE_CONSOLIDATE",
-      "modified": false,
+      "modified": true,
       "path": "workspace/deep_engineering_campaign/generated_app/upi_failed_debit_dispute/docs/test_plan.md",
       "reasons": [
-        "byte-identical duplicate"
+        "byte-identical duplicate",
+        "deterministic Phase59/60 fixture reconciled after portable source-identity repair"
       ],
-      "sha256_after": "2ccc4f74d7d6e67891e211208b6315439fe742311d8affe26cdc7a076f0c507a",
+      "sha256_after": "971eb99b6e47bbab4c9bc306360f11f38977ba6ad55d4967931cb7a70a0423ad",
       "sha256_before": "2ccc4f74d7d6e67891e211208b6315439fe742311d8affe26cdc7a076f0c507a"
     },
     {
