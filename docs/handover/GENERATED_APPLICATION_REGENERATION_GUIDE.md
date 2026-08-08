@@ -1,30 +1,18 @@
 # Generated Application Regeneration Guide
 
-The generated application is intentionally disposable.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Define the current governed regeneration/reproducibility distinction.
+> **Audience:** factory engineers and recipients
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-Durable:
-- factory governance
-- prompts
-- validators
-- run logs
-- generation ledgers
-- audit evidence
-- lifecycle artifacts
-- portals
+## Standards and practice alignment
 
-Disposable:
-- `workspace/factory_generated/upi_dispute_resolution/generated_application/`
+- ISO/IEC/IEEE 26514:2022
+- ISO/IEC/IEEE 15289:2019
 
-Safe reset command:
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-```bash
-python scripts/reset_generated_application_workspace.py --run-id first_governed_generation_run_001
-```
 
-After reset, run the generation/runtime commands and validation gates.
+**Regeneration** is a factory engineering action using current requirements/planning/approval/engineering/validation contracts. **Reproduction** is a recipient action proving an already-generated source bundle can bootstrap/run independently from its own locks/contracts.
 
-Expected behavior:
-- previous generated app is archived
-- reset manifest is written
-- generated_application workspace is recreated
-- lifecycle evidence remains preserved
+Do not confuse recipient clean-room bootstrap with factory regeneration.

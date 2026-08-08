@@ -1,5 +1,7 @@
 # UPI App Factory Logging Standard
 
+> **Canonical observability context:** [Observability and SLO Boundaries](../operations/OBSERVABILITY_AND_SLOS.md). This logging standard defines implemented logging semantics; it does not claim a production metrics/alerting backend.
+
 UPI App Factory emits dependency-light JSON logs to stdout by default. The
 schema is OpenTelemetry Logs Data Model aligned, W3C Trace Context compatible,
 and OWASP redaction oriented. It does not claim an external collector, SIEM,

@@ -1,31 +1,36 @@
-# Repository governance
+# Repository Governance
 
-UPI App Factory uses pull-request-only changes to `main`, deterministic
-quality gates, immutable action pins, least-privilege workflow
-permissions, evidence archives, and explicit protected-action approval.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Describe current repository quality gates, ownership and protected actions.
+> **Audience:** maintainers, reviewers and auditors
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-## Required checks
+## Standards and practice alignment
+
+- ISO/IEC/IEEE 15289:2019
+- NIST SP 800-218 SSDF 1.1; OWASP ASVS 5.0.0 verification reference
+
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
+
+
+## Required Governed CI checks
 
 - Governance policy
+- Public clone hygiene
 - Ruff
 - MyPy
 - Focused tests
+- Docker platform contract
 - Full regression
 
 ## Review model
 
-`.github/CODEOWNERS` assigns `marcose99` as the current accountable owner.
-This requests ownership review but does not manufacture independence.
-A genuinely independent approval requires a second authorized reviewer.
+`.github/CODEOWNERS` records ownership. Self-owned review does not manufacture independence; independent approval requires a genuinely distinct authorized reviewer.
 
 ## Protected decisions
 
-Merge, ruleset activation, capstone tagging, release, deployment,
-production-provider enablement, and certification claims require
-explicit human authorization.
+Documentation/source reconstruction, governed branch delivery/CI, `main` delivery, RC requalification, tagging, release, deployment and certification claims are separate protected boundaries. See [Release Governance](RELEASE_GOVERNANCE.md).
 
-## Boundaries
+## Safety boundary
 
-The repository remains fictional, local-first, mock-safe,
-certification-ready-not-certified, and does not perform production
-payment processing or live provider calls.
+The accepted default remains fictional/local-first/mock-safe. Production payment processing and live provider calls are not implied.

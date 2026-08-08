@@ -2,14 +2,23 @@
 from __future__ import annotations
 
 import json
-import re
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any, cast
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from scripts.current_operational_contract import (  # noqa: E402
+    find_executable_boundary_violations,
+    find_secret_like_text,
+    load_application_profile,
+    recipient_test_command,
+    required_local_run_environment,
+)
+
 APP_ID = "upi_dispute_resolution"
 PHASE = "phase42_generated_application_local_run_pack"
 POLICY_PATH = Path("policies/phase42_generated_application_local_run_pack_policy.json")
@@ -17,9 +26,7 @@ PROMPT_PATH = Path("prompts/phase42/generated_application_local_run_pack_prompt.
 VALIDATOR_PATH = Path("scripts/validate_phase42_generated_application_local_run_pack.py")
 TEST_PATH = Path("tests/test_phase42_generated_application_local_run_pack.py")
 GENERATED_APP_ROOT = Path("workspace/factory_generated/upi_dispute_resolution/generated_application")
-ARTIFACT_DIR = (
-    Path("workspace/factory_generated") / APP_ID / "lifecycle_artifacts" / "phase42"
-)
+ARTIFACT_DIR = Path("workspace/factory_generated") / APP_ID / "lifecycle_artifacts" / "phase42"
 
 RUN_PACK_MANIFEST_PATH = ARTIFACT_DIR / "generated_application_local_run_pack_manifest.json"
 READINESS_GATE_PATH = ARTIFACT_DIR / "generated_application_local_run_readiness_gate.json"
@@ -63,46 +70,19 @@ REQUIRED_BOUNDARY_FIELDS = [
     "push_allowed",
 ]
 
-REQUIRED_ENV_VALUES = {
-    "UPI_DISPUTE_APP_ENV=local",
-    "UPI_DISPUTE_EXTERNAL_ECOSYSTEM_MODE=mock",
-    "UPI_DISPUTE_ENABLE_LIVE_PROVIDER_CALLS=false",
-    "UPI_DISPUTE_ALLOW_REAL_SECRETS=false",
-    "UPI_DISPUTE_LOCAL_HOST=127.0.0.1",
-}
-
-LIVE_CALL_PATTERNS = [
-    r"\brequests\.",
-    r"\burllib\.request\b",
-    r"\bhttpx\.(get|post|put|delete|patch|stream)\(",
-    r"\bboto3\b",
-    r"\bgoogle\.cloud\b",
-    r"\bazure\.",
-    r"\bstripe\b",
-    r"\brazorpay\b",
+EXECUTABLE_SCAN_PATHS = [
+    GENERATED_APP_ROOT / ".env.example",
+    GENERATED_APP_ROOT / "scripts/start_local.sh",
+    GENERATED_APP_ROOT / "scripts/health_check.py",
+    GENERATED_APP_ROOT / "scripts/smoke_test.py",
+    GENERATED_APP_ROOT / "scripts/validate_local_run_pack.py",
+    GENERATED_APP_ROOT / "scripts/clean_local_artifacts.sh",
 ]
 
-REAL_SECRET_PATTERNS = [
-    "BEGIN PRIVATE KEY",
-    "BEGIN RSA PRIVATE KEY",
-    "client_secret =",
-    "client_secret:",
-    "api_key =",
-    "api_key:",
-    "secret_key =",
-    "secret_key:",
-    "password =",
-]
-
-RELEASE_ENABLEMENT_PATTERNS = [
-    r'"deployment_allowed"\s*:\s*true',
-    r'"merge_allowed"\s*:\s*true',
-    r'"tag_allowed"\s*:\s*true',
-    r'"push_allowed"\s*:\s*true',
-    r"\bgit\s+push\b",
-    r"\bgit\s+tag\b",
-    r"\bgit\s+merge\b",
-    r"\bnpm\s+publish\b",
+DOCUMENTATION_SCAN_PATHS = [
+    PROMPT_PATH,
+    GENERATED_APP_ROOT / "README.md",
+    GENERATED_APP_ROOT / "docs/local_run_pack/README.md",
 ]
 
 
@@ -175,8 +155,7 @@ def validate_policy_prompt_and_lifecycle_artifacts(errors: list[str]) -> None:
     smoke_steps = smoke_plan.get("smoke_steps")
     if not isinstance(smoke_steps, list) or len(smoke_steps) < 5:
         errors.append("Phase 42 smoke test plan is incomplete")
-    reset_scope = reset_plan.get("reset_scope")
-    if reset_scope != "known_local_runtime_noise_only":
+    if reset_plan.get("reset_scope") != "known_local_runtime_noise_only":
         errors.append("Phase 42 reset plan is not limited to known runtime noise")
 
     for contract_path in [
@@ -190,10 +169,12 @@ def validate_policy_prompt_and_lifecycle_artifacts(errors: list[str]) -> None:
 
 
 def validate_run_pack_content(errors: list[str]) -> None:
+    profile = load_application_profile(APP_ID)
+
     env_text = (PROJECT_ROOT / GENERATED_APP_ROOT / ".env.example").read_text(encoding="utf-8")
-    for required in REQUIRED_ENV_VALUES:
+    for required in required_local_run_environment(APP_ID, profile):
         if required not in env_text:
-            errors.append(f"Phase 42 .env.example missing {required}")
+            errors.append(f"Phase 42 .env.example missing profile value: {required}")
 
     doc_text = (
         PROJECT_ROOT / GENERATED_APP_ROOT / "docs/local_run_pack/README.md"
@@ -212,14 +193,18 @@ def validate_run_pack_content(errors: list[str]) -> None:
     deployment_guide = (
         PROJECT_ROOT / "docs/deployment/GENERATED_APPLICATION_LOCAL_DEPLOYMENT_GUIDE.md"
     ).read_text(encoding="utf-8")
+    current_command = recipient_test_command(APP_ID, profile)
+    if current_command not in deployment_guide:
+        errors.append(
+            "Deployment guide does not document application-profile recipient test "
+            f"command: {current_command}"
+        )
     if "python -m pytest -q generated_application/app/tests" in deployment_guide:
-        errors.append("Deployment guide uses a stale nested generated_application test path")
-    if "PYTHONPATH=.. python -m pytest -q app/tests" not in deployment_guide:
-        errors.append("Deployment guide does not match recipient-root generated app test command")
+        errors.append("Deployment guide uses stale nested generated_application test path")
 
-    startup_text = (PROJECT_ROOT / GENERATED_APP_ROOT / "scripts/start_local.sh").read_text(
-        encoding="utf-8"
-    )
+    startup_text = (
+        PROJECT_ROOT / GENERATED_APP_ROOT / "scripts/start_local.sh"
+    ).read_text(encoding="utf-8")
     for marker in [
         "127.0.0.1",
         "UPI_DISPUTE_EXTERNAL_ECOSYSTEM_MODE",
@@ -234,16 +219,10 @@ def validate_run_pack_content(errors: list[str]) -> None:
     if ":-mock}" not in startup_text or ":-false}" not in startup_text:
         errors.append("Phase 42 startup script does not default to mock-only false live settings")
 
-    smoke_text = (PROJECT_ROOT / GENERATED_APP_ROOT / "scripts/smoke_test.py").read_text(
-        encoding="utf-8"
-    )
-    for marker in [
-        "local_principal",
-        "app.openapi",
-        "/disputes",
-        "METRICS.openmetrics",
-        "401",
-    ]:
+    smoke_text = (
+        PROJECT_ROOT / GENERATED_APP_ROOT / "scripts/smoke_test.py"
+    ).read_text(encoding="utf-8")
+    for marker in ["local_principal", "app.openapi", "/disputes", "METRICS.openmetrics", "401"]:
         if marker not in smoke_text:
             errors.append(f"Phase 42 smoke test missing marker: {marker}")
 
@@ -255,38 +234,22 @@ def validate_run_pack_content(errors: list[str]) -> None:
 
 
 def validate_no_boundary_violations(errors: list[str]) -> None:
-    scan_paths = [
-        POLICY_PATH,
-        PROMPT_PATH,
-        RUN_PACK_MANIFEST_PATH,
-        READINESS_GATE_PATH,
-        SMOKE_TEST_PLAN_PATH,
-        RESET_PLAN_PATH,
-        AUDIT_PATH,
-        *RUN_PACK_FILES,
-    ]
-    for relative_path in scan_paths:
-        path = PROJECT_ROOT / relative_path
-        text = path.read_text(encoding="utf-8")
-        for pattern in LIVE_CALL_PATTERNS:
-            if re.search(pattern, text):
-                errors.append(f"{relative_path} contains live-call pattern: {pattern}")
-        for pattern in REAL_SECRET_PATTERNS:
-            if pattern in text:
-                errors.append(f"{relative_path} contains real-secret-like pattern: {pattern}")
-        for pattern in RELEASE_ENABLEMENT_PATTERNS:
-            if re.search(pattern, text):
-                errors.append(f"{relative_path} contains release enablement pattern: {pattern}")
-        if ".zip" in text:
-            errors.append(f"{relative_path} references generated export bundle ZIP output")
+    for relative_path in EXECUTABLE_SCAN_PATHS:
+        text = (PROJECT_ROOT / relative_path).read_text(encoding="utf-8")
+        for pattern in find_secret_like_text(text):
+            errors.append(f"{relative_path} contains secret-like pattern: {pattern}")
+        for pattern in find_executable_boundary_violations(text):
+            errors.append(f"{relative_path} contains executable boundary pattern: {pattern}")
+
+    for relative_path in DOCUMENTATION_SCAN_PATHS:
+        text = (PROJECT_ROOT / relative_path).read_text(encoding="utf-8")
+        for pattern in find_secret_like_text(text):
+            errors.append(f"{relative_path} contains secret-like pattern: {pattern}")
 
 
 def validate_local_smoke(errors: list[str]) -> None:
     result = subprocess.run(
-        [
-            sys.executable,
-            str(GENERATED_APP_ROOT / "scripts/smoke_test.py"),
-        ],
+        [sys.executable, str(GENERATED_APP_ROOT / "scripts/smoke_test.py")],
         cwd=PROJECT_ROOT,
         check=False,
         text=True,
@@ -296,10 +259,7 @@ def validate_local_smoke(errors: list[str]) -> None:
         errors.append("Phase 42 generated app smoke test failed:\n" + result.stdout + result.stderr)
 
     local_validator = subprocess.run(
-        [
-            sys.executable,
-            str(GENERATED_APP_ROOT / "scripts/validate_local_run_pack.py"),
-        ],
+        [sys.executable, str(GENERATED_APP_ROOT / "scripts/validate_local_run_pack.py")],
         cwd=PROJECT_ROOT,
         check=False,
         text=True,

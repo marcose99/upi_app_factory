@@ -1,32 +1,32 @@
 # Factory Local Deployment Guide
 
-This deployment guide is for running the factory locally on a recipient machine.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Provide the current native recipient command and point to the complete deployment contract.
+> **Audience:** recipients and operators
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-## Deployment type
+## Standards and practice alignment
 
-Local developer/operator deployment only.
+- ISO/IEC/IEEE 26514:2022
+- ISO/IEC 20000-1:2018 and SRE practices
 
-## Steps
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
+
+
+## Native route
 
 ```bash
-git clone <repo-url>
+git clone <repository-url>
 cd upi_app_factory
-git checkout <validated-release-tag>
-python3.10 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+./run_factory.sh
 ```
 
-Validate:
+For non-browser startup:
 
 ```bash
-python scripts/validate_phase13c_agent_runtime_foundation.py
-python scripts/validate_phase13c_self_correction_governance.py
-python -m pytest -q
+./run_factory.sh --no-browser
 ```
 
-## Boundary
+The launcher owns `.venv` creation and exact dependency closure. Do not substitute an editable development install as the recipient handover route.
 
-This is not production deployment.
-This is not a live UPI/payment deployment.
+Full details: [Local and Docker Deployment](LOCAL_AND_DOCKER_DEPLOYMENT.md).

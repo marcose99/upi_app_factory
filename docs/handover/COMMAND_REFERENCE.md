@@ -1,37 +1,44 @@
 # Command Reference
 
-Canonical clean-clone startup:
+> **Status:** Canonical current-state documentation
+> **Purpose:** List current recipient/operator commands without historical phase-specific setup paths.
+> **Audience:** recipients and operators
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
+
+## Standards and practice alignment
+
+- ISO/IEC/IEEE 26514:2022
+
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
+
+
+## Native
 
 ```bash
+./run_factory.sh
 ./run_factory.sh --no-browser
-./run_factory.sh --host 127.0.0.1 --port 0 --state-root .var/upi_app_factory --url-file .var/upi_app_factory/operator_url.txt --no-browser
-./stop_factory.sh --state-root .var/upi_app_factory
+./run_factory.sh --port 0
 ```
 
-Lower-level launcher:
+## Docker
 
 ```bash
-./start_factory.sh --host 127.0.0.1 --port 8036 --state-root .var/upi_app_factory
+docker compose up --build
+docker compose down
 ```
 
-The previously documented future `./factory ...` quick path is not currently
-possible in this repository because `factory/` is a Python package directory and
-no root executable named `factory` is created.
-
-Current script equivalents for the historical operator shortcuts:
+## Maintainer quality checks
 
 ```bash
-# ./factory doctor
-scripts/validate_public_clone_readiness.py --repo . --license Apache-2.0
-
-# ./factory generate
-scripts/run_portal_requirements_driven_application_engineering.py \
-  --requirements examples/requirements/01_upi_failed_debit_no_credit.md
+python -m ruff check .
+python -m mypy .
+python -m pytest -q
 ```
 
-Current generated application test command:
+Exact environments must be created from repository lock inputs rather than unconstrained installation.
 
-```bash
-PYTHONPATH=workspace/factory_generated/upi_dispute_resolution/generated_application/app \
-  python -m pytest -q workspace/factory_generated/upi_dispute_resolution/generated_application/tests
-```
+## Legacy Phase 13C compatibility contract — Current script equivalents
+
+The historical future-CLI vocabulary included `./factory doctor` and `./factory generate`. These names are retained for validator/history compatibility only. Do not treat an unimplemented historical/future CLI spelling as a current executable command.
+
+**Current script equivalents** are the repository-owned commands documented above and the operator portal/runtime surfaces verified at the checked-out revision.

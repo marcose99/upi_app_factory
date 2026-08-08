@@ -1,16 +1,20 @@
 # Generated Application Handover
 
-Authoritative path: `workspace/factory_generated/upi_dispute_resolution/generated_application`.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Explain what an engineered application recipient receives and how independent reproducibility is proven.
+> **Audience:** application recipients, developers, reviewers and security engineers
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-A recipient should be able to copy/extract the source bundle and run:
+## Standards and practice alignment
 
-```bash
-./scripts/bootstrap_cleanroom.sh
-.venv/bin/python scripts/validate_dependency_contract.py
-.venv/bin/python -m pytest -q app/tests
-./scripts/start_local.sh
-```
+- ISO/IEC/IEEE 26514:2022
+- SLSA 1.2 concepts; CycloneDX/SPDX SBOM concepts without level/certification claims
 
-Required handover artifacts are exact bootstrap/runtime-test locks, dependency contract, bootstrap/validator, tests and runtime health/smoke scripts. Tampered/non-exact/incomplete dependency state must fail closed.
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-The handover is a source bundle; wheel packaging and production deployment are not claimed.
+
+The authoritative `upi_dispute_resolution` generated source bundle is locally runnable and independently reproducible. It owns exact bootstrap/runtime-test locks, a dependency contract, clean-room bootstrap, tests and runtime sources.
+
+Handover proves source-bundle reproducibility and local execution; it does not claim wheel packaging, production deployment, live payment rails or regulatory certification.
+
+See the generated application's own `README.md`, [Supply Chain and Dependencies](../security/SUPPLY_CHAIN_AND_DEPENDENCIES.md) and [Architecture](../current_state/ARCHITECTURE.md).

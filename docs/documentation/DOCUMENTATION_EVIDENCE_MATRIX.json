@@ -1,7 +1,7 @@
 {
   "baseline_commit": "cdb9afab385cc0ada381d045a5509671bba617aa",
   "baseline_tree": "7b45ef655126783c5a78b628aaa34cc6794c8993",
-  "document_count": 552,
+  "document_count": 563,
   "documents": [
     {
       "classification_after": "CURRENT_AND_VERIFIED",
@@ -56,10 +56,26 @@
         "superseded latest baseline",
         "superseded uncommitted repair state",
         "modernized from executable current-state evidence",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "3870c5509c61b234336ac74e6832d846d5fae7046efa545214d5523039b4bfba",
+      "sha256_after": "866439c7bf08dc78478ab69af611641155bfaacaa21c11890265cfbc98de121d",
       "sha256_before": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/DOCUMENTATION_INDEX.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "03281d2f5df7ddab3d9620ff487ef3630b075bdb77362a3b8725de22658497cc",
+      "sha256_before": null
     },
     {
       "classification_after": "HISTORICAL_RETAIN_AS_HISTORY",
@@ -104,6 +120,34 @@
       ],
       "sha256_after": "15d1705a947442ab4eee2bd212b8133d36fae8eb0ee45ad160ffda9dcd36ddee",
       "sha256_before": "15d1705a947442ab4eee2bd212b8133d36fae8eb0ee45ad160ffda9dcd36ddee"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/ai/AI_AND_AGENTIC_GOVERNANCE.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "2e2098d2adc5d7319422299c2b80515bb641652378a6b70c96f708a158f706db",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/api/API_AND_EVENT_CONTRACTS.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "d7c0535e9f54c30ec1843c4a1db5f5acaac000f4cfad51add3fb8ae220b30aef",
+      "sha256_before": null
     },
     {
       "classification_after": "HISTORICAL_RETAIN_AS_HISTORY",
@@ -233,9 +277,11 @@
       "path": "docs/current_state/ARCHITECTURE.md",
       "reasons": [
         "created to close current documentation gap",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "a6c15e745cd947685977337745f7eb6553e9caefcb65149dc0e622c0a5f0f10d",
+      "sha256_after": "ae70a43ea7fef8bfdb08f1346e677e5cfb6130329342d5fcb88ed0224e4f7cc7",
       "sha256_before": ""
     },
     {
@@ -245,10 +291,40 @@
       "path": "docs/current_state/OPERATIONS_AND_ACCEPTANCE.md",
       "reasons": [
         "created to close current documentation gap",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "6388b0e3a87b287b23035ddc226f68c3d352cbe8dbb0aec2cecd61c5bc1fba11",
+      "sha256_after": "a08a93fede3ec33cbc8354162250d18ac0d3546f0e1073af2f547c6267555022",
       "sha256_before": ""
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/current_state/QUALITY_ATTRIBUTES.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "63bb222626721bfbeb1db9b3d16ad391042416f5c186123204e4b0996805dccb",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/current_state/SYSTEM_OVERVIEW.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "1f8629835824c0e5d3c4b395aad48a670b8e12d4e70e572e225065d3a36b4324",
+      "sha256_before": null
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
@@ -297,45 +373,69 @@
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/deployment/DEPLOYMENT_BOUNDARIES_AND_NON_CLAIMS.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "fe4aac27a9e142017a76e6e3cc1f7370f769ee0fa46a0f35936bfd64e734712e",
+      "sha256_after": "6ff866062469696306d3b3b6372ea3b2c770cd6287efe6a23c94e75b11cd9bb5",
       "sha256_before": "fe4aac27a9e142017a76e6e3cc1f7370f769ee0fa46a0f35936bfd64e734712e"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/deployment/FACTORY_LOCAL_DEPLOYMENT_GUIDE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "2cabd6c6b2d807c3a343b8d81a84cb4985fe8a7c0eba633a59e4ddfcaaed6126",
+      "sha256_after": "89326ea0c808168f26a6dc4224503384c45ddbf1c12690e48ba3184b6fda84a4",
       "sha256_before": "2cabd6c6b2d807c3a343b8d81a84cb4985fe8a7c0eba633a59e4ddfcaaed6126"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/deployment/GENERATED_APPLICATION_LOCAL_DEPLOYMENT_GUIDE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
+        "current operational contract owns recipient-root generated-application test command",
+        "recipient command is application-profile-specific under the generic UPI factory contract architecture"
       ],
-      "sha256_after": "1b0e6ef3d816dcac71762f4ebe4711e81d854963e680a76716ec2d486c9f0e01",
+      "sha256_after": "0d624c90339beece3f4faa78764bd1d749ed364737479d6fa3920c224bb5c5fb",
       "sha256_before": "1b0e6ef3d816dcac71762f4ebe4711e81d854963e680a76716ec2d486c9f0e01"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/deployment/LOCAL_AND_DOCKER_DEPLOYMENT.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "30a08a267b112d440b963fd6634be8c3ca9ae1db3cc5c2e43ba71e35f88285a9",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/deployment/PORTAL_LOCAL_DEPLOYMENT_GUIDE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "7bb206661422e61050252444faf7098d7562d1cfef483b0feb9574878373e47f",
+      "sha256_after": "e02c5915bebe8ec8919d96b304d9945b08edc9627c5e024c2adb4a317aecf30e",
       "sha256_before": "7bb206661422e61050252444faf7098d7562d1cfef483b0feb9574878373e47f"
     },
     {
@@ -344,20 +444,10 @@
       "modified": true,
       "path": "docs/documentation/DOCUMENTATION_AUDIT.md",
       "reasons": [
-        "created to close current documentation gap"
+        "created to close current documentation gap",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "a81466d446e3980cd8a8afc7c136d2ad3ae4853fca5b3d0699556a5c2b088b86",
-      "sha256_before": ""
-    },
-    {
-      "classification_after": "CURRENT_AND_VERIFIED",
-      "classification_before": "MISSING_CREATE",
-      "modified": true,
-      "path": "docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.json",
-      "reasons": [
-        "created to close current documentation gap"
-      ],
-      "sha256_after": "05a5d2221056c47d49e89e2a9495ec2050083671a35293c486e57c8b6eb260c9",
+      "sha256_after": "3555018851bff2d84e0e66a98beebb7e118449733c578f38f394a0ec4c637bb1",
       "sha256_before": ""
     },
     {
@@ -366,9 +456,10 @@
       "modified": true,
       "path": "docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.md",
       "reasons": [
-        "created to close current documentation gap"
+        "created to close current documentation gap",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "5ac0de1bae115946ab0424688088ea1a145f5d8ff160d50b816782be7c62e853",
+      "sha256_after": "c14b34de32e0438bf47b866bb55965b31e8f91cd602cce2074e6ee0f3c42857c",
       "sha256_before": ""
     },
     {
@@ -631,31 +722,37 @@
       "path": "docs/governance/RELEASE_GOVERNANCE.md",
       "reasons": [
         "created to close current documentation gap",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "246146c740c49647edbc45142350c56f8cb247ec3c1df9be2d74b01efbf25cdf",
+      "sha256_after": "dc805d8d6bd81c6dbef7218c8e8923e28091334fed88da78a8c32a75cfddbeba",
       "sha256_before": ""
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/governance/repository_governance.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "c73a8c7e623b2a6c0ff0c1f650372b599546dcdc8a170855253567295c45e3e2",
+      "sha256_after": "bfbe09fd863d3934cf8047478ce28f0a80af982aad54870cf8574cdda91f6109",
       "sha256_before": "c73a8c7e623b2a6c0ff0c1f650372b599546dcdc8a170855253567295c45e3e2"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/COMMAND_REFERENCE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "f34f78bde81199a957e048a656ab1eb6894f2fe254d841d8be32637891ed6b34",
+      "sha256_after": "2e396443330269f9b4d62150ec10ef2de334a55d29ee6d6db6f6b634f1e645fd",
       "sha256_before": "f34f78bde81199a957e048a656ab1eb6894f2fe254d841d8be32637891ed6b34"
     },
     {
@@ -674,12 +771,14 @@
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/FACTORY_ARCHITECTURE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "e603d68f5891e6e8bb9bdc35386bbc5d93218ef421029af73e163b2b5e38a9f6",
+      "sha256_after": "c1a2010a2756d85524ce8c396970a844612c2553a3e03af96c82f4176f961ca0",
       "sha256_before": "e603d68f5891e6e8bb9bdc35386bbc5d93218ef421029af73e163b2b5e38a9f6"
     },
     {
@@ -689,31 +788,37 @@
       "path": "docs/handover/GENERATED_APPLICATION_HANDOVER.md",
       "reasons": [
         "created to close current documentation gap",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "c5b0af07138b95ffef8e419992fa47b87a9aedf50496b2a7b5abc581d01e3b7a",
+      "sha256_after": "441390682e2972638f46061b4945e47a103c1b4425c7555780276edaf6d298df",
       "sha256_before": ""
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/GENERATED_APPLICATION_REGENERATION_GUIDE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "1c6637796234a118aedf2f9029aca388f1f85fc331ac9d16c4058705018657ac",
+      "sha256_after": "9937a5af0448684f7afc9838405a406418800148345550e587e1c2afbfeee2eb",
       "sha256_before": "1c6637796234a118aedf2f9029aca388f1f85fc331ac9d16c4058705018657ac"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/GOVERNANCE_AUDIT_SELF_CORRECTION_GUIDE.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "3ef9b18bdd9908d81c183a0ce50d36b0b7de315ad942a0cc0f304f078833070d",
+      "sha256_after": "e07a4461ed1a0a76d6a1d6c1a268001fd4b0249bdd90030ef3934fa4c819c5f8",
       "sha256_before": "3ef9b18bdd9908d81c183a0ce50d36b0b7de315ad942a0cc0f304f078833070d"
     },
     {
@@ -724,42 +829,50 @@
       "reasons": [
         "no known stale current-state signal",
         "modernized from executable current-state evidence",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "cea2bbf613b583ab520449e2cbaea4aee093d05c905d4ae56a37b313857b1bf0",
+      "sha256_after": "34579e31aafb5870aaa771b770c9e6a9f46b651c236ca1c1be1a72f8c80ca8b4",
       "sha256_before": "fe2f9b8205fee1b30625c39af19a9d59c95f49c1c02f996915dc979c69c98907"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/QUICKSTART.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "550f1957aac18683e694760f846cb0d006c7bd3ad12f47ff25812c95c858db0b",
+      "sha256_after": "37f6153f42dab22e43742d0188bf6185de17eac735eb0948ecce42df8c179b15",
       "sha256_before": "550f1957aac18683e694760f846cb0d006c7bd3ad12f47ff25812c95c858db0b"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/README_HANDOVER.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "9848056961c330d14bb1acb1d955bcc89a8f21f59b78759ee2ad0ce4f4e6d30b",
+      "sha256_after": "0dcff2475d84c34eca14c5015977b638e4047ea68db596a12ae661f69ff2e01a",
       "sha256_before": "9848056961c330d14bb1acb1d955bcc89a8f21f59b78759ee2ad0ce4f4e6d30b"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/handover/RELEASE_PACKAGE_SPEC.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "bc10c1c5757509570aa66250bc0f5228cd74ae0b8562861e51276790447cbbf2",
+      "sha256_after": "df912bbbae5313cc4034db8dec0b37770bc5817296dd1dd016e10923ed91e824",
       "sha256_before": "bc10c1c5757509570aa66250bc0f5228cd74ae0b8562861e51276790447cbbf2"
     },
     {
@@ -776,13 +889,57 @@
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/observability/logging_standard.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "cbe138f1052dd06441cc00eaae2e9fae3a3dd83c3825147d7e3058ef33b8d19f",
+      "sha256_after": "ddd53ebdce2269504731ec3d73583b8c392faabe46ce9fb56f1b8a670b34c58a",
       "sha256_before": "cbe138f1052dd06441cc00eaae2e9fae3a3dd83c3825147d7e3058ef33b8d19f"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/operations/INCIDENT_AND_RECOVERY.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "690852a5d900814f0e9a916391c176011e09c793b412a7330b5a15aeb3a3da7a",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/operations/OBSERVABILITY_AND_SLOS.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "6905d820452f71766e64996bab6e0717acc34bb76ce124c9277fafdbe674a443",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/operations/OPERATING_MODEL.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "d9d2f5b41a3c47a34f319cd9264b06e6100f870f9916f84cdada0dc9c26c07a4",
+      "sha256_before": null
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
@@ -2700,58 +2857,96 @@
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/requirements/REQUIREMENTS_AND_TRACEABILITY.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "84fa97e65ade6ddccbfc77a0a84b9815b5b746aee3f1cdb3ff69edcb456f5cae",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/runbooks/factory_handover_runbook.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "fb98f327bab7209ea76ea62cac9dc1ba0fbc14ee5fdc121e22e3db0226c05a66",
+      "sha256_after": "7751795bfc1753c58d02c4f5d8064d219afc36331ffd7e2c9546eed75d569a4c",
       "sha256_before": "fb98f327bab7209ea76ea62cac9dc1ba0fbc14ee5fdc121e22e3db0226c05a66"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/runbooks/generated_app_regeneration_runbook.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "76b405a45d80bd49d82489e262cb517fb7dca26d025fc149170008707ceb6e8a",
+      "sha256_after": "3121f983b1e0631e3366803cd033c11a8650c933b097be59c98bd440b09067fe",
       "sha256_before": "76b405a45d80bd49d82489e262cb517fb7dca26d025fc149170008707ceb6e8a"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/runbooks/handover_release_package_runbook.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "998f955ee4f16d0842d4f96d24d2502a16a7c69eee96a81ae7dec2b99f0f6a04",
+      "sha256_after": "fdcb363e8ebbb45659c16aa72cbcaa166de77c6a4a5a13f35f0d24d82c02a4aa",
       "sha256_before": "998f955ee4f16d0842d4f96d24d2502a16a7c69eee96a81ae7dec2b99f0f6a04"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/runbooks/handover_validation_runbook.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "ea11b28c44c089b168b0b42cb4967155ed2481e3779651d695344a3ecb6df207",
+      "sha256_after": "f3ed046e74868d4ea9d2e55ad6df4f327f4d1d29651821d96c5c0982d67c1beb",
       "sha256_before": "ea11b28c44c089b168b0b42cb4967155ed2481e3779651d695344a3ecb6df207"
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "docs/runbooks/recipient_operator_runbook.md",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "d2ff07cda0cee46b74e83d0265293503dd26228796b73bf2739d4c248b44e14f",
+      "sha256_after": "829b36ac31113456bbeb456e709fa38c57b74194b9bfc0bfc3d941a6ae3944f1",
       "sha256_before": "d2ff07cda0cee46b74e83d0265293503dd26228796b73bf2739d4c248b44e14f"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/security/SECURITY_ARCHITECTURE_AND_THREAT_MODEL.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "7dd8b9d9663f2bbfe76446f2728b870bf55f80cbfcc20f7b194725466b45a0e1",
+      "sha256_before": null
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
@@ -2760,9 +2955,11 @@
       "path": "docs/security/SUPPLY_CHAIN_AND_DEPENDENCIES.md",
       "reasons": [
         "created to close current documentation gap",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
       ],
-      "sha256_after": "f6bc2486bab4e4e57a0a15561fcd78e1cab155f2f13cb6890ca4a6a3ba6f905d",
+      "sha256_after": "4a643c42084bed9bbcff4425d166f1d8f3e4070e35e69596dadfae877741a32a",
       "sha256_before": ""
     },
     {
@@ -2775,6 +2972,20 @@
       ],
       "sha256_after": "3b6d7449fdf34f2e274bd476b2ea5d22006ae759b82ec60c1dc7fda417b2297d",
       "sha256_before": "3b6d7449fdf34f2e274bd476b2ea5d22006ae759b82ec60c1dc7fda417b2297d"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "docs/testing/TEST_STRATEGY_AND_ACCEPTANCE.md",
+      "reasons": [
+        "created as canonical current information item from executable technical truth",
+        "mapped to family-specific industry-standard documentation guidance",
+        "reconstructed/verified from executable technical truth and standards applicability",
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+      ],
+      "sha256_after": "de693b83c2848b82338ff36b03d67e4b4eed296306edd09a15754106b8bca76f",
+      "sha256_before": null
     },
     {
       "classification_after": "HISTORICAL_RETAIN_AS_HISTORY",
@@ -6090,6 +6301,15 @@
       "sha256_before": "ff615ede7fcf93c5aece9b8cafc79e2d5a5f6a3e50d5802190e4d4830d3dd8fc"
     }
   ],
+  "inventory_container_count": 1,
+  "reconstruction_authorized_boundary": "DOCUMENTATION_RECONSTRUCTION_WRITE",
+  "reconstruction_policy": "Current documents are source-truth reconstructed; duplicative and historical documents retain provenance.",
+  "reconstruction_source_commit": "3a44c8c9235e4535331159b3d3fcfa7ce4dbfe81",
   "schema_version": "upi-app-factory.documentation-evidence-matrix.v1",
-  "source_of_truth": "implementation_tests_runtime_evidence"
+  "self_document_path": "docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.json",
+  "self_hash_evidence": "governed reconstruction OUTPUT_MANIFEST.json and evidence archive",
+  "self_hash_policy": "EXTERNAL_EVIDENCE_MANIFEST",
+  "self_hash_reason": "A complete-file SHA-256 cannot be represented stably inside the same file whose bytes it hashes; the matrix digest is sealed externally.",
+  "source_of_truth": "implementation_tests_runtime_evidence",
+  "total_information_item_count": 564
 }

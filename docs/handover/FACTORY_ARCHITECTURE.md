@@ -1,45 +1,18 @@
-# Handover Factory Architecture
+# Factory Architecture — Handover View
 
-The factory consists of:
+> **Status:** Canonical current-state documentation
+> **Purpose:** Point handover readers to the canonical multi-view architecture.
+> **Audience:** recipients, architects and reviewers
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-1. Governance layer
-   - prompts
-   - policies
-   - validators
-   - guardrails
-   - audit scorecards
+## Standards and practice alignment
 
-2. Agent-runtime foundation
-   - agent registry
-   - tool registry
-   - runtime state
-   - dry-run orchestrator
-   - handoff ledger
-   - tool execution ledger
-   - runtime event ledger
+- ISO/IEC/IEEE 42010:2022; C4/arc42 pragmatic modeling practices
+- ISO/IEC/IEEE 26514:2022
 
-3. Generated application workspace
-   - disposable/recreatable generated application
-   - local FastAPI app
-   - tests
-   - docs
-   - evidence
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-4. Audit and self-correction layer
-   - validation findings
-   - governed correction decisions
-   - self-correction ledgers
-   - human approval boundaries
-   - blocked categories
 
-5. Portal layer
-   - generation progress portal
-   - agent runtime portal
-   - self-correction portal
+Canonical architecture: [Current Architecture](../current_state/ARCHITECTURE.md).
 
-6. Handover layer
-   - recipient quickstart
-   - deployment guides
-   - runbooks
-   - release package manifest
-   - troubleshooting guide
+The current architecture distinguishes the factory control/engineering plane from the generated application runtime plane and includes context, subsystem, generated-app, dynamic, deployment, security/trust, evidence/provenance and failure/recovery views.

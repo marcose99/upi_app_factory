@@ -1,26 +1,24 @@
-# Generated App Regeneration Runbook
+# Generated Application Regeneration Runbook
 
-## Objective
+> **Status:** Canonical current-state documentation
+> **Purpose:** Describe the governed regeneration boundary without obsolete phase-specific commands.
+> **Audience:** factory engineers and reviewers
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-Delete and recreate the generated app safely while preserving factory evidence.
+## Standards and practice alignment
 
-## Command
+- ISO/IEC 20000-1:2018 and SRE practices
+- ISO/IEC/IEEE 15289:2019
 
-```bash
-python scripts/reset_generated_application_workspace.py --run-id first_governed_generation_run_001
-```
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-## Verify
 
-```bash
-python scripts/validate_phase13a_generated_application_regeneration.py
-```
+Regeneration must use the current factory application-engineering path and preserve deterministic requirements/run identity, generated-app dependency ownership and validation evidence.
 
-## Then
+Do not manually edit the generated application to simulate factory capability. If regeneration changes product semantics or generation logic, treat it as an engineering change requiring its own qualification.
 
-Run generation/runtime commands and validation gates.
+See [System Overview](../current_state/SYSTEM_OVERVIEW.md), [Architecture](../current_state/ARCHITECTURE.md) and [Requirements and Traceability](../requirements/REQUIREMENTS_AND_TRACEABILITY.md).
 
-## Safety
+## Legacy Phase 13C compatibility contract — Generated App Regeneration Runbook
 
-Only the generated application workspace may be reset. Governance, prompts, validators,
-lifecycle artifacts, run logs, portals, and ledgers must remain preserved.
+The historical contract phrase **Only the generated application workspace** refers to the bounded regeneration artifact scope used by that phase. Current regeneration remains governed by executable factory application-engineering contracts and must not modify unrelated repository state merely to satisfy a historical phrase.

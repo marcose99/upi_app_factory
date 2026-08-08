@@ -1,15 +1,34 @@
 # Operator Portal Guide
 
-Start the governed local portal with:
+> **Status:** Canonical current-state documentation
+> **Purpose:** Describe current operator portal surfaces and guarded mutation model.
+> **Audience:** operators, recipients and reviewers
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-```bash
-./run_factory.sh
-```
+## Standards and practice alignment
 
-The operator workflow is: validate fictional requirements -> create governed run -> inspect plan -> explicitly approve application engineering -> execute -> inspect generated source/tests/OpenAPI/evidence -> select `app_id`/`version_id` -> approve runtime start -> inspect health/scenarios/logs/metrics -> download handover -> approve stop.
+- ISO/IEC/IEEE 26514:2022
+- ISO/IEC 20000-1:2018 and SRE practices
 
-Reviewers should verify identities, approvals, generated-test execution evidence, OpenAPI, runtime health, mock boundaries, logs/metrics/evidence, blocked findings, downloadable artifacts, Charts and visuals, and audit/self-correction evidence where those portal surfaces are available.
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-The downloaded authoritative generated application is independently reproducible. See [Generated Application Handover](GENERATED_APPLICATION_HANDOVER.md).
 
-The default workflow does not authorize real payment calls, real customer data, production deployment, certification claims or default live provider access.
+## Access
+
+Start through `./run_factory.sh` and use the verified `/operator-ui/` route after health succeeds.
+
+## Functional areas
+
+The portal exposes local-only health, requirements intake, planning/approval, application engineering, validation, evidence/download, portfolio/runtime, scenario/lifecycle and read-only audit/evidence workflows.
+
+Mutation controls use in-flight guards to prevent duplicate/conflicting actions while preserving unrelated read-only access.
+
+## Charts and visuals
+
+Charts and visuals summarize local evidence/runtime state where those surfaces are available; they do not replace machine-readable evidence.
+
+## Audit and self-correction
+
+Use audit/self-correction evidence where those portal surfaces are available. Bounded self-correction must stop for semantic/security/protected-boundary changes.
+
+See [Operator Portal Control Contract](../operator_portal/control_contract.md).

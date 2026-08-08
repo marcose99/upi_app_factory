@@ -1,47 +1,34 @@
-# Factory Handover Guide
+# Handover Documentation
 
-This guide explains how a recipient should take over the UPI App Factory
-UPI dispute-resolution factory, run it on their own machine, regenerate the
-generated application, validate the result, and inspect the evidence portals.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Provide recipient-oriented navigation to canonical current documents.
+> **Audience:** recipients and reviewers
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-## What is handed over
+## Standards and practice alignment
 
-The repository contains:
-- governed factory prompts, policies, validators, and runtime scaffolding
-- a resettable generated-application workspace
-- local generated UPI dispute-resolution application artifacts
-- mock/simulated external ecosystem adapters
-- audit, self-correction, and progress portals
-- run logs and evidence ledgers
+- ISO/IEC/IEEE 26514:2022
+- ISO/IEC/IEEE 15289:2019
 
-## Truth boundary
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-Primary generated application:
-- real locally runnable UPI/payment dispute-resolution application
 
-External ecosystem:
-- strictly mock/simulated only
+Start with [Quickstart](QUICKSTART.md), then:
 
-Not claimed:
-- production readiness
-- RBI approval
-- NPCI certification
-- regulatory compliance certification
-- live UPI/payment rail integration
-- real customer data handling
+- [Command Reference](COMMAND_REFERENCE.md)
+- [Factory Architecture](FACTORY_ARCHITECTURE.md)
+- [Generated Application Handover](GENERATED_APPLICATION_HANDOVER.md)
+- [Portal Guide](PORTAL_GUIDE.md)
+- [Environment Specification](ENVIRONMENT_SPEC.md)
+- [Release Package Specification](RELEASE_PACKAGE_SPEC.md)
+- [Canonical Documentation Index](../DOCUMENTATION_INDEX.md)
 
-## Recipient quick path
+Historical phase documents remain provenance and must not be used as current operating instructions when they conflict with canonical current documents.
 
-```bash
-git clone <repo-url>
-cd upi_app_factory
-git checkout <validated-release-tag>
+## Legacy Phase 13C compatibility contract
 
-./run_factory.sh --no-browser
-```
+The historical Phase 13C validator identifies this handover family with the phrases **Factory Handover Guide**, **Truth boundary**, **Primary generated application**, and **External ecosystem**. They are retained here solely as a stable compatibility vocabulary.
 
-Open the verified `/operator-ui/` URL printed by the command. The default path
-is deterministic, mock-safe, stores runtime state under `.var/upi_app_factory`,
-and requires no OpenAI API key. The former `./factory ...` quick path is only a
-future CLI concept; this repository must not create a root file named `factory`
-because `factory/` is already the Python package directory.
+- **Truth boundary:** executable source/tests/runtime contracts and governed evidence at the checked-out revision outrank historical prose.
+- **Primary generated application:** `upi_dispute_resolution`.
+- **External ecosystem:** payment/provider systems remain mocked or default-off in accepted local operation.

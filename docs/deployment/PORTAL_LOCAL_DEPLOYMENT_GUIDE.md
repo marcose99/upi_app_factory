@@ -1,19 +1,31 @@
 # Portal Local Deployment Guide
 
-Portals are offline HTML files.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Give current local portal startup and health guidance.
+> **Audience:** operators and recipients
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-Open these files in a browser:
+## Standards and practice alignment
 
-```text
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_generation_progress_portal.html
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_agent_runtime_portal.html
-workspace/factory_generated/upi_dispute_resolution/audit_portal/factory_self_correction_portal.html
-```
+- ISO/IEC/IEEE 26514:2022
+- ISO/IEC 20000-1:2018 and SRE practices
 
-Regenerate portals:
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
+
+
+## Native
 
 ```bash
-python scripts/generate_phase13b_progress_portal.py
-python scripts/generate_phase13c_agent_runtime_portal.py
-python scripts/generate_phase13c_self_correction_portal.py
+./run_factory.sh
 ```
+
+The verified canonical UI route is `/operator-ui/` after `GET /health` succeeds.
+
+## Docker
+
+```bash
+docker compose up --build
+docker compose down
+```
+
+See [Local and Docker Deployment](LOCAL_AND_DOCKER_DEPLOYMENT.md) and [Operating Model](../operations/OPERATING_MODEL.md).

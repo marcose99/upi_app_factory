@@ -1,0 +1,43 @@
+{
+  "application_id": "upi_dispute_resolution",
+  "documentation": {
+    "deployment_guide": "docs/deployment/GENERATED_APPLICATION_LOCAL_DEPLOYMENT_GUIDE.md"
+  },
+  "inherits_generic_contract": "factory_governance/current_contracts/upi_factory_contract.json",
+  "local_acceptance_environment": [
+    "UPI_DISPUTE_APP_ENV=local",
+    "UPI_DISPUTE_EXTERNAL_ECOSYSTEM_MODE=mock",
+    "UPI_DISPUTE_ENABLE_LIVE_PROVIDER_CALLS=false",
+    "UPI_DISPUTE_ALLOW_REAL_SECRETS=false",
+    "UPI_DISPUTE_LOCAL_HOST=127.0.0.1"
+  ],
+  "recipient_test": {
+    "argv": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "app/tests"
+    ],
+    "environment": {
+      "PYTHONPATH": ".."
+    },
+    "rendered_shell_command": "PYTHONPATH=.. python -m pytest -q app/tests",
+    "working_directory": "generated_application"
+  },
+  "runtime_safety": {
+    "certification_claim_allowed": false,
+    "deployment_allowed": false,
+    "external_ecosystem_integrations": "mocked_or_simulated_only",
+    "force_push_allowed": false,
+    "live_provider_calls_allowed": false,
+    "merge_allowed": false,
+    "push_allowed": false,
+    "real_payment_calls_allowed": false,
+    "real_secrets_allowed": false,
+    "release_allowed": false,
+    "tag_allowed": false
+  },
+  "schema_version": "upi-app-factory.application-profile.v1",
+  "upi_application_type": "UPI dispute resolution / failed debit beneficiary-not-credited case management"
+}

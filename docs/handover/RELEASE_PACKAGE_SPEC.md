@@ -1,38 +1,18 @@
 # Release Package Specification
 
-Future package command only; no root `factory` executable exists because
-`factory/` is the Python package directory:
+> **Status:** Canonical current-state documentation
+> **Purpose:** Define recipient package integrity and non-claims.
+> **Audience:** release engineers, recipients and auditors
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-```bash
-python -m factory.release_pack.generate
-```
+## Standards and practice alignment
 
-Expected output:
+- ISO/IEC/IEEE 15289:2019
+- SLSA 1.2 concepts; CycloneDX/SPDX SBOM concepts without level/certification claims
 
-```text
-release_packages/
-└── upi_app_factory_<tag>_handover/
-    ├── README_HANDOVER.md
-    ├── QUICKSTART.md
-    ├── ENVIRONMENT_SPEC.md
-    ├── COMMAND_REFERENCE.md
-    ├── FACTORY_ARCHITECTURE.md
-    ├── GENERATED_APPLICATION_GUIDE.md
-    ├── GOVERNANCE_AND_AUDIT_GUIDE.md
-    ├── TROUBLESHOOTING.md
-    ├── VALIDATION_REPORT.json
-    ├── HANDOVER_MANIFEST.json
-    ├── checksums.sha256
-    ├── portals/
-    └── evidence/
-```
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-The package must include:
-- release tag
-- source commit
-- validation summary
-- portal copies
-- evidence ledgers
-- generated app path
-- known limitations
-- truth boundary
+
+A governed handover package identifies exact source/tree/evidence, required files/checksums, recipient commands, dependency closure, generated application artifacts and explicit truth/non-claim boundaries.
+
+Pinned checksum/manifest files must be reconciled whenever a required release file changes. A handover package does not by itself constitute a GitHub release, deployment or certification.

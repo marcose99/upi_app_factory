@@ -1,0 +1,12 @@
+{
+  "application_profiles": [
+    {
+      "application_id": "upi_dispute_resolution",
+      "path": "factory_governance/current_contracts/application_profiles/upi_dispute_resolution.json",
+      "status": "CURRENT_AND_VERIFIED"
+    }
+  ],
+  "generic_upi_factory_contract": "factory_governance/current_contracts/upi_factory_contract.json",
+  "policy": "Generic UPI architecture, engineering, governance, security, reproducibility and acceptance rules belong in the factory contract. Application-specific runtime, test and environment details belong only in per-application profiles.",
+  "schema_version": "upi-app-factory.current-contract-registry.v1"
+}

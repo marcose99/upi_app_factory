@@ -1,0 +1,112 @@
+{
+  "architecture": {
+    "control_plane_separate_from_generated_application_runtime": true,
+    "external_systems_mocked_or_simulated_for_acceptance": true,
+    "factory_style": "lightweight_local_first_governed_application_engineering",
+    "generated_application_root_template": "workspace/factory_generated/{application_id}/generated_application",
+    "generated_applications_must_be_independently_reproducible": true,
+    "kubernetes_required": false
+  },
+  "contract_status": "CURRENT_AND_VERIFIED",
+  "docker": {
+    "health_path": "/health",
+    "host_publication": "loopback_only",
+    "root_filesystem": "read_only",
+    "shutdown_argv": [
+      "docker",
+      "compose",
+      "down"
+    ],
+    "startup_argv": [
+      "docker",
+      "compose",
+      "up",
+      "--build"
+    ]
+  },
+  "documentation_policy": {
+    "canonical_index": "docs/DOCUMENTATION_INDEX.md",
+    "current_documentation_must_follow_executable_truth": true,
+    "legacy_phase_vocabulary_is_provenance_not_current_authority": true
+  },
+  "engineering_governance": {
+    "deterministic_acceptance_expected": true,
+    "evidence_bound_to_exact_revision": true,
+    "force_push_allowed": false,
+    "human_approval_required_for_protected_actions": true,
+    "requirements_validated_before_protected_engineering": true
+  },
+  "factory_runtime": {
+    "allowed_native_hosts": [
+      "127.0.0.1",
+      "localhost"
+    ],
+    "health_path": "/health",
+    "native_entrypoint": "./run_factory.sh",
+    "operator_ui_path": "/operator-ui/"
+  },
+  "generated_application_profile_requirements": {
+    "profile_must_not_enable_live_provider_calls_for_acceptance": true,
+    "profile_must_not_enable_real_payment_calls_for_acceptance": true,
+    "profile_must_not_override_factory_protected_boundaries": true,
+    "required_fields": [
+      "schema_version",
+      "application_id",
+      "upi_application_type",
+      "recipient_test",
+      "local_acceptance_environment",
+      "runtime_safety",
+      "inherits_generic_contract",
+      "documentation"
+    ],
+    "runtime_safety_required_false_fields": [
+      "live_provider_calls_allowed",
+      "real_payment_calls_allowed",
+      "real_secrets_allowed",
+      "deployment_allowed",
+      "merge_allowed",
+      "push_allowed",
+      "force_push_allowed",
+      "tag_allowed",
+      "release_allowed",
+      "certification_claim_allowed"
+    ]
+  },
+  "governance": {
+    "governed_ci_jobs": [
+      "Governance policy",
+      "Public clone hygiene",
+      "Ruff",
+      "MyPy",
+      "Focused tests",
+      "Docker platform contract",
+      "Full regression"
+    ],
+    "protected_boundaries": [
+      "SOURCE_OR_DOCUMENTATION_MUTATION",
+      "COMMIT",
+      "PUSH",
+      "MAIN_DELIVERY_OR_MERGE",
+      "FORCE_PUSH",
+      "TAG_OR_RELEASE",
+      "DEPLOYMENT",
+      "CERTIFICATION_CLAIM",
+      "LIVE_PROVIDER_OR_PAYMENT_ACCESS"
+    ]
+  },
+  "schema_version": "upi-app-factory.generic-upi-factory-contract.v1",
+  "scope": {
+    "application_family": "UPI",
+    "application_specific_runtime_details_permitted": false,
+    "applies_to": "all UPI applications engineered by the factory",
+    "factory_runtime_semantics_changed_by_this_contract": false,
+    "generator_materializer_semantics_changed_by_this_contract": false
+  },
+  "security_policy": {
+    "generated_runtime_parent_secret_inheritance": "credential_like_variables_stripped",
+    "live_llm_provider_default": "disabled",
+    "local_host_exposure_default": "loopback_only",
+    "real_payment_calls_default": "disabled",
+    "real_secrets_allowed_in_acceptance": false
+  }
+}

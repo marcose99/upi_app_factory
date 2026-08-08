@@ -1,40 +1,22 @@
-# Governance, Audit, and Self-Correction Guide
+# Governance, Audit and Self-Correction Guide
 
-Every warning and error must be handled.
+> **Status:** Canonical current-state documentation
+> **Purpose:** Explain bounded autonomous repair and protected escalation.
+> **Audience:** operators, reviewers and maintainers
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
 
-Required decision states:
-- auto_remediate
-- plan_only
-- human_approval_required
-- blocked
-- no_change_needed
+## Standards and practice alignment
 
-Auto-remediable examples:
-- formatting
-- lint
-- import path
-- test fixture
-- portal population
-- documentation gap
-- validator message
-- low-risk generated app fix
+- ISO/IEC/IEEE 15289:2019
+- NIST SP 800-218 SSDF 1.1; OWASP ASVS 5.0.0 verification reference
 
-Human approval required:
-- git release
-- dependency installation
-- security-policy weakening
-- tool-authorization expansion
-- destructive reset
-- regulatory claim wording
-- live integration
-- customer data handling
-- quality objective waiver
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
-Blocked:
-- real payment execution
-- real customer data use
-- false compliance claim
-- credential exposure
 
-Release rule:
-- no handover/release/freeze should happen with untriaged warnings or errors.
+Bounded self-correction may repair deterministic harness/documentation/evidence defects inside an explicitly authorized boundary. It must not add product capabilities/dependencies, weaken security/tests/governance, enable live payment/LLM/provider behavior, force-push, merge, tag, release, deploy or claim certification without the relevant protected authorization.
+
+Every repair cycle must re-run the affected gate and broader qualification; repeated or semantic failures escalate.
+
+## Legacy Phase 13C compatibility contract
+
+**Every warning and error** must be triaged rather than hidden merely to obtain a green result. **Human approval required** remains the rule whenever a repair crosses a protected action or changes semantics. A **Blocked** result is correct when the requested fix lies outside the current authorization.

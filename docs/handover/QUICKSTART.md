@@ -1,43 +1,43 @@
-# Quickstart for a New Machine
+# Quickstart
 
-## 1. Clone and select release
+> **Status:** Canonical current-state documentation
+> **Purpose:** Get a recipient from clean clone to the health-gated operator portal using the authoritative dependency route.
+> **Audience:** new recipients and local operators
+> **Authority:** implementation, tests, runtime/configuration contracts, generated artifacts and governed evidence at the checked-out revision. This document does not override executable behavior.
+
+## Standards and practice alignment
+
+- ISO/IEC/IEEE 26514:2022
+
+Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
+
 
 ```bash
-git clone <repo-url>
+git clone <repository-url>
 cd upi_app_factory
-git checkout <validated-release-tag>
+./run_factory.sh
 ```
 
-## 2. Start the operator portal
+For a non-browser run:
 
 ```bash
 ./run_factory.sh --no-browser
 ```
 
-This is the canonical clean-clone command. It creates or reuses `.venv`,
-installs/verifies `requirements-recipient.txt`, initializes `.var/upi_app_factory`
-with `runs`, `portfolio`, `runtime`, `logs`, `downloads`, and `evidence`, waits
-for `/health`, and prints the verified `/operator-ui/` URL.
+The launcher manages `.venv` and exact dependency closure. When startup succeeds, use the printed local URL and `/operator-ui/`.
 
-Use `./run_factory.sh --port 0 --url-file .var/upi_app_factory/operator_url.txt --no-browser`
-to avoid a port conflict deterministically.
-
-## 3. Validate baseline
+Docker alternative:
 
 ```bash
-python scripts/validate_phase13c_agent_runtime_foundation.py
-python scripts/validate_phase13c_self_correction_governance.py
-python scripts/validate_phase13b_generated_application.py
-python scripts/validate_phase13b_progress_portal_observability.py
-python -m pytest -q
+docker compose up --build
+# stop:
+docker compose down
 ```
 
-## 4. Open portal
+Next read [Documentation Index](../DOCUMENTATION_INDEX.md).
 
-```text
-http://127.0.0.1:8036/operator-ui/
-```
+## Legacy Phase 13C compatibility contract
 
-The portal includes a Use Sample Requirements control backed by
-`examples/requirements/01_upi_failed_debit_no_credit.md`; pasted/uploaded
-requirements remain supported by the intake contract.
+The historical validator checks the phrases **git checkout** and **Validate baseline**. Current handover should use the exact governed revision supplied by release evidence; if a recipient is explicitly given a revision, `git checkout <exact-governed-revision>` is the generic Git operation, not an instruction to invent or choose a tag.
+
+**Validate baseline** means verify the supplied exact revision/evidence and then use `./run_factory.sh`; it does not reinstate the older editable-development installation path.

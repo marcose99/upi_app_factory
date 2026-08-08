@@ -1,9 +1,31 @@
+## Canonical current documentation
+
+The repository contains extensive historical phase/evidence material. For the current executable system, use the canonical documentation spine first:
+
+- [Documentation Index](docs/DOCUMENTATION_INDEX.md)
+- [System Overview](docs/current_state/SYSTEM_OVERVIEW.md)
+- [Current Architecture](docs/current_state/ARCHITECTURE.md)
+- [Quality Attributes](docs/current_state/QUALITY_ATTRIBUTES.md)
+- [Requirements and Traceability](docs/requirements/REQUIREMENTS_AND_TRACEABILITY.md)
+- [Test Strategy and Acceptance](docs/testing/TEST_STRATEGY_AND_ACCEPTANCE.md)
+- [Security Architecture and Threat Model](docs/security/SECURITY_ARCHITECTURE_AND_THREAT_MODEL.md)
+- [Supply Chain and Dependencies](docs/security/SUPPLY_CHAIN_AND_DEPENDENCIES.md)
+- [Operating Model](docs/operations/OPERATING_MODEL.md)
+- [Observability and SLO Boundaries](docs/operations/OBSERVABILITY_AND_SLOS.md)
+- [Incident and Recovery](docs/operations/INCIDENT_AND_RECOVERY.md)
+- [Local and Docker Deployment](docs/deployment/LOCAL_AND_DOCKER_DEPLOYMENT.md)
+- [API and Event Contracts](docs/api/API_AND_EVENT_CONTRACTS.md)
+- [AI and Agentic Governance](docs/ai/AI_AND_AGENTIC_GOVERNANCE.md)
+- [Release Governance](docs/governance/RELEASE_GOVERNANCE.md)
+
+Historical/duplicative documentation is retained for provenance and classified in `docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.json`; it does not override executable truth or the canonical current documents above.
+
 <!-- generated-by: governed-post-merge-documentation-modernization-v1 -->
 <!-- latest-fully-replayed-product-baseline: cdb9afab385cc0ada381d045a5509671bba617aa -->
 
 # UPI App Factory
 
-**A governed, explainable and safety-first agentic application-engineering factory for realistic UPI dispute workflows.**
+**A governed, explainable and safety-first application-engineering factory for UPI applications, with `upi_dispute_resolution` as the current reference profile.**
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)
@@ -129,11 +151,11 @@ python scripts/token_economics_cli.py compact-report /tmp/token_economics_ledger
 python -m factory.validators.validate_evidence_ledger
 ```
 
-The primary generated runtime now exposes the bounded failed-debit workflow that portal operators review against the campaign requirement: `POST /v1/disputes`, `POST /v1/disputes/{id}/evidence`, `POST /v1/disputes/{id}/investigation`, `POST /v1/disputes/{id}/resolution`, and `GET /v1/disputes/{id}/timeline`. The local workflow is deterministic-first and mock-only: create the case, attach the required `switch_failure`, `core_ledger`, and `customer_statement` evidence set, record the simulated-bank investigation snapshot, and then propose or finalize the resolution with an expected-version guard.
+The current reference generated runtime (`upi_dispute_resolution`) exposes the bounded failed-debit workflow that portal operators review against the current reference requirement: `POST /v1/disputes`, `POST /v1/disputes/{id}/evidence`, `POST /v1/disputes/{id}/investigation`, `POST /v1/disputes/{id}/resolution`, and `GET /v1/disputes/{id}/timeline`. The local workflow is deterministic-first and mock-only: create the case, attach the required `switch_failure`, `core_ledger`, and `customer_statement` evidence set, record the simulated-bank investigation snapshot, and then propose or finalize the resolution with an expected-version guard.
 
 ## Independent generated-application handover
 
-The authoritative generated application now carries its own exact clean-room dependency contract.
+The current reference generated application (`upi_dispute_resolution`) carries its own exact clean-room dependency contract.
 
 ```bash
 cd workspace/factory_generated/upi_dispute_resolution/generated_application
