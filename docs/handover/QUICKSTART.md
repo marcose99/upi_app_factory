@@ -18,6 +18,8 @@ cd upi_app_factory
 ./run_factory.sh
 ```
 
+Copy `<repository-url>` from GitHub's **Code** menu.
+
 For a non-browser run:
 
 ```bash
@@ -25,6 +27,14 @@ For a non-browser run:
 ```
 
 The launcher manages `.venv` and exact dependency closure. When startup succeeds, use the printed local URL and `/operator-ui/`.
+
+Stop the native portal cleanly with:
+
+```bash
+./stop_factory.sh
+```
+
+If you started with an explicit state root, pass the same state root to `stop_factory.sh`.
 
 Docker alternative:
 

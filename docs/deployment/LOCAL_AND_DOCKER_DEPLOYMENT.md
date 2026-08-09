@@ -22,6 +22,8 @@ cd upi_app_factory
 ./run_factory.sh
 ```
 
+Copy `<repository-url>` from GitHub's **Code** menu.
+
 For browser-suppressed startup:
 
 ```bash

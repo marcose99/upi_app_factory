@@ -1,6 +1,7 @@
 # Environment Specification
 
-Current public baseline: `cdb9afab385cc0ada381d045a5509671bba617aa`.
+> **Status:** Canonical current-state documentation
+> **Identity rule:** Environment and acceptance claims apply to the exact checked-out revision. Resolve it with `git rev-parse HEAD` and bind acceptance to Governed CI/evidence for that revision.
 
 ## Factory native route
 

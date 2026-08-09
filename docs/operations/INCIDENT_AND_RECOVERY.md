@@ -35,4 +35,4 @@ Alignment is an engineering documentation practice, **not** a claim of certifica
 
 ## Rollback/revert boundary
 
-This documentation phase does not deliver `main`. Future rollback is a separately governed Git operation; force-push rollback is not the default strategy.
+The public baseline may already have been delivered to `main`. Any rollback or revert is a separately governed Git operation: prefer an additive revert/corrective commit with fresh qualification, and do not use force-push rollback as the default strategy.

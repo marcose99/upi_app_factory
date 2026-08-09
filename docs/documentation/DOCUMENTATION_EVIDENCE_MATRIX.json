@@ -1,8 +1,20 @@
 {
   "baseline_commit": "cdb9afab385cc0ada381d045a5509671bba617aa",
   "baseline_tree": "7b45ef655126783c5a78b628aaa34cc6794c8993",
-  "document_count": 563,
+  "document_count": 568,
   "documents": [
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "reasons": [
+        "created for safe public showcase contribution, support or issue-reporting guidance",
+        "classified current from public recipient and repository governance requirements"
+      ],
+      "sha256_after": "dc7bc3b0c611b879634e7ee6b0b59d06804bdc652fec27f4a2895a5fb0968a9a",
+      "sha256_before": null
+    },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
@@ -24,6 +36,30 @@
       ],
       "sha256_after": "a5e5e84064ff44bb6b19ceaafd71b61d487f523cb6ae99a8c33e4a5d85eb8ed6",
       "sha256_before": "a5e5e84064ff44bb6b19ceaafd71b61d487f523cb6ae99a8c33e4a5d85eb8ed6"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "CODE_OF_CONDUCT.md",
+      "reasons": [
+        "created for safe public showcase contribution, support or issue-reporting guidance",
+        "classified current from public recipient and repository governance requirements"
+      ],
+      "sha256_after": "4d0a39039bc993e0d755caf5cc2318ca4c0484711f84e24dc199927caeb6df72",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "CONTRIBUTING.md",
+      "reasons": [
+        "created for safe public showcase contribution, support or issue-reporting guidance",
+        "classified current from public recipient and repository governance requirements"
+      ],
+      "sha256_after": "f6662bfccc22848e6e54a4c6d34927041b566916fedcfbcdbc403300b73e8169",
+      "sha256_before": null
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
@@ -58,10 +94,35 @@
         "modernized from executable current-state evidence",
         "modernized from executable current-state evidence",
         "reconstructed/verified from executable technical truth and standards applicability",
-        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
+        "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "866439c7bf08dc78478ab69af611641155bfaacaa21c11890265cfbc98de121d",
+      "sha256_after": "1c87b7612765e934848863f4871edc7939a9a0d5309c5d50dc2779775b264fa7",
       "sha256_before": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a"
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "SECURITY.md",
+      "reasons": [
+        "created for safe public showcase contribution, support or issue-reporting guidance",
+        "classified current from public recipient and repository governance requirements"
+      ],
+      "sha256_after": "ef660b2fe97138eebf4bd0b804ef052e83b600723d6d3b402c12c9e1192b58c6",
+      "sha256_before": null
+    },
+    {
+      "classification_after": "CURRENT_AND_VERIFIED",
+      "classification_before": "MISSING_CREATE",
+      "modified": true,
+      "path": "SUPPORT.md",
+      "reasons": [
+        "created for safe public showcase contribution, support or issue-reporting guidance",
+        "classified current from public recipient and repository governance requirements"
+      ],
+      "sha256_after": "6ea9715b4e1e5bb0f3fee972f9029616737cff9df68034d3b94c670b7f794384",
+      "sha256_before": null
     },
     {
       "classification_after": "CURRENT_AND_VERIFIED",
@@ -420,9 +481,10 @@
         "created as canonical current information item from executable technical truth",
         "mapped to family-specific industry-standard documentation guidance",
         "reconstructed/verified from executable technical truth and standards applicability",
-        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
+        "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "30a08a267b112d440b963fd6634be8c3ca9ae1db3cc5c2e43ba71e35f88285a9",
+      "sha256_after": "1a010cccc448d964f6725bc0ce23f2860580f2563ba73589e9941f004cebb22f",
       "sha256_before": null
     },
     {
@@ -458,9 +520,10 @@
       "reasons": [
         "created to close current documentation gap",
         "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
-        "human-readable lifecycle matrix updated for portable deterministic fixture reconciliation"
+        "human-readable lifecycle matrix updated for portable deterministic fixture reconciliation",
+        "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "4f7b43671d075e241b3b98e5dbab3f9273eafe10be8223b14c3c6d97fd33d795",
+      "sha256_after": "c36aeec5c770e423955df149624e850b69b31b3f082493da13adde6803bc9bd8",
       "sha256_before": ""
     },
     {
@@ -764,9 +827,10 @@
       "reasons": [
         "no known stale current-state signal",
         "modernized from executable current-state evidence",
-        "modernized from executable current-state evidence"
+        "modernized from executable current-state evidence",
+        "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "40503beb6b4674b0df15a380340c0daf43ed63a9465867b3974978dd199daf55",
+      "sha256_after": "9427fcee278aabfc39fa7dbe8dd8e474fa9eb17c715ae9803d29e4687b6b4156",
       "sha256_before": "c7d6f12305de2ce80cb03dd48fcaf9d63abb70797a567863ba31f43d1074f2c4"
     },
     {
@@ -845,9 +909,10 @@
       "reasons": [
         "no known stale current-state signal",
         "reconstructed/verified from executable technical truth and standards applicability",
-        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
+        "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "37f6153f42dab22e43742d0188bf6185de17eac735eb0948ecce42df8c179b15",
+      "sha256_after": "148171b5de0307c6c1b697cffec3182b67a3906fee09c905127373177826fc7d",
       "sha256_before": "550f1957aac18683e694760f846cb0d006c7bd3ad12f47ff25812c95c858db0b"
     },
     {
@@ -909,9 +974,10 @@
         "created as canonical current information item from executable technical truth",
         "mapped to family-specific industry-standard documentation guidance",
         "reconstructed/verified from executable technical truth and standards applicability",
-        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation"
+        "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
+        "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "690852a5d900814f0e9a916391c176011e09c793b412a7330b5a15aeb3a3da7a",
+      "sha256_after": "4773f0b36c5167ededb8f259140c0766a129838b5e76e9e382f2f0dc72ade122",
       "sha256_before": null
     },
     {
@@ -6314,5 +6380,5 @@
   "self_hash_policy": "EXTERNAL_EVIDENCE_MANIFEST",
   "self_hash_reason": "A complete-file SHA-256 cannot be represented stably inside the same file whose bytes it hashes; the matrix digest is sealed externally.",
   "source_of_truth": "implementation_tests_runtime_evidence",
-  "total_information_item_count": 564
+  "total_information_item_count": 569
 }

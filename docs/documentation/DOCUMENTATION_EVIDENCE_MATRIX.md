@@ -6,15 +6,15 @@
 
 `docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.json` is the machine-readable inventory container.
 The JSON matrix intentionally does **not** contain an in-band SHA-256 row for its own complete bytes because such a digest is self-referential and cannot remain stable after it is written.
-The matrix JSON file itself is SHA-256 bound externally by the governed campaign evidence `OUTPUT_MANIFEST.json` and evidence archive.
+The matrix JSON file itself is SHA-256 bound externally by governed campaign evidence and evidence archives.
 
-Inventoried document rows (excluding the JSON inventory container): **563**
+Inventoried document rows (excluding the JSON inventory container): **568**
 Inventory containers: **1**
-Total documentation information items represented by this campaign: **564**
+Total documentation information items represented by this campaign: **569**
 
 ## Classification summary
 
-- CURRENT_AND_VERIFIED: **133**
+- CURRENT_AND_VERIFIED: **138**
 - DUPLICATIVE_CONSOLIDATE: **172**
 - HISTORICAL_RETAIN_AS_HISTORY: **258**
 
@@ -22,18 +22,23 @@ Total documentation information items represented by this campaign: **564**
 
 | Path | Classification | Modified |
 |---|---|---:|
+| `.github/ISSUE_TEMPLATE/bug_report.yml` | CURRENT_AND_VERIFIED | true |
 | `.github/pull_request_template.md` | CURRENT_AND_VERIFIED | false |
 | `AGENTS.md` | CURRENT_AND_VERIFIED | false |
+| `CODE_OF_CONDUCT.md` | CURRENT_AND_VERIFIED | true |
+| `CONTRIBUTING.md` | CURRENT_AND_VERIFIED | true |
 | `LICENSE` | CURRENT_AND_VERIFIED | false |
 | `NOTICE` | CURRENT_AND_VERIFIED | false |
 | `README.md` | CURRENT_AND_VERIFIED | true |
-| `docs/DOCUMENTATION_INDEX.md` | CURRENT_AND_VERIFIED | false |
+| `SECURITY.md` | CURRENT_AND_VERIFIED | true |
+| `SUPPORT.md` | CURRENT_AND_VERIFIED | true |
+| `docs/DOCUMENTATION_INDEX.md` | CURRENT_AND_VERIFIED | true |
 | `docs/adr/ADR-0001-lightweight-local-first-governed-factory.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/adr/ADR-0067-repository-owned-autonomous-control-plane.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/adr/ADR-0068-consolidated-phases-68-70-capstone.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/agent_prompt_quality_guide.md` | CURRENT_AND_VERIFIED | false |
-| `docs/ai/AI_AND_AGENTIC_GOVERNANCE.md` | CURRENT_AND_VERIFIED | false |
-| `docs/api/API_AND_EVENT_CONTRACTS.md` | CURRENT_AND_VERIFIED | false |
+| `docs/ai/AI_AND_AGENTIC_GOVERNANCE.md` | CURRENT_AND_VERIFIED | true |
+| `docs/api/API_AND_EVENT_CONTRACTS.md` | CURRENT_AND_VERIFIED | true |
 | `docs/capstone/phase66/architecture.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/capstone/phase66/phase66_evaluation_summary.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/capstone/phase66/problem_framing.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
@@ -45,10 +50,10 @@ Total documentation information items represented by this campaign: **564**
 | `docs/capstone/phase68_70/phase70_portfolio_depth_matrix.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/capstone/phase68_70/reproducible_evaluator_recipient.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/control_plane/README.md` | CURRENT_AND_VERIFIED | false |
-| `docs/current_state/ARCHITECTURE.md` | CURRENT_AND_VERIFIED | false |
-| `docs/current_state/OPERATIONS_AND_ACCEPTANCE.md` | CURRENT_AND_VERIFIED | false |
-| `docs/current_state/QUALITY_ATTRIBUTES.md` | CURRENT_AND_VERIFIED | false |
-| `docs/current_state/SYSTEM_OVERVIEW.md` | CURRENT_AND_VERIFIED | false |
+| `docs/current_state/ARCHITECTURE.md` | CURRENT_AND_VERIFIED | true |
+| `docs/current_state/OPERATIONS_AND_ACCEPTANCE.md` | CURRENT_AND_VERIFIED | true |
+| `docs/current_state/QUALITY_ATTRIBUTES.md` | CURRENT_AND_VERIFIED | true |
+| `docs/current_state/SYSTEM_OVERVIEW.md` | CURRENT_AND_VERIFIED | true |
 | `docs/debugging/DEBUG_PLAN_CONTRACT.md` | CURRENT_AND_VERIFIED | false |
 | `docs/demo/api_test_commands.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/demo/demo_storyline.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
@@ -56,7 +61,7 @@ Total documentation information items represented by this campaign: **564**
 | `docs/deployment/DEPLOYMENT_BOUNDARIES_AND_NON_CLAIMS.md` | CURRENT_AND_VERIFIED | true |
 | `docs/deployment/FACTORY_LOCAL_DEPLOYMENT_GUIDE.md` | CURRENT_AND_VERIFIED | true |
 | `docs/deployment/GENERATED_APPLICATION_LOCAL_DEPLOYMENT_GUIDE.md` | CURRENT_AND_VERIFIED | true |
-| `docs/deployment/LOCAL_AND_DOCKER_DEPLOYMENT.md` | CURRENT_AND_VERIFIED | false |
+| `docs/deployment/LOCAL_AND_DOCKER_DEPLOYMENT.md` | CURRENT_AND_VERIFIED | true |
 | `docs/deployment/PORTAL_LOCAL_DEPLOYMENT_GUIDE.md` | CURRENT_AND_VERIFIED | true |
 | `docs/documentation/DOCUMENTATION_AUDIT.md` | CURRENT_AND_VERIFIED | true |
 | `docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.md` | CURRENT_AND_VERIFIED | true |
@@ -83,12 +88,12 @@ Total documentation information items represented by this campaign: **564**
 | `docs/enterprise_engineering/phase71_82_v63/WAVE_F_REPORT.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `docs/factory_and_application_quality_dimensions.md` | CURRENT_AND_VERIFIED | false |
 | `docs/generated_application_quality_prompting_guide.md` | CURRENT_AND_VERIFIED | false |
-| `docs/governance/RELEASE_GOVERNANCE.md` | CURRENT_AND_VERIFIED | false |
+| `docs/governance/RELEASE_GOVERNANCE.md` | CURRENT_AND_VERIFIED | true |
 | `docs/governance/repository_governance.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/COMMAND_REFERENCE.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/ENVIRONMENT_SPEC.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/FACTORY_ARCHITECTURE.md` | CURRENT_AND_VERIFIED | true |
-| `docs/handover/GENERATED_APPLICATION_HANDOVER.md` | CURRENT_AND_VERIFIED | false |
+| `docs/handover/GENERATED_APPLICATION_HANDOVER.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/GENERATED_APPLICATION_REGENERATION_GUIDE.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/GOVERNANCE_AUDIT_SELF_CORRECTION_GUIDE.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/PORTAL_GUIDE.md` | CURRENT_AND_VERIFIED | true |
@@ -97,9 +102,9 @@ Total documentation information items represented by this campaign: **564**
 | `docs/handover/RELEASE_PACKAGE_SPEC.md` | CURRENT_AND_VERIFIED | true |
 | `docs/handover/TROUBLESHOOTING.md` | CURRENT_AND_VERIFIED | false |
 | `docs/observability/logging_standard.md` | CURRENT_AND_VERIFIED | true |
-| `docs/operations/INCIDENT_AND_RECOVERY.md` | CURRENT_AND_VERIFIED | false |
-| `docs/operations/OBSERVABILITY_AND_SLOS.md` | CURRENT_AND_VERIFIED | false |
-| `docs/operations/OPERATING_MODEL.md` | CURRENT_AND_VERIFIED | false |
+| `docs/operations/INCIDENT_AND_RECOVERY.md` | CURRENT_AND_VERIFIED | true |
+| `docs/operations/OBSERVABILITY_AND_SLOS.md` | CURRENT_AND_VERIFIED | true |
+| `docs/operations/OPERATING_MODEL.md` | CURRENT_AND_VERIFIED | true |
 | `docs/operator_portal/control_contract.md` | CURRENT_AND_VERIFIED | false |
 | `docs/operator_portal/debug_plan.md` | CURRENT_AND_VERIFIED | false |
 | `docs/operator_portal/input_contract.md` | CURRENT_AND_VERIFIED | false |
@@ -274,16 +279,16 @@ Total documentation information items represented by this campaign: **564**
 | `docs/phase_6/regeneration_automation.md` | CURRENT_AND_VERIFIED | false |
 | `docs/project_debugging_guide.md` | CURRENT_AND_VERIFIED | false |
 | `docs/prompt_quality_guide.md` | CURRENT_AND_VERIFIED | false |
-| `docs/requirements/REQUIREMENTS_AND_TRACEABILITY.md` | CURRENT_AND_VERIFIED | false |
+| `docs/requirements/REQUIREMENTS_AND_TRACEABILITY.md` | CURRENT_AND_VERIFIED | true |
 | `docs/runbooks/factory_handover_runbook.md` | CURRENT_AND_VERIFIED | true |
 | `docs/runbooks/generated_app_regeneration_runbook.md` | CURRENT_AND_VERIFIED | true |
 | `docs/runbooks/handover_release_package_runbook.md` | CURRENT_AND_VERIFIED | true |
 | `docs/runbooks/handover_validation_runbook.md` | CURRENT_AND_VERIFIED | true |
 | `docs/runbooks/recipient_operator_runbook.md` | CURRENT_AND_VERIFIED | true |
-| `docs/security/SECURITY_ARCHITECTURE_AND_THREAT_MODEL.md` | CURRENT_AND_VERIFIED | false |
-| `docs/security/SUPPLY_CHAIN_AND_DEPENDENCIES.md` | CURRENT_AND_VERIFIED | false |
+| `docs/security/SECURITY_ARCHITECTURE_AND_THREAT_MODEL.md` | CURRENT_AND_VERIFIED | true |
+| `docs/security/SUPPLY_CHAIN_AND_DEPENDENCIES.md` | CURRENT_AND_VERIFIED | true |
 | `docs/software_and_payment_regulatory_governance.md` | CURRENT_AND_VERIFIED | false |
-| `docs/testing/TEST_STRATEGY_AND_ACCEPTANCE.md` | CURRENT_AND_VERIFIED | false |
+| `docs/testing/TEST_STRATEGY_AND_ACCEPTANCE.md` | CURRENT_AND_VERIFIED | true |
 | `evidence/phase66/live/prompt_comparison_report.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `evidence/phase66/offline/prompt_comparison_report.md` | HISTORICAL_RETAIN_AS_HISTORY | false |
 | `evidence/releases/factory_governance_baseline_provenance.md` | CURRENT_AND_VERIFIED | false |

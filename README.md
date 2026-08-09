@@ -20,8 +20,8 @@ The repository contains extensive historical phase/evidence material. For the cu
 
 Historical/duplicative documentation is retained for provenance and classified in `docs/documentation/DOCUMENTATION_EVIDENCE_MATRIX.json`; it does not override executable truth or the canonical current documents above.
 
-<!-- generated-by: governed-post-merge-documentation-modernization-v1 -->
-<!-- latest-fully-replayed-product-baseline: cdb9afab385cc0ada381d045a5509671bba617aa -->
+<!-- generated-by: governed-public-showcase-readiness -->
+<!-- exact checkout identity is obtained from Git; governed acceptance is revision-specific -->
 
 # UPI App Factory
 
@@ -59,17 +59,26 @@ It is not merely a chatbot or code generator. It treats requirements, agent deci
 | Product or governance evaluator | Assesses practical usefulness, explainability, safety, traceability and failure handling. |
 | Developer or architect | Replays the factory locally, extends approved capabilities and validates changes. |
 
+## Community and responsible use
+
+- [Contributing](CONTRIBUTING.md) — development workflow, validation expectations and pull-request guidance.
+- [Security](SECURITY.md) — how to report vulnerabilities without exposing secrets or exploit details.
+- [Support](SUPPORT.md) — where to ask usage questions and report reproducible problems.
+- [Code of Conduct](CODE_OF_CONDUCT.md) — expectations for respectful technical collaboration.
+
+This project is a local/mock engineering system. Do not use real customer data, payment credentials, production secrets or live payment rails when evaluating it.
+
 ## Quick start
 
 ### Native one-command route
 
 ```bash
-git clone https://github.com/<owner>/upi_app_factory.git
+git clone <repository-url>
 cd upi_app_factory
 ./run_factory.sh
 ```
 
-Replace `<owner>` with the repository owner shown in GitHub's **Code** menu. The command creates or reuses `.venv`, installs/verifies the recipient dependency set, starts the loopback Operator Portal, waits for `/health`, and prints the verified browser URL.
+Copy `<repository-url>` from GitHub's **Code** menu. The command creates or reuses `.venv`, installs/verifies the recipient dependency set, starts the loopback Operator Portal, waits for `/health`, and prints the verified browser URL.
 
 No OpenAI API key is required for the default deterministic route.
 
@@ -245,25 +254,15 @@ Truthful scope: the retrieval corpus is intentionally small and approved; the ve
 
 ## Reliability and evidence
 
-Current governed public baseline:
+Acceptance is bound to the exact checked-out Git revision rather than a self-staling SHA embedded in this file.
 
-```text
-cdb9afab385cc0ada381d045a5509671bba617aa
+```bash
+git rev-parse HEAD
+git rev-parse HEAD^{tree}
+git rev-parse HEAD^
 ```
 
-Current tree:
-
-```text
-7b45ef655126783c5a78b628aaa34cc6794c8993
-```
-
-Direct parent:
-
-```text
-915551649ce220087cf4cfceb23ecdbd137d9f1d
-```
-
-The current baseline passed local dependency/handover qualification, exact PR-head Governed CI, exact fast-forward-only delivery to `main`, fresh-public-clone verification, and a second push-triggered Governed CI on `main`.
+For the revision you are evaluating, use those identities together with the repository's Governed CI and delivery evidence. A green run on another revision is not transferable acceptance evidence.
 
 | Gate | Current result |
 |---|---:|
