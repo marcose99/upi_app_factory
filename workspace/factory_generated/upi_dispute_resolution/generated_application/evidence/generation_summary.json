@@ -18,30 +18,36 @@
     "path": "external_validation/validation_summary.json",
     "phase": null,
     "recorded_at_utc": null,
-    "sha256": "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab",
+    "sha256": "d877a2174908f9fa887ad9651027319231a4449d2065c3a043d5115b7c49c30d",
+    "source_sha256": "32fe0943a9c776ecdc09ebe5b515fc732cafdd50973ea343e8786ce7e1ad22ab",
     "status": "PASSED"
   },
+  "decision": "NO_GO_WITH_IMPROVEMENT_REQUIREMENTS",
+  "diagnostic_projection_used": false,
+  "evidence_authority": "obligation_specific_fail_closed",
   "exact_input_traceability": {
-    "decision": "GO",
-    "not_applicable_count": 0,
-    "partial_count": 0,
-    "supported_count": 781,
+    "decision": "NO_GO",
+    "not_applicable_count": 3,
+    "partial_count": 764,
+    "supported_count": 14,
     "unsupported_count": 0
   },
+  "mandatory_gate_passed": false,
   "mock_boundary": "enforced",
   "no_live_integrations": true,
   "no_real_customer_data": true,
   "phase": "governed_self_improvement",
+  "publication_authority": true,
   "real_payment_calls": "disabled",
-  "run_id": "r10_1_exact_input_evidence_runtime_convergence",
+  "run_id": "r10_1_exact_input_obligation_specific_evidence",
   "schema_version": "upi-failed-debit-generation-summary.v4",
   "source_hashes": {
-    "factory/exact_v2_traceability.py": "e474bed68b52886a8cd196340171fa350593744b15abc2d2648f95cf95df8828",
-    "factory/generated_application_artifacts.py": "f1a46efc71c92e369fce15b430535e5a9bc24d8b6e0c38eab39090cb272e11be",
-    "factory/native_capability_prerun/improvement_workflow.py": "bbf161e39c8e1d8fb57882a1a082fec98c3787e367173abc1f7cd5a9b8f74899",
+    "factory/exact_v2_traceability.py": "67cc9c6ad4b776c6de8833d5cba4ee89ce817b38dddb327da0e42191623a6766",
+    "factory/generated_application_artifacts.py": "51d24c410e5a913818f96fa55f33310e240a3033a3f9171598b483b96c64ce62",
+    "factory/native_capability_prerun/improvement_workflow.py": "803630b2301ff503cf55dc64fc0818ca9a9cee059f58f1e22cf0420cf35cc29d",
     "factory/operator_portal/local_web_api.py": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
     "factory/token_economics/service.py": "0fed08b94a7f7dd1ce0219264eecf3b5b29f02d1c5344649602bb93080cf2518",
-    "scripts/run_portal_requirements_driven_application_engineering.py": "7ff5d44bd1bb9951f820cdb79c710bbe7f52e3000db456526bb5c2adfaa9f83a"
+    "scripts/run_portal_requirements_driven_application_engineering.py": "51417b61741afee9d816e0be802302ee45495825b6a6f20d247aab6fed6c3c98"
   },
-  "status": "definition_of_done_ready"
+  "status": "definition_of_done_blocked"
 }

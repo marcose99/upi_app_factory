@@ -6,8 +6,15 @@ from pathlib import Path
 import zipfile
 from typing import Any
 
-from factory.operator_portal.runtime_contracts import CERTIFICATION_POSTURE, RuntimeContractError, safe_relative_path, utc_now
+from factory.operator_portal.runtime_contracts import (
+    CERTIFICATION_POSTURE,
+    RuntimeContractError,
+    RuntimeState,
+    safe_relative_path,
+    utc_now,
+)
 from factory.operator_portal.runtime_store import RuntimeStore, redact
+from factory.operator_portal.runtime_supervisor import RuntimeSupervisor
 
 
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
@@ -19,6 +26,7 @@ class RuntimeEvidenceService:
         self.store = store
 
     def build_manifest(self, *, run_id: str, extra: dict[str, Any] | None = None) -> dict[str, Any]:
+        runtime_identity = self._verified_runtime_identity_if_active(run_id)
         run_dir = self.store.run_dir(run_id)
         files = []
         for path in sorted(run_dir.rglob("*")):
@@ -46,10 +54,31 @@ class RuntimeEvidenceService:
             "validation_gates": gates,
             "decision": decision,
             "files": files,
+            "runtime_identity": runtime_identity,
             "extra": redact(extra or {}),
         }
         self.store.atomic_write_json(run_dir / "runtime_evidence_manifest.json", manifest)
         return manifest
+
+    def _verified_runtime_identity_if_active(self, run_id: str) -> dict[str, str] | None:
+        state_path = self.store.state_path(run_id)
+        if not state_path.is_file():
+            return None
+        payload = self.store.read_json(state_path)
+        try:
+            state = RuntimeState(str(payload.get("state", "")))
+        except ValueError as exc:
+            raise RuntimeContractError("runtime evidence state is malformed") from exc
+        if state not in {RuntimeState.READY, RuntimeState.DEGRADED}:
+            return None
+        binding = payload.get("binding")
+        if not isinstance(binding, dict) or not isinstance(binding.get("port"), int):
+            raise RuntimeContractError("runtime evidence binding is malformed")
+        supervisor = RuntimeSupervisor(project_root=self.project_root, store=self.store)
+        status = supervisor.status(run_id=run_id, port=int(binding["port"]))
+        if status.state not in {RuntimeState.READY, RuntimeState.DEGRADED}:
+            raise RuntimeContractError("runtime identity is not verified for evidence attribution")
+        return supervisor._runtime_identity_payload(run_id)
 
     def archive(self, *, run_id: str) -> Path:
         manifest = self.build_manifest(run_id=run_id)

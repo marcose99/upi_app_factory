@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 import json
+import re
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from typing import Any
@@ -1129,7 +1130,11 @@ class FailedDebitRuntimeService:
     @staticmethod
     def _expected_current_version(case: dict[str, Any], expected_version: int | None) -> int:
         current_version = int(case["version"])
-        if expected_version is not None and expected_version != current_version:
+        if expected_version is None:
+            raise ValidationFailed("expected_version is required for state-changing requests")
+        if expected_version < 1:
+            raise ValidationFailed("expected_version must be at least 1")
+        if expected_version != current_version:
             raise OptimisticConcurrencyError("failed-debit case stale write rejected")
         return current_version
 
@@ -1148,16 +1153,25 @@ class FailedDebitRuntimeService:
 
     @staticmethod
     def _parse_amount_minor(value: str) -> int:
+        if not isinstance(value, str) or re.fullmatch(
+            r"(?:0|[1-9][0-9]{0,11})(?:\.[0-9]{1,2})?",
+            value,
+        ) is None:
+            raise ValidationFailed(
+                "amount must be a bounded fixed-point decimal with at most two decimal places"
+            )
         try:
             amount = Decimal(value)
-        except InvalidOperation as exc:
+            if not amount.is_finite():
+                raise ValidationFailed("amount must be finite")
+            if amount <= Decimal("0"):
+                raise ValidationFailed("amount must be greater than zero")
+            quantized = amount.quantize(Decimal("0.01"))
+            if quantized != amount:
+                raise ValidationFailed("amount must have at most two decimal places")
+            return int(quantized * 100)
+        except (InvalidOperation, OverflowError, ValueError) as exc:
             raise ValidationFailed("amount must be a fixed-point decimal string") from exc
-        if amount <= Decimal("0"):
-            raise ValidationFailed("amount must be greater than zero")
-        quantized = amount.quantize(Decimal("0.01"))
-        if quantized != amount:
-            raise ValidationFailed("amount must have at most two decimal places")
-        return int(quantized * 100)
 
     @staticmethod
     def _append_timeline_event(

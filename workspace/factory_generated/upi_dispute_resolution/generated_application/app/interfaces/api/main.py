@@ -73,6 +73,9 @@ from .schemas import (
 DATABASE_PATH = Path(os.environ.get("UPI_DISPUTE_SQLITE_PATH", "state/local_disputes.sqlite3"))
 LOGGER = logging.getLogger("generated_application.runtime")
 RUNTIME = RuntimeLifecycle(DATABASE_PATH)
+APPLICATION_SLUG = "upi_dispute_resolution"
+APPLICATION_VERSION = "0.40.0"
+RUNTIME_MANIFEST_SHA256_ENV = "UPI_APP_FACTORY_RUNTIME_MANIFEST_SHA256"
 
 
 @asynccontextmanager
@@ -88,7 +91,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(
     title="Local UPI Dispute Resolution",
-    version="0.40.0",
+    version=APPLICATION_VERSION,
     openapi_version="3.1.0",
     lifespan=lifespan,
 )
@@ -460,7 +463,14 @@ async def drain(principal: Principal = Depends(local_principal_dependency)) -> d
 
 @app.get("/health")
 async def health() -> dict[str, object]:
-    return {"status": "ok", "startup": RUNTIME.started, "live": RUNTIME.live}
+    return {
+        "status": "ok",
+        "startup": RUNTIME.started,
+        "live": RUNTIME.live,
+        "app_slug": APPLICATION_SLUG,
+        "application_version": APPLICATION_VERSION,
+        "manifest_sha256": os.environ.get(RUNTIME_MANIFEST_SHA256_ENV, ""),
+    }
 
 
 @app.get("/runtime/health")

@@ -7,15 +7,22 @@
 
 Required:
 - Linux environment with Bash
-- Python 3.10
-- Git
-- local filesystem write access
+- Python 3.10 or newer, including the standard `venv` module and `pip`
+- Git for cloning and exact-revision identity checks
+- local filesystem write access to the clone and selected state directory
+- either package-source access to every exact locked dependency or an already
+  installed, verified compatible environment containing that exact closure
 
 ```bash
 ./run_factory.sh
 ```
 
 The recipient environment is governed by `requirements/bootstrap-lock.txt`, `requirements/recipient-lock.txt`, `requirements-recipient.txt`, and `pyproject.toml`.
+
+The launcher can verify and reuse a compatible environment, but it cannot obtain
+missing packages while offline. For an offline native run, prepare all locked
+artifacts in a local cache/wheelhouse or provide the verified exact environment
+before starting. No dependency bundle is implied by the source clone.
 
 ## Generated-application clean-room route
 
@@ -28,7 +35,14 @@ cd workspace/factory_generated/upi_dispute_resolution/generated_application
 
 The generated application owns `requirements-bootstrap.lock`, `requirements.lock`, `dependency_contract.json`, and its clean-room bootstrap. The bootstrap verifies exact installed closure and runs `pip check`.
 
+This route has the same offline limit: all exact generated-application pins must
+already be available locally or installed in the environment being verified.
+
 ## Docker/Compose route
+
+Docker with Compose is the existing alternative when the native Python
+prerequisites are unavailable. Image construction may still require dependency
+source access unless the required layers/artifacts are already cached locally.
 
 Supported Docker host routes:
 - Linux Docker Engine

@@ -72,6 +72,15 @@ This project is a local/mock engineering system. Do not use real customer data, 
 
 ### Native one-command route
 
+Prerequisites are Git, a Linux environment with Bash, Python 3.10 or newer with
+the standard `venv` module and `pip`, and write access to the clone and selected
+state directory. The exact locked dependencies must either be obtainable from
+the configured package source or already be installed in a verified compatible
+environment. Offline startup cannot acquire missing distributions; prepare a
+complete local cache/wheelhouse or a pre-verified exact environment first. The
+Docker Compose route below is the existing alternative when the native Python
+toolchain is unavailable.
+
 ```bash
 git clone <repository-url>
 cd upi_app_factory
@@ -160,7 +169,9 @@ python scripts/token_economics_cli.py compact-report /tmp/token_economics_ledger
 python -m factory.validators.validate_evidence_ledger
 ```
 
-The current reference generated runtime (`upi_dispute_resolution`) exposes the bounded failed-debit workflow that portal operators review against the current reference requirement: `POST /v1/disputes`, `POST /v1/disputes/{id}/evidence`, `POST /v1/disputes/{id}/investigation`, `POST /v1/disputes/{id}/resolution`, and `GET /v1/disputes/{id}/timeline`. The local workflow is deterministic-first and mock-only: create the case, attach the required `switch_failure`, `core_ledger`, and `customer_statement` evidence set, record the simulated-bank investigation snapshot, and then propose or finalize the resolution with an expected-version guard.
+The current reference generated runtime (`upi_dispute_resolution`) exposes the bounded canonical failed-debit workflow: create with `POST /v1/disputes`; attach the required `switch_failure`, `core_ledger`, and `customer_statement` evidence; investigate with `POST /v1/disputes/{id}/investigate`; classify with `POST /v1/disputes/{id}/classify`; request and record human review through `POST /v1/disputes/{id}/human-review` and `POST /v1/disputes/{id}/review-decisions`; record the approved outcome with `POST /v1/disputes/{id}/disposition`; close with `POST /v1/disputes/{id}/close`; and inspect `GET /v1/disputes/{id}/history` plus `GET /v1/disputes/{id}/audit-integrity`. Every state-changing request after creation requires a positive, matching `expected_version` guard. The runtime is deterministic-first and mock-only.
+
+`/investigation`, `/resolution`, and `/timeline` are deprecated, schema-hidden compatibility aliases for `/investigate`, `/classify`, and `/history`. The compatibility `/resolution` route accepts only `finalize_action=propose_only` and delegates to classification; it cannot record a disposition, finalize, or close a case. New integrations must use the canonical routes above.
 
 ## Independent generated-application handover
 

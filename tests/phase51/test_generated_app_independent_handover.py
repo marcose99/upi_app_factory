@@ -7,7 +7,7 @@ import sys
 
 from factory.generated_application_artifacts import (
     REQUIRED_ARTIFACT_RELATIVE_PATHS,
-    materialize_converged_generated_application_artifacts,
+    materialize_generated_application_artifacts,
 )
 
 
@@ -46,7 +46,7 @@ def test_materializer_owns_dependency_artifacts(tmp_path: Path) -> None:
         assert artifact in REQUIRED_ARTIFACT_RELATIVE_PATHS
 
     output = tmp_path / "generated_application"
-    materialize_converged_generated_application_artifacts(
+    materialize_generated_application_artifacts(
         project_root=PROJECT_ROOT,
         application_root=output,
     )

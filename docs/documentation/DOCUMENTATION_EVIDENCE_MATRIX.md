@@ -15,8 +15,8 @@ Total documentation information items represented by this campaign: **569**
 ## Classification summary
 
 - CURRENT_AND_VERIFIED: **138**
-- DUPLICATIVE_CONSOLIDATE: **172**
-- HISTORICAL_RETAIN_AS_HISTORY: **258**
+- DUPLICATIVE_CONSOLIDATE: **170**
+- HISTORICAL_RETAIN_AS_HISTORY: **260**
 
 ## Path inventory
 
@@ -481,8 +481,8 @@ Total documentation information items represented by this campaign: **569**
 | `workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/workspace/phase31_deep_generated_application_export/generated/generated_application/docs/runtime_runbook.md` | DUPLICATIVE_CONSOLIDATE | false |
 | `workspace/factory_generated/upi_dispute_resolution/export_bundles/phase31/workspace/phase31_deep_generated_application_export/generated/generated_application/docs/security_design.md` | DUPLICATIVE_CONSOLIDATE | false |
 | `workspace/factory_generated/upi_dispute_resolution/generated_application/README.md` | CURRENT_AND_VERIFIED | true |
-| `workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/adr/ADR-0001-authoritative-failed-debit-runtime.md` | DUPLICATIVE_CONSOLIDATE | false |
-| `workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/persistence_reset_policy.md` | DUPLICATIVE_CONSOLIDATE | false |
+| `workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/adr/ADR-0001-authoritative-failed-debit-runtime.md` | HISTORICAL_RETAIN_AS_HISTORY | true |
+| `workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/persistence_reset_policy.md` | HISTORICAL_RETAIN_AS_HISTORY | true |
 | `workspace/factory_generated/upi_dispute_resolution/generated_application/docs/adr/ADR-0001-authoritative-failed-debit-runtime.md` | DUPLICATIVE_CONSOLIDATE | false |
 | `workspace/factory_generated/upi_dispute_resolution/generated_application/docs/api_contract.md` | CURRENT_AND_VERIFIED | false |
 | `workspace/factory_generated/upi_dispute_resolution/generated_application/docs/architecture.md` | CURRENT_AND_VERIFIED | false |

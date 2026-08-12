@@ -97,7 +97,7 @@
         "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
         "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "1c87b7612765e934848863f4871edc7939a9a0d5309c5d50dc2779775b264fa7",
+      "sha256_after": "b4fc5e5a70cac4d6f91eb67da408ea469436f91e93bc2e41b7c0da73d878478f",
       "sha256_before": "9af208330fecaab6a604703cf6df354244ef058208577e3b71b97dacbf68393a"
     },
     {
@@ -523,7 +523,7 @@
         "human-readable lifecycle matrix updated for portable deterministic fixture reconciliation",
         "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "c36aeec5c770e423955df149624e850b69b31b3f082493da13adde6803bc9bd8",
+      "sha256_after": "62c342ceaae871afff70ec6666cbd4d890b2115695590f86051ceda78111ecc2",
       "sha256_before": ""
     },
     {
@@ -830,7 +830,7 @@
         "modernized from executable current-state evidence",
         "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "9427fcee278aabfc39fa7dbe8dd8e474fa9eb17c715ae9803d29e4687b6b4156",
+      "sha256_after": "6ad1dcea91732f0bfaf901f73f5e79934193f230418da56e373477c3a2b856ad",
       "sha256_before": "c7d6f12305de2ce80cb03dd48fcaf9d63abb70797a567863ba31f43d1074f2c4"
     },
     {
@@ -912,7 +912,7 @@
         "reconstructed/verified from executable technical truth with current/legacy-contract reconciliation",
         "public showcase readiness semantic and recipient-guidance refresh"
       ],
-      "sha256_after": "148171b5de0307c6c1b697cffec3182b67a3906fee09c905127373177826fc7d",
+      "sha256_after": "113317e300dc10706011f0331c81c0d31cc9c266c1cab2c96eaf6bbced050752",
       "sha256_before": "550f1957aac18683e694760f846cb0d006c7bd3ad12f47ff25812c95c858db0b"
     },
     {
@@ -5171,25 +5171,27 @@
       "sha256_before": "acab80d328f05d8fb43b7810c94ee5b1df514ca22738982a361cefbca4096c3d"
     },
     {
-      "classification_after": "DUPLICATIVE_CONSOLIDATE",
+      "classification_after": "HISTORICAL_RETAIN_AS_HISTORY",
       "classification_before": "DUPLICATIVE_CONSOLIDATE",
-      "modified": false,
+      "modified": true,
       "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/adr/ADR-0001-authoritative-failed-debit-runtime.md",
       "reasons": [
-        "byte-identical duplicate"
+        "quarantined non-authoritative diagnostic projection",
+        "current publication authority moved to the root fail-closed evidence pack"
       ],
-      "sha256_after": "bb03a346bd95888b55df1fb132bae534461e65f9bbe7e13fda9886409187c2d6",
+      "sha256_after": "246c84d122c19977a7cc4f6a6a04ab678ae9fcbd35b43f75074ba417971d701e",
       "sha256_before": "bb03a346bd95888b55df1fb132bae534461e65f9bbe7e13fda9886409187c2d6"
     },
     {
-      "classification_after": "DUPLICATIVE_CONSOLIDATE",
+      "classification_after": "HISTORICAL_RETAIN_AS_HISTORY",
       "classification_before": "DUPLICATIVE_CONSOLIDATE",
-      "modified": false,
+      "modified": true,
       "path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/persistence_reset_policy.md",
       "reasons": [
-        "byte-identical duplicate"
+        "quarantined non-authoritative diagnostic projection",
+        "current publication authority moved to the root fail-closed evidence pack"
       ],
-      "sha256_after": "e9caaf630819ad9c4f674f1866a05f8e45fea81f048cef3830bbeeb805c4d2f6",
+      "sha256_after": "6974cdc7ddd824cd6ed1d0613db78cccf450952c5a14f03aef0bfdfc94ccdec3",
       "sha256_before": "e9caaf630819ad9c4f674f1866a05f8e45fea81f048cef3830bbeeb805c4d2f6"
     },
     {

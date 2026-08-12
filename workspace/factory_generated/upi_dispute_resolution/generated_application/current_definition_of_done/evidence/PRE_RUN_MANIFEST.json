@@ -1,15 +1,14 @@
 {
-  "application_id": "upi_failed_debit_no_credit",
-  "artifact": "PRE_RUN_MANIFEST",
-  "artifacts": [
-    "CAPABILITY_PRE_RUN_REPORT.json",
-    "REQUIREMENT_CAPABILITY_MATRIX.json",
-    "PRE_RUN_MANIFEST.json"
-  ],
-  "compatibility_application_id": "upi_dispute_resolution",
-  "decision": "PROVEN_100_PERCENT_CAPABILITY",
-  "mandatory_gate_passed": true,
-  "requirements_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
-  "schema_version": "native-capability-prerun.v1",
-  "tracked_application_root": "workspace/factory_generated/upi_dispute_resolution/generated_application"
+  "current_publication_evidence_root": "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence",
+  "diagnostic_projection_used": true,
+  "evidence_authority": "quarantined_non_authoritative_historical_diagnostic",
+  "legacy_full_capability_claim_removed": true,
+  "original_path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/evidence/PRE_RUN_MANIFEST.json",
+  "original_sha256": "4d45be390fefc84e52db474110ee0bdba75d9e32c9e5fa1696e04f765a46cb2b",
+  "original_size": 607,
+  "publication_authority": false,
+  "quarantine_status": "HISTORICAL_DIAGNOSTIC_ONLY",
+  "reason": "This alternate projection used generic section-wide evidence and is retained only as an explicit non-authoritative tombstone.",
+  "schema_version": "upi-failed-debit-quarantined-diagnostic-projection.v1",
+  "status": "QUARANTINED_NON_AUTHORITATIVE"
 }

@@ -3,7 +3,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import shutil
+import threading
 import time
+from typing import Any
 
 from fastapi.testclient import TestClient
 
@@ -30,6 +32,59 @@ from tests.phase51.conftest import (
     registration,
     wait_for_ports_closed,
 )
+
+
+ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS = 60.0
+ASYNC_ENGINEERING_WORKER_CLEANUP_TIMEOUT_SECONDS = 5.0
+ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS = 0.05
+TERMINAL_RUN_STATES = frozenset({"SUCCEEDED", "FAILED", "CANCELLED"})
+
+
+def _active_engineering_worker_names(run_id: str) -> list[str]:
+    expected_name = f"portal-engineering-{run_id}"
+    return [
+        thread.name
+        for thread in threading.enumerate()
+        if thread.is_alive() and thread.name == expected_name
+    ]
+
+
+def _wait_for_terminal_engineering_run(
+    orchestrator: BrowserIntakeOrchestrator,
+    run_id: str,
+) -> dict[str, Any]:
+    deadline = time.monotonic() + ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS
+    completed = orchestrator.get_run(run_id)
+    while completed["state"] not in TERMINAL_RUN_STATES:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        time.sleep(min(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS, remaining))
+        completed = orchestrator.get_run(run_id)
+    if completed["state"] not in TERMINAL_RUN_STATES:
+        raise AssertionError(
+            "application-engineering run did not become terminal within "
+            f"{ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS:.1f}s; run_id={run_id!r}; "
+            f"state={completed.get('state')!r}; "
+            f"final_decision={completed.get('final_decision')!r}; "
+            f"error={completed.get('error')!r}; "
+            f"recent_events={completed.get('events', [])[-5:]!r}"
+        )
+
+    cleanup_deadline = (
+        time.monotonic() + ASYNC_ENGINEERING_WORKER_CLEANUP_TIMEOUT_SECONDS
+    )
+    active_workers = _active_engineering_worker_names(run_id)
+    while active_workers and time.monotonic() < cleanup_deadline:
+        time.sleep(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS)
+        active_workers = _active_engineering_worker_names(run_id)
+    if active_workers:
+        raise AssertionError(
+            "application-engineering worker did not stop after terminal state; "
+            f"run_id={run_id!r}; state={completed.get('state')!r}; "
+            f"active_workers={active_workers!r}"
+        )
+    return completed
 
 
 def _contained_test_root(tmp_path: Path, name: str) -> Path:
@@ -126,11 +181,7 @@ def test_browser_generation_registers_portfolio_version_and_metadata(tmp_path: P
     orchestrator.plan(run_id)
     orchestrator.approve(run_id, actor="tester", approval_token=APPROVAL_TOKEN)
     orchestrator.execute(run_id)
-    deadline = time.monotonic() + 10
-    completed = orchestrator.get_run(run_id)
-    while completed["state"] not in {"SUCCEEDED", "FAILED", "CANCELLED"} and time.monotonic() < deadline:
-        time.sleep(0.05)
-        completed = orchestrator.get_run(run_id)
+    completed = _wait_for_terminal_engineering_run(orchestrator, run_id)
 
     assert completed["state"] == "SUCCEEDED"
     registration = completed["engineering_result"]["portfolio_registration"]

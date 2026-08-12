@@ -10,7 +10,12 @@ from typing import Any, Final, cast
 from urllib import request as urllib_request
 from urllib.error import HTTPError, URLError
 
-from factory.operator_portal.runtime_contracts import RuntimeContractError, sha256_bytes, utc_now
+from factory.operator_portal.runtime_contracts import (
+    RuntimeContractError,
+    RuntimeState,
+    sha256_bytes,
+    utc_now,
+)
 from factory.operator_portal.runtime_network_policy import (
     CONCURRENCY_LIMIT,
     MAX_PAYLOAD_BYTES,
@@ -20,6 +25,7 @@ from factory.operator_portal.runtime_network_policy import (
     validate_redirect_location,
 )
 from factory.operator_portal.runtime_store import RuntimeStore, redact
+from factory.operator_portal.runtime_supervisor import RuntimeSupervisor
 
 
 @dataclass(frozen=True)
@@ -567,6 +573,11 @@ class ScenarioRunner:
         self._semaphore = threading.BoundedSemaphore(CONCURRENCY_LIMIT)
 
     def run_all(self, *, run_id: str, base_url: str, owned_port: int) -> dict[str, Any]:
+        supervisor = RuntimeSupervisor(project_root=self.store.project_root, store=self.store)
+        status = supervisor.status(run_id=run_id, port=owned_port)
+        if status.state not in {RuntimeState.READY, RuntimeState.DEGRADED}:
+            raise RuntimeContractError("runtime identity is not verified for scenario attribution")
+        runtime_identity = supervisor._runtime_identity_payload(run_id)
         results = [
             self.run_one(run_id=run_id, base_url=base_url, owned_port=owned_port, scenario=item)
             for item in scenario_catalog()["scenarios"]
@@ -576,6 +587,7 @@ class ScenarioRunner:
             "schema_version": "1.0",
             "run_id": run_id,
             "catalog_version": SCENARIO_CATALOG_VERSION,
+            "runtime_identity": runtime_identity,
             "started_at_utc": results[0]["started_at_utc"] if results else utc_now(),
             "completed_at_utc": utc_now(),
             "passed": passed,

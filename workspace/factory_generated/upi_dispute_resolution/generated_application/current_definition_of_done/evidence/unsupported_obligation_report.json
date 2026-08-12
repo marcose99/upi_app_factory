@@ -1,8 +1,14 @@
 {
-  "items": [],
-  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
-  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
-  "schema_version": "upi-failed-debit-unsupported-obligation-report.v3",
-  "status": "NONE",
-  "unsupported_obligation_count": 0
+  "current_publication_evidence_root": "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence",
+  "diagnostic_projection_used": true,
+  "evidence_authority": "quarantined_non_authoritative_historical_diagnostic",
+  "legacy_full_capability_claim_removed": true,
+  "original_path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/evidence/unsupported_obligation_report.json",
+  "original_sha256": "56caf28acec1511e9b372b1ce543b769adf3a51071451bfbebbf9a8e2ed43183",
+  "original_size": 317,
+  "publication_authority": false,
+  "quarantine_status": "HISTORICAL_DIAGNOSTIC_ONLY",
+  "reason": "This alternate projection used generic section-wide evidence and is retained only as an explicit non-authoritative tombstone.",
+  "schema_version": "upi-failed-debit-quarantined-diagnostic-projection.v1",
+  "status": "QUARANTINED_NON_AUTHORITATIVE"
 }

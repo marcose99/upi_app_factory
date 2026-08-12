@@ -13,7 +13,9 @@ from typing import Any, Final
 
 
 APP_ID: Final[str] = "upi_dispute_resolution"
+GENERATED_APPLICATION_VERSION: Final[str] = "0.40.0"
 GENERATED_RUN_ID: Final[str] = "first_governed_generation_run_001"
+RUNTIME_MANIFEST_SHA256_ENV: Final[str] = "UPI_APP_FACTORY_RUNTIME_MANIFEST_SHA256"
 CERTIFICATION_POSTURE: Final[str] = "certification-ready-not-certified"
 RUNTIME_APPROVAL_TOKEN: Final[str] = "phase50-test-runtime-approval-fixture"
 RUNTIME_APPROVAL_TOKEN_ENV: Final[str] = "UPI_APP_FACTORY_RUNTIME_APPROVAL_TOKEN"

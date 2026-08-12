@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import select
 from pathlib import Path
 import signal
 import socket
@@ -12,7 +13,14 @@ from typing import Any
 from urllib import request as urllib_request
 from urllib.error import URLError
 
-from factory.operator_portal.runtime_contracts import ProcessIdentity, RuntimeContractError, RuntimeState, RuntimeStatus
+from factory.operator_portal.runtime_contracts import (
+    GENERATED_APPLICATION_VERSION,
+    RUNTIME_MANIFEST_SHA256_ENV,
+    ProcessIdentity,
+    RuntimeContractError,
+    RuntimeState,
+    RuntimeStatus,
+)
 from factory.operator_portal.runtime_store import RuntimeStore, default_binding
 
 
@@ -28,20 +36,29 @@ class RuntimeSupervisor:
         binding = self.binding(run_id=run_id, port=port)
         status = self.store.read_status(run_id, binding)
         if status.process and not self._process_matches(status.process):
-            try:
-                return self.store.transition_status(status, RuntimeState.STALE, health={"status": "stale_process_identity"})
-            except RuntimeContractError:
-                return RuntimeStatus(
-                    state=RuntimeState.STALE,
-                    binding=binding,
+            return self._mark_stale(status, reason="stale_process_identity")
+        if status.state in {RuntimeState.READY, RuntimeState.DEGRADED}:
+            if status.process is None:
+                return self._mark_stale(status, reason="missing_process_identity")
+            health = self._verified_health(binding)
+            if health.get("status") != "ok":
+                return self._mark_stale(
+                    status,
+                    reason=str(health.get("status", "runtime_identity_unverified")),
+                    observed_health=health,
+                )
+            if status.state == RuntimeState.DEGRADED:
+                return self.store.transition_status(status, RuntimeState.READY, health=health)
+            if health != status.health:
+                current = RuntimeStatus(
+                    state=status.state,
+                    binding=status.binding,
                     process=status.process,
-                    health={"status": "stale_process_identity"},
+                    health=health,
                     updated_at_utc=status.updated_at_utc,
                 )
-        if status.state == RuntimeState.READY:
-            health = self._health(binding)
-            if health.get("status") != "ok":
-                return self.store.transition_status(status, RuntimeState.DEGRADED, health=health)
+                self.store.write_status(current)
+                return current
         return status
 
     def start(self, *, run_id: str, port: int = 18042, readiness_timeout: float = 10.0) -> RuntimeStatus:
@@ -51,7 +68,16 @@ class RuntimeSupervisor:
             return current
         if self._port_in_use(port):
             if current.process and self._process_matches(current.process):
-                return current
+                if current.state in {
+                    RuntimeState.STARTING,
+                    RuntimeState.READY,
+                    RuntimeState.DEGRADED,
+                }:
+                    return current
+                raise RuntimeContractError(
+                    "owned runtime process is still present in "
+                    f"{current.state.value}; use restart or stop"
+                )
             self.store.append_event(run_id, "runtime_start_rejected", {"reason": "port_collision", "port": port})
             raise RuntimeContractError("owned runtime port is already in use")
 
@@ -63,7 +89,20 @@ class RuntimeSupervisor:
         data_dir = self.store.data_dir(run_id)
         data_dir.mkdir(parents=True, exist_ok=True)
         log_handle = self.store.log_path(run_id).open("ab")
-        env = os.environ.copy()
+        allowed_parent_keys = (
+            "LANG",
+            "LC_ALL",
+            "LC_CTYPE",
+            "PATH",
+            "PYTHONIOENCODING",
+            "PYTHONUTF8",
+            "TZ",
+        )
+        env = {
+            key: os.environ[key]
+            for key in allowed_parent_keys
+            if key in os.environ
+        }
         env.update(
             {
                 "PYTHONPATH": os.pathsep.join(
@@ -71,10 +110,11 @@ class RuntimeSupervisor:
                     for part in [
                         app_root.parent.as_posix(),
                         (app_root / "app").as_posix(),
-                        env.get("PYTHONPATH", ""),
                     ]
                     if part
                 ),
+                "UPI_APP_FACTORY_ALLOW_HEADER_PRINCIPAL": "0",
+                RUNTIME_MANIFEST_SHA256_ENV: binding.manifest_sha256,
                 "UPI_DISPUTE_APP_ENV": "local",
                 "UPI_DISPUTE_DATA_DIR": data_dir.as_posix(),
                 "UPI_DISPUTE_SQLITE_PATH": (data_dir / "disputes.sqlite3").as_posix(),
@@ -106,7 +146,7 @@ class RuntimeSupervisor:
             if proc.poll() is not None:
                 failed = self.store.read_status(run_id, binding)
                 return self.store.transition_status(failed, RuntimeState.FAILED, process=process, health={"status": "process_exited", "returncode": proc.returncode})
-            last_health = self._health(binding)
+            last_health = self._verified_health(binding)
             if last_health.get("status") == "ok":
                 ready = self.store.read_status(run_id, binding)
                 return self.store.transition_status(ready, RuntimeState.READY, process=process, health=last_health)
@@ -121,21 +161,31 @@ class RuntimeSupervisor:
     def stop(self, *, run_id: str, port: int = 18042, timeout: float = 5.0) -> RuntimeStatus:
         binding = self.binding(run_id=run_id, port=port)
         current = self.status(run_id=run_id, port=port)
-        if current.state in {RuntimeState.ABSENT, RuntimeState.STOPPED, RuntimeState.STALE}:
-            stopped = RuntimeStatus(state=RuntimeState.STOPPED, binding=binding, process=None, health={"status": "stopped"}, updated_at_utc=current.updated_at_utc)
+        if current.state in {RuntimeState.ABSENT, RuntimeState.STOPPED}:
+            stopped = RuntimeStatus(
+                state=RuntimeState.STOPPED,
+                binding=binding,
+                process=None,
+                health={"status": "stopped", "orphan_detected": False},
+                updated_at_utc=current.updated_at_utc,
+            )
+            self.store.write_status(stopped)
+            return stopped
+        if current.state == RuntimeState.STALE:
+            if current.process and self._process_matches(current.process):
+                self._terminate_owned_process(current.process, timeout=timeout)
+            stopped = RuntimeStatus(
+                state=RuntimeState.STOPPED,
+                binding=binding,
+                process=None,
+                health={"status": "stopped", "orphan_detected": False},
+                updated_at_utc=current.updated_at_utc,
+            )
             self.store.write_status(stopped)
             return stopped
         stopping = self.store.transition_status(current, RuntimeState.STOPPING, health={"status": "stopping"})
         if stopping.process and self._process_matches(stopping.process):
-            try:
-                os.killpg(stopping.process.pid, signal.SIGTERM)
-            except ProcessLookupError:
-                pass
-            deadline = time.monotonic() + timeout
-            while time.monotonic() < deadline and self._pid_exists(stopping.process.pid):
-                time.sleep(0.1)
-            if self._pid_exists(stopping.process.pid) and self._process_matches(stopping.process):
-                os.killpg(stopping.process.pid, signal.SIGKILL)
+            self._terminate_owned_process(stopping.process, timeout=timeout)
         stopped = self.store.read_status(run_id, binding)
         return self.store.transition_status(
             stopped,
@@ -143,6 +193,80 @@ class RuntimeSupervisor:
             clear_process=True,
             health={"status": "stopped", "orphan_detected": False},
         )
+
+    def _open_owned_pidfd(
+        self,
+        process: ProcessIdentity,
+    ) -> int | None:
+        if not hasattr(os, "pidfd_open") or not hasattr(
+            signal,
+            "pidfd_send_signal",
+        ):
+            raise RuntimeContractError(
+                "pidfd process signalling is unavailable"
+            )
+        try:
+            pidfd = os.pidfd_open(process.pid, 0)
+        except ProcessLookupError:
+            return None
+        try:
+            if not self._process_matches(process):
+                os.close(pidfd)
+                return None
+        except Exception:
+            os.close(pidfd)
+            raise
+        return pidfd
+
+    def _wait_pidfd_exit(
+        self,
+        pidfd: int,
+        *,
+        timeout: float,
+    ) -> bool:
+        poller = select.poll()
+        poller.register(
+            pidfd,
+            select.POLLIN | select.POLLHUP | select.POLLERR,
+        )
+        return bool(poller.poll(max(0, int(timeout * 1000))))
+
+    def _terminate_owned_process(
+        self,
+        process: ProcessIdentity,
+        *,
+        timeout: float,
+    ) -> None:
+        pidfd = self._open_owned_pidfd(process)
+        if pidfd is None:
+            return
+        try:
+            try:
+                signal.pidfd_send_signal(
+                    pidfd,
+                    signal.SIGTERM,
+                    None,
+                    0,
+                )
+            except ProcessLookupError:
+                return
+            if self._wait_pidfd_exit(pidfd, timeout=timeout):
+                return
+            try:
+                signal.pidfd_send_signal(
+                    pidfd,
+                    signal.SIGKILL,
+                    None,
+                    0,
+                )
+            except ProcessLookupError:
+                return
+            if not self._wait_pidfd_exit(pidfd, timeout=timeout):
+                raise RuntimeContractError(
+                    "owned runtime process did not terminate"
+                )
+        finally:
+            os.close(pidfd)
 
     def _health(self, binding: Any) -> dict[str, Any]:
         try:
@@ -154,6 +278,51 @@ class RuntimeSupervisor:
         except (OSError, URLError, json.JSONDecodeError, TimeoutError):
             return {"status": "unavailable"}
         return {"status": "invalid"}
+
+    def _runtime_identity_payload(self, run_id: str) -> dict[str, str]:
+        binding = self.binding(run_id=run_id)
+        return {
+            "app_slug": binding.app_id,
+            "application_version": GENERATED_APPLICATION_VERSION,
+            "manifest_sha256": binding.manifest_sha256,
+        }
+
+    def _verified_health(self, binding: Any) -> dict[str, Any]:
+        health = self._health(binding)
+        expected = self._runtime_identity_payload(binding.run_id)
+        if health.get("status") != "ok":
+            return health
+        if any(health.get(key) != value for key, value in expected.items()):
+            return {
+                "status": "runtime_identity_mismatch",
+                "expected_identity": expected,
+                "observed_identity": {
+                    key: health.get(key)
+                    for key in expected
+                },
+            }
+        return health
+
+    def _mark_stale(
+        self,
+        status: RuntimeStatus,
+        *,
+        reason: str,
+        observed_health: dict[str, Any] | None = None,
+    ) -> RuntimeStatus:
+        health: dict[str, Any] = {"status": reason}
+        if observed_health is not None:
+            health["observed_health"] = observed_health
+        try:
+            return self.store.transition_status(status, RuntimeState.STALE, health=health)
+        except RuntimeContractError:
+            return RuntimeStatus(
+                state=RuntimeState.STALE,
+                binding=status.binding,
+                process=status.process,
+                health=health,
+                updated_at_utc=status.updated_at_utc,
+            )
 
     def _port_in_use(self, port: int) -> bool:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -178,4 +347,12 @@ class RuntimeSupervisor:
     def _process_matches(self, process: ProcessIdentity) -> bool:
         if not self._pid_exists(process.pid):
             return False
-        return self._process_start_time(process.pid) == process.process_start_time
+        if self._process_start_time(process.pid) != process.process_start_time:
+            return False
+        executable_link = Path(f"/proc/{process.pid}/exe")
+        if executable_link.exists():
+            try:
+                return executable_link.resolve() == Path(process.executable).resolve()
+            except OSError:
+                return False
+        return True

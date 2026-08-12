@@ -1,28 +1,10 @@
-# ADR-0001: Authoritative Failed-Debit Runtime
+# Quarantined Historical Diagnostic Projection
 
-## Status
+**Status:** `QUARANTINED_NON_AUTHORITATIVE`
 
-Accepted
+This retained path is historical diagnostic material only. It is not current publication evidence, is not a release or certification claim, and must not be used to determine capability readiness.
 
-## Context
+Current publication authority is the obligation-specific, fail-closed artifact set in `../../evidence/` (or the corresponding generated application root evidence directory).
 
-The exact v2 requirement package binds the canonical application identity
-`upi_failed_debit_no_credit`, while the repository still tracks the generated
-runtime under the governed compatibility identifier `upi_dispute_resolution`.
-Traceability therefore has to preserve both identifiers without overclaiming
-full exact-v2 support.
-
-## Decision
-
-Use a deterministic exact-input atomic obligation inventory as the source for
-truthful traceability. Keep the authoritative failed-debit runtime as the
-published implementation surface, keep compatibility mapping explicit in the
-generated evidence, and derive GO or NO_GO from actual supported, partial, and
-unsupported mandatory obligations.
-
-## Consequences
-
-- The canonical and compatibility identifiers are both recorded.
-- Exact-input obligation coverage is computed rather than hard-coded.
-- Any partial or unsupported mandatory obligation yields a governed NO_GO.
-- Evidence references are verified before they are emitted.
+Original path: `workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/docs/adr/ADR-0001-authoritative-failed-debit-runtime.md`
+Original SHA-256: `bb03a346bd95888b55df1fb132bae534461e65f9bbe7e13fda9886409187c2d6`

@@ -57,10 +57,20 @@ SUPPORTED_STATUSES = {
     "UNSUPPORTED",
     "NOT_APPLICABLE_WITH_JUSTIFICATION",
 }
+EVIDENCE_AUTHORITY = "obligation_specific_fail_closed"
+PUBLICATION_AUTHORITY = True
+DIAGNOSTIC_PROJECTION_USED = False
+NO_GO_EVIDENCE_DECISION = "NO_GO_WITH_IMPROVEMENT_REQUIREMENTS"
+PROVEN_EVIDENCE_DECISION = "ALL_MANDATORY_OBLIGATIONS_PROVEN"
 HEADING_RE = re.compile(r"^(?P<number>\d+(?:\.\d+)*)\.\s+(?P<title>.+)$")
 ENDPOINT_RE = re.compile(r"^(GET|POST|PUT|PATCH|DELETE)\s+(/\S+)")
 TRANSITION_RE = re.compile(r"\b([A-Z_]+)\s*->\s*([A-Z_]+)\b")
-TOKEN_RE = re.compile(r"[A-Z][A-Z0-9_]{2,}|[A-Z][a-zA-Z0-9]+(?:[A-Z][a-zA-Z0-9]+)+|/[A-Za-z0-9{}._/-]+")
+TOKEN_RE = re.compile(
+    r"[A-Z][A-Z0-9_]{2,}"
+    r"|[A-Z][a-zA-Z0-9]+(?:[A-Z][a-zA-Z0-9]+)+"
+    r"|[a-z][a-z0-9]*(?:_[a-z0-9]+)+"
+    r"|/[A-Za-z0-9{}._/-]+"
+)
 STOPWORDS = {
     "a",
     "an",
@@ -84,6 +94,221 @@ STOPWORDS = {
     "to",
     "with",
 }
+GENERIC_BINDING_TERMS = frozenset(
+    STOPWORDS
+    | {
+        "action",
+        "actor",
+        "actors",
+        "agent",
+        "allowed",
+        "all",
+        "amount",
+        "any",
+        "api",
+        "append",
+        "application",
+        "approved",
+        "audit",
+        "bank",
+        "beneficiary",
+        "bounded",
+        "call",
+        "calls",
+        "can",
+        "cannot",
+        "case",
+        "cases",
+        "certification",
+        "claim",
+        "claims",
+        "classification",
+        "classify",
+        "close",
+        "closed",
+        "closure",
+        "code",
+        "command",
+        "commands",
+        "complete",
+        "confirmed",
+        "conflict",
+        "contract",
+        "control",
+        "correlation",
+        "create",
+        "created",
+        "credit",
+        "current",
+        "customer",
+        "data",
+        "database",
+        "debit",
+        "delete",
+        "decision",
+        "default",
+        "deterministic",
+        "digest",
+        "disposition",
+        "dispute",
+        "disputes",
+        "domain",
+        "duration",
+        "endpoint",
+        "error",
+        "evidence",
+        "event",
+        "every",
+        "expected",
+        "explicit",
+        "factory",
+        "failed",
+        "final",
+        "failure",
+        "generic",
+        "generated",
+        "get",
+        "governed",
+        "health",
+        "history",
+        "human",
+        "id",
+        "identifier",
+        "idempotency",
+        "impact",
+        "implementation",
+        "infrastructure",
+        "input",
+        "integrity",
+        "investigate",
+        "investigation",
+        "items",
+        "key",
+        "level",
+        "local",
+        "logging",
+        "mandatory",
+        "mapping",
+        "may",
+        "metrics",
+        "missing",
+        "mock",
+        "must",
+        "negative",
+        "no",
+        "not",
+        "obligation",
+        "object",
+        "observability",
+        "only",
+        "operation",
+        "operations",
+        "output",
+        "partial",
+        "patch",
+        "payload",
+        "payer",
+        "payment",
+        "payments",
+        "pending",
+        "persistence",
+        "positive",
+        "post",
+        "prevent",
+        "process",
+        "production",
+        "profile",
+        "prohibited",
+        "proposed",
+        "provider",
+        "put",
+        "quarantine",
+        "rationale",
+        "readiness",
+        "ready",
+        "real",
+        "reason",
+        "record",
+        "records",
+        "reference",
+        "request",
+        "requested",
+        "required",
+        "requirement",
+        "resolution",
+        "response",
+        "result",
+        "return",
+        "review",
+        "reviewer",
+        "role",
+        "runtime",
+        "schema",
+        "sequence",
+        "service",
+        "shall",
+        "should",
+        "simulated",
+        "source",
+        "startup",
+        "state",
+        "statement",
+        "status",
+        "summary",
+        "support",
+        "supported",
+        "system",
+        "test",
+        "tests",
+        "threshold",
+        "transaction",
+        "transactions",
+        "transition",
+        "type",
+        "unit",
+        "upi",
+        "unsupported",
+        "user",
+        "value",
+        "verification",
+        "verified",
+        "version",
+        "where",
+        "workflow",
+        "work",
+    }
+)
+BINDING_TYPES = frozenset({"endpoint", "identifier", "phrase", "state_transition"})
+
+QUARANTINED_APPLICATION_SUBTREE = "current_definition_of_done"
+_TRACKED_APPLICATION_RELATIVE_ROOT = Path(
+    "workspace/factory_generated/upi_dispute_resolution/generated_application"
+)
+_QUARANTINED_SUBTREE_ARTIFACTS: tuple[str, ...] = (
+    "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md",
+    "docs/persistence_reset_policy.md",
+    "evidence/CAPABILITY_PRE_RUN_REPORT.json",
+    "evidence/PRE_RUN_MANIFEST.json",
+    "evidence/REQUIREMENT_CAPABILITY_MATRIX.json",
+    "evidence/atomic_obligation_inventory.json",
+    "evidence/classification_decision_table.json",
+    "evidence/coverage_report.json",
+    "evidence/evidence_manifest_description.json",
+    "evidence/generation_summary.json",
+    "evidence/openapi_inventory.json",
+    "evidence/requirements_traceability_matrix.json",
+    "evidence/residual_risk_register.json",
+    "evidence/unsupported_obligation_report.json",
+    "generation_metadata.json",
+)
+QUARANTINED_ARTIFACT_RELATIVE_PATHS: tuple[str, ...] = tuple(
+    (
+        _TRACKED_APPLICATION_RELATIVE_ROOT
+        / QUARANTINED_APPLICATION_SUBTREE
+        / relative_path
+    ).as_posix()
+    for relative_path in _QUARANTINED_SUBTREE_ARTIFACTS
+)
 
 REQUIRED_ARTIFACT_RELATIVE_PATHS: tuple[str, ...] = (
     "generation_metadata.json",
@@ -98,6 +323,7 @@ REQUIRED_ARTIFACT_RELATIVE_PATHS: tuple[str, ...] = (
     "evidence/unsupported_obligation_report.json",
     "evidence/evidence_manifest_description.json",
     "evidence/coverage_report.json",
+    "evidence/generation_summary.json",
     "docs/persistence_reset_policy.md",
     "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md",
     "requirements-bootstrap.lock",
@@ -229,6 +455,20 @@ def _json_text(payload: Mapping[str, Any]) -> str:
     return json.dumps(payload, indent=2, sort_keys=True) + "\n"
 
 
+def _authority_fields() -> dict[str, Any]:
+    return {
+        "evidence_authority": EVIDENCE_AUTHORITY,
+        "publication_authority": PUBLICATION_AUTHORITY,
+        "diagnostic_projection_used": DIAGNOSTIC_PROJECTION_USED,
+    }
+
+
+def _is_authority_json_surface(relative_path: str) -> bool:
+    return relative_path == "generation_metadata.json" or (
+        relative_path.startswith("evidence/") and relative_path.endswith(".json")
+    )
+
+
 def _artifact_ref(relative_path: str) -> str:
     return (
         "workspace/factory_generated/upi_dispute_resolution/generated_application/"
@@ -237,7 +477,44 @@ def _artifact_ref(relative_path: str) -> str:
 
 
 def _tracked_application_root() -> str:
-    return "workspace/factory_generated/upi_dispute_resolution/generated_application"
+    return _TRACKED_APPLICATION_RELATIVE_ROOT.as_posix()
+
+
+def is_quarantined_application_path(
+    path: Path,
+    *,
+    project_root: Path | None = None,
+) -> bool:
+    candidate = path.resolve()
+    quarantine_suffix = (
+        _TRACKED_APPLICATION_RELATIVE_ROOT / QUARANTINED_APPLICATION_SUBTREE
+    ).parts
+    candidate_parts = candidate.parts
+    if any(
+        candidate_parts[index : index + len(quarantine_suffix)] == quarantine_suffix
+        for index in range(len(candidate_parts) - len(quarantine_suffix) + 1)
+    ):
+        return True
+    quarantine_root = (
+        (project_root or PROJECT_ROOT).resolve()
+        / _TRACKED_APPLICATION_RELATIVE_ROOT
+        / QUARANTINED_APPLICATION_SUBTREE
+    ).resolve()
+    return candidate == quarantine_root or quarantine_root in candidate.parents
+
+
+def _reject_quarantined_application_root(
+    application_root: Path | None,
+    *,
+    project_root: Path,
+) -> None:
+    if application_root is not None and is_quarantined_application_path(
+        application_root,
+        project_root=project_root,
+    ):
+        raise ValueError(
+            "current_definition_of_done is quarantined and cannot be an authoritative target"
+        )
 
 
 def _normalize_whitespace(value: str) -> str:
@@ -482,9 +759,9 @@ def _test_reference_exists(project_root: Path, nodeid: str) -> bool:
     path = project_root / relative_path
     if not path.is_file():
         return False
-    if not target:
-        return True
     text = path.read_text(encoding="utf-8")
+    if not target:
+        return bool(re.search(r"^\s*(?:async\s+)?def\s+test_", text, re.MULTILINE))
     for fragment in target.split("::"):
         if fragment not in text:
             return False
@@ -509,36 +786,102 @@ def _section_rule(section: str) -> Mapping[str, Any]:
     return SECTION_REFERENCE_RULES[0]
 
 
-def _token_candidates(text: str) -> list[str]:
-    tokens = list(dict.fromkeys(match.group(0) for match in TOKEN_RE.finditer(text)))
-    if not tokens:
-        phrase_tokens = sorted(
-            {
-                token
-                for token in re.findall(r"[A-Za-z][A-Za-z0-9_-]{4,}", text)
-                if token.casefold() not in STOPWORDS
-            },
-            key=lambda token: (-len(token), token.casefold(), token),
+def _canonical_binding_text(value: str) -> str:
+    camel_split = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", value)
+    acronym_split = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", "_", camel_split)
+    return " ".join(re.findall(r"[a-z0-9]+", acronym_split.casefold()))
+
+
+def _binding_tokens(value: str) -> tuple[str, ...]:
+    return tuple(_canonical_binding_text(value).split())
+
+
+def _binding_occurs(binding_key: str, source_text: str) -> bool:
+    needle = _canonical_binding_text(binding_key)
+    haystack = _canonical_binding_text(source_text)
+    return bool(needle) and f" {needle} " in f" {haystack} "
+
+
+def _binding_token_is_generic(token: str) -> bool:
+    variants = {token}
+    if token.endswith("s") and len(token) > 3:
+        variants.add(token[:-1])
+    if token.endswith("ies") and len(token) > 4:
+        variants.add(token[:-3] + "y")
+    return bool(variants & GENERIC_BINDING_TERMS)
+
+
+def _binding_is_distinctive(binding_key: str) -> bool:
+    tokens = _binding_tokens(binding_key)
+    return bool(tokens) and any(not _binding_token_is_generic(token) for token in tokens)
+
+
+def _binding_candidates(text: str) -> list[tuple[str, str]]:
+    endpoint_match = ENDPOINT_RE.match(text)
+    if endpoint_match:
+        method, path = endpoint_match.groups()
+        return [(f"{method.upper()} {path}", "endpoint")]
+
+    transition_candidates = list(
+        dict.fromkeys(
+            f"{source_state} -> {target_state}"
+            for source_state, target_state in TRANSITION_RE.findall(text)
         )
-        tokens.extend(phrase_tokens[:3])
-    return list(dict.fromkeys(tokens))
+    )
+    if transition_candidates:
+        if len(transition_candidates) == 1:
+            return [(transition_candidates[0], "state_transition")]
+        return []
 
+    identifier_candidates = list(
+        dict.fromkeys(match.group(0) for match in TOKEN_RE.finditer(text))
+    )
+    canonical_identifiers = {
+        _canonical_binding_text(identifier)
+        for identifier in identifier_candidates
+        if _canonical_binding_text(identifier)
+    }
+    compound_identifier_constraint = (
+        len(canonical_identifiers) > 1
+        and re.search(r"\b(?:and|or)\b", text, re.IGNORECASE) is not None
+    )
 
-def _find_matching_paths(
-    file_index: Mapping[str, str],
-    candidates: Sequence[str],
+    candidates: list[tuple[str, str]] = []
+    if not compound_identifier_constraint:
+        candidates.extend(
+            (identifier, "identifier") for identifier in identifier_candidates
+        )
+
+    words = re.findall(r"[A-Za-z][A-Za-z0-9]*", text)
+    for width in range(min(5, len(words)), 1, -1):
+        candidates.extend(
+            (" ".join(words[index : index + width]), "phrase")
+            for index in range(len(words) - width + 1)
+        )
+
+    unique: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for binding_key, binding_type in candidates:
+        canonical = _canonical_binding_text(binding_key)
+        if not canonical or canonical in seen:
+            continue
+        seen.add(canonical)
+        unique.append((binding_key, binding_type))
+    return unique
+
+def _paths_with_binding(
+    canonical_file_index: Mapping[str, str],
+    binding_key: str,
     section_candidates: Sequence[str],
 ) -> list[str]:
-    matched: list[str] = []
-    lowered_candidates = [candidate.casefold() for candidate in candidates if candidate]
-    for relative in section_candidates:
-        text = file_index.get(relative)
-        if not text:
-            continue
-        haystack = text.casefold()
-        if any(candidate in haystack for candidate in lowered_candidates):
-            matched.append(relative)
-    return matched
+    needle = _canonical_binding_text(binding_key)
+    if not needle:
+        return []
+    return [
+        relative
+        for relative in dict.fromkeys(section_candidates)
+        if f" {needle} " in f" {canonical_file_index.get(relative, '')} "
+    ]
 
 
 def _verify_and_materialize_refs(
@@ -570,14 +913,21 @@ def _build_support_reason(
     test_refs: Sequence[Mapping[str, Any]],
     evidence_refs: Sequence[Mapping[str, Any]],
     openapi_verified: bool | None,
+    support_binding: Mapping[str, Any] | None,
 ) -> str:
-    if implementation_refs and test_refs and evidence_refs and openapi_verified is not False:
-        return "Current implementation, executable tests, and evidence references were verified."
+    if support_binding is not None and evidence_refs and openapi_verified is not False:
+        return (
+            "Current implementation and executable tests share obligation-specific binding "
+            f"{support_binding['binding_key']!r}; evidence references were verified."
+        )
     missing: list[str] = []
-    if not implementation_refs:
-        missing.append("implementation")
-    if not test_refs:
-        missing.append("tests")
+    if support_binding is None:
+        missing.append("shared obligation-specific implementation/test binding")
+    else:
+        if not implementation_refs:
+            missing.append("implementation")
+        if not test_refs:
+            missing.append("tests")
     if not evidence_refs:
         missing.append("evidence")
     if openapi_verified is False:
@@ -592,39 +942,74 @@ def _classify_support(
     openapi_inventory: Mapping[str, Any],
     file_index: Mapping[str, str],
     generated_relative_paths: set[str],
-    converged: bool,
 ) -> dict[str, Any]:
     source = obligation["source"]
     rule = _section_rule(str(source["section"]))
     normalized_text = _normalize_whitespace(
         str(obligation.get("normalized_text", obligation.get("text", "")))
     )
-    candidates = _token_candidates(normalized_text)
     section_implementation_paths = list(rule["implementation_paths"])
     section_test_references = list(rule["test_references"])
     section_evidence_references = list(rule["evidence_references"])
-    matched_paths = _find_matching_paths(file_index, candidates, section_implementation_paths)
-    matched_tests = _find_matching_paths(file_index, candidates, [ref.partition("::")[0] for ref in section_test_references])
-    implementation_candidates = (
-        list(dict.fromkeys([*section_implementation_paths, *matched_paths]))
-        if converged
-        else matched_paths
-    )
+    section_test_paths = [ref.partition("::")[0] for ref in section_test_references]
+    canonical_file_index = {
+        relative_path: _canonical_binding_text(file_index.get(relative_path, ""))
+        for relative_path in dict.fromkeys(
+            [*section_implementation_paths, *section_test_paths]
+        )
+    }
+
+    support_binding: dict[str, Any] | None = None
+    matched_paths: list[str] = []
+    matched_test_paths: list[str] = []
+    for binding_key, binding_type in _binding_candidates(normalized_text):
+        if not _binding_is_distinctive(binding_key):
+            continue
+        candidate_paths = _paths_with_binding(
+            canonical_file_index,
+            binding_key,
+            section_implementation_paths,
+        )
+        candidate_test_paths = _paths_with_binding(
+            canonical_file_index,
+            binding_key,
+            section_test_paths,
+        )
+        matched_paths.extend(candidate_paths)
+        matched_test_paths.extend(candidate_test_paths)
+        if support_binding is None and candidate_paths and candidate_test_paths:
+            binding_test_references = [
+                reference
+                for reference in section_test_references
+                if reference.partition("::")[0] in candidate_test_paths
+            ]
+            support_binding = {
+                "binding_key": binding_key,
+                "binding_type": binding_type,
+                "implementation_paths": list(dict.fromkeys(candidate_paths)),
+                "test_references": list(dict.fromkeys(binding_test_references)),
+            }
+
+    if support_binding is not None:
+        matched_paths = list(support_binding["implementation_paths"])
+        matched_test_paths = [
+            reference.partition("::")[0]
+            for reference in support_binding["test_references"]
+        ]
+    else:
+        matched_paths = list(dict.fromkeys(matched_paths))
+        matched_test_paths = list(dict.fromkeys(matched_test_paths))
     implementation_refs = _verify_and_materialize_refs(
         project_root,
-        implementation_candidates,
+        matched_paths,
         mode="implementation",
         generated_relative_paths=generated_relative_paths,
     )
-    verified_test_candidates = (
-        list(section_test_references)
-        if converged
-        else [
-            reference
-            for reference in section_test_references
-            if reference.partition("::")[0] in matched_tests
-        ]
-    )
+    verified_test_candidates = [
+        reference
+        for reference in section_test_references
+        if reference.partition("::")[0] in matched_test_paths
+    ]
     test_refs = _verify_and_materialize_refs(
         project_root,
         verified_test_candidates,
@@ -637,38 +1022,66 @@ def _classify_support(
         mode="evidence",
         generated_relative_paths=generated_relative_paths,
     )
+    if support_binding is not None:
+        binding_key = str(support_binding["binding_key"])
+        bound_implementation_paths = [
+            str(reference["path"])
+            for reference in implementation_refs
+            if _binding_occurs(
+                binding_key,
+                (project_root / str(reference["path"])).read_text(encoding="utf-8"),
+            )
+        ]
+        bound_test_references = [
+            str(reference["path"])
+            for reference in test_refs
+            if _binding_occurs(
+                binding_key,
+                (
+                    project_root
+                    / str(reference["path"]).partition("::")[0]
+                ).read_text(encoding="utf-8"),
+            )
+        ]
+        if bound_implementation_paths and bound_test_references:
+            support_binding["implementation_paths"] = bound_implementation_paths
+            support_binding["test_references"] = bound_test_references
+            implementation_refs = [
+                reference
+                for reference in implementation_refs
+                if reference["path"] in bound_implementation_paths
+            ]
+            test_refs = [
+                reference
+                for reference in test_refs
+                if reference["path"] in bound_test_references
+            ]
+        else:
+            support_binding = None
 
     openapi_verified: bool | None = None
     endpoint_match = ENDPOINT_RE.match(normalized_text)
     if endpoint_match:
         method, path = endpoint_match.groups()
-        candidate_path = path
-        if converged:
-            candidate_path = path.split(" or an equivalent", 1)[0].split("?", 1)[0]
-            candidate_path = candidate_path.replace("{case_id}", "{dispute_id}")
         endpoint_inventory = {
             (str(item.get("method", "")).upper(), str(item.get("path", "")))
             for item in cast(list[dict[str, Any]], openapi_inventory.get("endpoint_inventory", []))
         }
-        if converged:
-            endpoint_inventory = {
-                (method_name, endpoint_path.split("?", 1)[0])
-                for method_name, endpoint_path in endpoint_inventory
-            }
-        openapi_verified = (method.upper(), candidate_path) in endpoint_inventory
+        openapi_verified = (method.upper(), path) in endpoint_inventory
     elif "/v1/disputes" in normalized_text or normalized_text.startswith(("GET /", "POST /")):
         openapi_verified = False
 
     if "where supported" in normalized_text.casefold() and not implementation_refs:
         support_status = "NOT_APPLICABLE_WITH_JUSTIFICATION"
         reason = "The requirement is explicitly conditional and no supported implementation surface was found."
-    elif implementation_refs and test_refs and evidence_refs and openapi_verified is not False:
+    elif support_binding is not None and evidence_refs and openapi_verified is not False:
         support_status = "SUPPORTED"
         reason = _build_support_reason(
             implementation_refs=implementation_refs,
             test_refs=test_refs,
             evidence_refs=evidence_refs,
             openapi_verified=openapi_verified,
+            support_binding=support_binding,
         )
     elif implementation_refs or test_refs or evidence_refs:
         support_status = "PARTIAL"
@@ -677,6 +1090,7 @@ def _classify_support(
             test_refs=test_refs,
             evidence_refs=evidence_refs,
             openapi_verified=openapi_verified,
+            support_binding=None,
         )
     else:
         support_status = "UNSUPPORTED"
@@ -689,14 +1103,147 @@ def _classify_support(
         "test_refs": test_refs,
         "evidence_refs": evidence_refs,
         "openapi_verified": openapi_verified,
+        "support_binding": support_binding if support_status == "SUPPORTED" else None,
     }
+
+
+
+def _demote_shared_support_bindings(items: Sequence[dict[str, Any]]) -> None:
+    supported_by_binding: dict[str, list[dict[str, Any]]] = {}
+    for item in items:
+        if item.get("support_status") != "SUPPORTED":
+            continue
+        binding = item.get("support_binding")
+        if not isinstance(binding, dict):
+            continue
+        binding_key = binding.get("binding_key")
+        if not isinstance(binding_key, str):
+            continue
+        canonical = _canonical_binding_text(binding_key)
+        if canonical:
+            supported_by_binding.setdefault(canonical, []).append(item)
+
+    for rows in supported_by_binding.values():
+        obligation_texts = {
+            _canonical_binding_text(str(row.get("normalized_text", "")))
+            for row in rows
+        }
+        if len(rows) < 2 or len(obligation_texts) < 2:
+            continue
+        obligation_ids = sorted(str(row.get("obligation_id", "")) for row in rows)
+        for row in rows:
+            binding = row.get("support_binding")
+            binding_key = (
+                str(binding.get("binding_key"))
+                if isinstance(binding, dict)
+                else "<invalid>"
+            )
+            row["support_status"] = "PARTIAL"
+            row["support_reason"] = (
+                f"Binding {binding_key!r} is shared across distinct atomic obligations "
+                f"{obligation_ids}; fail-closed obligation-specific proof is absent."
+            )
+            row["support_binding"] = None
+
+
+def _validate_inventory_support_bindings(
+    items: Sequence[Mapping[str, Any]],
+    *,
+    project_root: Path,
+    openapi_inventory: Mapping[str, Any],
+) -> None:
+    required_fields = {
+        "binding_key",
+        "binding_type",
+        "implementation_paths",
+        "test_references",
+    }
+    endpoint_inventory = {
+        (str(item.get("method", "")).upper(), str(item.get("path", "")))
+        for item in cast(
+            list[dict[str, Any]],
+            openapi_inventory.get("endpoint_inventory", []),
+        )
+    }
+    supported_binding_owner: dict[str, str] = {}
+    for item in items:
+        if item.get("support_status") != "SUPPORTED":
+            continue
+        support_binding = item.get("support_binding")
+        if not isinstance(support_binding, dict):
+            continue
+        binding_key = support_binding.get("binding_key")
+        if not isinstance(binding_key, str):
+            continue
+        canonical = _canonical_binding_text(binding_key)
+        obligation_id = str(item.get("obligation_id", ""))
+        prior_owner = supported_binding_owner.get(canonical)
+        if prior_owner is not None and prior_owner != obligation_id:
+            raise ValueError(
+                "supported binding is reused across distinct atomic obligations"
+            )
+        supported_binding_owner[canonical] = obligation_id
+
+    for item in items:
+        support_status = item.get("support_status")
+        support_binding = item.get("support_binding")
+        if support_status != "SUPPORTED":
+            if support_binding is not None:
+                raise ValueError("non-supported obligation cannot have a support binding")
+            continue
+        if not isinstance(support_binding, dict) or set(support_binding) != required_fields:
+            raise ValueError("supported obligation has an invalid support binding object")
+        binding_key = support_binding.get("binding_key")
+        binding_type = support_binding.get("binding_type")
+        implementation_paths = support_binding.get("implementation_paths")
+        test_references = support_binding.get("test_references")
+        if not isinstance(binding_key, str) or not _binding_is_distinctive(binding_key):
+            raise ValueError("supported obligation binding key is generic or invalid")
+        if binding_type not in BINDING_TYPES:
+            raise ValueError("supported obligation binding type is invalid")
+        if not _binding_occurs(binding_key, str(item.get("normalized_text", ""))):
+            raise ValueError("support binding is not tied to the obligation text")
+        if (
+            not isinstance(implementation_paths, list)
+            or not implementation_paths
+            or not all(isinstance(path, str) for path in implementation_paths)
+        ):
+            raise ValueError("support binding implementation paths are invalid")
+        if (
+            not isinstance(test_references, list)
+            or not test_references
+            or not all(isinstance(reference, str) for reference in test_references)
+        ):
+            raise ValueError("support binding test references are invalid")
+        if list(item.get("implementation_paths", [])) != implementation_paths:
+            raise ValueError("support binding implementation paths disagree with inventory")
+        if list(item.get("test_references", [])) != test_references:
+            raise ValueError("support binding test references disagree with inventory")
+        for relative_path in implementation_paths:
+            path = project_root / relative_path
+            if not path.is_file() or not _binding_occurs(
+                binding_key,
+                path.read_text(encoding="utf-8"),
+            ):
+                raise ValueError("support binding is absent from implementation")
+        for nodeid in test_references:
+            relative_path = nodeid.partition("::")[0]
+            path = project_root / relative_path
+            if not _test_reference_exists(project_root, nodeid) or not _binding_occurs(
+                binding_key,
+                path.read_text(encoding="utf-8"),
+            ):
+                raise ValueError("support binding is absent from executable test source")
+        if binding_type == "endpoint":
+            endpoint_match = ENDPOINT_RE.fullmatch(binding_key)
+            if endpoint_match is None or endpoint_match.groups() not in endpoint_inventory:
+                raise ValueError("endpoint support binding lacks exact OpenAPI verification")
 
 
 def build_atomic_obligation_inventory(
     requirements_document: Path,
     *,
     project_root: Path | None = None,
-    converged: bool = False,
 ) -> dict[str, Any]:
     root = (project_root or PROJECT_ROOT).resolve()
     text = _read_text_document(requirements_document)
@@ -732,7 +1279,6 @@ def build_atomic_obligation_inventory(
             openapi_inventory=openapi_inventory,
             file_index=file_index,
             generated_relative_paths=generated_relative_paths,
-            converged=converged,
         )
         if support["support_status"] not in SUPPORTED_STATUSES:
             raise ValueError("unexpected support status")
@@ -750,6 +1296,7 @@ def build_atomic_obligation_inventory(
                 "mandatory": bool(raw.get("mandatory", True)),
                 "support_status": support["support_status"],
                 "support_reason": support["support_reason"],
+                "support_binding": support["support_binding"],
                 "implementation_paths": [
                     ref["path"] for ref in support["implementation_refs"]
                 ],
@@ -762,11 +1309,18 @@ def build_atomic_obligation_inventory(
                 ],
             }
         )
+    _demote_shared_support_bindings(items)
+    _validate_inventory_support_bindings(
+        items,
+        project_root=root,
+        openapi_inventory=openapi_inventory,
+    )
     decision = "NO_GO" if any(
         item["mandatory"] and item["support_status"] in {"PARTIAL", "UNSUPPORTED"}
         for item in items
     ) else "GO"
     return {
+        **_authority_fields(),
         "schema_version": ATOMIC_INVENTORY_SCHEMA,
         "requirements_schema": REQUIREMENTS_SCHEMA,
         "requirements_pdf_sha256": REQUIREMENTS_PDF_SHA256,
@@ -822,6 +1376,15 @@ def _unsupported_items(items: Sequence[Mapping[str, Any]]) -> list[dict[str, Any
     ]
 
 
+def _mandatory_gate_passed(items: Sequence[Mapping[str, Any]]) -> bool:
+    return all(
+        not item["mandatory"]
+        or item["support_status"]
+        in {"SUPPORTED", "NOT_APPLICABLE_WITH_JUSTIFICATION"}
+        for item in items
+    )
+
+
 def _traceability_items(
     project_root: Path,
     inventory_items: Sequence[Mapping[str, Any]],
@@ -842,6 +1405,7 @@ def _traceability_items(
                 "mandatory": item["mandatory"],
                 "support_status": item["support_status"],
                 "support_reason": item["support_reason"],
+                "support_binding": item["support_binding"],
                 "implementation_refs": implementation_refs,
                 "test_refs": list(item["test_references"]),
                 "evidence_refs": list(item["evidence_references"]),
@@ -860,6 +1424,7 @@ def _classification_decision_table(items: Sequence[Mapping[str, Any]]) -> dict[s
                 "support_status": item["support_status"],
                 "mandatory": item["mandatory"],
                 "decision_basis": item["support_reason"],
+                "support_binding": item["support_binding"],
             }
             for item in items
         ],
@@ -905,10 +1470,10 @@ def _residual_risk_register(items: Sequence[Mapping[str, Any]]) -> dict[str, Any
 
 def _coverage_report(items: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     summary = _summarize_inventory(items)
-    partial_or_unsupported = summary["PARTIAL"] + summary["UNSUPPORTED"]
+    mandatory_no_go_count = len(_unsupported_items(items))
     coverage_status = (
         "NO_GO_UNSUPPORTED_MANDATORY_OBLIGATIONS"
-        if partial_or_unsupported
+        if mandatory_no_go_count
         else "TRACEABLE_GO_CANDIDATE"
     )
     return {
@@ -922,7 +1487,7 @@ def _coverage_report(items: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
             "partial_count": summary["PARTIAL"],
             "unsupported_count": summary["UNSUPPORTED"],
             "not_applicable_count": summary["NOT_APPLICABLE_WITH_JUSTIFICATION"],
-            "mandatory_no_go_count": partial_or_unsupported,
+            "mandatory_no_go_count": mandatory_no_go_count,
         },
     }
 
@@ -941,8 +1506,10 @@ def _generation_summary(
         "factory/token_economics/service.py",
         "scripts/run_portal_requirements_driven_application_engineering.py",
     )
-    mandatory_no_go_count = summary["PARTIAL"] + summary["UNSUPPORTED"]
+    mandatory_no_go_count = len(_unsupported_items(items))
+    mandatory_gate_passed = _mandatory_gate_passed(items)
     return {
+        **_authority_fields(),
         "schema_version": "upi-failed-debit-generation-summary.v4",
         "status": (
             "definition_of_done_ready"
@@ -950,7 +1517,13 @@ def _generation_summary(
             else "definition_of_done_blocked"
         ),
         "phase": "governed_self_improvement",
-        "run_id": "r10_1_exact_input_evidence_runtime_convergence",
+        "run_id": "r10_1_exact_input_obligation_specific_evidence",
+        "decision": (
+            PROVEN_EVIDENCE_DECISION
+            if mandatory_gate_passed
+            else NO_GO_EVIDENCE_DECISION
+        ),
+        "mandatory_gate_passed": mandatory_gate_passed,
         "canonical_application_id": CANONICAL_APPLICATION_ID,
         "compatibility_application_id": COMPATIBILITY_APPLICATION_ID,
         "authoritative_requirements": {
@@ -1023,6 +1596,7 @@ def _prerun_report(
             "mandatory": item["mandatory"],
             "reason": item["support_reason"],
             "reasons": [item["support_reason"]],
+            "support_binding": item["support_binding"],
             "proof_mode": "exact_text",
             "matched_by": [{"kind": "exact_text", "value": item["normalized_text"]}],
             "matched_capabilities": [],
@@ -1035,6 +1609,7 @@ def _prerun_report(
                 "implementation_evidence": list(item["implementation_paths"]),
                 "automated_test_evidence": list(item["test_references"]),
                 "additional_evidence": list(item["evidence_references"]),
+                "support_binding": item["support_binding"],
                 "requirement_to_code_and_test_complete": (
                     item["support_status"] == "SUPPORTED"
                 ),
@@ -1042,11 +1617,14 @@ def _prerun_report(
         }
         for item in items
     ]
-    mandatory_gate_passed = all(
-        item["support_status"] == "SUPPORTED" or not item["mandatory"] for item in items
+    mandatory_gate_passed = _mandatory_gate_passed(items)
+    decision = (
+        PROVEN_EVIDENCE_DECISION
+        if mandatory_gate_passed
+        else NO_GO_EVIDENCE_DECISION
     )
-    decision = "PROVEN_100_PERCENT_CAPABILITY" if mandatory_gate_passed else "NO_GO_WITH_IMPROVEMENT_REQUIREMENTS"
     report = {
+        **_authority_fields(),
         "schema_version": "native-capability-prerun.v1",
         "artifact": "CAPABILITY_PRE_RUN_REPORT",
         "application_id": CANONICAL_APPLICATION_ID,
@@ -1070,6 +1648,7 @@ def _prerun_report(
         "requirements_size_bytes": len(json.dumps(items, sort_keys=True)),
     }
     matrix = {
+        **_authority_fields(),
         "schema_version": "native-capability-prerun.v1",
         "artifact": "REQUIREMENT_CAPABILITY_MATRIX",
         "application_id": CANONICAL_APPLICATION_ID,
@@ -1080,8 +1659,10 @@ def _prerun_report(
         "items": matrix_items,
         "requirements": matrix_items,
         "decision": decision,
+        "mandatory_gate_passed": mandatory_gate_passed,
     }
     manifest = {
+        **_authority_fields(),
         "schema_version": "native-capability-prerun.v1",
         "artifact": "PRE_RUN_MANIFEST",
         "application_id": CANONICAL_APPLICATION_ID,
@@ -1102,6 +1683,7 @@ def _prerun_report(
 def _generation_metadata(items: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     summary = _summarize_inventory(items)
     return {
+        **_authority_fields(),
         "schema_version": SCHEMA_VERSION,
         "canonical_application_id": CANONICAL_APPLICATION_ID,
         "compatibility_application_id": COMPATIBILITY_APPLICATION_ID,
@@ -1127,7 +1709,7 @@ def _generation_metadata(items: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     }
 
 
-def _manifest_description(*, converged: bool) -> dict[str, Any]:
+def _manifest_description() -> dict[str, Any]:
     descriptions = {
         "generation_metadata.json": "Canonical identity, compatibility mapping, and truthful exact-input lineage metadata.",
         "evidence/atomic_obligation_inventory.json": "Atomic obligation inventory derived from the exact authoritative requirements text.",
@@ -1141,6 +1723,7 @@ def _manifest_description(*, converged: bool) -> dict[str, Any]:
         "evidence/unsupported_obligation_report.json": "Mandatory obligations still partial or unsupported.",
         "evidence/evidence_manifest_description.json": "Descriptions and checksums for the exact-v2 evidence pack.",
         "evidence/coverage_report.json": "Truthful exact-v2 support-status coverage summary.",
+        "evidence/generation_summary.json": "Definition-of-done status bound to authoritative requirements, validation evidence, and obligation-specific support.",
         "docs/persistence_reset_policy.md": "Persistence and deterministic reset boundaries.",
         "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md": "Architecture decision grounding the authoritative failed-debit runtime.",
         "requirements-bootstrap.lock": "Exact packaging-tool bootstrap contract for independent clean-room replay.",
@@ -1149,11 +1732,8 @@ def _manifest_description(*, converged: bool) -> dict[str, Any]:
         "scripts/bootstrap_cleanroom.sh": "Independent local virtual-environment bootstrap using generated-app-owned locks.",
         "scripts/validate_dependency_contract.py": "Fail-closed generated-app dependency validator.",
     }
-    if converged:
-        descriptions["evidence/generation_summary.json"] = (
-            "Current definition-of-done-ready summary bound to authoritative requirements and validation evidence hashes."
-        )
     return {
+        **_authority_fields(),
         "schema_version": "upi-failed-debit-evidence-manifest-description.v3",
         "requirements_schema": REQUIREMENTS_SCHEMA,
         "requirements_text_sha256": REQUIREMENTS_TEXT_SHA256,
@@ -1232,15 +1812,13 @@ def build_generated_application_artifact_payloads(
     *,
     application_root: Path | None = None,
     requirements_document: Path | None = None,
-    converge_exact_input: bool = False,
 ) -> dict[str, str]:
-    del application_root
     root = (project_root or PROJECT_ROOT).resolve()
+    _reject_quarantined_application_root(application_root, project_root=root)
     authoritative_requirements = requirements_document or _authoritative_requirements_text()
     inventory_payload = build_atomic_obligation_inventory(
         authoritative_requirements,
         project_root=root,
-        converged=converge_exact_input,
     )
     items = list(inventory_payload["items"])
     traceability_items = _traceability_items(root, items)
@@ -1269,7 +1847,7 @@ def build_generated_application_artifact_payloads(
         project_root=root,
     )
     generation_metadata = _generation_metadata(items)
-    manifest_description = _manifest_description(converged=converge_exact_input)
+    manifest_description = _manifest_description()
     payloads = {
         "generation_metadata.json": _json_text(generation_metadata),
         "evidence/atomic_obligation_inventory.json": _json_text(inventory_payload),
@@ -1283,6 +1861,9 @@ def build_generated_application_artifact_payloads(
         "evidence/unsupported_obligation_report.json": _json_text(unsupported_report),
         "evidence/evidence_manifest_description.json": _json_text(manifest_description),
         "evidence/coverage_report.json": _json_text(coverage_report),
+        "evidence/generation_summary.json": _json_text(
+            _generation_summary(root, items)
+        ),
         "docs/persistence_reset_policy.md": PERSISTENCE_RESET_POLICY,
         "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md": ADR_TEXT,
         "requirements-bootstrap.lock": GENERATED_APP_REQUIREMENTS_BOOTSTRAP,
@@ -1291,10 +1872,14 @@ def build_generated_application_artifact_payloads(
         "scripts/bootstrap_cleanroom.sh": GENERATED_APP_BOOTSTRAP_SCRIPT,
         "scripts/validate_dependency_contract.py": GENERATED_APP_DEPENDENCY_VALIDATOR,
     }
-    if converge_exact_input:
-        payloads["evidence/generation_summary.json"] = _json_text(
-            _generation_summary(root, items)
-        )
+    for relative_path, content in tuple(payloads.items()):
+        if not _is_authority_json_surface(relative_path):
+            continue
+        json_surface = json.loads(content)
+        if not isinstance(json_surface, dict):
+            raise ValueError(f"authoritative JSON surface must be an object: {relative_path}")
+        json_surface.update(_authority_fields())
+        payloads[relative_path] = _json_text(json_surface)
     manifest_payload = json.loads(payloads["evidence/evidence_manifest_description.json"])
     for artifact in manifest_payload["artifacts"]:
         path = artifact["path"]
@@ -1302,36 +1887,60 @@ def build_generated_application_artifact_payloads(
     payloads["evidence/evidence_manifest_description.json"] = _json_text(manifest_payload)
     return payloads
 
-
-def build_converged_generated_application_artifact_payloads(
-    project_root: Path | None = None,
-    *,
-    application_root: Path | None = None,
-    requirements_document: Path | None = None,
-) -> dict[str, str]:
-    return build_generated_application_artifact_payloads(
-        project_root,
-        application_root=application_root,
-        requirements_document=requirements_document,
-        converge_exact_input=True,
-    )
-
-
 def materialize_generated_application_artifacts(
     project_root: Path | None = None,
     *,
     application_root: Path | None = None,
     requirements_document: Path | None = None,
-    converge_exact_input: bool = False,
 ) -> dict[str, Any]:
     root = (project_root or PROJECT_ROOT).resolve()
     generated_root = (application_root or TRACKED_APPLICATION_ROOT).resolve()
+    _reject_quarantined_application_root(generated_root, project_root=root)
     payloads = build_generated_application_artifact_payloads(
         root,
         application_root=generated_root,
         requirements_document=requirements_document,
-        converge_exact_input=converge_exact_input,
     )
+    if set(payloads) != set(REQUIRED_ARTIFACT_RELATIVE_PATHS):
+        raise ValueError("authoritative exact-v2 artifact set is incomplete")
+    for relative_path, content in payloads.items():
+        if not _is_authority_json_surface(relative_path):
+            continue
+        surface = json.loads(content)
+        if not isinstance(surface, dict) or any(
+            surface.get(field) != expected
+            for field, expected in _authority_fields().items()
+        ):
+            raise ValueError(
+                f"authoritative exact-v2 JSON surface is invalid: {relative_path}"
+            )
+    capability_report = json.loads(
+        payloads["evidence/CAPABILITY_PRE_RUN_REPORT.json"]
+    )
+    generation_summary = json.loads(payloads["evidence/generation_summary.json"])
+    mandatory_gate_passed = capability_report["mandatory_gate_passed"]
+    decision = capability_report["decision"]
+    if not isinstance(mandatory_gate_passed, bool):
+        raise ValueError("exact-v2 mandatory-gate status is not boolean")
+    if generation_summary["mandatory_gate_passed"] is not mandatory_gate_passed:
+        raise ValueError("exact-v2 mandatory-gate surfaces disagree")
+    if generation_summary["decision"] != decision:
+        raise ValueError("exact-v2 decision surfaces disagree")
+    expected_decision = (
+        PROVEN_EVIDENCE_DECISION
+        if mandatory_gate_passed
+        else NO_GO_EVIDENCE_DECISION
+    )
+    if decision != expected_decision:
+        raise ValueError("exact-v2 decision contradicts the mandatory gate")
+    expected_definition_of_done = (
+        "definition_of_done_ready"
+        if mandatory_gate_passed
+        else "definition_of_done_blocked"
+    )
+    if generation_summary["status"] != expected_definition_of_done:
+        raise ValueError("exact-v2 definition-of-done status contradicts the mandatory gate")
+
     written: list[str] = []
     for relative_path, content in payloads.items():
         target = generated_root / relative_path
@@ -1347,21 +1956,11 @@ def materialize_generated_application_artifacts(
         "supplied_pdf_sha256": REQUIREMENTS_PDF_SHA256,
         "supplied_text_sha256": REQUIREMENTS_TEXT_SHA256,
         "rejected_projection_sha256": REJECTED_PROJECTION_SHA256,
-        "decision": json.loads(
-            payloads["evidence/CAPABILITY_PRE_RUN_REPORT.json"]
-        )["decision"],
+        "decision": decision,
+        "mandatory_gate_passed": mandatory_gate_passed,
+        "definition_of_done_status": generation_summary["status"],
+        **_authority_fields(),
+        "exact_v2_evidence_decision": decision,
+        "exact_v2_evidence_authority": EVIDENCE_AUTHORITY,
+        "exact_v2_mandatory_gate_passed": mandatory_gate_passed,
     }
-
-
-def materialize_converged_generated_application_artifacts(
-    project_root: Path | None = None,
-    *,
-    application_root: Path | None = None,
-    requirements_document: Path | None = None,
-) -> dict[str, Any]:
-    return materialize_generated_application_artifacts(
-        project_root,
-        application_root=application_root,
-        requirements_document=requirements_document,
-        converge_exact_input=True,
-    )

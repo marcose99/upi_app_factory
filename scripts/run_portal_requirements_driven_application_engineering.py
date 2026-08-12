@@ -31,6 +31,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import uuid
 from typing import Any, Final, Mapping, Sequence, TypedDict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -50,8 +51,15 @@ from factory.native_capability_prerun import (  # noqa: E402
     run_capability_prerun,
 )
 from factory.generated_application_artifacts import (  # noqa: E402
+    DIAGNOSTIC_PROJECTION_USED,
+    EVIDENCE_AUTHORITY,
+    NO_GO_EVIDENCE_DECISION,
+    PROVEN_EVIDENCE_DECISION,
+    PUBLICATION_AUTHORITY,
+    QUARANTINED_APPLICATION_SUBTREE,
     REQUIRED_ARTIFACT_RELATIVE_PATHS,
-    materialize_converged_generated_application_artifacts,
+    is_quarantined_application_path,
+    materialize_generated_application_artifacts,
 )
 from factory.token_economics import classify_generated_application_token_economics  # noqa: E402
 
@@ -76,6 +84,62 @@ AUTHORITATIVE_FAILED_DEBIT_CAPABILITIES: Final[tuple[str, ...]] = (
 
 class AdapterError(RuntimeError):
     """Fail-closed adapter error."""
+
+
+def _validate_exact_v2_publication_authority(
+    materialization: Mapping[str, Any],
+) -> dict[str, Any]:
+    expected_authority = {
+        "evidence_authority": EVIDENCE_AUTHORITY,
+        "publication_authority": PUBLICATION_AUTHORITY,
+        "diagnostic_projection_used": DIAGNOSTIC_PROJECTION_USED,
+    }
+    for field, expected in expected_authority.items():
+        if materialization.get(field) != expected:
+            raise AdapterError(
+                f"exact-v2 publication authority is invalid: {field}"
+            )
+
+    decision = materialization.get("exact_v2_evidence_decision")
+    mandatory_gate_passed = materialization.get(
+        "exact_v2_mandatory_gate_passed"
+    )
+    if materialization.get("exact_v2_evidence_authority") != EVIDENCE_AUTHORITY:
+        raise AdapterError("exact-v2 evidence authority is invalid")
+    if not isinstance(mandatory_gate_passed, bool):
+        raise AdapterError("exact-v2 mandatory gate status is invalid")
+    expected_decision = (
+        PROVEN_EVIDENCE_DECISION
+        if mandatory_gate_passed
+        else NO_GO_EVIDENCE_DECISION
+    )
+    if decision != expected_decision:
+        raise AdapterError("exact-v2 evidence decision contradicts the mandatory gate")
+    expected_definition_of_done = (
+        "definition_of_done_ready"
+        if mandatory_gate_passed
+        else "definition_of_done_blocked"
+    )
+    if materialization.get("definition_of_done_status") != expected_definition_of_done:
+        raise AdapterError("exact-v2 definition-of-done status contradicts the mandatory gate")
+    application_root = materialization.get("application_root")
+    project_root = materialization.get("project_root")
+    if not isinstance(application_root, str) or not isinstance(project_root, str):
+        raise AdapterError("exact-v2 materialization roots are invalid")
+    if is_quarantined_application_path(
+        Path(application_root),
+        project_root=Path(project_root),
+    ):
+        raise AdapterError(
+            "quarantined current_definition_of_done cannot have publication authority"
+        )
+
+    return {
+        **expected_authority,
+        "exact_v2_evidence_decision": decision,
+        "exact_v2_evidence_authority": EVIDENCE_AUTHORITY,
+        "exact_v2_mandatory_gate_passed": mandatory_gate_passed,
+    }
 
 
 class ManifestRecord(TypedDict):
@@ -118,6 +182,183 @@ def _sha256_file(path: Path) -> str:
         while block := handle.read(1024 * 1024):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _normalized_distribution_name(value: str) -> str:
+    return re.sub(r"[-_.]+", "-", value).lower()
+
+
+def _generated_application_dependency_inputs(
+    application_root: Path,
+) -> tuple[dict[str, tuple[str, str]], dict[str, Any], str, str]:
+    lock_path = application_root / "requirements.lock"
+    contract_path = application_root / "dependency_contract.json"
+    if not lock_path.is_file() or not contract_path.is_file():
+        raise AdapterError("generated application dependency inputs are missing")
+    locked: dict[str, tuple[str, str]] = {}
+    for line_number, raw_line in enumerate(
+        lock_path.read_text(encoding="utf-8").splitlines(),
+        start=1,
+    ):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        match = re.fullmatch(
+            r"([A-Za-z0-9][A-Za-z0-9._-]*)==([^\s;]+)",
+            line,
+        )
+        if match is None:
+            raise AdapterError(f"requirements.lock line {line_number} is not an exact pin")
+        name, version = match.groups()
+        normalized = _normalized_distribution_name(name)
+        if normalized in locked:
+            raise AdapterError(f"requirements.lock has duplicate distribution {normalized}")
+        locked[normalized] = (name, version)
+    if not locked:
+        raise AdapterError("requirements.lock has no exact dependency pins")
+    try:
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise AdapterError("dependency_contract.json is not valid JSON") from exc
+    if not isinstance(contract, dict):
+        raise AdapterError("dependency_contract.json must contain an object")
+    lock_sha256 = _sha256_file(lock_path)
+    if contract.get("requirements_lock_sha256") != lock_sha256:
+        raise AdapterError("dependency contract lock digest does not match requirements.lock")
+    if contract.get("locked_distribution_count") != len(locked):
+        raise AdapterError("dependency contract locked distribution count does not match")
+    direct = contract.get("direct_distributions")
+    if not isinstance(direct, list) or not all(isinstance(item, str) for item in direct):
+        raise AdapterError("dependency contract direct distributions are malformed")
+    normalized_direct = {_normalized_distribution_name(item) for item in direct}
+    if not normalized_direct.issubset(locked):
+        raise AdapterError("dependency contract direct distributions are not present in the lock")
+    return locked, contract, lock_sha256, _sha256_file(contract_path)
+
+
+def build_generated_application_cyclonedx(application_root: Path) -> dict[str, Any]:
+    locked, contract, lock_sha256, contract_sha256 = (
+        _generated_application_dependency_inputs(application_root)
+    )
+    direct = {
+        _normalized_distribution_name(str(item))
+        for item in contract["direct_distributions"]
+    }
+    components = []
+    for normalized, (name, version) in sorted(locked.items()):
+        components.append(
+            {
+                "type": "library",
+                "bom-ref": f"pkg:pypi/{normalized}@{version}",
+                "name": name,
+                "version": version,
+                "scope": "required",
+                "properties": [
+                    {
+                        "name": "upi_app_factory:identity_source",
+                        "value": "requirements.lock exact pin",
+                    },
+                    {
+                        "name": "upi_app_factory:dependency_class",
+                        "value": "direct" if normalized in direct else "transitive",
+                    },
+                    {
+                        "name": "upi_app_factory:requirements_lock_sha256",
+                        "value": lock_sha256,
+                    },
+                ],
+            }
+        )
+    application_id = str(contract.get("application_id", "")).strip()
+    if not APP_ID_PATTERN.fullmatch(application_id):
+        raise AdapterError("dependency contract application_id is invalid")
+    serial = uuid.uuid5(
+        uuid.NAMESPACE_URL,
+        f"upi-app-factory:{application_id}:{lock_sha256}:{contract_sha256}",
+    )
+    return {
+        "bomFormat": "CycloneDX",
+        "specVersion": "1.7",
+        "serialNumber": f"urn:uuid:{serial}",
+        "version": 1,
+        "metadata": {
+            "component": {
+                "type": "application",
+                "name": f"{application_id}_generated_application",
+            },
+            "properties": [
+                {
+                    "name": "upi_app_factory:claim",
+                    "value": "generated SBOM evidence; schema validation is local structural validation only",
+                },
+                {
+                    "name": "upi_app_factory:source_lockfile",
+                    "value": "requirements.lock",
+                },
+                {
+                    "name": "upi_app_factory:requirements_lock_sha256",
+                    "value": lock_sha256,
+                },
+                {
+                    "name": "upi_app_factory:dependency_contract",
+                    "value": "dependency_contract.json",
+                },
+                {
+                    "name": "upi_app_factory:dependency_contract_sha256",
+                    "value": contract_sha256,
+                },
+                {
+                    "name": "upi_app_factory:live_payment_calls_allowed",
+                    "value": "false",
+                },
+            ],
+        },
+        "components": components,
+        "unresolved_risks": [
+            {
+                "risk_id": "LOCK-001",
+                "owner": "factory_governance_owner",
+                "risk": "Wheel hashes remain blocked until an offline wheelhouse is supplied; exact generated-application pins are recorded.",
+            }
+        ],
+    }
+
+
+def validate_generated_application_cyclonedx(application_root: Path) -> dict[str, Any]:
+    expected = build_generated_application_cyclonedx(application_root)
+    sbom_path = application_root / "evidence/assurance/cyclonedx_1_7_sbom.json"
+    if not sbom_path.is_file():
+        raise AdapterError("generated application CycloneDX SBOM is missing")
+    try:
+        observed = json.loads(sbom_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise AdapterError("generated application CycloneDX SBOM is not valid JSON") from exc
+    if observed != expected:
+        raise AdapterError(
+            "generated application CycloneDX SBOM does not exactly match its lock and dependency contract"
+        )
+    return {
+        "application_root": str(application_root.resolve()),
+        "component_count": len(expected["components"]),
+        "requirements_lock_sha256": next(
+            item["value"]
+            for item in expected["metadata"]["properties"]
+            if item["name"] == "upi_app_factory:requirements_lock_sha256"
+        ),
+        "status": "valid",
+    }
+
+
+def materialize_generated_application_cyclonedx(application_root: Path) -> dict[str, Any]:
+    payload = build_generated_application_cyclonedx(application_root)
+    destination = application_root / "evidence/assurance/cyclonedx_1_7_sbom.json"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(
+        json.dumps(payload, indent=2, sort_keys=False) + "\n",
+        encoding="utf-8",
+    )
+    validate_generated_application_cyclonedx(application_root)
+    return payload
 
 
 def validate_app_id(value: str) -> str:
@@ -1004,6 +1245,25 @@ def _manifest(root: Path) -> list[ManifestRecord]:
     return records
 
 
+def _validate_publication_manifest_quarantine(
+    records: Sequence[ManifestRecord],
+) -> None:
+    quarantine_root = (
+        Path("generated_application") / QUARANTINED_APPLICATION_SUBTREE
+    ).as_posix()
+    leaked = sorted(
+        record["relative_path"]
+        for record in records
+        if record["relative_path"] == quarantine_root
+        or record["relative_path"].startswith(quarantine_root + "/")
+    )
+    if leaked:
+        raise AdapterError(
+            "publication manifest contains quarantined current_definition_of_done paths: "
+            + ", ".join(leaked)
+        )
+
+
 def _redact_output(text: str) -> str:
     patterns = (
         re.compile(r"(?i)(approval[_-]?token|api[_-]?key|secret|password|token)=\S+"),
@@ -1200,8 +1460,11 @@ PRIMARY_PORTAL_WRAPPER_FILE_SIGNATURES: Final[dict[str, str]] = {
 
 
 def _copy_tree_contents(source_root: Path, destination_root: Path) -> None:
+    quarantine_root = Path(QUARANTINED_APPLICATION_SUBTREE)
     for path in sorted(source_root.rglob("*")):
         relative = path.relative_to(source_root)
+        if relative == quarantine_root or quarantine_root in relative.parents:
+            continue
         destination = destination_root / relative
         if path.is_dir():
             destination.mkdir(parents=True, exist_ok=True)
@@ -1248,6 +1511,8 @@ def _copy_authoritative_runtime_into_publication(
 ) -> None:
     _copy_tree_contents(source_root, destination_root)
     _sanitize_nested_authoritative_runtime_copy(destination_root, app_id)
+    if (destination_root / QUARANTINED_APPLICATION_SUBTREE).exists():
+        raise AdapterError("quarantined current_definition_of_done entered publication copy")
 
 
 def _authoritative_runtime_template_root(config: AdapterConfig) -> Path:
@@ -1640,6 +1905,7 @@ def _register_generated_application(
     requirements_sha: str,
     final_manifest: list[ManifestRecord],
     evidence_dir: Path,
+    exact_v2_publication: Mapping[str, Any] | None = None,
 ) -> dict[str, object]:
     version_id = _deterministic_version_id(
         app_id=config.app_id,
@@ -1665,6 +1931,7 @@ def _register_generated_application(
         "openapi": openapi_document,
         "openapi_inventory": openapi_inventory,
         "token_economics": _token_economics_contract(requirements_text),
+        **dict(exact_v2_publication or {}),
     }
     generation_manifest_path = config.output_root / "generation_manifest.json"
     generation_manifest_path.write_text(
@@ -1687,6 +1954,7 @@ def _register_generated_application(
         "real_payment_calls": "disabled",
         "certification_posture": "certification-ready-not-certified",
         "token_economics": _token_economics_contract(requirements_text),
+        **dict(exact_v2_publication or {}),
     }
     store = PortfolioStore(
         project_root=config.factory_root,
@@ -1872,10 +2140,14 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                 destination_root=staging / "generated_application",
                 app_id=config.app_id,
             )
-            materialize_converged_generated_application_artifacts(
-                config.factory_root,
+            exact_v2_materialization = materialize_generated_application_artifacts(
+                project_root=config.factory_root,
                 application_root=staging / "generated_application",
             )
+            exact_v2_publication = _validate_exact_v2_publication_authority(
+                exact_v2_materialization
+            )
+            materialize_generated_application_cyclonedx(staging / "generated_application")
             _write_tree(staging, _primary_runtime_wrapper_files(config.app_id, requirements_text))
             version_id = _deterministic_version_id(
                 app_id=config.app_id,
@@ -1890,6 +2162,7 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                 "entrypoint": f"app.{config.app_id}.interfaces.api.main:app",
                 "source_template_root": str(authoritative_root),
                 "primary_runtime_control_plane": "portfolio_authoritative",
+                **exact_v2_publication,
             }
             (staging / "generation_metadata.json").write_text(
                 json.dumps(metadata, indent=2, sort_keys=True) + "\n",
@@ -1947,6 +2220,7 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                 raise AdapterError("generated application tests failed or collected zero tests")
             _remove_generated_python_caches(staging)
             manifest_records = _manifest(staging)
+            _validate_publication_manifest_quarantine(manifest_records)
             required_paths = {
                 "Dockerfile",
                 "README.md",
@@ -1989,6 +2263,7 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                 shutil.rmtree(config.output_root)
             staging.replace(config.output_root)
             final_manifest = _manifest(config.output_root)
+            _validate_publication_manifest_quarantine(final_manifest)
             registration = (
                 _register_generated_application(
                     config=config,
@@ -1997,6 +2272,7 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                     requirements_sha=requirements_sha,
                     final_manifest=final_manifest,
                     evidence_dir=evidence_dir,
+                    exact_v2_publication=exact_v2_publication,
                 )
                 if config.register_with_portfolio
                 else None
@@ -2033,6 +2309,7 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                 "failed_debit_runtime_contract": runtime_contract,
                 "failed_debit_primary_flow_test": primary_flow_test,
                 "primary_runtime_control_plane": "portfolio_authoritative",
+                **exact_v2_publication,
                 "version_id": registration["version_id"] if registration else version_id,
                 "source_commit": (
                     registration["source_commit"]

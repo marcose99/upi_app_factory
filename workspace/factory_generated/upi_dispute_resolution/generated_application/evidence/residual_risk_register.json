@@ -1,12 +1,14 @@
 {
   "decision": "NO_GO",
+  "diagnostic_projection_used": false,
+  "evidence_authority": "obligation_specific_fail_closed",
   "items": [
     {
       "mitigation_refs": [
         "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/unsupported_obligation_report.json",
         "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/requirements_traceability_matrix.json"
       ],
-      "residual_risk": "380 mandatory obligations remain partial or unsupported.",
+      "residual_risk": "764 mandatory obligations remain partial or unsupported.",
       "risk_id": "RR-001",
       "sample_obligations": [
         "OBL-P01-document_control-001",
@@ -18,7 +20,7 @@
         "OBL-P01-1-002",
         "OBL-P01-1-001",
         "OBL-P01-2-001",
-        "OBL-P01-5-001"
+        "OBL-P01-3-001"
       ],
       "status": "OPEN",
       "title": "Unsupported or partially verified mandatory obligations remain"
@@ -34,6 +36,7 @@
       "title": "Mock-only external ecosystem boundary"
     }
   ],
+  "publication_authority": true,
   "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
   "schema_version": "upi-failed-debit-residual-risk-register.v3"
 }

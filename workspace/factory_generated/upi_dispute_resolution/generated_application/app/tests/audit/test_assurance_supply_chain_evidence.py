@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
+import re
 from typing import Any
 
 
 EVIDENCE_ROOT = Path(__file__).resolve().parents[3] / "evidence" / "assurance"
+APPLICATION_ROOT = Path(__file__).resolve().parents[3]
 
 
 def read_json(name: str) -> dict[str, Any]:
@@ -49,18 +52,40 @@ def test_wave_e_sbom_and_provenance_shapes_are_local_only() -> None:
     cyclonedx = read_json("cyclonedx_1_7_sbom.json")
     assert cyclonedx["bomFormat"] == "CycloneDX"
     assert cyclonedx["specVersion"] == "1.7"
-    assert {
-        require_object(component)["name"]
-        for component in require_list(cyclonedx["components"])
-    } >= {
-        "fastapi",
-        "uvicorn",
-        "pydantic",
-        "python-dotenv",
-        "PyYAML",
-        "httpx",
-        "sqlite3",
+    lock_path = APPLICATION_ROOT / "requirements.lock"
+    locked = {
+        (
+            re.sub(r"[-_.]+", "-", line.split("==", 1)[0]).lower(),
+            line.split("==", 1)[1],
+        )
+        for line in lock_path.read_text(encoding="utf-8").splitlines()
+        if line and not line.startswith("#")
     }
+    components = [require_object(item) for item in require_list(cyclonedx["components"])]
+    observed = {
+        (
+            re.sub(r"[-_.]+", "-", str(component["name"])).lower(),
+            str(component["version"]),
+        )
+        for component in components
+    }
+    assert observed == locked
+    assert len(components) == len(locked)
+    lock_sha256 = hashlib.sha256(lock_path.read_bytes()).hexdigest()
+    metadata_properties = {
+        str(item["name"]): str(item["value"])
+        for item in require_list(require_object(cyclonedx["metadata"])["properties"])
+    }
+    assert metadata_properties["upi_app_factory:source_lockfile"] == "requirements.lock"
+    assert metadata_properties["upi_app_factory:requirements_lock_sha256"] == lock_sha256
+    assert metadata_properties["upi_app_factory:dependency_contract"] == "dependency_contract.json"
+    for component in components:
+        properties = {
+            str(item["name"]): str(item["value"])
+            for item in require_list(component["properties"])
+        }
+        assert properties["upi_app_factory:identity_source"] == "requirements.lock exact pin"
+        assert properties["upi_app_factory:requirements_lock_sha256"] == lock_sha256
 
     spdx = read_json("spdx_3_0_sbom.json")
     assert spdx["spdxVersion"] == "SPDX-3.0"

@@ -11,6 +11,14 @@
 
 Alignment is an engineering documentation practice, **not** a claim of certification, formal conformity assessment, production approval, or regulatory approval.
 
+Native prerequisites are Git, Linux with Bash, Python 3.10 or newer with
+`venv` and `pip`, and write access to the clone and selected state directory.
+Every exact locked dependency must be obtainable from the configured package
+source or already present in a verified compatible environment. Offline startup
+cannot download missing distributions; prepare a complete local cache/wheelhouse
+or pre-verified exact environment. The Docker Compose route below is the existing
+alternative when the native Python toolchain is unavailable, although an
+uncached image build can also require dependency-source access.
 
 ```bash
 git clone <repository-url>
@@ -26,7 +34,9 @@ For a non-browser run:
 ./run_factory.sh --no-browser
 ```
 
-The launcher manages `.venv` and exact dependency closure. When startup succeeds, use the printed local URL and `/operator-ui/`.
+The launcher creates or reuses `.venv` and installs or verifies the exact
+dependency closure. When startup succeeds, use the printed local URL and
+`/operator-ui/`.
 
 Stop the native portal cleanly with:
 

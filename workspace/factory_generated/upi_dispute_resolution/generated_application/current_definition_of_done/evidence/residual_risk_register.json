@@ -1,28 +1,14 @@
 {
-  "decision": "GO",
-  "items": [
-    {
-      "mitigation_refs": [
-        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/unsupported_obligation_report.json",
-        "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence/requirements_traceability_matrix.json"
-      ],
-      "residual_risk": "No partial or unsupported mandatory obligations remain.",
-      "risk_id": "RR-001",
-      "sample_obligations": [],
-      "status": "CLOSED",
-      "title": "Unsupported or partially verified mandatory obligations remain"
-    },
-    {
-      "mitigation_refs": [
-        "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/security_design.md",
-        "workspace/factory_generated/upi_dispute_resolution/generated_application/docs/persistence_reset_policy.md"
-      ],
-      "residual_risk": "The runtime remains local-only and mock-only and does not prove live payment ecosystem behaviour.",
-      "risk_id": "RR-002",
-      "status": "ACCEPTED_WITH_BOUNDARY",
-      "title": "Mock-only external ecosystem boundary"
-    }
-  ],
-  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
-  "schema_version": "upi-failed-debit-residual-risk-register.v3"
+  "current_publication_evidence_root": "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence",
+  "diagnostic_projection_used": true,
+  "evidence_authority": "quarantined_non_authoritative_historical_diagnostic",
+  "legacy_full_capability_claim_removed": true,
+  "original_path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/evidence/residual_risk_register.json",
+  "original_sha256": "a3fe0b3dd085eb506d47e7b3e2600d4899fda2fc544fb82b39d3a4f11e4877a9",
+  "original_size": 1252,
+  "publication_authority": false,
+  "quarantine_status": "HISTORICAL_DIAGNOSTIC_ONLY",
+  "reason": "This alternate projection used generic section-wide evidence and is retained only as an explicit non-authoritative tombstone.",
+  "schema_version": "upi-failed-debit-quarantined-diagnostic-projection.v1",
+  "status": "QUARANTINED_NON_AUTHORITATIVE"
 }

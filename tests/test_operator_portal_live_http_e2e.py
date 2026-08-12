@@ -15,6 +15,14 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 APP_ID = "upi_failed_debit_no_credit"
 APPROVAL_TOKEN = "APPROVE_PORTAL_APPLICATION_ENGINEERING"
+HTTP_REQUEST_TIMEOUT_SECONDS = 20.0
+PORTAL_STATUS_REQUEST_TIMEOUT_SECONDS = 5.0
+PORTAL_SERVER_START_TIMEOUT_SECONDS = 60.0
+ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS = 60.0
+ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS = 0.25
+PORTAL_PROCESS_STOP_TIMEOUT_SECONDS = 10.0
+PROCESS_BACKED_ASGI_E2E_TIMEOUT_SECONDS = 180.0
+TERMINAL_RUN_STATES = frozenset({"SUCCEEDED", "FAILED", "CANCELLED"})
 REQUIREMENTS_TEXT = """# UPI Failed Debit - Beneficiary Not Credited
 
 Requirement ID: upi_failed_debit_no_credit.requirements.v1.
@@ -45,6 +53,7 @@ def _request(
     payload: dict[str, Any] | None = None,
     *,
     expect_json: bool = True,
+    timeout_seconds: float = HTTP_REQUEST_TIMEOUT_SECONDS,
 ) -> Any:
     data = None if payload is None else json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(
@@ -53,7 +62,7 @@ def _request(
         method=method,
         headers={"Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(request, timeout=20) as response:
+    with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
         body = response.read()
         if not expect_json:
             return body, response.headers
@@ -61,31 +70,75 @@ def _request(
 
 
 def _wait_for_server(base_url: str, process: subprocess.Popen[str]) -> None:
-    deadline = time.monotonic() + 20
+    deadline = time.monotonic() + PORTAL_SERVER_START_TIMEOUT_SECONDS
     last_error = ""
     while time.monotonic() < deadline:
         if process.poll() is not None:
             stderr = process.stderr.read() if process.stderr is not None else ""
             raise AssertionError(f"portal process exited early: {stderr}")
         try:
-            health = _request(base_url, "GET", "/health")
+            health = _request(
+                base_url,
+                "GET",
+                "/health",
+                timeout_seconds=PORTAL_STATUS_REQUEST_TIMEOUT_SECONDS,
+            )
             if health["status"] == "ok":
                 return
-        except (OSError, urllib.error.URLError) as exc:
-            last_error = str(exc)
-        time.sleep(0.2)
-    raise AssertionError(f"portal process did not become healthy: {last_error}")
+        except urllib.error.HTTPError:
+            raise
+        except (OSError, urllib.error.URLError, TimeoutError) as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+        time.sleep(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS)
+    raise AssertionError(
+        "portal process did not become healthy within "
+        f"{PORTAL_SERVER_START_TIMEOUT_SECONDS:.1f}s; last_error={last_error!r}"
+    )
 
 
-def _wait_for_terminal(base_url: str, run_id: str) -> dict[str, Any]:
-    deadline = time.monotonic() + 60
+def _wait_for_terminal(
+    base_url: str,
+    run_id: str,
+    process: subprocess.Popen[str],
+) -> dict[str, Any]:
+    deadline = time.monotonic() + ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS
     latest: dict[str, Any] = {}
+    request_errors: list[dict[str, str]] = []
     while time.monotonic() < deadline:
-        latest = _request(base_url, "GET", f"/operator-portal/api/runs/{run_id}")
-        if latest["state"] in {"SUCCEEDED", "FAILED", "CANCELLED"}:
+        if process.poll() is not None:
+            stderr = process.stderr.read() if process.stderr is not None else ""
+            raise AssertionError(
+                "portal process exited before the engineering run became terminal; "
+                f"return_code={process.returncode!r}; stderr={stderr[-4000:]!r}"
+            )
+        try:
+            latest = _request(
+                base_url,
+                "GET",
+                f"/operator-portal/api/runs/{run_id}",
+                timeout_seconds=PORTAL_STATUS_REQUEST_TIMEOUT_SECONDS,
+            )
+        except urllib.error.HTTPError:
+            raise
+        except (OSError, urllib.error.URLError, TimeoutError) as exc:
+            request_errors.append(
+                {
+                    "type": type(exc).__name__,
+                    "message": str(exc),
+                }
+            )
+            request_errors = request_errors[-5:]
+            time.sleep(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS)
+            continue
+        if latest.get("state") in TERMINAL_RUN_STATES:
             return latest
-        time.sleep(0.25)
-    raise AssertionError(f"run did not reach terminal state: {latest}")
+        time.sleep(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS)
+    raise AssertionError(
+        "run did not reach terminal state within "
+        f"{ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS:.1f}s; run_id={run_id!r}; "
+        f"latest={latest!r}; recent_request_errors={request_errors!r}; "
+        f"process_return_code={process.poll()!r}"
+    )
 
 
 def _assert_zip_download(content: bytes, expected_member_suffix: str) -> list[str]:
@@ -205,7 +258,7 @@ def test_operator_portal_live_http_e2e_creates_publishes_and_downloads(tmp_path:
         assert first_execute["status"] in {"queued", "already_queued", "already_succeeded"}
         assert second_execute["status"] in {"already_queued", "already_succeeded"}
 
-        terminal = _wait_for_terminal(base_url, run_id)
+        terminal = _wait_for_terminal(base_url, run_id, process)
         assert terminal["state"] == "SUCCEEDED"
         assert terminal["final_decision"] == "GO"
         assert terminal["engineering_result"]["llm_calls"] == 0
@@ -243,10 +296,10 @@ def test_operator_portal_live_http_e2e_creates_publishes_and_downloads(tmp_path:
     finally:
         process.terminate()
         try:
-            process.wait(timeout=10)
+            process.wait(timeout=PORTAL_PROCESS_STOP_TIMEOUT_SECONDS)
         except subprocess.TimeoutExpired:
             process.kill()
-            process.wait(timeout=10)
+            process.wait(timeout=PORTAL_PROCESS_STOP_TIMEOUT_SECONDS)
 
 
 def _run_process_backed_asgi_e2e(tmp_path: Path) -> None:
@@ -297,7 +350,7 @@ def _run_process_backed_asgi_e2e(tmp_path: Path) -> None:
                 "assert first['status'] in {'queued', 'already_queued', 'already_succeeded'}",
                 "assert second['status'] in {'already_queued', 'already_succeeded'}",
                 "terminal = {}",
-                "deadline = time.monotonic() + 60",
+                f"deadline = time.monotonic() + {ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS!r}",
                 "while time.monotonic() < deadline:",
                 "    terminal = browser_orchestrator.get_run(run_id)",
                 "    if terminal['state'] in {'SUCCEEDED', 'FAILED', 'CANCELLED'}:",
@@ -328,7 +381,7 @@ def _run_process_backed_asgi_e2e(tmp_path: Path) -> None:
             text=True,
             stdout=stdout,
             stderr=stderr,
-            timeout=90,
+            timeout=PROCESS_BACKED_ASGI_E2E_TIMEOUT_SECONDS,
             check=False,
         )
     assert completed.returncode == 0, stderr_path.read_text(encoding="utf-8") or stdout_path.read_text(encoding="utf-8")

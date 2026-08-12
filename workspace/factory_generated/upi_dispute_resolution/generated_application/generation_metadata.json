@@ -7,10 +7,13 @@
     "mapping_reason": "The tracked runtime root retains the governed compatibility identifier while the exact requirement package binds the canonical ID.",
     "runtime_compatibility_id": "upi_dispute_resolution"
   },
+  "diagnostic_projection_used": false,
+  "evidence_authority": "obligation_specific_fail_closed",
   "human_readable_application_name": "UPI Failed Debit \u2014 Beneficiary Not Credited",
   "llm_calls": 0,
   "materialization_strategy": "deterministic_exact_input_atomic_obligation_inventory",
   "production_posture": "not production-ready",
+  "publication_authority": true,
   "real_payment_calls": "disabled",
   "requirements_lineage": {
     "rejected_projection_sha256": "1c169ae23d3a95a1c37bd6b421da952c813f045b5b42215a94b2f329b6eea2ab",
@@ -20,8 +23,8 @@
   },
   "requirements_summary": {
     "NOT_APPLICABLE_WITH_JUSTIFICATION": 3,
-    "PARTIAL": 380,
-    "SUPPORTED": 398,
+    "PARTIAL": 764,
+    "SUPPORTED": 14,
     "UNSUPPORTED": 0
   },
   "schema_version": "upi-failed-debit-generated-application-evidence.v3",

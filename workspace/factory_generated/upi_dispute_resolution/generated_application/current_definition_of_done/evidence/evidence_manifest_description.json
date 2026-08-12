@@ -1,83 +1,14 @@
 {
-  "artifacts": [
-    {
-      "description": "Canonical identity, compatibility mapping, and truthful exact-input lineage metadata.",
-      "path": "generation_metadata.json",
-      "sha256": "3efc75a58fc3dcee7c8ebd786e4dfc121a931a9c27cf2be682b2fb6c6a988019"
-    },
-    {
-      "description": "Atomic obligation inventory derived from the exact authoritative requirements text.",
-      "path": "evidence/atomic_obligation_inventory.json",
-      "sha256": "0616d4e2e1906e533e36fbc9114d7a860549f52bf3fd2170b772ec23476eef51"
-    },
-    {
-      "description": "Per-obligation implementation, test, and evidence traceability.",
-      "path": "evidence/requirements_traceability_matrix.json",
-      "sha256": "df18ed1eead9e3fc21ab2be442598fd1359e842486bcf904028094add2a781ad"
-    },
-    {
-      "description": "Runtime-derived OpenAPI endpoint inventory and checksum.",
-      "path": "evidence/openapi_inventory.json",
-      "sha256": "263ed98e181329a909f552db41eeb5f6426a80ca5573afb3de1b0bf4f5884723"
-    },
-    {
-      "description": "Current capability pre-run conclusion derived from actual obligation classifications.",
-      "path": "evidence/CAPABILITY_PRE_RUN_REPORT.json",
-      "sha256": "ec8588d5c448f1397e732b2d6959b27ae303bfa237684c1561a0c9d8e04da4c8"
-    },
-    {
-      "description": "Current capability matrix derived from actual obligation classifications.",
-      "path": "evidence/REQUIREMENT_CAPABILITY_MATRIX.json",
-      "sha256": "8536ac5f167b51dec3b1e59564c6e474dc9c9264364e9c41e4267716586d16fa"
-    },
-    {
-      "description": "Current capability pre-run manifest.",
-      "path": "evidence/PRE_RUN_MANIFEST.json",
-      "sha256": "4d45be390fefc84e52db474110ee0bdba75d9e32c9e5fa1696e04f765a46cb2b"
-    },
-    {
-      "description": "Per-obligation support-status classification decisions.",
-      "path": "evidence/classification_decision_table.json",
-      "sha256": "99f3b5e55f3de4dae6f8584c87b9bce37cf7d62aa7a8feb0a628d4fbba339a82"
-    },
-    {
-      "description": "Truthful residual risks preserved after exact-input classification.",
-      "path": "evidence/residual_risk_register.json",
-      "sha256": "a3fe0b3dd085eb506d47e7b3e2600d4899fda2fc544fb82b39d3a4f11e4877a9"
-    },
-    {
-      "description": "Mandatory obligations still partial or unsupported.",
-      "path": "evidence/unsupported_obligation_report.json",
-      "sha256": "56caf28acec1511e9b372b1ce543b769adf3a51071451bfbebbf9a8e2ed43183"
-    },
-    {
-      "description": "Descriptions and checksums for the exact-v2 evidence pack.",
-      "path": "evidence/evidence_manifest_description.json",
-      "sha256": "389cd1a2ea3d3f33cbf37e68a658897784cbce919166f0536d06aad2db66a226"
-    },
-    {
-      "description": "Truthful exact-v2 support-status coverage summary.",
-      "path": "evidence/coverage_report.json",
-      "sha256": "2b3110ac5dba16fb74b4741a4d51ea0571fea399ae450b7a39f0c4685903bd9d"
-    },
-    {
-      "description": "Persistence and deterministic reset boundaries.",
-      "path": "docs/persistence_reset_policy.md",
-      "sha256": "e9caaf630819ad9c4f674f1866a05f8e45fea81f048cef3830bbeeb805c4d2f6"
-    },
-    {
-      "description": "Architecture decision grounding the authoritative failed-debit runtime.",
-      "path": "docs/adr/ADR-0001-authoritative-failed-debit-runtime.md",
-      "sha256": "bb03a346bd95888b55df1fb132bae534461e65f9bbe7e13fda9886409187c2d6"
-    },
-    {
-      "description": "Current definition-of-done-ready summary bound to authoritative requirements and validation evidence hashes.",
-      "path": "evidence/generation_summary.json",
-      "sha256": "efff2ca39fb5713bcb89599e90015c3f8fa7e51b01ece06d30dd12ca4a0fa226"
-    }
-  ],
-  "requirements_schema": "upi_failed_debit_no_credit.requirements.v2",
-  "requirements_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82",
-  "schema_version": "upi-failed-debit-evidence-manifest-description.v3",
-  "tracked_application_root": "workspace/factory_generated/upi_dispute_resolution/generated_application"
+  "current_publication_evidence_root": "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence",
+  "diagnostic_projection_used": true,
+  "evidence_authority": "quarantined_non_authoritative_historical_diagnostic",
+  "legacy_full_capability_claim_removed": true,
+  "original_path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/evidence/evidence_manifest_description.json",
+  "original_sha256": "8cd301e2c3d889b0ffdbff7dcc62fa793ae0093b6c1453cab55f3268fff0e089",
+  "original_size": 4012,
+  "publication_authority": false,
+  "quarantine_status": "HISTORICAL_DIAGNOSTIC_ONLY",
+  "reason": "This alternate projection used generic section-wide evidence and is retained only as an explicit non-authoritative tombstone.",
+  "schema_version": "upi-failed-debit-quarantined-diagnostic-projection.v1",
+  "status": "QUARANTINED_NON_AUTHORITATIVE"
 }

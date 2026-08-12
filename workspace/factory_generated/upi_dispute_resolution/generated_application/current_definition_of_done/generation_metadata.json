@@ -1,29 +1,14 @@
 {
-  "canonical_application_id": "upi_failed_debit_no_credit",
-  "certification_posture": "certification-ready-not-certified",
-  "compatibility_application_id": "upi_dispute_resolution",
-  "compatibility_mapping": {
-    "canonical_application_id": "upi_failed_debit_no_credit",
-    "mapping_reason": "The tracked runtime root retains the governed compatibility identifier while the exact requirement package binds the canonical ID.",
-    "runtime_compatibility_id": "upi_dispute_resolution"
-  },
-  "human_readable_application_name": "UPI Failed Debit \u2014 Beneficiary Not Credited",
-  "llm_calls": 0,
-  "materialization_strategy": "deterministic_exact_input_atomic_obligation_inventory",
-  "production_posture": "not production-ready",
-  "real_payment_calls": "disabled",
-  "requirements_lineage": {
-    "rejected_projection_sha256": "1c169ae23d3a95a1c37bd6b421da952c813f045b5b42215a94b2f329b6eea2ab",
-    "schema": "upi_failed_debit_no_credit.requirements.v2",
-    "supplied_pdf_sha256": "37c94a02891e84b59e4071d68f1aafb968730a0c458cdf3092562a5a1ea9ea1c",
-    "supplied_text_sha256": "8a67787690640d4af932a266fc44e2a70348ac0785eb4f91b8842aa3c70b0d82"
-  },
-  "requirements_summary": {
-    "NOT_APPLICABLE_WITH_JUSTIFICATION": 0,
-    "PARTIAL": 0,
-    "SUPPORTED": 781,
-    "UNSUPPORTED": 0
-  },
-  "schema_version": "upi-failed-debit-generated-application-evidence.v3",
-  "tracked_application_root": "workspace/factory_generated/upi_dispute_resolution/generated_application"
+  "current_publication_evidence_root": "workspace/factory_generated/upi_dispute_resolution/generated_application/evidence",
+  "diagnostic_projection_used": true,
+  "evidence_authority": "quarantined_non_authoritative_historical_diagnostic",
+  "legacy_full_capability_claim_removed": true,
+  "original_path": "workspace/factory_generated/upi_dispute_resolution/generated_application/current_definition_of_done/generation_metadata.json",
+  "original_sha256": "3efc75a58fc3dcee7c8ebd786e4dfc121a931a9c27cf2be682b2fb6c6a988019",
+  "original_size": 1477,
+  "publication_authority": false,
+  "quarantine_status": "HISTORICAL_DIAGNOSTIC_ONLY",
+  "reason": "This alternate projection used generic section-wide evidence and is retained only as an explicit non-authoritative tombstone.",
+  "schema_version": "upi-failed-debit-quarantined-diagnostic-projection.v1",
+  "status": "QUARANTINED_NON_AUTHORITATIVE"
 }

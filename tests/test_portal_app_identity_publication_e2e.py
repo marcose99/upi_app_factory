@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import threading
 import time
 from typing import Any
 import zipfile
@@ -29,6 +30,21 @@ REQUIREMENTS_TEXT = (
     "evidence boundaries.\n"
 )
 REQUIREMENTS_SHA256 = hashlib.sha256(REQUIREMENTS_TEXT.encode("utf-8")).hexdigest()
+
+
+ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS = 60.0
+ASYNC_ENGINEERING_WORKER_CLEANUP_TIMEOUT_SECONDS = 5.0
+ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS = 0.05
+TERMINAL_RUN_STATES = frozenset({"SUCCEEDED", "FAILED", "CANCELLED"})
+
+
+def _active_engineering_worker_names(run_id: str) -> list[str]:
+    expected_name = f"portal-engineering-{run_id}"
+    return [
+        thread.name
+        for thread in threading.enumerate()
+        if thread.is_alive() and thread.name == expected_name
+    ]
 
 
 def _requirements() -> str:
@@ -69,13 +85,38 @@ def _contained_test_root(tmp_path: Path, name: str) -> Path:
 
 
 def _wait(orchestrator: BrowserIntakeOrchestrator, run_id: str) -> dict[str, Any]:
-    deadline = time.monotonic() + 15
-    while time.monotonic() < deadline:
+    deadline = time.monotonic() + ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS
+    run = orchestrator.get_run(run_id)
+    while run.get("state") not in TERMINAL_RUN_STATES:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        time.sleep(min(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS, remaining))
         run = orchestrator.get_run(run_id)
-        if run["state"] in {"SUCCEEDED", "FAILED", "CANCELLED"}:
-            return run
-        time.sleep(0.05)
-    raise AssertionError("run did not reach a terminal state")
+    if run.get("state") not in TERMINAL_RUN_STATES:
+        raise AssertionError(
+            "application-engineering run did not reach a terminal state within "
+            f"{ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS:.1f}s; run_id={run_id!r}; "
+            f"state={run.get('state')!r}; "
+            f"final_decision={run.get('final_decision')!r}; "
+            f"error={run.get('error')!r}; "
+            f"recent_events={run.get('events', [])[-5:]!r}"
+        )
+
+    cleanup_deadline = (
+        time.monotonic() + ASYNC_ENGINEERING_WORKER_CLEANUP_TIMEOUT_SECONDS
+    )
+    active_workers = _active_engineering_worker_names(run_id)
+    while active_workers and time.monotonic() < cleanup_deadline:
+        time.sleep(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS)
+        active_workers = _active_engineering_worker_names(run_id)
+    if active_workers:
+        raise AssertionError(
+            "application-engineering worker did not stop after terminal state; "
+            f"run_id={run_id!r}; state={run.get('state')!r}; "
+            f"active_workers={active_workers!r}"
+        )
+    return run
 
 
 def _assert_zip_safe(content: bytes) -> list[str]:

@@ -166,8 +166,18 @@ class RuntimeAPI:
             owned_port=status.binding.port,
         )
 
-    def evidence_manifest(self, run_id: str) -> dict[str, Any]:
+    def evidence_manifest(self, run_id: str, *, port: int = 18042) -> dict[str, Any]:
+        status = self.supervisor.status(run_id=run_id, port=port)
+        if status.state in {RuntimeState.FAILED, RuntimeState.STALE}:
+            raise HTTPException(
+                status_code=409,
+                detail={"status": "rejected", "error": "runtime identity is not verified"},
+            )
         return self.evidence.build_manifest(run_id=run_id)
+
+    def evidence_archive(self, run_id: str, *, port: int = 18042) -> Path:
+        self.evidence_manifest(run_id, port=port)
+        return self.evidence.archive(run_id=run_id)
 
     def view(self, run_id: str, *, port: int = 18042) -> str:
         return render_runtime_view(status=self.status(run_id, port=port), events=self.store.read_events(run_id))
@@ -222,16 +232,16 @@ def build_runtime_router(*, project_root: Path, state_root: Path | None = None) 
         return api.run_scenarios(run_id, port=request.port)
 
     @router.get("/runs/{run_id}/evidence")
-    async def runtime_evidence(run_id: str) -> dict[str, Any]:
-        return api.evidence_manifest(run_id)
+    async def runtime_evidence(run_id: str, port: int = 18042) -> dict[str, Any]:
+        return api.evidence_manifest(run_id, port=port)
 
     @router.get("/runs/{run_id}/view", include_in_schema=False)
     async def runtime_view(run_id: str, port: int = 18042) -> Response:
         return Response(content=api.view(run_id, port=port), media_type="text/html")
 
     @router.get("/runs/{run_id}/downloads/evidence")
-    async def runtime_evidence_download(run_id: str) -> Response:
-        archive = api.evidence.archive(run_id=run_id)
+    async def runtime_evidence_download(run_id: str, port: int = 18042) -> Response:
+        archive = api.evidence_archive(run_id, port=port)
         return Response(
             content=archive.read_bytes(),
             media_type="application/zip",

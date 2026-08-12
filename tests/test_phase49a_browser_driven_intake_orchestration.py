@@ -6,9 +6,10 @@ import io
 import json
 from pathlib import Path
 import re
+import threading
 import time
 import zipfile
-from typing import Any, cast
+from typing import Any, Callable, cast
 
 import httpx
 from fastapi import FastAPI
@@ -24,6 +25,61 @@ from factory.operator_portal.local_web_api import create_app
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = PROJECT_ROOT / "factory/operator_portal/web_ui/static/index.html"
 SCRIPT_PATH = PROJECT_ROOT / "factory/operator_portal/web_ui/static/app.js"
+
+
+ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS = 60.0
+ASYNC_ENGINEERING_WORKER_CLEANUP_TIMEOUT_SECONDS = 5.0
+ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS = 0.05
+TERMINAL_RUN_STATES = frozenset({"SUCCEEDED", "FAILED", "CANCELLED"})
+
+
+def _active_engineering_worker_names(run_id: str) -> list[str]:
+    expected_name = f"portal-engineering-{run_id}"
+    return [
+        thread.name
+        for thread in threading.enumerate()
+        if thread.is_alive() and thread.name == expected_name
+    ]
+
+
+def _wait_for_worker_cleanup(run_id: str, state: str | None) -> None:
+    cleanup_deadline = (
+        time.monotonic() + ASYNC_ENGINEERING_WORKER_CLEANUP_TIMEOUT_SECONDS
+    )
+    active_workers = _active_engineering_worker_names(run_id)
+    while active_workers and time.monotonic() < cleanup_deadline:
+        time.sleep(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS)
+        active_workers = _active_engineering_worker_names(run_id)
+    if active_workers:
+        raise AssertionError(
+            "application-engineering worker did not stop after terminal state; "
+            f"run_id={run_id!r}; state={state!r}; active_workers={active_workers!r}"
+        )
+
+
+def _wait_for_terminal_payload(
+    run_id: str,
+    read_run: Callable[[], dict[str, Any]],
+) -> dict[str, Any]:
+    deadline = time.monotonic() + ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS
+    payload = read_run()
+    while payload.get("state") not in TERMINAL_RUN_STATES:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        time.sleep(min(ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS, remaining))
+        payload = read_run()
+    if payload.get("state") not in TERMINAL_RUN_STATES:
+        raise AssertionError(
+            "application-engineering run did not become terminal within "
+            f"{ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS:.1f}s; run_id={run_id!r}; "
+            f"state={payload.get('state')!r}; "
+            f"final_decision={payload.get('final_decision')!r}; "
+            f"error={payload.get('error')!r}; "
+            f"recent_events={payload.get('events', [])[-5:]!r}"
+        )
+    _wait_for_worker_cleanup(run_id, str(payload.get("state")))
+    return payload
 
 
 def requirements_text() -> str:
@@ -100,15 +156,22 @@ def create_run(app: FastAPI) -> dict[str, Any]:
 
 
 def wait_for_terminal(app: FastAPI, run_id: str) -> dict[str, Any]:
-    deadline = time.monotonic() + 30  # Bounded local evidence-generation allowance.
-    while time.monotonic() < deadline:
+    def read_run() -> dict[str, Any]:
         response = request(app, "GET", f"/operator-portal/api/runs/{run_id}")
-        assert response.status_code == 200
+        assert response.status_code == 200, response.text
         payload = response.json()
-        if payload["state"] in {"SUCCEEDED", "FAILED", "CANCELLED"}:
-            return cast(dict[str, Any], payload)
-        time.sleep(0.1)
-    raise AssertionError("run did not reach a terminal state")
+        if not isinstance(payload, dict):
+            raise AssertionError(f"non-dict run payload: {payload!r}")
+        return cast(dict[str, Any], payload)
+
+    return _wait_for_terminal_payload(run_id, read_run)
+
+
+def wait_for_orchestrator_terminal(
+    orchestrator: BrowserIntakeOrchestrator,
+    run_id: str,
+) -> dict[str, Any]:
+    return _wait_for_terminal_payload(run_id, lambda: orchestrator.get_run(run_id))
 
 
 def test_browser_controls_exist_and_target_backend() -> None:
@@ -588,11 +651,7 @@ def test_configured_publication_root_supports_read_only_project_root(tmp_path: P
     )
     assert orchestrator.execute(run_id)["status"] in {"queued", "already_queued"}
 
-    deadline = time.monotonic() + 30  # Bounded local evidence-generation allowance.
-    terminal = orchestrator.get_run(run_id)
-    while terminal["state"] not in {"SUCCEEDED", "FAILED", "CANCELLED"} and time.monotonic() < deadline:
-        time.sleep(0.1)
-        terminal = orchestrator.get_run(run_id)
+    terminal = wait_for_orchestrator_terminal(orchestrator, run_id)
 
     assert terminal["state"] == "SUCCEEDED"
     registration = terminal["engineering_result"]["portfolio_registration"]

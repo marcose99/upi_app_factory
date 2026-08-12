@@ -61,7 +61,11 @@ class CreateFailedDebitCaseRequest(BaseModel):
 
     transaction_ref: str = Field(min_length=8)
     customer_upi: str = Field(min_length=3)
-    amount: str = Field(min_length=1)
+    amount: str = Field(
+        min_length=1,
+        max_length=15,
+        pattern=r"^(?:0|[1-9][0-9]{0,11})(?:\.[0-9]{1,2})?$",
+    )
     reason_code: str = Field(min_length=3)
 
 
@@ -72,7 +76,7 @@ class AttachFailedDebitEvidenceRequest(BaseModel):
     source: str = Field(min_length=3)
     summary: str = Field(min_length=3)
     observed_at_utc: str = Field(min_length=20)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
     evidence_id: str | None = Field(default=None, min_length=4)
 
 
@@ -81,7 +85,7 @@ class RecordFailedDebitInvestigationRequest(BaseModel):
 
     analyst_notes: str = Field(min_length=3)
     simulated_bank_status: str = Field(min_length=3)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class ProposeFailedDebitResolutionRequest(BaseModel):
@@ -91,13 +95,13 @@ class ProposeFailedDebitResolutionRequest(BaseModel):
     reason_code: str = Field(min_length=3)
     rationale: str = Field(min_length=3)
     finalize_action: str = Field(default="propose_only", min_length=3)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class ClassifyFailedDebitCaseRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class RequestFailedDebitHumanReviewRequest(BaseModel):
@@ -105,7 +109,7 @@ class RequestFailedDebitHumanReviewRequest(BaseModel):
 
     reason_code: str = Field(min_length=3)
     rationale: str = Field(min_length=3)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class RecordFailedDebitReviewDecisionRequest(BaseModel):
@@ -116,7 +120,7 @@ class RecordFailedDebitReviewDecisionRequest(BaseModel):
     rationale: str = Field(min_length=3)
     approved_disposition: str | None = Field(default=None, min_length=3)
     review_id: str | None = Field(default=None, min_length=4)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class RecordFailedDebitDispositionRequest(BaseModel):
@@ -125,7 +129,7 @@ class RecordFailedDebitDispositionRequest(BaseModel):
     disposition: str = Field(min_length=3)
     reason_code: str = Field(min_length=3)
     rationale: str = Field(min_length=3)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class CloseFailedDebitCaseRequest(BaseModel):
@@ -133,7 +137,7 @@ class CloseFailedDebitCaseRequest(BaseModel):
 
     reason_code: str = Field(min_length=3)
     rationale: str = Field(min_length=3)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class QuarantineFailedDebitCaseRequest(BaseModel):
@@ -141,7 +145,7 @@ class QuarantineFailedDebitCaseRequest(BaseModel):
 
     reason_code: str = Field(min_length=3)
     rationale: str = Field(min_length=3)
-    expected_version: int | None = Field(default=None, ge=0)
+    expected_version: int = Field(ge=1)
 
 
 class FailedDebitEvidenceResponse(BaseModel):

@@ -7,8 +7,9 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
+from generated_application.app.application.services import FailedDebitRuntimeService
 from generated_application.app.domain.entities import Dispute, DisputeState
-from generated_application.app.domain.exceptions import OptimisticConcurrencyError
+from generated_application.app.domain.exceptions import OptimisticConcurrencyError, ValidationFailed
 from generated_application.app.domain.value_objects import DisputeId, UpiTransactionRef
 from generated_application.app.infrastructure.persistence.sqlite_unit_of_work import SqliteUnitOfWork
 
@@ -48,3 +49,14 @@ def test_stale_write_is_rejected_and_version_only_increments_once(tmp_path: Path
         assert current.version == 2
         assert current.state == DisputeState.REJECTED
         verifier.commit()
+
+
+def test_failed_debit_service_requires_positive_matching_expected_version() -> None:
+    case = {"version": 7}
+    with pytest.raises(ValidationFailed, match="expected_version is required"):
+        FailedDebitRuntimeService._expected_current_version(case, None)
+    with pytest.raises(ValidationFailed, match="at least 1"):
+        FailedDebitRuntimeService._expected_current_version(case, 0)
+    with pytest.raises(OptimisticConcurrencyError, match="stale write"):
+        FailedDebitRuntimeService._expected_current_version(case, 6)
+    assert FailedDebitRuntimeService._expected_current_version(case, 7) == 7

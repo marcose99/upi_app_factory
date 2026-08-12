@@ -6,6 +6,8 @@ import tempfile
 import unittest
 
 from factory.generated_application_artifacts import (
+    EVIDENCE_AUTHORITY,
+    NO_GO_EVIDENCE_DECISION,
     REQUIRED_ARTIFACT_RELATIVE_PATHS,
     REJECTED_PROJECTION_SHA256,
     REQUIREMENTS_PDF_SHA256,
@@ -25,6 +27,7 @@ class ExactV2TraceabilityTest(unittest.TestCase):
     def test_materializer_reproduces_tracked_exact_v2_artifacts(self) -> None:
         payloads = build_generated_application_artifact_payloads(ROOT)
         self.assertEqual(set(payloads), set(REQUIRED_ARTIFACT_RELATIVE_PATHS))
+        self.assertIn("evidence/generation_summary.json", payloads)
 
         with tempfile.TemporaryDirectory() as temp_dir:
             application_root = Path(temp_dir) / "generated_application"
@@ -37,6 +40,9 @@ class ExactV2TraceabilityTest(unittest.TestCase):
             self.assertEqual(result["requirements_schema"], REQUIREMENTS_SCHEMA)
             self.assertEqual(result["supplied_pdf_sha256"], REQUIREMENTS_PDF_SHA256)
             self.assertEqual(result["rejected_projection_sha256"], REJECTED_PROJECTION_SHA256)
+            self.assertEqual(result["exact_v2_evidence_decision"], NO_GO_EVIDENCE_DECISION)
+            self.assertEqual(result["exact_v2_evidence_authority"], EVIDENCE_AUTHORITY)
+            self.assertIs(result["exact_v2_mandatory_gate_passed"], False)
 
             matrix = json.loads(
                 (application_root / "evidence" / "requirements_traceability_matrix.json").read_text(
@@ -46,9 +52,28 @@ class ExactV2TraceabilityTest(unittest.TestCase):
             self.assertEqual(matrix["requirements_schema"], REQUIREMENTS_SCHEMA)
             self.assertEqual(matrix["supplied_pdf_sha256"], REQUIREMENTS_PDF_SHA256)
             self.assertEqual(matrix["rejected_projection_sha256"], REJECTED_PROJECTION_SHA256)
-            self.assertGreaterEqual(matrix["supported_obligation_count"], 6)
+            status_count = (
+                matrix["supported_obligation_count"]
+                + matrix["partial_obligation_count"]
+                + matrix["unsupported_obligation_count"]
+                + sum(
+                    item["support_status"]
+                    == "NOT_APPLICABLE_WITH_JUSTIFICATION"
+                    for item in matrix["items"]
+                )
+            )
+            self.assertEqual(status_count, len(matrix["items"]))
+            self.assertGreater(matrix["partial_obligation_count"], 0)
+            self.assertEqual(matrix["evidence_authority"], EVIDENCE_AUTHORITY)
+            self.assertIs(matrix["publication_authority"], True)
+            self.assertIs(matrix["diagnostic_projection_used"], False)
 
             for item in matrix["items"]:
+                self.assertIn("support_binding", item)
+                if item["support_status"] == "SUPPORTED":
+                    self.assertIsInstance(item["support_binding"], dict)
+                else:
+                    self.assertIsNone(item["support_binding"])
                 for implementation_ref in item["implementation_refs"]:
                     self.assertTrue((ROOT / implementation_ref["path"]).is_file())
 
