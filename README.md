@@ -25,17 +25,30 @@ Historical/duplicative documentation is retained for provenance and classified i
 
 # UPI App Factory
 
-**A governed, explainable and safety-first application-engineering factory for UPI applications, with `upi_dispute_resolution` as the current reference profile.**
+**A governed, local-first and evidence-driven Agentic AI application-engineering factory for simulated UPI/payment workflows, with `upi_dispute_resolution` as the current reference profile.**
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)
 ![Execution](https://img.shields.io/badge/execution-local--first-success)
 ![Safety](https://img.shields.io/badge/payment%20ecosystem-mocked%2Fsimulated-orange)
-![Posture](https://img.shields.io/badge/posture-certification--ready--not--certified-yellow)
+![Posture](https://img.shields.io/badge/posture-standards--aligned--not--certified-yellow)
 
 UPI App Factory turns a fictional payments requirement into a locally runnable, mock-safe Python application with governed planning, explicit approvals, generated source, executed tests, OpenAPI, runtime controls, observability, downloadable evidence and exact delivery provenance.
 
 It is not merely a chatbot or code generator. It treats requirements, agent decisions, application engineering, validation, runtime operations, safety and audit evidence as one controlled workflow.
+
+## Governed functional-delivery evidence
+
+The latest governed functional delivery was accepted at exact commit `c0330ba68a32030e591cb7bcebe3841902789571` with tree `f16171ffbf9937914e8b10779325588e5b54db17`.
+
+- **1514/1514** governed regression tests passed.
+- **14/14** mandatory Phase 59/60 engineering gates passed.
+- Final human review recorded **P0/P1/P2 = 0/0/0**.
+- Exact-commit acceptance and fresh public clean-clone verification passed.
+- Governed delivery used an exact non-force `main:main` push with no tag publication.
+- The accepted default boundary remained mock/simulated: no real-payment connectivity, production deployment, regulatory approval or certification claim.
+
+These figures are **revision-bound evidence for that exact governed functional delivery**. They are not automatically transferable acceptance evidence for later revisions.
 
 ## Why this project stands out
 
