@@ -4454,12 +4454,13 @@
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "requirements/ci-lock.txt",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "dependency lock hygiene refresh: charset-normalizer 3.4.8 -> 3.4.9"
       ],
-      "sha256_after": "ec9ce43fc8b15b5148cd48f28e7ee968f51a4d73aa59b4cb248e38593f14afc6",
+      "sha256_after": "b4138dec82a464b59862a343ac05c6dbcca82787bdff3508c79cce9e2b4f89d5",
       "sha256_before": "ec9ce43fc8b15b5148cd48f28e7ee968f51a4d73aa59b4cb248e38593f14afc6"
     },
     {
@@ -4487,12 +4488,13 @@
     {
       "classification_after": "CURRENT_AND_VERIFIED",
       "classification_before": "CURRENT_AND_VERIFIED",
-      "modified": false,
+      "modified": true,
       "path": "requirements/recipient-lock.txt",
       "reasons": [
-        "no known stale current-state signal"
+        "no known stale current-state signal",
+        "dependency lock hygiene refresh: charset-normalizer 3.4.8 -> 3.4.9"
       ],
-      "sha256_after": "d29187582a97f0bdaf7a8fc7ade697bc8a579aebb7e21e1c4e74a74f8d38d23d",
+      "sha256_after": "b0ec7c7b1e4b10a6bd32ea61f1b9219d20d7b50d6d104d9f03653f2ac6385ef0",
       "sha256_before": "d29187582a97f0bdaf7a8fc7ade697bc8a579aebb7e21e1c4e74a74f8d38d23d"
     },
     {
