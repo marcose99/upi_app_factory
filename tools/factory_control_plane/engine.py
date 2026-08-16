@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import shutil
 from pathlib import Path
 from typing import Any
 
@@ -33,6 +32,7 @@ class ControlPlaneEngine:
         self.executor = CapabilityExecutor(self.project_root)
 
     def close(self) -> None:
+        self.executor.close()
         self.store.close()
 
     def validate(self, manifest_path: Path) -> CampaignManifest:
@@ -40,6 +40,9 @@ class ControlPlaneEngine:
 
     def run(self, manifest_path: Path) -> dict[str, Any]:
         manifest = self.validate(manifest_path)
+        preflight = self._authorize_before_mutation(manifest)
+        if preflight is not None:
+            return preflight
         baseline = self._resolve_baseline(manifest)
         state = self.store.create_or_load_campaign(manifest, baseline)
         if state is LifecycleState.CLOSED:
@@ -205,24 +208,11 @@ class ControlPlaneEngine:
     def _reconcile_runtime_noise(self, manifest: CampaignManifest) -> dict[str, Any]:
         entries: list[dict[str, Any]] = []
         for item in manifest.validation_controls.deterministic_runtime_noise:
-            path = (self.project_root / item.path).resolve()
-            existed = path.exists()
-            removed = False
-            if existed:
-                if item.kind == "directory":
-                    if not path.is_dir():
-                        raise ControlPlaneError(
-                            f"deterministic runtime noise kind mismatch: {item.path}"
-                        )
-                    shutil.rmtree(path)
-                    removed = True
-                else:
-                    if not path.is_file():
-                        raise ControlPlaneError(
-                            f"deterministic runtime noise kind mismatch: {item.path}"
-                        )
-                    path.unlink()
-                    removed = True
+            self.executor.guard.validate_runtime_noise(
+                item.path, tuple(manifest.scope.get("allowed_write_paths", []))
+            )
+            removed = self.executor.filesystem.remove(item.path, item.kind)
+            existed = removed
             entries.append(
                 {
                     "id": item.id,
@@ -241,19 +231,39 @@ class ControlPlaneEngine:
         write_control_envelope(self.state_root, manifest.campaign_id, "reconcile", payload)
         return payload
 
+    def _authorize_before_mutation(self, manifest: CampaignManifest) -> dict[str, Any] | None:
+        """Authorize every effect before state, evidence, hydration, or cleanup changes."""
+        for activity in manifest.activities:
+            decision = self.policy.evaluate(activity.action, activity.risk)
+            if decision.outcome == "pause":
+                return {
+                    "status": "human_gate",
+                    "campaign_id": manifest.campaign_id,
+                    "decision": decision.to_record(),
+                }
+            if decision.outcome != "allow":
+                return {
+                    "status": "failed",
+                    "campaign_id": manifest.campaign_id,
+                    "failure_class": FailureClass.POLICY_DENIAL.value,
+                }
+            self.executor.guard.resolve(activity)
+        scope = tuple(manifest.scope.get("allowed_write_paths", []))
+        for item in manifest.validation_controls.deterministic_runtime_noise:
+            self.executor.guard.validate_runtime_noise(item.path, scope)
+        return None
+
     def _hydrate_prerequisites(self, manifest: CampaignManifest) -> dict[str, Any]:
         entries: list[dict[str, Any]] = []
         missing: list[str] = []
         for item in manifest.validation_controls.trusted_prerequisites:
-            path = (self.project_root / item.path).resolve()
-            existed_before = path.exists()
+            kind_before = self.executor.filesystem.kind(item.path)
+            existed_before = kind_before is not None
             if not existed_before and item.hydrate and item.kind == "directory":
-                path.mkdir(parents=True, exist_ok=True)
-            exists_after = path.exists()
-            kind_matches = (
-                (item.kind == "directory" and path.is_dir())
-                or (item.kind == "file" and path.is_file())
-            )
+                self.executor.filesystem.mkdir(item.path)
+            kind_after = self.executor.filesystem.kind(item.path)
+            exists_after = kind_after is not None
+            kind_matches = kind_after == item.kind
             if not exists_after or not kind_matches:
                 missing.append(item.id)
             entries.append(

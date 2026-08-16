@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import sys
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
@@ -99,6 +100,19 @@ def main() -> int:
     for line in lock_lines:
         if line.startswith("-e ") or "file:" in line or "git+" in line:
             fail(f"non-reproducible CI dependency: {line}")
+
+    authority_validator = ROOT / "scripts/validate_control_plane_authority_policy.py"
+    if not authority_validator.is_file():
+        fail("control-plane authority validator is missing")
+    authority_result = subprocess.run(
+        [sys.executable, str(authority_validator), "--repo", str(ROOT)],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if authority_result.returncode != 0:
+        fail("control-plane authority validation failed: " + authority_result.stdout.strip())
 
     report = {
         "status": "passed",

@@ -81,6 +81,14 @@ def test_verification_cannot_declare_writes(tmp_path: Path) -> None:
         load_manifest(_write(tmp_path, payload), ROOT)
 
 
+@pytest.mark.parametrize("path", [".git", "config", "README.md", "var"])
+def test_runtime_noise_must_be_inside_campaign_scope(tmp_path: Path, path: str) -> None:
+    payload = _manifest_payload()
+    payload["validation_controls"]["deterministic_runtime_noise"][0]["path"] = path
+    with pytest.raises(ControlPlaneError, match="outside manifest scope"):
+        load_manifest(_write(tmp_path, payload), ROOT)
+
+
 def test_lifecycle_monotonic_and_terminal() -> None:
     assert (
         advance(LifecycleState.NEW, LifecycleState.INTAKE_VALIDATED)
@@ -103,6 +111,14 @@ def test_policy_allow_pause_deny_and_deterministic_ids() -> None:
     assert policy.evaluate("live_payment_transaction", "LOW").outcome == "deny"
     assert policy.evaluate("not_in_policy", "LOW").outcome == "deny"
     assert policy.evaluate("run_tests", "HIGH").outcome == "deny"
+
+
+def test_policy_membership_overlap_fails_at_production_load(tmp_path: Path) -> None:
+    payload = json.loads(POLICY.read_text(encoding="utf-8"))
+    payload["automatic_actions"].append("production_deployment")
+    path = _write(tmp_path, payload)
+    with pytest.raises(ControlPlaneError, match="disjoint"):
+        StandingPolicy(path)
 
 
 def test_payload_copy_keeps_type_checking_honest() -> None:

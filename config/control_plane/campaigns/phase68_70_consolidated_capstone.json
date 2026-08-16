@@ -25,9 +25,10 @@
   "baseline": "2f033c8591bf53495c2d472bd3d8baa1e037b581",
   "objective": "Demonstrate requirements intake, governed campaign execution, application engineering, validation, evidence integrity and recipient download using local fictional data only.",
   "scope": {
-    "allowed_write_paths": [
-      "factory_governance/phase68_70/recipient_replay_output",
-      "factory_governance/phase68_70/phase69_control_plane_portal"
+      "allowed_write_paths": [
+        "factory_governance/phase68_70/recipient_replay_output",
+        "factory_governance/phase68_70/phase69_control_plane_portal",
+        "tmp"
     ]
   },
   "budgets": {
@@ -80,8 +81,7 @@
         "factory_governance/phase68_70/recipient_replay_output"
       ],
       "argv": [
-        "python3",
-        "scripts/run_phase68_recipient_replay.py"
+        "capability:phase68_recipient_replay"
       ],
       "cwd": ".",
       "dependencies": [],
@@ -96,8 +96,7 @@
       "action": "verify_evidence",
       "allowed_write_paths": [],
       "argv": [
-        "python3",
-        "scripts/validate_phase68_reproducible_evaluator_recipient.py"
+        "capability:phase68_recipient_verify"
       ],
       "cwd": ".",
       "dependencies": [
@@ -114,9 +113,7 @@
       "action": "verify_evidence",
       "allowed_write_paths": [],
       "argv": [
-        "python3",
-        "-c",
-        "import json; from pathlib import Path; p=Path('factory_governance/phase68_70/recipient_replay_output/content_manifest.json'); d=json.loads(p.read_text(encoding='utf-8')); raise SystemExit(0 if d.get('status') == 'PASS' and d.get('original_ignored_workspace_required') is False else 1)"
+        "capability:phase69_checkpoint"
       ],
       "cwd": ".",
       "dependencies": [
@@ -131,10 +128,11 @@
     },
     {
       "action": "execute_engineering",
-      "allowed_write_paths": [],
+      "allowed_write_paths": [
+        "tmp"
+      ],
       "argv": [
-        "python3",
-        "scripts/validate_phase70_multi_domain_application_engineering.py"
+        "capability:phase70_validate"
       ],
       "cwd": ".",
       "dependencies": [
@@ -151,9 +149,7 @@
       "action": "verify_evidence",
       "allowed_write_paths": [],
       "argv": [
-        "python3",
-        "-c",
-        "import json; from pathlib import Path; p=Path('factory_governance/phase68_70/recipient_replay_output/content_manifest.json'); d=json.loads(p.read_text(encoding='utf-8')); raise SystemExit(0 if d.get('status') == 'PASS' and d.get('network_required') is False and d.get('official_certification_claimed') is False else 1)"
+        "capability:phase68_70_checkpoint"
       ],
       "cwd": ".",
       "dependencies": [

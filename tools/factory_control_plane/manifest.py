@@ -50,6 +50,25 @@ ACTIVITY_KEYS = {
     "allowed_write_paths",
 }
 ORDERED_RISK = {"LOW": 0, "MODERATE": 1, "HIGH": 2, "CRITICAL": 3}
+PROTECTED_REPOSITORY_ROOTS = frozenset(
+    {
+        ".git", ".github", "config", "docs", "factory", "scripts", "src",
+        "tests", "tools", "AGENTS.md",
+    }
+)
+
+
+def _reject_protected_write_target(project_root: Path, target: Path, label: str) -> None:
+    relative = target.relative_to(project_root.resolve())
+    first = relative.parts[0] if relative.parts else "."
+    if target == project_root.resolve() or first in PROTECTED_REPOSITORY_ROOTS:
+        raise ControlPlaneError(f"{label} targets protected repository content")
+
+
+def _reject_lexical_protected_target(value: str, label: str) -> None:
+    first = Path(value).parts[0] if Path(value).parts else "."
+    if first in PROTECTED_REPOSITORY_ROOTS:
+        raise ControlPlaneError(f"{label} targets protected repository content")
 
 
 @dataclass(frozen=True)
@@ -207,6 +226,8 @@ def _parse_prerequisites(
         hydrate = item.get("hydrate", False)
         if not isinstance(hydrate, bool):
             raise ControlPlaneError("trusted prerequisite hydrate must be a boolean")
+        if hydrate:
+            _reject_lexical_protected_target(path, "hydrated prerequisite")
         item_dict = {str(k): v for k, v in item.items()}
         prerequisites.append(
             TrustedPrerequisite(
@@ -280,6 +301,27 @@ def load_manifest(path: Path, project_root: Path) -> CampaignManifest:
     for scope_path in allowed_scope:
         resolve_under_root(project_root, scope_path)
     validation_controls = _parse_validation_controls(raw, project_root)
+    scope_roots = tuple(resolve_under_root(project_root, value) for value in allowed_scope)
+    for noise_control in validation_controls.deterministic_runtime_noise:
+        resolved = resolve_under_root(project_root, noise_control.path)
+        if not scope_roots or not any(
+            resolved == root or resolved.is_relative_to(root) for root in scope_roots
+        ):
+            raise ControlPlaneError(
+                f"deterministic runtime noise is outside manifest scope: {noise_control.path}"
+            )
+    for prerequisite_control in validation_controls.trusted_prerequisites:
+        if prerequisite_control.hydrate:
+            resolved = resolve_under_root(project_root, prerequisite_control.path)
+            _reject_protected_write_target(
+                project_root, resolved, "hydrated prerequisite"
+            )
+            if not scope_roots or not any(
+                resolved == root or resolved.is_relative_to(root) for root in scope_roots
+            ):
+                raise ControlPlaneError(
+                    f"hydrated prerequisite is outside manifest scope: {prerequisite_control.path}"
+                )
     seen: set[str] = set()
     activities: list[Activity] = []
     for item in activities_raw:
