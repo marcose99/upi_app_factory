@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {"minLength": 1, "type": "string"},
+    "scope": {"minLength": 1, "type": "string"},
+    "actor": {
+      "pattern": "^human:(?!.*(?:agent|codex|serviceaccount|automation|buildbot|controller))[a-z][a-z0-9._-]{2,63}$",
+      "type": "string"
+    },
+    "actor_type": {"const": "HUMAN"},
+    "revision": {"minLength": 1, "type": "string"},
+    "decision_id": {"const": "HD-P0-01"},
+    "issued_at": {"format": "date-time", "type": "string"},
+    "expires_at": {"format": "date-time", "type": "string"}
+  },
+  "required": [
+    "action", "scope", "actor", "actor_type", "revision", "decision_id", "issued_at", "expires_at"
+  ],
+  "type": "object",
+  "x-upi-app-factory": {
+    "actor_identity_source": "TRUSTED_HUMAN_REGISTRY",
+    "authorization_effect": "HUMAN_ACTION_EVIDENCE_ONLY",
+    "decision_id": "HD-P0-01",
+    "delegation_to_agents": false,
+    "self_asserted_actor_identity": false
+  }
+}

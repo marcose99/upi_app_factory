@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "disposable_roots": [
+    "var/control_plane_self_test",
+    "factory_governance/phase68_70/phase69_control_plane_portal",
+    "tmp"
+  ],
+  "capabilities": [
+    {
+      "id": "self_test_create", "request_argv": ["capability:self_test_create"],
+      "kind": "internal", "executable": null, "script": null, "script_sha256": null,
+      "arguments": [], "effects": ["write"], "write_roots": ["var/control_plane_self_test"],
+      "environment": [], "network": false, "replace_write_root": false
+    },
+    {
+      "id": "self_test_verify", "request_argv": ["capability:self_test_verify"],
+      "kind": "internal", "executable": null, "script": null, "script_sha256": null,
+      "arguments": [], "effects": ["read"], "write_roots": [], "environment": [], "network": false,
+      "replace_write_root": false
+    },
+    {
+      "id": "self_test_cleanup", "request_argv": ["capability:self_test_cleanup"],
+      "kind": "internal", "executable": null, "script": null, "script_sha256": null,
+      "arguments": [], "effects": ["delete"], "write_roots": ["var/control_plane_self_test"],
+      "environment": [], "network": false, "replace_write_root": false
+    },
+    {
+      "id": "phase68_recipient_replay", "request_argv": ["capability:phase68_recipient_replay"],
+      "kind": "python_script", "executable": "python3", "script": "scripts/run_phase68_recipient_replay.py",
+      "script_sha256": "c9eeb2f028fd381bde0f6d852704522f8b994aac5f81bc15cd6c11d97c20ba58",
+      "arguments": [], "effects": ["write"], "write_roots": ["factory_governance/phase68_70/recipient_replay_output"],
+      "environment": [], "network": false, "replace_write_root": true
+    },
+    {
+      "id": "phase68_recipient_verify", "request_argv": ["capability:phase68_recipient_verify"],
+      "kind": "python_script", "executable": "python3", "script": "scripts/validate_phase68_reproducible_evaluator_recipient.py",
+      "script_sha256": "d2e4870a3f7974874f06e5845c1815695116f80ea6c30db4508d64c5671608d8",
+      "arguments": [], "effects": ["read"], "write_roots": [], "environment": [], "network": false,
+      "replace_write_root": false
+    },
+    {
+      "id": "phase69_checkpoint", "request_argv": ["capability:phase69_checkpoint"],
+      "kind": "internal", "executable": null, "script": null, "script_sha256": null,
+      "arguments": [], "effects": ["read"], "write_roots": [], "environment": [], "network": false,
+      "replace_write_root": false
+    },
+    {
+      "id": "phase70_validate", "request_argv": ["capability:phase70_validate"],
+      "kind": "python_script", "executable": "python3", "script": "scripts/validate_phase70_multi_domain_application_engineering.py",
+      "script_sha256": "a92c7b6014a99472a4156592ce7f3ee1b508147fa53c02b05ee65e5ce134c72c",
+      "arguments": [], "effects": ["write"], "write_roots": ["tmp"], "environment": [], "network": false,
+      "replace_write_root": false
+    },
+    {
+      "id": "phase68_70_checkpoint", "request_argv": ["capability:phase68_70_checkpoint"],
+      "kind": "internal", "executable": null, "script": null, "script_sha256": null,
+      "arguments": [], "effects": ["read"], "write_roots": [], "environment": [], "network": false,
+      "replace_write_root": false
+    }
+  ]
+}

@@ -23,6 +23,21 @@ ASYNC_ENGINEERING_POLL_INTERVAL_SECONDS = 0.25
 PORTAL_PROCESS_STOP_TIMEOUT_SECONDS = 10.0
 PROCESS_BACKED_ASGI_E2E_TIMEOUT_SECONDS = 180.0
 TERMINAL_RUN_STATES = frozenset({"SUCCEEDED", "FAILED", "CANCELLED"})
+
+
+def _process_output_tail(process: subprocess.Popen[str]) -> str:
+    if process.stderr is not None:
+        try:
+            return process.stderr.read()[-4000:]
+        except (OSError, ValueError):
+            return ""
+    diagnostic_path = getattr(process, "_upi_diagnostic_output_path", None)
+    if diagnostic_path is not None:
+        try:
+            return Path(diagnostic_path).read_text(encoding="utf-8", errors="replace")[-4000:]
+        except OSError:
+            return ""
+    return ""
 REQUIREMENTS_TEXT = """# UPI Failed Debit - Beneficiary Not Credited
 
 Requirement ID: upi_failed_debit_no_credit.requirements.v1.
@@ -74,7 +89,7 @@ def _wait_for_server(base_url: str, process: subprocess.Popen[str]) -> None:
     last_error = ""
     while time.monotonic() < deadline:
         if process.poll() is not None:
-            stderr = process.stderr.read() if process.stderr is not None else ""
+            stderr = _process_output_tail(process)
             raise AssertionError(f"portal process exited early: {stderr}")
         try:
             health = _request(
@@ -106,7 +121,7 @@ def _wait_for_terminal(
     request_errors: list[dict[str, str]] = []
     while time.monotonic() < deadline:
         if process.poll() is not None:
-            stderr = process.stderr.read() if process.stderr is not None else ""
+            stderr = _process_output_tail(process)
             raise AssertionError(
                 "portal process exited before the engineering run became terminal; "
                 f"return_code={process.returncode!r}; stderr={stderr[-4000:]!r}"
@@ -137,7 +152,8 @@ def _wait_for_terminal(
         "run did not reach terminal state within "
         f"{ASYNC_ENGINEERING_TEST_TIMEOUT_SECONDS:.1f}s; run_id={run_id!r}; "
         f"latest={latest!r}; recent_request_errors={request_errors!r}; "
-        f"process_return_code={process.poll()!r}"
+        f"process_return_code={process.poll()!r}; "
+        f"portal_output_tail={_process_output_tail(process)!r}"
     )
 
 
@@ -192,13 +208,16 @@ def test_operator_portal_live_http_e2e_creates_publishes_and_downloads(tmp_path:
         encoding="utf-8",
     )
 
+    portal_output_path = tmp_path / "portal_server.log"
+    portal_output = portal_output_path.open("w", encoding="utf-8")
     process = subprocess.Popen(
         [sys.executable, str(launcher)],
         cwd=Path("/tmp"),
         text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stdout=portal_output,
+        stderr=subprocess.STDOUT,
     )
+    setattr(process, "_upi_diagnostic_output_path", portal_output_path)
     try:
         _wait_for_server(base_url, process)
         html = _request(base_url, "GET", "/operator-ui/", expect_json=False)[0].decode("utf-8")
@@ -300,6 +319,7 @@ def test_operator_portal_live_http_e2e_creates_publishes_and_downloads(tmp_path:
         except subprocess.TimeoutExpired:
             process.kill()
             process.wait(timeout=PORTAL_PROCESS_STOP_TIMEOUT_SECONDS)
+        portal_output.close()
 
 
 def _run_process_backed_asgi_e2e(tmp_path: Path) -> None:

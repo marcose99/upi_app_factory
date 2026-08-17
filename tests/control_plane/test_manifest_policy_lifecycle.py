@@ -81,6 +81,14 @@ def test_verification_cannot_declare_writes(tmp_path: Path) -> None:
         load_manifest(_write(tmp_path, payload), ROOT)
 
 
+@pytest.mark.parametrize("path", [".git", "config", "README.md", "var"])
+def test_runtime_noise_must_be_inside_campaign_scope(tmp_path: Path, path: str) -> None:
+    payload = _manifest_payload()
+    payload["validation_controls"]["deterministic_runtime_noise"][0]["path"] = path
+    with pytest.raises(ControlPlaneError, match="outside manifest scope"):
+        load_manifest(_write(tmp_path, payload), ROOT)
+
+
 def test_lifecycle_monotonic_and_terminal() -> None:
     assert (
         advance(LifecycleState.NEW, LifecycleState.INTAKE_VALIDATED)
@@ -105,7 +113,49 @@ def test_policy_allow_pause_deny_and_deterministic_ids() -> None:
     assert policy.evaluate("run_tests", "HIGH").outcome == "deny"
 
 
+def test_policy_membership_overlap_fails_at_production_load(tmp_path: Path) -> None:
+    payload = json.loads(POLICY.read_text(encoding="utf-8"))
+    payload["automatic_actions"].append("production_deployment")
+    path = _write(tmp_path, payload)
+    with pytest.raises(ControlPlaneError, match="disjoint"):
+        StandingPolicy(path)
+
+
 def test_payload_copy_keeps_type_checking_honest() -> None:
     payload = _manifest_payload()
     cloned = copy.deepcopy(payload)
     assert cloned == payload
+
+
+@pytest.mark.parametrize("target", ["PR_OPEN", "MERGED", "POSTMERGE_ACCEPTED"])
+def test_automatic_capability_cannot_claim_protected_state(
+    tmp_path: Path, target: str
+) -> None:
+    payload = _manifest_payload()
+    payload["activities"][-1]["target_state"] = target
+    with pytest.raises(ControlPlaneError, match="not authorized for target state"):
+        load_manifest(_write(tmp_path, payload), ROOT)
+
+
+def test_automatic_capability_cannot_borrow_another_actions_transition(
+    tmp_path: Path,
+) -> None:
+    payload = _manifest_payload()
+    payload["activities"][0]["action"] = "verify_evidence"
+    with pytest.raises(ControlPlaneError, match="not authorized for target state"):
+        load_manifest(_write(tmp_path, payload), ROOT)
+
+
+@pytest.mark.parametrize("identifier", ["../escape", "a/b", ".hidden", "name\nnext"])
+def test_manifest_rejects_path_capable_identifiers(
+    tmp_path: Path, identifier: str
+) -> None:
+    payload = _manifest_payload()
+    payload["campaign_id"] = identifier
+    with pytest.raises(ControlPlaneError, match="conservative"):
+        load_manifest(_write(tmp_path, payload), ROOT)
+
+    payload = _manifest_payload()
+    payload["activities"][0]["id"] = identifier
+    with pytest.raises(ControlPlaneError, match="conservative"):
+        load_manifest(_write(tmp_path, payload), ROOT)
