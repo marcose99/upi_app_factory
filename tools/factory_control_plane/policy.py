@@ -4,7 +4,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal
 
-from tools.factory_control_plane.common import canonical_json, load_json_object, sha256_bytes
+from tools.factory_control_plane.common import (
+    ControlPlaneError,
+    canonical_json,
+    load_json_object,
+    sha256_bytes,
+)
 from tools.factory_control_plane.manifest import ORDERED_RISK, Risk
 
 Outcome = Literal["allow", "pause", "deny"]
@@ -41,6 +46,17 @@ class StandingPolicy:
         self.human_actions = set(_string_list(self.raw.get("human_required_actions")))
         self.prohibited_actions = set(_string_list(self.raw.get("prohibited_actions")))
         self.max_auto_risk = str(self.raw.get("max_automatic_risk", "MODERATE"))
+        conflicts = (
+            (self.auto_actions & self.human_actions)
+            | (self.auto_actions & self.prohibited_actions)
+            | (self.human_actions & self.prohibited_actions)
+        )
+        if conflicts:
+            raise ControlPlaneError(
+                f"standing policy memberships must be disjoint: {sorted(conflicts)}"
+            )
+        if self.max_auto_risk not in ORDERED_RISK:
+            raise ControlPlaneError("max_automatic_risk is invalid")
 
     def evaluate(self, action: str, risk: Risk | str) -> PolicyDecision:
         reasons: list[str] = [f"policy_digest={self.digest}"]

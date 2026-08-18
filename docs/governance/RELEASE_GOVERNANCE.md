@@ -30,6 +30,11 @@ A green run on another revision is not transferable acceptance evidence.
 
 ## Protected actions
 
+HD-P0-01 fixes the control plane in `MANUAL_PROTECTED_ACTIONS` mode: protected
+actions are human-only, and conflicts or unknown effects resolve to `DENY`. Agents and
+controllers have no authority to authorize protected actions. An approval record
+is evidence for the bound human action only; it must not grant agent authority.
+
 1. candidate/source reconstruction and local qualification;
 2. governed commit + documentation-branch push + draft PR/exact-head CI;
 3. exact fast-forward-only `main` delivery + post-push CI;

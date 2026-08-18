@@ -294,6 +294,14 @@ class StateStore:
             "events": events,
         }
 
+    def completed_activity_ids(self, campaign_id: str) -> set[str]:
+        self.lifecycle_state(campaign_id)
+        rows = self.connection.execute(
+            "SELECT activity_id FROM activities WHERE campaign_id=? AND status='completed'",
+            (campaign_id,),
+        ).fetchall()
+        return {str(row["activity_id"]) for row in rows}
+
     def export_events(self, campaign_id: str) -> list[dict[str, Any]]:
         rows = self.connection.execute(
             "SELECT event_hash, sequence, event_type, payload_json, created_at "

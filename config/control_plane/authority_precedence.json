@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "decision_id": "HD-P0-01",
+  "mode": "MANUAL_PROTECTED_ACTIONS",
+  "authority_precedence": [
+    "prohibited_actions",
+    "human_required_actions",
+    "automatic_actions",
+    "default_deny"
+  ],
+  "conflict_resolution": "DENY",
+  "default_resolution": "DENY",
+  "protected_actions": [
+    "commit_candidate",
+    "create_campaign_branch",
+    "push_campaign_branch",
+    "open_pull_request",
+    "merge_pull_request",
+    "create_tag",
+    "public_release",
+    "production_deployment",
+    "change_remote",
+    "change_host_protection",
+    "repository_settings_change",
+    "real_payment_rail_access",
+    "real_customer_data_access",
+    "policy_exception",
+    "destructive_migration",
+    "certification_claim"
+  ],
+  "agent_delegation": {
+    "allowed": false,
+    "protected_actions_authorizable": []
+  }
+}
