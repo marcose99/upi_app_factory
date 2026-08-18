@@ -29,11 +29,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -49,11 +64,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -69,11 +99,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -89,11 +134,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -108,12 +168,29 @@ jobs:
     name: Focused tests
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    env:
+      UPI_APP_FACTORY_GITHUB_CI_BWRAP_SHARE_NET: "1"
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -122,20 +199,60 @@ jobs:
           cache-dependency-path: requirements/ci-lock.txt
       - name: Install locked dependencies
         run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
+      - name: Install and verify Bubblewrap isolation prerequisite
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends apparmor bubblewrap
+          command -v apparmor_parser
+          profile_root="$RUNNER_TEMP/upi-app-factory-apparmor-profile"
+          mkdir -p "$profile_root"
+          (cd "$RUNNER_TEMP" && apt-get download apparmor-profiles)
+          profile_deb="$(find "$RUNNER_TEMP" -maxdepth 1 -type f -name 'apparmor-profiles_*.deb' -print -quit)"
+          test -n "$profile_deb"
+          dpkg-deb -x "$profile_deb" "$profile_root"
+          profile="$profile_root/usr/share/apparmor/extra-profiles/bwrap-userns-restrict"
+          test -r "$profile"
+          sha256sum "$profile"
+          sudo install -m 0644 "$profile" /etc/apparmor.d/bwrap-userns-restrict
+          sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
+          if [[ -r /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]]; then
+            test "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1"
+          fi
+          dpkg-query -W -f='${Package}=${Version}\n' apparmor bubblewrap
+          apt-cache policy apparmor-profiles | sed -n '1,8p'
+          command -v bwrap
+          bwrap --version
+          bwrap --die-with-parent --new-session --unshare-all --share-net             --ro-bind / /             --proc /proc             --dev /dev             /bin/true
       - name: Materialize deterministic validation fixtures
         run: python scripts/run_phase59_60_deep_engineering_closure.py
       - name: Run Focused tests
-        run: python -m pytest -q tests/architecture/test_phase54_kernel_architecture.py tests/test_phase52_deep_engineering_foundation.py tests/test_phase53_requirements_compiler.py tests/test_phase54_local_platform_kernel.py tests/test_phase55_failed_debit_capability.py tests/test_phase56_deep_composer.py tests/test_phase57_verification_evidence.py tests/test_phase58_deep_portal_integration.py tests/test_phase59_60_deep_engineering_closure.py tests/test_phase63_repository_governance.py tests/test_public_clone_readiness_validator.py && python -m pytest -q workspace/deep_engineering_campaign/phase59_60_fresh_root/upi_failed_debit_dispute/tests/generated_dispute_suite.py
+        run: python -m pytest -q tests/architecture/test_phase54_kernel_architecture.py tests/test_phase52_deep_engineering_foundation.py tests/test_phase53_requirements_compiler.py tests/test_phase54_local_platform_kernel.py tests/test_phase55_failed_debit_capability.py tests/test_phase56_deep_composer.py tests/test_phase57_verification_evidence.py tests/test_phase58_deep_portal_integration.py tests/test_phase59_60_deep_engineering_closure.py tests/test_phase63_repository_governance.py tests/test_public_clone_readiness_validator.py tests/control_plane/test_state_engine_executor.py::test_hosted_bwrap_ubuntu24_uses_packaged_restrictive_apparmor_profile tests/control_plane/test_state_engine_executor.py::test_real_bwrap_github_ci_share_net_mode_keeps_network_seccomp_denial && python -m pytest -q workspace/deep_engineering_campaign/phase59_60_fresh_root/upi_failed_debit_dispute/tests/generated_dispute_suite.py
   docker_platform_contract:
     name: Docker platform contract
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -154,12 +271,29 @@ jobs:
     name: Full regression
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      UPI_APP_FACTORY_GITHUB_CI_BWRAP_SHARE_NET: "1"
     steps:
-      - name: Checkout
+      - name: Checkout exact revision
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Assert exact checked out revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "${#EXPECTED_SHA}" -eq 40
+          case "$EXPECTED_SHA" in
+            *[!0-9a-f]*) echo "invalid expected SHA" >&2; exit 1 ;;
+          esac
+          test "$actual" = "$EXPECTED_SHA"
+          printf "validated_sha=%s\npr_head_sha=%s\npr_base_sha=%s\n" "$actual" "$PR_HEAD_SHA" "$PR_BASE_SHA"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -168,6 +302,31 @@ jobs:
           cache-dependency-path: requirements/ci-lock.txt
       - name: Install locked dependencies
         run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
+      - name: Install and verify Bubblewrap isolation prerequisite
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends apparmor bubblewrap
+          command -v apparmor_parser
+          profile_root="$RUNNER_TEMP/upi-app-factory-apparmor-profile"
+          mkdir -p "$profile_root"
+          (cd "$RUNNER_TEMP" && apt-get download apparmor-profiles)
+          profile_deb="$(find "$RUNNER_TEMP" -maxdepth 1 -type f -name 'apparmor-profiles_*.deb' -print -quit)"
+          test -n "$profile_deb"
+          dpkg-deb -x "$profile_deb" "$profile_root"
+          profile="$profile_root/usr/share/apparmor/extra-profiles/bwrap-userns-restrict"
+          test -r "$profile"
+          sha256sum "$profile"
+          sudo install -m 0644 "$profile" /etc/apparmor.d/bwrap-userns-restrict
+          sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
+          if [[ -r /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]]; then
+            test "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1"
+          fi
+          dpkg-query -W -f='${Package}=${Version}\n' apparmor bubblewrap
+          apt-cache policy apparmor-profiles | sed -n '1,8p'
+          command -v bwrap
+          bwrap --version
+          bwrap --die-with-parent --new-session --unshare-all --share-net             --ro-bind / /             --proc /proc             --dev /dev             /bin/true
       - name: Materialize deterministic validation fixtures
         run: python scripts/run_phase59_60_deep_engineering_closure.py
       - name: Run Full regression

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 from typing import Any, Literal, cast
 
 from tools.factory_control_plane.common import (
@@ -50,6 +51,49 @@ ACTIVITY_KEYS = {
     "allowed_write_paths",
 }
 ORDERED_RISK = {"LOW": 0, "MODERATE": 1, "HIGH": 2, "CRITICAL": 3}
+PROTECTED_REPOSITORY_ROOTS = frozenset(
+    {
+        ".git", ".github", "config", "docs", "factory", "scripts", "src",
+        "tests", "tools", "AGENTS.md",
+    }
+)
+IDENTIFIER_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}\Z")
+
+# Automatic authority is deliberately exact.  Adding a capability or changing
+# its lifecycle effect requires a code review; a campaign manifest cannot grant
+# itself a stronger transition by changing target_state.
+AUTOMATIC_CAPABILITY_TARGETS: dict[tuple[str, str], frozenset[LifecycleState]] = {
+    ("execute_engineering", "capability:self_test_create"): frozenset({LifecycleState.ENGINEERING}),
+    ("verify_evidence", "capability:self_test_verify"): frozenset({LifecycleState.OFFLINE_VALIDATED}),
+    ("cleanup_campaign", "capability:self_test_cleanup"): frozenset({LifecycleState.CLEANED}),
+    ("execute_engineering", "capability:phase68_recipient_replay"): frozenset({LifecycleState.ENGINEERING}),
+    ("verify_evidence", "capability:phase68_recipient_verify"): frozenset({LifecycleState.OFFLINE_VALIDATED}),
+    ("verify_evidence", "capability:phase69_checkpoint"): frozenset({LifecycleState.OFFLINE_VALIDATED}),
+    ("execute_engineering", "capability:phase70_validate"): frozenset({LifecycleState.OFFLINE_VALIDATED}),
+    ("verify_evidence", "capability:phase68_70_checkpoint"): frozenset({LifecycleState.CANDIDATE_SEALED}),
+}
+
+
+def _identifier(payload: dict[str, Any], key: str) -> str:
+    value = _string(payload, key)
+    if not IDENTIFIER_PATTERN.fullmatch(value):
+        raise ControlPlaneError(
+            f"{key} must be a conservative 1..128 character identifier"
+        )
+    return value
+
+
+def _reject_protected_write_target(project_root: Path, target: Path, label: str) -> None:
+    relative = target.relative_to(project_root.resolve())
+    first = relative.parts[0] if relative.parts else "."
+    if target == project_root.resolve() or first in PROTECTED_REPOSITORY_ROOTS:
+        raise ControlPlaneError(f"{label} targets protected repository content")
+
+
+def _reject_lexical_protected_target(value: str, label: str) -> None:
+    first = Path(value).parts[0] if Path(value).parts else "."
+    if first in PROTECTED_REPOSITORY_ROOTS:
+        raise ControlPlaneError(f"{label} targets protected repository content")
 
 
 @dataclass(frozen=True)
@@ -195,7 +239,7 @@ def _parse_prerequisites(
         if not isinstance(item, dict):
             raise ControlPlaneError("trusted prerequisite must be an object")
         _require_keys({str(k): v for k, v in item.items()}, PREREQUISITE_KEYS, "trusted prerequisite")
-        prerequisite_id = _string(item, "id")
+        prerequisite_id = _identifier(item, "id")
         if prerequisite_id in seen:
             raise ControlPlaneError(f"duplicate trusted prerequisite id {prerequisite_id}")
         seen.add(prerequisite_id)
@@ -207,6 +251,8 @@ def _parse_prerequisites(
         hydrate = item.get("hydrate", False)
         if not isinstance(hydrate, bool):
             raise ControlPlaneError("trusted prerequisite hydrate must be a boolean")
+        if hydrate:
+            _reject_lexical_protected_target(path, "hydrated prerequisite")
         item_dict = {str(k): v for k, v in item.items()}
         prerequisites.append(
             TrustedPrerequisite(
@@ -229,7 +275,7 @@ def _parse_runtime_noise(value: object, project_root: Path) -> tuple[RuntimeNois
         if not isinstance(item, dict):
             raise ControlPlaneError("deterministic runtime noise must be an object")
         _require_keys({str(k): v for k, v in item.items()}, RUNTIME_NOISE_KEYS, "deterministic runtime noise")
-        noise_id = _string(item, "id")
+        noise_id = _identifier(item, "id")
         if noise_id in seen:
             raise ControlPlaneError(f"duplicate deterministic runtime noise id {noise_id}")
         seen.add(noise_id)
@@ -255,7 +301,7 @@ def load_manifest(path: Path, project_root: Path) -> CampaignManifest:
     _require_keys(raw, TOP_LEVEL_KEYS, "manifest")
     if raw.get("schema_version") != 1:
         raise ControlPlaneError("schema_version must be 1")
-    campaign_id = _string(raw, "campaign_id")
+    campaign_id = _identifier(raw, "campaign_id")
     metadata = raw.get("metadata")
     scope = raw.get("scope")
     budgets = raw.get("budgets")
@@ -280,13 +326,34 @@ def load_manifest(path: Path, project_root: Path) -> CampaignManifest:
     for scope_path in allowed_scope:
         resolve_under_root(project_root, scope_path)
     validation_controls = _parse_validation_controls(raw, project_root)
+    scope_roots = tuple(resolve_under_root(project_root, value) for value in allowed_scope)
+    for noise_control in validation_controls.deterministic_runtime_noise:
+        resolved = resolve_under_root(project_root, noise_control.path)
+        if not scope_roots or not any(
+            resolved == root or resolved.is_relative_to(root) for root in scope_roots
+        ):
+            raise ControlPlaneError(
+                f"deterministic runtime noise is outside manifest scope: {noise_control.path}"
+            )
+    for prerequisite_control in validation_controls.trusted_prerequisites:
+        if prerequisite_control.hydrate:
+            resolved = resolve_under_root(project_root, prerequisite_control.path)
+            _reject_protected_write_target(
+                project_root, resolved, "hydrated prerequisite"
+            )
+            if not scope_roots or not any(
+                resolved == root or resolved.is_relative_to(root) for root in scope_roots
+            ):
+                raise ControlPlaneError(
+                    f"hydrated prerequisite is outside manifest scope: {prerequisite_control.path}"
+                )
     seen: set[str] = set()
     activities: list[Activity] = []
     for item in activities_raw:
         if not isinstance(item, dict):
             raise ControlPlaneError("activity must be an object")
         _require_keys({str(k): v for k, v in item.items()}, ACTIVITY_KEYS, "activity")
-        activity_id = _string(item, "id")
+        activity_id = _identifier(item, "id")
         if activity_id in seen:
             raise ControlPlaneError(f"duplicate activity id {activity_id}")
         seen.add(activity_id)
@@ -344,6 +411,15 @@ def load_manifest(path: Path, project_root: Path) -> CampaignManifest:
     result = tuple(activities)
     _topological(result)
     _validate_monotonic_targets(result)
+    for activity in result:
+        if len(activity.argv) == 1 and activity.argv[0].startswith("capability:"):
+            authorized = AUTOMATIC_CAPABILITY_TARGETS.get(
+                (activity.action, activity.argv[0])
+            )
+            if authorized is None or activity.target_state not in authorized:
+                raise ControlPlaneError(
+                    "automatic action/capability is not authorized for target state"
+                )
     return CampaignManifest(
         schema_version=1,
         campaign_id=campaign_id,

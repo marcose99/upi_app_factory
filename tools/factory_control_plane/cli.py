@@ -40,7 +40,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(list(sys.argv[1:] if argv is None else argv))
     project_root = project_root_from(Path(args.project_root))
-    state_root = Path(args.state_root).resolve() if args.state_root else default_state_root()
+    state_root = (
+        Path(args.state_root).resolve()
+        if args.state_root
+        else default_state_root(project_root)
+    )
     policy_path = (project_root / str(args.policy)).resolve()
     try:
         if args.command == "policy-explain":

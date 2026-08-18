@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
+import io
 import json
+import math
 from pathlib import Path
 import re
 import stat
@@ -40,13 +42,56 @@ PERSONAL_PATTERNS = (
     re.compile(r"upi_dispute_resolution_factory"),
 )
 SECRET_PATTERNS = (
-    re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
+    re.compile(
+        r"-----BEGIN (?:(?:RSA|EC|OPENSSH|DSA|ENCRYPTED) )?PRIVATE KEY-----"
+    ),
     re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
+    re.compile(r"\bASIA[0-9A-Z]{16}\b"),
+    re.compile(r"\bnpm_[A-Za-z0-9]{32,}\b"),
     re.compile(r"=\s*[\"']?sk-[A-Za-z0-9_-]{20,}"),
+    re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"),
+    re.compile(r"\bgithub_pat_[A-Za-z0-9_]{22,}\b"),
+    re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b"),
+    re.compile(r"\bglpat-[A-Za-z0-9_-]{20,}\b"),
+    re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{20,}\b"),
+    re.compile(r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b"),
+    re.compile(
+        r"(?i)\b(?:password|passwd|secret|client_secret|access_key|api_key)\b"
+        r"\s*[:=]\s*[\"']?[A-Za-z0-9_+/=-]{16,}"
+    ),
+    re.compile(
+        r"(?i)\b(?:auth_token|access_token|api_token|token)\b"
+        r"\s*[:=]\s*[\"']?[A-Za-z0-9_+/=-]{32,}"
+    ),
+)
+# Provider-neutral credentials are detected by the conjunction of an explicit
+# secret-bearing context and a high-entropy value.  This complements the small
+# set of formats for providers referenced by this repository without pretending
+# to enumerate every vendor token prefix.
+SECRET_CONTEXT = re.compile(
+    r"(?i)(?:^|[^A-Za-z0-9])"
+    r"(?:api[_-]?key|client[_-]?secret|access[_-]?token|auth[_-]?token|"
+    r"refresh[_-]?token|password|passwd|credential|private[_-]?key)"
+    r"\s*[:=]\s*[\"']?([A-Za-z0-9_+/=.-]{20,})"
+)
+URI_CREDENTIAL = re.compile(
+    r"(?i)\b(?:https?|postgres(?:ql)?|mysql|mongodb(?:\+srv)?)://"
+    r"[^\s/:@]{1,128}:([^\s/@]{12,})@"
 )
 SYNTHETIC_PATH_FIXTURES = {
     "scripts/validate_public_clone_readiness.py",
     "tests/transformation/test_phase46a_inventory.py",
+}
+SYNTHETIC_SECRET_FIXTURES = {
+    "tests/test_portal_synthetic_data_contract.py": {
+        'secret = "Build local disputes only. api_key=' + 'abcdefghijklmnopqrstuvwxyz123456"'
+    },
+    "tests/test_phase31_deep_generated_application_export_download_center.py": {
+        'assert "-----BEGIN ' + 'PRIVATE KEY-----" not in text'
+    },
+    "tests/test_phase32_operator_portal_download_center.py": {
+        'assert "-----BEGIN ' + 'PRIVATE KEY-----" not in service_source'
+    },
 }
 
 
@@ -275,21 +320,114 @@ def _check_modes_symlinks_large(repo: Path, files: list[Path]) -> list[Check]:
     ]
 
 
+def _reachable_blob_bytes(repo: Path) -> list[tuple[str, tuple[str, ...], bytes]]:
+    objects = subprocess.run(
+        ["git", "-C", str(repo), "rev-list", "--objects", "--all"],
+        check=False,
+        capture_output=True,
+    )
+    if objects.returncode != 0:
+        raise RuntimeError(objects.stderr.decode(errors="replace").strip())
+    paths_by_object: dict[bytes, set[str]] = {}
+    for line in objects.stdout.splitlines():
+        if not line:
+            continue
+        fields = line.split(maxsplit=1)
+        paths_by_object.setdefault(fields[0], set())
+        if len(fields) == 2:
+            paths_by_object[fields[0]].add(fields[1].decode("utf-8", errors="replace"))
+    object_ids = sorted(paths_by_object)
+    if not object_ids:
+        return []
+    batch = subprocess.run(
+        ["git", "-C", str(repo), "cat-file", "--batch"],
+        input=b"\n".join(object_ids) + b"\n",
+        check=False,
+        capture_output=True,
+    )
+    if batch.returncode != 0:
+        raise RuntimeError(batch.stderr.decode(errors="replace").strip())
+    result: list[tuple[str, tuple[str, ...], bytes]] = []
+    stream = io.BytesIO(batch.stdout)
+    for expected in object_ids:
+        header = stream.readline().rstrip(b"\n").split()
+        if len(header) != 3 or header[0] != expected:
+            raise RuntimeError("git object batch response was malformed")
+        size = int(header[2])
+        payload = stream.read(size)
+        if len(payload) != size or stream.read(1) != b"\n":
+            raise RuntimeError("git object batch response was truncated")
+        if header[1] == b"blob":
+            result.append((expected.decode("ascii"), tuple(sorted(paths_by_object[expected])), payload))
+    return result
+
+
+def _secret_findings(label: str, text: str, fixture_paths: tuple[str, ...] = ()) -> list[str]:
+    details: list[str] = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        allowed = any(line.strip() in SYNTHETIC_SECRET_FIXTURES.get(path, set()) for path in fixture_paths)
+        generic = any(_high_confidence_secret(match.group(1)) for match in SECRET_CONTEXT.finditer(line))
+        embedded_credential = any(
+            _high_confidence_secret(match.group(1), minimum_entropy=3.0)
+            for match in URI_CREDENTIAL.finditer(line)
+        )
+        if not allowed and (
+            any(pattern.search(line) for pattern in SECRET_PATTERNS)
+            or generic
+            or embedded_credential
+        ):
+            details.append(f"{label}:{number}: secret-like material")
+    return details
+
+
+def _high_confidence_secret(value: str, *, minimum_entropy: float = 3.5) -> bool:
+    """Reject credential-shaped random material while sparing obvious examples."""
+    candidate = value.rstrip(")]>")
+    lowered = candidate.lower()
+    if any(marker in lowered for marker in ("example", "placeholder", "redacted", "changeme")):
+        return False
+    if len(set(candidate)) < 8 or not any(char.isalpha() for char in candidate):
+        return False
+    frequencies = {char: candidate.count(char) for char in set(candidate)}
+    entropy = -sum(
+        (count / len(candidate)) * math.log2(count / len(candidate))
+        for count in frequencies.values()
+    )
+    return entropy >= minimum_entropy
+
+
+def _byte_text_views(payload: bytes) -> tuple[str, ...]:
+    """Produce deterministic text views without silently skipping binary blobs."""
+    views = [payload.decode("utf-8", errors="replace")]
+    if payload.startswith((b"\xff\xfe", b"\xfe\xff")):
+        views.append(payload.decode("utf-16", errors="replace"))
+    # Credential-bearing binary formats commonly retain printable ASCII strings.
+    printable = re.findall(rb"[\x20-\x7e]{8,}", payload)
+    if printable:
+        views.append("\n".join(item.decode("ascii") for item in printable))
+    return tuple(dict.fromkeys(views))
+
+
+def _secret_findings_bytes(
+    label: str, payload: bytes, fixture_paths: tuple[str, ...] = ()
+) -> list[str]:
+    details: list[str] = []
+    for view_index, text in enumerate(_byte_text_views(payload), start=1):
+        view_label = label if view_index == 1 else f"{label}:byte-view-{view_index}"
+        details.extend(_secret_findings(view_label, text, fixture_paths))
+    return details
+
+
 def _check_secrets(repo: Path, files: list[Path]) -> Check:
     details: list[str] = []
     for path in files:
         if not path.is_file():
             continue
         relative = path.relative_to(repo).as_posix()
-        text = _read_text(path)
-        if text is None:
-            continue
-        for number, line in enumerate(text.splitlines(), start=1):
-            if " not in " in line or "not " in line:
-                continue
-            for pattern in SECRET_PATTERNS:
-                if pattern.search(line):
-                    details.append(f"{relative}:{number}: secret-like material")
+        details.extend(_secret_findings_bytes(relative, path.read_bytes(), (relative,)))
+    for object_id, paths, payload in _reachable_blob_bytes(repo):
+        details.extend(_secret_findings_bytes(f"git-blob:{object_id}", payload, paths))
+    details = sorted(set(details))
     return Check("secrets", "passed" if not details else "failed", details)
 
 

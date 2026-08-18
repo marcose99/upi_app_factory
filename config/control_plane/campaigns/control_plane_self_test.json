@@ -25,7 +25,7 @@
       {
         "id": "self_test_runtime_root",
         "kind": "directory",
-        "path": "var",
+        "path": "var/control_plane_self_test",
         "hydrate": true
       }
     ],
@@ -44,9 +44,7 @@
       "kind": "execution",
       "risk": "LOW",
       "argv": [
-        "python3",
-        "-c",
-        "from pathlib import Path; p=Path('var/control_plane_self_test'); p.mkdir(parents=True, exist_ok=True); (p/'artifact.txt').write_text('upi_app_factory control plane self-test\\n', encoding='utf-8')"
+        "capability:self_test_create"
       ],
       "dependencies": [],
       "target_state": "ENGINEERING",
@@ -63,9 +61,7 @@
       "kind": "verification",
       "risk": "LOW",
       "argv": [
-        "python3",
-        "-c",
-        "from pathlib import Path; data=Path('var/control_plane_self_test/artifact.txt').read_text(encoding='utf-8'); raise SystemExit(0 if data == 'upi_app_factory control plane self-test\\n' else 1)"
+        "capability:self_test_verify"
       ],
       "dependencies": [
         "create_self_test_file"
@@ -82,9 +78,7 @@
       "kind": "execution",
       "risk": "LOW",
       "argv": [
-        "python3",
-        "-c",
-        "import shutil; from pathlib import Path; shutil.rmtree(Path('var/control_plane_self_test'), ignore_errors=True)"
+        "capability:self_test_cleanup"
       ],
       "dependencies": [
         "verify_self_test_file"
