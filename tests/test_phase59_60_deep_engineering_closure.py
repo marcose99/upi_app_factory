@@ -90,6 +90,13 @@ def test_full_repository_pytest_command_receives_extended_timeout() -> None:
     )
 
 
+def test_full_repository_pytest_timeout_matches_governed_full_regression_budget() -> None:
+    # Repository governance gives the full-regression job a 60-minute budget.
+    # Keep the Phase59/60 embedded full-suite timeout aligned so local closure
+    # does not fail earlier merely because a healthy run exceeds 15 minutes.
+    assert FULL_REPOSITORY_TEST_TIMEOUT_SECONDS == 60 * 60
+
+
 def test_focused_pytest_and_non_pytest_commands_retain_default_timeout() -> None:
     assert (
         command_timeout_seconds(["/repo/.venv/bin/python", "-m", "pytest", "tests/test_example.py", "-q"])

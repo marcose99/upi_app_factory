@@ -2,6 +2,23 @@
   "schema_version": "native-capability-catalogue.v1",
   "capabilities": [
     {
+      "id": "CAP-OUTBOUND-NETWORK-DENIAL",
+      "description": "Automatic capability execution denies outbound socket and network effects with an OS-enforced no-network boundary.",
+      "source_requirement_ids": [
+        "SEC-008"
+      ],
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/factory_control_plane/executor.py"
+        },
+        {
+          "type": "security_test",
+          "path": "tests/test_control_plane_authority_policy.py"
+        }
+      ]
+    },
+    {
       "id": "CAP-REQ-HONESTY-GATE",
       "description": "Native pre-run inventory, classification, fail-closed gate, and improvement requirement mapping.",
       "exact_texts": [
