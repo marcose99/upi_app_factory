@@ -62,6 +62,16 @@ NON_OBLIGATION_FRONTMATTER_KEYS: Final[set[str]] = {
     "product_name",
     "repository_id",
     "domain",
+    "inherits",
+    "journey_stage",
+    "official_reference_ids",
+    "regulatory_profile",
+    "requirement_id",
+    "scenario_family",
+    "scenario_id",
+    "scenario_number",
+    "severity_default",
+    "target_application_id",
 }
 DEFAULT_SCHEMA_VERSION: Final[str] = "native-capability-prerun.v1"
 GO_DECISION: Final[str] = "PROVEN_100_PERCENT_CAPABILITY"
@@ -481,7 +491,7 @@ def _frontmatter_clauses(line: str) -> list[str]:
     key, separator, value = line.partition(":")
     if not separator:
         return []
-    normalized_key = key.strip()
+    normalized_key = key.strip().casefold()
     normalized_value = value.strip()
     if not normalized_key or not normalized_value:
         return []
@@ -866,17 +876,74 @@ def classify_obligation(
             reason="Prompt-injection-like governance override text cannot be fulfilled.",
             evidence=[],
         )
-    negative_access_request = re.search(
-        r"\b(requested|attempted|denied|rejected|blocked)\b",
-        normalized,
-    ) and re.search(r"\b(access|call|integration|provider|bank|payment|rail|npci|psp)\b", normalized)
-    if (
-        not negative_access_request
-        and re.search(r"\b(real|live)\b.*\b(call|integration|provider|bank|payment|rail|npci|psp)\b", normalized)
-        and not re.search(
-        r"\b(prohibited|disabled|never|not|no)\b", normalized
+    authorised_real_world_verification = (
+        re.search(r"\bbefore\s+any\s+real(?:-world)?\s+implementation\b", normalized)
+        and re.search(r"\bauthori[sz]ed\b.{0,100}\bowner\b", normalized)
+        and re.search(r"\b(?:must\s+)?verif(?:y|ies|ied|ication)\b", normalized)
+    )
+    independent_real_world_verification = (
+        re.search(r"\b(?:obligations?|requirements?)\b.{0,80}\b(?:confirm(?:ed)?|verif(?:y|ied))\b", normalized)
+        and re.search(r"\bindependent(?:ly)?\b", normalized)
+        and re.search(r"\b(?:before|prior to)\b.{0,80}\b(?:real(?:-world)? (?:implementation|deployment)|production)\b", normalized)
+    )
+    if authorised_real_world_verification or independent_real_world_verification:
+        return evaluated_obligation(
+            obligation,
+            classification="NOT_FULFILLABLE_GOVERNANCE_BOUNDARY",
+            fulfillable=False,
+            reason=(
+                "Independent regulatory or compliance verification is an authorised-human "
+                "governance gate for real-world transition; local mock generation cannot claim it."
+            ),
+            evidence=[],
         )
-    ):
+    dependency_language = (
+        r"\b(access|calls?|connect(?:ion|ivity)?|integrat(?:e|ion)|providers?|banks?|payments?|"
+        r"rails?|npci|psp|sockets?|dns|https?)\b"
+    )
+    denial_terms = (
+        r"(?:deny|denies|denied|forbid|forbids|forbidden|prohibit|prohibits|prohibited|"
+        r"block|blocks|blocked|disable|disables|disabled|must not|shall not|never|"
+        r"request|requests|requested|requesting|attempt|attempts|attempted|attempting|"
+        r"reject|rejects|rejected|rejecting)"
+    )
+    dependency_terms = (
+        r"(?:access|calls?|connect(?:ion|ivity)?|integrat(?:e|ion)|providers?|banks?|payments?|"
+        r"rails?|upi|npci|psp|sockets?|dns|https?|processing|interactions?|actions?|data)"
+    )
+    negative_access_pattern = (
+        rf"(?:\b{denial_terms}\b.{{0,100}}\b{dependency_terms}\b|"
+        rf"\b{dependency_terms}\b.{{0,60}}\b{denial_terms}\b|"
+        rf"\b(?:live|real)[- ]?{dependency_terms}\b.{{0,40}}\brequested\b|"
+        rf"\bno\b.{{0,40}}\b(?:live|real)\b|"
+        rf"\bwithout(?: performing)?\b.{{0,40}}\b(?:live|real)[- ]?{dependency_terms}\b)"
+    )
+    positive_access_action = (
+        r"(?:connect|call|use|access|integrate|send|require|invoke|contact|reach|perform|"
+        r"process|execute|initiate|transmit)\w*"
+    )
+    independent_action_start = (
+        rf"(?:(?:the|this|that|our|an?|a)\s+(?:app|application|system|service|workflow|"
+        rf"factory|runtime)\s+)?(?:(?:must|shall|should|will|may|can|to)\s+)?"
+        rf"{positive_access_action}"
+    )
+    access_clauses = [
+        clause.strip()
+        for clause in re.split(
+            rf"(?:[;.!?]|\b(?:but|however|then|while)\b|"
+            rf",(?=\s*{independent_action_start}\b)|"
+            rf"\band\b(?=\s*{independent_action_start}\b))",
+            normalized,
+        )
+        if clause.strip()
+    ]
+    unnegated_live_dependency = any(
+        re.search(dependency_language, clause)
+        and re.search(r"\b(?:real|live)\b", clause)
+        and not re.search(negative_access_pattern, clause)
+        for clause in access_clauses
+    )
+    if unnegated_live_dependency:
         return evaluated_obligation(
             obligation,
             classification="NOT_FULFILLABLE_EXTERNAL_DEPENDENCY",

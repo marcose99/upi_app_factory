@@ -98,3 +98,40 @@ def test_generic_pattern_match_cannot_claim_proven_100_percent_capability(tmp_pa
     item = payloads["REQUIREMENT_CAPABILITY_MATRIX.json"]["items"][0]
     assert item["classification"] == "PARTIALLY_FULFILLABLE"
     assert payloads["CAPABILITY_PRE_RUN_REPORT.json"]["decision"] == "NO_GO_WITH_IMPROVEMENT_REQUIREMENTS"
+
+
+def test_sec_008_requires_implementation_and_automated_security_test_evidence(tmp_path: Path) -> None:
+    requirements = tmp_path / "requirements.md"
+    requirements.write_text(
+        "## Mandatory requirements\n- id: SEC-008; name: Network denial; description: Deny outbound sockets/DNS/HTTP and prohibit live provider calls.\n",
+        encoding="utf-8",
+    )
+    complete = build_payloads(
+        PreRunConfig(requirements, "test_application", tmp_path / "out", ROOT)
+    )["REQUIREMENT_CAPABILITY_MATRIX.json"]["items"]
+    sec_items = [item for item in complete if item.get("source_requirement_id") == "SEC-008"]
+    assert sec_items
+    assert all(item["classification"] == "FULFILLABLE" for item in sec_items)
+    assert all(item["proof_trace"]["implementation_evidence"] for item in sec_items)
+    assert all(item["proof_trace"]["automated_test_evidence"] for item in sec_items)
+
+    catalogue = json.loads((ROOT / "config/native_capability/catalogue.json").read_text(encoding="utf-8"))
+    sec_capability = next(item for item in catalogue["capabilities"] if item["id"] == "CAP-OUTBOUND-NETWORK-DENIAL")
+    for missing_type in ("implementation", "security_test"):
+        isolated_root = tmp_path / missing_type
+        config_dir = isolated_root / "config/native_capability"
+        config_dir.mkdir(parents=True)
+        reduced = dict(sec_capability)
+        reduced["evidence"] = [entry for entry in sec_capability["evidence"] if entry["type"] != missing_type]
+        (config_dir / "catalogue.json").write_text(
+            json.dumps({"schema_version": "native-capability-catalogue.v1", "capabilities": [reduced]}),
+            encoding="utf-8",
+        )
+        for entry in reduced["evidence"]:
+            target = isolated_root / entry["path"]
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text("# evidence fixture\n", encoding="utf-8")
+        item = build_payloads(
+            PreRunConfig(requirements, "test_application", tmp_path / f"out-{missing_type}", isolated_root)
+        )["REQUIREMENT_CAPABILITY_MATRIX.json"]["items"][0]
+        assert item["classification"] != "FULFILLABLE"

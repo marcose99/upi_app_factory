@@ -14,7 +14,7 @@ from scripts.run_portal_requirements_driven_application_engineering import APPRO
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "examples" / "requirements" / "01_upi_failed_debit_no_credit.md"
+FIXTURE = ROOT / "tests" / "fixtures" / "phase53" / "failed_debit_requirements.md"
 
 
 async def _request(

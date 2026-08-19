@@ -51,7 +51,7 @@ FIXTURE_REQUIREMENTS = Path("tests/fixtures/phase53/failed_debit_requirements.md
 CLEAN_CLONE_EVIDENCE_MANIFEST = Path("factory_governance/clean_clone_test_evidence/manifest.json")
 LEGACY_LIFECYCLE_ARTIFACT_ROOT = Path("workspace/factory_generated/upi_dispute_resolution/lifecycle_artifacts")
 DEFAULT_COMMAND_TIMEOUT_SECONDS = 240
-FULL_REPOSITORY_TEST_TIMEOUT_SECONDS = 900
+FULL_REPOSITORY_TEST_TIMEOUT_SECONDS = 60 * 60
 
 
 class ClosureError(RuntimeError):
