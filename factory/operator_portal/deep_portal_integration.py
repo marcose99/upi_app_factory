@@ -6,7 +6,6 @@ import hashlib
 import html
 import json
 from pathlib import Path
-import shutil
 import zipfile
 from typing import Any, Mapping
 
@@ -323,8 +322,6 @@ class DeepPortalIntegration:
         run_root = self.runtime_root / ("approved_runs" if approved else "proposals") / digest
         output_root = run_root / "generated_app"
         evidence_root = run_root / "engineering_evidence"
-        if approved and output_root.exists():
-            shutil.rmtree(output_root)
         return AdapterConfig(
             requirements=requirements.source_path,
             app_id=APP_ID,

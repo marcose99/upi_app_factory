@@ -5,8 +5,14 @@ import hashlib
 import json
 from pathlib import Path
 import re
-import shutil
 from typing import Any, Mapping
+
+from factory.application_engineering.transactional_publish import (
+    DirectoryPublication,
+    cleanup_staging_directory,
+    create_staging_directory,
+    publish_directories,
+)
 
 
 COMPOSER_PROFILE_VERSION = "deep-composer/v1"
@@ -124,38 +130,55 @@ class DeepApplicationComposer:
         except ValueError as exc:
             raise DeepComposerError("output root must remain inside the project worktree") from exc
         app_root = root / app_id
-        if app_root.exists():
-            if not replace_existing:
-                raise DeepComposerError(f"output already exists: {app_root}")
-            shutil.rmtree(app_root)
+        if app_root.exists() and not replace_existing:
+            raise DeepComposerError(f"output already exists: {app_root}")
 
-        requirements_hash = sha256_text(canonical_json(requirements_ir))
-        files = self._render_files(app_id, requirements_hash, requirements_ir)
-        for relative, content in files.items():
-            _write_text(app_root / relative, content)
+        candidate_root = create_staging_directory(app_root)
+        try:
+            requirements_hash = sha256_text(canonical_json(requirements_ir))
+            files = self._render_files(app_id, requirements_hash, requirements_ir)
+            for relative, content in files.items():
+                _write_text(candidate_root / relative, content)
 
-        payload = {
-            "composer_profile": self.profile.profile_id,
-            "profile_version": self.profile.profile_version,
-            "app_id": app_id,
-            "product_name": "UPI App Factory",
-            "repository_id": "upi_app_factory",
-            "requirements_ir_sha256": requirements_hash,
-            "architecture": self.profile.architecture,
-            "persistence": self.profile.persistence,
-            "endpoints": list(REQUIRED_ENDPOINTS),
-            "state_machine": list(DOMAIN_STATES),
-            "llm_runtime_calls": 0,
-            "real_payment_calls": "disabled",
-            "file_count": 0,
-            "file_manifest": [],
-        }
-        _write_text(app_root / "evidence" / "generation_manifest.json", json.dumps(payload, indent=2, sort_keys=True) + "\n")
-        manifest = _file_manifest(app_root)
-        payload["file_count"] = len(manifest)
-        payload["file_manifest"] = manifest
-        _write_text(app_root / "evidence" / "generation_manifest.json", json.dumps(payload, indent=2, sort_keys=True) + "\n")
-        return payload
+            payload = {
+                "composer_profile": self.profile.profile_id,
+                "profile_version": self.profile.profile_version,
+                "app_id": app_id,
+                "product_name": "UPI App Factory",
+                "repository_id": "upi_app_factory",
+                "requirements_ir_sha256": requirements_hash,
+                "architecture": self.profile.architecture,
+                "persistence": self.profile.persistence,
+                "endpoints": list(REQUIRED_ENDPOINTS),
+                "state_machine": list(DOMAIN_STATES),
+                "llm_runtime_calls": 0,
+                "real_payment_calls": "disabled",
+                "file_count": 0,
+                "file_manifest": [],
+            }
+            _write_text(
+                candidate_root / "evidence" / "generation_manifest.json",
+                json.dumps(payload, indent=2, sort_keys=True) + "\n",
+            )
+            manifest = _file_manifest(candidate_root)
+            payload["file_count"] = len(manifest)
+            payload["file_manifest"] = manifest
+            _write_text(
+                candidate_root / "evidence" / "generation_manifest.json",
+                json.dumps(payload, indent=2, sort_keys=True) + "\n",
+            )
+            publish_directories(
+                [
+                    DirectoryPublication(
+                        candidate=candidate_root,
+                        destination=app_root,
+                        replace_existing=replace_existing,
+                    )
+                ]
+            )
+            return payload
+        finally:
+            cleanup_staging_directory(candidate_root)
 
     def _code_paths_for_collection(self, app_id: str, collection: str) -> list[str]:
         mapping = {

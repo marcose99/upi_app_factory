@@ -63,7 +63,7 @@
     {
       "description": "Definition-of-done status bound to authoritative requirements, validation evidence, and obligation-specific support.",
       "path": "evidence/generation_summary.json",
-      "sha256": "c10ac215623aa894bb84bd48b14edd7ccb480e14a6144986df76abaa704b004c"
+      "sha256": "2ec49d226437724f5c059ed83d0f40efdc09a264de1fc07b6b59177241d5f8cd"
     },
     {
       "description": "Persistence and deterministic reset boundaries.",

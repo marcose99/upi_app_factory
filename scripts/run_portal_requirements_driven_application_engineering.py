@@ -43,6 +43,12 @@ from factory.application_engineering.portfolio import (  # noqa: E402
     PortfolioStore,
     RegistrationRequest,
 )
+from factory.application_engineering.transactional_publish import (  # noqa: E402
+    DirectoryPublication,
+    cleanup_staging_directory,
+    create_staging_directory,
+    publish_directories,
+)
 from factory.operator_portal.state_roots import resolve_portfolio_state_root  # noqa: E402
 from factory.debugging import write_generated_application_debug_plan  # noqa: E402
 from factory.native_capability_prerun import (  # noqa: E402
@@ -1890,11 +1896,15 @@ def _mirror_deep_generated_app(*, config: AdapterConfig, app_root: Path) -> Path
     except ValueError as exc:
         raise AdapterError("canonical deep generated application root must stay in workspace") from exc
 
-    if canonical_app_root.exists():
-        shutil.rmtree(canonical_app_root)
-    canonical_app_root.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(app_root, canonical_app_root, symlinks=False)
-    return canonical_app_root
+    candidate = create_staging_directory(canonical_app_root)
+    try:
+        shutil.copytree(app_root, candidate, dirs_exist_ok=True, symlinks=False)
+        publish_directories(
+            [DirectoryPublication(candidate=candidate, destination=canonical_app_root)]
+        )
+        return canonical_app_root
+    finally:
+        cleanup_staging_directory(candidate)
 
 
 def _register_generated_application(
@@ -2112,8 +2122,6 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
         )
 
     if config.engineering_profile == "authoritative-failed-debit-v1":
-        if config.output_root.exists():
-            shutil.rmtree(config.output_root)
         run_id = (
             "portal_"
             + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
@@ -2259,9 +2267,15 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
                     "generated output retained portal wrapper artifacts inside nested runtime: "
                     + ", ".join(unexpected)
                 )
-            if config.output_root.exists():
-                shutil.rmtree(config.output_root)
-            staging.replace(config.output_root)
+            publish_directories(
+                [
+                    DirectoryPublication(
+                        candidate=staging,
+                        destination=config.output_root,
+                        replace_existing=config.replace_existing,
+                    )
+                ]
+            )
             final_manifest = _manifest(config.output_root)
             _validate_publication_manifest_quarantine(final_manifest)
             registration = (
@@ -2336,49 +2350,84 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
         from factory.application_engineering.deep_composer import DeepApplicationComposer
         from factory.application_engineering.requirements_compiler import compile_requirements
 
-        requirements_ir = compile_requirements([config.requirements], config.factory_root)
-        manifest = DeepApplicationComposer(config.factory_root).compose(
-            requirements_ir=requirements_ir,
-            output_root=config.output_root,
-            app_id=config.app_id,
-            replace_existing=config.replace_existing,
-        )
         actual_application_root = config.output_root / config.app_id
-        canonical_application_root = _mirror_deep_generated_app(
-            config=config,
-            app_root=actual_application_root,
-        )
-        generated_tests = [
-            item["path"]
-            for item in manifest["file_manifest"]
-            if "test" in item["path"]
-        ]
+        canonical_application_root = _canonical_deep_generated_root(config)
         evidence_dir = config.evidence_root / (
             "portal_deep_"
             + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
             + "_"
             + requirements_sha[:12]
         )
-        evidence_dir.mkdir(parents=True, exist_ok=False)
-        result = {
-            **plan,
-            "status": SUCCESS_STATUS,
-            "composer_profile": manifest["composer_profile"],
-            "generated_file_count": manifest["file_count"],
-            "health_contract": "GET /health" in manifest["endpoints"],
-            "ready_contract": "GET /ready" in manifest["endpoints"],
-            "generated_tests": generated_tests,
-            "actual_application_root": str(actual_application_root),
-            "canonical_application_root": str(canonical_application_root),
-            "evidence_directory": str(evidence_dir),
-            "completed_at_utc": _utc_now(),
-            "token_economics": _token_economics_contract(requirements_text),
-        }
-        (evidence_dir / "result.json").write_text(
-            json.dumps(result, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
-        return result
+        output_candidate = create_staging_directory(config.output_root)
+        evidence_candidate = create_staging_directory(evidence_dir)
+        canonical_candidate: Path | None = None
+        try:
+            requirements_ir = compile_requirements([config.requirements], config.factory_root)
+            manifest = DeepApplicationComposer(config.factory_root).compose(
+                requirements_ir=requirements_ir,
+                output_root=output_candidate,
+                app_id=config.app_id,
+                replace_existing=False,
+            )
+            candidate_application_root = output_candidate / config.app_id
+            generated_tests = [
+                item["path"]
+                for item in manifest["file_manifest"]
+                if "test" in item["path"]
+            ]
+            result = {
+                **plan,
+                "status": SUCCESS_STATUS,
+                "composer_profile": manifest["composer_profile"],
+                "generated_file_count": manifest["file_count"],
+                "health_contract": "GET /health" in manifest["endpoints"],
+                "ready_contract": "GET /ready" in manifest["endpoints"],
+                "generated_tests": generated_tests,
+                "actual_application_root": str(actual_application_root),
+                "canonical_application_root": str(canonical_application_root),
+                "evidence_directory": str(evidence_dir),
+                "completed_at_utc": _utc_now(),
+                "token_economics": _token_economics_contract(requirements_text),
+            }
+            (evidence_candidate / "result.json").write_text(
+                json.dumps(result, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+
+            publications = [
+                DirectoryPublication(
+                    candidate=output_candidate,
+                    destination=config.output_root,
+                    replace_existing=config.replace_existing,
+                ),
+                DirectoryPublication(
+                    candidate=evidence_candidate,
+                    destination=evidence_dir,
+                    replace_existing=False,
+                ),
+            ]
+            if actual_application_root.resolve() != canonical_application_root:
+                canonical_candidate = create_staging_directory(canonical_application_root)
+                shutil.copytree(
+                    candidate_application_root,
+                    canonical_candidate,
+                    dirs_exist_ok=True,
+                    symlinks=False,
+                )
+                publications.append(
+                    DirectoryPublication(
+                        candidate=canonical_candidate,
+                        destination=canonical_application_root,
+                        replace_existing=config.replace_existing,
+                    )
+                )
+            publish_directories(publications)
+            return result
+        finally:
+            cleanup_staging_directory(output_candidate)
+            cleanup_staging_directory(evidence_candidate)
+            if canonical_candidate is not None:
+                cleanup_staging_directory(canonical_candidate)
 
     run_id = (
         "portal_"
@@ -2491,9 +2540,15 @@ def run(config: AdapterConfig) -> Mapping[str, Any]:
         if '"/health"' not in api_text or '"/ready"' not in api_text:
             raise AdapterError("health/readiness contracts are missing")
 
-        if config.output_root.exists():
-            shutil.rmtree(config.output_root)
-        staging.replace(config.output_root)
+        publish_directories(
+            [
+                DirectoryPublication(
+                    candidate=staging,
+                    destination=config.output_root,
+                    replace_existing=config.replace_existing,
+                )
+            ]
+        )
 
         final_manifest = _manifest(config.output_root)
         registration = (
