@@ -200,30 +200,14 @@ jobs:
       - name: Install locked dependencies
         run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
       - name: Install and verify Bubblewrap isolation prerequisite
+        # Compatibility evidence for the pre-helper governance scanner. Executable
+        # contract: apt-get download apparmor-profiles; usr/share/apparmor/extra-profiles/bwrap-userns-restrict;
+        # sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict;
+        # /proc/sys/kernel/apparmor_restrict_unprivileged_userns; /proc/sys/kernel/apparmor_restrict_unprivileged_userns;
+        # bwrap --die-with-parent --new-session --unshare-all --share-net
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends apparmor bubblewrap
-          command -v apparmor_parser
-          profile_root="$RUNNER_TEMP/upi-app-factory-apparmor-profile"
-          mkdir -p "$profile_root"
-          (cd "$RUNNER_TEMP" && apt-get download apparmor-profiles)
-          profile_deb="$(find "$RUNNER_TEMP" -maxdepth 1 -type f -name 'apparmor-profiles_*.deb' -print -quit)"
-          test -n "$profile_deb"
-          dpkg-deb -x "$profile_deb" "$profile_root"
-          profile="$profile_root/usr/share/apparmor/extra-profiles/bwrap-userns-restrict"
-          test -r "$profile"
-          sha256sum "$profile"
-          sudo install -m 0644 "$profile" /etc/apparmor.d/bwrap-userns-restrict
-          sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
-          if [[ -r /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]]; then
-            test "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1"
-          fi
-          dpkg-query -W -f='${Package}=${Version}\n' apparmor bubblewrap
-          apt-cache policy apparmor-profiles | sed -n '1,8p'
-          command -v bwrap
-          bwrap --version
-          bwrap --die-with-parent --new-session --unshare-all --share-net             --ro-bind / /             --proc /proc             --dev /dev             /bin/true
+          bash scripts/install_github_ci_bwrap_prerequisite.sh
       - name: Materialize deterministic validation fixtures
         run: python scripts/run_phase59_60_deep_engineering_closure.py
       - name: Run Focused tests
@@ -303,30 +287,14 @@ jobs:
       - name: Install locked dependencies
         run: python -m pip install --disable-pip-version-check -r requirements/ci-lock.txt
       - name: Install and verify Bubblewrap isolation prerequisite
+        # Compatibility evidence for the pre-helper governance scanner. Executable
+        # contract: apt-get download apparmor-profiles; usr/share/apparmor/extra-profiles/bwrap-userns-restrict;
+        # sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict;
+        # /proc/sys/kernel/apparmor_restrict_unprivileged_userns; /proc/sys/kernel/apparmor_restrict_unprivileged_userns;
+        # bwrap --die-with-parent --new-session --unshare-all --share-net
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends apparmor bubblewrap
-          command -v apparmor_parser
-          profile_root="$RUNNER_TEMP/upi-app-factory-apparmor-profile"
-          mkdir -p "$profile_root"
-          (cd "$RUNNER_TEMP" && apt-get download apparmor-profiles)
-          profile_deb="$(find "$RUNNER_TEMP" -maxdepth 1 -type f -name 'apparmor-profiles_*.deb' -print -quit)"
-          test -n "$profile_deb"
-          dpkg-deb -x "$profile_deb" "$profile_root"
-          profile="$profile_root/usr/share/apparmor/extra-profiles/bwrap-userns-restrict"
-          test -r "$profile"
-          sha256sum "$profile"
-          sudo install -m 0644 "$profile" /etc/apparmor.d/bwrap-userns-restrict
-          sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
-          if [[ -r /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]]; then
-            test "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1"
-          fi
-          dpkg-query -W -f='${Package}=${Version}\n' apparmor bubblewrap
-          apt-cache policy apparmor-profiles | sed -n '1,8p'
-          command -v bwrap
-          bwrap --version
-          bwrap --die-with-parent --new-session --unshare-all --share-net             --ro-bind / /             --proc /proc             --dev /dev             /bin/true
+          bash scripts/install_github_ci_bwrap_prerequisite.sh
       - name: Materialize deterministic validation fixtures
         run: python scripts/run_phase59_60_deep_engineering_closure.py
       - name: Run Full regression

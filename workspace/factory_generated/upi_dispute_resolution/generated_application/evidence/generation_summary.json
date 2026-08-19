@@ -47,7 +47,7 @@
     "factory/native_capability_prerun/improvement_workflow.py": "803630b2301ff503cf55dc64fc0818ca9a9cee059f58f1e22cf0420cf35cc29d",
     "factory/operator_portal/local_web_api.py": "25fc38c5385a1efd109542021e56a0dd607803792fc5ff75dc36b9c1b1130092",
     "factory/token_economics/service.py": "0fed08b94a7f7dd1ce0219264eecf3b5b29f02d1c5344649602bb93080cf2518",
-    "scripts/run_portal_requirements_driven_application_engineering.py": "51417b61741afee9d816e0be802302ee45495825b6a6f20d247aab6fed6c3c98"
+    "scripts/run_portal_requirements_driven_application_engineering.py": "91247c3485e06a0fea378c528a54cc938132cded8566871a26f8e52da82019d4"
   },
   "status": "definition_of_done_blocked"
 }
