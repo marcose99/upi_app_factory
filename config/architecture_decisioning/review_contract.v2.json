@@ -1,0 +1,100 @@
+{
+  "adjudication_schema_version": "upi-app-factory.architecture-reviewed-decision.v1",
+  "adjudication_statuses": [
+    "SELECTED_REVIEWED",
+    "PROTOTYPE_REQUIRED",
+    "HUMAN_GATE",
+    "FACTORY_CAPABILITY_GAP",
+    "NO_ADMISSIBLE"
+  ],
+  "all_lanes_required_before_adjudication": true,
+  "blind_first_pass_required": true,
+  "confidence": {
+    "high_threshold": 0.8,
+    "medium_threshold": 0.6,
+    "score_margin_full_credit": 10.0,
+    "weights": {
+      "evidence_quality": 20,
+      "reviewer_agreement": 35,
+      "score_margin": 25,
+      "sensitivity_stability": 20
+    }
+  },
+  "contract_integrity_recheck": true,
+  "execution_mode": "PARALLEL_BLIND",
+  "finding_dispositions": [
+    "OBSERVATION",
+    "CONCERN",
+    "VETO"
+  ],
+  "lane_roles": {
+    "ARCHITECT_A": "independent generalist architecture trade-off analysis",
+    "ARCHITECT_B": "independent alternate architecture trade-off analysis",
+    "PAYMENT_CHALLENGER": "payment integrity, consistency, idempotency, reconciliation and money-safety challenge",
+    "REGULATORY_CHALLENGER": "auditability, evidence, retention, segregation and certification-readiness challenge",
+    "SECURITY_CHALLENGER": "trust boundary, authorization, secrets, abuse and attack-surface challenge",
+    "SRE_CHALLENGER": "availability, recovery, operability, observability, capacity and failure-mode challenge"
+  },
+  "max_evidence_refs_per_finding": 50,
+  "max_findings_per_report": 100,
+  "max_parallelism": 6,
+  "max_summary_chars": 12000,
+  "milestone": "M2.1A-C2",
+  "near_tie_basis": "REVISED_ELIGIBLE_MARGIN",
+  "near_tie_margin": 3.0,
+  "protected_veto_categories": [
+    "PAYMENT_INTEGRITY",
+    "SECURITY_TRUST_BOUNDARY",
+    "REGULATORY_COMPLIANCE"
+  ],
+  "protected_veto_severities": [
+    "HIGH",
+    "CRITICAL"
+  ],
+  "provider_timeout_seconds": 30.0,
+  "purpose": "Parallel blind multi-expert architecture review with deterministic validation, veto, confidence and adjudication.",
+  "report_schema_version": "upi-app-factory.architecture-review-report.v1",
+  "require_rich_review_context": true,
+  "required_lanes": [
+    "ARCHITECT_A",
+    "ARCHITECT_B",
+    "PAYMENT_CHALLENGER",
+    "SECURITY_CHALLENGER",
+    "SRE_CHALLENGER",
+    "REGULATORY_CHALLENGER"
+  ],
+  "review_packet_schema_version": "upi-app-factory.architecture-review-packet.v2",
+  "review_set_schema_version": "upi-app-factory.architecture-review-set.v1",
+  "rules": {
+    "adjustment_out_of_bounds": "REJECT_REPORT",
+    "all_candidates_vetoed": "HUMAN_GATE",
+    "duplicate_lane": "REJECT_REPORT_SET",
+    "low_or_medium_veto": "REJECT_REPORT",
+    "missing_lane": "REJECT_REPORT_SET",
+    "near_tie_with_non_high_confidence": "PROTOTYPE_REQUIRED",
+    "prior_reports_visible": "REJECT_REPORT",
+    "protected_high_or_critical_veto": "REMOVE_CANDIDATE_FROM_AUTOMATIC_SELECTION",
+    "unknown_candidate": "REJECT_REPORT",
+    "unknown_score_dimension": "REJECT_REPORT",
+    "unprotected_veto": "REJECT_REPORT",
+    "upstream_capability_gap": "MUST_NOT_FALL_BACK",
+    "upstream_human_gate": "MUST_NOT_FALL_BACK",
+    "veto_without_evidence": "REJECT_REPORT"
+  },
+  "schema_version": "upi-app-factory.architecture-review-adjudication-contract.v2",
+  "score_adjustment_aggregation": "MEAN_PER_DIMENSION",
+  "score_adjustment_max": 5,
+  "score_adjustment_min": -5,
+  "severities": [
+    "INFO",
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL"
+  ],
+  "upstream_non_bypassable_statuses": [
+    "HUMAN_GATE",
+    "FACTORY_CAPABILITY_GAP",
+    "NO_ADMISSIBLE"
+  ]
+}

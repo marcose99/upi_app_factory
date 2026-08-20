@@ -1,0 +1,153 @@
+{
+  "automatic_authority_classes": [
+    "A0",
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "common_conformance_rules": [
+    "requirements_hash_matches_reviewed_freeze",
+    "reviewed_freeze_digest_valid",
+    "realization_contract_digest_valid",
+    "generation_manifest_binds_reviewed_architecture",
+    "architecture_evidence_identity_chain_complete",
+    "generated_application_runtime_llm_calls_zero",
+    "real_payment_calls_disabled",
+    "no_provider_sdk_in_generated_domain",
+    "no_external_infrastructure_enablement"
+  ],
+  "common_generated_document_paths": [
+    "docs/adrs/ADR-0001-selected-architecture.md",
+    "docs/architecture/evolution_and_compatibility.md",
+    "docs/architecture/reconsideration_triggers.md"
+  ],
+  "common_generated_evidence_paths": [
+    "evidence/architecture/architecture_driver_ir.json",
+    "evidence/architecture/architecture_review_packet.json",
+    "evidence/architecture/architecture_review_set.json",
+    "evidence/architecture/architecture_adjudication.json",
+    "evidence/architecture/architecture_reviewed_decision.json",
+    "evidence/architecture/architecture_freeze.json",
+    "evidence/architecture/evolution_contract.json",
+    "evidence/architecture/realization_manifest.json",
+    "evidence/architecture/architecture_conformance.json"
+  ],
+  "confidence_order": [
+    "LOW",
+    "MEDIUM",
+    "HIGH"
+  ],
+  "failure_policy": {
+    "conformance_failure": "FAIL_CLOSED_NO_PUBLICATION",
+    "factory_capability_gap": "FAIL_CLOSED_NO_FREEZE",
+    "human_gate": "FAIL_CLOSED_NO_FREEZE",
+    "low_review_confidence": "HUMAN_GATE",
+    "prototype_required": "FAIL_CLOSED_NO_FREEZE",
+    "requirements_hash_mismatch": "FAIL_CLOSED_NO_PUBLICATION",
+    "tampered_package": "FAIL_CLOSED_NO_PUBLICATION",
+    "unsupported_selected_pattern": "FAIL_CLOSED_NO_FALLBACK"
+  },
+  "generated_manifest_fields": [
+    "architecture_pattern_id",
+    "architecture_adapter_id",
+    "architecture_reviewed_decision_digest",
+    "architecture_freeze_digest",
+    "architecture_evolution_contract_digest",
+    "architecture_conformance_digest",
+    "architecture_realization_contract_digest"
+  ],
+  "legacy_composer_compatibility": {
+    "architecture_package_omitted": "PRESERVE_DEEP_COMPOSER_V1_BEHAVIOR",
+    "legacy_architecture": "modular-monolith-ddd-hexagonal",
+    "legacy_persistence": "sqlite-stdlib",
+    "legacy_profile": "local-deep-v1"
+  },
+  "milestone": "M2.1A-C3",
+  "minimum_review_confidence_level": "MEDIUM",
+  "no_silent_fallback": true,
+  "patterns": [
+    {
+      "adapter_id": "hexagonal_modular_monolith_v1",
+      "automatic_authority_class": "A3",
+      "conformance_rules": [
+        "domain_does_not_import_infrastructure",
+        "domain_does_not_import_interfaces",
+        "api_depends_on_application_service",
+        "outbound_dependencies_are_adapter_bounded"
+      ],
+      "execution_state": "EXECUTABLE",
+      "manifest_architecture": "modular-monolith-ddd-hexagonal",
+      "pattern_id": "MODULAR_MONOLITH_HEXAGONAL",
+      "required_generated_paths": [
+        "app/{app_id}/domain/aggregates/dispute_case.py",
+        "app/{app_id}/application/services/dispute_service.py",
+        "app/{app_id}/interfaces/api/main.py",
+        "app/{app_id}/infrastructure/persistence/migrations/0001_initial.sql"
+      ]
+    },
+    {
+      "adapter_id": "workflow_modular_monolith_v1",
+      "automatic_authority_class": "A3",
+      "conformance_rules": [
+        "explicit_workflow_state",
+        "deadline_policy_declared",
+        "reentry_policy_declared",
+        "human_review_states_declared",
+        "domain_does_not_import_infrastructure"
+      ],
+      "execution_state": "EXECUTABLE",
+      "manifest_architecture": "workflow-centric-modular-monolith",
+      "pattern_id": "WORKFLOW_CENTRIC_MODULAR_MONOLITH",
+      "required_generated_paths": [
+        "app/{app_id}/domain/aggregates/dispute_case.py",
+        "app/{app_id}/application/services/dispute_service.py",
+        "app/{app_id}/application/workflows/dispute_workflow.py",
+        "app/{app_id}/interfaces/api/main.py"
+      ]
+    },
+    {
+      "adapter_id": "event_driven_outbox_modular_monolith_v1",
+      "automatic_authority_class": "A3",
+      "conformance_rules": [
+        "event_schema_version_declared",
+        "transactional_outbox_present",
+        "service_records_domain_events",
+        "idempotent_outbox_contract_present",
+        "outbox_migration_present",
+        "domain_does_not_import_infrastructure"
+      ],
+      "execution_state": "EXECUTABLE",
+      "manifest_architecture": "event-driven-modular-monolith-outbox",
+      "pattern_id": "EVENT_DRIVEN_MODULAR_MONOLITH_OUTBOX",
+      "required_generated_paths": [
+        "app/{app_id}/domain/aggregates/dispute_case.py",
+        "app/{app_id}/application/services/dispute_service.py",
+        "app/{app_id}/application/events.py",
+        "app/{app_id}/infrastructure/messaging/outbox.py",
+        "app/{app_id}/infrastructure/persistence/migrations/0001_initial.sql"
+      ]
+    }
+  ],
+  "purpose": "Bind a reviewed architecture decision to a supported realization adapter, generate architecture/evolution evidence, and prove source conformance before publication.",
+  "required_adjudication_status": "SELECTED_REVIEWED",
+  "reviewed_freeze_bindings": [
+    "requirements_sha256",
+    "driver_ir_digest",
+    "architecture_contract_digest",
+    "review_contract_digest",
+    "architecture_packet_digest",
+    "review_set_digest",
+    "adjudication_digest",
+    "reviewed_decision_digest",
+    "evolution_contract_digest",
+    "realization_contract_digest",
+    "selected_candidate_id",
+    "adapter_id",
+    "confidence_digest"
+  ],
+  "schema_version": "upi-app-factory.architecture-realization-contract.v1",
+  "unsupported_patterns": {
+    "CQRS_EVENT_ORIENTED": "FACTORY_CAPABILITY_GAP",
+    "SERVICE_ORIENTED_DISTRIBUTED": "HUMAN_GATE"
+  }
+}

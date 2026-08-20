@@ -1,0 +1,478 @@
+{
+  "authority_classes": [
+    "A0",
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+  ],
+  "constraint_outcomes": [
+    "ALLOW",
+    "ANALYSIS_ONLY",
+    "HUMAN_GATE",
+    "REJECT"
+  ],
+  "decision_statuses": [
+    "SELECTED",
+    "HUMAN_GATE",
+    "FACTORY_CAPABILITY_GAP",
+    "NO_ADMISSIBLE"
+  ],
+  "default_weights": {
+    "auditability": 9,
+    "business_correctness": 13,
+    "cost_efficiency": 2,
+    "deployment_simplicity": 3,
+    "evolvability": 6,
+    "maintainability": 6,
+    "operability": 6,
+    "payment_integrity": 12,
+    "performance": 5,
+    "reliability": 7,
+    "reversibility": 5,
+    "scalability": 4,
+    "security": 9,
+    "testability": 5,
+    "upgradeability": 4,
+    "vendor_portability": 4
+  },
+  "durability_evolution_policy": {
+    "dependency_policy": "PIN_REPRODUCIBLY_TRACK_EOL_AND_REQUIRE_TESTED_UPGRADE_PATH",
+    "event_policy": "VERSIONED_EVENTS_AND_REPLAY_COMPATIBILITY",
+    "evidence_continuity_policy": "VERSION_CHAIN_PRESERVES_WHY_WHAT_CHANGED_AND_VALIDATION_RESULTS",
+    "migration_policy": "DATA_EXPORT_IMPORT_AND_ROLLBACK_OR_FORWARD_RECOVERY_REQUIRED",
+    "provider_model_policy": "PORTS_AND_ADAPTERS_NO_PROVIDER_LOCK_IN_AT_DOMAIN_BOUNDARY",
+    "public_contract_policy": "BACKWARD_COMPATIBLE_BY_DEFAULT_EXPLICIT_VERSION_AND_DEPRECATION",
+    "reconsideration_policy": "EXPLICIT_THRESHOLDS_TRIGGER_REARCHITECTURE_REVIEW",
+    "reproducibility_policy": "REQUIREMENTS_DECISION_SOURCE_DEPENDENCIES_AND_EVIDENCE_DIGEST_BOUND",
+    "required_controls": [
+      "versioned_public_contracts",
+      "backward_compatibility_by_default",
+      "explicit_deprecation_policy",
+      "expand_contract_schema_migrations",
+      "event_schema_versioning",
+      "dependency_eol_and_upgrade_policy",
+      "provider_and_model_replaceability_ports",
+      "crypto_agility",
+      "data_export_and_migration_path",
+      "rollback_or_forward_recovery_plan",
+      "reproducible_regeneration_and_build",
+      "architecture_reconsideration_triggers",
+      "evidence_lineage_across_versions"
+    ],
+    "schema_policy": "EXPAND_CONTRACT_WITH_FORWARD_AND_RECOVERY_EVIDENCE",
+    "security_policy": "CRYPTO_AGILITY_NO_ALGORITHM_LOCK_IN_AT_DOMAIN_BOUNDARY",
+    "silent_breaking_change": "REJECT",
+    "silent_dependency_eol": "REJECT",
+    "silent_provider_lock_in": "REJECT",
+    "unknown_future_nfr_policy": "PRESERVE_UNKNOWN_AND_USE_SENSITIVITY_NOT_FABRICATION"
+  },
+  "factory_evolution_requirements": [
+    "versioned architecture contracts and registries",
+    "backward-compatible persisted evidence/state or explicit migration",
+    "upgrade tests across supported contract versions",
+    "deprecation process rather than silent removal",
+    "portable provider/model boundaries",
+    "reproducible clean-clone qualification",
+    "held-out regression before learned-rule promotion"
+  ],
+  "freeze_policy": {
+    "allowed_decision_status": "SELECTED",
+    "bind_contract_digest": true,
+    "bind_decision_digest": true,
+    "bind_driver_ir_digest": true,
+    "bind_evolution_contract_digest": true,
+    "bind_requirements_sha256": true,
+    "maximum_automatic_authority_class": "A3",
+    "require_durability_pass": true,
+    "require_executable_pattern": true
+  },
+  "generated_application_evolution_requirements": [
+    "evidence/architecture/evolution_contract.json",
+    "docs/architecture/evolution_and_compatibility.md",
+    "docs/architecture/reconsideration_triggers.md",
+    "versioned API/event/schema contracts where applicable",
+    "tested migration and recovery evidence",
+    "dependency inventory with lifecycle metadata",
+    "reproducible generation/build identity"
+  ],
+  "hard_constraint_policy": {
+    "acceptance_bar_delta_negative": "REJECT",
+    "analysis_only_pattern_or_technology": "ANALYSIS_ONLY",
+    "dependency_eol_without_upgrade_or_containment_plan": "REJECT",
+    "external_infrastructure_without_authority": "HUMAN_GATE",
+    "human_enablement_required": "HUMAN_GATE",
+    "material_trust_boundary_change": "HUMAN_GATE",
+    "missing_architecture_reconsideration_triggers": "REJECT",
+    "missing_migration_or_recovery_for_persistent_contract_change": "REJECT",
+    "prohibited_technology": "REJECT",
+    "provider_or_model_lock_in_without_portability_boundary": "REJECT",
+    "real_payment_calls_not_disabled": "REJECT",
+    "silent_breaking_api_or_event_change": "REJECT"
+  },
+  "milestone": "M2.1A-C1",
+  "patterns": [
+    {
+      "base_scores": {
+        "auditability": 90,
+        "business_correctness": 92,
+        "cost_efficiency": 92,
+        "deployment_simplicity": 95,
+        "evolvability": 94,
+        "maintainability": 92,
+        "operability": 92,
+        "payment_integrity": 92,
+        "performance": 78,
+        "reliability": 88,
+        "reversibility": 95,
+        "scalability": 72,
+        "security": 90,
+        "testability": 94,
+        "upgradeability": 92,
+        "vendor_portability": 94
+      },
+      "conformance_rules": [
+        "domain_no_infrastructure_import",
+        "api_through_application_layer",
+        "outbound_dependencies_via_ports"
+      ],
+      "durability_controls": [
+        "versioned_public_contracts",
+        "backward_compatibility_by_default",
+        "explicit_deprecation_policy",
+        "expand_contract_schema_migrations",
+        "event_schema_versioning",
+        "dependency_eol_and_upgrade_policy",
+        "provider_and_model_replaceability_ports",
+        "crypto_agility",
+        "data_export_and_migration_path",
+        "rollback_or_forward_recovery_plan",
+        "reproducible_regeneration_and_build",
+        "architecture_reconsideration_triggers",
+        "evidence_lineage_across_versions"
+      ],
+      "execution_state": "EXECUTABLE",
+      "pattern_id": "MODULAR_MONOLITH_HEXAGONAL",
+      "reconsideration_triggers": [
+        "measured load exceeds qualified envelope",
+        "business ownership or deployment independence materially changes",
+        "regulatory/security boundary materially changes"
+      ],
+      "required_technologies": [
+        "sqlite_stdlib"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 94,
+        "business_correctness": 94,
+        "cost_efficiency": 88,
+        "deployment_simplicity": 88,
+        "evolvability": 91,
+        "maintainability": 86,
+        "operability": 88,
+        "payment_integrity": 90,
+        "performance": 75,
+        "reliability": 88,
+        "reversibility": 91,
+        "scalability": 70,
+        "security": 90,
+        "testability": 90,
+        "upgradeability": 89,
+        "vendor_portability": 92
+      },
+      "conformance_rules": [
+        "explicit_workflow_state",
+        "deadline_and_reentry_semantics",
+        "human_review_states",
+        "outbound_dependencies_via_ports"
+      ],
+      "durability_controls": [
+        "versioned_public_contracts",
+        "backward_compatibility_by_default",
+        "explicit_deprecation_policy",
+        "expand_contract_schema_migrations",
+        "event_schema_versioning",
+        "dependency_eol_and_upgrade_policy",
+        "provider_and_model_replaceability_ports",
+        "crypto_agility",
+        "data_export_and_migration_path",
+        "rollback_or_forward_recovery_plan",
+        "reproducible_regeneration_and_build",
+        "architecture_reconsideration_triggers",
+        "evidence_lineage_across_versions"
+      ],
+      "execution_state": "EXECUTABLE",
+      "pattern_id": "WORKFLOW_CENTRIC_MODULAR_MONOLITH",
+      "reconsideration_triggers": [
+        "measured load exceeds qualified envelope",
+        "business ownership or deployment independence materially changes",
+        "regulatory/security boundary materially changes"
+      ],
+      "required_technologies": [
+        "sqlite_stdlib",
+        "workflow_state_machine"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 95,
+        "business_correctness": 90,
+        "cost_efficiency": 80,
+        "deployment_simplicity": 78,
+        "evolvability": 88,
+        "maintainability": 82,
+        "operability": 82,
+        "payment_integrity": 90,
+        "performance": 86,
+        "reliability": 92,
+        "reversibility": 86,
+        "scalability": 90,
+        "security": 88,
+        "testability": 86,
+        "upgradeability": 87,
+        "vendor_portability": 88
+      },
+      "conformance_rules": [
+        "transactional_outbox",
+        "idempotent_event_handling",
+        "event_versioning",
+        "replay_proof"
+      ],
+      "durability_controls": [
+        "versioned_public_contracts",
+        "backward_compatibility_by_default",
+        "explicit_deprecation_policy",
+        "expand_contract_schema_migrations",
+        "event_schema_versioning",
+        "dependency_eol_and_upgrade_policy",
+        "provider_and_model_replaceability_ports",
+        "crypto_agility",
+        "data_export_and_migration_path",
+        "rollback_or_forward_recovery_plan",
+        "reproducible_regeneration_and_build",
+        "architecture_reconsideration_triggers",
+        "evidence_lineage_across_versions"
+      ],
+      "execution_state": "EXECUTABLE",
+      "pattern_id": "EVENT_DRIVEN_MODULAR_MONOLITH_OUTBOX",
+      "reconsideration_triggers": [
+        "event throughput exceeds proven local persistence envelope",
+        "independent service scaling becomes a measured requirement",
+        "replay/storage growth exceeds operational budget"
+      ],
+      "required_technologies": [
+        "sqlite_stdlib",
+        "in_process_outbox"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 96,
+        "business_correctness": 88,
+        "cost_efficiency": 70,
+        "deployment_simplicity": 68,
+        "evolvability": 80,
+        "maintainability": 72,
+        "operability": 75,
+        "payment_integrity": 88,
+        "performance": 88,
+        "reliability": 90,
+        "reversibility": 76,
+        "scalability": 92,
+        "security": 86,
+        "testability": 78,
+        "upgradeability": 80,
+        "vendor_portability": 84
+      },
+      "conformance_rules": [
+        "separate_command_query_models",
+        "event_versioning",
+        "replay_proof"
+      ],
+      "durability_controls": [
+        "versioned_public_contracts",
+        "backward_compatibility_by_default",
+        "explicit_deprecation_policy",
+        "expand_contract_schema_migrations",
+        "event_schema_versioning",
+        "dependency_eol_and_upgrade_policy",
+        "provider_and_model_replaceability_ports",
+        "crypto_agility",
+        "data_export_and_migration_path",
+        "rollback_or_forward_recovery_plan",
+        "reproducible_regeneration_and_build",
+        "architecture_reconsideration_triggers",
+        "evidence_lineage_across_versions"
+      ],
+      "execution_state": "ANALYSIS_ONLY",
+      "pattern_id": "CQRS_EVENT_ORIENTED",
+      "reconsideration_triggers": [
+        "measured load exceeds qualified envelope",
+        "business ownership or deployment independence materially changes",
+        "regulatory/security boundary materially changes"
+      ],
+      "required_technologies": [
+        "sqlite_stdlib",
+        "in_process_outbox"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 90,
+        "business_correctness": 86,
+        "cost_efficiency": 48,
+        "deployment_simplicity": 50,
+        "evolvability": 76,
+        "maintainability": 70,
+        "operability": 68,
+        "payment_integrity": 82,
+        "performance": 90,
+        "reliability": 90,
+        "reversibility": 58,
+        "scalability": 96,
+        "security": 82,
+        "testability": 74,
+        "upgradeability": 66,
+        "vendor_portability": 70
+      },
+      "conformance_rules": [
+        "service_ownership_boundaries",
+        "idempotent_messages",
+        "distributed_failure_contract",
+        "observable_sagas"
+      ],
+      "durability_controls": [
+        "versioned_public_contracts",
+        "backward_compatibility_by_default",
+        "explicit_deprecation_policy",
+        "expand_contract_schema_migrations",
+        "event_schema_versioning",
+        "dependency_eol_and_upgrade_policy",
+        "provider_and_model_replaceability_ports",
+        "crypto_agility",
+        "data_export_and_migration_path",
+        "rollback_or_forward_recovery_plan",
+        "reproducible_regeneration_and_build",
+        "architecture_reconsideration_triggers",
+        "evidence_lineage_across_versions"
+      ],
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "pattern_id": "SERVICE_ORIENTED_DISTRIBUTED",
+      "reconsideration_triggers": [
+        "independent deployment pressure materially decreases",
+        "distributed consistency cost exceeds business value",
+        "external infrastructure supportability changes"
+      ],
+      "required_technologies": [
+        "postgresql",
+        "kafka",
+        "kubernetes"
+      ]
+    }
+  ],
+  "purpose": "Deterministic governed architecture decisioning plus durability/evolution kernel. Architecture must be suitable now and remain evolvable, reversible, replaceable, upgradeable and evidence-preserving over time. No application-generation integration in C1.",
+  "required_driver_ids": [
+    "business_criticality",
+    "transaction_consistency",
+    "auditability",
+    "security_trust_boundaries",
+    "availability_slo",
+    "peak_tps",
+    "latency_slo_ms",
+    "data_volume",
+    "retention_days",
+    "rpo_seconds",
+    "rto_seconds",
+    "deployment_independence",
+    "operational_complexity_budget",
+    "cost_sensitivity",
+    "vendor_portability",
+    "compatibility_horizon_years",
+    "change_frequency",
+    "api_evolution",
+    "schema_evolution",
+    "event_contract_evolution",
+    "dependency_support_policy",
+    "model_provider_replaceability",
+    "crypto_agility",
+    "migration_rollback_requirements",
+    "deprecation_policy",
+    "reproducibility_horizon"
+  ],
+  "schema_version": "upi-app-factory.architecture-decision-durability-kernel-contract.v2",
+  "score_dimensions": [
+    "business_correctness",
+    "payment_integrity",
+    "auditability",
+    "security",
+    "reliability",
+    "operability",
+    "maintainability",
+    "performance",
+    "scalability",
+    "testability",
+    "deployment_simplicity",
+    "cost_efficiency",
+    "vendor_portability",
+    "evolvability",
+    "reversibility",
+    "upgradeability"
+  ],
+  "source_classes": [
+    "EXPLICIT_REQUIREMENT",
+    "DERIVED_STRONG",
+    "ASSUMPTION",
+    "UNKNOWN"
+  ],
+  "technology_registry": [
+    {
+      "authority_floor": "A3",
+      "execution_state": "EXECUTABLE",
+      "external_infrastructure": false,
+      "technology_id": "sqlite_stdlib"
+    },
+    {
+      "authority_floor": "A3",
+      "execution_state": "EXECUTABLE",
+      "external_infrastructure": false,
+      "technology_id": "in_process_outbox"
+    },
+    {
+      "authority_floor": "A3",
+      "execution_state": "EXECUTABLE",
+      "external_infrastructure": false,
+      "technology_id": "workflow_state_machine"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "external_infrastructure": true,
+      "technology_id": "postgresql"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "external_infrastructure": true,
+      "technology_id": "kafka"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "external_infrastructure": true,
+      "technology_id": "kubernetes"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "ANALYSIS_ONLY",
+      "external_infrastructure": true,
+      "technology_id": "redis"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "PROHIBITED",
+      "external_infrastructure": true,
+      "technology_id": "live_payment_rail"
+    }
+  ]
+}
