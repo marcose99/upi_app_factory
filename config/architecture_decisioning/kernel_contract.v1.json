@@ -1,0 +1,290 @@
+{
+  "authority_classes": [
+    "A0",
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+  ],
+  "constraint_outcomes": [
+    "ALLOW",
+    "ANALYSIS_ONLY",
+    "HUMAN_GATE",
+    "REJECT"
+  ],
+  "decision_statuses": [
+    "SELECTED",
+    "HUMAN_GATE",
+    "FACTORY_CAPABILITY_GAP",
+    "NO_ADMISSIBLE"
+  ],
+  "default_weights": {
+    "auditability": 10,
+    "business_correctness": 15,
+    "cost_efficiency": 3,
+    "deployment_simplicity": 5,
+    "maintainability": 8,
+    "operability": 8,
+    "payment_integrity": 13,
+    "performance": 6,
+    "reliability": 8,
+    "scalability": 5,
+    "security": 10,
+    "testability": 6,
+    "vendor_portability": 3
+  },
+  "freeze_policy": {
+    "allowed_decision_status": "SELECTED",
+    "bind_contract_digest": true,
+    "bind_decision_digest": true,
+    "bind_driver_ir_digest": true,
+    "bind_requirements_sha256": true,
+    "maximum_automatic_authority_class": "A3",
+    "require_executable_pattern": true
+  },
+  "hard_constraint_policy": {
+    "acceptance_bar_delta_negative": "REJECT",
+    "analysis_only_pattern_or_technology": "ANALYSIS_ONLY",
+    "external_infrastructure_without_authority": "HUMAN_GATE",
+    "human_enablement_required": "HUMAN_GATE",
+    "material_trust_boundary_change": "HUMAN_GATE",
+    "prohibited_technology": "REJECT",
+    "real_payment_calls_not_disabled": "REJECT"
+  },
+  "milestone": "M2.1A-C1",
+  "patterns": [
+    {
+      "base_scores": {
+        "auditability": 90,
+        "business_correctness": 92,
+        "cost_efficiency": 92,
+        "deployment_simplicity": 95,
+        "maintainability": 92,
+        "operability": 92,
+        "payment_integrity": 92,
+        "performance": 78,
+        "reliability": 88,
+        "scalability": 72,
+        "security": 90,
+        "testability": 94,
+        "vendor_portability": 92
+      },
+      "conformance_rules": [
+        "domain_no_infrastructure_import",
+        "api_through_application_layer",
+        "outbound_dependencies_via_ports"
+      ],
+      "execution_state": "EXECUTABLE",
+      "pattern_id": "MODULAR_MONOLITH_HEXAGONAL",
+      "required_technologies": [
+        "sqlite_stdlib"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 94,
+        "business_correctness": 94,
+        "cost_efficiency": 88,
+        "deployment_simplicity": 88,
+        "maintainability": 86,
+        "operability": 88,
+        "payment_integrity": 90,
+        "performance": 75,
+        "reliability": 88,
+        "scalability": 70,
+        "security": 90,
+        "testability": 90,
+        "vendor_portability": 90
+      },
+      "conformance_rules": [
+        "explicit_workflow_state",
+        "deadline_and_reentry_semantics",
+        "human_review_states",
+        "outbound_dependencies_via_ports"
+      ],
+      "execution_state": "EXECUTABLE",
+      "pattern_id": "WORKFLOW_CENTRIC_MODULAR_MONOLITH",
+      "required_technologies": [
+        "sqlite_stdlib",
+        "workflow_state_machine"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 95,
+        "business_correctness": 90,
+        "cost_efficiency": 80,
+        "deployment_simplicity": 78,
+        "maintainability": 82,
+        "operability": 82,
+        "payment_integrity": 90,
+        "performance": 86,
+        "reliability": 92,
+        "scalability": 90,
+        "security": 88,
+        "testability": 86,
+        "vendor_portability": 86
+      },
+      "conformance_rules": [
+        "transactional_outbox",
+        "idempotent_event_handling",
+        "event_versioning",
+        "replay_proof"
+      ],
+      "execution_state": "EXECUTABLE",
+      "pattern_id": "EVENT_DRIVEN_MODULAR_MONOLITH_OUTBOX",
+      "required_technologies": [
+        "sqlite_stdlib",
+        "in_process_outbox"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 96,
+        "business_correctness": 88,
+        "cost_efficiency": 70,
+        "deployment_simplicity": 68,
+        "maintainability": 72,
+        "operability": 75,
+        "payment_integrity": 88,
+        "performance": 88,
+        "reliability": 90,
+        "scalability": 92,
+        "security": 86,
+        "testability": 78,
+        "vendor_portability": 82
+      },
+      "conformance_rules": [
+        "separate_command_query_models",
+        "event_versioning",
+        "replay_proof"
+      ],
+      "execution_state": "ANALYSIS_ONLY",
+      "pattern_id": "CQRS_EVENT_ORIENTED",
+      "required_technologies": [
+        "sqlite_stdlib",
+        "in_process_outbox"
+      ]
+    },
+    {
+      "base_scores": {
+        "auditability": 90,
+        "business_correctness": 86,
+        "cost_efficiency": 48,
+        "deployment_simplicity": 50,
+        "maintainability": 70,
+        "operability": 68,
+        "payment_integrity": 82,
+        "performance": 90,
+        "reliability": 90,
+        "scalability": 96,
+        "security": 82,
+        "testability": 74,
+        "vendor_portability": 68
+      },
+      "conformance_rules": [
+        "service_ownership_boundaries",
+        "idempotent_messages",
+        "distributed_failure_contract",
+        "observable_sagas"
+      ],
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "pattern_id": "SERVICE_ORIENTED_DISTRIBUTED",
+      "required_technologies": [
+        "postgresql",
+        "kafka",
+        "kubernetes"
+      ]
+    }
+  ],
+  "purpose": "Deterministic architecture-driver, candidate, constraint, scoring, sensitivity, authority, freeze and evidence kernel. No application generation integration in C1.",
+  "required_driver_ids": [
+    "business_criticality",
+    "transaction_consistency",
+    "auditability",
+    "security_trust_boundaries",
+    "availability_slo",
+    "peak_tps",
+    "latency_slo_ms",
+    "data_volume",
+    "retention_days",
+    "rpo_seconds",
+    "rto_seconds",
+    "deployment_independence",
+    "operational_complexity_budget",
+    "cost_sensitivity",
+    "vendor_portability"
+  ],
+  "schema_version": "upi-app-factory.architecture-decision-kernel-contract.v1",
+  "score_dimensions": [
+    "business_correctness",
+    "payment_integrity",
+    "auditability",
+    "security",
+    "reliability",
+    "operability",
+    "maintainability",
+    "performance",
+    "scalability",
+    "testability",
+    "deployment_simplicity",
+    "cost_efficiency",
+    "vendor_portability"
+  ],
+  "source_classes": [
+    "EXPLICIT_REQUIREMENT",
+    "DERIVED_STRONG",
+    "ASSUMPTION",
+    "UNKNOWN"
+  ],
+  "technology_registry": [
+    {
+      "authority_floor": "A3",
+      "execution_state": "EXECUTABLE",
+      "external_infrastructure": false,
+      "technology_id": "sqlite_stdlib"
+    },
+    {
+      "authority_floor": "A3",
+      "execution_state": "EXECUTABLE",
+      "external_infrastructure": false,
+      "technology_id": "in_process_outbox"
+    },
+    {
+      "authority_floor": "A3",
+      "execution_state": "EXECUTABLE",
+      "external_infrastructure": false,
+      "technology_id": "workflow_state_machine"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "external_infrastructure": true,
+      "technology_id": "postgresql"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "external_infrastructure": true,
+      "technology_id": "kafka"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "HUMAN_ENABLEMENT_REQUIRED",
+      "external_infrastructure": true,
+      "technology_id": "kubernetes"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "ANALYSIS_ONLY",
+      "external_infrastructure": true,
+      "technology_id": "redis"
+    },
+    {
+      "authority_floor": "A4",
+      "execution_state": "PROHIBITED",
+      "external_infrastructure": true,
+      "technology_id": "live_payment_rail"
+    }
+  ]
+}

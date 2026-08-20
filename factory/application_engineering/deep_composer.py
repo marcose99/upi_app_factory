@@ -13,6 +13,12 @@ from factory.application_engineering.transactional_publish import (
     create_staging_directory,
     publish_directories,
 )
+from factory.application_engineering.architecture_conformance import (
+    validate_architecture_conformance,
+    verify_architecture_conformance_report,
+)
+from factory.application_engineering.architecture_realization import get_architecture_adapter
+from factory.architecture_decisioning import verify_reviewed_architecture_package
 
 
 COMPOSER_PROFILE_VERSION = "deep-composer/v1"
@@ -118,6 +124,7 @@ class DeepApplicationComposer:
         output_root: Path,
         app_id: str = GOLDEN_APP_ID,
         replace_existing: bool = True,
+        architecture_package: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         if not APP_ID_PATTERN.fullmatch(app_id):
             raise DeepComposerError(f"invalid app id: {app_id!r}")
@@ -136,9 +143,61 @@ class DeepApplicationComposer:
         candidate_root = create_staging_directory(app_root)
         try:
             requirements_hash = sha256_text(canonical_json(requirements_ir))
+            if architecture_package is not None:
+                if not verify_reviewed_architecture_package(architecture_package):
+                    raise DeepComposerError("reviewed architecture package is invalid")
+                reviewed_freeze = architecture_package["reviewed_freeze"]
+                if reviewed_freeze.get("requirements_sha256") != requirements_hash:
+                    raise DeepComposerError("requirements hash does not match reviewed architecture")
+                realization_contract = architecture_package["realization_contract"]
+                adapter = get_architecture_adapter(
+                    str(reviewed_freeze.get("selected_candidate_id")), realization_contract
+                )
             files = self._render_files(app_id, requirements_hash, requirements_ir)
+            if architecture_package is not None:
+                files.update(adapter.render(app_id))
             for relative, content in files.items():
                 _write_text(candidate_root / relative, content)
+
+            if architecture_package is not None:
+                evidence_root = candidate_root / "evidence" / "architecture"
+                evidence_documents = {
+                    "architecture_driver_ir.json": architecture_package["driver_ir"],
+                    "architecture_review_packet.json": architecture_package["architecture_packet"],
+                    "architecture_review_set.json": architecture_package["review_set"],
+                    "architecture_adjudication.json": architecture_package["adjudication"],
+                    "architecture_reviewed_decision.json": architecture_package["reviewed_decision"],
+                    "architecture_freeze.json": architecture_package["reviewed_freeze"],
+                    "evolution_contract.json": architecture_package["evolution_contract"],
+                    "realization_manifest.json": {
+                        "selected_candidate_id": reviewed_freeze["selected_candidate_id"],
+                        "adapter_id": adapter.adapter_id,
+                        "realization_contract_digest": realization_contract["contract_digest"],
+                        "freeze_digest": reviewed_freeze["freeze_digest"],
+                    },
+                }
+                for name, document in evidence_documents.items():
+                    _write_text(evidence_root / name, json.dumps(document, indent=2, sort_keys=True) + "\n")
+                selected = str(reviewed_freeze["selected_candidate_id"])
+                evolution = architecture_package["evolution_contract"]
+                docs = {
+                    "docs/adrs/ADR-0001-selected-architecture.md": f"# ADR-0001: {selected}\n\nFrozen reviewed selection. Adapter: `{adapter.adapter_id}`.\n",
+                    "docs/architecture/evolution_and_compatibility.md": "# Evolution and Compatibility\n\n" + json.dumps(evolution, indent=2, sort_keys=True) + "\n",
+                    "docs/architecture/reconsideration_triggers.md": "# Reconsideration Triggers\n\n" + "\n".join(f"- {item}" for item in evolution.get("reconsideration_triggers", [])) + "\n",
+                }
+                for relative, content in docs.items():
+                    _write_text(candidate_root / relative, content)
+                conformance = validate_architecture_conformance(
+                    candidate_root, reviewed_freeze, realization_contract
+                )
+                if conformance["status"] != "PASS" or not verify_architecture_conformance_report(
+                    conformance, candidate_root, reviewed_freeze, realization_contract
+                ):
+                    raise DeepComposerError("generated application fails architecture conformance")
+                _write_text(
+                    evidence_root / "architecture_conformance.json",
+                    json.dumps(conformance, indent=2, sort_keys=True) + "\n",
+                )
 
             payload = {
                 "composer_profile": self.profile.profile_id,
@@ -156,6 +215,20 @@ class DeepApplicationComposer:
                 "file_count": 0,
                 "file_manifest": [],
             }
+            if architecture_package is not None:
+                payload.update({
+                    "architecture": next(
+                        row["manifest_architecture"] for row in realization_contract["patterns"]
+                        if row["pattern_id"] == reviewed_freeze["selected_candidate_id"]
+                    ),
+                    "architecture_pattern_id": reviewed_freeze["selected_candidate_id"],
+                    "architecture_adapter_id": adapter.adapter_id,
+                    "architecture_reviewed_decision_digest": reviewed_freeze["reviewed_decision_digest"],
+                    "architecture_freeze_digest": reviewed_freeze["freeze_digest"],
+                    "architecture_evolution_contract_digest": reviewed_freeze["evolution_contract_digest"],
+                    "architecture_conformance_digest": conformance["conformance_digest"],
+                    "architecture_realization_contract_digest": reviewed_freeze["realization_contract_digest"],
+                })
             _write_text(
                 candidate_root / "evidence" / "generation_manifest.json",
                 json.dumps(payload, indent=2, sort_keys=True) + "\n",
