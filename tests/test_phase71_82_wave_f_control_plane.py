@@ -19,7 +19,12 @@ from factory.application_engineering.portfolio import (
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_GENERATED_FILE_COUNT = 78
+TEMPLATE_MANIFEST_PATH = (
+    PROJECT_ROOT / "factory/templates/mock_dispute_app/template_manifest.v1.json"
+)
+EXPECTED_GENERATED_FILE_COUNT = len(
+    json.loads(TEMPLATE_MANIFEST_PATH.read_text(encoding="utf-8"))["template_files"]
+)
 
 
 def test_portfolio_approval_scope_expiry_and_replay(tmp_path: Path) -> None:

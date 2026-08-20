@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import os
 from contextlib import asynccontextmanager
+from dataclasses import asdict
 from pathlib import Path
 from time import perf_counter
 from typing import AsyncIterator, cast
@@ -15,6 +16,10 @@ from starlette.datastructures import MutableHeaders
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 from generated_application.app.application.commands import CreateDisputeCommand
+from generated_application.app.application.reconciliation_resolution import (
+    Observation,
+    ReconciliationResolutionService,
+)
 from generated_application.app.application.services import DisputeService
 from generated_application.app.domain.exceptions import DomainError
 from generated_application.app.infrastructure.persistence.sqlite_unit_of_work import (
@@ -234,6 +239,9 @@ def _install_openapi_contract() -> None:
                 scopes=("runtime:diagnostics",),
                 summary="Read bounded local runtime diagnostics",
             )
+            _secure_operation(paths, "/reconciliation/{case_id}", "post", operation_id="reconcileObservations", scopes=("dispute:read:any",), summary="Reconcile local observations without financial or external action")
+            _secure_operation(paths, "/reconciliation/{case_id}/proposals", "post", operation_id="createReviewedResolutionProposal", scopes=("dispute:read:any",), summary="Create a version-bound non-executing resolution proposal")
+            _secure_operation(paths, "/reconciliation/proposals/{proposal_id}/reviews", "post", operation_id="reviewResolutionProposal", scopes=("dispute:read:any",), summary="Append a non-executing proposal review")
         return schema
 
     setattr(app, "openapi", custom_openapi)
@@ -278,6 +286,36 @@ _install_openapi_contract()
 class EchoScenarioRequest(BaseModel):
     client_request_id: str = Field(min_length=1, max_length=128)
     amount: int = Field(ge=0)
+
+
+class ObservationRequest(BaseModel):
+    source: str = Field(min_length=1, max_length=128)
+    status: str = Field(min_length=1, max_length=64)
+    value_minor: int = Field(ge=0)
+    currency: str = Field(min_length=3, max_length=3)
+    product_leg: str = Field(min_length=1, max_length=128)
+    control_state: str = Field(min_length=1, max_length=128)
+    evidence_reference: str = Field(min_length=1, max_length=256)
+
+
+class ReconcileRequest(BaseModel):
+    observations: list[ObservationRequest] = Field(min_length=1, max_length=100)
+
+
+class ProposalRequest(BaseModel):
+    expected_version: int = Field(ge=1)
+    recommended_actions: list[str] = Field(min_length=1, max_length=25)
+    prohibited_actions: list[str] = Field(min_length=1, max_length=25)
+    rationale: str = Field(min_length=1, max_length=2000)
+    customer_message: str = Field(min_length=1, max_length=2000)
+    risk: str = Field(min_length=1, max_length=1000)
+    dependencies: list[str] = Field(default_factory=list, max_length=25)
+
+
+class ProposalReviewRequest(BaseModel):
+    expected_version: int = Field(ge=1)
+    state: str = Field(min_length=1, max_length=32)
+    note: str = Field(default="", max_length=2000)
 
 
 async def local_principal_dependency(
@@ -332,10 +370,50 @@ async def runtime_health() -> dict[str, str]:
 async def capabilities() -> dict[str, object]:
     return {
         "mock_only": True,
-        "capabilities": ["disputes", "health", "echo", "ready"],
+        "capabilities": ["disputes", "health", "echo", "ready", "reconciliation_reviewed_resolution"],
+        "reconciliation_boundary": "observation-and-review-only; never executes remediation",
         "live_provider_calls_allowed": False,
         "default_runtime_llm_calls": 0,
     }
+
+
+@app.post("/reconciliation/{case_id}")
+async def reconcile_observations(
+    case_id: str,
+    request: ReconcileRequest,
+    principal: Principal = Depends(local_principal_dependency),
+) -> dict[str, object]:
+    LocalAuthorizationPolicy().require(principal, scopes=("dispute:read:any",))
+    result = ReconciliationResolutionService(DATABASE_PATH).reconcile(
+        case_id, (Observation(**item.model_dump()) for item in request.observations)
+    )
+    return cast(dict[str, object], asdict(result))
+
+
+@app.post("/reconciliation/{case_id}/proposals", status_code=201)
+async def create_resolution_proposal(
+    case_id: str,
+    request: ProposalRequest,
+    principal: Principal = Depends(local_principal_dependency),
+) -> dict[str, object]:
+    LocalAuthorizationPolicy().require(principal, scopes=("dispute:read:any",))
+    result = ReconciliationResolutionService(DATABASE_PATH).create_proposal(
+        case_id=case_id, **request.model_dump()
+    )
+    return cast(dict[str, object], asdict(result))
+
+
+@app.post("/reconciliation/proposals/{proposal_id}/reviews")
+async def review_resolution_proposal(
+    proposal_id: str,
+    request: ProposalReviewRequest,
+    principal: Principal = Depends(local_principal_dependency),
+) -> dict[str, object]:
+    LocalAuthorizationPolicy().require(principal, scopes=("dispute:read:any",))
+    result = ReconciliationResolutionService(DATABASE_PATH).review_proposal(
+        proposal_id=proposal_id, reviewer=principal.subject, **request.model_dump()
+    )
+    return cast(dict[str, object], asdict(result))
 
 
 @app.post("/scenario/echo", response_model=None)

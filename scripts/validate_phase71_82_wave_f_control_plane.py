@@ -24,7 +24,12 @@ from factory.generators.mock_dispute_app_generator import generate  # noqa: E402
 
 RUN_ID_A = "phase71_82_wave_f_control_plane_a"
 RUN_ID_B = "phase71_82_wave_f_control_plane_b"
-EXPECTED_GENERATED_FILE_COUNT = 78
+TEMPLATE_MANIFEST_PATH = (
+    PROJECT_ROOT / "factory/templates/mock_dispute_app/template_manifest.v1.json"
+)
+EXPECTED_GENERATED_FILE_COUNT = len(
+    json.loads(TEMPLATE_MANIFEST_PATH.read_text(encoding="utf-8"))["template_files"]
+)
 REQUIRED_WAVE_F_FILES = {
     "generated_application/app/control_plane/policy.py",
     "generated_application/app/tests/security/test_control_plane_policy.py",

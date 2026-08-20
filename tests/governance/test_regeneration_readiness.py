@@ -20,3 +20,11 @@ def test_mock_dispute_app_generator_writes_manifest(tmp_path: Path) -> None:
     assert len(result.generated_files) >= 8
     assert (result.output_dir / "generated/app/disputes/models.py").is_file()
     assert (result.output_dir / "generated/adapters/mock_upi_switch.py").is_file()
+    assert (
+        result.output_dir
+        / "generated/generated_application/app/application/reconciliation_resolution.py"
+    ).is_file()
+    assert (
+        result.output_dir
+        / "generated/generated_application/app/tests/integration/test_reconciliation_reviewed_resolution.py"
+    ).is_file()

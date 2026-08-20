@@ -8,6 +8,13 @@ import tarfile
 import tempfile
 from typing import Any
 
+from factory.ai_governance import (
+    AISystemRegistry,
+    GovernedSelfLearningFoundation,
+    LearningEnvelope,
+    metadata_marker,
+)
+
 from tools.factory_control_plane.common import (
     DEFAULT_BASELINE,
     ControlPlaneError,
@@ -42,6 +49,27 @@ class ControlPlaneEngine:
         self.policy = StandingPolicy(policy_path)
         self.store = StateStore(self.state_root / "control_plane.sqlite3")
         self.executor = CapabilityExecutor(self.project_root)
+        # The registry is intentionally empty: authoritative callers must
+        # register systems explicitly; manifest metadata is never trusted to do so.
+        self.learning_foundation = GovernedSelfLearningFoundation(
+            AISystemRegistry(),
+            LearningEnvelope(
+                permitted_data_classes=frozenset(
+                    {"source", "tests", "diagnostics", "evidence", "scheduling", "prompts"}
+                ),
+                permitted_objectives=frozenset(
+                    {"implementation", "diagnosis", "scheduling", "evidence", "architecture", "prompts", "capabilities"}
+                ),
+                permitted_change_classes=frozenset(
+                    {"read_only", "deterministic_repair", "engineering_candidate", "learning_rule", "promotion"}
+                ),
+                maximum_change_budget=10_000,
+                minimum_evaluation_score=0.8,
+                minimum_held_out_score=0.8,
+                promotion_ceiling=4,
+            ),
+            self.store,
+        )
 
     def close(self) -> None:
         self.executor.close()
@@ -428,15 +456,34 @@ class ControlPlaneEngine:
 
     def _authorize_before_mutation(self, manifest: CampaignManifest) -> dict[str, Any] | None:
         """Authorize every effect before state, evidence, hydration, or cleanup changes."""
-        for activity in manifest.activities:
-            decision = self.policy.evaluate(activity.action, activity.risk)
-            if decision.outcome == "pause":
+        marker = metadata_marker(manifest.metadata)
+        if marker is not None:
+            # Do not record a denial here: even an incident is durable mutation.
+            # Incident/drift recording remains available through the bound
+            # foundation after a campaign exists.
+            decision = self.learning_foundation.authorize(marker)
+            if decision.outcome == "human_gate":
                 return {
                     "status": "human_gate",
                     "campaign_id": manifest.campaign_id,
                     "decision": decision.to_record(),
                 }
             if decision.outcome != "allow":
+                return {
+                    "status": "failed",
+                    "campaign_id": manifest.campaign_id,
+                    "failure_class": FailureClass.POLICY_DENIAL.value,
+                    "decision": decision.to_record(),
+                }
+        for activity in manifest.activities:
+            policy_decision = self.policy.evaluate(activity.action, activity.risk)
+            if policy_decision.outcome == "pause":
+                return {
+                    "status": "human_gate",
+                    "campaign_id": manifest.campaign_id,
+                    "decision": policy_decision.to_record(),
+                }
+            if policy_decision.outcome != "allow":
                 return {
                     "status": "failed",
                     "campaign_id": manifest.campaign_id,

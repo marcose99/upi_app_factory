@@ -73,6 +73,8 @@ def test_regeneration_uses_phase29_generator_output_not_only_docs(tmp_path: Path
     )
     assert manifest["phase29_deep_structure_policy_recorded"] is True
     assert "generated_application/app/domain/entities.py" in emitted_files
+    assert "generated_application/app/application/reconciliation_resolution.py" in emitted_files
+    assert "generated_application/app/tests/integration/test_reconciliation_reviewed_resolution.py" in emitted_files
     assert result.manifest_path.is_file()
 
 
@@ -115,10 +117,12 @@ def test_deep_generated_application_files_and_directories_are_emitted(tmp_path: 
     assert {
         "generated_application/app/domain/entities.py",
         "generated_application/app/application/services.py",
+        "generated_application/app/application/reconciliation_resolution.py",
         "generated_application/app/infrastructure/persistence/sqlite_unit_of_work.py",
         "generated_application/app/interfaces/api/main.py",
         "generated_application/app/observability/metrics.py",
         "generated_application/app/security/input_validation.py",
+        "generated_application/app/tests/integration/test_reconciliation_reviewed_resolution.py",
     }.issubset(emitted_files)
     for relative_dir in [
         "generated_application/app/domain",

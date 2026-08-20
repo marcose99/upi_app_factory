@@ -28,7 +28,12 @@ TEMPLATE_GENERATED_ROOT = (
     PROJECT_ROOT / "factory/templates/mock_dispute_app/generated_application"
 )
 ASSURANCE_ROOT = "generated_application/evidence/assurance"
-EXPECTED_GENERATED_FILE_COUNT = 78
+TEMPLATE_MANIFEST_PATH = (
+    PROJECT_ROOT / "factory/templates/mock_dispute_app/template_manifest.v1.json"
+)
+EXPECTED_GENERATED_FILE_COUNT = len(
+    json.loads(TEMPLATE_MANIFEST_PATH.read_text(encoding="utf-8"))["template_files"]
+)
 REQUIRED_WAVE_E_FILES = {
     f"{ASSURANCE_ROOT}/asvs_5_0_l2_mapping.json",
     f"{ASSURANCE_ROOT}/owasp_api_security_checks.json",
