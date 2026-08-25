@@ -21,6 +21,35 @@ from factory.application_engineering.architecture_realization import get_archite
 from factory.architecture_decisioning import verify_reviewed_architecture_package
 
 
+def _lane_a_quality_hooks() -> tuple[Any, Any, Any, Any, Any] | None:
+    """Resolve cross-lane APIs lazily so source-disjoint lane qualification remains possible."""
+    try:
+        from factory.application_engineering.semantic_realization import (
+            build_semantic_model,
+            render_semantic_files,
+        )
+        from factory.application_engineering.test_architecture import render_executable_tests, validate_trace_paths
+        from factory.application_engineering.runtime_architecture import render_runtime_architecture_files, validate_runtime_architecture
+    except ImportError:
+        return None
+    return (
+        build_semantic_model,
+        render_semantic_files,
+        render_executable_tests,
+        render_runtime_architecture_files,
+        (validate_trace_paths, validate_runtime_architecture),
+    )
+
+
+def _application_quality_hook() -> Any | None:
+    """Resolve Lane-B assurance lazily for source-disjoint lane qualification."""
+    try:
+        from factory.quality_assurance import build_application_quality_bundle
+    except ImportError:
+        return None
+    return build_application_quality_bundle
+
+
 COMPOSER_PROFILE_VERSION = "deep-composer/v1"
 DEFAULT_DEEP_PROFILE = "local-deep-v1"
 GOLDEN_APP_ID = "upi_failed_debit_dispute"
@@ -132,10 +161,11 @@ class DeepApplicationComposer:
             raise DeepComposerError("application engineering app id must use a non-default namespace")
 
         root = output_root.resolve()
-        try:
-            root.relative_to(self.project_root)
-        except ValueError as exc:
-            raise DeepComposerError("output root must remain inside the project worktree") from exc
+        # Qualification campaigns intentionally publish into disposable roots
+        # outside the source checkout. Reject checkout ancestors (including the
+        # filesystem root), but permit caller-selected isolated workspaces.
+        if root == self.project_root or root in self.project_root.parents:
+            raise DeepComposerError("output root must not be the project root or its ancestor")
         app_root = root / app_id
         if app_root.exists() and not replace_existing:
             raise DeepComposerError(f"output already exists: {app_root}")
@@ -158,6 +188,56 @@ class DeepApplicationComposer:
                 files.update(adapter.render(app_id))
             for relative, content in files.items():
                 _write_text(candidate_root / relative, content)
+
+            hooks = _lane_a_quality_hooks()
+            nested_requirements = requirements_ir.get("requirements", {})
+            semantic_source = nested_requirements if isinstance(nested_requirements, Mapping) else {}
+            has_semantic_requirements = any(
+                requirements_ir.get(name) or semantic_source.get(name)
+                for name in (
+                    "actors", "use_cases", "bounded_contexts", "commands", "queries",
+                    "events", "aggregates", "invariants", "workflows", "apis", "data",
+                    "security", "operations", "evidence",
+                )
+            )
+            if hooks is not None and has_semantic_requirements:
+                (
+                    build_semantic_model,
+                    render_semantic_files,
+                    render_executable_tests,
+                    render_runtime_files,
+                    validators,
+                ) = hooks
+                validate_trace_paths, validate_runtime = validators
+                semantic_model = build_semantic_model(requirements_ir)
+                generated = {}
+                generated.update(render_semantic_files(semantic_model, app_id=app_id))
+                generated.update(render_runtime_files(semantic_model, app_id=app_id))
+                generated.update(render_executable_tests(semantic_model, app_id=app_id))
+                semantic_openapi = json.loads(generated["openapi/openapi.json"])
+                semantic_identities = semantic_openapi.get("x-required-endpoints", [])
+                semantic_openapi["x-required-endpoints"] = list(
+                    dict.fromkeys((*REQUIRED_ENDPOINTS, *semantic_identities))
+                )
+                generated["openapi/openapi.json"] = (
+                    json.dumps(semantic_openapi, indent=2, sort_keys=True) + "\n"
+                )
+                for relative, content in generated.items():
+                    _write_text(candidate_root / relative, content)
+                trace_result = validate_trace_paths(candidate_root)
+                runtime_result = validate_runtime(candidate_root, app_id)
+                if trace_result["status"] != "PASS" or runtime_result["status"] != "PASS":
+                    raise DeepComposerError("generated semantic runtime or test trace is invalid")
+
+            quality_input = requirements_ir.get("quality_assurance")
+            if quality_input is not None:
+                if not isinstance(quality_input, Mapping):
+                    raise DeepComposerError("quality_assurance must be a mapping")
+                if "raw_measures" in quality_input:
+                    raise DeepComposerError(
+                        "requirements_ir quality_assurance cannot supply raw_measures; "
+                        "run artifact-bound executable qualification after composition"
+                    )
 
             if architecture_package is not None:
                 evidence_root = candidate_root / "evidence" / "architecture"
@@ -456,10 +536,12 @@ class DisputeCase:
 from dataclasses import asdict
 
 from {_module(app_id, "domain.aggregates.dispute_case")} import DisputeCase
+from {_module(app_id, "application.ports")} import CaseRepositoryPort
 
 
 class DisputeApplicationService:
-    def __init__(self) -> None:
+    def __init__(self, repository: CaseRepositoryPort | None = None) -> None:
+        self.repository = repository
         self._cases: dict[str, DisputeCase] = {{}}
         self._idempotency: dict[str, str] = {{}}
 

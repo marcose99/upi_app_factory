@@ -96,7 +96,8 @@ def test_authenticated_api_contract_is_non_executing_and_local_only(
 import sys
 from pathlib import Path
 
-from fastapi.testclient import TestClient
+import asyncio
+import httpx as local_http_client
 
 import_root = Path(sys.argv[1]).resolve()
 database = Path(sys.argv[2]).resolve()
@@ -135,39 +136,47 @@ payload = {
     ]
 }
 
-with TestClient(main.app) as client:
-    assert client.post("/reconciliation/CASE-API", json=payload).status_code == 401
-    denied_token = issue_local_test_token(subject="reader", scopes=["dispute:read"])
-    assert client.post(
-        "/reconciliation/CASE-API",
-        json=payload,
-        headers={"Authorization": f"Bearer {denied_token}"},
-    ).status_code == 403
-    reconciled = client.post(
-        "/reconciliation/CASE-API", json=payload, headers=headers
-    )
-    assert reconciled.status_code == 200
-    body = reconciled.json()
-    assert body["financial_ledger"] is body["executes_remediation"] is False
-    assert body["live_provider_calls_allowed"] is False
+async def exercise_api():
+  main.RUNTIME.startup()
+  try:
+    transport = local_http_client.ASGITransport(app=main.app)
+    async with local_http_client.AsyncClient(transport=transport, base_url="http://local") as client:
+      assert (await client.post("/reconciliation/CASE-API", json=payload)).status_code == 401
+      denied_token = issue_local_test_token(subject="reader", scopes=["dispute:read"])
+      assert (await client.post(
+          "/reconciliation/CASE-API",
+          json=payload,
+          headers={"Authorization": f"Bearer {denied_token}"},
+      )).status_code == 403
+      reconciled = await client.post(
+          "/reconciliation/CASE-API", json=payload, headers=headers
+      )
+      assert reconciled.status_code == 200
+      body = reconciled.json()
+      assert body["financial_ledger"] is body["executes_remediation"] is False
+      assert body["live_provider_calls_allowed"] is False
 
-    created = client.post(
-        "/reconciliation/CASE-API/proposals",
-        headers=headers,
-        json={
-            "expected_version": 1,
-            "recommended_actions": ["manual review"],
-            "prohibited_actions": ["payment", "refund"],
-            "rationale": "local evidence conflict",
-            "customer_message": "We are reviewing this case.",
-            "risk": "No automated remediation.",
-            "dependencies": ["reviewer"],
-        },
-    )
-    assert created.status_code == 201
-    assert created.json()["executes_remediation"] is False
-    capabilities = client.get("/capabilities").json()
-    assert "reconciliation_reviewed_resolution" in capabilities["capabilities"]
+      created = await client.post(
+          "/reconciliation/CASE-API/proposals",
+          headers=headers,
+          json={
+              "expected_version": 1,
+              "recommended_actions": ["manual review"],
+              "prohibited_actions": ["payment", "refund"],
+              "rationale": "local evidence conflict",
+              "customer_message": "We are reviewing this case.",
+              "risk": "No automated remediation.",
+              "dependencies": ["reviewer"],
+          },
+      )
+      assert created.status_code == 201
+      assert created.json()["executes_remediation"] is False
+      capabilities = (await client.get("/capabilities")).json()
+      assert "reconciliation_reviewed_resolution" in capabilities["capabilities"]
+  finally:
+    main.RUNTIME.shutdown()
+
+asyncio.run(exercise_api())
 
 schema = main.app.openapi()
 operation = schema["paths"]["/reconciliation/{case_id}/proposals"]["post"]
