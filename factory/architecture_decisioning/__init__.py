@@ -32,6 +32,11 @@ from .reviewed_freeze import (
     verify_reviewed_architecture_freeze,
     verify_reviewed_architecture_package,
 )
+from .prototype_resolution import (
+    HUMAN_RESOLUTION_STATUS,
+    resolve_prototype_required_adjudication,
+    verify_human_resolved_adjudication,
+)
 
 __all__ = [
     "ArchitectureDecisionError", "ArchitectureHumanGate", "canonical_sha256",
@@ -47,4 +52,6 @@ __all__ = [
     "calculate_architecture_confidence", "adjudicate_architecture_reviews",
     "freeze_reviewed_architecture", "verify_reviewed_architecture_freeze",
     "build_reviewed_architecture_package", "verify_reviewed_architecture_package",
+    "HUMAN_RESOLUTION_STATUS", "resolve_prototype_required_adjudication",
+    "verify_human_resolved_adjudication",
 ]

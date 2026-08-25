@@ -1,0 +1,7 @@
+{
+  "external_review_status": "PENDING_EXTERNAL_HUMAN_REVIEW",
+  "local_mock_only": true,
+  "production_ready": false,
+  "schema_version": "upi-app-factory.quality-assurance-defaults.v1",
+  "threshold": 99.0
+}
