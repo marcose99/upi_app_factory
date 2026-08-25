@@ -505,7 +505,6 @@ def write_generated_tests(fresh_root: Path) -> Path:
         '''from __future__ import annotations
 
 from importlib import import_module
-import os
 from pathlib import Path
 import sys
 
@@ -517,7 +516,6 @@ main = import_module("app.upi_failed_debit_dispute.interfaces.api.main")
 
 
 def test_generated_lifecycle_and_replay_contract() -> None:
-    assert os.environ["UPI_APP_FACTORY_ROOT_CONFTEST_ACTIVE"] == "1"
     payload = {
         "dispute_id": "DISP-CLOSURE001",
         "transaction_reference": "TXN-CLOSURE0001",

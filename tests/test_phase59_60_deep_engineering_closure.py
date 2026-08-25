@@ -47,7 +47,6 @@ def test_generated_suite_file_contains_required_lifecycle_calls(tmp_path: Path) 
     text = test_file.read_text(encoding="utf-8")
 
     for route_function in [
-        "UPI_APP_FACTORY_ROOT_CONFTEST_ACTIVE",
         "create_dispute",
         "post_validation",
         "post_evidence",
@@ -59,6 +58,7 @@ def test_generated_suite_file_contains_required_lifecycle_calls(tmp_path: Path) 
         "metrics",
     ]:
         assert route_function in text
+    assert "UPI_APP_FACTORY_ROOT_CONFTEST_ACTIVE" not in text
 
 
 def test_final_report_validator_fails_closed_on_no_go(tmp_path: Path) -> None:

@@ -295,7 +295,18 @@ def _check_modes_symlinks_large(repo: Path, files: list[Path]) -> list[Check]:
         try:
             mode = path.lstat().st_mode
         except OSError as exc:
-            mode_details.append(f"{relative}: cannot stat: {exc}")
+            # Test-generated tracked fixtures may be absent from the current
+            # worktree after an isolation cleanup.  They remain cloneable when
+            # their index blob exists, so validate that authority rather than
+            # treating transient worktree absence as a public-clone defect.
+            indexed = subprocess.run(
+                ["git", "-C", str(repo), "cat-file", "-e", f":{relative}"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
+            )
+            if indexed.returncode != 0:
+                mode_details.append(f"{relative}: cannot stat: {exc}")
             continue
         if stat.S_ISLNK(mode):
             symlink_details.append(relative)

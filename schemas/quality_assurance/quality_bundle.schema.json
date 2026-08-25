@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:upi-app-factory:quality-bundle:v1",
+  "type": "object",
+  "required": ["schema_version", "kind", "claims", "evidence", "acceptance"],
+  "properties": {
+    "schema_version": {"const": "upi-app-factory.quality-bundle.v1"},
+    "kind": {"enum": ["factory", "application"]},
+    "claims": {"type": "array"},
+    "evidence": {"type": "array"},
+    "acceptance": {"type": "object"}
+  },
+  "additionalProperties": false
+}

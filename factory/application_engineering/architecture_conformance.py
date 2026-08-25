@@ -81,11 +81,21 @@ def validate_architecture_conformance(
         "deadline_policy_declared": "DEADLINE_POLICY" in workflow,
         "reentry_policy_declared": "REENTRY_POLICY" in workflow,
         "human_review_states_declared": "HUMAN_REVIEW_STATES" in workflow,
+        "runtime_imports_workflow_module": "application.workflows.dispute_workflow import" in service,
+        "runtime_calls_workflow_transition": "next_state(" in service,
+        "runtime_consumes_deadline_policy": "DEADLINE_POLICY.get" in service,
+        "runtime_consumes_reentry_policy": "REENTRY_POLICY.items" in service,
+        "runtime_consumes_human_review_policy": "state in HUMAN_REVIEW_STATES" in service,
         "event_schema_version_declared": "EVENT_SCHEMA_VERSION" in events,
         "transactional_outbox_present": bool(outbox) and "outbox_events" in migration,
-        "service_records_domain_events": "DomainEvent" in service and ".append(" in service,
-        "idempotent_outbox_contract_present": "idempotency_key" in outbox and "setdefault" in outbox,
+        "service_records_domain_events": "DomainEvent" in service and "save_case_and_event" in service,
+        "idempotent_outbox_contract_present": "idempotency_key" in outbox and "UNIQUE" in outbox,
         "outbox_migration_present": "CREATE TABLE outbox_events" in migration and "idempotency_key" in migration,
+        "runtime_outbox_is_persistent": "sqlite3.connect" in outbox and "data/generated_application.sqlite3" in outbox,
+        "case_and_outbox_share_atomic_transaction_boundary": all(
+            token in outbox
+            for token in ("BEGIN IMMEDIATE", "INSERT INTO dispute_cases", "INSERT INTO outbox_events", "connection.commit")
+        ),
     }
     required_paths = [] if pattern is None else [
         str(item).format(app_id=app_id) for item in pattern.get("required_generated_paths", [])
@@ -98,6 +108,16 @@ def validate_architecture_conformance(
             "sha256": hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None,
         })
     outcomes = {rule: bool(checks.get(rule, False)) for rule in rules}
+    if selected == "WORKFLOW_CENTRIC_MODULAR_MONOLITH":
+        for rule in (
+            "runtime_imports_workflow_module", "runtime_calls_workflow_transition",
+            "runtime_consumes_deadline_policy", "runtime_consumes_reentry_policy",
+            "runtime_consumes_human_review_policy",
+        ):
+            outcomes[rule] = checks[rule]
+    if selected == "EVENT_DRIVEN_MODULAR_MONOLITH_OUTBOX":
+        for rule in ("runtime_outbox_is_persistent", "case_and_outbox_share_atomic_transaction_boundary"):
+            outcomes[rule] = checks[rule]
     if any(not (application_root / relative).is_file() for relative in required_paths):
         outcomes["required_generated_paths_present"] = False
     else:

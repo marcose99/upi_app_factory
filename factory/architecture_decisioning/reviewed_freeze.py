@@ -5,9 +5,14 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any, Mapping
 
+from .adjudication import adjudicate_architecture_reviews
 from .canonical import canonical_sha256
 from .durability import build_evolution_contract
 from .models import ArchitectureDecisionError, ArchitectureHumanGate, require_sha256
+from .prototype_resolution import (
+    HUMAN_RESOLUTION_STATUS,
+    verify_human_resolved_adjudication,
+)
 
 
 def _valid_digest(value: Mapping[str, Any], field: str) -> bool:
@@ -64,6 +69,12 @@ def _reviewed_decision(
         "decision_status": "SELECTED",
         "authority_class": authority,
     })
+    resolution = adjudication.get("human_resolution")
+    if isinstance(resolution, Mapping):
+        decision.update({
+            "governance_resolution_status": HUMAN_RESOLUTION_STATUS,
+            "human_resolution_digest": resolution.get("human_resolution_digest"),
+        })
     decision.pop("decision_digest", None)
     decision["reviewed_decision_digest"] = canonical_sha256(decision)
     return decision
@@ -93,6 +104,51 @@ def freeze_reviewed_architecture(
         "HUMAN_GATE", "PROTOTYPE_REQUIRED", "FACTORY_CAPABILITY_GAP", "NO_ADMISSIBLE"
     }:
         raise ArchitectureDecisionError("non-bypassable upstream status cannot be frozen")
+
+    confidence = adjudication.get("confidence")
+    if not isinstance(confidence, Mapping) or not _valid_digest(confidence, "digest"):
+        raise ArchitectureDecisionError("review confidence identity is invalid")
+    order = realization_contract.get("confidence_order")
+    minimum = realization_contract.get("minimum_review_confidence_level")
+    level = confidence.get("level")
+    if not isinstance(order, list) or level not in order or minimum not in order:
+        raise ArchitectureDecisionError("review confidence policy is invalid")
+    below_minimum = order.index(level) < order.index(minimum)
+    if below_minimum and not isinstance(adjudication.get("human_resolution"), Mapping):
+        raise ArchitectureHumanGate("review confidence is below the governed minimum")
+
+    deterministic_adjudication = adjudicate_architecture_reviews(
+        dict(architecture_packet),
+        dict(review_set),
+        dict(review_contract),
+        dict(architecture_contract),
+    )
+    automatic_status = deterministic_adjudication.get("status")
+    human_resolved = False
+    if automatic_status == "SELECTED_REVIEWED":
+        if dict(adjudication) != deterministic_adjudication:
+            raise ArchitectureDecisionError(
+                "selected adjudication does not match deterministic review result"
+            )
+    elif automatic_status == "PROTOTYPE_REQUIRED":
+        human_resolved = verify_human_resolved_adjudication(
+            adjudication,
+            deterministic_pre_resolution=deterministic_adjudication,
+            packet=architecture_packet,
+            review_set=review_set,
+            review_contract=review_contract,
+            requirements_sha256=str(upstream_decision.get("requirements_sha256")),
+        )
+        if not human_resolved:
+            raise ArchitectureHumanGate(
+                "prototype-required architecture lacks a valid human resolution"
+            )
+    elif automatic_status == "HUMAN_GATE":
+        raise ArchitectureHumanGate("architecture review requires human enablement")
+    else:
+        raise ArchitectureDecisionError(
+            f"deterministic architecture review cannot be frozen: {automatic_status}"
+        )
     if (
         architecture_packet.get("decision_digest") != upstream_decision.get("decision_digest")
         or architecture_packet.get("driver_ir_digest") != driver_ir.get("digest")
@@ -103,15 +159,7 @@ def freeze_reviewed_architecture(
         or adjudication.get("review_set_digest") != review_set.get("review_set_digest")
     ):
         raise ArchitectureDecisionError("reviewed architecture transitive binding mismatch")
-    confidence = adjudication.get("confidence")
-    if not isinstance(confidence, Mapping) or not _valid_digest(confidence, "digest"):
-        raise ArchitectureDecisionError("review confidence identity is invalid")
-    order = realization_contract.get("confidence_order")
-    minimum = realization_contract.get("minimum_review_confidence_level")
-    level = confidence.get("level")
-    if not isinstance(order, list) or level not in order or minimum not in order:
-        raise ArchitectureDecisionError("review confidence policy is invalid")
-    if order.index(level) < order.index(minimum):
+    if below_minimum and not human_resolved:
         raise ArchitectureHumanGate("review confidence is below the governed minimum")
     reviewed = _reviewed_decision(
         upstream_decision, adjudication, architecture_contract, realization_contract
@@ -137,6 +185,14 @@ def freeze_reviewed_architecture(
         "adapter_id": adapter.get("adapter_id"),
         "confidence_digest": confidence.get("digest"),
     }
+    if human_resolved:
+        resolution = adjudication.get("human_resolution")
+        if not isinstance(resolution, Mapping):
+            raise ArchitectureDecisionError("human resolution evidence is missing")
+        freeze.update({
+            "governance_resolution_status": HUMAN_RESOLUTION_STATUS,
+            "human_resolution_digest": resolution.get("human_resolution_digest"),
+        })
     freeze["freeze_digest"] = canonical_sha256(freeze)
     return freeze
 

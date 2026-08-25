@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 from dataclasses import dataclass
 import hashlib
 import json
@@ -19,6 +20,35 @@ from factory.application_engineering.architecture_conformance import (
 )
 from factory.application_engineering.architecture_realization import get_architecture_adapter
 from factory.architecture_decisioning import verify_reviewed_architecture_package
+
+
+def _lane_a_quality_hooks() -> tuple[Any, Any, Any, Any, Any] | None:
+    """Resolve cross-lane APIs lazily so source-disjoint lane qualification remains possible."""
+    try:
+        from factory.application_engineering.semantic_realization import (
+            build_semantic_model,
+            render_semantic_files,
+        )
+        from factory.application_engineering.test_architecture import render_executable_tests, validate_trace_paths
+        from factory.application_engineering.runtime_architecture import render_runtime_architecture_files, validate_runtime_architecture
+    except ImportError:
+        return None
+    return (
+        build_semantic_model,
+        render_semantic_files,
+        render_executable_tests,
+        render_runtime_architecture_files,
+        (validate_trace_paths, validate_runtime_architecture),
+    )
+
+
+def _application_quality_hook() -> Any | None:
+    """Resolve Lane-B assurance lazily for source-disjoint lane qualification."""
+    try:
+        from factory.quality_assurance import build_application_quality_bundle
+    except ImportError:
+        return None
+    return build_application_quality_bundle
 
 
 COMPOSER_PROFILE_VERSION = "deep-composer/v1"
@@ -111,6 +141,56 @@ def _module(app_id: str, suffix: str) -> str:
     return f"app.{app_id}.{suffix}"
 
 
+def _registered_api_identity_counts(source: str) -> dict[str, int]:
+    """Return static FastAPI path-operation ownership without inspecting framework internals."""
+    methods = {"get", "post", "put", "patch", "delete", "options", "head"}
+    counts: dict[str, int] = {}
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        for decorator in node.decorator_list:
+            if not isinstance(decorator, ast.Call) or not isinstance(decorator.func, ast.Attribute):
+                continue
+            method = decorator.func.attr.lower()
+            if method not in methods or not decorator.args:
+                continue
+            raw_path = decorator.args[0]
+            if isinstance(raw_path, ast.Constant) and isinstance(raw_path.value, str):
+                identity = f"{method.upper()} {raw_path.value}"
+                counts[identity] = counts.get(identity, 0) + 1
+    return counts
+
+
+def _registered_api_identities(source: str) -> set[str]:
+    """Return uniquely owned application API identities and fail closed on duplicate ownership."""
+    counts = _registered_api_identity_counts(source)
+    duplicates = sorted(identity for identity, count in counts.items() if count != 1)
+    if duplicates:
+        raise DeepComposerError(f"duplicate application API route ownership: {duplicates}")
+    return set(counts)
+
+
+def _mount_semantic_router(candidate_root: Path, app_id: str) -> None:
+    """Augment the established API with semantic-only routes without replacing legacy behavior."""
+    main_path = candidate_root / f"app/{app_id}/interfaces/api/main.py"
+    if not main_path.is_file():
+        raise DeepComposerError("generated application API main.py is missing before semantic overlay")
+    source = main_path.read_text(encoding="utf-8")
+    include_line = "app.include_router(semantic_router)"
+    if include_line in source:
+        return
+    future = "from __future__ import annotations\n"
+    if future not in source:
+        raise DeepComposerError("generated application API must preserve future-annotations header")
+    import_line = (
+        f"from app.{app_id}.interfaces.api.semantic_routes import router as semantic_router\n"
+    )
+    source = source.replace(future, future + "\n" + import_line, 1)
+    source = source.rstrip() + "\n\n" + include_line + "\n"
+    _write_text(main_path, source)
+
+
 class DeepApplicationComposer:
     def __init__(self, project_root: Path, profile: DeepProfile | None = None) -> None:
         self.project_root = project_root.resolve()
@@ -132,10 +212,11 @@ class DeepApplicationComposer:
             raise DeepComposerError("application engineering app id must use a non-default namespace")
 
         root = output_root.resolve()
-        try:
-            root.relative_to(self.project_root)
-        except ValueError as exc:
-            raise DeepComposerError("output root must remain inside the project worktree") from exc
+        # Qualification campaigns intentionally publish into disposable roots
+        # outside the source checkout. Reject checkout ancestors (including the
+        # filesystem root), but permit caller-selected isolated workspaces.
+        if root == self.project_root or root in self.project_root.parents:
+            raise DeepComposerError("output root must not be the project root or its ancestor")
         app_root = root / app_id
         if app_root.exists() and not replace_existing:
             raise DeepComposerError(f"output already exists: {app_root}")
@@ -158,6 +239,72 @@ class DeepApplicationComposer:
                 files.update(adapter.render(app_id))
             for relative, content in files.items():
                 _write_text(candidate_root / relative, content)
+
+            hooks = _lane_a_quality_hooks()
+            nested_requirements = requirements_ir.get("requirements", {})
+            semantic_source = nested_requirements if isinstance(nested_requirements, Mapping) else {}
+            has_semantic_requirements = any(
+                requirements_ir.get(name) or semantic_source.get(name)
+                for name in (
+                    "actors", "use_cases", "bounded_contexts", "commands", "queries",
+                    "events", "aggregates", "invariants", "workflows", "apis", "data",
+                    "security", "operations", "evidence",
+                )
+            )
+            if hooks is not None and has_semantic_requirements:
+                (
+                    build_semantic_model,
+                    render_semantic_files,
+                    render_executable_tests,
+                    render_runtime_files,
+                    validators,
+                ) = hooks
+                validate_trace_paths, validate_runtime = validators
+                semantic_model = build_semantic_model(requirements_ir)
+                generated = {}
+                generated.update(render_semantic_files(semantic_model, app_id=app_id))
+                main_path = candidate_root / f"app/{app_id}/interfaces/api/main.py"
+                if not main_path.is_file():
+                    raise DeepComposerError(
+                        "generated application API main.py is missing before semantic overlay"
+                    )
+                reserved_identities = set(REQUIRED_ENDPOINTS)
+                reserved_identities.update(
+                    _registered_api_identities(main_path.read_text(encoding="utf-8"))
+                )
+                generated.update(
+                    render_runtime_files(
+                        semantic_model,
+                        app_id=app_id,
+                        reserved_identities=tuple(sorted(reserved_identities)),
+                    )
+                )
+                generated.update(render_executable_tests(semantic_model, app_id=app_id))
+                semantic_openapi = json.loads(generated["openapi/openapi.json"])
+                semantic_identities = semantic_openapi.get("x-required-endpoints", [])
+                semantic_openapi["x-required-endpoints"] = list(
+                    dict.fromkeys((*REQUIRED_ENDPOINTS, *semantic_identities))
+                )
+                generated["openapi/openapi.json"] = (
+                    json.dumps(semantic_openapi, indent=2, sort_keys=True) + "\n"
+                )
+                for relative, content in generated.items():
+                    _write_text(candidate_root / relative, content)
+                _mount_semantic_router(candidate_root, app_id)
+                trace_result = validate_trace_paths(candidate_root)
+                runtime_result = validate_runtime(candidate_root, app_id)
+                if trace_result["status"] != "PASS" or runtime_result["status"] != "PASS":
+                    raise DeepComposerError("generated semantic runtime or test trace is invalid")
+
+            quality_input = requirements_ir.get("quality_assurance")
+            if quality_input is not None:
+                if not isinstance(quality_input, Mapping):
+                    raise DeepComposerError("quality_assurance must be a mapping")
+                if "raw_measures" in quality_input:
+                    raise DeepComposerError(
+                        "requirements_ir quality_assurance cannot supply raw_measures; "
+                        "run artifact-bound executable qualification after composition"
+                    )
 
             if architecture_package is not None:
                 evidence_root = candidate_root / "evidence" / "architecture"
@@ -451,15 +598,27 @@ class DisputeCase:
         self.version += 1
         self.timeline.append(event)
 """,
+            f"app/{app_id}/application/ports.py": """from __future__ import annotations
+
+from typing import Protocol
+
+
+class CaseRepositoryPort(Protocol):
+    def put(self, case_id: str, value: object) -> None: ...
+    def get(self, case_id: str) -> object: ...
+    def values(self) -> list[object]: ...
+""",
             f"app/{app_id}/application/services/dispute_service.py": f"""from __future__ import annotations
 
 from dataclasses import asdict
 
 from {_module(app_id, "domain.aggregates.dispute_case")} import DisputeCase
+from {_module(app_id, "application.ports")} import CaseRepositoryPort
 
 
 class DisputeApplicationService:
-    def __init__(self) -> None:
+    def __init__(self, repository: CaseRepositoryPort | None = None) -> None:
+        self.repository = repository
         self._cases: dict[str, DisputeCase] = {{}}
         self._idempotency: dict[str, str] = {{}}
 
@@ -520,8 +679,14 @@ from fastapi import FastAPI, Header
 
 from {_module(app_id, "application.services.dispute_service")} import DisputeApplicationService
 
+try:
+    from {_module(app_id, "application.composition_root")} import build_dispute_service
+except (ImportError, ModuleNotFoundError):
+    def build_dispute_service() -> DisputeApplicationService:
+        return DisputeApplicationService()
+
 app = FastAPI(title="UPI Failed Debit Dispute", version="1.0.0")
-service = DisputeApplicationService()
+service = build_dispute_service()
 
 
 @app.get("/health")
