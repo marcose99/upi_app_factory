@@ -25,3 +25,28 @@ def test_json_html_parity_accessibility_and_offline_assets(tmp_path: Path) -> No
         min(luminance(PALETTE["text"]), luminance(PALETTE["page_background"])) + 0.05
     )
     assert ratio >= 4.5
+
+
+def test_architecture_dossier_section_appears_only_in_architecture_report(tmp_path: Path) -> None:
+    index = write_report_suite(
+        tmp_path,
+        kind="application",
+        context={
+            "architecture_decision_sections": [
+                {
+                    "heading": "Architecture Decision Dossier Gate",
+                    "content": "claim=ARCHITECTURE_BEST_FIT_WITHIN_CURRENT_EVIDENCE_ENVELOPE",
+                }
+            ]
+        },
+    )
+    by_title = {row["title"]: row for row in index["reports"]}
+    architecture = by_title[
+        "Architecture Decision, Prototype, Realization and Conformance Report"
+    ]
+    executive = by_title["Application Executive Quality Dossier"]
+    architecture_json = (tmp_path / architecture["json_path"]).read_text(encoding="utf-8")
+    executive_json = (tmp_path / executive["json_path"]).read_text(encoding="utf-8")
+    assert "Architecture Decision Dossier Gate" in architecture_json
+    assert "ARCHITECTURE_BEST_FIT_WITHIN_CURRENT_EVIDENCE_ENVELOPE" in architecture_json
+    assert "Architecture Decision Dossier Gate" not in executive_json

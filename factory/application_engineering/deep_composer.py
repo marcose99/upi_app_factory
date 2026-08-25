@@ -19,7 +19,12 @@ from factory.application_engineering.architecture_conformance import (
     verify_architecture_conformance_report,
 )
 from factory.application_engineering.architecture_realization import get_architecture_adapter
-from factory.architecture_decisioning import verify_reviewed_architecture_package
+from factory.architecture_decisioning import (
+    build_architecture_decision_dossier,
+    render_architecture_decision_dossier_markdown,
+    verify_architecture_decision_dossier,
+    verify_reviewed_architecture_package,
+)
 
 
 def _lane_a_quality_hooks() -> tuple[Any, Any, Any, Any, Any] | None:
@@ -224,6 +229,7 @@ class DeepApplicationComposer:
         candidate_root = create_staging_directory(app_root)
         try:
             requirements_hash = sha256_text(canonical_json(requirements_ir))
+            architecture_dossier: dict[str, Any] | None = None
             if architecture_package is not None:
                 if not verify_reviewed_architecture_package(architecture_package):
                     raise DeepComposerError("reviewed architecture package is invalid")
@@ -345,6 +351,21 @@ class DeepApplicationComposer:
                     evidence_root / "architecture_conformance.json",
                     json.dumps(conformance, indent=2, sort_keys=True) + "\n",
                 )
+                architecture_dossier = build_architecture_decision_dossier(
+                    architecture_package, conformance
+                )
+                if not verify_architecture_decision_dossier(
+                    architecture_dossier, architecture_package, conformance
+                ):
+                    raise DeepComposerError("architecture decision dossier verification failed")
+                _write_text(
+                    evidence_root / "architecture_decision_dossier.json",
+                    json.dumps(architecture_dossier, indent=2, sort_keys=True) + "\n",
+                )
+                _write_text(
+                    candidate_root / "docs/architecture/architecture_decision_dossier.md",
+                    render_architecture_decision_dossier_markdown(architecture_dossier),
+                )
 
             payload = {
                 "composer_profile": self.profile.profile_id,
@@ -363,6 +384,11 @@ class DeepApplicationComposer:
                 "file_manifest": [],
             }
             if architecture_package is not None:
+                if architecture_dossier is None:
+                    raise DeepComposerError(
+                        "architecture dossier missing for reviewed architecture package"
+                    )
+                dossier_for_manifest = architecture_dossier
                 payload.update({
                     "architecture": next(
                         row["manifest_architecture"] for row in realization_contract["patterns"]
@@ -375,6 +401,11 @@ class DeepApplicationComposer:
                     "architecture_evolution_contract_digest": reviewed_freeze["evolution_contract_digest"],
                     "architecture_conformance_digest": conformance["conformance_digest"],
                     "architecture_realization_contract_digest": reviewed_freeze["realization_contract_digest"],
+                    "architecture_decision_dossier_digest": dossier_for_manifest["dossier_digest"],
+                    "architecture_claim_status": dossier_for_manifest["architecture_claim_status"],
+                    "architecture_nfr_sufficiency_gate_outcome": dossier_for_manifest[
+                        "nfr_sufficiency_gate"
+                    ]["gate_outcome"],
                 })
             _write_text(
                 candidate_root / "evidence" / "generation_manifest.json",

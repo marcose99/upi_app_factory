@@ -109,13 +109,19 @@ def write_report_suite(
     rows = []
     for index, title in enumerate(titles, 1):
         slug = f"{index:02d}_{_slug(title)}"
+        sections = list(context.get("sections", []))
+        if (
+            kind == "application"
+            and title == "Architecture Decision, Prototype, Realization and Conformance Report"
+        ):
+            sections.extend(context.get("architecture_decision_sections", []))
         document = {
             "schema_version": "upi-app-factory.quality-report.v1",
             "title": title,
             "status": context.get("status", "INFORMATIONAL"),
             "scope": context.get("scope", "Frozen finite model and exact audited corpus."),
             "limitations": "Internal technical assurance; external human review and production evidence remain pending.",
-            "sections": context.get("sections", []),
+            "sections": sections,
             "claim_ids": context.get("claim_ids", []),
             "evidence_ids": context.get("evidence_ids", []),
         }
