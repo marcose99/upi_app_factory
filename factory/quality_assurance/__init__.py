@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -15,6 +16,64 @@ from .kernel import (
     validate_claim_ledger,
 )
 from .reporting import validate_report_suite, write_report_suite
+
+
+def _architecture_dossier_report_sections(application_root: Path) -> list[dict[str, str]]:
+    evidence_root = application_root / "evidence" / "architecture"
+    freeze = evidence_root / "architecture_freeze.json"
+    dossier_path = evidence_root / "architecture_decision_dossier.json"
+    if freeze.is_file() and not dossier_path.is_file():
+        raise QualityAssuranceError(
+            "reviewed architecture application is missing architecture decision dossier"
+        )
+    if not dossier_path.is_file():
+        return []
+    dossier = json.loads(dossier_path.read_text(encoding="utf-8"))
+    supplied = dossier.get("dossier_digest")
+    body = {key: value for key, value in dossier.items() if key != "dossier_digest"}
+    expected = hashlib.sha256(
+        json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode(
+            "utf-8"
+        )
+    ).hexdigest()
+    if supplied != expected:
+        raise QualityAssuranceError("architecture decision dossier digest is invalid")
+    nfr = dossier.get("nfr_sufficiency_gate", {})
+    review = dossier.get("review_consensus", {})
+    confidence = dossier.get("final_confidence") or {}
+    conformance = dossier.get("architecture_conformance", {})
+    tradeoffs = dossier.get("known_tradeoffs", {})
+    matrix = dossier.get("candidate_matrix", [])
+    disqualified = dossier.get("disqualified_candidates", [])
+    sensitivity = dossier.get("sensitivity", {})
+    prototype = dossier.get("prototype_and_human_resolution", {})
+    summary = "; ".join(
+        [
+            f"claim={dossier.get('architecture_claim_status')}",
+            f"requirements={dossier.get('requirements_sha256')}",
+            f"drivers={len(dossier.get('architecture_drivers', []))}",
+            f"nfr_gate={nfr.get('gate_outcome')}",
+            f"unknown_nfrs={nfr.get('unknown_driver_ids', [])}",
+            f"candidates={len(matrix)}",
+            f"disqualified={len(disqualified)}",
+            f"winner_stability={sensitivity.get('winner_stability')}",
+            f"review_consensus={review.get('selected_recommendation_count', 0)}/{review.get('lane_count', 0)}",
+            f"prototype_human_resolution={bool(prototype.get('human_resolution_applied'))}",
+            f"confidence={confidence.get('level')}:{confidence.get('score')}",
+            f"selected={dossier.get('selected_candidate_id')}",
+            f"adapter={dossier.get('selected_adapter_id')}",
+            f"conformance={conformance.get('status')}",
+            f"tradeoff_dimensions={tradeoffs.get('lowest_revised_dimensions', [])}",
+            f"reconsideration_triggers={dossier.get('reconsideration_triggers', [])}",
+            f"dossier_digest={supplied}",
+        ]
+    )
+    return [
+        {
+            "heading": "Architecture Decision Dossier Gate",
+            "content": summary,
+        }
+    ]
 
 
 def _build(
@@ -83,13 +142,18 @@ def build_application_quality_bundle(
     **context: Any,
 ) -> dict[str, Any]:
     target = output_dir if output_dir is not None else application_root
+    report_context = dict(context)
+    if application_root is not None:
+        sections = _architecture_dossier_report_sections(Path(application_root))
+        if sections:
+            report_context["architecture_decision_sections"] = sections
     return _build(
         "application",
         output_dir=target,
         claims=claims,
         evidence=evidence,
         raw_measures=raw_measures,
-        context=context,
+        context=report_context,
     )
 
 

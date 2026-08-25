@@ -37,6 +37,15 @@ from .prototype_resolution import (
     resolve_prototype_required_adjudication,
     verify_human_resolved_adjudication,
 )
+from .dossier import (
+    ARCHITECTURE_CHANGING_NFR_DRIVER_IDS,
+    BOUNDED_CLAIM_STATUS,
+    SUFFICIENT_CLAIM_STATUS,
+    build_architecture_decision_dossier,
+    evaluate_nfr_sufficiency,
+    render_architecture_decision_dossier_markdown,
+    verify_architecture_decision_dossier,
+)
 
 __all__ = [
     "ArchitectureDecisionError", "ArchitectureHumanGate", "canonical_sha256",
@@ -54,4 +63,8 @@ __all__ = [
     "build_reviewed_architecture_package", "verify_reviewed_architecture_package",
     "HUMAN_RESOLUTION_STATUS", "resolve_prototype_required_adjudication",
     "verify_human_resolved_adjudication",
+    "ARCHITECTURE_CHANGING_NFR_DRIVER_IDS", "BOUNDED_CLAIM_STATUS",
+    "SUFFICIENT_CLAIM_STATUS", "evaluate_nfr_sufficiency",
+    "build_architecture_decision_dossier", "verify_architecture_decision_dossier",
+    "render_architecture_decision_dossier_markdown",
 ]
