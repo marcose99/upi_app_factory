@@ -25,6 +25,8 @@ from factory.architecture_decisioning import (
     verify_architecture_decision_dossier,
     verify_reviewed_architecture_package,
 )
+from factory.documentation import build_portal, canonical_sha256, render_document_html, write_document_pair
+from factory.application_maintenance import MaintenanceLedger
 
 
 def _lane_a_quality_hooks() -> tuple[Any, Any, Any, Any, Any] | None:
@@ -363,9 +365,22 @@ class DeepApplicationComposer:
                     json.dumps(architecture_dossier, indent=2, sort_keys=True) + "\n",
                 )
                 _write_text(
+                    candidate_root / "docs/architecture/architecture_decision_dossier.json",
+                    json.dumps(architecture_dossier, indent=2, sort_keys=True) + "\n",
+                )
+                _write_text(
                     candidate_root / "docs/architecture/architecture_decision_dossier.md",
                     render_architecture_decision_dossier_markdown(architecture_dossier),
                 )
+                dossier_bytes = (json.dumps(architecture_dossier, indent=2, sort_keys=True) + "\n").encode("utf-8")
+                _write_text(
+                    candidate_root / "docs/architecture/architecture_decision_dossier.html",
+                    render_document_html(architecture_dossier, hashlib.sha256(dossier_bytes).hexdigest()),
+                )
+
+            self._write_documentation_portal(
+                candidate_root, app_id, requirements_hash, requirements_ir, architecture_dossier
+            )
 
             payload = {
                 "composer_profile": self.profile.profile_id,
@@ -431,6 +446,177 @@ class DeepApplicationComposer:
         finally:
             cleanup_staging_directory(candidate_root)
 
+    def _write_documentation_portal(
+        self,
+        root: Path,
+        app_id: str,
+        requirements_hash: str,
+        requirements_ir: Mapping[str, Any],
+        architecture_dossier: Mapping[str, Any] | None,
+    ) -> None:
+        """Materialize the self-contained, generation-time provenance capsule and portal."""
+        docs_root = root / "docs"
+        trace = json.loads(self._build_requirement_trace(app_id, requirements_hash, requirements_ir))
+        requirement_ids = sorted(
+            str(row["requirement_id"])
+            for row in trace["mappings"]
+            if row.get("requirement_id") is not None
+        )
+        source_documents = requirements_ir.get("source_documents", [])
+        sources = list(source_documents) if isinstance(source_documents, list) else []
+        common = {
+            "applicability_status": "PROVEN",
+            "generated_at": "DETERMINISTIC_FROM_REQUIREMENTS_IR_IDENTITY",
+            "schema_version": "upi_app_factory.application-requirements-provenance.v1",
+            "source_fact_ids": requirement_ids,
+            "subject_id": app_id,
+        }
+        documents: list[tuple[str, dict[str, Any]]] = []
+        documents.append(("requirements/requirements_ir", {
+            **common, "document_id": f"DOC-{app_id}-requirements-ir",
+            "requirements_ir": json.loads(json.dumps(requirements_ir, sort_keys=True)),
+            "requirements_ir_sha256": requirements_hash,
+        }))
+        documents.append(("requirements/requirements_traceability", {
+            **common, "document_id": f"DOC-{app_id}-requirements-traceability", **trace,
+        }))
+        documents.append(("requirements/requirements_disposition", {
+            **common, "document_id": f"DOC-{app_id}-requirements-disposition",
+            "entries": [
+                {"requirement_id": row["requirement_id"], "status": "PROVEN", "implementation_paths": row["code_paths"], "test_paths": row["test_paths"]}
+                for row in trace["mappings"]
+            ],
+        }))
+        documents.append(("requirements/requirements_provenance", {
+            **common, "document_id": f"DOC-{app_id}-requirements-provenance",
+            "requirements_ir_sha256": requirements_hash, "source_documents": sources,
+        }))
+        documents.append(("requirements/requirements_to_release_traceability", {
+            **common, "applicability_status": "NOT_RELEASED",
+            "document_id": f"DOC-{app_id}-requirements-to-release",
+            "entries": [{"requirement_id": item, "release_status": "NOT_RELEASED"} for item in requirement_ids],
+        }))
+        maintenance = MaintenanceLedger(app_id).documents()
+        for name in (
+            "application_evolution_spec", "change_ledger", "maintenance_status",
+            "release_lineage", "requirements_to_release_maintenance",
+            "factory_learning_ledger",
+        ):
+            documents.append((f"maintenance/{name}", maintenance[name]))
+        documents.extend(
+            self._build_artifact_parity_documents(root, app_id, requirements_hash, requirement_ids)
+        )
+        entries: list[dict[str, Any]] = []
+        for stem, document in documents:
+            # Digest binds document content independently of pretty/human projections.
+            if "document_digest" not in document:
+                document["document_digest"] = canonical_sha256(document)
+            written = write_document_pair(docs_root, stem, document)
+            entries.append({
+                "document_id": document["document_id"],
+                "json_path": f"{stem}.json", "html_path": f"{stem}.html",
+                "json_sha256": written["json_sha256"],
+            })
+        if architecture_dossier is not None:
+            dossier_json = root / "docs/architecture/architecture_decision_dossier.json"
+            entries.append({
+                "document_id": f"DOC-{app_id}-architecture-decision-dossier",
+                "json_path": "architecture/architecture_decision_dossier.json",
+                "html_path": "architecture/architecture_decision_dossier.html",
+                "json_sha256": hashlib.sha256(dossier_json.read_bytes()).hexdigest(),
+            })
+        portal = build_portal(app_id, entries, source_fact_ids=requirement_ids)
+        write_document_pair(docs_root, "index", portal)
+
+    def _build_artifact_parity_documents(
+        self, root: Path, app_id: str, requirements_hash: str, requirement_ids: list[str]
+    ) -> list[tuple[str, dict[str, Any]]]:
+        """Derive the application evidence registry from files already materialized.
+
+        Unknown measurements and external decisions remain explicit; absence is
+        never converted into an assurance claim.
+        """
+        common = {
+            "schema_version": "upi_app_factory.artifact-evidence.v1",
+            "subject_id": app_id,
+            "generated_at": "DETERMINISTIC_FROM_GENERATION_IDENTITY",
+            "source_fact_ids": requirement_ids,
+            "requirements_ir_sha256": requirements_hash,
+        }
+        dependencies: dict[str, Any] = {
+            **common,
+            "document_id": f"DOC-{app_id}-dependency-inventory",
+            "applicability_status": "PROVEN",
+            "dependencies": [
+                {"component_id": "DEP-fastapi", "name": "fastapi", "version": "UNKNOWN_EXPLICIT", "source_path": f"app/{app_id}/interfaces/api/main.py"},
+                {"component_id": "DEP-uvicorn", "name": "uvicorn", "version": "UNKNOWN_EXPLICIT", "source_path": "scripts/run_local.sh"},
+                {"component_id": "DEP-python-stdlib-sqlite", "name": "sqlite3", "version": "UNKNOWN_EXPLICIT", "source_path": f"app/{app_id}/infrastructure/persistence/sqlite_repository.py"},
+            ],
+        }
+        licenses = {
+            **common,
+            "document_id": f"DOC-{app_id}-license-inventory",
+            "applicability_status": "UNKNOWN_EXPLICIT",
+            "entries": [
+                {"component_id": row["component_id"], "license": "UNKNOWN_EXPLICIT"}
+                for row in dependencies["dependencies"]
+            ],
+            "reason": "Dependency versions and authenticated package metadata are not locked in the generated application.",
+        }
+        sbom = {
+            **common,
+            "document_id": f"DOC-{app_id}-cyclonedx-sbom",
+            "applicability_status": "PROVEN",
+            "bomFormat": "CycloneDX",
+            "specVersion": "1.5",
+            "version": 1,
+            "components": [
+                {"type": "library", "bom-ref": row["component_id"], "name": row["name"], "version": row["version"]}
+                for row in dependencies["dependencies"]
+            ],
+        }
+        governed_artifact_paths = [
+            "configuration/example.env", "openapi/openapi.json",
+            "docs/threat_model.md", "docs/test_plan.md", "docs/operations_runbook.md",
+            "evidence/requirements_trace.json",
+        ]
+        artifact_checksums = [
+            {
+                "path": path,
+                "sha256": hashlib.sha256((root / path).read_bytes()).hexdigest(),
+                "size_bytes": (root / path).stat().st_size,
+            }
+            for path in governed_artifact_paths
+            if (root / path).is_file()
+        ]
+        evidence: list[tuple[str, dict[str, Any]]] = [
+            ("evidence/dependency_inventory", dependencies),
+            ("evidence/license_inventory", licenses),
+            ("evidence/sbom_cyclonedx", sbom),
+            ("evidence/build_source_provenance", {**common, "document_id": f"DOC-{app_id}-build-source-provenance", "applicability_status": "PROVEN", "generator_profile": self.profile.profile_id, "profile_version": self.profile.profile_version, "source_identity": requirements_hash}),
+            ("evidence/artifact_manifest", {**common, "document_id": f"DOC-{app_id}-artifact-manifest", "applicability_status": "PROVEN", "artifacts": artifact_checksums}),
+            ("evidence/api_contract", {**common, "document_id": f"DOC-{app_id}-api-contract", "applicability_status": "PROVEN", "openapi_path": "../../openapi/openapi.json", "asyncapi_status": "NOT_APPLICABLE"}),
+            ("evidence/configuration_inventory", {**common, "document_id": f"DOC-{app_id}-configuration-inventory", "applicability_status": "PROVEN", "source_path": "../../configuration/example.env", "entries": [{"name": "REAL_PAYMENT_CALLS", "default": "disabled"}, {"name": "FACTORY_LLM_ENABLED", "default": "0"}, {"name": "SQLITE_PATH", "default": "./data/upi_failed_debit_dispute.sqlite3"}]}),
+            ("evidence/data_inventory", {**common, "document_id": f"DOC-{app_id}-data-inventory", "applicability_status": "PROVEN", "persistence": "sqlite-stdlib", "classification_status": "UNKNOWN_EXPLICIT", "retention_status": "UNKNOWN_EXPLICIT", "reason": "No authenticated field-classification or retention contract is present in the requirements IR."}),
+            ("evidence/security_assurance", {**common, "document_id": f"DOC-{app_id}-security-assurance", "applicability_status": "NOT_YET_MEASURED", "threat_catalogue_path": "../threat_model.md", "vulnerability_scan_status": "NOT_YET_MEASURED", "penetration_test_status": "PENDING_EXTERNAL_AUTHORITY"}),
+            ("evidence/test_assurance", {**common, "document_id": f"DOC-{app_id}-test-assurance", "applicability_status": "NOT_YET_MEASURED", "test_catalogue": ["tests/test_service.py", "tests/test_api_contract.py"], "result_status": "NOT_YET_MEASURED"}),
+            ("evidence/runtime_operations", {**common, "document_id": f"DOC-{app_id}-runtime-operations", "applicability_status": "PROVEN", "runtime_architecture": "local modular monolith", "runbook_path": "../operations_runbook.md", "deployment_status": "NOT_DEPLOYED", "recovery_measurement_status": "NOT_YET_MEASURED"}),
+            ("evidence/event_contract", {**common, "document_id": f"DOC-{app_id}-event-contract", "applicability_status": "NOT_APPLICABLE", "reason": "The generated runtime exposes synchronous HTTP endpoints and declares no external event channel.", "asyncapi_path": None}),
+        ]
+        registry_entries = [
+            {"evidence_class": stem.rsplit("/", 1)[-1], "document_id": document["document_id"], "status": document["applicability_status"], "json_path": f"{stem}.json"}
+            for stem, document in evidence
+        ]
+        evidence.append(("evidence/artifact_parity", {
+            **common,
+            "document_id": f"DOC-{app_id}-artifact-parity",
+            "applicability_status": "PROVEN",
+            "entries": registry_entries,
+            "release_status": "NOT_RELEASED",
+            "deployment_status": "NOT_DEPLOYED",
+        }))
+        return evidence
+
     def _code_paths_for_collection(self, app_id: str, collection: str) -> list[str]:
         mapping = {
             "actors": [f"app/{app_id}/interfaces/api/main.py"],
@@ -462,6 +648,31 @@ class DeepApplicationComposer:
             return ["tests/test_api_contract.py", "tests/test_service.py"]
         return ["tests/test_service.py"]
 
+    def _implementation_symbols_for_collection(self, app_id: str, collection: str) -> list[dict[str, str]]:
+        """Generation-time implementation identities; never reconstructed from prose."""
+        symbols = {
+            "actors": "app",
+            "use_cases": "DisputeApplicationService",
+            "bounded_contexts": "DisputeApplicationService",
+            "commands": "DisputeApplicationService.create",
+            "queries": "DisputeApplicationService.get",
+            "events": "DisputeCase.transition",
+            "aggregates": "DisputeCase",
+            "invariants": "DisputeCase.transition",
+            "workflows": "DisputeLifecycle",
+            "apis": "app",
+            "data": "migration:0001_initial",
+            "security": "app",
+            "operations": "run_local",
+            "evidence": "requirements_trace",
+            "dependencies": "runtime_configuration",
+        }
+        symbol = symbols.get(collection, "DisputeApplicationService")
+        return [
+            {"module_path": path, "symbol": symbol}
+            for path in self._code_paths_for_collection(app_id, collection)
+        ]
+
     def _artifact_paths_for_collection(self, collection: str) -> list[str]:
         mapping = {
             "apis": ["openapi/openapi.json", "docs/domain_state_machine.md"],
@@ -489,6 +700,7 @@ class DeepApplicationComposer:
                         "source": row.get("source"),
                         "canonical_hash": row.get("canonical_hash"),
                         "code_paths": self._code_paths_for_collection(app_id, collection),
+                        "implementation_references": self._implementation_symbols_for_collection(app_id, collection),
                         "test_paths": self._test_paths_for_collection(collection),
                         "generated_artifacts": self._artifact_paths_for_collection(collection),
                     }

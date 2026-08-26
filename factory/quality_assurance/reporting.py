@@ -60,6 +60,35 @@ APPLICATION_TITLES = (
     "Known Gaps, Debt, Risk Acceptance and Limitations Register",
 )
 
+# A report type is a governed projection contract, not merely a different title.
+# These stable keys also let callers attach facts without coupling them to prose.
+APPLICATION_REPORT_PROJECTIONS = {
+    title: projection
+    for title, projection in zip(
+        APPLICATION_TITLES,
+        (
+            "executive", "requirement_traceability", "semantic_fidelity",
+            "architecture_conformance", "test_assurance", "debug_reproduction",
+            "resilience_capacity", "observability", "security_supply_chain",
+            "claim_grounding", "independent_review", "candidate_acceptance",
+            "productionization_gaps", "limitations_risks",
+        ),
+    )
+}
+FACTORY_REPORT_PROJECTIONS = {
+    title: projection
+    for title, projection in zip(
+        FACTORY_TITLES,
+        (
+            "executive", "architecture", "engineering", "scalability",
+            "debug_reproduction", "test_architecture", "test_execution",
+            "observability", "security_supply_chain", "claim_grounding",
+            "independent_review", "candidate_acceptance", "productionization_gaps",
+            "learning_ledger",
+        ),
+    )
+}
+
 
 def _slug(title: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", title.lower()).strip("_")
@@ -106,10 +135,29 @@ def write_report_suite(
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     titles = FACTORY_TITLES if kind == "factory" else APPLICATION_TITLES
+    projections = (
+        FACTORY_REPORT_PROJECTIONS if kind == "factory" else APPLICATION_REPORT_PROJECTIONS
+    )
     rows = []
     for index, title in enumerate(titles, 1):
         slug = f"{index:02d}_{_slug(title)}"
-        sections = list(context.get("sections", []))
+        projection = projections[title]
+        # Untyped sections are shared context for compatibility. Typed sections
+        # are included only in their declared projection(s).
+        sections = [
+            dict(section)
+            for section in context.get("sections", [])
+            if not section.get("projection_ids")
+            or projection in section.get("projection_ids", [])
+        ]
+        projection_sections = context.get("report_sections", {})
+        if isinstance(projection_sections, Mapping):
+            sections.extend(projection_sections.get(projection, []))
+        sections.insert(0, {
+            "heading": "Projection contract",
+            "content": f"Fact/evidence projection: {projection}.",
+            "projection_id": projection,
+        })
         if (
             kind == "application"
             and title == "Architecture Decision, Prototype, Realization and Conformance Report"
@@ -118,12 +166,19 @@ def write_report_suite(
         document = {
             "schema_version": "upi-app-factory.quality-report.v1",
             "title": title,
+            "document_id": f"QA-{kind}-{projection}",
+            "projection_id": projection,
             "status": context.get("status", "INFORMATIONAL"),
             "scope": context.get("scope", "Frozen finite model and exact audited corpus."),
             "limitations": "Internal technical assurance; external human review and production evidence remain pending.",
             "sections": sections,
-            "claim_ids": context.get("claim_ids", []),
-            "evidence_ids": context.get("evidence_ids", []),
+            "source_fact_ids": context.get("source_fact_ids", []),
+            "claim_ids": context.get("claim_ids_by_projection", {}).get(
+                projection, context.get("claim_ids", [])
+            ),
+            "evidence_ids": context.get("evidence_ids_by_projection", {}).get(
+                projection, context.get("evidence_ids", [])
+            ),
         }
         raw = canonical_bytes(document)
         json_digest = hashlib.sha256(raw).hexdigest()
